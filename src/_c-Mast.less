@@ -1,0 +1,88 @@
+
+/*################################*\
+    conf  |  _c-Mast.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__tool.borders.less');
+@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+@import (reference) url('__settings.less');
+@import (reference) url('__tool.logo.less');
+
+
+// Masthead header and footer banners across entire site.
+//
+// ^subclasses
+// --head    - masthead at top of site
+// --menu    - mast containing main menu
+// --sitemap - mast containing sitemap
+// --foot    - copyright footline
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-10-14
+.c-Mast {
+  --heading-color: currentColor;
+  .font-size-mod(14/16);
+  background-color: @g-color-gray_dk; // HACK fallback
+  color: @g-color-gray_lt-tint2; // HACK fallback
+  background-color: var(--color-gray_dk);
+  color: var(--color-gray_lt-tint2);
+}
+
+.c-Mast--menu,
+.c-Mast--sitemap {
+  background-color: @g-color-primary; // HACK fallback
+  background-color: var(--color-primary);
+}
+
+.c-Mast--sitemap,
+.c-Mast--foot {
+  --link-color: currentColor;
+  --link-color-hover: var(--link-color);
+  a {
+    color: inherit; // HACK fallback
+    &:hover,
+    &:focus,
+    &._hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+
+.c-Mast--head {
+  background: linear-gradient(to right, var(--color-gray_dk), var(--color-gray_dk-tint1));
+}
+
+.c-Mast--menu {
+  background: linear-gradient(to right, var(--color-primary-shade1), var(--color-primary));
+}
+
+.c-Mast--sitemap {
+}
+
+.c-Mast--foot {
+  text-align: center;
+  background: linear-gradient(to bottom, var(--color-gray_dk), var(--color-gray_dk-shade1));
+}
+
+
+// Logo in footline.
+//
+// ^author
+// Chris Harvey
+// ^updated
+// 2017-03-04
+.c-ASCELogo {
+  margin-top: (14/16 * @g-vru); // HACK fallback uses `.c-Mast` module vru
+  margin-top: var(--vru);
+  margin-left:  auto;
+  margin-right: auto;
+  width: 233px; // 73px;
+  height: 30px; // 23px;
+  .logo();
+  background-image: url('../img/asce-logo-footer.png'); // url('../img/asce-logo-footer-small.png');
+  .transition(opacity 125ms);
+  &:hover {
+    opacity: 0.5;
+  }
+}

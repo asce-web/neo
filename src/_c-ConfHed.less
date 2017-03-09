@@ -1,0 +1,53 @@
+
+/*################################*\
+    conf  |  _c-ConfHed.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+
+
+// Promo for any year’s conference. Typographical styles.
+// May appear on front page or as an aside for other year conference.
+//
+// ^subcomponents
+// __Name   - conference name
+// __Detail - contains place and/or dates of conference
+//   __Place  - place of conference
+//   __Dates  - dates of conference
+// __Blurb  - paragraph containing add’l text and/or Theme
+// __Theme  - conference theme
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-10-21
+.c-ConfHed {
+  text-align: center;
+}
+
+.c-ConfHed__Name {
+}
+
+.c-ConfHed__Detail {
+  .flex-justify-content(space-around);
+  font-weight: 600;
+  @media screen and (max-width: 44.999em) {
+    .flex-direction(column);
+  }
+  .o-Runner--pageHeader & {
+    // when inside hero
+    .font-size-el(@g-font_size_mega; 2); // copied from xmeter atom `.-fz-el-mega`
+  }
+  .o-Runner--highlight & {
+    // when inside other-year
+    .font-size-el(@g-font_size_kilo); // copied from xmeter atom `.-fz-el-kilo`
+  }
+}
+
+.c-ConfHed__Detail__Place {
+}
+.c-ConfHed__Detail__Dates {
+}
+
+.c-ConfHed__Theme {
+  .font-size-el(1.5; 2);
+  font-style: italic;
+}

@@ -1,0 +1,106 @@
+
+/*################################*\
+    conf  |  _c-MenuMobile.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__fallback.flexbox.less');
+@import (reference) url('__settings.less');
+@import (reference) url('__tool.menufont.less');
+
+
+// Site-wide navigation menu (both mobile and desktop)
+// This component is dependent on the Flex Object.
+//
+// ^subcomponents
+// __Item - each item in the list
+// __Link - each link inside an __Item in the menu
+// __Icon - icon for page link
+// __Sub  - sub menu inside an item
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-10-13
+.c-MenuMobile {
+  .flex-direction(column);
+  .flex-justify-content(flex-start);
+  height: 100%;
+  margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
+  .menufont();
+  background-color: @g-color-gray_lt; // HACK fallback
+  color: @g-color-gray_dk; // HACK fallback
+  background-color: var(--color-gray_lt);
+  color: var(--color-gray_dk);
+  // REVIEW using .material-icons out of component
+  // .material-icons {
+  //   margin-right: 1rem;
+  // }
+}
+
+.c-MenuMobile__Item {
+  .flex(0 0 auto);
+  &:hover,
+  &:focus,
+  &._hover,
+  &:active,
+  &._active {
+    background-color: @g-color-gray_lt-tint2; // HACK fallback
+    background-color: var(--color-gray_lt-tint2);
+  }
+}
+
+.c-MenuMobile__Link {
+  padding: @g-boxpadd_norm;
+  &,
+  &:hover,
+  &:focus,
+  &._hover,
+  &:active
+  &._active {
+    color: inherit;
+  }
+}
+
+.c-MenuMobile__Icon {
+  margin-right: 1rem;
+}
+
+.c-MenuMobile__Sub {
+  display: none;
+}
+
+@media screen and (max-width: 44.999em) {
+  .c-MenuMobile-nsM       { .c-MenuMobile; }
+  .c-MenuMobile__Item-nsM { .c-MenuMobile__Item; }
+  .c-MenuMobile__Link-nsM { .c-MenuMobile__Link; }
+  .c-MenuMobile__Icon-nsM { .c-MenuMobile__Icon; }
+  .c-MenuMobile__Sub-nsM  { .c-MenuMobile__Sub; }
+}
+
+// .c-MenuTop__Link--current {
+//   // colors copied directly from `.c-Btn.c-Btn--primary`
+//   // HACK (can’t use that component because of padding and display issues)
+//   @media screen and (min-width: 45em) {
+//     border-radius: 0.25rem; // same as `.c-Btn`
+//   }
+//   background-color: @g-color-primary-tint1; // HACK fallback
+//   background-color: var(--color-primary-tint1);
+//   &,
+//   &:hover,
+//   &:focus,
+//   &:active,
+//   &._hover,
+//   &._active {
+//     color: @g-color-gray_lt-tint2; // HACK fallback
+//     color: var(--color-gray_lt-tint2);
+//   }
+//   &:hover,
+//   &:focus,
+//   &._hover {
+//     background-color: @g-color-primary-tint2; // HACK fallback
+//     background-color: var(--color-primary-tint2);
+//   }
+//   &:active,
+//   &._active {
+//     background-color: @g-color-primary; // HACK fallback
+//     background-color: var(--color-primary);
+//   }
+// }

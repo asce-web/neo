@@ -1,0 +1,191 @@
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
+    neo
+    Version: 0.4.0
+    Licence: ?
+    Repo   : https://github.com/asce-web/neo.git
+    Author : ASCE web team (webteam@asce.org)
+\*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+/*================================*\
+    neo.less
+\*================================*/
+
+
+// This stylesheet is the master stylesheet for all conference sites.
+// Each and every conference site imports this stylesheet, which
+// determines all styles for all conference sites.
+// Then each conference site imports an additional stylesheet
+// specific to that conference, which determines the conference-specific
+// styles such as colors.
+
+
+/*
+ * Table Of Contents
+ *
+ * # SETTINGS & TOOLS-----------------------PROJECT SETTINGS & MIXINS
+ * __settings.less..........................variables
+ * __tool.border-radius.less................useful mixins for grouping border-radii
+ * __tool.menufont.less.....................font styles for menu bars
+ * __tool.logo.less.........................background-image styles for logos
+ *
+ * # BASE-----------------------------------BARE UNCLASSED ELEMENTS
+ * _dev.less................................development code
+ * _base.less...............................bare, unclassed elements
+ *
+ * # OBJECTS--------------------------------REUSABLE STRUCTURAL PATTERNS
+ * GridFloat................................grid of items; legacy support
+ * Runner...................................header and footer
+ * Constrain................................keeps content at max width
+ * ListAction...............................list of actionable choices
+ * ListStacked..............................row of stackable items (Sponsors, Passes, Speakers, etc.)
+ * Tabs.....................................tabbed panel interface
+ * Drawer...................................pull-out container
+ *
+ * # COMPONENTS-----------------------------SPECIFIC STYLE PATTERNS
+ * Mast.....................................masthead for the site
+ * SiteTitle................................area containg logo and site title and tagline
+ * MenuMobile...............................mobile menu
+ * MenuBar..................................navigation bar
+ * Sitemap..................................sitemap for top (site) pages or main (internal) pages
+ * PageTitle................................title of entire page
+ * Banner...................................full-width block with a background image
+ * ConfHed..................................promo for any year conference
+ * SupporterBlock...........................block containing one level of sponsors on Sponsors page
+ * DateBlock................................list of important dates
+ * Pass.....................................a listing of prices for one Pass Type
+ * ProgramHn................................heading for TimeBlock
+ * TimeBlock................................list of sessions for a single day
+ * Speaker..................................(keynote) speaker profile
+ * SocialList...............................list of social media icons
+ * Callout..................................textual block standing out from normal prose
+ * Btn......................................buttons
+ * Toggle...................................toggle button
+ * LinkCamo.................................camouflaged links & elements
+ * LinkCaps.................................link in all caps, like that of menus
+ *   ## Block Section-y Components------------[description]
+ *   ## Typographical Components--------------[description]
+ *   ## User-Interactive Components-----------[description]
+ *
+ * # THEMES & HELPERS-----------------------LOCATION-DEPENDENT STYLES
+ *
+ * # OVERRIDES------------------------------ATOMS & HACKS
+ * _atom.less...............................all uncategorized atoms
+ * _shame.less..............................hacks
+ */
+
+//++++++++++++++++++++++++++++++++//
+//    # SETTINGS & TOOLS
+//++++++++++++++++++++++++++++++++//
+@import url('src/__settings.less');
+@import url('src/__tool.border-radius.less');
+// @import url('__tool.menufont.less');
+// @import url('__tool.logo.less');
+//++++ end # SETTINGS & TOOLS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # BASE
+//++++++++++++++++++++++++++++++++//
+@import url('src/_dev.less');
+@import url('src/_base.less');
+//++++ end # BASE ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # OBJECTS
+//++++++++++++++++++++++++++++++++//
+@import url('src/_o-GridFloat.less');
+@import url('src/_o-Runner.less');
+@import url('src/_o-Constrain.less');
+@import url('src/_o-ListAction.less');
+@import url('src/_o-ListStacked.less');
+@import url('src/_o-Tabs.less');
+@import url('src/_o-Drawer.less');
+//++++ end # OBJECTS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # COMPONENTS
+//++++++++++++++++++++++++++++++++//
+@import url('src/_c-Mast.less');
+@import url('src/_c-SiteTitle.less');
+@import url('src/_c-MenuMobile.less');
+@import url('src/_c-MenuBar.less');
+@import url('src/_c-Sitemap.less');
+@import url('src/_c-PageTitle.less');
+@import url('src/_c-Banner.less');
+@import url('src/_c-ConfHed.less');
+@import url('src/_c-SupporterBlock.less');
+@import url('src/_c-DateBlock.less');
+@import url('src/_c-Pass.less');
+@import url('src/_c-ProgramHn.less');
+@import url('src/_c-TimeBlock.less');
+@import url('src/_c-Speaker.less');
+@import url('src/_c-SocialList.less');
+@import url('src/_c-Callout.less');
+@import url('src/_c-Btn.less');
+@import url('src/_c-Toggle.less');
+@import url('src/_c-LinkCamo.less');
+@import url('src/_c-LinkCaps.less');
+  //--------------------------------//
+  //    ## Block Section-y Components
+  //--------------------------------//
+  //---- end ## Block Section-y Components ----//
+  //--------------------------------//
+  //    ## Typographical Components
+  //--------------------------------//
+  //---- end ## Typographical Components ----//
+  //--------------------------------//
+  //    ## User-Interactive Components
+  //--------------------------------//
+  //---- end ## User-Interactive Components ----//
+//++++ end # COMPONENTS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # THEMES & HELPERS
+//++++++++++++++++++++++++++++++++//
+.t-md {
+  [itemscope] {
+    border: 2px solid #808080;
+  }
+  [itemtype$="Event"] {
+    background-color: rgba(0,0,0,0.15) !important;
+  }
+  [itemprop] {
+    border: 1px solid currentColor;
+  }
+  [itemprop="name"] {
+    border-color: red;
+  }
+  [itemprop="description"] {
+    border-color: yellow;
+  }
+  [itemprop="url"] {
+    border-color: blue;
+  }
+  [itemprop="startDate"],
+  [itemprop="endDate"] {
+    border-color: orange;
+  }
+  [itemprop="location"] {
+    border-color: #0c0;
+  }
+  [itemprop="addressLocality"] {
+    border-color: #0c9;
+  }
+  [itemprop="addressRegion"] {
+    border-color: #9c0;
+  }
+}
+//++++ end # THEMES & HELPERS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # OVERRIDES
+//++++++++++++++++++++++++++++++++//
+@import url('src/_atom.less');
+@import url('src/_shame.less');
+//++++ end # OVERRIDES ++++//

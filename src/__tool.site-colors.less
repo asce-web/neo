@@ -1,0 +1,60 @@
+
+/*################################*\
+    conf  |  __tool.site-colors.less
+\*################################*/
+
+
+.site-colors(@primary; @secondary) {
+  @g-color-primary  : @primary;
+  @g-color-secondary: @secondary;
+
+  @g-color-primary-shade2  :         darken(@primary,   (2/3)*100%, relative);
+  @g-color-primary-shade1  :         darken(@primary,   (1/3)*100%, relative);
+  @g-color-primary-tint1   : lighten(darken(@primary,   (1/3)*100%, relative), (1/3)*100%);
+  @g-color-primary-tint2   : lighten(darken(@primary,   (2/3)*100%, relative), (2/3)*100%);
+  @g-color-secondary-shade2:         darken(@secondary, (2/3)*100%, relative);
+  @g-color-secondary-shade1:         darken(@secondary, (1/3)*100%, relative);
+  @g-color-secondary-tint1 : lighten(darken(@secondary, (1/3)*100%, relative), (1/3)*100%);
+  @g-color-secondary-tint2 : lighten(darken(@secondary, (2/3)*100%, relative), (2/3)*100%);
+
+  @_g1: desaturate(mix(@primary, @secondary, (3/4)*100%), (7/8)*100%, relative);
+  @_g2: desaturate(mix(@secondary, @primary, (3/4)*100%), (7/8)*100%, relative);
+
+  @g-color-gray_dk-shade2: lighten(@_g1, ( 1/12)*100% - lightness(@_g1));
+  @g-color-gray_dk-shade1: lighten(@_g1, ( 2/12)*100% - lightness(@_g1));
+  @g-color-gray_dk       : lighten(@_g1, ( 3/12)*100% - lightness(@_g1));
+  @g-color-gray_dk-tint1 : lighten(@_g1, ( 4/12)*100% - lightness(@_g1));
+  @g-color-gray_dk-tint2 : lighten(@_g1, ( 5/12)*100% - lightness(@_g1));
+  @g-color-gray_lt-shade2: lighten(@_g2, ( 7/12)*100% - lightness(@_g2));
+  @g-color-gray_lt-shade1: lighten(@_g2, ( 8/12)*100% - lightness(@_g2));
+  @g-color-gray_lt       : lighten(@_g2, ( 9/12)*100% - lightness(@_g2));
+  @g-color-gray_lt-tint1 : lighten(@_g2, (10/12)*100% - lightness(@_g2));
+  @g-color-gray_lt-tint2 : lighten(@_g2, (11/12)*100% - lightness(@_g2));
+
+  :root {
+    --color-primary:   @g-color-primary;
+    --color-secondary: @g-color-secondary;
+    --color-gray_dk:   @g-color-gray_dk;
+    --color-gray_lt:   @g-color-gray_lt;
+
+    --color-primary-shade2: @g-color-primary-shade2;
+    --color-primary-shade1: @g-color-primary-shade1;
+    --color-primary-tint1:  @g-color-primary-tint1 ;
+    --color-primary-tint2:  @g-color-primary-tint2 ;
+
+    --color-secondary-shade2: @g-color-secondary-shade2;
+    --color-secondary-shade1: @g-color-secondary-shade1;
+    --color-secondary-tint1:  @g-color-secondary-tint1 ;
+    --color-secondary-tint2:  @g-color-secondary-tint2 ;
+
+    --color-gray_dk-shade2: @g-color-gray_dk-shade2;
+    --color-gray_dk-shade1: @g-color-gray_dk-shade1;
+    --color-gray_dk-tint1:  @g-color-gray_dk-tint1 ;
+    --color-gray_dk-tint2:  @g-color-gray_dk-tint2 ;
+
+    --color-gray_lt-shade2: @g-color-gray_lt-shade2;
+    --color-gray_lt-shade1: @g-color-gray_lt-shade1;
+    --color-gray_lt-tint1:  @g-color-gray_lt-tint1 ;
+    --color-gray_lt-tint2:  @g-color-gray_lt-tint2 ;
+  }
+}

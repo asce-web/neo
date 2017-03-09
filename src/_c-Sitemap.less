@@ -1,0 +1,50 @@
+
+/*################################*\
+    conf  |  _c-Sitemap.less
+\*################################*/
+@import (reference) url('__tool.menufont.less');
+
+
+// Sitemap for top (site) pages or main (internal) pages.
+//
+// ^Subcomponents:
+// __Item - each item in the list
+// __Sub  - a sub menu list
+// __Sub__Item - an item within the SubList
+//
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-10-12
+@p-fz: 20/16;
+.c-Sitemap {
+  margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
+  .menufont();
+  @media screen and (max-width: 44.999em) {
+    .flex-direction(column);
+    .font-size-mod(@p-fz);
+  }
+}
+
+.c-Sitemap__Item {
+  .flex(0 0 auto);
+  @media screen and (max-width: 44.999em) {
+    &:not(:last-child) {
+      margin-bottom: (@p-fz * @g-vru); // HACK fallback // uses module vru
+      margin-bottom: var(--vru);
+    }
+  }
+}
+
+.c-Sitemap__Sub {
+  margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
+  font-weight: 300;
+  .font-size-el(16/20);
+  text-transform: none; // override .menufont()
+  @media screen and (min-width: 45em) {
+    .font-size-el(12/14);
+  }
+}
+
+.c-Sitemap__Sub__Item {
+}

@@ -1,0 +1,191 @@
+
+/*################################*\
+    conf  |  _c-Btn.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__fallback.transition.less');
+@import (reference) url('__settings.less');
+
+
+// Table of Contents
+// # ALL BUTTON STYLES (.c-Btn)
+// # BUTTON COLOR STYLES
+// # BUTTON TEXTURE STYLES
+// # BUTTON STRUCTURE STYLES
+
+
+// Buttons.
+//
+// ^subclasses
+// : --dark      - normal button but dark
+// : --primary   - site primary color
+// : --secondary - site secondary color
+// : --ghost     - ghost button (border and text only)
+// :   --ghost--dark - like ghost but dark
+// : --glossy    - shiny & 3D button
+// : --flat      - button text to look like a regular link
+// : --hilite    - singular button in highlight block
+// : --inline    - buttons in line with text
+// ^enhancement classes
+// : subclasses used only in the styleguide (not on the conference sites)
+// : ._hover  - indicates hover/focus state
+// : ._active - indicates active/pressed state
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-07-03
+.c-Btn {
+  // all button styles
+  display: inline-block;
+  vertical-align: middle;
+  padding: @g-boxpadd_mill;
+  margin-top: 0; // FIXME override negative margin-top from xmeter
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: 0.25rem;
+  text-shadow: none; // fallback for initial
+  text-shadow: initial; // override .c-Banner
+  cursor: pointer;
+  .transitions(color, background-color, border-color; 250ms);
+  a&:not([href]),
+  button&:disabled {
+    opacity: 0.75; // override xmeter
+    cursor: not-allowed;
+  }
+}
+
+
+//++++++++++++++++++++++++++++++++//
+//    # BUTTON COLOR STYLES
+//++++++++++++++++++++++++++++++++//
+.c-Btn {
+  // generic button color styles
+  background-color: @g-color-gray_lt; // HACK fallback
+  color: @g-color-gray_dk-shade2; // HACK fallback
+  background-color: var(--button-color);
+  color: var(--button-text);
+  &:hover,
+  &:focus,
+  &._hover {
+    background-color: @g-color-gray_lt-tint1; // HACK fallback
+    // color: @g-color-gray_dk-shade2; // HACK fallback // don’t need: inherits from above
+    background-color: var(--button-color-hover);
+    color: var(--button-text-hover);
+  }
+  &:active,
+  &._active {
+    background-color: @g-color-gray_lt-shade1; // HACK fallback
+    // color: @g-color-gray_dk-shade2; // HACK fallback // don’t need: inherits from above
+    background-color: var(--button-color-active);
+    color: var(--button-text-active);
+  }
+  a&:not([href]),
+  button&:disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      border: 0;
+      box-shadow: none;
+      background-color: #eee;
+      color: #bbb;
+    }
+  }
+}
+
+.c-Btn {
+  // specific button color styles
+  --button-color:        var(--color-gray_lt);
+  --button-color-hover:  var(--color-gray_lt-tint1);
+  --button-color-active: var(--color-gray_lt-shade1);
+  --button-text:         var(--color-gray_dk-shade2);
+  --button-text-hover:   var(--button-text);
+  --button-text-active:  var(--button-text);
+}
+
+.c-Btn--dark {
+  --button-color:        var(--color-gray_dk);
+  --button-color-hover:  var(--color-gray_dk-tint1);
+  --button-color-active: var(--color-gray_dk-shade1);
+  --button-text: var(--color-gray_lt-tint2);
+}
+
+.c-Btn--primary,
+.c-Btn--secondary {
+  --button-text: var(--color-gray_lt-tint2);
+}
+
+.c-Btn--primary {
+  --button-color:        var(--color-primary-tint1);
+  --button-color-hover:  var(--color-primary-tint2);
+  --button-color-active: var(--color-primary);
+}
+
+.c-Btn--secondary {
+  --button-color:        var(--color-secondary-shade1);
+  --button-color-hover:  var(--color-secondary);
+  --button-color-active: var(--color-secondary-shade2);
+}
+
+.c-Btn--ghost {
+  --button-color:        transparent;
+  --button-color-hover:  #222;
+  --button-color-active: var(--button-color);
+  --button-text-hover: #fff;
+  border: 2px solid currentColor;
+  &:hover,
+  &:focus,
+  &._hover {
+    &:not(:active):not(._active) {
+      border-color: transparent;
+    }
+  }
+  &,
+  &:active,
+  &._active {
+    color: inherit; // HACK override `.c-Btn` // do not use `--button-text: inherit;`
+  }
+}
+
+.c-Btn--ghost--dark {
+  --button-color-hover: #fff;
+  --button-text-hover: #222;
+}
+//++++ end # BUTTON COLOR STYLES ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # BUTTON TEXTURE STYLES
+//++++++++++++++++++++++++++++++++//
+.c-Btn--glossy {
+  @bs_x:     0;
+  @bs_y:     1em;
+  @bs_blur:  0;
+  @bs_color: fadeout(#fff, 75%);
+  border: 1px outset transparent;
+  box-shadow: @bs_x @bs_y @bs_blur @bs_color inset;
+  &:active,
+  &._active {
+    border-style: inset;
+    box-shadow: @bs_x (-0.5*@bs_y) @bs_blur @bs_color inset;
+  }
+}
+//++++ end # BUTTON TEXTURE STYLES ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # BUTTON STRUCTURE STYLES
+//++++++++++++++++++++++++++++++++//
+.c-Btn--hilite {
+  padding: @g-boxpadd_mill_v @g-boxpadd_kilo_h;
+  border-radius: 0.5rem;
+  font-size: 1.5em;
+}
+
+.c-Btn--inline {
+  display: inline;
+  padding: 0 @g-boxpadd_micr_h;
+  font-size: 0.75em;
+  line-height: 0;
+  border-radius: 0.25em;
+}
+//++++ end # BUTTON STRUCTURE STYLES ++++//

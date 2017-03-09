@@ -1,0 +1,37 @@
+
+/*################################*\
+    conf  |  _c-PageTitle.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+
+
+// Title of entire page.
+//
+// ^author
+// : Chris Harvey
+// ^updated
+// 2016-04-25
+.c-PageTitle {
+  .font-size-el(@g-font_size_tera; 3);
+}
+
+// A full-width heading that rests just above the bottom of the hero image.
+// Right now this is only used on the **Hotel & Travel** page.
+//
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-04-25
+// .c-PageTitle--special {
+//   position: absolute;
+//   left: 0; right: 0;
+//   bottom: 0.5em; // so not completely flush
+//   margin-bottom: 0; // override h1
+//   padding: @g-vru 0; // HACK fallback
+//   padding: var(--vru) 0;
+//   .font-size-el(3; 2);
+//   @media screen and (min-width: 340px) { // HACK specific to 'Hotel & Travel'
+//     .font-size-el(3);
+//   }
+//   background-color: rgba(0,0,0,0.5);
+// }

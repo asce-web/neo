@@ -9,6 +9,14 @@
   "scripts": {
     "pug:index": "pug index.jade",
     "pug:docs": "pug -O docs/_models/options.js docs/{index,principles,base,obj,comp,temp,help,atom}.jade",
+    "pug:all": "npm run pug:index  &&  npm run pug:docs",
+    "lessc:neo": "lessc neo.less neo.css",
+    "lessc:docs": "lessc docs/styles/docs.less docs/styles/docs.css",
+    "lessc:all": "npm run lessc:neo  &&  npm run lessc:docs",
+    "minify": "cleancss neo.css -o neo.min.css",
+    "browserify:principles": "browserify docs/scripts/principles.js > docs/scripts/principles.b.js",
+    "browserify:all": "npm run browserify:principles",
+    "build": "npm run pug:all  &&  npm run lessc:all  &&  npm run minify  &&  npm run browserify:all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +37,7 @@
   },
   "homepage": "https://github.com/asce-web/neo#readme",
   "devDependencies": {
+    "browserify": "^14.1.0",
     "csscolor": "^1.3.1",
     "pug-cli": "^1.0.0-alpha6",
     "sitepage": "^1.0.0",

@@ -1,0 +1,30 @@
+
+/*################################*\
+    conf  |  _c-Callout.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__tool.borders.less');
+@import (reference) url('__settings.less');
+
+
+// A textual block standing out from normal prose.
+// This may not *necessarily* be a removable aside, that is, it may be integral
+// to the content.
+// It may also be deemphasized from normal prose, for example, it may contain
+// fine print or disclaimers of some sort.
+// Do not use this for alerts; see the Alert component.
+//
+// ^subcomponents
+// __Item - if this is a list, an item in the list. not all callouts are lists, however.
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-05-06
+.c-Callout {
+  .border-vert(topbot; 1px);
+  border-style: solid;
+  padding: @g-boxpadd_mill;
+}
+
+.c-Callout__Item {
+  padding: @g-boxpadd_mill;
+}

@@ -1,0 +1,89 @@
+
+/*################################*\
+    conf  |  _o-Tabs.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
+@import (reference) url('__settings.less');
+
+
+// A block containing a list of tabs and corresponding panels.
+// The tabs and corresponding panels follow subsequently, as so:
+// > tab0, panel0, tab1, panel1, tab2, panel2, etc.
+//
+// ^subcomponents
+// __Tab   - tab for a panel
+//   --selected - style for tab that is selected via `__Check` subcomponent
+// __Check - a radio button in the Tab, used for selecting the desired panel
+// __Panel - panel containing content
+// ^author
+// Chris Harvey
+// ^updated
+// 2017-02-08
+@p-transdura: 500ms;
+.o-Tabs {
+  position: relative;
+  .flex-justify-content(center);
+  .flex-align-content(flex-start); // push flex items to top
+  .flex-align-items(flex-start); // minimize height of flex items
+  // overflow: hidden;
+  .transition(height @p-transdura); // height changes as panel
+}
+
+.o-Tabs__Tab,
+.o-Tabs__Panel {
+  .transitions(@g-prefix_transform; @p-transdura);
+}
+
+// A tab. Contains a label or heading of the panel.
+//
+// ^subclasses
+// --selected - added via script; styles for selected tab
+// ^author
+// Chris Harvey
+// ^updated
+// 2017-02-08
+.o-Tabs__Tab {
+  text-align: center;
+  @media screen and (min-width: 30em) {
+    .flex(1); // equal "main size" for all items
+  }
+}
+// this class should be added via script, NOT manually!
+// .o-Tabs__Tab:has(.o-Tabs__Check:checked), // TODO `:has()` is unsupported
+.o-Tabs__Tab--selected {
+  .transform(scale(1.2));
+}
+
+.o-Tabs__Check {
+}
+
+// A panel of content.
+//
+// ^subclasses
+// --js           - use when JS is enabled (for animation)
+// --hiddenBefore - the schedule before the one selected
+// --hiddenAfter  - the schedule after the one selected
+// --shown        - the selected schedule
+// ^author
+// Chris Harvey
+// ^updated
+// 2017-02-09
+.o-Tabs__Panel {
+}
+// the following classes should be added via script, NOT manually!
+.o-Tabs__Panel--js {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  .flex-order(1);
+}
+.o-Tabs__Panel--shown {
+}
+.o-Tabs__Panel--hiddenBefore {
+  .transform(translateX(-100%) scale(0));
+}
+.o-Tabs__Panel--hiddenAfter {
+  .transform(translateX(100%) scale(0));
+}

@@ -1,0 +1,89 @@
+
+/*################################*\
+    conf  |  _c-Speaker.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+@import (reference) url('__settings.less');
+@import (reference) url('__tool.logo.less');
+@import (reference) url('__tool.ticket.less');
+
+
+// A block containing a (keynote) speaker.
+// The first column is the headshot photo,
+// the second column is the description.
+//
+// ^subcomponents
+// __Img      - the speaker’s headshot photo
+// __Head     - header containing name and job title (affiliation)
+// __Body     - body of speaker info containing bio and social media links
+// __Foot     - pass footer containing other registration periods
+// __Name     - the speaker’s name and suffix (e.g. M.ASCE)
+// __JobTitle - speaker’s job title
+// __Affiliation - speaker’s organization
+// __Bio      - a block of content further describing information about the speaker
+// __Link     - link to speaker’s email, LinkedIn, and/or Twitter
+//
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-10-14
+.c-Speaker {
+  .ticket();
+  position: relative; // for the background image
+  .c-Speaker__JobTitle {
+    // HACK override `.font-size-mod() >> p`
+    margin-bottom: 0;
+  }
+}
+
+.c-Speaker__Img {
+  height: 60vw;
+  @media screen and (min-width: 30em)  { height: 40vw; }
+  @media screen and (min-width: 45em)  { height: 20vw; }
+  @media screen and (min-width: 90em)  { height: 15vw; }
+  .logo();
+  background-size: cover; // override .logo();
+}
+
+.c-Speaker__Head,
+.c-Speaker__Body,
+.c-Speaker__Foot {
+  padding: @g-boxpadd_norm;
+  & > *:last-child {
+    margin-bottom: 0; // override base typog
+  }
+  & > h1:first-child {
+    padding-top: 0; // override base h1
+  }
+}
+
+.c-Speaker__Head {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.c-Speaker__Body {
+  padding: @g-boxpadd_mill;
+  & > footer > ul {
+    margin-bottom: 0;
+  }
+  .ticket-body();
+}
+
+.c-Speaker__Foot {
+}
+
+.c-Speaker__Name {
+  .font-size-el(@g-font_size_h2);
+  font-family: inherit; // override h1
+  color: inherit; // override h1
+}
+
+.c-Speaker__JobTitle,
+.c-Speaker__Affiliation {
+  font-weight: 300;
+}
+
+.c-Speaker__Affiliation {
+  font-style: italic;
+}

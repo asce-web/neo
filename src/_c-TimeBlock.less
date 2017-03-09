@@ -1,0 +1,120 @@
+
+/*################################*\
+    conf  |  _c-TimeBlock.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__fallback.flexbox.less');
+@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+
+
+// A list of sessions for a single day.
+//
+// ^subcomponents
+// __Times - contains start and end times
+// __Desc  - the description
+// __Item - (optional) contains both times and description,
+//          in case TimeBlock has a list-like structure
+// __Link  - link in the description, if any
+// ^author
+// Chris Harvey
+// ^updated
+// 2017-02-19
+.c-TimeBlock {
+  .font-size-mod(14/16);
+}
+
+.c-TimeBlock__Item {
+}
+
+.c-TimeBlock__Times,
+.c-TimeBlock__Desc {
+  padding-bottom: (2*@g-vru); // HACK fallback
+  padding-bottom: calc(~'2 * var(--vru)');
+  @media not all and (min-width: 30em) {
+    padding-left: @g-boxpadd_norm_h;
+  }
+  @media screen and (min-width: 30em) {
+    .flex(50%);
+    max-width: 50%;
+  }
+}
+
+.c-TimeBlock__Times {
+  @media not all and (min-width: 30em) {
+    padding-bottom: 0; // override padding-bottom above
+    font-weight: 300;
+  }
+  @media screen and (min-width: 30em) {
+    text-align: right;
+    padding-right: @g-boxpadd_kilo_h;
+  }
+}
+
+.c-TimeBlock__Desc {
+  @media not all and (min-width: 30em) {
+    // same as .c-DateBlock__Desc
+    .font-size-el(1.25);
+    font-weight: 600;
+  }
+  @media screen and (min-width: 30em) {
+    padding-left: @g-boxpadd_kilo_h;
+  }
+}
+
+// Timeline Visualization
+@media screen {
+  // @supports (color: var(--color-primary)) {
+  //   // HACK `@supports` not supported in harp@0.23.0; commenting out for now
+  //   // checking support for css custom properties (for positioning & sizing of viz)
+  //   .c-TimeBlock__Times::before,
+  //   .c-TimeBlock__Desc:not(.c-TimeBlock__Desc--last)::before {
+  //     content: '';
+  //   }
+  // }
+  .c-TimeBlock__Times,
+  .c-TimeBlock__Desc {
+    position: relative; // for psuedo-elements in viz
+  }
+  .c-TimeBlock__Times::before,
+  .c-TimeBlock__Desc:not(.c-TimeBlock__Desc--last)::before {
+    // HACK : lack of `@supports` support (see above)
+    --variablessupported: '';
+    content: var(--variablessupported);
+  }
+  .c-TimeBlock__Times::before,
+  .c-TimeBlock__Desc::before {
+    display: block;
+    position: absolute;
+    box-shadow: 0 0 0 1em currentColor inset, 0 0 1em 0 currentColor;
+    color: @g-color-primary; // HACK fallbak
+    color: var(--color-primary);
+  }
+  .c-TimeBlock__Times::before {
+    // This is the disc on the viz
+    @_width: calc(~'var(--vru) / var(--line-height)'); // module em (like root em if the module were the root)
+    @_side : calc(~'-0.5 * var(--vru) / var(--line-height)');
+    @_top  : calc(~'-0.5 * var(--vru) / var(--line-height) + 0.5 * var(--vru)');
+    left: @_side;
+    top: @_top;
+    width: @_width;
+    height: @_width;
+    border-radius: 100%;
+    @media (min-width: 30em) {
+      left: auto;
+      right: @_side;
+    }
+  }
+  .c-TimeBlock__Desc::before {
+    // This is the line on the viz
+    left: 0;
+    top:    calc(~'-0.5 * var(--vru)');
+    bottom: calc(~'-0.5 * var(--vru)');
+    border-left: 1px solid;
+    @media (min-width: 30em) {
+      top: calc(~'0.5 * var(--vru)');
+    }
+  }
+}
+
+.c-TimeBlock__Link {
+  text-decoration: underline;
+}
