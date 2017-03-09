@@ -1,0 +1,17 @@
+p.
+  #[strong Note:]
+  The Drawer Object will be fixed off-screen when screen is smaller than 720px.
+  Extra Javascript functionality may be added to show it on command (as seen in the figure below).
+figure.docs-figure
+  div.o-Drawer
+    h1 drawer heading
+    p drawer content
+  div.docs-c-Togglable
+    input.docs-c-Togglable__Check#drawer-check(type="checkbox" value="open demo drawer")
+    label(for="drawer-check") open demo drawer
+      small  (only relevant on XS/S screens)
+    pre.docs-pre.
+      &lt;div class="#[u o-Drawer]#[u.docs-c-Togglable__Text   o-Drawer--open]"&gt;
+        &lt;h1&gt;drawer heading&lt;/h1&gt;
+        &lt;p&gt;drawer content&lt;/p&gt;
+      &lt;/div&gt;

@@ -1,0 +1,122 @@
+p.
+  A generic Social List Component is shown below. The generic form of this Component
+  shouldn&rsquo;t be used on its own; there are three #[i flavors] of Social List shown below.
+figure.docs-figure
+  include /_views/_c-SocialList.view.pug
+  +socialList({
+    twitter : { url: '#0', text: 'example Twitter link' }
+  , google  : { url: '#0', text: 'example Google+ link' }
+  , facebook: { url: '#0', text: 'example Facebook link' }
+  })
+  ul.o-List.o-Flex.c-SocialList
+    li.o-List__Item.o-Flex__Item.c-SocialList__Item
+      span hover:
+      a.c-SocialList__Link.c-SocialList__Link--twitter.h-Block(href="#0")._hover
+    li.o-List__Item.o-Flex__Item.c-SocialList__Item
+      span active:
+      a.c-SocialList__Link.c-SocialList__Link--twitter.h-Block(href="#0")._active
+  pre.docs-pre.
+    &lt;ul class="o-List  o-Flex  #[u c-SocialList]"&gt;
+      &lt;li class="o-List__Item  o-Flex__Item  #[u c-SocialList__Item]"&gt;
+        &lt;a class="#[u c-SocialList__Link]  #[u c-SocialList__Link--twitter]  h-Block"&gt;...&lt;/a&gt;
+      &lt;/li&gt;
+      ...
+    &lt;/ul&gt;
+  figcaption A generic Social List Component. Do not use on its own. Use one of the flavors below.
+p The first type of Social List is meant for the site mast footer.
+figure.docs-figure
+  div.c-Mast.c-Mast--foot
+    include /_views/_c-SocialList.view.pug
+    +socialList({
+      twitter : { url: '#0', text: 'example Twitter link' }
+    , google  : { url: '#0', text: 'example Google+ link' }
+    , facebook: { url: '#0', text: 'example Facebook link' }
+    , linkedin: { url: '#0', text: 'example LinkedIn link' }
+    , youtube : { url: '#0', text: 'example YouTube link' }
+    }).c-SocialList--footer
+    ul.o-List.o-Flex.c-SocialList.c-SocialList--footer
+      li.o-List__Item.o-Flex__Item.c-SocialList__Item
+        span footer hover:
+        a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href="#0")._hover
+      li.o-List__Item.o-Flex__Item.c-SocialList__Item
+        span footer active:
+        a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href="#0")._active
+  pre.docs-pre.
+    &lt;ul class="o-List  o-Flex  #[u c-SocialList]  #[u c-SocialList--footer]"&gt;
+      &lt;li class="o-List__Item  o-Flex__Item  #[u c-SocialList__Item]"&gt;
+        &lt;a class="#[u c-SocialList__Link]  #[u c-SocialList__Link--twitter]  h-Block"&gt;...&lt;/a&gt;
+      &lt;/li&gt;
+      ...
+    &lt;/ul&gt;
+p The second type, similar to the foooter, belongs in the #[a(href="#speaker-component") Speaker Component].
+figure.docs-figure
+  div.c-Speaker: div.c-Speaker__Foot
+    include /_views/_c-SocialList.view.pug
+    +socialList({
+      twitter : { url: '#0', text: 'example Twitter link' }
+    , google  : { url: '#0', text: 'example Google+ link' }
+    , facebook: { url: '#0', text: 'example Facebook link' }
+    , linkedin: { url: '#0', text: 'example LinkedIn link' }
+    , youtube : { url: '#0', text: 'example YouTube link' }
+    }).c-SocialList--speaker
+    ul.o-List.o-Flex.c-SocialList.c-SocialList--speaker
+      li.o-List__Item.o-Flex__Item.c-SocialList__Item
+        span speaker hover:
+        a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href="#0")._hover
+      li.o-List__Item.o-Flex__Item.c-SocialList__Item
+        span speaker active:
+        a.c-SocialList__Link.c-SocialList__Link--phone_iphone.h-Block(href="#0")._active
+  pre.docs-pre.
+    &lt;ul class="o-List  o-Flex  #[u c-SocialList]  #[u c-SocialList--speaker]"&gt;
+      &lt;li class="o-List__Item  o-Flex__Item  #[u c-SocialList__Item]"&gt;
+        &lt;a class="#[u c-SocialList__Link]  #[u c-SocialList__Link--twitter]  h-Block"&gt;...&lt;/a&gt;
+      &lt;/li&gt;
+      ...
+    &lt;/ul&gt;
+p.
+  The third is meant for a highlighted content block.
+  The logos are larger and each encompassed in a circle.
+  Logos in a #[a(href="#banner-component") Banner] are slightly lighter.
+figure.docs-figure
+  include /_views/_c-SocialList.view.pug
+  +socialList({
+    twitter : { url: '#0', text: 'example Twitter link' }
+  , google  : { url: '#0', text: 'example Google+ link' }
+  , facebook: { url: '#0', text: 'example Facebook link' }
+  }).c-SocialList--highlight
+  ul.o-List.o-Flex.c-SocialList.c-SocialList--highlight
+    li.o-List__Item.o-Flex__Item.c-SocialList__Item
+      span highlight hover:
+      a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href="#0")._hover
+    li.o-List__Item.o-Flex__Item.c-SocialList__Item
+      span highlight active:
+      a.c-SocialList__Link.c-SocialList__Link--phone_iphone.h-Block(href="#0")._active
+  div.c-Banner
+    +socialList({
+      twitter : { url: '#0', text: 'example Twitter link' }
+    , google  : { url: '#0', text: 'example Google+ link' }
+    , facebook: { url: '#0', text: 'example Facebook link' }
+    }).c-SocialList--highlight
+  pre.docs-pre.
+    &lt;ul class="o-List  o-Flex  #[u c-SocialList]  #[u c-SocialList--highlight]"&gt;
+      &lt;li class="o-List__Item  o-Flex__Item  #[u c-SocialList__Item]"&gt;
+        &lt;a class="#[u c-SocialList__Link]  #[u c-SocialList__Link--twitter]  h-Block"&gt;...&lt;/a&gt;
+      &lt;/li&gt;
+      ...
+    &lt;/ul&gt;
+p.
+  The available subclasses of #[code.docs-code .c-SocialList__Link] are listed below.
+  Each subclass corresponsds to its designated social network.
+ul
+  li #[code.docs-code .c-SocialList__Link--twitter]  (Twitter)
+  li #[code.docs-code .c-SocialList__Link--facebook] (Facebook)
+  li #[code.docs-code .c-SocialList__Link--google]   (Google+)
+  li #[code.docs-code .c-SocialList__Link--linkedin] (LinkedIn)
+  li #[code.docs-code .c-SocialList__Link--youtube]  (YouTube)
+p.
+  There are also links available for traditional contact information.
+ul
+  li #[code.docs-code .c-SocialList__Link--email]   (email address)
+  li #[code.docs-code .c-SocialList__Link--phone]   (telephone number)
+  li #[code.docs-code .c-SocialList__Link--explore] (homepage / website)
+  li #[code.docs-code .c-SocialList__Link--phone_iphone] (mobile phone)

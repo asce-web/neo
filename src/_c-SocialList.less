@@ -1,0 +1,127 @@
+
+/*################################*\
+    neo  |  _c-SocialList.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__fallback.flexbox.less');
+@import (reference) url('../node_modules/xmeter/styles/__fallback.filter.less');
+@import (reference) url('../node_modules/xmeter/styles/__fallback.transition.less');
+@import (reference) url('__settings.less');
+@import (reference) url('__tool.logo.less');
+
+
+// List of social media icons
+//
+// ^subclasses
+// --footer - social list inside home page footer
+// --speaker - social list inside speaker component
+// --highlight - social list inside "Join the Conversation" callout
+// ^subcomponents
+// __Item - each item in the list
+// __Link - each link inside an __Item in the menu
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-10-14
+.c-SocialList {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  &:not(.c-SocialList--speaker) {
+    .flex-justify-content(space-around);
+  }
+}
+
+.c-SocialList--footer {
+  width: 50%;
+  @iconsize: 5vw;
+  --iconsize: @iconsize; // TODO remove after fallback
+  // HACK fallbacks
+  .c-SocialList__Link {
+    width:  @iconsize;
+    height: @iconsize;
+  }
+  @media screen and (min-width: 60em) {
+    @iconsize: 2 * @g-vru;
+    --iconsize: calc(~'2 * var(--vru)');
+    // HACK fallbacks
+    .c-SocialList__Link {
+      width:  @iconsize;
+      height: @iconsize;
+    }
+  }
+  @media screen and (min-width: 75em) {
+    width: (100%/3);
+  }
+}
+
+.c-SocialList--speaker {
+  @iconsize: @g-vru;
+  --iconsize: var(--vru);
+  // HACK fallbacks
+  .c-SocialList__Link {
+    width:  @iconsize;
+    height: @iconsize;
+  }
+}
+
+.c-SocialList--highlight {
+  width: 50%;
+  @iconsize: 10vw;
+  --iconsize: @iconsize; // TODO update after fallback
+  // HACK fallbacks
+  .c-SocialList__Link {
+    width:  @iconsize;
+    height: @iconsize;
+  }
+  --icon-color: var(--color-gray_dk);
+  --icon-color-hover: var(--color-secondary);
+  .c-Banner & {
+    --icon-color: var(--color-gray_dk-tint2);
+  }
+}
+
+.c-SocialList__Item {
+  .flex(0);
+}
+
+.c-SocialList__Link {
+  width:  var(--iconsize);
+  height: var(--iconsize);
+  .logo();
+  .transitions(background-color, @g-prefix_filter; 500ms); // override base `a`
+  .c-SocialList--footer &,
+  .c-SocialList--speaker & {
+    &:hover,
+    &:focus,
+    &._hover,
+    &:active,
+    &._active {
+      .filter(blur(2px));
+    }
+  }
+  .c-SocialList--highlight & {
+    border-radius: 100%;
+    background-size: ((2/3) * 100%) ((2/3) * 100%);
+    background-color: @g-color-gray_dk; // HACK fallback
+    background-color: var(--icon-color, transparent);
+    &:hover,
+    &:focus,
+    &._hover,
+    &:active,
+    &._active {
+      background-color: @g-color-secondary; // HACK fallback
+      background-color: var(--icon-color-hover, transparent);
+    }
+  }
+}
+
+.c-SocialList__Link--email   { background-image: url('img/social-icons/email.svg'); }
+.c-SocialList__Link--phone   { background-image: url('img/social-icons/phone.svg'); }
+.c-SocialList__Link--explore { background-image: url('img/social-icons/explore.svg'); }
+.c-SocialList__Link--phone_iphone { background-image: url('img/social-icons/phone_iphone.svg'); }
+
+.c-SocialList__Link--twitter  { background-image: url('img/social-icons/twitter.svg'); }
+.c-SocialList__Link--google   { background-image: url('img/social-icons/google.svg'); }
+.c-SocialList__Link--facebook { background-image: url('img/social-icons/facebook.svg'); }
+.c-SocialList__Link--linkedin { background-image: url('img/social-icons/linkedin.svg'); }
+.c-SocialList__Link--youtube  { background-image: url('img/social-icons/youtube.svg'); }

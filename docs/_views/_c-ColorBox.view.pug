@@ -1,0 +1,9 @@
+mixin colorBox(w, attrs, factor)
+  -
+    attrs = attrs || {}
+    var _width  = w
+    var _height = _width * (Math.sqrt(5)-1)/2 * (factor || 1)
+  svg.docs-c-ColorBox(viewbox=`0 0 ${_width} ${_height}`)&attributes(attrs.svg || {})
+    rect(width=_width height=_height)&attributes(attrs.rect || {})
+  //- div.docs-c-ColorBox&attributes(Object.assign({}, (attrs.svg || {}), (attrs.rect || {})))
+  //- use div if you do not want svg

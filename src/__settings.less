@@ -1,0 +1,116 @@
+
+/*################################*\
+    neo  |  __settings.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__settings.less');
+
+
+//++++++++++++++++++++++++++++++++//
+//    # VARIABLES
+//++++++++++++++++++++++++++++++++//
+@g-prefix_transform: -webkit-transform, -moz-transform, -ms-transform, -o-transform, transform;
+@g-prefix_filter: -webkit-filter, -moz-filter, -ms-filter, -o-filter, filter;
+
+// Google’s Natural Easing Curves
+// <https://www.google.com/design/spec/motion/duration-easing.html#duration-easing-natural-easing-curves>
+@google-standard: cubic-bezier(0.4,  0,  0.2,  1); // css keyword `ease        == cubic-bezier(0.25,  0.1,  0.25,  1)`
+@google-decel:    cubic-bezier(0,    0,  0.2,  1); // css keyword `ease-out    == cubic-bezier(0,     0,    0.58,  1)`
+@google-accel:    cubic-bezier(0.4,  0,  1,    1); // css keyword `ease-in     == cubic-bezier(0.42,  0,    1,     1)`
+@google-sharp:    cubic-bezier(0.4,  0,  0.6,  1); // css keyword `ease-in-out == cubic-bezier(0.42,  0,    0.58,  1)`
+
+@g-decel_hard: cubic-bezier(0,0,0,1);
+@g-accel_hard: cubic-bezier(1,0,1,1);
+@g-decel_dram: cubic-bezier(0,1,0,1);
+@g-accel_dram: cubic-bezier(1,0,1,0);
+@g-decel_extm: cubic-bezier(1,-1,0,1);
+@g-accel_extm: cubic-bezier(1,0,0,2);
+
+//++++ end # VARIABLES ++++ //
+
+
+//++++++++++++++++++++++++++++++++//
+//    # TYPOGRAPHY
+//++++++++++++++++++++++++++++++++//
+@g-fontfam_body: 'Open Sans',sans-serif;
+@g-fontfam_hn:   'Bitter',serif;
+//++++ end # TYPOGRAPHY ++++ //
+
+
+//++++++++++++++++++++++++++++++++//
+//    # BOX PADDING
+//++++++++++++++++++++++++++++++++//
+@g-boxpadd_micr_h: 0.25rem; //   4px
+@g-boxpadd_mill_h: 0.50rem; //   8px
+@g-boxpadd_norm_h: 1.00rem; //  16px
+@g-boxpadd_kilo_h: 2.00rem; //  32px
+@g-boxpadd_mega_h: 3.00rem; //  48px
+@g-boxpadd_giga_h: 4.00rem; //  64px
+@g-boxpadd_tera_h: 6.00rem; //  96px
+@g-boxpadd_peta_h: 8.00rem; // 128px
+
+@g-boxpadd_micr_v: (@g-vru/8)   ; // 0.1875rem //  3px
+@g-boxpadd_mill_v: (@g-vru*0.25); // 0.3750rem //  6px
+@g-boxpadd_norm_v: (@g-vru*0.50); // 0.7500rem // 12px
+@g-boxpadd_kilo_v: (@g-vru*1.00); // 1.5000rem // 24px
+@g-boxpadd_mega_v: (@g-vru*1.50); // 2.2500rem // 36px
+@g-boxpadd_giga_v: (@g-vru*2.00); // 3.0000rem // 48px
+@g-boxpadd_tera_v: (@g-vru*3.00); // 4.5000rem // 72px
+@g-boxpadd_peta_v: (@g-vru*4.00); // 6.0000rem // 96px
+
+@g-boxpadd_micr: @g-boxpadd_micr_v @g-boxpadd_micr_h; // 0.1875rem 0.25rem //  3px   4px
+@g-boxpadd_mill: @g-boxpadd_mill_v @g-boxpadd_mill_h; // 0.3750rem 0.50rem //  6px   8px
+@g-boxpadd_norm: @g-boxpadd_norm_v @g-boxpadd_norm_h; // 0.7500rem 1.00rem // 12px  16px
+@g-boxpadd_kilo: @g-boxpadd_kilo_v @g-boxpadd_kilo_h; // 1.5000rem 2.00rem // 24px  32px
+@g-boxpadd_mega: @g-boxpadd_mega_v @g-boxpadd_mega_h; // 2.2500rem 3.00rem // 36px  48px
+@g-boxpadd_giga: @g-boxpadd_giga_v @g-boxpadd_giga_h; // 3.0000rem 4.00rem // 48px  64px
+@g-boxpadd_tera: @g-boxpadd_tera_v @g-boxpadd_tera_h; // 4.5000rem 6.00rem // 72px  96px
+@g-boxpadd_peta: @g-boxpadd_peta_v @g-boxpadd_peta_h; // 6.0000rem 8.00rem // 96px 128px
+//++++ end # BOX PADDING ++++ //
+
+
+//++++++++++++++++++++++++++++++++//
+//    # ASCE COMPANY COLORS
+//++++++++++++++++++++++++++++++++//
+// @g-color_asce_blue: #0c5fa8;
+// @g-color_asce_black: #222;
+// @g-color_asce_white: #fff;
+
+// ASCE table colors
+@g-color_asce_table_border:  #e8e8e8;
+@g-color_asce_table_bground: #f4f4f4;
+
+// ASCE form colors
+@g-color_asce_form_bground: #f4f4f5;
+//++++ end # ASCE COMPANY COLORS ++++ //
+
+
+//++++++++++++++++++++++++++++++++//
+//    # DEFAULT CONFERENCE COLORS
+//++++++++++++++++++++++++++++++++//
+@import (reference) url('__tool.site-colors.less');
+.site-colors(#660000; #ff6600); // default Hokie colors
+//++++ end # DEFAULT CONFERENCE COLORS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # COMPONENT COLORS
+//++++++++++++++++++++++++++++++++//
+//++++ end # COMPONENT COLORS ++++ //
+
+
+
+
+// -------------------- DRAFT BELOW ------------------------
+
+// flag colors
+@g-color_flag: #ed1c24; // default
+@g-color_note_bg: #fef0c1;
+@g-color_note_br: #fdcd2f;
+
+
+// other colors
+@g-color_livechat: #62b840; // okay random
+
+// UI fonts
+@g-font_ui: 'futura-pt', 'Open Sans', 'Arial', sans-serif;
+@g-highdpi: ~'(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-resolution: 1.5dppx)';

@@ -1,0 +1,81 @@
+
+/*################################*\
+    neo  |  _c-DateBlock.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__tool.borders.less');
+@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+
+
+// A block containing rows of important dates.
+// The first column is the date,
+// the second column is the description.
+//
+// ^subcomponents
+// __Date - the date
+// __Desc - the description
+// __Item - (optional) contains both date and description,
+//          in case DateBlock has a list-like structure
+// __Link - link in the description, if any
+// ^author
+// Chris Harvey
+// ^updated
+// 2017-02-19
+.c-DateBlock {
+  width: 75%;
+  margin-left:  auto;
+  margin-right: auto;
+  color: @g-color-gray_dk-shade2; // HACK fallback
+  color: var(--color-gray_dk-shade2); // override if inside Banner
+}
+
+@p-rw: 1px;
+.c-DateBlock__Item,
+.c-DateBlock > .c-DateBlock__Date,
+.c-DateBlock > .c-DateBlock__Desc {
+  background-color: @g-color-gray_lt-tint2; // HACK fallback
+  border-color: @g-color-gray_dk; // HACK fallback
+  background-color: var(--color-gray_lt-tint2);
+  border-color: var(--color-gray_dk);
+  @media screen                       { padding: @g-boxpadd_micr; }
+  @media screen and (min-width: 30em) { padding: @g-boxpadd_mill; }
+  @media screen and (min-width: 45em) { padding: @g-boxpadd_norm; }
+}
+
+.c-DateBlock__Item {
+  margin-bottom: @g-vru; // HACK fallback
+  margin-bottom: var(--vru);
+  .border-vert(all; @p-rw);
+  border-style: solid;
+}
+
+.c-DateBlock__Date {
+  font-weight: 300;
+}
+
+.c-DateBlock__Desc {
+  .font-size-el(1.25);
+  font-weight: 600;
+}
+
+// if using __Date & __Desc as direct children
+.c-DateBlock {
+  & > .c-DateBlock__Date,
+  & > .c-DateBlock__Desc {
+    border-width: 0 @p-rw;
+    border-style: solid;
+  }
+  & > .c-DateBlock__Date {
+    .border-vert(top; @p-rw);
+    padding-bottom: 0;
+  }
+  & > .c-DateBlock__Desc {
+    .border-vert(bottom; @p-rw);
+    padding-top: 0;
+    margin-bottom: @g-vru; // HACK fallback
+    margin-bottom: var(--vru);
+  }
+}
+
+.c-DateBlock__Link {
+  text-decoration: underline;
+}

@@ -1,0 +1,46 @@
+extends _docs.tpl.jade
+
+block append vars
+  - var page = ConfDocs.DOCS.find('comp.html')
+
+block append main
+  +newSection(2, ConfDocs.DOCS.find('comp.html#mast-component'))
+    include _includes/_comp.mast-component.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#banner-component'))
+    include _includes/_comp.banner-component.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#site-title'))
+    include _includes/_comp.site-title.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#mobile-menu'))
+    include _includes/_comp.mobile-menu.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#menu-bar'))
+    include _includes/_comp.menu-bar.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#sitemap-component'))
+    include _includes/_comp.sitemap-component.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#page-title'))
+    include _includes/_comp.page-title.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#conference-header'))
+    include _includes/_comp.conference-header.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#supporter-block'))
+    include _includes/_comp.supporter-block.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#pass-component'))
+    include _includes/_comp.pass-component.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#program-heading'))
+    include _includes/_comp.program-heading.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#time-block'))
+    include _includes/_comp.time-block.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#speaker-component'))
+    include _includes/_comp.speaker-component.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#social-list'))
+    include _includes/_comp.social-list.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#date-block'))
+    include _includes/_comp.date-block.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#callout-component'))
+    include _includes/_comp.callout-component.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#buttons'))
+    include _includes/_comp.buttons.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#toggle-button'))
+    include _includes/_comp.toggle-button.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#camo-link'))
+    include _includes/_comp.camo-link.pug
+  +newSection(2, ConfDocs.DOCS.find('comp.html#caps-link'))
+    include _includes/_comp.caps-link.pug

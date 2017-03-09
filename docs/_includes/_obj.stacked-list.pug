@@ -1,0 +1,21 @@
+p.
+  The Stacked List Object is usually an unordered list (though it can be ordered) of blocky items.
+  These items may be sponsor logos, passes, speakers, and more. This Object is responsive,
+  adjusting its items&rsquo; widths at different breakpoints.
+figure.docs-figure
+  ul.o-List.o-ListStacked
+    each val in [1,2,3]
+      li.o-List__Item.o-ListStacked__Item
+        article
+          h1 a blocky heading
+          p blocky content
+  pre.docs-pre.
+    &lt;ul class="o-List  #[u o-ListStacked]"&gt;
+      &lt;li class="o-List__Item  #[u o-ListStacked__Item]"&gt;
+        &lt;article&gt;
+          &lt;h1&gt;a blocky heading&lt;h1&gt;
+          &lt;p&gt;blocky content&lt;p&gt;
+        &lt;/article&gt;
+      &lt;/li&gt;
+      ...
+    &lt;/ul&gt;

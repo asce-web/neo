@@ -1,0 +1,28 @@
+
+/*################################*\
+    neo  |  _o-GridFloat.less
+\*################################*/
+
+
+// Use the GridFloat Object for a grid-like appearance using floats.
+//
+// ^subcomponents
+// : `__Item` - any item inside the grid
+// ^author
+// : Chris Harvey
+// ^updated
+// : 2016-07-08
+.o-GridFloat {
+  &::after {
+    // duplicating Xmeter’s .h-Clearfix Helper
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+.o-GridFloat__Item {
+  display: inline-block;
+  float: left;
+  width: 100%;
+}

@@ -1,0 +1,5 @@
+mixin programHn(date)
+  time.c-ProgramHn.h-Block(datetime=date)&attributes(attributes)
+    = Util.DAY_NAMES[date.getUTCDay()] + ','
+    br
+    = Util.monthDay(date)

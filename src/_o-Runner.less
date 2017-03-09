@@ -1,0 +1,63 @@
+
+/*################################*\
+    neo  |  _o-Runner.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__fallback.transition.less');
+
+
+// A large, full-width section with padding.
+// May be used for headers, footers, heros, highlight blocks, etc.
+//
+// ^subclasses
+// --pageHeader - A generic header of the entire page.
+// --highlight  - Highlighted content, like a callout.
+// ^author
+// : Chris Harvey
+// ^updated
+// 2016-04-25
+.o-Runner {
+  --padding   : @g-boxpadd_micr;
+  --padding-sK: @g-boxpadd_mill;
+  --padding-sM: @g-boxpadd_norm;
+  --padding-sG: @g-boxpadd_kilo;
+  @media screen {
+    padding: @g-boxpadd_micr; // HACK fallback
+    padding: var(--padding);
+  }
+  @media screen and (min-width: 30em) {
+    padding: @g-boxpadd_mill; // HACK fallback
+    padding: var(--padding-sK);
+  }
+  @media screen and (min-width: 45em) {
+    padding: @g-boxpadd_norm; // HACK fallback
+    padding: var(--padding-sM);
+  }
+  @media screen and (min-width: 60em) {
+    padding: @g-boxpadd_kilo; // HACK fallback
+    padding: var(--padding-sG);
+  }
+}
+
+.o-Runner--pageHeader {
+  --padding   : @g-boxpadd_norm;
+  --padding-sK: @g-boxpadd_norm; // override .o-Runner --padding-sK
+  --padding-sM: @g-boxpadd_mega;
+  --padding-sG: @g-boxpadd_giga;
+  // HACK fallbacks
+  @media screen                       { padding: @g-boxpadd_norm; }
+  @media screen and (min-width: 30em) { padding: @g-boxpadd_norm; } // needs to override .o-Runner @sK (when minified)
+  @media screen and (min-width: 45em) { padding: @g-boxpadd_mega; }
+  @media screen and (min-width: 60em) { padding: @g-boxpadd_giga; }
+}
+
+.o-Runner--highlight {
+  --padding   : @g-boxpadd_norm;
+  --padding-sK: @g-boxpadd_kilo;
+  --padding-sM: @g-boxpadd_giga;
+  --padding-sG: @g-boxpadd_peta;
+  // HACK fallbacks
+  @media screen                       { padding: @g-boxpadd_norm; }
+  @media screen and (min-width: 30em) { padding: @g-boxpadd_kilo; }
+  @media screen and (min-width: 45em) { padding: @g-boxpadd_giga; }
+  @media screen and (min-width: 60em) { padding: @g-boxpadd_peta; }
+}

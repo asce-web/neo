@@ -1,0 +1,60 @@
+
+//- ///////////////////////////////////////////////////////////////////////////////
+//- //
+//- // This file holds 'global' data for all files in this project,
+//- // including the pattern library and the sample sites.
+//- //
+//- ///////////////////////////////////////////////////////////////////////////////
+
+
+mixin sitetoc(args, inner)
+  //- WHERE +sitetoc() is used:
+  //- - /sites/all/_sites.tpl.jade
+  //- - /views/_c-Sitemap.view.pug
+  //- - /docs/_includes/_comp.mobile-menu.pug
+  //- - /docs/_includes/_comp.menu-bar.pug
+  //- - /docs/_includes/_temp.site-header.pug
+  //- NOTE parameter validation
+  -
+    var pages   = args.pages   || []
+    var classes = args.classes || {}
+    var depth   = +args.depth  || 0
+    var icons   = args.icons   || {}
+  ul.o-List(class=classes.listclasses)&attributes(inner ? {} : { role: 'directory' })
+    each $confPage in pages
+      unless $confPage.isHidden()
+        li.o-List__Item(class=classes.itemclasses)
+          a(class=classes.linkclasses href=$confPage.url())&attributes((page.url()===$confPage.url()) ? {'aria-current':'page'} : {})
+            if icons && icons.page && $confPage.getIcon()
+              i.material-icons.c-MenuMobile__Icon.-d-n-sM(role="none")= $confPage.getIcon()
+            span= $confPage.name()
+            if icons && icons.sub && $confPage.findAll().length && depth > 0
+              i.material-icons.c-MenuBar__Icon.-d-n-nM(role="none") expand_more
+          if $confPage.findAll().length && depth > 0
+            +sitetoc({pages: $confPage.findAll(), classes: (classes.sub || {}), depth: depth-1, icons: false}, true)
+
+//- mixin promotedLocation(promoloc)
+  - promoloc = promoloc || {} // NOTE parameter validation
+  if promoloc.title && promoloc.text
+    abbr(title=promoloc.title)= promoloc.text
+  else
+    = (promoloc.text || promoloc)
+
+mixin highlightButtons(links, more_classes)
+  ul.o-List.o-ListAction
+    each item in links
+      li.o-List__Item.o-ListAction__Item
+        a.c-Btn.c-Btn--hilite(class=(more_classes || '') href=item.href)&attributes(item.attr || {})
+          = item.text
+
+mixin promoLoc(location)
+  if location.title
+    abbr(title=location.title)= location.text
+  else
+    = location.text
+
+mixin highlight()
+  aside.o-Runner.o-Runner--highlight&attributes(attributes)
+    div.o-Constrain
+      //- NOTE: the topmost-level heading insde this `block` shall have the frag id for the aside
+      block

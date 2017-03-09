@@ -1,0 +1,12 @@
+p Use with #[a(href="#camo-link") the Camo Link].
+figure.docs-figure
+  include /_views/_ConfSite.view.pug
+  +siteTitle(new ConfSite('CI Summit', '#0', 'Innovations In Construction')
+    .logo('http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png')
+    )
+  pre.docs-pre.
+    &lt;a class="o-GridFloat  #[u c-SiteTitle]  c-LinkCamo  h-Block"&gt;
+      &lt;span class="o-GridFloat__Item  #[u c-SiteTitle__Logo]"&gt;&lt;/span&gt;
+      &lt;h1 class="o-GridFloat__Item  #[u c-SiteTitle__Name]"&gt;CI Summit&lt;/h1&gt;
+      &lt;p class="o-GridFloat__Item  #[u c-SiteTitle__Tagline]"&gt;Innovations In Construction&lt;/p&gt;
+    &lt;/a&gt;

@@ -1,0 +1,32 @@
+
+/*################################*\
+    neo  |  _o-ListAction.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__fallback.flexbox.less');
+@import (reference) url('__settings.less');
+
+
+// An action list is a list of (typically 3 or less) actionable choices a user can make.
+//
+// ^subcomponents
+// __Item - an item in the list
+// ^author
+// : Chris Harvey
+// ^updated
+// : 2016-07-12
+.o-ListAction {
+  .flexbox();
+  line-height: inherit; // if using on a text-level element
+  .flex-justify-content(space-around);
+  text-align: center;
+  @media screen and (max-width: 44.999em) {
+    .flex-direction(column);
+  }
+  @media screen and (min-width: 45em) {
+    .flex-wrap(nowrap);
+  }
+}
+
+.o-ListAction__Item {
+  .flex(1);
+}

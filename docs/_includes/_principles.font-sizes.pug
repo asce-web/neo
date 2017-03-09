@@ -1,0 +1,36 @@
+p.
+  Please use only the font sizes listed below.
+  Sticking with a pre-determined set of font sizes will ensure a consistent look-and-feel,
+  while at the same time providing a sense of even vertical rhythm.
+figure.docs-figure
+  table(style="margin-top:calc(2 * var(--vru));").-fz-i
+    colgroup
+      each n in new Array(8)
+        col.-w-1o8
+    tbody.-va-b
+      -
+        var sizes = [
+          { word: 'peta', rem: 6    }
+        , { word: 'tera', rem: 4    }
+        , { word: 'giga', rem: 3    }
+        , { word: 'mega', rem: 2    }
+        , { word: 'kilo', rem: 1.5  }
+        , { word: 'norm', rem: 1    }
+        , { word: 'mill', rem: 0.75 }
+        , { word: 'micr', rem: 0.5  }
+        ]
+      tr(title="sample")
+        each $item in sizes
+          td: span(class='-fz-'+$item.word) Abq
+      tr(title="keyword")
+        each $item in sizes
+          td= $item.word
+      tr(title="rems")
+        each $item in sizes
+          td #{$item.rem}rem
+      tr(title="pixels")
+        each $item in sizes
+          td #{$item.rem*16}px
+      tr(title="points")
+        each $item in sizes
+          td #{$item.rem*12}pt

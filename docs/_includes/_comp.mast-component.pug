@@ -1,0 +1,77 @@
+p.
+  A Mast is a section or banner that runs across the full width of the page.
+  There are four types of masts: head, main, sitemap, and foot. These four are instances
+  of the generic Mast Component.
+  In these examples, we use the #[code.docs-code div] element, but it may be more appropriate
+  to use #[code.docs-code header] or #[code.docs-code footer] on an actual site.
+p.
+  A generic mast. It uses the site&rsquo;s #[b Dark Gray] background color.
+figure.docs-figure
+  div.c-Mast
+    h1 heading
+    p content
+    ul
+      li: a(href="#0") link
+      li: a(href="#0")._hover link hover
+      li: a(href="#0")._active link active
+      li: a link disabled
+  pre.docs-pre.
+    &lt;div class="#[u c-Mast]"&gt; ... &lt;/div&gt;
+p.
+  The Mast Head contains the #[a(href="site-title") Site Title] Component.
+  It has a slight gradient: #[b Dark Gray] to #[b Dark Gray t1], left to right.
+figure.docs-figure
+  div.c-Mast.c-Mast--head
+    h1 heading
+    p content
+    ul
+      li: a(href="#0") link
+      li: a(href="#0")._hover link hover
+      li: a(href="#0")._active link active
+      li: a link disabled
+  pre.docs-pre.
+    &lt;div class="#[u c-Mast]  #[u c-Mast--head]"&gt; ... &lt;/div&gt;
+p.
+  The Mast Menu contains the #[a(href="#menu-bar") Menu Bar] Component.
+  It has a slight gradient: #[b Primary s1] to #[b Primary], left to right.
+figure.docs-figure
+  div.c-Mast.c-Mast--menu
+    h1 heading
+    p content
+    ul
+      li: a(href="#0") link
+      li: a(href="#0")._hover link hover
+      li: a(href="#0")._active link active
+      li: a link disabled
+  pre.docs-pre.
+    &lt;div class="#[u c-Mast]  #[u c-Mast--menu]"&gt; ... &lt;/div&gt;
+p.
+  The Mast Sitemap contains the #[a(href="#sitemap-component") Sitemap] Component.
+  It uses the #[b Primary] background color, and its links are underlined.
+figure.docs-figure
+  div.c-Mast.c-Mast--sitemap
+    h1 heading
+    p content
+    ul
+      li: a(href="#0") link
+      li: a(href="#0")._hover link hover
+      li: a(href="#0")._active link active
+      li: a link disabled
+  pre.docs-pre.
+    &lt;div class="#[u c-Mast]  #[u c-Mast--sitemap]"&gt; ... &lt;/div&gt;
+p.
+  The Mast Foot contains the copyright line and ASCE contact info.
+  Its text-align is centered and it also has a slight gradient:
+  #[b Dark Gray] to #[b Dark Gray t1], top to bottom.
+  Its links are also underlined.
+figure.docs-figure
+  footer.c-Mast.c-Mast--foot
+    h1 heading
+    p content
+    ul
+      li: a(href="#0") link
+      li: a(href="#0")._hover link hover
+      li: a(href="#0")._active link active
+      li: a link disabled
+  pre.docs-pre.
+    &lt;div class="#[u c-Mast]  #[u c-Mast--foot]"&gt; ... &lt;/div&gt;

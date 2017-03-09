@@ -1,0 +1,55 @@
+
+/*################################*\
+    neo  |  _o-Drawer.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__fallback.transform.less');
+@import (reference) url('../node_modules/xmeter/styles/__fallback.transition.less');
+@import (reference) url('__settings.less');
+
+
+@p-trans_dura: 250ms;
+
+
+// Drawer object slides out from a side on mobile devices.
+// Most commonly used for a menu.
+//
+// ^subclasses
+// --open - for when drawer is activated/shown
+// ^subcomponents
+// __Item - each item in the list
+// __Link - each link inside an __Item in the menu
+// __Link--current - link to the current convention (home) page
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-10-13
+.o-Drawer {
+  .transitions(@g-prefix_transform, opacity; @p-trans_dura);
+  // animation for *closing* drawer
+  .transition-timing-function(@google-accel);
+  // .transition-timing-function(@g-accel_hard);
+  // .transition-timing-function(@g-accel_dram);
+  // .transition-timing-function(@g-decel_extm);
+  @media screen and (max-width: 44.999em) {
+    @width: 12rem;
+    position: fixed;
+    right: -@width; top: 0;
+    z-index: 2; // over hero and "jump to top" button
+    width: @width;
+    height: 100%; // fallback for vh
+    height: 100vh;
+    border-left: 1px solid currentColor;
+    opacity: 0;
+  }
+}
+.o-Drawer--open {
+  @media screen and (max-width: 44.999em) {
+    .transform(translateX(-100%));
+    opacity: 1;
+    // animation for *opening* drawer
+    .transition-timing-function(@google-decel);
+    // .transition-timing-function(@g-decel_hard);
+    // .transition-timing-function(@g-decel_dram);
+    // .transition-timing-function(@g-accel_extm);
+  }
+}

@@ -1,0 +1,29 @@
+
+/*################################*\
+    neo  |  _c-LinkCamo.less
+\*################################*/
+
+
+// A text-level element that blends in with its surrounding text.
+//
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-10-06
+.c-LinkCamo {
+  &,
+  &:hover,
+  &:focus,
+  &:active,
+  &._hover,
+  &._active {
+    // fallbacks (for IE)    // initial values (for non-IE)
+    text-decoration: none;   text-decoration: initial;
+    background: transparent; background:      initial;
+    border: 0;               border:          initial;
+    opacity: 1 !important;   opacity: initial !important; // specificity HACK override a:not([href]) from xmeter
+
+    // inherited values
+    color: inherit;
+  }
+}

@@ -1,0 +1,63 @@
+extends /node_modules/xmeter/docs/_includes/_base.jade
+
+block append lists
+  p.
+    Dictionary lists are used for key-value pairs, such as a list of
+    dates/times and descriptions.
+
+block append tables
+  p.
+    Use the table #[code.docs-code caption] element
+    for the title and/or summary of the table.
+
+block append textLevelElements
+  footer: figure.docs-figure
+    figcaption: p The following paragraphs contain live examples of usage of the elements above.
+    p.
+      This figure demonstrates #[em commonly used] inline elements
+      in text. Notice #[q commonly used] is emphasized: it&rsquo;s important
+      to note that #[strong not all text-level elements are listed here].
+    p.
+      Some have the opinion that #[code em] and #[code strong] are #[i semantic elements]
+      while #[code i] and #[code b] are #[i formatting elements]
+      (which should be #[b deprecated] in HTML5), however
+      others might argue that
+      given the flexibility of these, they can be used for other undefined phrasing content,
+      such as scare quotes and mentions (for the former), and keywords
+      and technical terms (for the latter).
+      #[small However, #[s it&rsquo;s okay to use them interchangeably] one should remember not to use #[code i] and #[code b] for the meanings associated with #[code em] and #[code strong], respectively.]
+    p.
+      Use the #[code sup] and #[code sub] elements for when their presence
+      is semantically required, not just when it looks good there.
+      #[i(lang="la"): abbr(title="exampli gratia") E.g.], don&rsquo;t use superscripts
+      for the abbreviation of ordinals. There are two reasons for this:
+      1st,
+      #[q superscripted ordinals are tiny and hard to read]
+      #[cite (Matthew Butterick, #[time 2014])],
+      and 2nd, you should really be spelling out these ordinal numbers in the first place.
+      But third, and most importantly,
+      the semantics would remain the same even if the superscript were removed.
+      Use super/subscripts only when changing them to normal text would
+      drastically affect their meaning. For example,
+      #[i 1#[span(style="font-size:smaller;vertical-align:super;") st]] means the same thing as #[i 1st];
+      however, this does not hold
+      in math: #[u f(x) = a#[sub 0]x#[sup 2] + a#[sub 1]x + a#[sub 2]],
+      in chemical formulae: #[u dihydgogen oxide, or H#[sub 2]O, is commonly known as water], and
+      in French abbreviations: #[u #[abbr(title="Mademoiselle") M#[sup lle]] Juliette].
+
+block append linksList
+  li: a(href="#0")._hover a[href]:hover / a[href]:focus
+  li: a(href="#0")._active a[href]:active
+  li: p.
+    Lorem ipsum #[a(href="#0") dolor] sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt #[a(href="#0") ut labore et dolore] magna aliqua. Ut
+    enim ad minim veniam, quis nostrud exercitation ullamco laboris
+    nisi ut aliquip ex ea commodo consequat. #[a(href="#0") Lorem ipsum dolor sit]
+    amet, consectetur adipisicing elit, sed do eiusmod tempor
+    incididunt #[a(href="#0") ut labore et dolore magna aliqua].
+    Lorem ipsum #[a dolor] sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt #[a ut labore et dolore] magna aliqua. Ut
+    enim ad minim veniam, quis nostrud exercitation ullamco laboris
+    nisi ut aliquip ex ea commodo consequat. #[a Lorem ipsum dolor sit]
+    amet, consectetur adipisicing elit, sed do eiusmod tempor
+    incididunt #[a ut labore et dolore magna aliqua].

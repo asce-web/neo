@@ -1,0 +1,42 @@
+
+/*################################*\
+    neo  |  _c-ProgramHn.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+@import (reference) url('__settings.less');
+
+
+body {
+  --heading-color-unselected: var(--color-gray_dk);
+}
+.c-Banner {
+  --heading-color-unselected: var(--color-gray_lt);
+}
+
+// A heading for a program time block.
+// Contains the common date of the sessions.
+//
+// ^author
+// Chris Harvey
+// ^updated
+// 2017-02-19
+.c-ProgramHn {
+  // some styles from h1
+  margin-bottom: @g-vru; // HACK fallback
+  margin-bottom: var(--vru);
+  font-weight: 900;
+  color: @g-color-gray_dk; // HACK fallback
+  color: var(--heading-color-unselected);
+  .c-Banner & {
+    color: @g-color-gray_lt; // HACK fallback
+    color: var(--heading-color-unselected); // HACK override
+  }
+  @media screen and (min-width: 45em) {
+    .font-size-el(1.25);
+  }
+  // selected look
+  input:checked + & {
+    color: @g-color-primary; // HACK fallback
+    color: var(--color-primary);
+  }
+}

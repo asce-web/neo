@@ -1,0 +1,145 @@
+
+/*################################*\
+    neo  |  _c-Pass.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__fallback.flexbox.less');
+@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+@import (reference) url('__settings.less');
+@import (reference) url('__tool.ticket.less');
+
+
+// A listing of prices for one Pass Type
+// (e.g. Student, Speaker, Standard, etc.)
+//
+// ^subcomponents
+// __Head   - pass header. contains heading and description
+// __Body   - pass body containing current registration period
+// __Foot   - pass footer containing other registration periods
+// __Hn     - name of pass type (e.g. "Standard Pass")
+// __Desc   - description of pass type (e.g. "Undergraduates 18–24")
+// __Fine   - fine print (additional to description)
+// __Period - a registration period. see below.
+// __Attendee - attendee type (membership status)
+// __Price    - any price for any pass
+//   __Price--featured - highlighted price of some sort (usually membership price)
+//
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-10-14
+.c-Pass {
+  .ticket();
+  text-align: center;
+  overflow: hidden;
+  .c-Pass__Period__Hn {
+    margin-bottom: 0; // HACK override `.font-size-mod() >> h1`
+  }
+}
+
+.c-Pass__Head,
+.c-Pass__Body,
+.c-Pass__Foot {
+  padding: @g-boxpadd_norm_v @g-boxpadd_mill_h;
+  & > *:last-child {
+    margin-bottom: 0; // override base typog
+  }
+  & > h1:first-child {
+    padding-top: 0; // override base h1
+  }
+}
+
+.c-Pass__Body {
+  .ticket-body()
+}
+
+.c-Pass__Hn,
+.c-Pass__Period__Hn {
+  font-family: inherit; // override h1
+  color: inherit; // override h1
+}
+
+.c-Pass__Hn,
+.c-Pass__Desc {
+  white-space: nowrap;
+}
+
+.c-Pass__Hn {
+  .font-size-el(@g-font_size_h2);
+}
+
+.c-Pass__Desc {
+  font-weight: 600;
+}
+
+.c-Pass__Fine {
+  font-weight: 300;
+  font-style: italic;
+  .font-size-el(14/16);
+  white-space: normal; // HACK fallback for IE `initial`
+  white-space: initial;
+}
+
+.c-Pass__Attendee {
+  &::after {
+    content: ':\0020';
+  }
+}
+
+.c-Pass__Price {
+}
+
+.c-Pass__Price--featured {
+  .font-size-el(2; 2);
+  font-weight: 600;
+  color: @g-color-primary; // HACK fallback
+  color: var(--color-primary);
+}
+
+
+// A registration period containing a heading and a price listing.
+// A subcomponent of `.c-Pass`.
+//
+// ^subcomponents
+// __Hn              - the name of the registration period
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-07-15
+.c-Pass__Period {
+  & > *:last-child {
+    margin-bottom: 0; // override base typog
+  }
+  & > h1:first-child {
+    padding-top: 0; // override base h1
+  }
+  .c-Pass__Foot & {
+    .flex(1); // override Flex__Item (auto)
+    &:not(:last-child) {
+      position: relative; // for the ::after
+      padding-right: @g-boxpadd_micr_h;
+      &::after {
+        @rw: 1px;
+        content: '';
+        display: block;
+        position: absolute;
+        right: 0; top: 0; bottom: 0;
+        margin: (0.75 * @g-vru_px) 0; // HACK fallback // IE10 does not support rems on pseudo-elements!!!
+        margin: (0.75 * @g-vru) 0; // HACK fallback // from .ticket();
+        margin: var(--vru) 0;
+        border-right-width: @rw;
+        opacity: 0.5;
+      }
+    }
+    &:last-child {
+      padding-left:  @g-boxpadd_micr_h;
+    }
+  }
+}
+
+.c-Pass__Period__Hn {
+  font-weight: 700; // override base 900
+  .font-size-el(@g-font_size_h4);
+  .c-Pass__Body & {
+    .font-size-el(@g-font_size_h3);
+  }
+}

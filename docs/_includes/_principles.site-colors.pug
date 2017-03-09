@@ -1,0 +1,41 @@
+mixin siteColorList(primary_str, secondary_str)
+  - var site_colors = ConfSite.colorStyles(Color.fromString(primary_str), Color.fromString(secondary_str))
+  mixin cell(item, index)
+    mixin fig($pairing)
+      figure
+        include /docs/_views/_c-ColorBox.view.pug
+        +colorBox(96, {
+          svg: { 'data-prop': '--color' + $pairing.suffix }
+        , rect: { class: '-f' + $pairing.suffix }
+        })
+        p
+          b= $pairing.name
+          br
+          code= Color.fromString(site_colors['--color' + $pairing.suffix]).toString('hex')
+    if (index - 2) % 5 === 0
+      th.o-List__Item.docs-o-ColorList__Item
+        +fig(item)
+    else
+      td.o-List__Item.docs-o-ColorList__Item
+        +fig(item)
+  table.docs-o-ColorList(style=site_colors)&attributes(attributes)
+    thead: tr
+      th(title="Shade 2")
+      th(title="Shade 1")
+      th(title="Main Color")
+      th(title="Tint 1")
+      th(title="Tint 2")
+    tbody
+      - for (var i = 0; i < ConfDocs.COLOR_NAMES.length; i += 5)
+        tr
+          each item,index in ConfDocs.COLOR_NAMES.slice(i, i+5)
+            +cell(item,index)
+h4 Docs
+p (this style guide)
+include ../_views/_colorpickers.view.pug
++colorPickers('#660000', '#ff6600')
++siteColorList('#660000', '#ff6600')#docs-colors
+h4 ASCE 2016
++siteColorList('#3fae2a', '#00a1e1')
+h4 ASCE 2017
++siteColorList('#00737b', '#694890')

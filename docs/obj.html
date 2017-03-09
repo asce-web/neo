@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head><title>Objects | ASCE Conferences Pattern Library</title><meta charset="utf-8"><meta name="description" content="Pattern Library for conference microsites."><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,400italic,700"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><link rel="stylesheet" href="https://cdn.rawgit.com/chharvey/xmeter/v5.4.0/xmeter.min.css"><link rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.10.0/bangs.min.css"><link rel="stylesheet" href="../neo.css"><link rel="stylesheet" href="styles/docs.css"></head><body style="--color-primary:#660000;--color-secondary:#ff6600;--color-gray_dk:#483b38;--color-gray_lt:#c7bdb7;--color-primary-shade2:#220000;--color-primary-shade1:#440000;--color-primary-tint1:#ee0000;--color-primary-tint2:#ff7777;--color-secondary-shade2:#552200;--color-secondary-shade1:#aa4400;--color-secondary-tint1:#ff9955;--color-secondary-tint2:#ffccaa;--color-gray_dk-shade2:#181413;--color-gray_dk-shade1:#302725;--color-gray_dk-tint1:#604f4a;--color-gray_dk-tint2:#78635d;--color-gray_lt-shade2:#a29188;--color-gray_lt-shade1:#b5a79f;--color-gray_lt-tint1:#dad3cf;--color-gray_lt-tint2:#ece9e7;"><a class="h-Hidden" href="#main">skip to main content</a><header><h1>ASCE Conferences Pattern Library</h1><p>Pattern Library for conference microsites.</p><p><a href="/index.html">Return to Landing Page</a></p><nav id="sitemap"><h1 class="h-Hidden">Sitemap</h1><ol role="directory"><li><a href="index.html">Home</a></li><li><a href="principles.html">Principles</a></li><li><a href="base.html">Base Typography</a></li><li><a href="obj.html" aria-current="page">Objects</a></li><li><a href="comp.html">Components</a></li><li><a href="temp.html">Templates</a></li><li><a href="help.html">Helpers</a></li><li><a href="atom.html">Atoms</a></li></ol></nav></header><main class="docs-main" id="main"><header><h1>Objects</h1><p>Patterns of structure that can be reused many times for many different purposes.</p><nav id="table-contents"><h2>Table of Contents</h2><ol role="directory"><li><a href="obj.html#float-grid">The Float Grid</a></li><li><a href="obj.html#runner-object">The Runner Object</a></li><li><a href="obj.html#constrain">Constrain</a></li><li><a href="obj.html#action-list">The Action List</a></li><li><a href="obj.html#stacked-list">The Stacked List</a></li><li><a href="obj.html#tabs-object">The Tabs Object</a></li><li><a href="obj.html#drawer-object">The Drawer Object</a></li></ol></nav></header><p>This style guide imports styles from the Xmeter stylesheet.
+See the
+<a href="https://cdn.rawgit.com/chharvey/xmeter/master/docs/obj.html">Xmeter style guide</a>
+for more information.</p><section id="float-grid"><h2>The Float Grid <a class="docs-_fragid" href="#float-grid" aria-label="permalink"></a></h2><p>The Float Grid is a list of items arranged in a grid-like structure.
+It is similar to the Grid Object, except this object uses floating items
+instead of the Flexbox model. It works in older browsers such as <cite>Internet Explorer 9</cite>.</p><figure class="docs-figure"><ul class="o-List o-GridFloat"><li class="o-List__Item o-GridFloat__Item">Burns &amp; McDonnell Engineering</li><li class="o-List__Item o-GridFloat__Item">DIS-TRAN Steel, LLC</li><li class="o-List__Item o-GridFloat__Item">EDM International</li><li class="o-List__Item o-GridFloat__Item">Electrical Consultants, Inc.</li><li class="o-List__Item o-GridFloat__Item">Fabrimet Inc.</li><li class="o-List__Item o-GridFloat__Item">Falcon Steel Company</li><li class="o-List__Item o-GridFloat__Item">Sabre-FWT</li><li class="o-List__Item o-GridFloat__Item">HDR</li><li class="o-List__Item o-GridFloat__Item">Mitas Energy</li><li class="o-List__Item o-GridFloat__Item">Power Consulting Associates, LLC</li><li class="o-List__Item o-GridFloat__Item">Power Line Systems, Inc.</li><li class="o-List__Item o-GridFloat__Item">Quanta Services</li><li class="o-List__Item o-GridFloat__Item">ReliaPOLE Inspection Services</li><li class="o-List__Item o-GridFloat__Item">Sabre-FWT</li><li class="o-List__Item o-GridFloat__Item">SAE Towers</li><li class="o-List__Item o-GridFloat__Item">TAPP Steel Poles</li><li class="o-List__Item o-GridFloat__Item">Trinity Meyer Utility Structures</li><li class="o-List__Item o-GridFloat__Item">TRC Engineers</li><li class="o-List__Item o-GridFloat__Item">Underground Devices</li><li class="o-List__Item o-GridFloat__Item">Valmont Newmark</li></ul><pre class="docs-pre">&lt;ul class="o-List  <u>o-GridFloat</u>"&gt;
+  &lt;li class="o-List__Item  <u>o-GridFloat__Item</u>"&gt;Burns &amp; McDonnell Engineering&lt;/li&gt;
+  &lt;li class="o-List__Item  <u>o-GridFloat__Item</u>"&gt;DIS-TRAN Steel, LLC&lt;/li&gt;
+  ...
+&lt;/ul&gt;</pre></figure></section><section id="runner-object"><h2>The Runner Object <a class="docs-_fragid" href="#runner-object" aria-label="permalink"></a></h2><p>The Runner Object is a large, full-width section with padding on all four sides.
+It can be used for headers, footers, heros, highlight blocks, etc.,
+really, anything that looks like a “row” of a page.
+Change the window size and watch what happens to the padding.</p><figure class="docs-figure"><div class="o-Runner"><h1>runner heading</h1><p>runner content</p></div><pre class="docs-pre">&lt;div class="<u>o-Runner</u>"&gt;
+  &lt;h1&gt;runner heading&lt;/h1&gt;
+  &lt;p&gt;runner content&lt;/p&gt;
+&lt;/div&gt;</pre></figure><p>Subclasses of the Runner Object simply vary the padding.</p><p>Use <code class="docs-code">.o-Runner--pageHeader</code> for headers of pages,
+whether they be generic pages or special pages with hero banner headers.</p><figure class="docs-figure"><div class="o-Runner o-Runner--pageHeader"><h1 class="o-Runner--pageHeader__Hn">page heading</h1></div><pre class="docs-pre">&lt;div class="<u>o-Runner</u>  <u>o-Runner--pageHeader</u>"&gt;
+  &lt;h1&gt;page heading&lt;/h1&gt;
+&lt;/div&gt;</pre></figure><p>Use <code class="docs-code">.o-Runner--highlight</code> for highlighted content callouts.</p><figure class="docs-figure"><div class="o-Runner o-Runner--highlight"><h1>highlight block heading</h1><p>highlight content</p></div><pre class="docs-pre">&lt;div class="<u>o-Runner</u>  <u>o-Runner--highlight</u>"&gt;
+  &lt;h1&gt;highlight block heading&lt;/h1&gt;
+  &lt;p&gt;highlight content&lt;/p&gt;
+&lt;/div&gt;</pre></figure><h3>Table of Runner Padding</h3><table><thead><tr><th>Runner type</th><th scope="col" colspan="2">X-Small (s)</th><th scope="col" colspan="2">Small (sK)</th><th scope="col" colspan="2">Medium (sM)</th><th scope="col" colspan="2">Large (sG)</th></tr></thead><tbody><tr><th scope="row" rowspan="3">Runner</th><td colspan="2"><code class="docs-code">@g-boxpadd_micr</code></td><td colspan="2"><code class="docs-code">@g-boxpadd_mill</code></td><td colspan="2"><code class="docs-code">@g-boxpadd_norm</code></td><td colspan="2"><code class="docs-code">@g-boxpadd_kilo</code></td></tr><tr><td>0.125vru</td><td>0.25rem</td><td>0.25vru</td><td>0.5rem</td><td>0.5vru</td><td>1rem</td><td>1vru</td><td>2rem</td></tr><tr><td>3px</td><td>4px</td><td>6px</td><td>8px</td><td>12px</td><td>16px</td><td>24px</td><td>32px</td></tr><tr><th scope="row" rowspan="3">Runner--pageHeader</th><td colspan="2"><code class="docs-code">@g-boxpadd_norm</code></td><td colspan="2"><code class="docs-code">@g-boxpadd_norm</code></td><td colspan="2"><code class="docs-code">@g-boxpadd_mega</code></td><td colspan="2"><code class="docs-code">@g-boxpadd_giga</code></td></tr><tr><td>0.5vru</td><td>1rem</td><td>0.5vru</td><td>1rem</td><td>1.5vru</td><td>3rem</td><td>2vru</td><td>4rem</td></tr><tr><td>12px</td><td>16px</td><td>12px</td><td>16px</td><td>36px</td><td>48px</td><td>48px</td><td>64px</td></tr><tr><th scope="row" rowspan="3">Runner--highlight</th><td colspan="2"><code class="docs-code">@g-boxpadd_norm</code></td><td colspan="2"><code class="docs-code">@g-boxpadd_kilo</code></td><td colspan="2"><code class="docs-code">@g-boxpadd_giga</code></td><td colspan="2"><code class="docs-code">@g-boxpadd_peta</code></td></tr><tr><td>0.5vru</td><td>1rem</td><td>1vru</td><td>2rem</td><td>2vru</td><td>4rem</td><td>4vru</td><td>8rem</td></tr><tr><td>12px</td><td>16px</td><td>24px</td><td>32px</td><td>48px</td><td>64px</td><td>96px</td><td>128px</td></tr></tbody></table></section><section id="constrain"><h2>Constrain <a class="docs-_fragid" href="#constrain" aria-label="permalink"></a></h2><p>This object wraps content, limiting its maximum width.
+Use it to wrap content directly inside a Runner
+(though it may not necessarily be a child of Runner).</p><figure class="docs-figure"><div class="o-Runner"><div class="o-Constrain"><h1>content heading</h1><p>content</p></div></div><pre class="docs-pre">&lt;div class="<u>o-Runner</u>"&gt;
+  &lt;div class="<u>o-Constrain</u>"&gt;
+    &lt;h1&gt;content heading&lt;/h1&gt;
+    &lt;p&gt;content&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre></figure></section><section id="action-list"><h2>The Action List <a class="docs-_fragid" href="#action-list" aria-label="permalink"></a></h2><p>The Action List contains a variable number of items (typically 3 or fewer).
+Most commonly these items are actionable elements, such as links or buttons.
+However, this Object does not discriminate its contents&mdash;it can be used to hold
+static items as well.
+The list items are stacked vertically by default and become horizontal
+on Medium screens (720px) and larger.
+When displayed horizontally, the items have equal width
+(unlike Flex Object items, whose widths are automatically sized).</p><figure class="docs-figure"><ul class="o-List o-ListAction"><li class="o-List__Item o-ListAction__Item">action item 1</li><li class="o-List__Item o-ListAction__Item">action item 2</li><li class="o-List__Item o-ListAction__Item">action item 3</li></ul><pre class="docs-pre">&lt;ul class="o-List  <u>o-ListAction</u>"&gt;
+  &lt;li class="o-List__Item  <u>o-ListAction__Item</u>"&gt;action item 1&lt;/li&gt;
+  &lt;li class="o-List__Item  <u>o-ListAction__Item</u>"&gt;action item 2&lt;/li&gt;
+  &lt;li class="o-List__Item  <u>o-ListAction__Item</u>"&gt;action item 3&lt;/li&gt;
+&lt;/ul&gt;</pre></figure></section><section id="stacked-list"><h2>The Stacked List <a class="docs-_fragid" href="#stacked-list" aria-label="permalink"></a></h2><p>The Stacked List Object is usually an unordered list (though it can be ordered) of blocky items.
+These items may be sponsor logos, passes, speakers, and more. This Object is responsive,
+adjusting its items&rsquo; widths at different breakpoints.</p><figure class="docs-figure"><ul class="o-List o-ListStacked"><li class="o-List__Item o-ListStacked__Item"><article><h1>a blocky heading</h1><p>blocky content</p></article></li><li class="o-List__Item o-ListStacked__Item"><article><h1>a blocky heading</h1><p>blocky content</p></article></li><li class="o-List__Item o-ListStacked__Item"><article><h1>a blocky heading</h1><p>blocky content</p></article></li></ul><pre class="docs-pre">&lt;ul class="o-List  <u>o-ListStacked</u>"&gt;
+  &lt;li class="o-List__Item  <u>o-ListStacked__Item</u>"&gt;
+    &lt;article&gt;
+      &lt;h1&gt;a blocky heading&lt;h1&gt;
+      &lt;p&gt;blocky content&lt;p&gt;
+    &lt;/article&gt;
+  &lt;/li&gt;
+  ...
+&lt;/ul&gt;</pre></figure></section><section id="tabs-object"><h2>The Tabs Object <a class="docs-_fragid" href="#tabs-object" aria-label="permalink"></a></h2><p>The Tabs Object contains a series of corresponding tabs and panels.
+It is similar to a carousel, but only one panel is shown at a time and
+there is no timed automatic progression.
+Each Tabs Object must have a unique id for the carousel effect to work properly.</p><p>Enable Javascript to view animation effects.</p><figure class="docs-figure"><dl class="o-Grid o-Tabs" id="demotabs"><dt class="o-Grid__Item o-Tabs__Tab"><label class="h-Block"><input class="o-Tabs__Check h-Hidden -ps-a" type="radio" name="demotabs" value="0" checked="">tab 0</label></dt><dd class="o-Grid__Item o-Tabs__Panel">panel 0</dd><dt class="o-Grid__Item o-Tabs__Tab"><label class="h-Block"><input class="o-Tabs__Check h-Hidden -ps-a" type="radio" name="demotabs" value="1">tab 1</label></dt><dd class="o-Grid__Item o-Tabs__Panel">panel 1</dd><dt class="o-Grid__Item o-Tabs__Tab"><label class="h-Block"><input class="o-Tabs__Check h-Hidden -ps-a" type="radio" name="demotabs" value="2">tab 2</label></dt><dd class="o-Grid__Item o-Tabs__Panel">panel 2</dd></dl><pre class="docs-pre">&lt;dl class="o-Grid  <u>o-Tabs</u>"<mark> id="demotabs"</mark>&gt;
+  &lt;dt class="o-Grid__Item  <u>o-Tabs__Tab</u>"&gt;
+    &lt;label class="h-Block"&gt;
+      &lt;input class="<u>o-Tabs__Check</u>  h-Hidden  -ps-a"<mark> type="radio" name="demotabs" value="0"</mark> checked=""/&gt;
+      tab 0
+    &lt;/label&gt;
+  &lt;/dt&gt;
+  &lt;dd class="o-Grid__Item  <u>o-Tabs__Panel</u>"&gt;
+    panel 0
+  &lt;/dd&gt;
+
+  &lt;dt class="o-Grid__Item  <u>o-Tabs__Tab</u>"&gt;... tab 1 ...&lt;/dt&gt;
+  &lt;dd class="o-Grid__Item  <u>o-Tabs__Panel</u>"&gt;panel 1&lt;/dd&gt;
+  ...
+&lt;/dl&gt;</pre></figure></section><section id="drawer-object"><h2>The Drawer Object <a class="docs-_fragid" href="#drawer-object" aria-label="permalink"></a></h2><p><strong>Note:</strong>
+The Drawer Object will be fixed off-screen when screen is smaller than 720px.
+Extra Javascript functionality may be added to show it on command (as seen in the figure below).</p><figure class="docs-figure"><div class="o-Drawer"><h1>drawer heading</h1><p>drawer content</p></div><div class="docs-c-Togglable"><input class="docs-c-Togglable__Check" id="drawer-check" type="checkbox" value="open demo drawer"><label for="drawer-check">open demo drawer<small> (only relevant on XS/S screens)</small></label><pre class="docs-pre">&lt;div class="<u>o-Drawer</u><u class="docs-c-Togglable__Text">  o-Drawer--open</u>"&gt;
+  &lt;h1&gt;drawer heading&lt;/h1&gt;
+  &lt;p&gt;drawer content&lt;/p&gt;
+&lt;/div&gt;</pre></div></figure></section></main><script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script><script src="/scripts/o-Tabs.js"></script><script>$('#drawer-check').change(function () {
+  $(this).parents('.docs-c-Togglable').siblings('.o-Drawer').toggleClass('o-Drawer--open')
+})</script></body></html>
