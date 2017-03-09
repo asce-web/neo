@@ -1,0 +1,68 @@
+mixin personFullName($person)
+  span(itemprop="name")
+    span(itemprop="givenName")= $person.name().given_name
+    = ' '
+    if $person.name().additional_name
+      span(itemprop="additionalName")= $person.name().additional_name
+      = ' '
+    span(itemprop="familyName")= $person.name().family_name
+
+mixin personEntireName($person)
+  if $person.name().honorific_prefix
+    span(itemprop="honorificPrefix")= $person.name().honorific_prefix
+    = ' '
+  +personFullName($person)
+  if $person.name().honorific_suffix
+    = ', '
+    span(itemprop="honorificSuffix")= $person.name().honorific_suffix
+
+mixin personAffiliation($person)
+  +personEntireName($person)
+  if $person.affiliation()
+    = ', '
+    span.-fs-t(itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization")
+      span(itemprop="name")= $person.affiliation()
+
+mixin personContact($person)
+  a(href=`mailto:${$person.email()}` itemprop="email")
+    +personFullName($person)
+  if $person.jobTitle()
+    = ', '
+    span(itemprop="jobTitle")= $person.jobTitle()
+  if $person.phone()
+    = ' | '
+    span(itemprop="telephone")= $person.phone()
+
+mixin speakerList(speakers)
+  ul.o-List.o-ListStacked
+    each $person in speakers
+      li.o-List__Item.o-ListStacked__Item
+        +speaker($person)
+
+mixin speaker($person)
+  article.c-Speaker(itemprop="performer" itemscope="" itemtype="http://schema.org/Person")
+    div.c-Speaker__Img(style=`background-image:url('${$person.img() || ''}');`)
+    header.c-Speaker__Head
+      h1.c-Speaker__Name(id=$person.id()): +personEntireName($person)
+      p.c-Speaker__JobTitle(itemprop="jobTitle")= $person.jobTitle()
+      p.c-Speaker__Affiliation(itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization")
+        span(itemprop="name")= $person.affiliation()
+    div.c-Speaker__Body(itemprop="description")._text-block!= $person.getBio(true)
+    footer.c-Speaker__Foot
+      include /_views/_c-SocialList.view.pug
+      +socialList($person.getSocialAll()).c-SocialList--speaker
+        if $person.email()
+          li.o-List__Item.o-Flex__Item.c-SocialList__Item
+            a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href=`mailto:${$person.email()}` title=$person.email() itemprop="email")
+              span.h-Hidden send email
+              //- i.material-icons(role="none") email
+        if $person.phone()
+          li.o-List__Item.o-Flex__Item.c-SocialList__Item
+            a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href=`tel:${Util.toURL($person.phone())}` title=$person.phone() itemprop="telephone")
+              span.h-Hidden call
+              //- i.material-icons(role="none") phone
+        if $person.url()
+          li.o-List__Item.o-Flex__Item.c-SocialList__Item
+            a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href=$person.url() title="visit homepage" itemprop="url")
+              span.h-Hidden visit homepage
+              //- i.material-icons(role="none") explore

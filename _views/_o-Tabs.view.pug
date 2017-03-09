@@ -1,0 +1,29 @@
+mixin tabs(n)
+  //-
+    NOTE this mixin *must* be called with an id attribute as shown below.
+    The id is required and is used to calculate the `name` attributes of the radio button inputs.
+    Without an id, the radio buttons may not work correctly.
+    The id is added to the mixin as any attribute would be added to an element:
+    ```
+    +tabs(3)(id="any-valid-id-string")
+      mixin tab(i)
+        ...
+      mixin panel(i)
+        ...
+    ```
+    Or, you may use the shorthand id syntax:
+    ```
+    +tabs(3)#any-valid-id
+    ```
+  dl.o-Grid.o-Tabs&attributes(attributes)
+    mixin tab(i)
+      | tab #{i}
+    mixin panel(i)
+      | panel #{i}
+    block
+    each val,index in new Array(n)
+      dt.o-Grid__Item.o-Tabs__Tab: label.h-Block
+        input.o-Tabs__Check.h-Hidden.-ps-a(type="radio" name=attributes.id value=index)&attributes((index===0) ? {checked:''} : {})
+        +tab(index)
+      dd.o-Grid__Item.o-Tabs__Panel
+        +panel(index)

@@ -1,0 +1,74 @@
+p A Supporter Block holds one group of supporters.
+p.
+  On the Sponsor page, each Supporter Block corresponds to one level,
+  e.g., Platinum, Gold, or Corporate.
+  On all other pages, this block may be used to group additional organizations,
+  such as Cooperating Organizations.
+  This block is a #[code.docs-code section] containing a heading
+  (the name of the level)
+  followed by an unordered list of supporter logos.
+p.
+  To separate multiple supporter blocks, add class #[code.docs-code .c-SupporterBlock--separate]
+  for a thin bottom border.
+p.
+  Supporter Blocks, regardless of display, hold logos for sponsoring or supporting organizations.
+  Typically, they are links with background images, containing hidden text for accessibility.
+p There are three subclasses of #[code.docs-code .c-SupporterBlock__Logo]:
+ul
+  li: code.docs-code .c-SupporterBlock__Logo--sml
+  li: code.docs-code .c-SupporterBlock__Logo--med
+  li: code.docs-code .c-SupporterBlock__Logo--lrg
+figure.docs-figure
+  -
+    var supporters = [
+      new Supporter('Bank of America')
+        .url('#0')
+        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg')
+    , new Supporter('UPS')
+        .url('#0')
+        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg')
+    , new Supporter('Geico')
+        .url('#0')
+        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png')
+    ]
+  include /_views/_SupporterLevel.view.pug
+  +supporterBlock(new SupporterLevel('Titanium').size('lrg')
+  , new ConfSite()
+      .addSupporter(supporters[0].level('Titanium'))
+      .addSupporter(supporters[1].level('Titanium'))
+      .addSupporter(supporters[2].level('Titanium'))
+  , 'c-SupporterBlock--separate'
+  )
+  +supporterBlock(new SupporterLevel('Platinum').size('med')
+  , new ConfSite()
+      .addSupporter(supporters[0].level('Platinum'))
+      .addSupporter(supporters[1].level('Platinum'))
+      .addSupporter(supporters[2].level('Platinum'))
+  , 'c-SupporterBlock--separate'
+  )
+  +supporterBlock(new SupporterLevel('Silver').size('sml')
+  , new ConfSite()
+      .addSupporter(supporters[0].level('Silver'))
+      .addSupporter(supporters[1].level('Silver'))
+      .addSupporter(supporters[2].level('Silver'))
+  )
+  +microdataCheckbox('supporterblock')
+    pre.docs-pre.
+      &lt;section class="#[u c-SupporterBlock]  #[u c-SupporterBlock--separate]"&gt;
+        &lt;h1 class="#[u c-SupporterBlock__Hn]"&gt;Titanium&lt;/h1&gt;
+        &lt;ul class="o-List  o-ListStacked"&gt;
+          &lt;li class="o-List__Item  o-ListStacked__Item"#[mark.docs-c-Togglable__Text  itemprop="sponsor" itemscope="" itemtype="http://schema.org/Organization"]&gt;
+            &lt;a class="#[u c-SupporterBlock__Logo]  #[u c-SupporterBlock__Logo--lrg]  h-Block" href="#[var.docs-var //path/to/site/]" rel="external nofollow"#[mark.docs-c-Togglable__Text  itemprop="url"]&gt;
+              &lt;img class="#[u c-SupporterBlock__Logo__Img]" src="#[var.docs-var ../path/to/logo.png]" alt=""#[mark.docs-c-Togglable__Text  itemprop="img"]/&gt;
+              &lt;span class="#[u c-SupporterBlock__Logo__Name]"#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;Bank of America&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+          ...
+        &lt;/ul&gt;
+      &lt;/section&gt;
+
+      &lt;section class="#[u c-SupporterBlock]"&gt;
+        &lt;h1 class="#[u c-SupporterBlock__Hn]"&gt;Silver&lt;/h1&gt;
+        ...
+      &lt;/section&gt;
+      ...

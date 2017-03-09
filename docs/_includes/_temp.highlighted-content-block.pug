@@ -1,0 +1,34 @@
+p.
+  Highlighted Content Blocks, commonly referred to as callouts,
+  are modular blocks of content movable anywhere on a page. They
+  might contain a heading, some content, and one or more action buttons.
+  Typically, the heading is given an #[code.docs-code id] to be used as
+  a fragment identifier (internal page anchors).
+p.-fs-t This Template uses:
+ul.-fs-t
+  li: +internalLink(ConfDocs.DOCS.find('obj.html#runner-object'))
+  li: +internalLink(ConfDocs.DOCS.find('obj.html#constrain'))
+  li: +internalLink(ConfDocs.DOCS.find('obj.html#action-list'))
+  li: +internalLink(ConfDocs.DOCS.find('comp.html#buttons'))
+  li #[+internalLink(ConfDocs.DOCS.find('comp.html#banner-component'))] (optional)
+figure.docs-figure
+  +highlight()
+    h1#volunteer Volunteer
+    p We will need volunteers to act as greeters, direct people to various venues within the hotel, collect tickets, travel with tour buses, provide head counts, and serve as a point of contact with ASCE staff.
+    +highlightButtons([{text:'Sign Up', href:'#0'}])
+  +highlight().c-Banner
+    h1#volunteer-banner Volunteer Banner
+    p We will need volunteers to act as greeters, direct people to various venues within the hotel, collect tickets, travel with tour buses, provide head counts, and serve as a point of contact with ASCE staff.
+    +highlightButtons([{text:'Sign Up', href:'#0'}])
+  pre.docs-pre.
+    &lt;aside class="o-Runner  o-Runner--highlight  #[u= '[c-Banner]']"&gt;
+      &lt;div class="o-Constrain"&gt;
+        &lt;h1 #[mark id="volunteer"]&gt;Volunteer&lt;/h1&gt;
+        &lt;p&gt;We will need ...&lt;/p&gt;
+        &lt;ul class="o-List  o-ListAction"&gt;
+          &lt;li class="o-List__Item  o-ListAction__Item"&gt;
+            &lt;a class="c-Btn  c-Btn--hilite" href="#0"&gt;Sign Up&lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/aside&gt;

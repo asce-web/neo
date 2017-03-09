@@ -1,0 +1,76 @@
+doctype html
+html(lang="en")
+  include /_includes/__snippets.pug
+  mixin doctoc(args, inner)
+    //- NOTE parameter validation
+    -
+      var pages   = args.pages   || []
+      var classes = args.classes || {}
+      var depth   = +args.depth  || 0
+    ol(class=classes.listclasses)&attributes(inner ? {} : { role: 'directory' })
+      each item in pages
+        li(class=classes.itemclasses)
+          a(class=classes.linkclasses href=item.url())&attributes((page.url()===item.url()) ? {'aria-current':'page'} : {})= item.name()
+          if item.findAll().length && depth > 0
+            +doctoc({pages: item.findAll(), classes: (classes.sub || {}), depth: depth-1}, true)
+  mixin microdataCheckbox(id)
+    div.docs-c-Togglable
+      input.docs-c-Togglable__Check(id=id+'-check' type="checkbox" value=id+'-md-true')
+      label(for=id+'-check') show microdata
+      block
+  mixin newSection(n, page)
+    - var id = page.url().split('#')[1]
+    section(id=id)
+      | <h#{n}>#{page.name()} <a class="docs-_fragid" href="##{id}" aria-label="permalink"></a></h#{n}>
+      block
+  mixin internalLink($page)
+    a(href=$page.url())= $page.name()
+  block vars
+  head
+    title= page.title() || (page.name() + ' | ' + ConfDocs.DOCS.name())
+    meta(charset="utf-8")
+    meta(name="description" content=ConfDocs.DOCS.description())
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    block styles
+      link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic")
+      link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,400italic,700")
+      link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+      link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/xmeter/v5.4.0/xmeter.min.css")
+      link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.10.0/bangs.min.css")
+      link(rel="stylesheet" href="/src/neo.css")
+      link(rel="stylesheet" href="styles/docs.css")
+  body(style=ConfDocs.COLORS)
+    a.h-Hidden(href="#main") skip to main content
+    header
+      h1= ConfDocs.DOCS.name()
+      p= ConfDocs.DOCS.description()
+      p: a(href="/index.html") Return to Landing Page
+      nav#sitemap
+        h1.h-Hidden Sitemap
+        +doctoc({pages: ConfDocs.DOCS.findAll()})
+    main.docs-main#main
+      block main
+        header
+          h1= page.name()
+          p= page.description()
+          block toc
+            nav#table-contents
+              h2 Table of Contents
+              +doctoc({pages: page.findAll(), depth: Infinity})
+    block scripts
+      script(src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous")
+      //- script.
+        var Util = (function () {
+          // copied from /includes/Util.class
+          function Util() {}
+          Util.toURL = function toURL(string) {
+            return encodeURIComponent(string.toLowerCase().replace(/[\W]+/g, '-'))
+          }
+          return Util
+        })()
+        $('h1, h2, h3, h4, h5, h6').each(function () {
+          if (!$(this).parents('figure').length) {
+            var id = '_' + Util.toURL($(this).text())
+            $(this).append($('<a>').addClass('docs-_fragid').attr('id', id).attr('href', '#' + id))
+          }
+        })

@@ -1,0 +1,141 @@
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
+    conf
+\*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+/*================================*\
+    docs.less
+\*================================*/
+@import (reference) url('../../node_modules/xmeter/styles/__settings.less');
+@import (reference) url('../../node_modules/xmeter/styles/__fallback.flexbox.less');
+@import (reference) url('../../node_modules/xmeter/styles/__fallback.transition.less');
+@import (reference) url('../../node_modules/xmeter/styles/__tool.borders.less');
+@import (reference) url('../../node_modules/xmeter/styles/__tool.delims.less');
+
+
+// This stylesheet is used on all styleguide documentation files.
+// NOTE that this style sheet does NOT use any variables, settings, tools, or styles
+// of any kind from the Conf stylesheet (conf.less and its partials).
+// This is a stand-alone stylesheet.
+
+
+// HACK copied from conf
+@p-color_asce_blue: #0c5fa8;
+@p-color_asce_black: #222;
+@p-color_asce_white: #fff;
+.docs-main {
+  margin: 0 1rem var(--vru);
+}
+.docs-pre,
+.docs-code {
+  color: #000;
+}
+.docs-pre {
+  padding: calc(~'0.5 * var(--vru)') 1rem;
+  .border-vert(all; 1px);
+  border-color: @p-color_asce_blue;
+  border-radius: 4px;
+  background-color: lighten(desaturate(@p-color_asce_blue, 25%), 50%);
+  small {
+    font-size: inherit;
+    color: #666;
+  }
+  u {
+    color: #050;
+  }
+  mark {
+    background: none;
+    color: #c06;
+  }
+}
+.docs-code {
+  padding: 1px 2px;
+  border-radius: 3px;
+  background-color: desaturate(lighten(@p-color_asce_blue, 40%), 25%);
+}
+.docs-figure {
+  position: relative; // for containing other relative things
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 0.5em;
+  .border-vert(all; 1px);
+  border-color: #e5eaef;
+  border-radius: 8px;
+  background-color: #f8fcff;
+}
+.docs-var {
+  background-color: rgba(255,255,255,0.5);
+  .guillemets-single();
+}
+
+
+.docs-o-ColorList {
+  // HACK override conf.css
+  font-size: inherit;
+  th, td {
+    padding: 0;
+    border: 0;
+    text-align: left;
+  }
+  th {
+    background-color: #f4f4f4; // HACK copied from conf.css
+  }
+}
+.docs-o-ColorList__Item {
+  vertical-align: top;
+  width: 20%;
+  &, th&, td& {
+    // HACK specificity
+    padding: 0.375rem 0.5rem;
+  }
+  li& {
+    margin-right: 3rem;
+  }
+  #derivation-color-palettes & {
+    display: inline-block;
+    width:25%;
+  }
+}
+
+
+// A container with togglable content.
+// Togglable content may be shown/hidden on command.
+.docs-c-Togglable {}
+  .docs-c-Togglable__Check {
+    margin: 0.25rem;
+  }
+  .docs-c-Togglable__Text {
+    display: inline-block;
+    .transition(text-indent 500ms);
+  }
+  .docs-c-Togglable__Check:not(:checked) ~ * .docs-c-Togglable__Text {
+    text-indent: -200%;
+  }
+
+
+.docs-c-ColorBox {
+  display: block;
+  width: 100%;
+  height: 12vw;
+  box-shadow: 0 2px 0.5rem 0 fadeout(#222, 50%); // #222 is `currentColor`
+}
+
+
+.docs-_fragid {
+  display: inline; // override `a` base styles
+  line-height: 0;  // override `a` base styles
+  margin-left: 1rem;
+  font-weight: 100;
+  &::before {
+    content: '';
+  }
+}
+h1, h2, h3, h4, h5, h6 {
+  &:hover > .docs-_fragid::before {
+    content: '\00a7'; // §
+  }
+}
+.docs-_fragid:focus::before {
+  content: '\00a7'; // §
+}

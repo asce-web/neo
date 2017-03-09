@@ -1,0 +1,29 @@
+p.
+  This Component is not part of the #[code.docs-code .c-Btn] suite of styles; it is a
+  separate Component that just so happens to look like a button.
+p.
+  #[strong Note:]
+  The Toggle Button for the top menu will normally be hidden when
+  screen is larger than 720px. However on this page it is always shown
+  for demonstration purposes.
+  When toggled on, it will be fixed to the top right of the screen.
+figure.docs-figure
+  label.c-Toggle(style="display: inline;" aria-label="activate to toggle")
+    input.c-Toggle__Check.h-Hidden(type="checkbox" value="toggle is on" role="switch")
+    svg.c-Toggle__Viz(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36")
+      path(d="M0,0 H24 V24 H0 z" fill="transparent")
+      g(transform="translate(3,11)")
+        each val in new Array(3)
+          rect.c-Toggle__Viz__Bar(width="18" height="2")
+  pre.docs-pre.
+    &lt;label class="#[u c-Toggle]" #[mark aria-label="#[var.docs-var activate to toggle]"]&gt;
+      &lt;input class="#[u c-Toggle__Check]  h-Hidden" type="checkbox" value="#[var.docs-var toggle is on]"#[mark  role="switch"]/&gt;
+      &lt;svg class="#[u c-Toggle__Viz]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36"&gt;
+        &lt;path d="M0,0 H24 V24 H0 z" fill="transparent"/&gt;
+        &lt;g transform="translate(3,11)"&gt;
+          &lt;rect class="#[u c-Toggle__Viz__Bar]" width="18" height="2"&gt;
+          &lt;rect class="#[u c-Toggle__Viz__Bar]" width="18" height="2"&gt;
+          &lt;rect class="#[u c-Toggle__Viz__Bar]" width="18" height="2"&gt;
+        &lt;/g&gt;
+      &lt;svg&gt;
+    &lt;/label&gt;

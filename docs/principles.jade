@@ -1,0 +1,19 @@
+extends _docs.tpl.jade
+
+block append vars
+  - var page = ConfDocs.DOCS.find('principles.html')
+
+block append main
+  +newSection(2, ConfDocs.DOCS.find('principles.html#fonts'))
+    +newSection(3, ConfDocs.DOCS.find('principles.html#font-sizes'))
+      include _includes/_principles.font-sizes.pug
+    +newSection(3, ConfDocs.DOCS.find('principles.html#font-families'))
+      include _includes/_principles.font-families.pug
+  +newSection(2, ConfDocs.DOCS.find('principles.html#colors'))
+    +newSection(3, ConfDocs.DOCS.find('principles.html#derivation-color-palettes'))
+      include _includes/_principles.derivation-color-palettes.pug
+    +newSection(3, ConfDocs.DOCS.find('principles.html#site-colors'))
+      include _includes/_principles.site-colors.pug
+
+block append scripts
+  script(src="scripts/principles.b.js")

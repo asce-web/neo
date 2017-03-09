@@ -1,0 +1,45 @@
+p.
+  Use the Other Year Callout to promote last cycle&rsquo;s and next cycle&rsquo;s conferences.
+  This Template is very similar to the #[a(href="#hero-image") Hero Image], but with some differences:
+ul
+  li The microdata is slightly different (but visually unnoticeable).
+  li.
+    The conference dates and theme are ommitted, and replaced with a small blurb about
+    why users should visit the page or site.
+  li Being a highlighted content block, this Template does not use a Page Title as the Hero Image does.
+p.-fs-t This Template uses:
+ul.-fs-t
+  li: +internalLink(ConfDocs.DOCS.find('obj.html#runner-object'))
+  li: +internalLink(ConfDocs.DOCS.find('comp.html#banner-component'))
+  li: +internalLink(ConfDocs.DOCS.find('comp.html#conference-header'))
+  li: +internalLink(ConfDocs.DOCS.find('obj.html#constrain'))
+  li: +internalLink(ConfDocs.DOCS.find('obj.html#action-list'))
+  li: +internalLink(ConfDocs.DOCS.find('comp.html#buttons'))
+figure.docs-figure
+  include /_views/_Conference.view.pug
+  +otherYear(new Conference({
+    name      : 'Geo-Risk 2020'
+  , url       : 'http://2017.georiskconference.org/'
+  , start_date: new Date('2020-06-04')
+  , promo_loc : { text: 'Denver, CO', title: 'Denver, Colorado'}
+  }), 'Plan ahead to attend Geo-Risk next year!')
+    +highlightButtons([
+      { text: 'Event Details' , href:'#0', attr: {itemprop:'url'} }
+    ], 'c-Btn--ghost c-Btn--ghost--dark')
+  +microdataCheckbox('otheryear')
+    pre.docs-pre.
+      &lt;aside class="o-Runner  o-Runner--highlight  c-Banner  c-Banner--#[var.docs-var prev|next]  c-ConfHed"&gt;
+        &lt;div class="o-Constrain"&gt;
+          &lt;h1 class="c-ConfHed__Name"#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;Geo-Risk 2020&lt;/h1&gt;
+          #[mark.docs-c-Togglable__Text!= '&lt;meta content="2020-06-04" itemprop="startDate"/&gt;']
+          &lt;p class="c-ConfHed__Detail"#[mark.docs-c-Togglable__Text  itemprop="location"]&gt;
+            #[mark.docs-c-Togglable__Text &lt;abbr title="Denver, Colorado"&gt;]Denver, CO#[mark.docs-c-Togglable__Text!= '&lt;/abbr&gt;']
+          &lt;/p&gt;
+          &lt;p class="h-Hidden-nsM"&gt;Plan ahead ...&lt;/p&gt;
+          &lt;ul class="o-List  o-ListAction"&gt;
+            &lt;li class="o-List__Item  o-ListAction__Item"&gt;
+              &lt;a class="c-Btn  c-Btn--hilite  c-Btn--ghost  c-Btn--ghost--dark" href="#0"#[mark.docs-c-Togglable__Text  itemprop="url"]&gt;Event Details&lt;/a&gt;
+            &lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/aside&gt;
