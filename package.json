@@ -7,9 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "pug:index": "pug index.jade",
+    "pug:root": "pug index.jade",
     "pug:docs": "pug -O docs/_models/options.js docs/{index,principles,base,obj,comp,temp,help,atom}.jade",
-    "pug:all": "npm run pug:index  &&  npm run pug:docs",
+    "pug:all": "npm run pug:root  &&  npm run pug:docs",
     "lessc:neo": "lessc neo.less neo.css",
     "lessc:docs": "lessc docs/styles/docs.less docs/styles/docs.css",
     "lessc:all": "npm run lessc:neo  &&  npm run lessc:docs",
@@ -17,6 +17,11 @@
     "browserify:principles": "browserify docs/scripts/principles.js > docs/scripts/principles.b.js",
     "browserify:all": "npm run browserify:principles",
     "build": "npm run pug:all  &&  npm run lessc:all  &&  npm run minify  &&  npm run browserify:all",
+    "unbuild:root": "rm index.html",
+    "unbuild:docs": "rm docs/{index,principles,base,obj,comp,temp,help,atom}.html",
+    "unbuild:css": "rm neo.css neo.min.css docs/styles/docs.css",
+    "unbuild:js": "rm docs/scripts/principles.b.js",
+    "unbuild": "npm run unbuild:root  &&  npm run unbuild:docs  &&  npm run unbuild:css  &&  npm run unbuild:js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
