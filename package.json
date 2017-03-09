@@ -1,0 +1,27 @@
+{
+  "name": "neo",
+  "version": "0.4.0",
+  "description": "Neo theme and style guide for conference sites.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asce-web/neo.git"
+  },
+  "keywords": [
+    "style",
+    "guide",
+    "conference"
+  ],
+  "author": "ASCE Web Team <webteam@asce.org> (https://github.com/asce-web/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/asce-web/neo/issues"
+  },
+  "homepage": "https://github.com/asce-web/neo#readme"
+}
