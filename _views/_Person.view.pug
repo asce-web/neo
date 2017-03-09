@@ -49,7 +49,7 @@ mixin speaker($person)
         span(itemprop="name")= $person.affiliation()
     div.c-Speaker__Body(itemprop="description")._text-block!= $person.getBio(true)
     footer.c-Speaker__Foot
-      include /_views/_c-SocialList.view.pug
+      include _c-SocialList.view.pug
       +socialList($person.getSocialAll()).c-SocialList--speaker
         if $person.email()
           li.o-List__Item.o-Flex__Item.c-SocialList__Item
