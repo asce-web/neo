@@ -27,9 +27,9 @@ html(lang="en")
     a(href=$page.url())= $page.name()
   block vars
   head
-    title= page.title() || (page.name() + ' | ' + ConfDocs.DOCS.name())
+    title= page.title() || (page.name() + ' | ' + Docs.DOCS.name())
     meta(charset="utf-8")
-    meta(name="description" content=ConfDocs.DOCS.description())
+    meta(name="description" content=Docs.DOCS.description())
     meta(name="viewport" content="width=device-width, initial-scale=1")
     block styles
       link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic")
@@ -39,15 +39,15 @@ html(lang="en")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.10.0/bangs.min.css")
       link(rel="stylesheet" href="../neo.css")
       link(rel="stylesheet" href="styles/docs.css")
-  body(style=ConfDocs.COLORS)
+  body(style=Docs.COLORS)
     a.h-Hidden(href="#main") skip to main content
     header
-      h1= ConfDocs.DOCS.name()
-      p= ConfDocs.DOCS.description()
+      h1= Docs.DOCS.name()
+      p= Docs.DOCS.description()
       p: a(href="/index.html") Return to Landing Page
       nav#sitemap
         h1.h-Hidden Sitemap
-        +doctoc({pages: ConfDocs.DOCS.findAll()})
+        +doctoc({pages: Docs.DOCS.findAll()})
     main.docs-main#main
       block main
         header

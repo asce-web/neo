@@ -1,7 +1,7 @@
 extends _docs.tpl.jade
 
 block append vars
-  - var page = ConfDocs.DOCS.find('index.html')
+  - var page = Docs.DOCS.find('/docs/index.html')
 
 block toc
 
@@ -14,7 +14,7 @@ block append main
   p.
     #[strong Note:] On these pages, component demos and example code will be
     placed in #[code &lt;figure&gt;] elements to separate them from the surrounding documentation.
-  each item in ConfDocs.DOCS.findAll().slice(1)
+  each item in Docs.DOCS.findAll().slice(1)
     section
       h3: a(href=item.url())= item.name()
       p= item.description()
