@@ -8,7 +8,7 @@ module.exports = (function () {
    * Similar to a utility class.
    * @constructor
    */
-  function ConfDocs() {}
+  function Docs() {}
 
   // METHODS
 
@@ -17,7 +17,7 @@ module.exports = (function () {
    * The style guide site for this project.
    * @type {Page}
    */
-  ConfDocs.DOCS = (function () {
+  Docs.DOCS = (function () {
     return new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' })
       .title('ASCE Conferences Pattern Library')
       .description('Pattern Library for conference microsites.')
@@ -106,9 +106,9 @@ module.exports = (function () {
       )
   })()
 
-  ConfDocs.COLORS = require('../../_models/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
+  Docs.COLORS = require('../../_models/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
 
-  ConfDocs.COLOR_NAMES = [
+  Docs.COLOR_NAMES = [
     { name: 'Primary s2'   , suffix: '-primary-shade2' }
   , { name: 'Primary s1'   , suffix: '-primary-shade1' }
   , { name: 'Primary'      , suffix: '-primary' }
@@ -131,5 +131,5 @@ module.exports = (function () {
   , { name: 'Light Gray t2', suffix: '-gray_lt-tint2' }
   ]
 
-  return ConfDocs
+  return Docs
 })()
