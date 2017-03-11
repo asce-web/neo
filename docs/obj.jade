@@ -1,7 +1,7 @@
 extends _docs.tpl.jade
 
 block append vars
-  - var page = Docs.DOCS.find('obj.html')
+  - var page = Docs.DOCS.find('/docs/obj.html')
 
 block append main
   p.
@@ -9,19 +9,19 @@ block append main
     See the
     #[a(href="https://cdn.rawgit.com/chharvey/xmeter/master/docs/obj.html") Xmeter style guide]
     for more information.
-  +newSection(2, Docs.DOCS.find('obj.html#float-grid'))
+  +newSection(2, Docs.DOCS.find('/docs/obj.html#float-grid'))
     include _includes/_obj.float-grid.pug
-  +newSection(2, Docs.DOCS.find('obj.html#runner-object'))
+  +newSection(2, Docs.DOCS.find('/docs/obj.html#runner-object'))
     include _includes/_obj.runner-object.pug
-  +newSection(2, Docs.DOCS.find('obj.html#constrain'))
+  +newSection(2, Docs.DOCS.find('/docs/obj.html#constrain'))
     include _includes/_obj.constrain.pug
-  +newSection(2, Docs.DOCS.find('obj.html#action-list'))
+  +newSection(2, Docs.DOCS.find('/docs/obj.html#action-list'))
     include _includes/_obj.action-list.pug
-  +newSection(2, Docs.DOCS.find('obj.html#stacked-list'))
+  +newSection(2, Docs.DOCS.find('/docs/obj.html#stacked-list'))
     include _includes/_obj.stacked-list.pug
-  +newSection(2, Docs.DOCS.find('obj.html#tabs-object'))
+  +newSection(2, Docs.DOCS.find('/docs/obj.html#tabs-object'))
     include _includes/_obj.tabs-object.pug
-  +newSection(2, Docs.DOCS.find('obj.html#drawer-object'))
+  +newSection(2, Docs.DOCS.find('/docs/obj.html#drawer-object'))
     include _includes/_obj.drawer-object.pug
 
 block append scripts
