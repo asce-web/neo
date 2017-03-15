@@ -3,6 +3,7 @@
     neo  |  _c-Speaker.less
 \*################################*/
 @import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+@import (reference) url('../node_modules/xmeter/styles/__tool.borders.less');
 @import (reference) url('__settings.less');
 @import (reference) url('__tool.logo.less');
 @import (reference) url('__tool.ticket.less');
@@ -13,20 +14,17 @@
 // the second column is the description.
 //
 // ^subcomponents
-// __Img      - the speaker’s headshot photo
-// __Head     - header containing name and job title (affiliation)
-// __Body     - body of speaker info containing bio and social media links
-// __Foot     - pass footer containing other registration periods
-// __Name     - the speaker’s name and suffix (e.g. M.ASCE)
-// __JobTitle - speaker’s job title
-// __Affiliation - speaker’s organization
-// __Bio      - a block of content further describing information about the speaker
-// __Link     - link to speaker’s email, LinkedIn, and/or Twitter
+// __Img         - the speaker’s headshot photo
+// __Head        - header containing name, job title, and affiliation
+// __Name        - the speaker’s name and suffix (e.g. M.ASCE)
+// __JobTitle    - speaker’s job title
+// __Affiliation - speaker’s organization, company, or institution
+// __Foot        - footer containing other registration periods
 //
 // ^author
 // Chris Harvey
 // ^updated
-// 2016-10-14
+// 2017-03-15
 .c-Speaker {
   .ticket();
   position: relative; // for the background image
@@ -46,7 +44,6 @@
 }
 
 .c-Speaker__Head,
-.c-Speaker__Body,
 .c-Speaker__Foot {
   padding: @g-boxpadd_norm;
   & > *:last-child {
@@ -62,15 +59,17 @@
   white-space: nowrap;
 }
 
-.c-Speaker__Body {
-  padding: @g-boxpadd_mill;
-  & > footer > ul {
-    margin-bottom: 0;
-  }
-  .ticket-body();
-}
+// .c-Speaker__Body {
+//   padding: @g-boxpadd_mill;
+//   & > footer > ul {
+//     margin-bottom: 0;
+//   }
+//   .ticket-body();
+// }
 
 .c-Speaker__Foot {
+  .border-vert(top; 2px);
+  border-color: currentColor;
 }
 
 .c-Speaker__Name {
