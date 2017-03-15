@@ -41,7 +41,7 @@ mixin speakerList(speakers)
 
 mixin speaker($person)
   article.c-Speaker(itemprop="performer" itemscope="" itemtype="http://schema.org/Person")
-    div.c-Speaker__Img(style=`background-image:url('${$person.img() || ''}');`)
+    div.c-Speaker__Img(style=`background-image:url('${$person.img()}');`)
     header.c-Speaker__Head
       h1.c-Speaker__Name(id=$person.id()): +personEntireName($person)
       p.c-Speaker__JobTitle(itemprop="jobTitle")= $person.jobTitle()
