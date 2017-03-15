@@ -47,7 +47,7 @@ mixin speaker($person)
       p.c-Speaker__JobTitle(itemprop="jobTitle")= $person.jobTitle()
       p.c-Speaker__Affiliation(itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization")
         span(itemprop="name")= $person.affiliation()
-    div.c-Speaker__Body(itemprop="description")._text-block!= $person.getBio(true)
+    //- div.c-Speaker__Body(itemprop="description")._text-block!= $person.getBio(true)
     footer.c-Speaker__Foot
       include _c-SocialList.view.pug
       +socialList($person.getSocialAll()).c-SocialList--speaker

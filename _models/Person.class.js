@@ -33,7 +33,6 @@ module.exports = (function () {
     self._telephone   = ''
     self._url         = ''
     self._social      = {}
-    self._bio         = ''
     self._is_starred  = false
   }
 
@@ -162,24 +161,6 @@ module.exports = (function () {
   Person.prototype.getSocialAll = function getSocialAll() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._social) // shallow clone this.social into {}
-  }
-
-  /**
-   * Set a short, html-friendly biography (“bio”) for this person.
-   * @param {string} html html-friendly content
-   * @return {Person} this person
-   */
-  Person.prototype.setBio = function setBio(html) {
-    this._bio = html
-    return this
-  }
-  /**
-   * Get the bio of this person.
-   * @param  {boolean=} unescaped whether or not the returned string should be escaped
-   * @return {string} the bio of this person
-   */
-  Person.prototype.getBio = function getBio(unescaped) {
-    return ((unescaped) ? '<!-- warning: unescaped code -->' : '') + this._bio
   }
 
   /**
