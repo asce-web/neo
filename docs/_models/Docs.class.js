@@ -99,6 +99,7 @@ module.exports = (function () {
     )
     .add(new Page({ name: 'Helpers', url: '/docs/help.html' })
       .description('Somewhat explicit classes used for enhancing default styles.')
+      .add(new Page({ name: 'Glyphicons', url: '/docs/help.html#glyphicons' }))
     )
     .add(new Page({ name: 'Atoms', url: '/docs/atom.html' })
       .description('Very specific classes used for creating anomalies or fixing broken styles.')
