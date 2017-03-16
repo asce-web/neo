@@ -9,3 +9,17 @@ block append main
     See the
     #[a(href="https://cdn.rawgit.com/chharvey/xmeter/master/docs/help.html") Xmeter style guide]
     for more information.
+  section#glyphicons
+    h2 Glyphicons
+    p Some examples of #[a(href="http://glyphicons.com/" rel="external") glyphicons] you can use:
+    -
+      var data = [
+        { title: 'PDF Icon     ', classes: ['filetypes' , 'filetypes-pdf'] }
+      , { title: 'Word Doc Icon', classes: ['filetypes' , 'filetypes-docx'] }
+      , { title: 'Email Icon   ', classes: ['glyphicons', 'glyphicons-envelope'] }
+      ]
+    dl.o-Grid
+      each obj in data
+        dt.o-Grid__Item= obj.title
+        dd.o-Grid__Item: i.x2(class=obj.classes)
+        dd.o-Grid__Item: code.docs-code &lt;i class="#{obj.classes.join(' ')}"&gt;&lt;/i&gt;
