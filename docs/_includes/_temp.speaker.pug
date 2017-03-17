@@ -26,7 +26,7 @@ figure.docs-figure
   +microdataCheckbox('speaker')
     pre.docs-pre.
       &lt;article class="c-Speaker"#[mark.docs-c-Togglable__Text  itemprop="performer" itemscope="" itemtype="http://schema.org/Person"]&gt;
-        &lt;div class="c-Speaker__Img"&gt;&lt;/div&gt;
+        &lt;img class="#[u c-Speaker__Img]  h-Block" src="#[var.docs-var headshot.jpg]"#[mark.docs-c-Togglable__Text  itemprop="image"]/&gt;
         &lt;header class="c-Speaker__Head"&gt;
           &lt;h1 class="c-Speaker__Name"&gt;
             #[mark.docs-c-Togglable__Text &lt;span itemprop="name"&gt;]
@@ -42,15 +42,12 @@ figure.docs-figure
             #[mark.docs-c-Togglable__Text &lt;span itemprop="name"&gt;]German Chamber of Architects#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
           &lt;/p&gt;
         &lt;/header&gt;
-        &lt;div class="c-Speaker__Body"#[mark.docs-c-Togglable__Text  itemprop="description"]&gt;
-          &lt;p&gt;Speaker bio ...&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="c-Speaker__Foot"&gt;
+        &lt;footer class="c-Speaker__Foot"&gt;
           &lt;ul class="o-List  o-Flex  c-SocialList  c-SocialList--speaker"&gt;
             &lt;li class="o-List__Item  o-Flex__Item  c-SocialList__Item"&gt;
               &lt;a class="c-SocialList__Link  c-SocialList__Link--twitter  h-Block" href="#0"#[mark.docs-c-Togglable__Text  itemprop="sameAs"]&gt;...&lt;/a&gt;
             &lt;/li&gt;
             ...
           &lt;/ul&gt;
-        &lt;/div&gt;
+        &lt;/footer&gt;
       &lt;/article&gt;
