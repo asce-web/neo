@@ -1,67 +1,70 @@
 p The Benefits Card shows benefits offered to a sponsorship level.
 figure.docs-figure
   section.c-Benefits
-    h1.c-Benefits__Hn Silver
-    p.c-Benefits__Price $7,500
-    ul.c-Benefits__List
-      li.c-Benefits__List__Item
+    header.c-Benefits__Head
+      h1.c-Benefits__Hn Silver
+      p.c-Benefits__Price $7,500
+    ul.o-List.c-Benefits__List
+      li.o-List__Item.c-Benefits__List__Item
         i.c-Benefits__Icon.c-Benefits__Icon--numeric 2
         | Full conference registration passes
-      li.c-Benefits__List__Item.c-Benefits__List__Item--notOffered
+      li.o-List__Item.c-Benefits__List__Item.c-Benefits__List__Item--notOffered
         i.c-Benefits__Icon.c-Benefits__Icon--numeric 0
         | Extra passes to conference event
-      li.c-Benefits__List__Item
+      li.o-List__Item.c-Benefits__List__Item
         i.c-Benefits__Icon.glyphicons.glyphicons-ok
           span.h-Hidden Offered:
         | Place on conference handout table to display materials
-      li.c-Benefits__List__Item.c-Benefits__List__Item--notOffered
+      li.o-List__Item.c-Benefits__List__Item.c-Benefits__List__Item--notOffered
         i.c-Benefits__Icon.glyphicons.glyphicons-ban-circle
           span.h-Hidden Not Offered:
         | Handout included with registration materials
-      li.c-Benefits__List__Item.c-Benefits__List__Item--notOffered
+      li.o-List__Item.c-Benefits__List__Item.c-Benefits__List__Item--notOffered
         i.c-Benefits__Icon.glyphicons.glyphicons-ban-circle
           span.h-Hidden Not Offered:
         | Pre/post conference attendee mailing list (sent once before andonce after event)
-      li.c-Benefits__List__Item
+      li.o-List__Item.c-Benefits__List__Item
         i.c-Benefits__Icon.glyphicons.glyphicons-ok
           span.h-Hidden Offered:
         | Special recognition in Conference program
-      li.c-Benefits__List__Item
+      li.o-List__Item.c-Benefits__List__Item
         i.c-Benefits__Icon.glyphicons.glyphicons-ok
           span.h-Hidden Offered:
         | Recognition on conference program
-      li.c-Benefits__List__Item
+      li.o-List__Item.c-Benefits__List__Item
         i.c-Benefits__Icon.glyphicons.glyphicons-ok
           span.h-Hidden Offered:
         | Recognition on sponsor signage
-      li.c-Benefits__List__Item
+      li.o-List__Item.c-Benefits__List__Item
         i.c-Benefits__Icon.glyphicons.glyphicons-ok
           span.h-Hidden Offered:
         | Recognition in conference PowerPoint presentation
   pre.docs-pre.
     &lt;section class="#[u c-Benefits]"&gt;
-      &lt;h1 class="#[u c-Benefits__Hn]"&gt;Silver&lt;/h1&gt;
-      &lt;p class="#[u c-Benefits__Price]"&gt;$7,500&lt;/p&gt;
-      &lt;ul class="#[u c-Benefits__List]"&gt;
+      &lt;header class="#[u c-Benefits__Head]"&gt;
+        &lt;h1 class="#[u c-Benefits__Hn]"&gt;Silver&lt;/h1&gt;
+        &lt;p class="#[u c-Benefits__Price]"&gt;$7,500&lt;/p&gt;
+      &lt;/header&gt;
+      &lt;ul class="o-List  #[u c-Benefits__List]"&gt;
         #[small &lt;!-- numeric item, nonzero: --&gt;]
-        &lt;li class="#[u c-Benefits__List__Item]"&gt;
+        &lt;li class="o-List__Item  #[u c-Benefits__List__Item]"&gt;
           &lt;i class="#[u c-Benefits__Icon]  #[u c-Benefits__Icon--numeric]"&gt;2&lt;/i&gt;
           Full conference registration passes
         &lt;/li&gt;
         #[small &lt;!-- numeric item, zero: --&gt;]
-        &lt;li class="#[u c-Benefits__List__Item]  #[u c-Benefits__List__Item--notOffered]"&gt;
+        &lt;li class="o-List__Item  #[u c-Benefits__List__Item]  #[u c-Benefits__List__Item--notOffered]"&gt;
           &lt;i class="#[u c-Benefits__Icon]  #[u c-Benefits__Icon--numeric]"&gt;0&lt;/i&gt;
           Extra passes to conference event
         &lt;/li&gt;
         #[small &lt;!-- binary item, true: --&gt;]
-        &lt;li class="#[u c-Benefits__List__Item]"&gt;
+        &lt;li class="o-List__Item  #[u c-Benefits__List__Item]"&gt;
           &lt;i class="#[u c-Benefits__Icon]  glyphicons  glyphicons-ok"&gt;
             &lt;span class="h-Hidden"&gt;Offered:&lt;/span&gt;
           &lt;/i&gt;
           Place on conference handout table to display materials
         &lt;/li&gt;
         #[small &lt;!-- binary item, false: --&gt;]
-        &lt;li class="#[u c-Benefits__List__Item]  #[u c-Benefits__List__Item--notOffered]"&gt;
+        &lt;li class="o-List__Item  #[u c-Benefits__List__Item]  #[u c-Benefits__List__Item--notOffered]"&gt;
           &lt;i class="#[u c-Benefits__Icon]  glyphicons  glyphicons-ban-circle"&gt;
             &lt;span class="h-Hidden"&gt;Not Offered:&lt;/span&gt;
           &lt;/i&gt;

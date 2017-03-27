@@ -1,0 +1,116 @@
+
+/*################################*\
+    neo  |  _c-Benefits.less
+\*################################*/
+@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
+@import (reference) url('__tool.border-radius.less');
+
+
+// A list of benefits offered to a sponsorship level.
+//
+// ^Subcomponents:
+// __Head                     - header containing heading and price
+// __Hn                       - name of the sponsor level (Gold, Silver, etc.)
+// __Price                    - cost of the sponsorship
+// __List                     - the list of benefits offered
+//   __List__Item             - an item within the List
+//   __List__Item--notOffered - an item shown to be not offered
+// __Icon                     - icon indicator of what is offered (either a number, a check, or a “do not” sign)
+// __Icon--numeric            - a numerical indicator icon
+//
+// ^author
+// Chris Harvey
+// ^updated
+// 2017-03-29
+.c-Benefits {
+  .font-size-mod(0.75);
+  .border-vert(all; 1px);
+  border-color: @g-color-gray_dk; // HACK fallback
+  border-color: var(--color-gray_dk);
+  border-radius: 0.5rem;
+  background-color: #fff;
+  // overflow: hidden; // __Head appears over border-radius // FIXME: enabling this will hide the price
+}
+
+.c-Benefits__Head {
+  --header-color: var(--color-primary-shade1);
+  --header-text: #fff;
+  position: relative; // containing __Price
+  padding-top: calc(~'2 * var(--vru)');
+  padding-bottom: var(--vru);
+  .mx-rr-top(0.5rem); // HACK fixes bug from parent overflow: hidden
+  background-color: @g-color-primary-shade1; // HACK fallback
+  color: #fff; // HACK fallback
+  background-color: var(--header-color);
+  color: var(--header-text);
+}
+
+.c-Benefits__Hn,
+.c-Benefits__Price {
+  text-align: center;
+}
+
+.c-Benefits__Hn {
+  color: inherit; // HACK fallback
+  color: unset; // override `h1`
+}
+
+.c-Benefits__Price {
+  // square box, 4em by 4em
+  @fontsize: @g-font_size_kilo;
+  display: block;
+  position: absolute;
+  left: calc(~'50% - 2em'); top: -2em;
+  .font-size-el(@fontsize);
+  width: 4em;
+  padding: (3em/2) 0; // use padding-vertical to define height (4em - 1em) / 2
+  font-weight: 900;
+  border-width: 1px;
+  border-radius: 50%;
+  background-color: #fff; // HACK fallback
+  color: @g-color-primary-shade1; // HACK fallback
+  background-color: var(--header-text);
+  color: var(--header-color);
+}
+
+.c-Benefits__List.c-Benefits__List { // HACK specificity override `.c-Benefits__List > ul` (will be fixed with CSS custom property support)
+  margin-bottom: 0; // HACK fallback for `initial`
+  margin-bottom: initial; // HACK fallback for `unset`
+  margin-bottom: unset; // override base `ul` style
+}
+
+.c-Benefits__List__Item {
+  padding: calc(~'var(--vru) / 1') 1rem;
+  &:nth-of-type(2n) {
+    background-color: @g-color-gray_lt-tint2; // HACK fallback
+    background-color: var(--color-gray_lt-tint2);
+  }
+}
+.c-Benefits__List__Item--notOffered {
+  color: @g-color-gray_lt-shade2; // HACK fallback
+  color: var(--color-gray_lt-shade2);
+}
+
+.c-Benefits__Icon {
+  margin-right: 1em;
+
+  // overriding glyphicons style
+  vertical-align: baseline; // override `.glyphicons`
+  &::before {
+    padding: 0; // override `.glyphicons::before`
+  }
+  &.glyphicons-ok {
+    color: @g-color-primary-tint1; // HACK fallback
+    color: var(--color-primary-tint1);
+    color: @g-color-asce-green;
+  }
+}
+.c-Benefits__Icon--numeric {
+  position: relative;
+  top: 0.125em;
+  font-style: inherit; // HACK fallback
+  font-style: unset;
+  font-weight: 600;
+  font-size: @g-font_size_kilo * 1em;
+}
