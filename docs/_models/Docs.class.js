@@ -72,6 +72,7 @@ module.exports = (function () {
       .add(new Page({ name: 'The Page Title'       , url: '/docs/comp.html#page-title' }))
       .add(new Page({ name: 'The Conference Header', url: '/docs/comp.html#conference-header' }))
       .add(new Page({ name: 'The Supporter Block'  , url: '/docs/comp.html#supporter-block' }))
+      .add(new Page({ name: 'The Benefits Card'    , url: '/docs/comp.html#benefits-card' }))
       .add(new Page({ name: 'The Pass Component'   , url: '/docs/comp.html#pass-component' }))
       .add(new Page({ name: 'The Program Heading'  , url: '/docs/comp.html#program-heading' }))
       .add(new Page({ name: 'The Time Block'       , url: '/docs/comp.html#time-block' }))
