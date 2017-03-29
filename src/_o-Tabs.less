@@ -23,16 +23,18 @@
 // 2017-02-08
 @p-transdura: 500ms;
 .o-Tabs {
-  position: relative;
-  .flex-justify-content(center);
+  .flex-wrap(wrap);
+  .flex-justify-content(center); // override `.o-Flex`
   .flex-align-content(flex-start); // push flex items to top
   .flex-align-items(flex-start); // minimize height of flex items
+  position: relative;
   // overflow: hidden;
   .transition(height @p-transdura); // height changes as panel
 }
 
 .o-Tabs__Tab,
 .o-Tabs__Panel {
+  .flex(100%); // override `.o-Flex__Item`
   .transitions(@g-prefix_transform; @p-transdura);
 }
 
@@ -82,8 +84,14 @@
 .o-Tabs__Panel--shown {
 }
 .o-Tabs__Panel--hiddenBefore {
-  .transform(translateX(-100%) scale(0));
+  .transform(translateY(-100%) scale(1,0));
+  @media screen and (min-width: 30em) {
+    .transform(translateX(-100%) scale(0,1));
+  }
 }
 .o-Tabs__Panel--hiddenAfter {
-  .transform(translateX(100%) scale(0));
+  .transform(translateY(100%) scale(1,0));
+  @media screen and (min-width: 30em) {
+    .transform(translateX(100%) scale(0,1));
+  }
 }
