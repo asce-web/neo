@@ -28,11 +28,12 @@
 }
 
 .c-ConfHed__Detail {
+  @media screen and (min-width: 45em) {
+    -ms-grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+  }
   .justify-content(space-around);
   font-weight: 600;
-  @media screen and (max-width: 44.999em) {
-    .flex-direction(column);
-  }
   .o-Runner--pageHeader & {
     // when inside hero
     .font-size-el(@g-font_size_mega; 2); // copied from xmeter atom `.-fz-el-mega`

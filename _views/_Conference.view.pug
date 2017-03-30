@@ -2,10 +2,10 @@ mixin hero($conference)
   header.o-Runner.o-Runner--pageHeader.c-Banner.c-Banner--hero.c-ConfHed: div.o-Constrain
     h1.c-PageTitle.c-ConfHed__Name(itemprop="name")= $conference.name()
     meta(content=$conference.url() itemprop="url")
-    p.o-Flex.c-ConfHed__Detail
-      span.o-Flex__Item.c-ConfHed__Detail__Place.h-Block(itemprop="location")
+    p.o-Grid.c-ConfHed__Detail
+      span.o-Grid__Item.c-ConfHed__Detail__Place.h-Block(itemprop="location")
         +promoLoc($conference.promoLoc())
-      span.o-Flex__Item.c-ConfHed__Detail__Dates.h-Block
+      span.o-Grid__Item.c-ConfHed__Detail__Dates.h-Block
         time(datetime=$conference.startDate() itemprop="startDate")
           = Util.monthDay($conference.startDate())
         | &ndash;
