@@ -3,6 +3,7 @@
     neo  |  _c-MenuBar.less
 \*################################*/
 @import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
 @import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
 @import (reference) url('../node_modules/xmeter/src/__fallback.transform-origin.less');
 @import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
@@ -23,7 +24,7 @@
 // 2016-10-13
 @p-trans_dura: 250ms;
 .c-MenuBar {
-  .flex-justify-content(flex-start); // override .o-Flex `space-between`
+  .justify-content(flex-start); // override .o-Flex `space-between`
   margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
   .menufont();
   color: @g-color-gray_lt-tint2; // HACK fallback

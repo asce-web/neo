@@ -3,6 +3,7 @@
     neo  |  _o-ListStacked.less
 \*################################*/
 @import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
 
 
 // A row of items that stacks vertically on a small screen.
@@ -17,7 +18,7 @@
   .flexbox();
   line-height: inherit; // if using on a text-level element
   .flex-wrap(wrap);
-  .flex-justify-content(space-around);
+  .justify-content(space-around);
 }
 .o-ListStacked__Item {
   .flex(0 100%);
