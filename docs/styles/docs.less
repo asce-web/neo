@@ -29,6 +29,10 @@
 .o-Grid--2col {
   .grid-template-columns(repeat(2, 1fr));
 }
+.o-Grid--3col {
+  .grid-template-columns(repeat(3, 1fr));
+}
+
 
 // HACK copied from conf
 @p-color_asce_blue: #0c5fa8;
@@ -132,10 +136,15 @@
 }
 
 
-#glyphicons .o-Grid__Item {
-  flex: 33.3%;
-  padding: 0.375rem 0;
-  .border-vert(bottom; 1px);
-  border-style: solid;
-  border-color: #999;
+#glyphicons {
+  .o-Grid {
+    grid-row-gap: 0.75rem;
+  }
+  .o-Grid__Item {
+    &:nth-child(6n+1),
+    &:nth-child(6n+2),
+    &:nth-child(6n+3) {
+      background-color: #eee;
+    }
+  }
 }
