@@ -3,6 +3,9 @@
     neo  |  _o-Tabs.less
 \*################################*/
 @import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.align-content.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.align-items.less');
 @import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
 @import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
 @import (reference) url('__settings.less');
@@ -24,9 +27,9 @@
 @p-transdura: 500ms;
 .o-Tabs {
   .flex-wrap(wrap);
-  .flex-justify-content(center); // override `.o-Flex`
-  .flex-align-content(flex-start); // push flex items to top
-  .flex-align-items(flex-start); // minimize height of flex items
+  .justify-content(center); // override `.o-Flex`
+  .align-content(flex-start); // push flex items to top
+  .align-items(flex-start); // minimize height of flex items
   position: relative;
   // overflow: hidden;
   .transition(height @p-transdura); // height changes as panel

@@ -2,7 +2,8 @@
 /*################################*\
     neo  |  _c-MenuMobile.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/styles/__fallback.flexbox.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
 @import (reference) url('__settings.less');
 @import (reference) url('__tool.menufont.less');
 
@@ -21,7 +22,7 @@
 // 2016-10-13
 .c-MenuMobile {
   .flex-direction(column);
-  .flex-justify-content(flex-start);
+  .justify-content(flex-start);
   height: 100%;
   margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
   .menufont();
