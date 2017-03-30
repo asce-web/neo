@@ -23,6 +23,7 @@
 }
 
 .c-TimeBlock__Item {
+  .flex-wrap(wrap);
 }
 
 .c-TimeBlock__Times,
@@ -30,6 +31,7 @@
   padding-bottom: (2*@g-vru); // HACK fallback
   padding-bottom: calc(~'2 * var(--vru)');
   @media not all and (min-width: 30em) {
+    .flex(100%);
     padding-left: @g-boxpadd_norm_h;
   }
   @media screen and (min-width: 30em) {

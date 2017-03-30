@@ -1,15 +1,15 @@
 mixin timeBlock(sessions)
   dl.o-List.c-TimeBlock
     each $session,index in sessions
-      li.o-List__Item.o-Grid.c-TimeBlock__Item(itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event")
-        dt.o-Grid__Item.c-TimeBlock__Times
+      li.o-List__Item.o-Flex.c-TimeBlock__Item(itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event")
+        dt.o-Flex__Item.c-TimeBlock__Times
           -
             var start = $session.startDate()
             var end   = $session.endDate()
           time(datetime=start itemprop="startDate")= Util.hourTime12(start)
           | &ndash;
           time(datetime=end itemprop="endDate")= Util.hourTime12(end)
-        dd.o-Grid__Item.c-TimeBlock__Desc(class={'c-TimeBlock__Desc--last': index===sessions.length-1} itemprop="name")
+        dd.o-Flex__Item.c-TimeBlock__Desc(class={'c-TimeBlock__Desc--last': index===sessions.length-1} itemprop="name")
           if $session.url()
             a.c-TimeBlock__Link(href=$session.url() itemprop="url")= $session.name()
           else
