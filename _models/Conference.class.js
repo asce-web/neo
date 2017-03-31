@@ -2,8 +2,10 @@ module.exports = (function () {
   // CONSTRUCTOR
   /**
    * A conference event.
-   * It may have a name, theme, dates, (promoted) location, passes, sessions, venues, speakers,
-   * important dates, chairs, and other properties.
+   * It may have a name, theme, dates, (promoted) location,
+   * passes, sessions, venues, speakers,
+   * supporter levels and supporters, exhibitors, contact information,
+   * important dates, organizers, and other properties.
    * Construct a Conference object.
    * The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
@@ -111,15 +113,6 @@ module.exports = (function () {
     return this._reg_periods.find(function ($registrationPeriod) { return $registrationPeriod.name() === name }) || null
   }
   /**
-   * Remove a registration period from this conference.
-   * @param  {string} name the name of the registration period
-   * @return {Conference} this conference
-   */
-  Conference.prototype.removeRegistrationPeriod = function removeRegistrationPeriod(name) {
-    Util.spliceFromArray(this._reg_periods, this.getRegistrationPeriod(name))
-    return this
-  }
-  /**
    * Retrieve all registration periods of this conference.
    * @return {Array<RegistrationPeriod>} a shallow array of all registration periods of this conference.
    */
@@ -157,15 +150,6 @@ module.exports = (function () {
     return this._passes.find(function ($pass) { return $pass.name() === name }) || null
   }
   /**
-   * Remove a pass of this conference.
-   * @param  {string} name the name of the pass
-   * @return {Conference} this conference
-   */
-  Conference.prototype.removePass = function removePass(name) {
-    Util.spliceFromArray(this._passes, this.getPass(name))
-    return this
-  }
-  /**
    * Retrieve all passes of this conference.
    * @return {Array<Pass>} a shallow array of all passes of this conference
    */
@@ -188,15 +172,6 @@ module.exports = (function () {
    */
   Conference.prototype.getSession = function getSession(name) {
     return this._sessions.find(function ($session) { return $session.name() === name }) || null
-  }
-  /**
-   * Remove a session of this conference.
-   * @param  {string} name the name of the session
-   * @return {Conference} this conference
-   */
-  Conference.prototype.removeSession = function removeSession(name) {
-    Util.spliceFromArray(this._sessions, this.getSession(name))
-    return this
   }
   /**
    * Retrieve all sessions of this conference.
@@ -222,15 +197,6 @@ module.exports = (function () {
    */
   Conference.prototype.getVenue = function getVenue(venue_label) {
     return this._venues[venue_label]
-  }
-  /**
-   * Remove a venue of this conference.
-   * @param  {string} venue_label the key for accessing the venue
-   * @return {Conference} this conference
-   */
-  Conference.prototype.removeVenue = function removeVenue(venue_label) {
-    this._venues[venue_label] = null
-    return this
   }
   /**
    * Retrieve all venues of this conference.
@@ -271,15 +237,6 @@ module.exports = (function () {
     return this._speakers.find(function ($person) { return $person.id() === id }) || null
   }
   /**
-   * Remove a speaker of this conference.
-   * @param  {string} id the id of the speaker
-   * @return {Conference} this conference
-   */
-  Conference.prototype.removeSpeaker = function removeSpeaker(id) {
-    Util.spliceFromArray(this._speakers, this.getSpeaker(id))
-    return this
-  }
-  /**
    * Retrieve all speakers of this conference.
    * @return {Array<Person>} a shallow array of all speakers of this conference
    */
@@ -302,15 +259,6 @@ module.exports = (function () {
    */
   Conference.prototype.getImportantDate = function getImportantDate(name) {
     return this._important_dates.find(function ($importantDate) { return $importantDate.name() === name }) || null
-  }
-  /**
-   * Remove an important date of this conference.
-   * @param  {string} name the name of the important date
-   * @return {Conference} this conference
-   */
-  Conference.prototype.removeImportantDate = function removeImportantDate(name) {
-    Util.spliceFromArray(this._important_dates, this.getImportantDate(name))
-    return this
   }
   /**
    * Retrieve all important dates of this conference.
@@ -337,15 +285,6 @@ module.exports = (function () {
    */
   Conference.prototype.getOrganizer = function getOrganizer(id) {
     return this._organizers.find(function ($person) { return $person.id() === id }) || null
-  }
-  /**
-   * Remove an organizer of this conference.
-   * @param  {string} id the name of the organizer
-   * @return {Conference} this conference
-   */
-  Conference.prototype.removeOrganizer = function removeOrganizer(id) {
-    Util.spliceFromArray(this._organizers, this.getOrganizer(id))
-    return this
   }
   /**
    * Retrieve all organizers of this conference.
@@ -375,15 +314,6 @@ module.exports = (function () {
     return this._social[network_name]
   }
   /**
-   * Remove a social network profile from this conference.
-   * @param  {string} network_name the name of the social network
-   * @return {Conference} this conference
-   */
-  Conference.prototype.removeSocial = function removeSocial(network_name) {
-    this._social[network_name] = null
-    return this
-  }
-  /**
    * Return an object representing all social network profiles of this conference.
    * @return {Object} shallow clone of this conference’s social object
    */
@@ -393,14 +323,14 @@ module.exports = (function () {
   }
 
   // METHODS
-  Conference.prototype.setPrice = function setPrice(reg_period, pass, membership, price) {
-    //- reg_period = reg_period.name || reg_period
-    //- pass        = pass.name        || pass
-    //- membership  = membership.name  || membership
-    //- this.registration = this.registration || {}
-    //- this.registration[reg_period][pass][membership] = price
-    return this
-  }
+  // Conference.prototype.setPrice = function setPrice(reg_period, pass, membership, price) {
+  //   reg_period = reg_period.name || reg_period
+  //   pass        = pass.name        || pass
+  //   membership  = membership.name  || membership
+  //   this.registration = this.registration || {}
+  //   this.registration[reg_period][pass][membership] = price
+  //   return this
+  // }
   /**
    * NOTE: TYPE DEFINITION
    * A group of sessions, all of which share the same date (excluding time of day).

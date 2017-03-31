@@ -7,8 +7,7 @@ module.exports = (function () {
   /**
    * A conference site.
    * A site hosting a series of conferences,
-   * with a name, url, taglinne,
-   * logo, supporter levels and supporters, exhibitors, and contact information.
+   * with a name, url, tagline, logo, and color scheme.
    * Construct a ConfSite object, given a name and url.
    * @constructor
    * @extends Page
@@ -100,16 +99,6 @@ module.exports = (function () {
     return this._conferences[conf_label]
   }
   /**
-   * This method does nothing.
-   * @param  {string} conf_label key for accessing the conference, usually a year
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.removeConference = function removeConference(conf_label) {
-    console.error('Sorry, you do not have this ability.\
-    Instead, add a new conference overwriting the one you wish to delete.')
-    return this
-  }
-  /**
    * Return an object representing all conferences of this site.
    * FIXME this should return a deep clone, not a shallow clone
    * @return {Object} shallow clone of this site’s conferences object
@@ -182,15 +171,6 @@ module.exports = (function () {
     return this._supporter_levels.find(function ($supporterLevel) { return $supporterLevel.name() === name }) || null
   }
   /**
-   * Remove a supporter level from this site.
-   * @param  {string} name the name of the supporter level
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.removeSupporterLevel = function removeSupporterLevel(name) {
-    Util.spliceFromArray(this._supporter_levels, this.getSupporterLevel(name))
-    return this
-  }
-  /**
    * Retrieve all supporter levels of this site.
    * @return {Array<SupporterLevel>} a shallow array of all supporter levels of this site
    */
@@ -236,15 +216,6 @@ module.exports = (function () {
     return this._supporters.find(function ($supporter) { return $supporter.name() === name }) || null
   }
   /**
-   * Remove a supporter of this site.
-   * @param  {string} name the name of the supporter
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.removeSupporter = function removeSupporter(name) {
-    Util.spliceFromArray(this._supporters, this.getSupporter(name))
-    return this
-  }
-  /**
    * Retrieve all supporters of this site.
    * @return {Array<Supporter>} a shallow array of all supporters of this site
    */
@@ -268,15 +239,6 @@ module.exports = (function () {
    */
   ConfSite.prototype.getExhibitor = function getExhibitor(name) {
     return this._exhibitors.find(function ($exhibitor) { return $exhibitor.name() === name }) || null
-  }
-  /**
-   * Remove an exhibitor of this site.
-   * @param  {string} name the name of the exhibitor
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.removeExhibitor = function removeExhibitor(name) {
-    Util.spliceFromArray(this._exhibitors, this.getSupporter(name))
-    return this
   }
   /**
    * Retrieve all exhibitors of this site.
