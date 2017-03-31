@@ -35,6 +35,10 @@ module.exports = (function () {
     self._sessions        = []
     self._venues          = {}
     self._speakers        = []
+    self._supporter_levels = []
+    self._supporter_lists  = {}
+    self._supporters       = []
+    self._exhibitors       = []
     self._important_dates = []
     self._organizers      = []
     self._social          = {}
@@ -242,6 +246,101 @@ module.exports = (function () {
    */
   Conference.prototype.getSpeakersAll = function getSpeakersAll() {
     return this._speakers.slice()
+  }
+
+  /**
+   * Add a supporter level to this conference.
+   * @param {SupporterLevel} $supporterLevel the supporter level to add
+   * @return {Conference} this conference
+   */
+  Conference.prototype.addSupporterLevel = function addSupporterLevel($supporterLevel) {
+    this._supporter_levels.push($supporterLevel)
+    return this
+  }
+  /**
+   * Retrieve a supporter level of this conference.
+   * @param  {string} name the name of the supporter level
+   * @return {?SupporterLevel} the specified supporter level
+   */
+  Conference.prototype.getSupporterLevel = function getSupporterLevel(name) {
+    return this._supporter_levels.find(function ($supporterLevel) { return $supporterLevel.name() === name }) || null
+  }
+  /**
+   * Retrieve all supporter levels of this conference.
+   * @return {Array<SupporterLevel>} a shallow array of all supporter levels of this conference
+   */
+  Conference.prototype.getSupporterLevelsAll = function getSupporterLevelsAll() {
+    return this._supporter_levels.slice()
+  }
+
+  /**
+   * Add a named subarray of supporter levels to this conference.
+   * @param {string} type the name of the subarray
+   * @param {Array<string>} supporter_level_names an array of pre-existing SupporterLevel names
+   * @return {Conference} this conference
+   */
+  Conference.prototype.addSupporterLevelList = function addSupporterLevelList(type, supporter_level_names) {
+    this._supporter_lists[type] = supporter_level_names
+    return this
+  }
+  /**
+   * Get a named subarray of supporter levels of this conference.
+   * @param  {string} type the name of the subarray
+   * @return {Array<SupporterLevel>} the array of SupporterLevel objects belonging to the type
+   */
+  Conference.prototype.getSupporterLevelList = function getSupporterLevelList(type) {
+    var self = this
+    return (self._supporter_lists[type] || []).map(function (el) { return self.getSupporterLevel(el) })
+  }
+
+  /**
+   * Add a supporter to this conference.
+   * @param {Supporter} $supporter the supporter to add
+   * @return {Conference} this conference
+   */
+  Conference.prototype.addSupporter = function addSupporter($supporter) {
+    this._supporters.push($supporter)
+    return this
+  }
+  /**
+   * Retrieve a supporter of this conference.
+   * @param  {string} name the name of the supporter
+   * @return {?Supporter} the specified supporter
+   */
+  Conference.prototype.getSupporter = function getSupporter(name) {
+    return this._supporters.find(function ($supporter) { return $supporter.name() === name }) || null
+  }
+  /**
+   * Retrieve all supporters of this conference.
+   * @return {Array<Supporter>} a shallow array of all supporters of this conference
+   */
+  Conference.prototype.getSupportersAll = function getSupportersAll() {
+    return this._supporters.slice()
+  }
+
+  /**
+   * Add an exhibitor to this conference.
+   * @param {Exhibitor} $exhibitor the exhibitor to add
+   * @return {Conference} this conference
+   */
+  Conference.prototype.addExhibitor = function addExhibitor($exhibitor) {
+    this._exhibitors.push($exhibitor)
+    return this
+  }
+  /**
+   * Retrieve an exhibitor of this conference.
+   * @param  {string} name the name of the exhibitor
+   * @return {?Exhibitor} the specified exhibitor
+   */
+  Conference.prototype.getExhibitor = function getExhibitor(name) {
+    return this._exhibitors.find(function ($exhibitor) { return $exhibitor.name() === name }) || null
+  }
+  /**
+   * Retrieve all exhibitors of this conference.
+   * @return {Array<Exhibitor>} a shallow array of all exhibitors of this conference
+   */
+  Conference.prototype.getExhibitorsAll = function getExhibitorsAll() {
+    return this._exhibitors.slice()
   }
 
   /**
