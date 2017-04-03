@@ -24,7 +24,7 @@
 // ^updated
 // 2017-03-29
 .c-Benefits {
-  .font-size-mod(0.75);
+  .font-size-mod(@g-font_size_mill);
   .border-vert(all; 1px);
   border-color: @g-color-gray_dk; // HACK fallback
   border-color: var(--color-gray_dk);
@@ -54,6 +54,12 @@
 .c-Benefits__Hn {
   color: inherit; // HACK fallback
   color: unset; // override `h1`
+  @media not all and (min-width: 45em) {
+    margin-bottom: 0; // HACK fallback
+    margin-bottom: initial; // HACK fallback
+    margin-bottom: unset !important; // undo h1 // HACK !important override .c-Benefits > h1
+    .font-size-el(@g-font_size_mega);
+  }
 }
 
 .c-Benefits__Price {
@@ -81,7 +87,10 @@
 }
 
 .c-Benefits__List__Item {
-  padding: calc(~'var(--vru) / 1') 1rem;
+  padding: calc(~'var(--vru) / 2') 0.5rem;
+  @media screen and (min-width: 45em) {
+    padding: calc(~'var(--vru) / 1') 1rem;
+  }
   &:nth-of-type(2n) {
     background-color: @g-color-gray_lt-tint2; // HACK fallback
     background-color: var(--color-gray_lt-tint2);
