@@ -87,18 +87,41 @@
 }
 
 .c-Benefits__List__Item {
-  padding: calc(~'var(--vru) / 2') 0.5rem;
+  @padding-h: 0.5rem;
+  position: relative; // for the absolute ::before
+  padding: calc(~'var(--vru) / 2') @padding-h;
   @media screen and (min-width: 45em) {
     padding: calc(~'var(--vru) / 1') 1rem;
   }
+  padding-left: 2rem; // room for the icon // FIXME: prop comes after media query (may break during minification)
   &:nth-of-type(2n) {
     background-color: @g-color-gray_lt-tint2; // HACK fallback
     background-color: var(--color-gray_lt-tint2);
+  }
+  &::before {
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    padding: calc(~'var(--vru) / 2') @padding-h;
+    & {
+      // .glyphicons.glyphicons-ok
+      content: '\e207';
+      font-family: 'Glyphicons Regular';
+      color: @g-color-asce-green;
+    }
   }
 }
 .c-Benefits__List__Item--notOffered {
   color: @g-color-gray_lt-shade2; // HACK fallback
   color: var(--color-gray_lt-shade2);
+  &::before {
+    // .glyphicons.glyphicons-ban-circle
+    content: '\e200';
+    color: inherit; // HACK fallback
+    color: unset;
+  }
+}
+.c-Benefits__List__Item--numeric::before {
+  content: none;
 }
 
 .c-Benefits__Icon {
@@ -110,8 +133,6 @@
     padding: 0; // override `.glyphicons::before`
   }
   &.glyphicons-ok {
-    color: @g-color-primary-tint1; // HACK fallback
-    color: var(--color-primary-tint1);
     color: @g-color-asce-green;
   }
 }
