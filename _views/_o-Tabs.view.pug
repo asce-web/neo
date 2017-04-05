@@ -23,7 +23,7 @@ mixin tabs(n)
     block
     each val,index in new Array(n)
       dt.o-Flex__Item.o-Tabs__Tab: label.h-Block
-        input.o-Tabs__Check.h-Hidden.-ps-a(type="radio" name=attributes.id value=index)&attributes((index===0) ? {checked:''} : {})
+        input.o-Tabs__Check.h-Hidden(type="radio" name=attributes.id value=index)&attributes((index===0) ? {checked:''} : {})
         +tab(index)
       dd.o-Flex__Item.o-Tabs__Panel
         +panel(index)
