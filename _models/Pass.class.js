@@ -65,15 +65,6 @@ module.exports = (function () {
     return this._attend_types.find(function ($attendeeType) { return $attendeeType.name() === name }) || null
   }
   /**
-   * Remove an attendee type from this pass.
-   * @param  {string} name the name of the attendee type to remove
-   * @return {Pass} pass
-   */
-  Pass.prototype.removeAttendeeType = function removeAttendeeType(name) {
-    Util.spliceFromArray(this._attend_types, this.getAttendeeType(name))
-    return this
-  }
-  /**
    * Retreive all attendee types of this pass.
    * @return {Array<AttendeeType>} a shallow array of all attendee types of this pass
    */

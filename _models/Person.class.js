@@ -147,15 +147,6 @@ module.exports = (function () {
     return this._social[network_name]
   }
   /**
-   * Remove a social network profile from this person.
-   * @param  {string} network_name the name of the social network
-   * @return {Person} this person
-   */
-  Person.prototype.removeSocial = function removeSocial(network_name) {
-    this._social[network_name] = null
-    return this
-  }
-  /**
    * Return an object representing all social network profiles of this person.
    * @return {Object} shallow clone of this person’s social object
    */
