@@ -88,14 +88,14 @@
 .o-Tabs__Panel--shown {
 }
 .o-Tabs__Panel--hiddenBefore {
-  .transform(translateY(-100%) scale(1,0));
+  .transform(translateY(-100%) scaleY(0));
   @media screen and (min-width: 30em) {
-    .transform(translateX(-100%) scale(0,1));
+    .transform(translateX(-100%) scaleX(0));
   }
 }
 .o-Tabs__Panel--hiddenAfter {
-  .transform(translateY(100%) scale(1,0));
+  .transform(translateY(100%) scaleY(0));
   @media screen and (min-width: 30em) {
-    .transform(translateX(100%) scale(0,1));
+    .transform(translateX(100%) scaleX(0));
   }
 }
