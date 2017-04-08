@@ -87,6 +87,7 @@ module.exports = (function () {
     .add(new Page({ name: 'Organisms', url: '/docs/org.html' })
       .description('Compositions of Objects and Components that act together as a single interface.')
       .add(new Page({ name: 'Site Header'              , url: '/docs/org.html#site-header' }))
+      .add(new Page({ name: 'Site Footer'              , url: '/docs/org.html#site-footer' }))
       .add(new Page({ name: 'Page Header'              , url: '/docs/org.html#page-header' }))
       .add(new Page({ name: 'Highlighted Content Block', url: '/docs/org.html#highlighted-content-block' }))
       .add(new Page({ name: 'Hero Image'               , url: '/docs/org.html#hero-image' }))
