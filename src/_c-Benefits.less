@@ -4,7 +4,7 @@
 \*################################*/
 @import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
 @import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
-@import (reference) url('__tool.border-radius.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.border-radius.less');
 
 
 // A list of benefits offered to a sponsorship level.
@@ -39,7 +39,7 @@
   position: relative; // containing __Price
   padding-top: calc(~'2 * var(--vru)');
   padding-bottom: var(--vru);
-  .mx-rr-top(0.5rem); // HACK fixes bug from parent overflow: hidden
+  .border-top-radius(0.5rem); // HACK fixes bug from parent overflow: hidden
   background-color: @g-color-primary-shade1; // HACK fallback
   color: #fff; // HACK fallback
   background-color: var(--header-color);
