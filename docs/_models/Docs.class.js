@@ -94,7 +94,6 @@ module.exports = (function () {
       .add(new Page({ name: 'Other Year Callout'       , url: '/docs/org.html#other-year-callout' }))
       .add(new Page({ name: 'Program Tabs'             , url: '/docs/org.html#program-tabs' }))
       .add(new Page({ name: 'Speaker'                  , url: '/docs/org.html#speaker' }))
-      .add(new Page({ name: 'Important Dates'          , url: '/docs/org.html#important-dates' }))
       .add(new Page({ name: 'Person'                   , url: '/docs/org.html#person' }))
       .add(new Page({ name: 'Place'                    , url: '/docs/org.html#place' }))
     )
