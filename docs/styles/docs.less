@@ -27,6 +27,20 @@
 .docs-main {
   margin: 0 1rem var(--vru);
 }
+@media screen and (min-width: 60em) {
+  .docs-main {
+    width: calc(~'75% - 1rem');
+    margin-right: calc(~'25% + 1rem');
+  }
+  #contents {
+    position: fixed;
+    right: 0;
+    top: calc(~'4 * var(--vru)');
+    bottom: 0;
+    overflow: auto;
+    width: 25%;
+  }
+}
 .docs-pre,
 .docs-code {
   color: #000;

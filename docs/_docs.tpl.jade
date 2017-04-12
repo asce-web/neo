@@ -61,8 +61,8 @@ html(lang="en")
           h1= page.name()
           p= page.description()
           block toc
-            nav#table-contents
-              h2 Table of Contents
+            nav#contents
+              h2 Contents
               +doctoc({pages: page.findAll(), depth: Infinity})
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous")
