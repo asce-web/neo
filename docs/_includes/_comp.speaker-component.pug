@@ -20,18 +20,33 @@ figure.docs-figure
       .setBio('<p>Speaker bio goes here. <b>HTML</b> is allowed.\
         Block- and text-level elements.</p>')
     )
-  pre.docs-pre.
-    &lt;article class="#[u c-Speaker]"&gt;
-      &lt;div class="#[u c-Speaker__Img]" #[u style="background-image: url('headshot.jpg');"]&gt;&lt;/div&gt;
-      &lt;header class="#[u c-Speaker__Head]"&gt;
-        &lt;h1 class="#[u c-Speaker__Name]"&gt;Donna A. Fulman, P.ASCE&lt;/h1&gt;
-        &lt;p class="#[u c-Speaker__JobTitle]"&gt;Administrator of Interior Engineering&lt;/p&gt;
-        &lt;p class="#[u c-Speaker__Affiliation]"&gt;German Chamber of Architects&lt;/p&gt;
-      &lt;/header&gt;
-      &lt;div class="#[u c-Speaker__Body]"&gt;
-        &lt;p&gt;Speaker bio ...&lt;/p&gt;
-      &lt;/div&gt;
-      &lt;div class="#[u c-Speaker__Foot]"&gt;
-        &lt;ul class="o-List  o-Flex  c-SocialList  c-SocialList--speaker"&gt;...&lt;/ul&gt;
-      &lt;/div&gt;
-    &lt;/article&gt;
+  +microdataCheckbox('speaker')
+    pre.docs-pre.
+      &lt;article class="#[u c-Speaker]"#[mark.docs-c-Togglable__Text  itemprop="performer" itemscope="" itemtype="http://schema.org/Person"]&gt;
+        &lt;div class="#[u c-Speaker__Img]" #[u style="background-image: url('headshot.jpg');"]&gt;&lt;/div&gt;
+        &lt;header class="#[u c-Speaker__Head]"&gt;
+          &lt;h1 class="#[u c-Speaker__Name]"&gt;
+            &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
+              &lt;span#[mark.docs-c-Togglable__Text  itemprop="givenName"]&gt;Donna&lt;/span&gt;&amp;nbsp;
+              &lt;span#[mark.docs-c-Togglable__Text  itemprop="additionalName"]&gt;A.&lt;/span&gt;&amp;nbsp;
+              &lt;span#[mark.docs-c-Togglable__Text  itemprop="familyName"]&gt;Fulman&lt;/span&gt;
+            &lt;/span&gt;,&amp;nbsp;
+            &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificSuffix"]&gt;P.ASCE&lt;/span&gt;
+          &lt;/h1&gt;
+          &lt;p class="#[u c-Speaker__JobTitle]"#[mark.docs-c-Togglable__Text  itemprop="jobTitle"]&gt;Administrator of Interior Engineering&lt;/p&gt;
+          &lt;p class="#[u c-Speaker__Affiliation]"#[mark.docs-c-Togglable__Text  itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization"]&gt;
+            &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;German Chamber of Architects&lt;/span&gt;
+          &lt;/p&gt;
+        &lt;/header&gt;
+        &lt;div class="#[u c-Speaker__Body]"#[mark.docs-c-Togglable__Text  itemprop="description"]&gt;
+          &lt;p&gt;Speaker bio ...&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="#[u c-Speaker__Foot]"&gt;
+          &lt;ul class="o-List  o-Flex  c-SocialList  c-SocialList--speaker"&gt;
+            &lt;li class="o-List__Item  o-Flex__Item  c-SocialList__Item"&gt;
+              &lt;a class="c-SocialList__Link  c-SocialList__Link--twitter  h-Block" href="#0"#[mark.docs-c-Togglable__Text  itemprop="sameAs"]&gt;...&lt;/a&gt;
+            &lt;/li&gt;
+            ...
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/article&gt;
