@@ -3,6 +3,7 @@
     neo  |  _c-Callout.less
 \*################################*/
 @import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
 @import (reference) url('__settings.less');
 
 
@@ -15,6 +16,7 @@
 //
 // ^subcomponents
 // __Item - if this is a list, an item in the list. not all callouts are lists, however.
+// __Hn   - if this is not a list, the heading/title for the callout. Use kewords like "new!" or "important!"
 // ^author
 // Chris Harvey
 // ^updated
@@ -27,4 +29,21 @@
 
 .c-Callout__Item {
   padding: @g-boxpadd_mill;
+}
+
+.c-Callout__Hn {
+  & { // HACK fallbacks
+    font: inherit;
+    text-align: inhert;
+    padding-top: 0;
+    color: inherit;
+  }
+  & { // unset `h1`
+    font: unset;
+    text-align: unset;
+    padding-top: unset;
+    color: unset;
+  }
+  font-weight: 900;
+  .font-size-el(1.5);
 }
