@@ -21,33 +21,40 @@ html(lang="en")
   mixin newSection(n, page)
     - var id = page.url().split('#')[1]
     section(id=id)
-      | <h#{n}>#{page.name()} <a class="docs-_fragid" href="##{id}" aria-label="permalink"></a></h#{n}>
+      | <h#{n}>#{page.name()}
+      include ../node_modules/xmeter/_views/_c-Permalink.view.pug
+      +permalink(id)
+      | </h#{n}>
       block
   mixin internalLink($page)
     a(href=$page.url())= $page.name()
   block vars
   head
-    title= page.title() || (page.name() + ' | ' + ConfDocs.DOCS.name())
+    title= page.title() || (page.name() + ' | ' + Docs.DOCS.name())
     meta(charset="utf-8")
-    meta(name="description" content=ConfDocs.DOCS.description())
+    meta(name="description" content=Docs.DOCS.description())
     meta(name="viewport" content="width=device-width, initial-scale=1")
     block styles
       link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic")
       link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,400italic,700")
       link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
-      link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/xmeter/v5.4.0/xmeter.min.css")
+      link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/xmeter/v5.6.0/xmeter.min.css")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.10.0/bangs.min.css")
+      link(rel="stylesheet" href="../3rd_modules/glyphicons_pro_1_9_2/glyphicons/web/html_css/css/glyphicons.css")
+      link(rel="stylesheet" href="../3rd_modules/glyphicons_pro_1_9_2/glyphicons-filetypes/web/html_css/css/glyphicons-filetypes.css")
+      link(rel="stylesheet" href="../3rd_modules/glyphicons_pro_1_9_2/glyphicons-halflings/web/html_css/css/glyphicons-halflings.css")
+      link(rel="stylesheet" href="../3rd_modules/glyphicons_pro_1_9_2/glyphicons-social/web/html_css/css/glyphicons-social.css")
       link(rel="stylesheet" href="../neo.css")
       link(rel="stylesheet" href="styles/docs.css")
-  body(style=ConfDocs.COLORS)
+  body(style=Docs.COLORS)
     a.h-Hidden(href="#main") skip to main content
     header
-      h1= ConfDocs.DOCS.name()
-      p= ConfDocs.DOCS.description()
+      h1= Docs.DOCS.name()
+      p= Docs.DOCS.description()
       p: a(href="/index.html") Return to Landing Page
       nav#sitemap
         h1.h-Hidden Sitemap
-        +doctoc({pages: ConfDocs.DOCS.findAll()})
+        +doctoc({pages: Docs.DOCS.findAll()})
     main.docs-main#main
       block main
         header
@@ -68,9 +75,3 @@ html(lang="en")
           }
           return Util
         })()
-        $('h1, h2, h3, h4, h5, h6').each(function () {
-          if (!$(this).parents('figure').length) {
-            var id = '_' + Util.toURL($(this).text())
-            $(this).append($('<a>').addClass('docs-_fragid').attr('id', id).attr('href', '#' + id))
-          }
-        })

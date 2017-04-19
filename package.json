@@ -1,6 +1,7 @@
 {
   "name": "neo",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "private": true,
   "description": "Neo theme and style guide for conference sites.",
   "main": "index.js",
   "directories": {
@@ -43,9 +44,13 @@
   "homepage": "https://github.com/asce-web/neo#readme",
   "devDependencies": {
     "browserify": "^14.1.0",
-    "csscolor": "^1.3.1",
+    "clean-css": "^4.0.8",
+    "less": "^2.7.2",
     "pug-cli": "^1.0.0-alpha6",
-    "sitepage": "^1.0.0",
     "xmeter": "^5.4.0"
+  },
+  "dependencies": {
+    "csscolor": "^1.3.1",
+    "sitepage": "^1.0.0"
   }
 }

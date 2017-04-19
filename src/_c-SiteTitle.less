@@ -2,7 +2,7 @@
 /*################################*\
     neo  |  _c-SiteTitle.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/styles/__fallback.transition.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
 @import (reference) url('__tool.logo.less');
 
 
@@ -17,7 +17,7 @@
 // ^subcomponents
 // __Logo    - holds the conference logo or institute shield
 // __Name    - the name of the entire site
-// __Tagline - site tagline
+// __Slogan  - slogan/tagline for the site
 // ^author
 // Chris Harvey
 // ^updated
@@ -45,7 +45,7 @@
   .logo();
 }
 .c-SiteTitle__Name,
-.c-SiteTitle__Tagline {
+.c-SiteTitle__Slogan {
   padding-left: 0.5rem;
   // @media screen and (max-width: 29.999em) {
   //   width: 100%; // NOTE not necessary (default)
@@ -61,7 +61,7 @@
   .font-size-el(2);
   text-align: inherit; // override h1 center
 }
-.c-SiteTitle__Tagline {
+.c-SiteTitle__Slogan {
   font-weight: 300;
   @media screen and (max-width: 44.999em) {
     display: none;

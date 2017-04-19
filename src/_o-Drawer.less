@@ -2,8 +2,8 @@
 /*################################*\
     neo  |  _o-Drawer.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/styles/__fallback.transform.less');
-@import (reference) url('../node_modules/xmeter/styles/__fallback.transition.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
 @import (reference) url('__settings.less');
 
 
@@ -33,11 +33,12 @@
   @media screen and (max-width: 44.999em) {
     @width: 12rem;
     position: fixed;
-    right: -@width; top: 0;
+    top: 0; bottom: 0;
+    right: -@width;
     z-index: 2; // over hero and "jump to top" button
     width: @width;
-    height: 100%; // fallback for vh
-    height: 100vh;
+    // height: 100%; // fallback for vh
+    // height: 100vh; // don’t need this if bottom:0
     border-left: 1px solid currentColor;
     opacity: 0;
   }

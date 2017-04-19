@@ -2,7 +2,8 @@
 /*################################*\
     neo  |  _c-ConfHed.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
 
 
 // Promo for any year’s conference. Typographical styles.
@@ -27,11 +28,12 @@
 }
 
 .c-ConfHed__Detail {
-  .flex-justify-content(space-around);
-  font-weight: 600;
-  @media screen and (max-width: 44.999em) {
-    .flex-direction(column);
+  @media screen and (min-width: 45em) {
+    -ms-grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
   }
+  .justify-content(space-around);
+  font-weight: 600;
   .o-Runner--pageHeader & {
     // when inside hero
     .font-size-el(@g-font_size_mega; 2); // copied from xmeter atom `.-fz-el-mega`

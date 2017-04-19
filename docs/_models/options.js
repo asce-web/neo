@@ -10,7 +10,7 @@
 module.exports = {
   basedir : './'
 , Color             : require('csscolor').Color
-, ConfDocs          : require('./ConfDocs.class.js')
+, Docs          : require('./Docs.class.js')
 , Util              : require('../../_models/Util.class.js')
 , ConfSite          : require('../../_models/ConfSite.class.js')
 , ConfPage          : require('../../_models/ConfPage.class.js')

@@ -104,23 +104,11 @@ li.docs-o-ColorList__Item {
   height: 12vw;
   box-shadow: 0 2px 0.5rem 0 rgba(34, 34, 34, 0.5);
 }
-.docs-_fragid {
-  display: inline;
-  line-height: 0;
-  margin-left: 1rem;
-  font-weight: 100;
+#glyphicons .o-Grid {
+  grid-row-gap: 0.75rem;
 }
-.docs-_fragid::before {
-  content: '';
-}
-h1:hover > .docs-_fragid::before,
-h2:hover > .docs-_fragid::before,
-h3:hover > .docs-_fragid::before,
-h4:hover > .docs-_fragid::before,
-h5:hover > .docs-_fragid::before,
-h6:hover > .docs-_fragid::before {
-  content: '\00a7';
-}
-.docs-_fragid:focus::before {
-  content: '\00a7';
+#glyphicons .o-Grid__Item:nth-child(6n+1),
+#glyphicons .o-Grid__Item:nth-child(6n+2),
+#glyphicons .o-Grid__Item:nth-child(6n+3) {
+  background-color: #eee;
 }

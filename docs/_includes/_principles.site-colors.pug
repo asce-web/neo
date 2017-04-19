@@ -26,9 +26,9 @@ mixin siteColorList(primary_str, secondary_str)
       th(title="Tint 1")
       th(title="Tint 2")
     tbody
-      - for (var i = 0; i < ConfDocs.COLOR_NAMES.length; i += 5)
+      - for (var i = 0; i < Docs.COLOR_NAMES.length; i += 5)
         tr
-          each item,index in ConfDocs.COLOR_NAMES.slice(i, i+5)
+          each item,index in Docs.COLOR_NAMES.slice(i, i+5)
             +cell(item,index)
 h4 Docs
 p (this style guide)

@@ -35,6 +35,9 @@ build/Release
 node_modules
 jspm_packages
 
+# Manually installed 3rd party packages
+3rd_modules
+
 # Optional npm cache directory
 .npm
 

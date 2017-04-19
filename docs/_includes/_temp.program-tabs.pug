@@ -1,9 +1,9 @@
 p Program Tabs are used in the Program Highlights block and on the Program page.
 p.-fs-t This Template uses:
 ul.-fs-t
-  li: +internalLink(ConfDocs.DOCS.find('obj.html#tabs-object'))
-  li: +internalLink(ConfDocs.DOCS.find('comp.html#program-heading'))
-  li: +internalLink(ConfDocs.DOCS.find('comp.html#time-block'))
+  li: +internalLink(Docs.DOCS.find('/docs/obj.html#tabs-object'))
+  li: +internalLink(Docs.DOCS.find('/docs/comp.html#program-heading'))
+  li: +internalLink(Docs.DOCS.find('/docs/comp.html#time-block'))
 figure.docs-figure
   include /_views/_o-Tabs.view.pug
   +tabs(2)#demoprogram
@@ -22,31 +22,31 @@ figure.docs-figure
       ])
   +microdataCheckbox('program')
     pre.docs-pre.
-      &lt;dl class="o-Grid  o-Tabs" #[mark id="demoprogram"]&gt;
-        &lt;dt class="o-Grid__Item  o-Tabs__Tab"&gt;
+      &lt;dl class="o-Flex  o-Tabs" #[mark id="demoprogram"]&gt;
+        &lt;dt class="o-Flex__Item  o-Tabs__Tab"&gt;
           &lt;label class="h-Block"&gt;
-            &lt;input class="o-Tabs__Check  h-Hidden  -ps-a"#[mark  type="radio" name="demoprogram" value="0"] checked=""/&gt;
+            &lt;input class="o-Tabs__Check  h-Hidden"#[mark  type="radio" name="demoprogram" value="0"] checked=""/&gt;
             &lt;time class="c-ProgramHn"#[mark  datetime="2016-09-28"]&gt;
               Wednesday,&lt;br/&gt;
               Sep 28
             &lt;/time&gt;
           &lt;/label&gt;
         &lt;/dt&gt;
-        &lt;dd class="o-Grid__Item  o-Tabs__Panel"&gt;
+        &lt;dd class="o-Flex__Item  o-Tabs__Panel"&gt;
           &lt;dl class="o-List  c-TimeBlock"&gt;
-            &lt;li class="o-List__Item  o-Grid  c-TimeBlock__Item"#[mark.docs-c-Togglable__Text  itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event"]&gt;
-              &lt;dt class="o-Grid__Item  c-TimeBlock__Times"&gt;
+            &lt;li class="o-List__Item  o-Flex  c-TimeBlock__Item"#[mark.docs-c-Togglable__Text  itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event"]&gt;
+              &lt;dt class="o-Flex__Item  c-TimeBlock__Times"&gt;
                 &lt;time#[mark  datetime="2016-09-28 10:00"]#[mark.docs-c-Togglable__Text  itemprop="startDate"]&gt;10am&lt;/time&gt;
                 &ndash;
                 &lt;time#[mark  datetime="2016-09-28 19:00"]#[mark.docs-c-Togglable__Text  itemprop="endDate"]&gt;7pm&lt;/time&gt;
               &lt;/dt&gt;
-              &lt;dd class="o-Grid__Item  c-TimeBlock__Desc"#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
+              &lt;dd class="o-Flex__Item  c-TimeBlock__Desc"#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
                 Registration
               &lt;/dd&gt;
             &lt;/li&gt;
-            &lt;li class="o-List__Item  o-Grid  c-TimeBlock__Item"#[mark.docs-c-Togglable__Text  itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event"]&gt;
-              &lt;dt class="o-Grid__Item  c-TimeBlock__Times"&gt;...&lt;/dt&gt;
-              &lt;dd class="o-Grid__Item  c-TimeBlock__Desc"#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
+            &lt;li class="o-List__Item  o-Flex  c-TimeBlock__Item"#[mark.docs-c-Togglable__Text  itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event"]&gt;
+              &lt;dt class="o-Flex__Item  c-TimeBlock__Times"&gt;...&lt;/dt&gt;
+              &lt;dd class="o-Flex__Item  c-TimeBlock__Desc"#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
                 &lt;a class="c-TimeBlock__Link" href="#0"#[mark.docs-c-Togglable__Text  itemprop="url"]&gt;Technical Tours&lt;/a&gt;
               &lt;/dd&gt;
             &lt;/li&gt;
@@ -54,17 +54,17 @@ figure.docs-figure
           &lt;/dl&gt;
         &lt;/dd&gt;
 
-        &lt;dt class="o-Grid__Item  o-Tabs__Tab"&gt;
+        &lt;dt class="o-Flex__Item  o-Tabs__Tab"&gt;
           &lt;label class="h-Block"&gt;
             &lt;input class="o-Tabs__Check ..." .../&gt;
             &lt;time class="c-ProgramHn"&gt;...&lt;/time&gt;
           &lt;/label&gt;
         &lt;/dt&gt;
-        &lt;dd class="o-Grid__Item  o-Tabs__Panel"&gt;
+        &lt;dd class="o-Flex__Item  o-Tabs__Panel"&gt;
           &lt;dl class="o-List  c-TimeBlock"&gt;...&lt;/dl&gt;
         &lt;/dd&gt;
 
-        &lt;dt class="o-Grid__Item  o-Tabs__Tab"&gt;...&lt;/dt&gt;
-        &lt;dd class="o-Grid__Item  o-Tabs__Panel"&gt;...&lt;/dd&gt;
+        &lt;dt class="o-Flex__Item  o-Tabs__Tab"&gt;...&lt;/dt&gt;
+        &lt;dd class="o-Flex__Item  o-Tabs__Panel"&gt;...&lt;/dd&gt;
         ...
       &lt;/dl&gt;

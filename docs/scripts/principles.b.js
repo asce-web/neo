@@ -72,19 +72,19 @@ module.exports = (function () {
   /**
    * A conference site.
    * A site hosting a series of conferences,
-   * with a name, url, taglinne,
+   * with a name, url, slogan,
    * logo, supporter levels and supporters, exhibitors, and contact information.
    * Construct a ConfSite object, given a name and url.
    * @constructor
    * @extends Page
    * @param {string} name name of this site
    * @param {string} url url of the landing page for this site
-   * @param {string} tagline the tagline, or slogan, of this site
+   * @param {string} slogan the tagline, or slogan, of this site
    */
-  function ConfSite(name, url, tagline) {
+  function ConfSite(name, url, slogan) {
     var self = this
     Page.call(self, { name: name, url: url })
-    Page.prototype.description.call(self, tagline)
+    Page.prototype.description.call(self, slogan)
     self._logo             = ''
     self._colors           = {}
     self._conferences      = {}
@@ -111,12 +111,12 @@ module.exports = (function () {
     return Page.prototype.description.call(this)
   }
   /**
-   * Get the tagline of this site.
-   * The tagline is very brief slogan, and is fixed for the entire series of conferences.
+   * Get the slogan of this site.
+   * The slogan is very brief, and is fixed for the entire series of conferences.
    * Equivalent to calling `Page.prototype.description()`.
-   * @return {string} the tagline of this site
+   * @return {string} the slogan of this site
    */
-  ConfSite.prototype.tagline = function tagline() {
+  ConfSite.prototype.slogan = function slogan() {
     return this.description() || ''
   }
 
@@ -364,7 +364,7 @@ module.exports = (function () {
       .removeAll() //- NOTE IMPORTANT
       .add(new ConfPage('Home', 'index.html')
         .title(self.name())
-        .description(self.tagline())
+        .description(self.slogan())
         .setIcon('home')
       )
       .add(new ConfPage('Registration', 'registration.html')
