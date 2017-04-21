@@ -15,12 +15,12 @@
 // Do not use this for alerts; see the Alert component.
 //
 // ^subcomponents
+// __Hn   - the heading/title for this callout, if it is not a list. Use kewords like "new!" or "important!"
 // __Item - if this is a list, an item in the list. not all callouts are lists, however.
-// __Hn   - if this is not a list, the heading/title for the callout. Use kewords like "new!" or "important!"
 // ^author
 // Chris Harvey
 // ^updated
-// 2016-05-06
+// 2017-04-21
 .c-Callout {
   .border-vert(topbot; 1px);
   border-style: solid;
@@ -32,18 +32,18 @@
 }
 
 .c-Callout__Hn {
-  & { // HACK fallbacks
+  // HACK fallbacks
     font: inherit;
-    text-align: inhert;
-    padding-top: 0;
+    padding-top: 0; padding-top: initial;
     color: inherit;
-  }
-  & { // unset `h1`
+  // unset `h1`
     font: unset;
-    text-align: unset;
     padding-top: unset;
     color: unset;
-  }
+  margin-bottom: @g-vru; // HACK fallback
+  margin-bottom: var(--vru);
   font-weight: 900;
   .font-size-el(1.5);
+  text-transform: uppercase;
+  text-align: center;
 }
