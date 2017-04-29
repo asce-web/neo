@@ -1,5 +1,5 @@
-mixin supporterBlock($supporterLevel, $conference, classes)
-  section.c-SupporterBlock(class=classes)
+mixin supporterBlock($supporterLevel, $conference)
+  section.c-SupporterBlock&attributes(attributes)
     h1.c-SupporterBlock__Hn= $supporterLevel.name()
     ul.o-List.o-ListStacked
       each $supporter in $conference.getSupportersAll().filter(function ($supporter) { return $supporter.level() === $supporterLevel.name() })
