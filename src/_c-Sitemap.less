@@ -20,7 +20,7 @@
 .c-Sitemap {
   margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
   .menufont();
-  @media screen and (max-width: 44.999em) {
+  @media not all and (min-width: 45em) {
     .flex-direction(column);
     .font-size-mod(@p-fz);
   }
@@ -28,7 +28,7 @@
 
 .c-Sitemap__Item {
   .flex(0 0 auto);
-  @media screen and (max-width: 44.999em) {
+  @media not all and (min-width: 45em) {
     &:not(:last-child) {
       margin-bottom: (@p-fz * @g-vru); // HACK fallback // uses module vru
       margin-bottom: var(--vru);
@@ -40,7 +40,8 @@
   margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
   font-weight: 300;
   .font-size-el(16/20);
-  text-transform: none; // override .menufont()
+  text-transform: none; text-transform: initial; // HACK fallback
+  text-transform: unset; // override .menufont()
   @media screen and (min-width: 45em) {
     .font-size-el(12/14);
   }
