@@ -1,20 +1,20 @@
 mixin personFullName($person)
   span(itemprop="name")
-    span(itemprop="givenName")= $person.name().given_name
+    span(itemprop="givenName")= $person.name.given_name
     = ' '
-    if $person.name().additional_name
-      span(itemprop="additionalName")= $person.name().additional_name
+    if $person.name.additional_name
+      span(itemprop="additionalName")= $person.name.additional_name
       = ' '
-    span(itemprop="familyName")= $person.name().family_name
+    span(itemprop="familyName")= $person.name.family_name
 
 mixin personEntireName($person)
-  if $person.name().honorific_prefix
-    span(itemprop="honorificPrefix")= $person.name().honorific_prefix
+  if $person.name.honorific_prefix
+    span(itemprop="honorificPrefix")= $person.name.honorific_prefix
     = ' '
   +personFullName($person)
-  if $person.name().honorific_suffix
+  if $person.name.honorific_suffix
     = ', '
-    span(itemprop="honorificSuffix")= $person.name().honorific_suffix
+    span(itemprop="honorificSuffix")= $person.name.honorific_suffix
 
 mixin personAffiliation($person)
   +personEntireName($person)
@@ -43,7 +43,7 @@ mixin speaker($person)
   article.c-Speaker(itemprop="performer" itemscope="" itemtype="http://schema.org/Person")
     div.c-Speaker__Img(style=`background-image:url('${$person.img()}');`)
     header.c-Speaker__Head
-      h1.c-Speaker__Name(id=$person.id()): +personEntireName($person)
+      h1.c-Speaker__Name(id=$person.id): +personEntireName($person)
       p.c-Speaker__JobTitle(itemprop="jobTitle")= $person.jobTitle()
       p.c-Speaker__Affiliation(itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization")
         span(itemprop="name")= $person.affiliation()

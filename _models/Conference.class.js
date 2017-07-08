@@ -235,7 +235,7 @@ module.exports = class Conference {
    * @return {?Person} the specified speaker
    */
   getSpeaker(id) {
-    return this._speakers.find(($person) => $person.id()===id) || null
+    return this._speakers.find(($person) => $person.id===id) || null
   }
   /**
    * Retrieve all speakers of this conference.
@@ -379,7 +379,7 @@ module.exports = class Conference {
    * @return {?Person} the specified organizer
    */
   getOrganizer(id) {
-    return this._organizers.find(($person) => $person.id()===id) || null
+    return this._organizers.find(($person) => $person.id===id) || null
   }
   /**
    * Retrieve all organizers of this conference.

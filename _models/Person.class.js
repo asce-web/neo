@@ -38,7 +38,7 @@ module.exports = class Person {
    * Get the id of this person.
    * @return {string} the unique id of this person
    */
-  id() {
+  get id() {
     return this._ID
   }
 
@@ -46,7 +46,7 @@ module.exports = class Person {
    * Get the name object of this person.
    * @return {Object} a shallow object representing this person’s name
    */
-  name() {
+  get name() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._NAME)
   }
