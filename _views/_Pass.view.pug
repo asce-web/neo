@@ -8,7 +8,7 @@ mixin pass($pass, $conference)
   - var current_period = $conference.currentRegistrationPeriod()
   article.c-Pass
     mixin periodDetails($registrationPeriod, is_body)
-      h1.c-Pass__Period__Hn= $registrationPeriod.name()
+      h1.c-Pass__Period__Hn= $registrationPeriod.name
       dl
         each $attendeeType in $pass.getAttendeeTypesAll()
           - var price = 0;

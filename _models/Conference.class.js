@@ -111,7 +111,7 @@ module.exports = class Conference {
    * @return {?RegistrationPeriod} the specified registration period
    */
   getRegistrationPeriod(name) {
-    return this._reg_periods.find(($registrationPeriod) => $registrationPeriod.name()===name) || null
+    return this._reg_periods.find(($registrationPeriod) => $registrationPeriod.name===name) || null
   }
   /**
    * Retrieve all registration periods of this conference.

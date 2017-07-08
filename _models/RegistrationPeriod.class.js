@@ -15,9 +15,9 @@ module.exports = class RegistrationPeriod {
    * @param {Date} $periodinfo.end_date the date on which this registration period ends
    */
   constructor($periodinfo = {}) {
-    /** @private */ this._NAME  = $periodinfo.name
-    /** @private */ this._START = $periodinfo.start_date
-    /** @private */ this._END   = $periodinfo.end_date
+    /** @private @final */ this._NAME  = $periodinfo.name
+    /** @private @final */ this._START = $periodinfo.start_date
+    /** @private @final */ this._END   = $periodinfo.end_date
     /** @private */ this._icon = null
   }
 
@@ -25,7 +25,7 @@ module.exports = class RegistrationPeriod {
    * Get the name of this registration period.
    * @return {string} the name of this registration period
    */
-  name() {
+  get name() {
     return this._NAME
   }
 
@@ -33,7 +33,7 @@ module.exports = class RegistrationPeriod {
    * Get the start date of this registration period.
    * @return {Date} the start date of this registration period
    */
-  startDate() {
+  get startDate() {
     return this._START || new Date()
   }
 
@@ -41,7 +41,7 @@ module.exports = class RegistrationPeriod {
    * Get the end date of this registration period.
    * @return {Date} the end date of this registration period
    */
-  endDate() {
+  get endDate() {
     return this._END || new Date()
   }
 
