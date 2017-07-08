@@ -7,33 +7,31 @@ module.exports = class Person {
    * Constructs a Person object.
    * @constructor
    * @param {string} id a unique identifier of the person
-   * @param {Object} $name an object containing the following:
+   * @param {Object=} $name an object containing the following:
    * @param {string} $name.honorific_prefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
    * @param {string} $name.given_name the person’s first name
    * @param {string} $name.additional_name  the person’s middle name or initial
    * @param {string} $name.family_name the person’s last name
    * @param {string} $name.honorific_suffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
    */
-  constructor(id, $name) {
-    var self = this
-    $name = $name || {} // NOTE constructor overloading
-    self._ID   = id
-    self._NAME = {
-      honorific_prefix: $name.honorific_prefix
-    , given_name      : $name.given_name
-    , additional_name : $name.additional_name
-    , family_name     : $name.family_name
-    , honorific_suffix: $name.honorific_suffix
+  constructor(id, $name = {}) {
+    /** @private @final */ this._ID   = id
+    /** @private @final */ this._NAME = {
+      honorific_prefix: $name.honorific_prefix,
+      given_name      : $name.given_name,
+      additional_name : $name.additional_name,
+      family_name     : $name.family_name,
+      honorific_suffix: $name.honorific_suffix,
     }
-    self._jobTitle    = ''
-    self._affiliation = ''
-    self._img         = ''
-    self._email       = ''
-    self._telephone   = ''
-    self._url         = ''
-    self._social      = {}
-    self._bio         = ''
-    self._is_starred  = false
+    /** @private */ this._jobTitle    = ''
+    /** @private */ this._affiliation = ''
+    /** @private */ this._img         = ''
+    /** @private */ this._email       = ''
+    /** @private */ this._telephone   = ''
+    /** @private */ this._url         = ''
+    /** @private */ this._social      = {}
+    /** @private */ this._bio         = ''
+    /** @private */ this._is_starred  = false
   }
 
   /**

@@ -5,19 +5,17 @@ module.exports = class Session {
    * The name, start date, and end date
    * are immutable and must be provided during construction.
    * @constructor
-   * @param {Object} $eventinfo an object with the following immutable properties:
+   * @param {Object=} $eventinfo an object with the following immutable properties:
    * @param {string} $eventinfo.name the name of the session
    * @param {Date} $eventinfo.start_date the start date of the session
    * @param {Date} $eventinfo.end_date the end date of the session
    */
-  constructor($eventinfo) {
-    var self = this
-    $eventinfo = $eventinfo || {} // NOTE constructor overloading
-    self._NAME  = $eventinfo.name
-    self._START = $eventinfo.start_date
-    self._END   = $eventinfo.end_date
-    self._url = ''
-    self._is_starred = false
+  constructor($eventinfo = {}) {
+    /** @private */ this._NAME  = $eventinfo.name
+    /** @private */ this._START = $eventinfo.start_date
+    /** @private */ this._END   = $eventinfo.end_date
+    /** @private */ this._url = ''
+    /** @private */ this._is_starred = false
   }
 
   /**

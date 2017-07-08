@@ -6,12 +6,11 @@ module.exports = class Pass {
    * @param {string} name the name or type of the pass
    */
   constructor(name) {
-    var self = this
-    self._NAME = name
-    self._description  = ''
-    self._fineprint    = ''
-    self._attend_types = []
-    self._is_starred = false
+    /** @private @final */ this._NAME = name
+    /** @private */ this._description  = ''
+    /** @private */ this._fineprint    = ''
+    /** @private */ this._attend_types = []
+    /** @private */ this._is_starred = false
   }
 
   /**
@@ -105,9 +104,8 @@ module.exports = class Pass {
        * @param {boolean} is_featured whether this attendee type is marked as “featured”
        */
       constructor(name, is_featured) {
-        var self = this
-        self._NAME        = name
-        self._IS_FEATURED = is_featured
+        /** @private @final */ this._NAME        = name
+        /** @private @final */ this._IS_FEATURED = is_featured
       }
       /**
        * Get the name of this attendee type.

@@ -9,7 +9,7 @@ module.exports = class Conference {
    * The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
    * @constructor
-   * @param {Object} $confinfo an object with the following immutable properties:
+   * @param {Object=} $confinfo an object with the following immutable properties:
    * @param {string} $confinfo.name the name of this conference
    * @param {string} $confinfo.url the url of this conference
    * @param {string} $confinfo.theme the theme, or slogan, of this conference
@@ -20,30 +20,28 @@ module.exports = class Conference {
    * @param {string=} $confinfo.promo_loc.title the elongated version of the location (eg, "Portland, Oregon")
    * @param {string=} $confinfo.promo_loc.blurb small paragraph about location. escaped plain-text (no HTML)
    */
-  constructor($confinfo) {
-    var self = this
-    $confinfo = $confinfo || {} // NOTE constructor overloading
-    self._NAME      = $confinfo.name
-    self._URL       = $confinfo.url
-    self._THEME     = $confinfo.theme
-    self._START     = $confinfo.start_date
-    self._END       = $confinfo.end_date
-    self._PROMO_LOC = $confinfo.promo_loc
-    self._reg_periods     = []
-    self._passes          = []
-    self._sessions        = []
-    self._venues          = {}
-    self._speakers        = []
-    self._supporter_levels = []
-    self._supporter_lists  = {}
-    self._supporters       = []
-    self._exhibitors       = []
-    self._important_dates = []
-    self._organizers      = []
-    self._social          = {}
-    self._other_year_blurb= ''
-    self._regpd_curr_index = NaN
-    self._venue_conf_key   = ''
+  constructor($confinfo = {}) {
+    /** @private @final */ this._NAME      = $confinfo.name
+    /** @private @final */ this._URL       = $confinfo.url
+    /** @private @final */ this._THEME     = $confinfo.theme
+    /** @private @final */ this._START     = $confinfo.start_date
+    /** @private @final */ this._END       = $confinfo.end_date
+    /** @private @final */ this._PROMO_LOC = $confinfo.promo_loc
+    /** @private */ this._reg_periods     = []
+    /** @private */ this._passes          = []
+    /** @private */ this._sessions        = []
+    /** @private */ this._venues          = {}
+    /** @private */ this._speakers        = []
+    /** @private */ this._supporter_levels = []
+    /** @private */ this._supporter_lists  = {}
+    /** @private */ this._supporters       = []
+    /** @private */ this._exhibitors       = []
+    /** @private */ this._important_dates = []
+    /** @private */ this._organizers      = []
+    /** @private */ this._social          = {}
+    /** @private */ this._other_year_blurb= ''
+    /** @private */ this._regpd_curr_index = NaN
+    /** @private */ this._venue_conf_key   = ''
   }
 
   /**
@@ -288,8 +286,7 @@ module.exports = class Conference {
    * @return {Array<SupporterLevel>} the array of SupporterLevel objects belonging to the type
    */
   getSupporterLevelList(type) {
-    var self = this
-    return (self._supporter_lists[type] || []).map(function (el) { return self.getSupporterLevel(el) })
+    return (this._supporter_lists[type] || []).map((el) => this.getSupporterLevel(el))
   }
 
   /**
@@ -462,22 +459,16 @@ module.exports = class Conference {
    * @return {Array<SessionGroup>} an array grouping the sessions together
    */
   groupSessions(starred) {
-    var all_sessions = this.getSessionsAll().filter(function ($session) {
-      return (starred) ? $session.isStarred() : true
-    })
+    var all_sessions = this.getSessionsAll().filter(($session) => (starred) ? $session.isStarred() : true)
     var $groupings = []
     function equalDays(date1, date2) {
       return date1.toISOString().slice(0,10) === date2.toISOString().slice(0,10)
     }
     for (var $session of all_sessions) {
-      if (!$groupings.find(function ($sessionGroup) {
-        return equalDays($sessionGroup.dateday, $session.startDate())
-      })) {
+      if (!$groupings.find(($sessionGroup) => equalDays($sessionGroup.dateday, $session.startDate()))) {
         $groupings.push({
-          dateday : $session.startDate()
-        , sessions: all_sessions.filter(function (_event) {
-            return equalDays(_event.startDate(), $session.startDate())
-          })
+          dateday : $session.startDate(),
+          sessions: all_sessions.filter((_event) => equalDays(_event.startDate(), $session.startDate())),
         })
       }
     }

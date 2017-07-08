@@ -7,11 +7,10 @@ module.exports = class Supporter {
    * @param {string} name the name of the supporting organization
    */
   constructor(name) {
-    var self = this
-    self._NAME = name
-    self._url   = ''
-    self._img   = ''
-    self._level = ''
+    /** @private */ this._NAME = name
+    /** @private */ this._url   = ''
+    /** @private */ this._img   = ''
+    /** @private */ this._level = ''
   }
 
   /**

@@ -7,9 +7,8 @@ module.exports = class SupporterLevel {
    * @param {string} name the name of the level (e.g. 'Gold')
    */
   constructor(name) {
-    var self = this
-    self._NAME = name
-    self._size = ''
+    /** @private */ this._NAME = name
+    /** @private */ this._size = ''
   }
 
   /**

@@ -5,17 +5,15 @@ module.exports = class ImportantDate {
    * The name and start time
    * are immutable and must be provided during construction.
    * @constructor
-   * @param {Object} $actioninfo an object with the following immutable properties:
+   * @param {Object=} $actioninfo an object with the following immutable properties:
    * @param {string} $actioninfo.name the name of the important date
    * @param {Date} $actioninfo.start_time the start time of the important date
    */
-  constructor($actioninfo) {
-    var self = this
-    $actioninfo = $actioninfo || {} // NOTE constructor overloading
-    self._NAME  = $actioninfo.name
-    self._START = $actioninfo.start_time
-    self._url       = ''
-    self._is_starred = false
+  constructor($actioninfo = {}) {
+    /** @private @final */ this._NAME  = $actioninfo.name
+    /** @private @final */ this._START = $actioninfo.start_time
+    /** @private */ this._url          = ''
+    /** @private */ this._is_starred   = false
   }
 
   /**

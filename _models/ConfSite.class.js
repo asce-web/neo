@@ -15,15 +15,14 @@ module.exports = class ConfSite extends Page {
    * @param {string} slogan the tagline, or slogan, of this site
    */
   constructor(name, url, slogan) {
-    var self = this
     super({ name: name, url: url })
     super.description(slogan)
-    self._logo             = ''
-    self._colors           = {}
-    self._conferences      = {}
-    self._conf_curr_key   = null
-    self._conf_prev_key   = null
-    self._conf_next_key   = null
+    /** @private */ this._logo             = ''
+    /** @private */ this._colors           = {}
+    /** @private */ this._conferences      = {}
+    /** @private */ this._conf_curr_key   = null
+    /** @private */ this._conf_prev_key   = null
+    /** @private */ this._conf_next_key   = null
   }
 
   /**
@@ -64,7 +63,6 @@ module.exports = class ConfSite extends Page {
    * @return {(ConfSite|Object)} this || a CSS style object containg custom properties and color string values
    */
   colors($primary, $secondary) {
-    var self = this
     if (arguments.length) {
       this._colors = ConfSite.colorStyles($primary, $secondary)
       return this
@@ -206,57 +204,57 @@ module.exports = class ConfSite extends Page {
    * Generate a color palette and return a style object with custom properties.
    * @param  {Color} $primary   the primary color for the site
    * @param  {Color} $secondary the secondary color for the site
-   * @return {Object} a style object containg custom properties and color string values
+   * @return {Object<string>} a style object containg custom properties and color string values
    */
   static colorStyles($primary, $secondary) {
-    var   primary_s2  =   $primary.darken(2/3, true)
-    var   primary_s1  =   $primary.darken(1/3, true)
-    var   primary_t1  =   $primary.darken(1/3, true).lighten(1/3, false) // one-third to white
-    var   primary_t2  =   $primary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
-    var secondary_s2  = $secondary.darken(2/3, true)
-    var secondary_s1  = $secondary.darken(1/3, true)
-    var secondary_t1  = $secondary.darken(1/3, true).lighten(1/3, false) // one-third to white
-    var secondary_t2  = $secondary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
+    let   primary_s2  =   $primary.darken(2/3, true)
+    let   primary_s1  =   $primary.darken(1/3, true)
+    let   primary_t1  =   $primary.darken(1/3, true).lighten(1/3, false) // one-third to white
+    let   primary_t2  =   $primary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
+    let secondary_s2  = $secondary.darken(2/3, true)
+    let secondary_s1  = $secondary.darken(1/3, true)
+    let secondary_t1  = $secondary.darken(1/3, true).lighten(1/3, false) // one-third to white
+    let secondary_t2  = $secondary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
 
-    var _g1 = $primary.mix($secondary, 1/4).desaturate(7/8, true)
-    var _g2 = $secondary.mix($primary, 1/4).desaturate(7/8, true)
+    let _g1 = $primary.mix($secondary, 1/4).desaturate(7/8, true)
+    let _g2 = $secondary.mix($primary, 1/4).desaturate(7/8, true)
 
-    var gray_dk_s2 = _g1.lighten( 1/12 - _g1.hslLum(), false)
-    var gray_dk_s1 = _g1.lighten( 2/12 - _g1.hslLum(), false)
-    var gray_dk    = _g1.lighten( 3/12 - _g1.hslLum(), false)
-    var gray_dk_t1 = _g1.lighten( 4/12 - _g1.hslLum(), false)
-    var gray_dk_t2 = _g1.lighten( 5/12 - _g1.hslLum(), false)
-    var gray_lt_s2 = _g2.lighten( 7/12 - _g2.hslLum(), false)
-    var gray_lt_s1 = _g2.lighten( 8/12 - _g2.hslLum(), false)
-    var gray_lt    = _g2.lighten( 9/12 - _g2.hslLum(), false)
-    var gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum(), false)
-    var gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum(), false)
+    let gray_dk_s2 = _g1.lighten( 1/12 - _g1.hslLum(), false)
+    let gray_dk_s1 = _g1.lighten( 2/12 - _g1.hslLum(), false)
+    let gray_dk    = _g1.lighten( 3/12 - _g1.hslLum(), false)
+    let gray_dk_t1 = _g1.lighten( 4/12 - _g1.hslLum(), false)
+    let gray_dk_t2 = _g1.lighten( 5/12 - _g1.hslLum(), false)
+    let gray_lt_s2 = _g2.lighten( 7/12 - _g2.hslLum(), false)
+    let gray_lt_s1 = _g2.lighten( 8/12 - _g2.hslLum(), false)
+    let gray_lt    = _g2.lighten( 9/12 - _g2.hslLum(), false)
+    let gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum(), false)
+    let gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum(), false)
 
     return {
-      '--color-primary'  :   $primary.toString('hex')
-    , '--color-secondary': $secondary.toString('hex')
-    , '--color-gray_dk'  :    gray_dk.toString('hex')
-    , '--color-gray_lt'  :    gray_lt.toString('hex')
+      '--color-primary'  :   $primary.toString('hex'),
+      '--color-secondary': $secondary.toString('hex'),
+      '--color-gray_dk'  :    gray_dk.toString('hex'),
+      '--color-gray_lt'  :    gray_lt.toString('hex'),
 
-    , '--color-primary-shade2'  :   primary_s2.toString('hex')
-    , '--color-primary-shade1'  :   primary_s1.toString('hex')
-    , '--color-primary-tint1'   :   primary_t1.toString('hex')
-    , '--color-primary-tint2'   :   primary_t2.toString('hex')
+      '--color-primary-shade2'  :   primary_s2.toString('hex'),
+      '--color-primary-shade1'  :   primary_s1.toString('hex'),
+      '--color-primary-tint1'   :   primary_t1.toString('hex'),
+      '--color-primary-tint2'   :   primary_t2.toString('hex'),
 
-    , '--color-secondary-shade2': secondary_s2.toString('hex')
-    , '--color-secondary-shade1': secondary_s1.toString('hex')
-    , '--color-secondary-tint1' : secondary_t1.toString('hex')
-    , '--color-secondary-tint2' : secondary_t2.toString('hex')
+      '--color-secondary-shade2': secondary_s2.toString('hex'),
+      '--color-secondary-shade1': secondary_s1.toString('hex'),
+      '--color-secondary-tint1' : secondary_t1.toString('hex'),
+      '--color-secondary-tint2' : secondary_t2.toString('hex'),
 
-    , '--color-gray_dk-shade2'  :   gray_dk_s2.toString('hex')
-    , '--color-gray_dk-shade1'  :   gray_dk_s1.toString('hex')
-    , '--color-gray_dk-tint1'   :   gray_dk_t1.toString('hex')
-    , '--color-gray_dk-tint2'   :   gray_dk_t2.toString('hex')
+      '--color-gray_dk-shade2'  :   gray_dk_s2.toString('hex'),
+      '--color-gray_dk-shade1'  :   gray_dk_s1.toString('hex'),
+      '--color-gray_dk-tint1'   :   gray_dk_t1.toString('hex'),
+      '--color-gray_dk-tint2'   :   gray_dk_t2.toString('hex'),
 
-    , '--color-gray_lt-shade2'  :   gray_lt_s2.toString('hex')
-    , '--color-gray_lt-shade1'  :   gray_lt_s1.toString('hex')
-    , '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex')
-    , '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex')
+      '--color-gray_lt-shade2'  :   gray_lt_s2.toString('hex'),
+      '--color-gray_lt-shade1'  :   gray_lt_s1.toString('hex'),
+      '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex'),
+      '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex'),
     }
   }
 }

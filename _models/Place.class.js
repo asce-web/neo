@@ -7,7 +7,7 @@ module.exports = class Place {
    * Constructs a Place object.
    * @constructor
    * @param {string} name the name of the place
-   * @param {Object} $placeinfo an object containing the following:
+   * @param {Object=} $placeinfo an object containing the following:
    * @param {string} $placeinfo.street_address the street and number, eg: '1801 Alexander Bell Drive'
    * @param {string} $placeinfo.address_locality the city name, eg: 'Reston'
    * @param {string} $placeinfo.address_region   the state code *[1], eg: 'VA'
@@ -17,17 +17,15 @@ module.exports = class Place {
    * @param {string} $placeinfo.url              the URL of homepage, eg: 'http://www.asce.org/'
    * *[1] zip, state, and country codes should match the ISO-3166 standard format. see https://en.wikipedia.org/wiki/ISO_3166
    */
-  constructor(name, $placeinfo) {
-    var self = this
-    $placeinfo = $placeinfo || {} // NOTE constructor overloading
-    self._NAME = name
-    self._STREET_ADDRESS   = $placeinfo.street_address
-    self._ADDRESS_LOCALITY = $placeinfo.address_locality
-    self._ADDRESS_REGION   = $placeinfo.address_region
-    self._POSTAL_CODE      = $placeinfo.postal_code
-    self._ADDRESS_COUNTRY  = $placeinfo.address_country
-    self._TELEPHONE        = $placeinfo.telephone
-    self._URL              = $placeinfo.url
+  constructor(name, $placeinfo = {}) {
+    /** @private @final */ this._NAME = name
+    /** @private @final */ this._STREET_ADDRESS   = $placeinfo.street_address
+    /** @private @final */ this._ADDRESS_LOCALITY = $placeinfo.address_locality
+    /** @private @final */ this._ADDRESS_REGION   = $placeinfo.address_region
+    /** @private @final */ this._POSTAL_CODE      = $placeinfo.postal_code
+    /** @private @final */ this._ADDRESS_COUNTRY  = $placeinfo.address_country
+    /** @private @final */ this._TELEPHONE        = $placeinfo.telephone
+    /** @private @final */ this._URL              = $placeinfo.url
   }
 
   /**

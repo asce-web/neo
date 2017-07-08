@@ -7,13 +7,12 @@ module.exports = class Exhibitor {
    * @param {string} name the name of the exhibiting organization
    */
   constructor(name) {
-    var self = this
-    self._NAME = name
-    self._url   = ''
-    self._img   = ''
-    self._description = ''
-    self._booth = NaN
-    self._is_sponsor = false
+    /** @private @final */ this._NAME = name
+    /** @private */ this._url   = ''
+    /** @private */ this._img   = ''
+    /** @private */ this._description = ''
+    /** @private */ this._booth = NaN
+    /** @private */ this._is_sponsor = false
   }
 
   /**

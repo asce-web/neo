@@ -12,10 +12,9 @@ module.exports = class ConfPage extends Page {
    * @param {string} url  url of this page
    */
   constructor(name, url) {
-    var self = this
     super({ name: name, url: url })
-    self._icon     = null
-    self._is_hidden = false
+    /** @private */ this._icon     = null
+    /** @private */ this._is_hidden = false
   }
 
   /**

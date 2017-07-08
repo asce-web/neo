@@ -9,18 +9,16 @@ module.exports = class RegistrationPeriod {
    * The name, start date, and end date
    * are immutable and must be provided during construction.
    * @constructor
-   * @param {Object} $periodinfo an object with the following immutable properties:
+   * @param {Object=} $periodinfo an object with the following immutable properties:
    * @param {string} $periodinfo.name the name of the registration period (e.g., 'Early Bird')
    * @param {Date} $periodinfo.start_date the date on which this registration period starts
    * @param {Date} $periodinfo.end_date the date on which this registration period ends
    */
-  constructor($periodinfo) {
-    var self = this
-    $periodinfo = $periodinfo || {} // NOTE constructor overloading
-    self._NAME  = $periodinfo.name
-    self._START = $periodinfo.start_date
-    self._END   = $periodinfo.end_date
-    self._icon = null
+  constructor($periodinfo = {}) {
+    /** @private */ this._NAME  = $periodinfo.name
+    /** @private */ this._START = $periodinfo.start_date
+    /** @private */ this._END   = $periodinfo.end_date
+    /** @private */ this._icon = null
   }
 
   /**

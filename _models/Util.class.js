@@ -7,8 +7,8 @@ module.exports = class Util {
   constructor() {}
 
   /**
-   * List of full month names.
-   * @type {Array}
+   * List of full month names in English.
+   * @type {Array<string>}
    */
   static get MONTH_NAMES() {
     return [
@@ -28,8 +28,8 @@ module.exports = class Util {
   }
 
   /**
-   * List of full day names.
-   * @type {Array}
+   * List of full day names in English.
+   * @type {Array<string>}
    */
   static get DAY_NAMES() {
     return [
@@ -44,14 +44,18 @@ module.exports = class Util {
   }
 
   /**
+   * NOTE: Type Definition
+   * @typedef {Object} StateObj
+   * @property {string} index  - the postal code for the state
+   * @property {string} name   - the name of the state
+   * @property {number} pop    - population in people
+   * @property {number} area   - area in square km
+   * @property {string} region - region of US
+   */
+
+  /**
    * List of US State objects.
-   * Each object has:
-   * - index              : @type {string}
-   * - name               : @type {string}
-   * - pop  (in people)   : @type {number}
-   * - area (in square km): @type {number}
-   * - region             : @type {string}
-   * @type {Array}
+   * @type {Array<StateObj>}
    */
   static get STATE_DATA() {
     return [
@@ -109,12 +113,16 @@ module.exports = class Util {
   }
 
   /**
+   * NOTE: Type Definition
+   * @typedef {Object} Icon
+   * @property {string} content  - the keyword used for the ligature
+   * @property {string} fallback - unicode code point
+   * @property {string} html     - html entity
+   */
+
+  /**
    * List of icon objects used in Conf styles.
-   * Each object has:
-   * - content : @type {string}: keyword
-   * - fallback: @type {string}: unicode code point
-   * - html    : @type {string}: html entity
-   * @type {Array}
+   * @type {Array<Icon>}
    */
   static get ICON_DATA() {
     return [
@@ -141,7 +149,7 @@ module.exports = class Util {
 
   /**
    * Data for social media networks.
-   * @type {Object}
+   * @type {Object<{name:string, icon}>}
    */
   static get SOCIAL_DATA() {
     return {
