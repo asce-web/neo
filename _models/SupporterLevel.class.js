@@ -7,8 +7,8 @@ module.exports = class SupporterLevel {
    * @param {string} name the name of the level (e.g. 'Gold')
    */
   constructor(name) {
-    /** @private */ this._NAME = name
-    /** @private */ this._size = ''
+    /** @private @final */ this._NAME = name
+    /** @private */ this._size = SupporterLevel.LogoSize.DEFAULT
   }
 
   /**
@@ -22,17 +22,26 @@ module.exports = class SupporterLevel {
   /**
    * Set or get the sizing of this supporter level.
    * The sizing informs the size of the supporter logo in this supporter level.
-   * The parameter must be one of the following enumerated values:
-   * - 'lrg'
-   * - 'med'
-   * - 'sml'
-   * @param  {string=} str the sizing of this supporter level’s logos
-   * @return {(SupporterLevel|string)} this supporter level | the sizing
+   * @param  {SupporterLevel.LogoSize=} size the sizing of this supporter level’s logos
+   * @return {(SupporterLevel|SupporterLevel.LogoSize)} this supporter level | the sizing
    */
-  size(str) {
+  size(size = SupporterLevel.LogoSize.DEFAULT) {
     if (arguments.length) {
-      this._size = str
+      this._size = size
       return this
     } else return this._size
+  }
+
+  /**
+   * Enum for supporter level logo sizes.
+   * @enum {string}
+   */
+  static get LogoSize() {
+    return {
+      /** Logo size for top-level supporters. */ LARGE : 'lrg',
+      /** Logo size for mid-level supporters. */ MEDIUM: 'med',
+      /** Logo size for low-level supporters. */ SMALL : 'sml',
+      /** Default value. */                      get DEFAULT() { return this.LARGE },
+    }
   }
 }
