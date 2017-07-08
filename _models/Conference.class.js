@@ -304,7 +304,7 @@ module.exports = class Conference {
    * @return {?Supporter} the specified supporter
    */
   getSupporter(name) {
-    return this._supporters.find(($supporter) => $supporter.name()===name) || null
+    return this._supporters.find(($supporter) => $supporter.name===name) || null
   }
   /**
    * Retrieve all supporters of this conference.

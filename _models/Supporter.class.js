@@ -7,7 +7,7 @@ module.exports = class Supporter {
    * @param {string} name the name of the supporting organization
    */
   constructor(name) {
-    /** @private */ this._NAME = name
+    /** @private @final */ this._NAME = name
     /** @private */ this._url   = ''
     /** @private */ this._img   = ''
     /** @private */ this._level = ''
@@ -17,7 +17,7 @@ module.exports = class Supporter {
    * Get the name of this supporter.
    * @return {string} the name of this supporter
    */
-  name() {
+  get name() {
     return this._NAME
   }
 
