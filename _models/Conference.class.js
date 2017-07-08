@@ -110,14 +110,14 @@ module.exports = class Conference {
    * @param  {string} name the name of the registration period
    * @return {?RegistrationPeriod} the specified registration period
    */
-  function getRegistrationPeriod(name) {
-    return this._reg_periods.find(function ($registrationPeriod) { return $registrationPeriod.name() === name }) || null
+  getRegistrationPeriod(name) {
+    return this._reg_periods.find(($registrationPeriod) => $registrationPeriod.name()===name) || null
   }
   /**
    * Retrieve all registration periods of this conference.
    * @return {Array<RegistrationPeriod>} a shallow array of all registration periods of this conference.
    */
-  function getRegistrationPeriodsAll() {
+  getRegistrationPeriodsAll() {
     return this._reg_periods.slice()
   }
 
@@ -127,7 +127,7 @@ module.exports = class Conference {
    * @param  {string=} reg_period_name the name of the registration period to set current
    * @return {(Conference|RegistrationPeriod)} this conference || the set current registration period
    */
-  function currentRegistrationPeriod(reg_period_name) {
+  currentRegistrationPeriod(reg_period_name) {
     if (arguments.length) {
       this._regpd_curr_index = this._reg_periods.indexOf(this.getRegistrationPeriod(reg_period_name))
       return this
@@ -148,7 +148,7 @@ module.exports = class Conference {
    * @return {?Pass} the specified pass
    */
   getPass(name) {
-    return this._passes.find(function ($pass) { return $pass.name() === name }) || null
+    return this._passes.find(($pass) => $pass.name()===name) || null
   }
   /**
    * Retrieve all passes of this conference.
@@ -172,7 +172,7 @@ module.exports = class Conference {
    * @return {?Session} the specified session
    */
   getSession(name) {
-    return this._sessions.find(function ($session) { return $session.name() === name }) || null
+    return this._sessions.find(($session) => $session.name()===name) || null
   }
   /**
    * Retrieve all sessions of this conference.
@@ -235,7 +235,7 @@ module.exports = class Conference {
    * @return {?Person} the specified speaker
    */
   getSpeaker(id) {
-    return this._speakers.find(function ($person) { return $person.id() === id }) || null
+    return this._speakers.find(($person) => $person.id()===id) || null
   }
   /**
    * Retrieve all speakers of this conference.
@@ -260,7 +260,7 @@ module.exports = class Conference {
    * @return {?SupporterLevel} the specified supporter level
    */
   getSupporterLevel(name) {
-    return this._supporter_levels.find(function ($supporterLevel) { return $supporterLevel.name() === name }) || null
+    return this._supporter_levels.find(($supporterLevel) => $supporterLevel.name()===name) || null
   }
   /**
    * Retrieve all supporter levels of this conference.
@@ -304,7 +304,7 @@ module.exports = class Conference {
    * @return {?Supporter} the specified supporter
    */
   getSupporter(name) {
-    return this._supporters.find(function ($supporter) { return $supporter.name() === name }) || null
+    return this._supporters.find(($supporter) => $supporter.name()===name) || null
   }
   /**
    * Retrieve all supporters of this conference.
@@ -329,7 +329,7 @@ module.exports = class Conference {
    * @return {?Exhibitor} the specified exhibitor
    */
   getExhibitor(name) {
-    return this._exhibitors.find(function ($exhibitor) { return $exhibitor.name() === name }) || null
+    return this._exhibitors.find(($exhibitor) => $exhibitor.name()===name) || null
   }
   /**
    * Retrieve all exhibitors of this conference.
@@ -353,7 +353,7 @@ module.exports = class Conference {
    * @return {?ImportantDate} the specified important date
    */
   getImportantDate(name) {
-    return this._important_dates.find(function ($importantDate) { return $importantDate.name() === name }) || null
+    return this._important_dates.find(($importantDate) => $importantDate.name()===name) || null
   }
   /**
    * Retrieve all important dates of this conference.
@@ -379,7 +379,7 @@ module.exports = class Conference {
    * @return {?Person} the specified organizer
    */
   getOrganizer(id) {
-    return this._organizers.find(function ($person) { return $person.id() === id }) || null
+    return this._organizers.find(($person) => $person.id()===id) || null
   }
   /**
    * Retrieve all organizers of this conference.
@@ -459,19 +459,19 @@ module.exports = class Conference {
    * @return {Array<SessionGroup>} an array grouping the sessions together
    */
   groupSessions(starred) {
-    var all_sessions = this.getSessionsAll().filter(($session) => (starred) ? $session.isStarred() : true)
-    var $groupings = []
+    let all_sessions = this.getSessionsAll().filter(($session) => (starred) ? $session.isStarred() : true)
+    let $groupings = []
     function equalDays(date1, date2) {
       return date1.toISOString().slice(0,10) === date2.toISOString().slice(0,10)
     }
-    for (var $session of all_sessions) {
+    all_sessions.forEach(function ($session) {
       if (!$groupings.find(($sessionGroup) => equalDays($sessionGroup.dateday, $session.startDate()))) {
         $groupings.push({
           dateday : $session.startDate(),
           sessions: all_sessions.filter((_event) => equalDays(_event.startDate(), $session.startDate())),
         })
       }
-    }
+    })
     return $groupings
   }
 }

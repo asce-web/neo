@@ -22,7 +22,7 @@ module.exports = class ConfPage extends Page {
    * @param {string} key the keyword for the icon
    */
   setIcon(key) {
-    this._icon = Util.ICON_DATA.find(function ($icon) { return $icon.content === key })
+    this._icon = Util.ICON_DATA.find(($icon) => $icon.content===key)
     return this
   }
   /**

@@ -196,11 +196,7 @@ module.exports = class Person {
    * @return {string} a string representing this person’s full name
    */
   printFullName() {
-    var returned = ''
-    returned += this.name.givenName
-    returned += ' ' + this.name.additionalName
-    returned += ' ' + this.name.familyName
-    return returned
+    return `${this.name.givenName} ${this.name.additionalName} ${this.name.familyName}`
   }
 
   /**
@@ -210,7 +206,7 @@ module.exports = class Person {
    * @return {string} a string representing this person’s entire name
    */
   printEntireName() {
-    var returned = ''
+    let returned = ''
     if (this.name.honorificPrefix) returned += this.name.honorificPrefix + ' '
     returned += this.printFullName()
     if (this.name.honorificSuffix) returned += ', ' + this.name.honorificSuffix

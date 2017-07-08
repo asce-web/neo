@@ -51,7 +51,7 @@ module.exports = class RegistrationPeriod {
    * @param {string} key the keyword of the icon to set
    */
   setIcon(key) {
-    this._icon = Util.ICON_DATA.find(function (item) { return item.content === key })
+    this._icon = Util.ICON_DATA.find((item) => item.content===key)
     return this
   }
   /**

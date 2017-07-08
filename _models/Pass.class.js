@@ -47,7 +47,7 @@ module.exports = class Pass {
 
   /**
    * Add an attendee type to this pass.
-   * @param {AttendeeType} $attendeeType the attendee type to add
+   * @param {Pass.AttendeeType} $attendeeType the attendee type to add
    */
   addAttendeeType($attendeeType) {
     this._attend_types.push($attendeeType)
@@ -56,14 +56,14 @@ module.exports = class Pass {
   /**
    * Retrieve an attendee type of this pass.
    * @param  {string} name the name of the attendee type to get
-   * @return {?AtendeeType} the specified attendee type
+   * @return {?Pass.AtendeeType} the specified attendee type
    */
   getAttendeeType(name) {
-    return this._attend_types.find(function ($attendeeType) { return $attendeeType.name() === name }) || null
+    return this._attend_types.find(($attendeeType) => $attendeeType.name()===name) || null
   }
   /**
    * Retreive all attendee types of this pass.
-   * @return {Array<AttendeeType>} a shallow array of all attendee types of this pass
+   * @return {Array<Pass.AttendeeType>} a shallow array of all attendee types of this pass
    */
   getAttendeeTypesAll() {
     return this._attend_types.slice()
@@ -74,8 +74,8 @@ module.exports = class Pass {
    * @param  {boolean=true} bool if true, mark as starred
    * @return {Pass} this pass
    */
-  star(bool) {
-    this._is_starred = (arguments.length) ? bool : true
+  star(bool = true) {
+    this._is_starred = bool
     return this
   }
   /**
