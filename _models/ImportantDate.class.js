@@ -1,5 +1,4 @@
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class ImportantDate {
   /**
    * An important date.
    * Construct an ImportantDate object.
@@ -10,7 +9,7 @@ module.exports = (function () {
    * @param {string} $actioninfo.name the name of the important date
    * @param {Date} $actioninfo.start_time the start time of the important date
    */
-  function ImportantDate($actioninfo) {
+  constructor($actioninfo) {
     var self = this
     $actioninfo = $actioninfo || {} // NOTE constructor overloading
     self._NAME  = $actioninfo.name
@@ -19,12 +18,11 @@ module.exports = (function () {
     self._is_starred = false
   }
 
-  // ACCESSOR FUNCTIONS
   /**
    * Get the name of this important date.
    * @return {string} the name of this important date
    */
-  ImportantDate.prototype.name = function name() {
+  name() {
     return this._NAME
   }
 
@@ -32,7 +30,7 @@ module.exports = (function () {
    * Get the date value of this important date.
    * @return {Date} the date of this important date
    */
-  ImportantDate.prototype.startTime = function startTime() {
+  startTime() {
     return this._START || new Date()
   }
 
@@ -41,7 +39,7 @@ module.exports = (function () {
    * @param  {string=} url the url of this important date
    * @return {(ImportantDate|string)} this important date || the url of this important date
    */
-  ImportantDate.prototype.url = function url(url) {
+  url(url) {
     if (arguments.length) {
       this._url = url
       return this
@@ -53,7 +51,7 @@ module.exports = (function () {
    * @param  {boolean=true} bool if true, mark as starred
    * @return {ImportantDate} this important date
    */
-  ImportantDate.prototype.star = function star(bool) {
+  star(bool) {
     this._is_starred = (arguments.length) ? bool : true
     return this
   }
@@ -61,9 +59,7 @@ module.exports = (function () {
    * Get the starred status of this important date.
    * @return {boolean} whether this important date is starred
    */
-  ImportantDate.prototype.isStarred = function isStarred() {
+  isStarred() {
     return this._is_starred
   }
-
-  return ImportantDate
-})()
+}

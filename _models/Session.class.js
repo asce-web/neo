@@ -1,5 +1,4 @@
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class Session {
   /**
    * A program event.
    * Construct a Session object.
@@ -11,7 +10,7 @@ module.exports = (function () {
    * @param {Date} $eventinfo.start_date the start date of the session
    * @param {Date} $eventinfo.end_date the end date of the session
    */
-  function Session($eventinfo) {
+  constructor($eventinfo) {
     var self = this
     $eventinfo = $eventinfo || {} // NOTE constructor overloading
     self._NAME  = $eventinfo.name
@@ -21,12 +20,11 @@ module.exports = (function () {
     self._is_starred = false
   }
 
-  // ACCESSOR FUNCTIONS
   /**
    * Get the name of this session.
    * @return {string} the name of this session
    */
-  Session.prototype.name = function name() {
+  name() {
     return this._NAME
   }
 
@@ -34,7 +32,7 @@ module.exports = (function () {
    * Get the start date of this session.
    * @return {Date} the start date of this session
    */
-  Session.prototype.startDate = function startDate() {
+  startDate() {
     return this._START || new Date()
   }
 
@@ -42,7 +40,7 @@ module.exports = (function () {
    * Get the end date of this session.
    * @return {Date} the end date of this session
    */
-  Session.prototype.endDate = function endDate() {
+  endDate() {
     return this._END || new Date()
   }
 
@@ -51,7 +49,7 @@ module.exports = (function () {
    * @param  {string=} url the url of this session
    * @return {(Session|string)} this session || the url of this session
    */
-  Session.prototype.url = function url(url) {
+  url(url) {
     if (arguments.length) {
       this._url = url
       return this
@@ -63,7 +61,7 @@ module.exports = (function () {
    * @param  {boolean=true} bool if true, mark as starred
    * @return {Session} this session
    */
-  Session.prototype.star = function star(bool) {
+  star(bool) {
     this._is_starred = (arguments.length) ? bool : true
     return this
   }
@@ -71,9 +69,7 @@ module.exports = (function () {
    * Get the starred status of this session.
    * @return {boolean} whether this session is starred
    */
-  Session.prototype.isStarred = function isStarred() {
+  isStarred() {
     return this._is_starred
   }
-
-  return Session
-})()
+}

@@ -1,5 +1,4 @@
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class Supporter {
   /**
    * An organization supporting a conference or series of conferences.
    * Assigned at the site level, not at an individual conference.
@@ -7,7 +6,7 @@ module.exports = (function () {
    * @constructor
    * @param {string} name the name of the supporting organization
    */
-  function Supporter(name) {
+  constructor(name) {
     var self = this
     self._NAME = name
     self._url   = ''
@@ -15,12 +14,11 @@ module.exports = (function () {
     self._level = ''
   }
 
-  // ACCESSOR FUNCTIONS
   /**
    * Get the name of this supporter.
    * @return {string} the name of this supporter
    */
-  Supporter.prototype.name = function name() {
+  name() {
     return this._NAME
   }
 
@@ -29,7 +27,7 @@ module.exports = (function () {
    * @param  {string=} url the URL of this supporter
    * @return {(Supporter|string)} this supporter || the URL of this suppoter
    */
-  Supporter.prototype.url = function url(url) {
+  url(url) {
     if (arguments.length) {
       this._url = url
       return this
@@ -41,7 +39,7 @@ module.exports = (function () {
    * @param  {string=} img the image of this supporter
    * @return {(Supporter|string)} this supporter || the image of this suppoter
    */
-  Supporter.prototype.img = function img(img) {
+  img(img) {
     if (arguments.length) {
       this._img = img
       return this
@@ -54,12 +52,10 @@ module.exports = (function () {
    * @param  {string=} level a string matching a the name of a SupporterLevel; the level this supporter belongs in
    * @return {(Supporter|string)} this supporter || name of the corresponding SupporterLevel object
    */
-  Supporter.prototype.level = function level(level) {
+  level(level) {
     if (arguments.length) {
       this._level = level
       return this
     } else return this._level
   }
-
-  return Supporter
-})()
+}

@@ -1,5 +1,4 @@
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class SupporterLevel {
   /**
    * A group of supporters with a similar level of support or donation.
    * Assigned at the site level, not at an individual conference.
@@ -7,18 +6,17 @@ module.exports = (function () {
    * @constructor
    * @param {string} name the name of the level (e.g. 'Gold')
    */
-  function SupporterLevel(name) {
+  constructor(name) {
     var self = this
     self._NAME = name
     self._size = ''
   }
 
-  // ACCESSOR FUNCTIONS
   /**
    * Get the name of this supporter level.
    * @return {string} the name of this supporter level
    */
-  SupporterLevel.prototype.name = function name() {
+  name() {
     return this._NAME
   }
 
@@ -32,12 +30,10 @@ module.exports = (function () {
    * @param  {string=} str the sizing of this supporter level’s logos
    * @return {(SupporterLevel|string)} this supporter level | the sizing
    */
-  SupporterLevel.prototype.size = function size(str) {
+  size(str) {
     if (arguments.length) {
       this._size = str
       return this
     } else return this._size
   }
-
-  return SupporterLevel
-})()
+}

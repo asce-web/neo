@@ -1,7 +1,6 @@
 var Util = require('./Util.class.js')
 
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class Place {
   /**
    * A place.
    * Mostly used for hotel & venue locations.
@@ -18,7 +17,7 @@ module.exports = (function () {
    * @param {string} $placeinfo.url              the URL of homepage, eg: 'http://www.asce.org/'
    * *[1] zip, state, and country codes should match the ISO-3166 standard format. see https://en.wikipedia.org/wiki/ISO_3166
    */
-  function Place(name, $placeinfo) {
+  constructor(name, $placeinfo) {
     var self = this
     $placeinfo = $placeinfo || {} // NOTE constructor overloading
     self._NAME = name
@@ -31,63 +30,60 @@ module.exports = (function () {
     self._URL              = $placeinfo.url
   }
 
-  // ACCESSOR FUNCTIONS
   /**
    * Get the name of this place.
    * @return {string} the name of this place
    */
-  Place.prototype.name = function name() {
+  name() {
     return this._NAME
   }
   /**
    * Get the street address of this place.
    * @return {string} the street address of this place
    */
-  Place.prototype.streetAddress = function streetAddress() {
+  streetAddress() {
     return this._STREET_ADDRESS
   }
   /**
    * Get the address locality (city/town) of this place.
    * @return {string} the address locality (city/town) of this place
    */
-  Place.prototype.addressLocality = function addressLocality() {
+  addressLocality() {
     return this._ADDRESS_LOCALITY
   }
   /**
    * Get the address region (state/province) of this place.
    * @return {string} the address region (state/province) of this place
    */
-  Place.prototype.addressRegion = function addressRegion() {
+  addressRegion() {
     return this._ADDRESS_REGION
   }
   /**
    * Get the postal (zip) code of this place.
    * @return {string} the postal (zip) code of this place
    */
-  Place.prototype.postalCode = function postalCode() {
+  postalCode() {
     return this._POSTAL_CODE
   }
   /**
    * Get the country of this place.
    * @return {string} the country of this place
    */
-  Place.prototype.addressCountry = function addressCountry() {
+  addressCountry() {
     return this._ADDRESS_COUNTRY
   }
   /**
    * Get the telephone number for this place.
    * @return {string} the telephone number for this place
    */
-  Place.prototype.telephone = function telephone() {
+  telephone() {
     return this._TELEPHONE
   }
   /**
    * Get the URL for the homepage of this place.
    * @return {string} the URL for the homepage of this place
    */
-  Place.prototype.url = function url() {
+  url() {
     return this._URL
   }
-
-  return Place
-})()
+}

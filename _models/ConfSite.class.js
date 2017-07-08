@@ -2,8 +2,7 @@ var Page = require('sitepage').Page
 var Color = require('csscolor').Color
 var ConfPage = require('./ConfPage.class.js')
 
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class ConfSite extends Page {
   /**
    * A conference site.
    * A site hosting a series of conferences,
@@ -15,10 +14,10 @@ module.exports = (function () {
    * @param {string} url url of the landing page for this site
    * @param {string} slogan the tagline, or slogan, of this site
    */
-  function ConfSite(name, url, slogan) {
+  constructor(name, url, slogan) {
     var self = this
-    Page.call(self, { name: name, url: url })
-    Page.prototype.description.call(self, slogan)
+    super({ name: name, url: url })
+    super.description(slogan)
     self._logo             = ''
     self._colors           = {}
     self._conferences      = {}
@@ -26,10 +25,7 @@ module.exports = (function () {
     self._conf_prev_key   = null
     self._conf_next_key   = null
   }
-  ConfSite.prototype = Object.create(Page.prototype)
-  ConfSite.prototype.constructor = ConfSite
 
-  // ACCESSOR FUNCTIONS
   /**
    * Overwrite superclass description() method.
    * This method only gets the description, it does not set it.
@@ -37,16 +33,15 @@ module.exports = (function () {
    * @param  {*} arg any argument
    * @return {string} the description of this site
    */
-  ConfSite.prototype.description = function description(arg) {
-    return Page.prototype.description.call(this)
+  description(arg) {
+    return super.description()
   }
   /**
    * Get the slogan of this site.
    * The slogan is very brief, and is fixed for the entire series of conferences.
-   * Equivalent to calling `Page.prototype.description()`.
    * @return {string} the slogan of this site
    */
-  ConfSite.prototype.slogan = function slogan() {
+  slogan() {
     return this.description() || ''
   }
 
@@ -55,7 +50,7 @@ module.exports = (function () {
    * @param  {string=} logo url of the logo file
    * @return {(ConfSite|string)} this site || url of the logo
    */
-  ConfSite.prototype.logo = function logo(logo) {
+  logo(logo) {
     if (arguments.length) {
       this._logo = logo
       return this
@@ -68,7 +63,7 @@ module.exports = (function () {
    * @param {Color=} $secondary a Color object for the secondary color
    * @return {(ConfSite|Object)} this || a CSS style object containg custom properties and color string values
    */
-  ConfSite.prototype.colors = function colors($primary, $secondary) {
+  colors($primary, $secondary) {
     var self = this
     if (arguments.length) {
       this._colors = ConfSite.colorStyles($primary, $secondary)
@@ -82,7 +77,7 @@ module.exports = (function () {
    * @param {Conference} $conference the conference to add
    * @return {ConfSite} this site
    */
-  ConfSite.prototype.addConference = function addConference(conf_label, $conference) {
+  addConference(conf_label, $conference) {
     this._conferences[conf_label] = $conference
     return this
   }
@@ -91,7 +86,7 @@ module.exports = (function () {
    * @param  {string} conf_label key for accessing the conference, usually a year
    * @return {Conference} the specified conference
    */
-  ConfSite.prototype.getConference = function getConference(conf_label) {
+  getConference(conf_label) {
     return this._conferences[conf_label]
   }
   /**
@@ -99,7 +94,7 @@ module.exports = (function () {
    * FIXME this should return a deep clone, not a shallow clone
    * @return {Object} shallow clone of this site’s conferences object
    */
-  ConfSite.prototype.getConferencesAll = function getConferencesAll() {
+  getConferencesAll() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._conferences)
   }
@@ -112,7 +107,7 @@ module.exports = (function () {
    * @param  {string=} conf_label key for accessing the conference
    * @return {(ConfSite|Conference)} this site || the current conference
    */
-  ConfSite.prototype.currentConference = function currentConference(conf_label) {
+  currentConference(conf_label) {
     if (arguments.length) {
       this._conf_curr_key = conf_label
       return this
@@ -128,7 +123,7 @@ module.exports = (function () {
    * @param  {string=} conf_label key for accessing the conference
    * @return {(ConfSite|Conference)} this site || the previous conference
    */
-  ConfSite.prototype.prevConference = function prevConference(conf_label) {
+  prevConference(conf_label) {
     if (arguments.length) {
       this._conf_prev_key = conf_label
       return this
@@ -142,20 +137,19 @@ module.exports = (function () {
    * @param  {string=} conf_label key for accessing the conference
    * @return {(ConfSite|Conference)} this site || the next conference
    */
-  ConfSite.prototype.nextConference = function nextConference(conf_label) {
+  nextConference(conf_label) {
     if (arguments.length) {
       this._conf_next_key = conf_label
       return this
     } else return this.getConference(this._conf_next_key)
   }
 
-  // METHODS
   /**
    * Initialize this site: add the proper pages.
    * This method should only be called once; it resets pages every time called.
    * @return {ConfSite} this site
    */
-  ConfSite.prototype.init = function init() {
+  init() {
     var self = this
     function pageTitle() { return this.name() + ' | ' + self.name() }
     return self
@@ -207,7 +201,6 @@ module.exports = (function () {
       )
   }
 
-  // STATIC MEMBERS
 
   /**
    * Generate a color palette and return a style object with custom properties.
@@ -215,7 +208,7 @@ module.exports = (function () {
    * @param  {Color} $secondary the secondary color for the site
    * @return {Object} a style object containg custom properties and color string values
    */
-  ConfSite.colorStyles = function colorStyles($primary, $secondary) {
+  static colorStyles($primary, $secondary) {
     var   primary_s2  =   $primary.darken(2/3, true)
     var   primary_s1  =   $primary.darken(1/3, true)
     var   primary_t1  =   $primary.darken(1/3, true).lighten(1/3, false) // one-third to white
@@ -266,6 +259,4 @@ module.exports = (function () {
     , '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex')
     }
   }
-
-  return ConfSite
-})()
+}
