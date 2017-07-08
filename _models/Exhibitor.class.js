@@ -19,7 +19,7 @@ module.exports = class Exhibitor {
    * Get the name of this exhibitor.
    * @return {string} the name of this exhibitor
    */
-  name() {
+  get name() {
     return this._NAME
   }
 

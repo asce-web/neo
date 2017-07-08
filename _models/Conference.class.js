@@ -329,7 +329,7 @@ module.exports = class Conference {
    * @return {?Exhibitor} the specified exhibitor
    */
   getExhibitor(name) {
-    return this._exhibitors.find(($exhibitor) => $exhibitor.name()===name) || null
+    return this._exhibitors.find(($exhibitor) => $exhibitor.name===name) || null
   }
   /**
    * Retrieve all exhibitors of this conference.
