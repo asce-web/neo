@@ -353,7 +353,7 @@ module.exports = class Conference {
    * @return {?ImportantDate} the specified important date
    */
   getImportantDate(name) {
-    return this._important_dates.find(($importantDate) => $importantDate.name()===name) || null
+    return this._important_dates.find(($importantDate) => $importantDate.name===name) || null
   }
   /**
    * Retrieve all important dates of this conference.

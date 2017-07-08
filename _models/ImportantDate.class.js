@@ -20,7 +20,7 @@ module.exports = class ImportantDate {
    * Get the name of this important date.
    * @return {string} the name of this important date
    */
-  name() {
+  get name() {
     return this._NAME
   }
 
@@ -28,7 +28,7 @@ module.exports = class ImportantDate {
    * Get the date value of this important date.
    * @return {Date} the date of this important date
    */
-  startTime() {
+  get startTime() {
     return this._START || new Date()
   }
 
