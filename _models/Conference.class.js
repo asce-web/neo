@@ -148,7 +148,7 @@ module.exports = class Conference {
    * @return {?Pass} the specified pass
    */
   getPass(name) {
-    return this._passes.find(($pass) => $pass.name()===name) || null
+    return this._passes.find(($pass) => $pass.name===name) || null
   }
   /**
    * Retrieve all passes of this conference.
