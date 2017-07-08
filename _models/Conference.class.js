@@ -48,7 +48,7 @@ module.exports = class Conference {
    * Get the name of this conference.
    * @return {string} the name of this conference
    */
-  name() {
+  get name() {
     return this._NAME
   }
 
@@ -56,7 +56,7 @@ module.exports = class Conference {
    * Get the URL of this conference.
    * @return {string} the URL of this conference
    */
-  url() {
+  get url() {
     return this._URL
   }
 
@@ -66,7 +66,7 @@ module.exports = class Conference {
    * and may be changed from year to year (from conference to conference).
    * @return {string} the theme of this conference
    */
-  theme() {
+  get theme() {
     return this._THEME || ''
   }
 
@@ -74,7 +74,7 @@ module.exports = class Conference {
    * Get the start date of this conference.
    * @return {Date} the start date of this conference
    */
-  startDate() {
+  get startDate() {
     return this._START || new Date()
   }
 
@@ -82,7 +82,7 @@ module.exports = class Conference {
    * Get the end date of this conference.
    * @return {Date} the end date of this conference
    */
-  endDate() {
+  get endDate() {
     return this._END || new Date()
   }
 
@@ -93,7 +93,7 @@ module.exports = class Conference {
    * promotional and advertising purposes.
    * @return {Object} the promoted location for this conference
    */
-  promoLoc() {
+  get promoLoc() {
     return this._PROMO_LOC || {}
   }
 

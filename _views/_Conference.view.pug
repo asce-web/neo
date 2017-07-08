@@ -1,26 +1,26 @@
 mixin hero($conference)
   header.o-Runner.o-Runner--pageHeader.c-Banner.c-Banner--hero.c-ConfHed: div.o-Constrain
-    h1.c-PageTitle.c-ConfHed__Name(itemprop="name")= $conference.name()
-    meta(content=$conference.url() itemprop="url")
+    h1.c-PageTitle.c-ConfHed__Name(itemprop="name")= $conference.name
+    meta(content=$conference.url itemprop="url")
     p.o-Grid.c-ConfHed__Detail
       span.o-Grid__Item.c-ConfHed__Detail__Place.h-Block(itemprop="location")
-        +promoLoc($conference.promoLoc())
+        +promoLoc($conference.promoLoc)
       span.o-Grid__Item.c-ConfHed__Detail__Dates.h-Block
-        time(datetime=$conference.startDate() itemprop="startDate")
-          = Util.monthDay($conference.startDate())
+        time(datetime=$conference.startDate itemprop="startDate")
+          = Util.monthDay($conference.startDate)
         | &ndash;
-        time(datetime=$conference.endDate() itemprop="endDate")
-          = Util.monthDay($conference.endDate())
+        time(datetime=$conference.endDate itemprop="endDate")
+          = Util.monthDay($conference.endDate)
     p.c-ConfHed__Theme.h-Hidden-nsM(itemprop="description")
-      = $conference.theme() || '\xa0'
-      //- \xa0 == &nbsp;
+      = $conference.theme || '\xa0'
+      //- (\xa0 === &nbsp;)
     block
 
 mixin otherYear($conference)
   +highlight().c-Banner.c-ConfHed(itemscope="" itemtype="http://schema.org/Event")&attributes(attributes)
-    h1.c-ConfHed__Name(itemprop="name")= $conference.name()
-    meta(content=$conference.startDate() itemprop="startDate")
+    h1.c-ConfHed__Name(itemprop="name")= $conference.name
+    meta(content=$conference.startDate itemprop="startDate")
     p.c-ConfHed__Detail(itemprop="location")
-      +promoLoc($conference.promoLoc())
+      +promoLoc($conference.promoLoc)
     p.h-Hidden-nsM= $conference.otherYearBlurb()
     block
