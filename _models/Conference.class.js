@@ -172,7 +172,7 @@ module.exports = class Conference {
    * @return {?Session} the specified session
    */
   getSession(name) {
-    return this._sessions.find(($session) => $session.name()===name) || null
+    return this._sessions.find(($session) => $session.name===name) || null
   }
   /**
    * Retrieve all sessions of this conference.

@@ -22,7 +22,7 @@ module.exports = class Session {
    * Get the name of this session.
    * @return {string} the name of this session
    */
-  name() {
+  get name() {
     return this._NAME
   }
 
@@ -30,7 +30,7 @@ module.exports = class Session {
    * Get the start date of this session.
    * @return {Date} the start date of this session
    */
-  startDate() {
+  get startDate() {
     return this._START || new Date()
   }
 
@@ -38,7 +38,7 @@ module.exports = class Session {
    * Get the end date of this session.
    * @return {Date} the end date of this session
    */
-  endDate() {
+  get endDate() {
     return this._END || new Date()
   }
 
