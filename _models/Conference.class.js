@@ -260,7 +260,7 @@ module.exports = class Conference {
    * @return {?SupporterLevel} the specified supporter level
    */
   getSupporterLevel(name) {
-    return this._supporter_levels.find(($supporterLevel) => $supporterLevel.name()===name) || null
+    return this._supporter_levels.find(($supporterLevel) => $supporterLevel.name===name) || null
   }
   /**
    * Retrieve all supporter levels of this conference.
