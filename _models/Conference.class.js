@@ -465,10 +465,10 @@ module.exports = class Conference {
       return date1.toISOString().slice(0,10) === date2.toISOString().slice(0,10)
     }
     all_sessions.forEach(function ($session) {
-      if (!$groupings.find(($sessionGroup) => equalDays($sessionGroup.dateday, $session.startDate()))) {
+      if (!$groupings.find(($sessionGroup) => equalDays($sessionGroup.dateday, $session.startDate))) {
         $groupings.push({
-          dateday : $session.startDate(),
-          sessions: all_sessions.filter((_event) => equalDays(_event.startDate(), $session.startDate())),
+          dateday : $session.startDate,
+          sessions: all_sessions.filter((_event) => equalDays(_event.startDate, $session.startDate)),
         })
       }
     })
