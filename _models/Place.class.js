@@ -32,56 +32,56 @@ module.exports = class Place {
    * Get the name of this place.
    * @return {string} the name of this place
    */
-  name() {
+  get name() {
     return this._NAME
   }
   /**
    * Get the street address of this place.
    * @return {string} the street address of this place
    */
-  streetAddress() {
+  get streetAddress() {
     return this._STREET_ADDRESS
   }
   /**
    * Get the address locality (city/town) of this place.
    * @return {string} the address locality (city/town) of this place
    */
-  addressLocality() {
+  get addressLocality() {
     return this._ADDRESS_LOCALITY
   }
   /**
    * Get the address region (state/province) of this place.
    * @return {string} the address region (state/province) of this place
    */
-  addressRegion() {
+  get addressRegion() {
     return this._ADDRESS_REGION
   }
   /**
    * Get the postal (zip) code of this place.
    * @return {string} the postal (zip) code of this place
    */
-  postalCode() {
+  get postalCode() {
     return this._POSTAL_CODE
   }
   /**
    * Get the country of this place.
    * @return {string} the country of this place
    */
-  addressCountry() {
+  get addressCountry() {
     return this._ADDRESS_COUNTRY
   }
   /**
    * Get the telephone number for this place.
    * @return {string} the telephone number for this place
    */
-  telephone() {
+  get telephone() {
     return this._TELEPHONE
   }
   /**
    * Get the URL for the homepage of this place.
    * @return {string} the URL for the homepage of this place
    */
-  url() {
+  get url() {
     return this._URL
   }
 }

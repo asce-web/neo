@@ -28,6 +28,7 @@ module.exports = class ConfSite extends Page {
   /**
    * Overwrite superclass description() method.
    * This method only gets the description, it does not set it.
+   * TODO: update this to an ES6 getter once {@link Page#description()} is updated.
    * @override
    * @param  {*} arg any argument
    * @return {string} the description of this site
@@ -40,7 +41,7 @@ module.exports = class ConfSite extends Page {
    * The slogan is very brief, and is fixed for the entire series of conferences.
    * @return {string} the slogan of this site
    */
-  slogan() {
+  get slogan() {
     return this.description() || ''
   }
 
@@ -154,7 +155,7 @@ module.exports = class ConfSite extends Page {
       .removeAll() //- NOTE IMPORTANT
       .add(new ConfPage('Home', 'index.html')
         .title(self.name())
-        .description(self.slogan())
+        .description(self.slogan)
         .setIcon('home')
       )
       .add(new ConfPage('Registration', 'registration.html')
