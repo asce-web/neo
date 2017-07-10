@@ -2,8 +2,6 @@
 /*################################*\
     neo  |  _o-ListAction.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
 @import (reference) url('__settings.less');
 
 
@@ -16,18 +14,18 @@
 // ^updated
 // : 2016-07-12
 .o-ListAction {
-  .flexbox();
+  display: flex;
   line-height: inherit; // if using on a text-level element
-  .justify-content(space-around);
+  justify-content: space-around;
   text-align: center;
   @media screen and (max-width: 44.999em) {
-    .flex-direction(column);
+    flex-direction: column;
   }
   @media screen and (min-width: 45em) {
-    .flex-wrap(nowrap);
+    flex-wrap: nowrap;
   }
 }
 
 .o-ListAction__Item {
-  .flex(1);
+  flex: 1;
 }

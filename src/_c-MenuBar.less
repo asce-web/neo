@@ -2,11 +2,7 @@
 /*################################*\
     neo  |  _c-MenuBar.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transform-origin.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.transitions.less');
 @import (reference) url('__settings.less');
 @import (reference) url('__tool.menufont.less');
 
@@ -24,7 +20,7 @@
 // 2016-10-13
 @p-trans_dura: 250ms;
 .c-MenuBar {
-  .justify-content(flex-start); // override .o-Flex `space-between`
+  justify-content: flex-start; // override .o-Flex `space-between`
   margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
   .menufont();
   color: @g-color-gray_lt-tint2; // HACK fallback
@@ -36,7 +32,7 @@
 }
 
 .c-MenuBar__Item {
-  .flex(0 0 auto);
+  flex: 0 0 auto;
   .transition(background-color @p-trans_dura);
   &:hover,
   &._hover {
@@ -47,7 +43,7 @@
   }
   &:not(:hover) .c-MenuBar__Sub,
   &:not(:hover) .c-MenuBar__Sub-sM {
-    .transform(scale(0));
+    transform: scale(0);
     opacity: 0;
   }
 }
@@ -79,13 +75,13 @@
 .c-MenuBar__Sub {
   position: absolute; // inside the .c-MenuBar
   z-index: 1; // atop of c-Banner which is relative
-  .transform-origin(left top);
+  transform-origin: left top;
   padding: @g-boxpadd_mill;
   font-weight: 400;     // override `.menufont();`
   text-transform: none; // override `.menufont();`
   background-color: @g-color-gray_lt-tint2; // HACK fallback
   background-color: var(--color-gray_lt-tint2);
-  .transitions(@g-prefix_transform, opacity; @p-trans_dura);
+  .transitions(transform, opacity; @p-trans_dura);
 }
 
 .c-MenuBar__Sub__Item {

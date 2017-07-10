@@ -2,10 +2,7 @@
 /*################################*\
     neo  |  _c-SocialList.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.filter.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.transitions.less');
 @import (reference) url('__settings.less');
 @import (reference) url('__tool.logo.less');
 
@@ -28,7 +25,7 @@
   margin-right: auto;
   text-align: center;
   &:not(.c-SocialList--speaker) {
-    .justify-content(space-around);
+    justify-content: space-around;
   }
 }
 
@@ -82,14 +79,14 @@
 }
 
 .c-SocialList__Item {
-  .flex(0);
+  flex: 0;
 }
 
 .c-SocialList__Link {
   width:  var(--iconsize);
   height: var(--iconsize);
   .logo();
-  .transitions(background-color, @g-prefix_filter; 500ms); // override base `a`
+  .transitions(background-color, filter; 500ms); // override base `a`
   .c-SocialList--footer &,
   .c-SocialList--speaker & {
     &:hover,
@@ -97,7 +94,7 @@
     &._hover,
     &:active,
     &._active {
-      .filter(blur(2px));
+      filter: blur(2px);
     }
   }
   .c-SocialList--highlight & {

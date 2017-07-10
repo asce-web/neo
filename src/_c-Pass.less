@@ -2,7 +2,6 @@
 /*################################*\
     neo  |  _c-Pass.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
 @import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
 @import (reference) url('__settings.less');
 @import (reference) url('__tool.ticket.less');
@@ -113,7 +112,7 @@
     padding-top: 0; // override base h1
   }
   .c-Pass__Foot & {
-    .flex(1); // override Flex__Item (auto)
+    flex: 1; // override Flex__Item (auto)
     &:not(:last-child) {
       position: relative; // for the ::after
       padding-right: @g-boxpadd_micr_h;

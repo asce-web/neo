@@ -21,13 +21,13 @@
   margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
   .menufont();
   @media screen and (max-width: 44.999em) {
-    .flex-direction(column);
+    flex-direction: column;
     .font-size-mod(@p-fz);
   }
 }
 
 .c-Sitemap__Item {
-  .flex(0 0 auto);
+  flex: 0 0 auto;
   @media screen and (max-width: 44.999em) {
     &:not(:last-child) {
       margin-bottom: (@p-fz * @g-vru); // HACK fallback // uses module vru

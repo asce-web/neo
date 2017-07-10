@@ -2,8 +2,7 @@
 /*################################*\
     neo  |  _o-Drawer.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.transitions.less');
 @import (reference) url('__settings.less');
 
 
@@ -24,12 +23,12 @@
 // ^updated
 // 2016-10-13
 .o-Drawer {
-  .transitions(@g-prefix_transform, opacity; @p-trans_dura);
+  .transitions(transform, opacity; @p-trans_dura);
   // animation for *closing* drawer
-  .transition-timing-function(@google-accel);
-  // .transition-timing-function(@g-accel_hard);
-  // .transition-timing-function(@g-accel_dram);
-  // .transition-timing-function(@g-decel_extm);
+  transition-timing-function: @google-accel;
+  // transition-timing-function: @g-accel_hard;
+  // transition-timing-function: @g-accel_dram;
+  // transition-timing-function: @g-decel_extm;
   @media screen and (max-width: 44.999em) {
     @width: 12rem;
     position: fixed;
@@ -45,12 +44,12 @@
 }
 .o-Drawer--open {
   @media screen and (max-width: 44.999em) {
-    .transform(translateX(-100%));
+    transform: translateX(-100%);
     opacity: 1;
     // animation for *opening* drawer
-    .transition-timing-function(@google-decel);
-    // .transition-timing-function(@g-decel_hard);
-    // .transition-timing-function(@g-decel_dram);
-    // .transition-timing-function(@g-accel_extm);
+    transition-timing-function: @google-decel;
+    // transition-timing-function: @g-decel_hard;
+    // transition-timing-function: @g-decel_dram;
+    // transition-timing-function: @g-accel_extm;
   }
 }

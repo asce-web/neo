@@ -2,7 +2,6 @@
 /*################################*\
     neo  |  _c-TimeBlock.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
 @import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
 
 
@@ -31,11 +30,11 @@
   padding-bottom: (2*@g-vru); // HACK fallback
   padding-bottom: calc(~'2 * var(--vru)');
   @media not all and (min-width: 30em) {
-    .flex(100%);
+    flex: 100%;
     padding-left: @g-boxpadd_norm_h;
   }
   @media screen and (min-width: 30em) {
-    .flex(50%);
+    flex: 50%;
     max-width: 50%;
   }
 }

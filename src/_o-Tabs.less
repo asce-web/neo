@@ -2,12 +2,6 @@
 /*################################*\
     neo  |  _o-Tabs.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.align-content.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.align-items.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
 @import (reference) url('__settings.less');
 
 
@@ -26,19 +20,19 @@
 // 2017-02-08
 @p-transdura: 500ms;
 .o-Tabs {
-  .flex-wrap(wrap);
-  .justify-content(center); // override `.o-Flex`
-  .align-content(flex-start); // push flex items to top
-  .align-items(flex-start); // minimize height of flex items
+  flex-wrap: wrap;
+  justify-content: center; // override `.o-Flex`
+  align-content: flex-start; // push flex items to top
+  align-items: flex-start; // minimize height of flex items
   position: relative;
   // overflow: hidden;
-  .transition(height @p-transdura); // height changes as panel
+  transition: height @p-transdura; // height changes as panel
 }
 
 .o-Tabs__Tab,
 .o-Tabs__Panel {
-  .flex(100%); // override `.o-Flex__Item`
-  .transitions(@g-prefix_transform; @p-transdura);
+  flex: 100%; // override `.o-Flex__Item`
+  transition: transform @p-transdura;
 }
 
 // A tab. Contains a label or heading of the panel.
@@ -52,13 +46,13 @@
 .o-Tabs__Tab {
   text-align: center;
   @media screen and (min-width: 30em) {
-    .flex(1); // equal "main size" for all items
+    flex: 1; // equal "main size" for all items
   }
 }
 // this class should be added via script, NOT manually!
 // .o-Tabs__Tab:has(.o-Tabs__Check:checked), // TODO `:has()` is unsupported
 .o-Tabs__Tab--selected {
-  .transform(scale(1.2));
+  transform: scale(1.2);
 }
 
 .o-Tabs__Check {
@@ -83,19 +77,19 @@
   position: absolute;
   left: 0; right: 0;
   bottom: 0;
-  .flex-order(1);
+  flex-order: 1;
 }
 .o-Tabs__Panel--shown {
 }
 .o-Tabs__Panel--hiddenBefore {
-  .transform(translateY(-100%) scaleY(0));
+  transform: translateY(-100%) scaleY(0);
   @media screen and (min-width: 30em) {
-    .transform(translateX(-100%) scaleX(0));
+    transform: translateX(-100%) scaleX(0);
   }
 }
 .o-Tabs__Panel--hiddenAfter {
-  .transform(translateY(100%) scaleY(0));
+  transform: translateY(100%) scaleY(0);
   @media screen and (min-width: 30em) {
-    .transform(translateX(100%) scaleX(0));
+    transform: translateX(100%) scaleX(0);
   }
 }

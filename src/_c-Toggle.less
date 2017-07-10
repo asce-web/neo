@@ -2,9 +2,7 @@
 /*################################*\
     neo  |  _c-Toggle.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transform-origin.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.transitions.less');
 @import (reference) url('__settings.less');
 
 
@@ -64,20 +62,20 @@
 .c-Toggle__Viz__Bar {
   fill: @g-color-gray_lt-tint2; // HACK fallback
   fill: var(--color-gray_lt-tint2);
-  .transform-origin(center);
-  .transitions(@g-prefix_transform, fill; @p-trans_dura);
+  transform-origin: center;
+  .transitions(transform, fill; @p-trans_dura);
   &:nth-child(1) {}
-  &:nth-child(2) { .transform(translate(0,-5px)); }
-  &:nth-child(3) { .transform(translate(0,5px)); }
+  &:nth-child(2) { transform: translate(0,-5px); }
+  &:nth-child(3) { transform: translate(0,5px); }
   .c-Toggle__Check:checked ~ .c-Toggle__Viz & {
     &:nth-child(1) {
-      .transform(scale((24/18),12));
+      transform: scale((24/18),12); // REVIEW magic numbers
       fill: @g-color-gray_dk; // HACK fallback
       fill: var(--color-gray_dk);
     }
     &:nth-child(2),
-    &:nth-child(3) { .transition-delay(0.5*@p-trans_dura); }
-    &:nth-child(2) { .transform(rotate(45deg)); }
-    &:nth-child(3) { .transform(rotate(-45deg)); }
+    &:nth-child(3) { transition-delay: (0.5*@p-trans_dura); }
+    &:nth-child(2) { transform: rotate(45deg); }
+    &:nth-child(3) { transform: rotate(-45deg); }
   }
 }

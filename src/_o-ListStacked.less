@@ -15,22 +15,22 @@
 // ^updated
 // 2016-05-01
 .o-ListStacked {
-  .flexbox();
+  display: flex;
   line-height: inherit; // if using on a text-level element
-  .flex-wrap(wrap);
-  .justify-content(space-around);
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 .o-ListStacked__Item {
   .flex(0 100%);
   margin-bottom: @g-vru; // HACK fallback
   margin-bottom: var(--vru);
   @media screen and (min-width: 30em) {
-    .flex-basis(calc(100%/2~' - '0.5rem));
+    flex-basis: calc(100%/2~' - '0.5rem);
   }
   @media screen and (min-width: 45em) {
-    .flex-basis(calc(100%/3~' - '1rem));
+    flex-basis: calc(100%/3~' - '1rem);
   }
   @media screen and (min-width: 90em) {
-    .flex-basis(calc(100%/4~' - '2rem));
+    flex-basis: calc(100%/4~' - '2rem);
   }
 }

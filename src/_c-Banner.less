@@ -2,7 +2,6 @@
 /*################################*\
     neo  |  _c-Banner.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.filter.less');
 @import (reference) url('__settings.less');
 
 
@@ -65,7 +64,7 @@
     left: 0; right: 0; top: 0; bottom: 0;
     z-index: -1; // pseudo is painted after content; must be stacked lower
     .p-background-settings();
-    .filter(blur(4px));
+    filter: blur(4px);
   }
 }
 
