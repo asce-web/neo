@@ -25,7 +25,7 @@
   margin-left:  auto;
   margin-right: auto;
   color: @g-color-gray_dk-shade2; // HACK fallback
-  color: var(--color-gray_dk-shade2); // override if inside Banner
+  color: var(--color-gray_dk-shade2, @g-color-gray_dk-shade2); // override if inside Banner
 }
 
 @p-rw: 1px;
@@ -34,8 +34,8 @@
 .c-DateBlock > .c-DateBlock__Desc {
   background-color: @g-color-gray_lt-tint2; // HACK fallback
   border-color: @g-color-gray_dk; // HACK fallback
-  background-color: var(--color-gray_lt-tint2);
-  border-color: var(--color-gray_dk);
+  background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+  border-color: var(--color-gray_dk, @g-color-gray_dk);
   @media screen                       { padding: @g-boxpadd_micr; }
   @media screen and (min-width: 30em) { padding: @g-boxpadd_mill; }
   @media screen and (min-width: 45em) { padding: @g-boxpadd_norm; }
