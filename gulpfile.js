@@ -39,13 +39,17 @@ gulp.task('pug:docs', function () {
 
 gulp.task('pug:all', ['pug:index', 'pug:docs'])
 
-gulp.task('lessc:neo', function () {
+gulp.task('lessc:core', function () {
   return gulp.src('neo.less')
     .pipe(less())
     .pipe(autoprefixer({
       grid: true,
       cascade: false,
     }))
+    .pipe(gulp.dest('./'))
+    .pipe(sourcemaps.init())
+    .pipe(clean_css())
+    .pipe(sourcemaps.write('./')) // write to an external .map file
     .pipe(gulp.dest('./'))
 })
 
@@ -59,24 +63,6 @@ gulp.task('lessc:docs', function () {
     .pipe(gulp.dest('./docs/styles/'))
 })
 
-gulp.task('lessc:all', ['lessc:neo', 'lessc:docs'])
+gulp.task('lessc:all', ['lessc:core', 'lessc:docs'])
 
-gulp.task('minify:neo', ['lessc:neo'], function () {
-  return gulp.src('neo.css')
-    .pipe(sourcemaps.init())
-    .pipe(clean_css())
-    .pipe(sourcemaps.write('./')) // write to an external .map file
-    .pipe(gulp.dest('./'))
-})
-
-gulp.task('minify:docs', ['lessc:docs'], function () {
-  return gulp.src('./docs/styles/docs.css')
-    .pipe(sourcemaps.init())
-    .pipe(clean_css())
-    .pipe(sourcemaps.write('./')) // write to an external .map file
-    .pipe(gulp.dest('./docs/styles/'))
-})
-
-gulp.task('minify:all', ['minify:neo', 'minify:docs'])
-
-gulp.task('build', ['pug:all', 'lessc:all', 'minify:all'])
+gulp.task('build', ['pug:all', 'lessc:all'])
