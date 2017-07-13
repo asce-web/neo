@@ -13,5 +13,9 @@
     "../3rd_modules/glyphicons_pro_1_9_2/glyphicons-halflings/web/html_css/css/glyphicons-halflings.css",
     "../3rd_modules/glyphicons_pro_1_9_2/glyphicons-social/web/html_css/css/glyphicons-social.css",
     "../neo.css"
+  ],
+  "js": [
+    "https://code.jquery.com/jquery-2.2.3.min.js",
+    "../scripts/o-Tabs.js"
   ]
 }
