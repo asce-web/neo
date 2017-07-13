@@ -5,20 +5,38 @@
 @import (reference) url('__settings.less');
 
 
-// An action list is a list of (typically 3 or less) actionable choices a user can make.
+// The Action List
 //
-// ^subcomponents
-// __Item - an item in the list
-// ^author
-// : Chris Harvey
-// ^updated
-// : 2016-07-12
+// An Action List is a list of (typically 3 or fewer) actionable choices a user can make,
+// such as a list of links or buttons. However, this Object does not discriminate
+// its contents: it can be used to hold static items as well.
+//
+// This Object differs from the plain List Object in the way it responds to screen size.
+// The list items are stacked vertically by default and become horizontal
+// on Medium screens and larger.
+// When displayed horizontally, the items have equal width
+// (unlike Flex Object items, whose widths are automatically sized).
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-07-12</time></dd>
+// </dl></header>
+//
+// Markup:
+// <ul class="o-List o-ListAction">
+//   <li class="o-List__Item o-ListAction__Item">Register Now</li>
+//   <li class="o-List__Item o-ListAction__Item">Read Specs</li>
+//   <li class="o-List__Item o-ListAction__Item">Contact Us</li>
+// </ul>
+//
+// Weight: 4
+//
+// Styleguide Objects.ListAction
 .o-ListAction {
   display: flex;
   line-height: inherit; // if using on a text-level element
   justify-content: space-around;
   text-align: center;
-  @media screen and (max-width: 44.999em) {
+  @media not all and (min-width: 45em) {
     flex-direction: column;
   }
   @media screen and (min-width: 45em) {
