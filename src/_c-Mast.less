@@ -20,14 +20,14 @@
   .font-size-mod(14/16);
   background-color: @g-color-gray_dk; // HACK fallback
   color: @g-color-gray_lt-tint2; // HACK fallback
-  background-color: var(--color-gray_dk);
-  color: var(--color-gray_lt-tint2);
+  background-color: var(--color-gray_dk, @g-color-gray_dk);
+  color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
 }
 
 .c-Mast--menu,
 .c-Mast--sitemap {
   background-color: @g-color-primary; // HACK fallback
-  background-color: var(--color-primary);
+  background-color: var(--color-primary, @g-color-primary);
 }
 
 .c-Mast--sitemap,
@@ -46,11 +46,11 @@
 
 
 .c-Mast--head {
-  background: linear-gradient(to right, var(--color-gray_dk), var(--color-gray_dk-tint1));
+  background: linear-gradient(to right, var(--color-gray_dk, @g-color-gray_dk), var(--color-gray_dk-tint1, @g-color-gray_dk-tint1));
 }
 
 .c-Mast--menu {
-  background: linear-gradient(to right, var(--color-primary-shade1), var(--color-primary));
+  background: linear-gradient(to right, var(--color-primary-shade1, @g-color-primary-shade1), var(--color-primary, @g-color-primary));
 }
 
 .c-Mast--sitemap {
@@ -58,7 +58,7 @@
 
 .c-Mast--foot {
   text-align: center;
-  background: linear-gradient(to bottom, var(--color-gray_dk), var(--color-gray_dk-shade1));
+  background: linear-gradient(to bottom, var(--color-gray_dk, @g-color-gray_dk), var(--color-gray_dk-shade1, @g-color-gray_dk-shade1));
 }
 
 

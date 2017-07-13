@@ -59,22 +59,22 @@
   // generic button color styles
   background-color: @g-color-gray_lt; // HACK fallback
   color: @g-color-gray_dk-shade2; // HACK fallback
-  background-color: var(--button-color);
-  color: var(--button-text);
+  background-color: var(--button-color, @g-color-gray_lt);
+  color: var(--button-text, @g-color-gray_dk-shade2);
   &:hover,
   &:focus,
   &._hover {
     background-color: @g-color-gray_lt-tint1; // HACK fallback
     // color: @g-color-gray_dk-shade2; // HACK fallback // don’t need: inherits from above
-    background-color: var(--button-color-hover);
-    color: var(--button-text-hover);
+    background-color: var(--button-color-hover, @g-color-gray_lt-tint1);
+    color: var(--button-text-hover, @g-color-gray_dk-shade2);
   }
   &:active,
   &._active {
     background-color: @g-color-gray_lt-shade1; // HACK fallback
     // color: @g-color-gray_dk-shade2; // HACK fallback // don’t need: inherits from above
-    background-color: var(--button-color-active);
-    color: var(--button-text-active);
+    background-color: var(--button-color-active, @g-color-gray_lt-shade1);
+    color: var(--button-text-active, @g-color-gray_dk-shade2);
   }
   a&:not([href]),
   button&:disabled {
