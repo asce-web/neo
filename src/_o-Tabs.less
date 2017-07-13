@@ -5,19 +5,67 @@
 @import (reference) url('__settings.less');
 
 
-// A block containing a list of tabs and corresponding panels.
-// The tabs and corresponding panels follow subsequently, as so:
-// > tab0, panel0, tab1, panel1, tab2, panel2, etc.
+// The Tabs Object
 //
-// ^subcomponents
-// __Tab   - tab for a panel
-//   --selected - style for tab that is selected via `__Check` subcomponent
-// __Check - a radio button in the Tab, used for selecting the desired panel
-// __Panel - panel containing content
-// ^author
-// Chris Harvey
-// ^updated
-// 2017-02-08
+// The Tabs Object contains a series of corresponding tabs and panels.
+// It is similar to a carousel, but only one panel is shown at a time and
+// there is no timed automatic progression.
+//
+// Tabs and corresponding panels follow subsequently, as so:
+// <figure>tab-0, panel-0, tab-1, panel-1, tab-2, panel-2, etc.</figure>
+//
+// Each Tabs Object must have a unique id for the carousel effect to work properly.
+// Enable Javascript to view animation effects.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-02-08</time></dd>
+// </dl></header>
+//
+// Markup:
+// <dl class="o-Flex o-Tabs" id="demotabs">
+//   <!-- NOTE:
+//     - The value of `[id]` is the unique id of the Tabs Object.
+//       It may not be used as the `[id]` of any other element on the page.
+//       It is used on the `[name]` attribute for each of its tabs,
+//       creating a radio button group.
+//   -->
+//   <dt class="o-Flex__Item o-Tabs__Tab"><!-- (see Tab subcomponent below) --><label class="h-Block"><input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs" value="0" checked=""/>tab 0</label></dt>
+//   <dd class="o-Flex__Item o-Tabs__Panel">panel 0</dd>
+//   <dt class="o-Flex__Item o-Tabs__Tab"><!-- (see Tab subcomponent below) --><label class="h-Block"><input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs" value="1"/>tab 1</label></dt>
+//   <dd class="o-Flex__Item o-Tabs__Panel">panel 1</dd>
+//   <dt class="o-Flex__Item o-Tabs__Tab"><!-- (see Tab subcomponent below) --><label class="h-Block"><input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs" value="2"/>tab 2</label></dt>
+//   <dd class="o-Flex__Item o-Tabs__Panel">panel 2</dd>
+// </dl>
+//
+// Weight: 6
+//
+// Styleguide Objects.Tabs
+
+
+// Tab
+//
+// The Tab subcomponent is a child of the Tabs Object.
+// It represents a tab for a panel, and semantically consists of a radio button
+// (although it may not appear anything like a radio button).
+//
+// Markup:
+// <dt class="o-Flex__Item o-Tabs__Tab {{ modifier_class }}">
+//   <label class="h-Block">
+//     <input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs1" value="0" checked=""/>
+//     <!-- NOTE:
+//       - The value of `[name]` is the id of the container Tabs Object
+//       - The value of `[value]` is the ordinal position of the tab. If it is first, use 0.
+//       - Use `[checked=""]` only if the tab should be selected on page load.
+//         Only one input in a radio button group can have this.
+//     -->
+//     tab 0
+//   </label>
+// </dt>
+//
+// .o-Tabs__Tab--selected - a tab that is selected
+//
+// Styleguide Objects.Tabs.Tab
+
 @p-transdura: 500ms;
 .o-Tabs {
   flex-wrap: wrap;
@@ -77,7 +125,7 @@
   position: absolute;
   left: 0; right: 0;
   bottom: 0;
-  flex-order: 1;
+  order: 1;
 }
 .o-Tabs__Panel--shown {
 }
