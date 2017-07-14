@@ -38,11 +38,14 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
     )
     .add(new Page({ name: 'Objects', url: '/docs/obj.html' })
       .add(new Page({ name: 'The Runner Object', url: '/docs/obj.html#runner-object' }))
+
+      // TODO leaving here for orgs’ docs internal links
       .add(new Page({ name: 'Constrain'        , url: '/docs/obj.html#constrain' }))
       .add(new Page({ name: 'The Float Grid'   , url: '/docs/obj.html#float-grid' }))
       .add(new Page({ name: 'The Action List'  , url: '/docs/obj.html#action-list' }))
       .add(new Page({ name: 'The Stacked List' , url: '/docs/obj.html#stacked-list' }))
       .add(new Page({ name: 'The Tabs Object'  , url: '/docs/obj.html#tabs-object' }))
+
       .add(new Page({ name: 'The Drawer Object', url: '/docs/obj.html#drawer-object' }))
     )
     .add(new Page({ name: 'Components', url: '/docs/comp.html' })

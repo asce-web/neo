@@ -11,21 +11,10 @@ block append main
     for more information.
   +newSection(2, Docs.DOCS.find('/docs/obj.html#runner-object'))
     include _includes/_obj.runner-object.pug
-  +newSection(2, Docs.DOCS.find('/docs/obj.html#constrain'))
-    include _includes/_obj.constrain.pug
-  +newSection(2, Docs.DOCS.find('/docs/obj.html#float-grid'))
-    include _includes/_obj.float-grid.pug
-  +newSection(2, Docs.DOCS.find('/docs/obj.html#action-list'))
-    include _includes/_obj.action-list.pug
-  +newSection(2, Docs.DOCS.find('/docs/obj.html#stacked-list'))
-    include _includes/_obj.stacked-list.pug
-  +newSection(2, Docs.DOCS.find('/docs/obj.html#tabs-object'))
-    include _includes/_obj.tabs-object.pug
   +newSection(2, Docs.DOCS.find('/docs/obj.html#drawer-object'))
     include _includes/_obj.drawer-object.pug
 
 block append scripts
-  script(src="/scripts/o-Tabs.js")
   script.
     $('#drawer-check').change(function () {
       $(this).parents('.docs-c-Togglable').siblings('.o-Drawer').toggleClass('o-Drawer--open')

@@ -15,6 +15,21 @@
 //
 // Each Tabs Object must have a unique id for the carousel effect to work properly.
 // Enable Javascript to view animation effects.
+//
+// Use in Pug:
+// <pre>
+//   include /_views/_o-Tabs.view.pug
+//   +tabs(3)#demotabs
+//     //- where:
+//       - `3` is the number of tabs you want
+//       - `#demotabs` is your ID for the container
+//         (also used as the name of the radio button group)
+//     mixin tab(i)
+//      //- define your own tab markup here, using `i` as the index
+//     mixin panel(i)
+//      //- define your own panel markup here, using `i` as the index
+// </pre>
+//
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
 //   <dt>updated</dt> <dd><time>2017-02-08</time></dd>
@@ -23,7 +38,7 @@
 // Markup:
 // <dl class="o-Flex o-Tabs" id="demotabs">
 //   <!-- NOTE:
-//     - The value of `[id]` is the unique id of the Tabs Object.
+//     - The value of `[id]` is the unique ID of the Tabs Object.
 //       It may not be used as the `[id]` of any other element on the page.
 //       It is used on the `[name]` attribute for each of its tabs,
 //       creating a radio button group.
@@ -52,10 +67,10 @@
 //   <label class="h-Block">
 //     <input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs1" value="0" checked=""/>
 //     <!-- NOTE:
-//       - The value of `[name]` is the id of the container Tabs Object
+//       - The value of `[name]` is the ID of the container Tabs Object
 //       - The value of `[value]` is the ordinal position of the tab. If it is first, use 0.
 //       - Use `[checked=""]` only if the tab should be selected on page load.
-//         Only one input in a radio button group can have this.
+//         Exactly one input in a radio button group must have this.
 //     -->
 //     tab 0
 //   </label>
