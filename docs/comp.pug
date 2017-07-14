@@ -4,8 +4,6 @@ block append vars
   - var page = Docs.DOCS.find('/docs/comp.html')
 
 block append main
-  +newSection(2, Docs.DOCS.find('/docs/comp.html#site-title'))
-    include _includes/_comp.site-title.pug
   +newSection(2, Docs.DOCS.find('/docs/comp.html#mobile-menu'))
     include _includes/_comp.mobile-menu.pug
   +newSection(2, Docs.DOCS.find('/docs/comp.html#menu-bar'))
