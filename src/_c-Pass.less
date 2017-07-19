@@ -4,25 +4,75 @@
 \*################################*/
 
 
-// A listing of prices for one Pass Type
-// (e.g. Student, Speaker, Standard, etc.)
+// The Pass Component
 //
-// ^subcomponents
-// __Head   - pass header. contains heading and description
-// __Body   - pass body containing current registration period
-// __Foot   - pass footer containing other registration periods
-// __Hn     - name of pass type (e.g. "Standard Pass")
-// __Desc   - description of pass type (e.g. "Undergraduates 18–24")
-// __Fine   - fine print (additional to description)
-// __Period - a registration period. see below.
-// __Attendee - attendee type (membership status)
-// __Price    - any price for any pass
-//   __Price--featured - highlighted price of some sort (usually membership price)
+// A listing of prices for one Pass Type (e.g. Student, Speaker, Standard, etc.).
 //
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-10-14
+// Use with Pug:
+// <pre>
+//   include /_views/_Pass.view.pug
+//   +pass(
+//     new Pass('Speaker Pass')
+//       .description('Speakers and Presenters')
+//       .addAttendeeType(new Pass.AttendeeType('Member', true))
+//       .addAttendeeType(new Pass.AttendeeType('Non-Member'))
+//       .fineprint('Side note or fine print goes here. Only plain text is allowed.'),
+//     new Conference()
+//       .addRegistrationPeriod(new RegistrationPeriod({ name: 'Early Bird' }))
+//       .addRegistrationPeriod(new RegistrationPeriod({ name: 'Advance' }))
+//       .addRegistrationPeriod(new RegistrationPeriod({ name: 'Onsite' }))
+//       .currentRegistrationPeriod('Advance')
+//   )
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-10-14</time></dd>
+// </dl></header>
+//
+// Markup:
+// <article class="c-Pass">
+//   <header class="c-Pass__Head">
+//     <h1 class="c-Pass__Hn">Speaker Pass</h1>
+//     <p class="c-Pass__Desc">
+//       Speakers and Presenters
+//       <small class="c-Pass__Fine h-Block">Side note or fine print goes here. Only plain text is allowed.</small>
+//     </p>
+//   </header>
+//   <section class="c-Pass__Body c-Pass__Period">
+//     <h1 class="c-Pass__Period__Hn">Advance</h1>
+//     <dl>
+//       <dt class="c-Pass__Attendee">Member</dt>
+//       <dd class="c-Pass__Price c-Pass__Price--featured">$0</dd>
+//       <dt class="c-Pass__Attendee">Non-Member</dt>
+//       <dd class="c-Pass__Price">$0</dd>
+//     </dl>
+//   </section>
+//   <footer class="o-Flex c-Pass__Foot">
+//     <section class="o-Flex__Item c-Pass__Period">
+//       <h1 class="c-Pass__Period__Hn">Early Bird</h1>
+//       <dl>
+//         <dt class="c-Pass__Attendee">Member</dt>
+//         <dd class="c-Pass__Price">$0</dd>
+//         <dt class="c-Pass__Attendee">Non-Member</dt>
+//         <dd class="c-Pass__Price">$0</dd>
+//       </dl>
+//     </section>
+//     <section class="o-Flex__Item c-Pass__Period">
+//       <h1 class="c-Pass__Period__Hn">Onsite</h1>
+//       <dl>
+//         <dt class="c-Pass__Attendee">Member</dt>
+//         <dd class="c-Pass__Price">$0</dd>
+//         <dt class="c-Pass__Attendee">Non-Member</dt>
+//         <dd class="c-Pass__Price">$0</dd>
+//       </dl>
+//     </section>
+//   </footer>
+// </article>
+//
+// Weight: 9
+//
+// Styleguide Components.Pass
 .c-Pass {
   .ticket();
   text-align: center;
@@ -75,32 +125,33 @@
   white-space: initial;
 }
 
-.c-Pass__Attendee {
-  &::after {
-    content: ':\0020';
-  }
-}
-
-.c-Pass__Price {
-}
-
-.c-Pass__Price--featured {
-  .font-size-el(2; 2);
-  font-weight: 600;
-  color: @g-color-primary; // HACK fallback
-  color: var(--color-primary, @g-color-primary);
-}
 
 
-// A registration period containing a heading and a price listing.
-// A subcomponent of `.c-Pass`.
+// Pass Periods
 //
-// ^subcomponents
-// __Hn              - the name of the registration period
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-07-15
+// A registration period containing a heading and a price listing.
+// A subcomponent of <code>.c-Pass</code>.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-07-15</time></dd>
+// </dl></header>
+//
+// Markup:
+// <section class="o-Flex__Item {{ modifier_class }} c-Pass__Period">
+//   <h1 class="c-Pass__Period__Hn">Advance</h1>
+//   <dl>
+//     <dt class="c-Pass__Attendee">Member</dt>
+//     <dd class="c-Pass__Price c-Pass__Price--featured">$0</dd>
+//     <dt class="c-Pass__Attendee">Non-Member</dt>
+//     <dd class="c-Pass__Price">$0</dd>
+//   </dl>
+// </section>
+//
+// .c-Pass__Body - pass body containing current registration period
+//
+// Weight: 1
+//
+// Styleguide Components.Pass.Period
 .c-Pass__Period {
   & > *:last-child {
     margin-bottom: 0; // override base typog
@@ -138,4 +189,39 @@
   .c-Pass__Body & {
     .font-size-el(@g-font_size_h3);
   }
+}
+
+
+
+.c-Pass__Attendee {
+  &::after {
+    content: ':\0020';
+  }
+}
+
+// Pass Prices
+//
+// Marks up prices for each attendee type.
+// Use a <code>dd</code> following a <code>dt</code> attendee type.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-19</time></dd>
+// </dl></header>
+//
+// Markup:
+// <div class="c-Pass__Price {{ modifier_class }}">$0</div>
+//
+// .c-Pass__Price--featured - highlighted price of some sort (usually membership price)
+//
+// Weight: 2
+//
+// Styleguide Components.Pass.Price
+.c-Pass__Price {
+}
+
+.c-Pass__Price--featured {
+  .font-size-el(2; 2);
+  font-weight: 600;
+  color: @g-color-primary; // HACK fallback
+  color: var(--color-primary, @g-color-primary);
 }
