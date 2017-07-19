@@ -72,7 +72,9 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
 
       .add(new Page({ name: 'Buttons'              , url: '/docs/comp.html#buttons' }))
 
+      // TODO leaving here for reference
       .add(new Page({ name: 'The Camo Link'        , url: '/docs/comp.html#camo-link' }))
+
       .add(new Page({ name: 'The Caps Link'        , url: '/docs/comp.html#caps-link' }))
       .add(new Page({ name: 'The Toggle Button'    , url: '/docs/comp.html#toggle-button' }))
     )
