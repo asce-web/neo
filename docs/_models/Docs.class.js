@@ -56,8 +56,8 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       // TODO leaving here for reference
       .add(new Page({ name: 'The Sitemap Component', url: '/docs/comp.html#sitemap-component' }))
       .add(new Page({ name: 'The Banner Component' , url: '/docs/comp.html#banner-component' }))
-
       .add(new Page({ name: 'The Page Title'       , url: '/docs/comp.html#page-title' }))
+
       .add(new Page({ name: 'The Conference Header', url: '/docs/comp.html#conference-header' }))
       .add(new Page({ name: 'The Pass Component'   , url: '/docs/comp.html#pass-component' }))
       .add(new Page({ name: 'The Program Heading'  , url: '/docs/comp.html#program-heading' }))
