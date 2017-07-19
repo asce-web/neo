@@ -67,8 +67,8 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
 
       // TODO leaving here for reference
       .add(new Page({ name: 'The Social List'      , url: '/docs/comp.html#social-list' }))
-
       .add(new Page({ name: 'The Date Block'       , url: '/docs/comp.html#date-block' }))
+
       .add(new Page({ name: 'The Callout Component', url: '/docs/comp.html#callout-component' }))
       .add(new Page({ name: 'Buttons'              , url: '/docs/comp.html#buttons' }))
       .add(new Page({ name: 'The Camo Link'        , url: '/docs/comp.html#camo-link' }))
