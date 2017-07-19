@@ -4,18 +4,51 @@
 \*################################*/
 
 
+// The Time Block
+//
 // A list of sessions for a single day.
 //
-// ^subcomponents
-// __Times - contains start and end times
-// __Desc  - the description
-// __Item - (optional) contains both times and description,
-//          in case TimeBlock has a list-like structure
-// __Link  - link in the description, if any
-// ^author
-// Chris Harvey
-// ^updated
-// 2017-02-19
+// Use in Pug:
+// <pre>
+//   include /_views/_Session.view.pug
+//   +timeBlock([
+//     new Session({start_date:new Date('2016-09-28 10:00'), end_date:new Date('2016-09-28 19:00'), name:'Registration'             }),
+//     new Session({start_date:new Date('2016-09-28 10:30'), end_date:new Date('2016-09-28 16:30'), name:'Technical Tours'          }).url('#0'),
+//     new Session({start_date:new Date('2016-09-28 13:00'), end_date:new Date('2016-09-28 17:00'), name:'Short Courses'            }).url('#0'),
+//     new Session({start_date:new Date('2016-09-28 12:00'), end_date:new Date('2016-09-28 17:00'), name:'Optional Tours'           }).url('#0'),
+//     new Session({start_date:new Date('2016-09-28 17:30'), end_date:new Date('2016-09-28 19:30'), name:'Opening Welcome Reception'}),
+//     new Session({start_date:new Date('2016-09-28 13:00'), end_date:new Date('2016-09-28 17:00'), name:'Community Service Project'}),
+//   ])
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-02-19</time></dd>
+// </dl></header>
+//
+// Markup:
+// <dl class="o-List c-TimeBlock">
+//   <li class="o-List__Item o-Flex c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
+//     <dt class="o-Flex__Item c-TimeBlock__Times">
+//       <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>&ndash;<time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
+//     </dt>
+//     <dd class="o-Flex__Item c-TimeBlock__Desc" itemprop="name">
+//       <a class="c-TimeBlock__Link" href="#0" itemprop="url">Registration</a>
+//     </dd>
+//   </li>
+//   <li class="o-List__Item o-Flex c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
+//     <dt class="o-Flex__Item c-TimeBlock__Times">
+//       <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>&ndash;<time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
+//     </dt>
+//     <dd class="o-Flex__Item c-TimeBlock__Desc c-TimeBlock__Desc--last" itemprop="name">
+//       Technical Tours
+//     </dd>
+//   </li>
+// </dl>
+//
+// Weight: 11
+//
+// Styleguide Components.TimeBlock
 .c-TimeBlock {
   .font-size-mod(14/16);
 }

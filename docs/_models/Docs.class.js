@@ -60,8 +60,8 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       .add(new Page({ name: 'The Conference Header', url: '/docs/comp.html#conference-header' }))
       .add(new Page({ name: 'The Pass Component'   , url: '/docs/comp.html#pass-component' }))
       .add(new Page({ name: 'The Program Heading'  , url: '/docs/comp.html#program-heading' }))
-
       .add(new Page({ name: 'The Time Block'       , url: '/docs/comp.html#time-block' }))
+
       .add(new Page({ name: 'The Speaker Component', url: '/docs/comp.html#speaker-component' }))
       .add(new Page({ name: 'The Supporter Block'  , url: '/docs/comp.html#supporter-block' }))
       .add(new Page({ name: 'The Social List'      , url: '/docs/comp.html#social-list' }))
