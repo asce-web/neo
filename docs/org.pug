@@ -18,10 +18,6 @@ block append main
     include _includes/_org.other-year-callout.pug
   +newSection(2, Docs.DOCS.find('/docs/org.html#program-tabs'))
     include _includes/_org.program-tabs.pug
-  +newSection(2, Docs.DOCS.find('/docs/org.html#person'))
-    include _includes/_org.person.pug
-  +newSection(2, Docs.DOCS.find('/docs/org.html#place'))
-    include _includes/_org.place.pug
 
 block append scripts
   script(src="/scripts/o-Tabs.js")
