@@ -189,6 +189,66 @@
 //
 // Styleguide Organisms
 
+// Site Header
+//
+// There are 2 site headers: one for the site title and one for the nav bar.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-20</time></dd>
+// </dl></header>
+//
+// Markup:
+// <header class="o-Runner c-Mast c-Mast--head">
+//   <div class="o-Constrain">
+//     <a class="o-GridFloat c-SiteTitle c-LinkCamo h-Block" href="#0">
+//       <span class="o-GridFloat__Item c-SiteTitle__Logo"
+//         style="background-image:url('http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png');"></span>
+//         <!-- TODO: make this span an <img>! -->
+//       <h1 class="o-GridFloat__Item c-SiteTitle__Name">CI Summit</h1>
+//       <p class="o-GridFloat__Item c-SiteTitle__Slogan">Innovations In Construction</p>
+//     </a>
+//   </div>
+// </header>
+// <header class="o-Runner c-Mast c-Mast--head">
+//   <div class="o-Constrain">
+//     <label class="c-Toggle" aria-label="activate to toggle">
+//       <input class="c-Toggle__Check h-Hidden" type="checkbox" value="main menu is open" role="switch"/>
+//       <svg class="c-Toggle__Viz" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36">
+//         <path d="M0,0 H24 V24 H0 z" fill="transparent"/>
+//         <g transform="translate(3,11)">
+//           <rect class="c-Toggle__Viz__Bar" width="18" height="2"/>
+//           <rect class="c-Toggle__Viz__Bar" width="18" height="2"/>
+//           <rect class="c-Toggle__Viz__Bar" width="18" height="2"/>
+//         </g>
+//       </svg>
+//       <noscript><a href="#sitemap">Site Map</a></noscript>
+//     </label>
+//     <nav class="o-Drawer">
+//       <h1 class="h-Hidden" id="main-menu">Main Menu</h1>
+//         <ul class="o-List o-Flex c-MenuMobile-nM c-MenuBar-sM" role="directory">
+//           <li class="o-List__Item o-Flex__Item c-MenuMobile__Item-nM  c-MenuBar__Item-sM">
+//             <a class="c-MenuMobile__Link-nM c-MenuBar__Link-sM h-Block" href="#0">
+//               <i class="material-icons c-MenuMobile__Icon -d-n-sM" role="none">page_icon</i>
+//               <span>Registration</span>
+//               <i class="material-icons c-MenuBar__Icon -d-n-nM" role="none">expand_more</i>
+//             </a>
+//             <ul class="o-List c-MenuBar__Sub-sM">
+//               <li class="o-List__Item c-MenuBar__Sub__Item-sM">
+//                 <a class="c-MenuBar__Sub__Link-sM h-Block" href="#0">
+//                   <span>Why Attend</span>
+//                 </a>
+//               </li>
+//             </ul>
+//           </li>
+//         </ul>
+//     </nav>
+//   </div>
+// </header>
+//
+// Weight: 1
+//
+// Styleguide Organisms.site-header
+
 //++++ end # ORGANISMS ++++//
 
 
