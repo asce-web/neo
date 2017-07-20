@@ -1,23 +1,8 @@
 var Page = require('sitepage').Page
 var Color = require('csscolor').Color
 
-module.exports = (function () {
-  // CONSTRUCTOR
-  /**
-   * A set of static members used for the Conf style guide.
-   * Similar to a utility class.
-   * @constructor
-   */
-  function Docs() {}
-
-  // METHODS
-
-  // STATIC MEMBERS
-  /**
-   * The style guide site for this project.
-   * @type {Page}
-   */
-  Docs.DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' })
+const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' })
+  // REVIEW indentation
     .title('ASCE Conferences Pattern Library')
     .description('Pattern Library for conference microsites.')
     .add(new Page({ name: 'Home', url: '/docs/index.html' })
@@ -104,30 +89,55 @@ module.exports = (function () {
       .description('Very specific classes used for creating anomalies or fixing broken styles.')
     )
 
-  Docs.COLORS = require('../../_models/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
+module.exports = class Docs {
+  /**
+   * A set of static members used for the Conf style guide.
+   * Similar to a utility class.
+   * @private
+   * @constructor
+   */
+  constructor() {}
 
-  Docs.COLOR_NAMES = [
-    { name: 'Primary s2'   , suffix: '-primary-shade2' }
-  , { name: 'Primary s1'   , suffix: '-primary-shade1' }
-  , { name: 'Primary'      , suffix: '-primary' }
-  , { name: 'Primary t1'   , suffix: '-primary-tint1' }
-  , { name: 'Primary t2'   , suffix: '-primary-tint2' }
-  , { name: 'Secondary s2' , suffix: '-secondary-shade2' }
-  , { name: 'Secondary s1' , suffix: '-secondary-shade1' }
-  , { name: 'Secondary'    , suffix: '-secondary' }
-  , { name: 'Secondary t1' , suffix: '-secondary-tint1' }
-  , { name: 'Secondary t2' , suffix: '-secondary-tint2' }
-  , { name: 'Dark Gray s2' , suffix: '-gray_dk-shade2' }
-  , { name: 'Dark Gray s1' , suffix: '-gray_dk-shade1' }
-  , { name: 'Dark Gray'    , suffix: '-gray_dk' }
-  , { name: 'Dark Gray t1' , suffix: '-gray_dk-tint1' }
-  , { name: 'Dark Gray t2' , suffix: '-gray_dk-tint2' }
-  , { name: 'Light Gray s2', suffix: '-gray_lt-shade2' }
-  , { name: 'Light Gray s1', suffix: '-gray_lt-shade1' }
-  , { name: 'Light Gray'   , suffix: '-gray_lt' }
-  , { name: 'Light Gray t1', suffix: '-gray_lt-tint1' }
-  , { name: 'Light Gray t2', suffix: '-gray_lt-tint2' }
-  ]
+  /**
+   * The style guide site for this project.
+   * @type {Page}
+   */
+  static get DOCS() { return DOCS }
 
-  return Docs
-})()
+  /**
+   * The color style object for this site.
+   * @type {Object<string>}
+   */
+  static get COLORS() {
+    return require('../../_models/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
+  }
+
+  /**
+   * A list of objects describing suffices used for color names.
+   * @type {Array<{name:string, suffix:string}>}
+   */
+  static get COLOR_NAMES() {
+    return [
+      { name: 'Primary s2'   , suffix: '-primary-shade2'   },
+      { name: 'Primary s1'   , suffix: '-primary-shade1'   },
+      { name: 'Primary'      , suffix: '-primary'          },
+      { name: 'Primary t1'   , suffix: '-primary-tint1'    },
+      { name: 'Primary t2'   , suffix: '-primary-tint2'    },
+      { name: 'Secondary s2' , suffix: '-secondary-shade2' },
+      { name: 'Secondary s1' , suffix: '-secondary-shade1' },
+      { name: 'Secondary'    , suffix: '-secondary'        },
+      { name: 'Secondary t1' , suffix: '-secondary-tint1'  },
+      { name: 'Secondary t2' , suffix: '-secondary-tint2'  },
+      { name: 'Dark Gray s2' , suffix: '-gray_dk-shade2'   },
+      { name: 'Dark Gray s1' , suffix: '-gray_dk-shade1'   },
+      { name: 'Dark Gray'    , suffix: '-gray_dk'          },
+      { name: 'Dark Gray t1' , suffix: '-gray_dk-tint1'    },
+      { name: 'Dark Gray t2' , suffix: '-gray_dk-tint2'    },
+      { name: 'Light Gray s2', suffix: '-gray_lt-shade2'   },
+      { name: 'Light Gray s1', suffix: '-gray_lt-shade1'   },
+      { name: 'Light Gray'   , suffix: '-gray_lt'          },
+      { name: 'Light Gray t1', suffix: '-gray_lt-tint1'    },
+      { name: 'Light Gray t2', suffix: '-gray_lt-tint2'    },
+    ]
+  }
+}

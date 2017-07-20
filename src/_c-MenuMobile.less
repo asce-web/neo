@@ -28,8 +28,8 @@
   .menufont();
   background-color: @g-color-gray_lt; // HACK fallback
   color: @g-color-gray_dk; // HACK fallback
-  background-color: var(--color-gray_lt);
-  color: var(--color-gray_dk);
+  background-color: var(--color-gray_lt, @g-color-gray_lt);
+  color: var(--color-gray_dk, @g-color-gray_dk);
   // REVIEW using .material-icons out of component
   // .material-icons {
   //   margin-right: 1rem;
@@ -44,7 +44,7 @@
   &:active,
   &._active {
     background-color: @g-color-gray_lt-tint2; // HACK fallback
-    background-color: var(--color-gray_lt-tint2);
+    background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   }
 }
 

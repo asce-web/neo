@@ -47,7 +47,7 @@
 .c-Banner--loc {
   // NOTE adding text shadow for over top images
   // text-shadow: 0 0 0.25rem @g-color-gray_dk-shade2; // HACK fallback
-  // text-shadow: 0 0 0.25rem var(--color-gray_dk-shade2);
+  // text-shadow: 0 0 0.25rem var(--color-gray_dk-shade2, @g-color-gray_dk-shade2);
   text-shadow: 0 0 0.25rem #000;
 }
 .c-Banner--prev,
@@ -75,8 +75,8 @@
 
 .c-Banner--orgs {
   background-color: @g-color-gray_lt-tint2; // HACK fallback
-  background-color: var(--color-gray_lt-tint2);
-  background: linear-gradient(to bottom, var(--color-gray_lt-tint2), var(--color-gray_lt-tint1));
+  background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+  background: linear-gradient(to bottom, var(--color-gray_lt-tint2, @g-color-gray_lt-tint2), var(--color-gray_lt-tint1, @g-color-gray_lt-tint1));
 }
 
 .c-Banner--location {

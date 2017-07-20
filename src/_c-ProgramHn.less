@@ -26,10 +26,10 @@ body {
   margin-bottom: var(--vru);
   font-weight: 900;
   color: @g-color-gray_dk; // HACK fallback
-  color: var(--heading-color-unselected);
+  color: var(--heading-color-unselected, @g-color-gray_dk);
   .c-Banner & {
     color: @g-color-gray_lt; // HACK fallback
-    color: var(--heading-color-unselected); // HACK override
+    color: var(--heading-color-unselected, @g-color-gray_lt); // HACK override
   }
   @media screen and (min-width: 45em) {
     .font-size-el(1.25);
@@ -37,6 +37,6 @@ body {
   // selected look
   input:checked + & {
     color: @g-color-primary; // HACK fallback
-    color: var(--color-primary);
+    color: var(--color-primary, @g-color-primary);
   }
 }
