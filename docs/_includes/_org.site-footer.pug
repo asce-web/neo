@@ -15,18 +15,18 @@ figure.docs-figure
       h1.h-Hidden Site Map
       include /_views/_c-Sitemap.view.pug
       +sitemap([
-          new ConfPage('Home', '#0')
-        , new ConfPage('Registration', '#0')
-            .add(new ConfPage('Why Attend'     , '#0'))
-        , new ConfPage('Program', '#0')
+          new ConfPage('Home', '#0'),
+          new ConfPage('Registration', '#0')
+            .add(new ConfPage('Why Attend'     , '#0')),
+          new ConfPage('Program', '#0')
             .add(new ConfPage('Events'         , '#0'))
             .add(new ConfPage('Short Courses'  , '#0'))
             .add(new ConfPage('Technical Tours', '#0'))
-            .add(new ConfPage('Optional Tours' , '#0'))
-        , new ConfPage('Hotel & Travel', '#0')
-            .add(new ConfPage('International Travel', '#0'))
-        , new ConfPage('Speakers', '#0')
-            .add(new ConfPage('Distinguished Lecture Series', '#0'))
+            .add(new ConfPage('Optional Tours' , '#0')),
+          new ConfPage('Hotel & Travel', '#0')
+            .add(new ConfPage('International Travel', '#0')),
+          new ConfPage('Speakers', '#0')
+            .add(new ConfPage('Distinguished Lecture Series', '#0')),
         ])
     footer.o-Runner.c-Mast.c-Mast--foot#connect-with-asce: div.o-Constrain
       h1.h-Hidden Connect With #[abbr(title="American Society of Civil Engineers") ASCE]

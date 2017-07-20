@@ -32,13 +32,13 @@ figure.docs-figure
       nav.o-Drawer
         h1.h-Hidden#main-menu Main Menu
         +sitetoc({
-          icons: { page: true, sub: true }
-        , depth: 1
-        , pages: [
-            new ConfPage('Home', '#0').setIcon('insert_drive_file')
-          , new ConfPage('Registration', '#0').setIcon('insert_drive_file')
-              .add(new ConfPage('Why Attend', '#0'))
-          , new ConfPage('Program', '#0').setIcon('insert_drive_file')
+          icons: { page: true, sub: true },
+          depth: 1,
+          pages: [
+            new ConfPage('Home', '#0').setIcon('insert_drive_file'),
+            new ConfPage('Registration', '#0').setIcon('insert_drive_file')
+              .add(new ConfPage('Why Attend', '#0')),
+            new ConfPage('Program', '#0').setIcon('insert_drive_file')
               .add(new ConfPage('Short Courses', '#0'))
               .add(new ConfPage('Technical Tours', '#0')),
             new ConfPage('Location', '#0').setIcon('insert_drive_file'),
