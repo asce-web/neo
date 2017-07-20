@@ -11,7 +11,7 @@ mixin hero($conference)
         | &ndash;
         time(datetime=$conference.endDate() itemprop="endDate")
           = Util.monthDay($conference.endDate())
-    p.c-ConfHed__Theme.h-Hidden-nsM(itemprop="description")
+    p.c-ConfHed__Theme.h-Hidden-nM(itemprop="description")
       = $conference.theme() || '\xa0'
       //- \xa0 == &nbsp;
     block
@@ -22,5 +22,5 @@ mixin otherYear($conference)
     meta(content=$conference.startDate() itemprop="startDate")
     p.c-ConfHed__Detail(itemprop="location")
       +promoLoc($conference.promoLoc())
-    p.h-Hidden-nsM= $conference.otherYearBlurb()
+    p.h-Hidden-nM= $conference.otherYearBlurb()
     block
