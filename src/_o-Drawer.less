@@ -30,7 +30,7 @@
   // .transition-timing-function(@g-accel_hard);
   // .transition-timing-function(@g-accel_dram);
   // .transition-timing-function(@g-decel_extm);
-  @media screen and (max-width: 44.999em) {
+  @media not all and (min-width: 45em) {
     @width: 12rem;
     position: fixed;
     top: 0; bottom: 0;
@@ -44,7 +44,7 @@
   }
 }
 .o-Drawer--open {
-  @media screen and (max-width: 44.999em) {
+  @media not all and (min-width: 45em) {
     .transform(translateX(-100%));
     opacity: 1;
     // animation for *opening* drawer
