@@ -2,8 +2,7 @@
 var Page = require('sitepage').Page
 var Util = require('./Util.class.js')
 
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class ConfPage extends Page {
   /**
    * Any page or subpage within a ConfSite.
    * Construct a ConfPage object, given a name and url.
@@ -13,22 +12,18 @@ module.exports = (function () {
    * @param {string} name name of this page
    * @param {string} url  url of this page
    */
-  function ConfPage(name, url) {
-    var self = this
-    Page.call(self, { name: name, url: url })
-    self._icon     = null
-    self._is_hidden = false
+  constructor(name, url) {
+    super({ name: name, url: url })
+    /** @private */ this._icon     = null
+    /** @private */ this._is_hidden = false
   }
-  ConfPage.prototype = Object.create(Page.prototype)
-  ConfPage.prototype.constructor = ConfPage
 
-  // ACCESSOR FUNCTIONS
   /**
    * Set the icon for this page.
    * @param {string} key the keyword for the icon
    */
-  ConfPage.prototype.setIcon = function setIcon(key) {
-    this._icon = Util.ICON_DATA.find(function ($icon) { return $icon.content === key })
+  setIcon(key) {
+    this._icon = Util.ICON_DATA.find(($icon) => $icon.content===key)
     return this
   }
   /**
@@ -36,7 +31,7 @@ module.exports = (function () {
    * @param  {boolean=} fallback if true, get the unicode code point
    * @return {string} if fallback, the unicode code point, else, the keyword of the icon
    */
-  ConfPage.prototype.getIcon = function getIcon(fallback) {
+  getIcon(fallback) {
     return (this._icon) ? Util.iconToString(this._icon, fallback) : ''
   }
 
@@ -45,7 +40,7 @@ module.exports = (function () {
    * @param  {boolean=true} bool hides or shows this page
    * @return {Page} this page
    */
-  Page.prototype.hide = function hide(bool) {
+  hide(bool) {
     this._is_hidden = (arguments.length) ? bool : true
     return this
   }
@@ -53,27 +48,21 @@ module.exports = (function () {
    * Get the hidden status of this page.
    * @return {boolean} true if this page is hidden; false otherwise
    */
-  Page.prototype.isHidden = function isHidden() {
+  isHidden() {
     return this._is_hidden
   }
-
-  // STATIC MEMBERS
-
-  return ConfPage
-})()
+}
 
 },{"./Util.class.js":3,"sitepage":11}],2:[function(require,module,exports){
 var Page = require('sitepage').Page
 var Color = require('csscolor').Color
 var ConfPage = require('./ConfPage.class.js')
 
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class ConfSite extends Page {
   /**
    * A conference site.
    * A site hosting a series of conferences,
-   * with a name, url, slogan,
-   * logo, supporter levels and supporters, exhibitors, and contact information.
+   * with a name, url, slogan, logo, and color scheme.
    * Construct a ConfSite object, given a name and url.
    * @constructor
    * @extends Page
@@ -81,25 +70,17 @@ module.exports = (function () {
    * @param {string} url url of the landing page for this site
    * @param {string} slogan the tagline, or slogan, of this site
    */
-  function ConfSite(name, url, slogan) {
-    var self = this
-    Page.call(self, { name: name, url: url })
-    Page.prototype.description.call(self, slogan)
-    self._logo             = ''
-    self._colors           = {}
-    self._conferences      = {}
-    self._supporter_levels = []
-    self._supporter_lists  = {}
-    self._supporters       = []
-    self._exhibitors       = []
-    self._conf_curr_key   = null
-    self._conf_prev_key   = null
-    self._conf_next_key   = null
+  constructor(name, url, slogan) {
+    super({ name: name, url: url })
+    super.description(slogan)
+    /** @private */ this._logo             = ''
+    /** @private */ this._colors           = {}
+    /** @private */ this._conferences      = {}
+    /** @private */ this._conf_curr_key   = null
+    /** @private */ this._conf_prev_key   = null
+    /** @private */ this._conf_next_key   = null
   }
-  ConfSite.prototype = Object.create(Page.prototype)
-  ConfSite.prototype.constructor = ConfSite
 
-  // ACCESSOR FUNCTIONS
   /**
    * Overwrite superclass description() method.
    * This method only gets the description, it does not set it.
@@ -107,16 +88,15 @@ module.exports = (function () {
    * @param  {*} arg any argument
    * @return {string} the description of this site
    */
-  ConfSite.prototype.description = function description(arg) {
-    return Page.prototype.description.call(this)
+  description(arg) {
+    return super.description()
   }
   /**
    * Get the slogan of this site.
    * The slogan is very brief, and is fixed for the entire series of conferences.
-   * Equivalent to calling `Page.prototype.description()`.
    * @return {string} the slogan of this site
    */
-  ConfSite.prototype.slogan = function slogan() {
+  slogan() {
     return this.description() || ''
   }
 
@@ -125,7 +105,7 @@ module.exports = (function () {
    * @param  {string=} logo url of the logo file
    * @return {(ConfSite|string)} this site || url of the logo
    */
-  ConfSite.prototype.logo = function logo(logo) {
+  logo(logo) {
     if (arguments.length) {
       this._logo = logo
       return this
@@ -138,8 +118,7 @@ module.exports = (function () {
    * @param {Color=} $secondary a Color object for the secondary color
    * @return {(ConfSite|Object)} this || a CSS style object containg custom properties and color string values
    */
-  ConfSite.prototype.colors = function colors($primary, $secondary) {
-    var self = this
+  colors($primary, $secondary) {
     if (arguments.length) {
       this._colors = ConfSite.colorStyles($primary, $secondary)
       return this
@@ -152,7 +131,7 @@ module.exports = (function () {
    * @param {Conference} $conference the conference to add
    * @return {ConfSite} this site
    */
-  ConfSite.prototype.addConference = function addConference(conf_label, $conference) {
+  addConference(conf_label, $conference) {
     this._conferences[conf_label] = $conference
     return this
   }
@@ -161,25 +140,15 @@ module.exports = (function () {
    * @param  {string} conf_label key for accessing the conference, usually a year
    * @return {Conference} the specified conference
    */
-  ConfSite.prototype.getConference = function getConference(conf_label) {
+  getConference(conf_label) {
     return this._conferences[conf_label]
-  }
-  /**
-   * This method does nothing.
-   * @param  {string} conf_label key for accessing the conference, usually a year
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.removeConference = function removeConference(conf_label) {
-    console.error('Sorry, you do not have this ability.\
-    Instead, add a new conference overwriting the one you wish to delete.')
-    return this
   }
   /**
    * Return an object representing all conferences of this site.
    * FIXME this should return a deep clone, not a shallow clone
    * @return {Object} shallow clone of this site’s conferences object
    */
-  ConfSite.prototype.getConferencesAll = function getConferencesAll() {
+  getConferencesAll() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._conferences)
   }
@@ -192,7 +161,7 @@ module.exports = (function () {
    * @param  {string=} conf_label key for accessing the conference
    * @return {(ConfSite|Conference)} this site || the current conference
    */
-  ConfSite.prototype.currentConference = function currentConference(conf_label) {
+  currentConference(conf_label) {
     if (arguments.length) {
       this._conf_curr_key = conf_label
       return this
@@ -208,7 +177,7 @@ module.exports = (function () {
    * @param  {string=} conf_label key for accessing the conference
    * @return {(ConfSite|Conference)} this site || the previous conference
    */
-  ConfSite.prototype.prevConference = function prevConference(conf_label) {
+  prevConference(conf_label) {
     if (arguments.length) {
       this._conf_prev_key = conf_label
       return this
@@ -222,7 +191,7 @@ module.exports = (function () {
    * @param  {string=} conf_label key for accessing the conference
    * @return {(ConfSite|Conference)} this site || the next conference
    */
-  ConfSite.prototype.nextConference = function nextConference(conf_label) {
+  nextConference(conf_label) {
     if (arguments.length) {
       this._conf_next_key = conf_label
       return this
@@ -230,134 +199,11 @@ module.exports = (function () {
   }
 
   /**
-   * Add a supporter level to this site.
-   * @param {SupporterLevel} $supporterLevel the supporter level to add
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.addSupporterLevel = function addSupporterLevel($supporterLevel) {
-    this._supporter_levels.push($supporterLevel)
-    return this
-  }
-  /**
-   * Retrieve a supporter level of this site.
-   * @param  {string} name the name of the supporter level
-   * @return {?SupporterLevel} the specified supporter level
-   */
-  ConfSite.prototype.getSupporterLevel = function getSupporterLevel(name) {
-    return this._supporter_levels.find(function ($supporterLevel) { return $supporterLevel.name() === name }) || null
-  }
-  /**
-   * Remove a supporter level from this site.
-   * @param  {string} name the name of the supporter level
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.removeSupporterLevel = function removeSupporterLevel(name) {
-    Util.spliceFromArray(this._supporter_levels, this.getSupporterLevel(name))
-    return this
-  }
-  /**
-   * Retrieve all supporter levels of this site.
-   * @return {Array<SupporterLevel>} a shallow array of all supporter levels of this site
-   */
-  ConfSite.prototype.getSupporterLevelsAll = function getSupporterLevelsAll() {
-    return this._supporter_levels.slice()
-  }
-
-  /**
-   * Add a named subarray of supporter levels to this site.
-   * @param {string} type the name of the subarray
-   * @param {Array<string>} supporter_level_names an array of pre-existing SupporterLevel names
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.addSupporterLevelList = function addSupporterLevelList(type, supporter_level_names) {
-    this._supporter_lists[type] = supporter_level_names
-    return this
-  }
-  /**
-   * Get a named subarray of supporter levels of this site.
-   * @param  {string} type the name of the subarray
-   * @return {Array<SupporterLevel>} the array of SupporterLevel objects belonging to the type
-   */
-  ConfSite.prototype.getSupporterLevelList = function getSupporterLevelList(type) {
-    var self = this
-    return (self._supporter_lists[type] || []).map(function (el) { return self.getSupporterLevel(el) })
-  }
-
-  /**
-   * Add a supporter to this site.
-   * @param {Supporter} $supporter the supporter to add
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.addSupporter = function addSupporter($supporter) {
-    this._supporters.push($supporter)
-    return this
-  }
-  /**
-   * Retrieve a supporter of this site.
-   * @param  {string} name the name of the supporter
-   * @return {?Supporter} the specified supporter
-   */
-  ConfSite.prototype.getSupporter = function getSupporter(name) {
-    return this._supporters.find(function ($supporter) { return $supporter.name() === name }) || null
-  }
-  /**
-   * Remove a supporter of this site.
-   * @param  {string} name the name of the supporter
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.removeSupporter = function removeSupporter(name) {
-    Util.spliceFromArray(this._supporters, this.getSupporter(name))
-    return this
-  }
-  /**
-   * Retrieve all supporters of this site.
-   * @return {Array<Supporter>} a shallow array of all supporters of this site
-   */
-  ConfSite.prototype.getSupportersAll = function getSupportersAll() {
-    return this._supporters.slice()
-  }
-
-  /**
-   * Add an exhibitor to this site.
-   * @param {Exhibitor} $exhibitor the exhibitor to add
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.addExhibitor = function addExhibitor($exhibitor) {
-    this._exhibitors.push($exhibitor)
-    return this
-  }
-  /**
-   * Retrieve an exhibitor of this site.
-   * @param  {string} name the name of the exhibitor
-   * @return {?Exhibitor} the specified exhibitor
-   */
-  ConfSite.prototype.getExhibitor = function getExhibitor(name) {
-    return this._exhibitors.find(function ($exhibitor) { return $exhibitor.name() === name }) || null
-  }
-  /**
-   * Remove an exhibitor of this site.
-   * @param  {string} name the name of the exhibitor
-   * @return {ConfSite} this site
-   */
-  ConfSite.prototype.removeExhibitor = function removeExhibitor(name) {
-    Util.spliceFromArray(this._exhibitors, this.getSupporter(name))
-    return this
-  }
-  /**
-   * Retrieve all exhibitors of this site.
-   * @return {Array<Exhibitor>} a shallow array of all exhibitors of this site
-   */
-  ConfSite.prototype.getExhibitorsAll = function getExhibitorsAll() {
-    return this._exhibitors.slice()
-  }
-
-  // METHODS
-  /**
    * Initialize this site: add the proper pages.
    * This method should only be called once; it resets pages every time called.
    * @return {ConfSite} this site
    */
-  ConfSite.prototype.init = function init() {
+  init() {
     var self = this
     function pageTitle() { return this.name() + ' | ' + self.name() }
     return self
@@ -409,229 +255,243 @@ module.exports = (function () {
       )
   }
 
-  // STATIC MEMBERS
 
   /**
    * Generate a color palette and return a style object with custom properties.
    * @param  {Color} $primary   the primary color for the site
    * @param  {Color} $secondary the secondary color for the site
-   * @return {Object} a style object containg custom properties and color string values
+   * @return {Object<string>} a style object containg custom properties and color string values
    */
-  ConfSite.colorStyles = function colorStyles($primary, $secondary) {
-    var   primary_s2  =   $primary.darken(2/3, true)
-    var   primary_s1  =   $primary.darken(1/3, true)
-    var   primary_t1  =   $primary.darken(1/3, true).lighten(1/3, false) // one-third to white
-    var   primary_t2  =   $primary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
-    var secondary_s2  = $secondary.darken(2/3, true)
-    var secondary_s1  = $secondary.darken(1/3, true)
-    var secondary_t1  = $secondary.darken(1/3, true).lighten(1/3, false) // one-third to white
-    var secondary_t2  = $secondary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
+  static colorStyles($primary, $secondary) {
+    let   primary_s2  =   $primary.darken(2/3, true)
+    let   primary_s1  =   $primary.darken(1/3, true)
+    let   primary_t1  =   $primary.darken(1/3, true).lighten(1/3, false) // one-third to white
+    let   primary_t2  =   $primary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
+    let secondary_s2  = $secondary.darken(2/3, true)
+    let secondary_s1  = $secondary.darken(1/3, true)
+    let secondary_t1  = $secondary.darken(1/3, true).lighten(1/3, false) // one-third to white
+    let secondary_t2  = $secondary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
 
-    var _g1 = $primary.mix($secondary, 1/4).desaturate(7/8, true)
-    var _g2 = $secondary.mix($primary, 1/4).desaturate(7/8, true)
+    let _g1 = $primary.mix($secondary, 1/4).desaturate(7/8, true)
+    let _g2 = $secondary.mix($primary, 1/4).desaturate(7/8, true)
 
-    var gray_dk_s2 = _g1.lighten( 1/12 - _g1.hslLum(), false)
-    var gray_dk_s1 = _g1.lighten( 2/12 - _g1.hslLum(), false)
-    var gray_dk    = _g1.lighten( 3/12 - _g1.hslLum(), false)
-    var gray_dk_t1 = _g1.lighten( 4/12 - _g1.hslLum(), false)
-    var gray_dk_t2 = _g1.lighten( 5/12 - _g1.hslLum(), false)
-    var gray_lt_s2 = _g2.lighten( 7/12 - _g2.hslLum(), false)
-    var gray_lt_s1 = _g2.lighten( 8/12 - _g2.hslLum(), false)
-    var gray_lt    = _g2.lighten( 9/12 - _g2.hslLum(), false)
-    var gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum(), false)
-    var gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum(), false)
+    let gray_dk_s2 = _g1.lighten( 1/12 - _g1.hslLum(), false)
+    let gray_dk_s1 = _g1.lighten( 2/12 - _g1.hslLum(), false)
+    let gray_dk    = _g1.lighten( 3/12 - _g1.hslLum(), false)
+    let gray_dk_t1 = _g1.lighten( 4/12 - _g1.hslLum(), false)
+    let gray_dk_t2 = _g1.lighten( 5/12 - _g1.hslLum(), false)
+    let gray_lt_s2 = _g2.lighten( 7/12 - _g2.hslLum(), false)
+    let gray_lt_s1 = _g2.lighten( 8/12 - _g2.hslLum(), false)
+    let gray_lt    = _g2.lighten( 9/12 - _g2.hslLum(), false)
+    let gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum(), false)
+    let gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum(), false)
 
     return {
-      '--color-primary'  :   $primary.toString('hex')
-    , '--color-secondary': $secondary.toString('hex')
-    , '--color-gray_dk'  :    gray_dk.toString('hex')
-    , '--color-gray_lt'  :    gray_lt.toString('hex')
+      '--color-primary'  :   $primary.toString('hex'),
+      '--color-secondary': $secondary.toString('hex'),
+      '--color-gray_dk'  :    gray_dk.toString('hex'),
+      '--color-gray_lt'  :    gray_lt.toString('hex'),
 
-    , '--color-primary-shade2'  :   primary_s2.toString('hex')
-    , '--color-primary-shade1'  :   primary_s1.toString('hex')
-    , '--color-primary-tint1'   :   primary_t1.toString('hex')
-    , '--color-primary-tint2'   :   primary_t2.toString('hex')
+      '--color-primary-shade2'  :   primary_s2.toString('hex'),
+      '--color-primary-shade1'  :   primary_s1.toString('hex'),
+      '--color-primary-tint1'   :   primary_t1.toString('hex'),
+      '--color-primary-tint2'   :   primary_t2.toString('hex'),
 
-    , '--color-secondary-shade2': secondary_s2.toString('hex')
-    , '--color-secondary-shade1': secondary_s1.toString('hex')
-    , '--color-secondary-tint1' : secondary_t1.toString('hex')
-    , '--color-secondary-tint2' : secondary_t2.toString('hex')
+      '--color-secondary-shade2': secondary_s2.toString('hex'),
+      '--color-secondary-shade1': secondary_s1.toString('hex'),
+      '--color-secondary-tint1' : secondary_t1.toString('hex'),
+      '--color-secondary-tint2' : secondary_t2.toString('hex'),
 
-    , '--color-gray_dk-shade2'  :   gray_dk_s2.toString('hex')
-    , '--color-gray_dk-shade1'  :   gray_dk_s1.toString('hex')
-    , '--color-gray_dk-tint1'   :   gray_dk_t1.toString('hex')
-    , '--color-gray_dk-tint2'   :   gray_dk_t2.toString('hex')
+      '--color-gray_dk-shade2'  :   gray_dk_s2.toString('hex'),
+      '--color-gray_dk-shade1'  :   gray_dk_s1.toString('hex'),
+      '--color-gray_dk-tint1'   :   gray_dk_t1.toString('hex'),
+      '--color-gray_dk-tint2'   :   gray_dk_t2.toString('hex'),
 
-    , '--color-gray_lt-shade2'  :   gray_lt_s2.toString('hex')
-    , '--color-gray_lt-shade1'  :   gray_lt_s1.toString('hex')
-    , '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex')
-    , '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex')
+      '--color-gray_lt-shade2'  :   gray_lt_s2.toString('hex'),
+      '--color-gray_lt-shade1'  :   gray_lt_s1.toString('hex'),
+      '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex'),
+      '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex'),
     }
   }
-
-  return ConfSite
-})()
+}
 
 },{"./ConfPage.class.js":1,"csscolor":8,"sitepage":11}],3:[function(require,module,exports){
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class Util {
   /**
    * A set of static values and functions used site-wide.
+   * @private
    * @constructor
    */
-  function Util() {}
-
-  // STATIC MEMBERS
-  /**
-   * List of full month names.
-   * @type {Array}
-   */
-  Util.MONTH_NAMES = [
-    'January'
-  , 'February'
-  , 'March'
-  , 'April'
-  , 'May'
-  , 'June'
-  , 'July'
-  , 'August'
-  , 'September'
-  , 'October'
-  , 'November'
-  , 'December'
-  ]
+  constructor() {}
 
   /**
-   * List of full day names.
-   * @type {Array}
+   * List of full month names in English.
+   * @type {Array<string>}
    */
-  Util.DAY_NAMES = [
-    'Sunday'
-  , 'Monday'
-  , 'Tuesday'
-  , 'Wednesday'
-  , 'Thursday'
-  , 'Friday'
-  , 'Saturday'
-  ]
+  static get MONTH_NAMES() {
+    return [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ]
+  }
+
+  /**
+   * List of full day names in English.
+   * @type {Array<string>}
+   */
+  static get DAY_NAMES() {
+    return [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ]
+  }
+
+  /**
+   * NOTE: Type Definition
+   * @typedef {Object} StateObj
+   * @property {string} index  - the postal code for the state
+   * @property {string} name   - the name of the state
+   * @property {number} pop    - population in people
+   * @property {number} area   - area in square km
+   * @property {Util.Region} region - region of US
+   */
 
   /**
    * List of US State objects.
-   * Each object has:
-   * - index              : @type {string}
-   * - name               : @type {string}
-   * - pop  (in people)   : @type {number}
-   * - area (in square km): @type {number}
-   * - region             : @type {string}
-   * @type {Array}
+   * @type {Array<StateObj>}
    */
-  Util.STATE_DATA = [
-    { index: 'AL',  name: 'Alabama',         pop:  4779736,  area:  52419, region: 'South'     }
-  , { index: 'AK',  name: 'Alaska',          pop:   710231,  area: 663267, region: 'West'      }
-  , { index: 'AZ',  name: 'Arizona',         pop:  6392017,  area: 113998, region: 'Southwest' }
-  , { index: 'AR',  name: 'Arkansas',        pop:  2915918,  area:  53179, region: 'South'     }
-  , { index: 'CA',  name: 'California',      pop: 37253956,  area: 163696, region: 'West'      }
-  , { index: 'CO',  name: 'Colorado',        pop:  5029196,  area: 104094, region: 'West'      }
-  , { index: 'CT',  name: 'Connecticut',     pop:  3574097,  area:   5543, region: 'Northeast' }
-  , { index: 'DE',  name: 'Delaware',        pop:   897934,  area:   2489, region: 'Northeast' }
-  , { index: 'FL',  name: 'Florida',         pop: 18801310,  area:  65755, region: 'South'     }
-  , { index: 'GA',  name: 'Georgia',         pop:  9687653,  area:  59425, region: 'South'     }
-  , { index: 'HI',  name: 'Hawaii',          pop:  1360301,  area:  10931, region: 'West'      }
-  , { index: 'ID',  name: 'Idaho',           pop:  1567582,  area:  83570, region: 'West'      }
-  , { index: 'IL',  name: 'Illinois',        pop: 12830632,  area:  57914, region: 'Midwest'   }
-  , { index: 'IN',  name: 'Indiana',         pop:  6483802,  area:  36418, region: 'Midwest'   }
-  , { index: 'IA',  name: 'Iowa',            pop:  3046355,  area:  56272, region: 'Midwest'   }
-  , { index: 'KS',  name: 'Kansas',          pop:  2853118,  area:  82277, region: 'Midwest'   }
-  , { index: 'KY',  name: 'Kentucky',        pop:  4339367,  area:  40409, region: 'South'     }
-  , { index: 'LA',  name: 'Louisiana',       pop:  4533372,  area:  51840, region: 'South'     }
-  , { index: 'ME',  name: 'Maine',           pop:  1328361,  area:  35385, region: 'Northeast' }
-  , { index: 'MD',  name: 'Maryland',        pop:  5773552,  area:  12407, region: 'Northeast' }
-  , { index: 'MA',  name: 'Massachusetts',   pop:  6547629,  area:  10555, region: 'Northeast' }
-  , { index: 'MI',  name: 'Michigan',        pop:  9883640,  area:  96716, region: 'Midwest'   }
-  , { index: 'MN',  name: 'Minnesota',       pop:  5303925,  area:  86939, region: 'Midwest'   }
-  , { index: 'MS',  name: 'Mississippi',     pop:  2967297,  area:  48430, region: 'South'     }
-  , { index: 'MO',  name: 'Missouri',        pop:  5988927,  area:  69704, region: 'Midwest'   }
-  , { index: 'MT',  name: 'Montana',         pop:   989415,  area: 147042, region: 'West'      }
-  , { index: 'NE',  name: 'Nebraska',        pop:  1826341,  area:  77354, region: 'Midwest'   }
-  , { index: 'NV',  name: 'Nevada',          pop:  2700551,  area: 110561, region: 'West'      }
-  , { index: 'NH',  name: 'New Hampshire',   pop:  1316470,  area:   9350, region: 'Northeast' }
-  , { index: 'NJ',  name: 'New Jersey',      pop:  8791894,  area:   8721, region: 'Northeast' }
-  , { index: 'NM',  name: 'New Mexico',      pop:  2059179,  area: 121589, region: 'Southwest' }
-  , { index: 'NY',  name: 'New York',        pop: 19378102,  area:  54556, region: 'Northeast' }
-  , { index: 'NC',  name: 'North Carolina',  pop:  9535483,  area:  53819, region: 'South'     }
-  , { index: 'ND',  name: 'North Dakota',    pop:   672591,  area:  70700, region: 'Midwest'   }
-  , { index: 'OH',  name: 'Ohio',            pop: 11536504,  area:  44825, region: 'Midwest'   }
-  , { index: 'OK',  name: 'Oklahoma',        pop:  3751351,  area:  69898, region: 'Southwest' }
-  , { index: 'OR',  name: 'Oregon',          pop:  3831074,  area:  98381, region: 'West'      }
-  , { index: 'PA',  name: 'Pennsylvania',    pop: 12702379,  area:  46055, region: 'Northeast' }
-  , { index: 'RI',  name: 'Rhode Island',    pop:  1052567,  area:   1545, region: 'Northeast' }
-  , { index: 'SC',  name: 'South Carolina',  pop:  4625364,  area:  32020, region: 'South'     }
-  , { index: 'SD',  name: 'South Dakota',    pop:   814180,  area:  77117, region: 'Midwest'   }
-  , { index: 'TN',  name: 'Tennessee',       pop:  6346105,  area:  42143, region: 'South'     }
-  , { index: 'TX',  name: 'Texas',           pop: 25145561,  area: 268581, region: 'Southwest' }
-  , { index: 'UT',  name: 'Utah',            pop:  2763885,  area:  84899, region: 'West'      }
-  , { index: 'VT',  name: 'Vermont',         pop:   625741,  area:   9614, region: 'Northeast' }
-  , { index: 'VA',  name: 'Virginia',        pop:  8260405,  area:  42774, region: 'South'     }
-  , { index: 'WA',  name: 'Washington',      pop:  6971406,  area:  71300, region: 'West'      }
-  , { index: 'WV',  name: 'West Virginia',   pop:  1854304,  area:  24230, region: 'South'     }
-  , { index: 'WI',  name: 'Wisconsin',       pop:  5686986,  area:  65498, region: 'Midwest'   }
-  , { index: 'WY',  name: 'Wyoming',         pop:   563626,  area:  97814, region: 'West'      }
-  ]
+  static get STATE_DATA() {
+    return [
+      { index: 'AL',  name: 'Alabama',         pop:  4779736,  area:  52419, region: Util.Region.SOUTH     },
+      { index: 'AK',  name: 'Alaska',          pop:   710231,  area: 663267, region: Util.Region.WEST      },
+      { index: 'AZ',  name: 'Arizona',         pop:  6392017,  area: 113998, region: Util.Region.SOUTHWEST },
+      { index: 'AR',  name: 'Arkansas',        pop:  2915918,  area:  53179, region: Util.Region.SOUTH     },
+      { index: 'CA',  name: 'California',      pop: 37253956,  area: 163696, region: Util.Region.WEST      },
+      { index: 'CO',  name: 'Colorado',        pop:  5029196,  area: 104094, region: Util.Region.WEST      },
+      { index: 'CT',  name: 'Connecticut',     pop:  3574097,  area:   5543, region: Util.Region.NORTHEAST },
+      { index: 'DE',  name: 'Delaware',        pop:   897934,  area:   2489, region: Util.Region.NORTHEAST },
+      { index: 'FL',  name: 'Florida',         pop: 18801310,  area:  65755, region: Util.Region.SOUTH     },
+      { index: 'GA',  name: 'Georgia',         pop:  9687653,  area:  59425, region: Util.Region.SOUTH     },
+      { index: 'HI',  name: 'Hawaii',          pop:  1360301,  area:  10931, region: Util.Region.WEST      },
+      { index: 'ID',  name: 'Idaho',           pop:  1567582,  area:  83570, region: Util.Region.WEST      },
+      { index: 'IL',  name: 'Illinois',        pop: 12830632,  area:  57914, region: Util.Region.MIDWEST   },
+      { index: 'IN',  name: 'Indiana',         pop:  6483802,  area:  36418, region: Util.Region.MIDWEST   },
+      { index: 'IA',  name: 'Iowa',            pop:  3046355,  area:  56272, region: Util.Region.MIDWEST   },
+      { index: 'KS',  name: 'Kansas',          pop:  2853118,  area:  82277, region: Util.Region.MIDWEST   },
+      { index: 'KY',  name: 'Kentucky',        pop:  4339367,  area:  40409, region: Util.Region.SOUTH     },
+      { index: 'LA',  name: 'Louisiana',       pop:  4533372,  area:  51840, region: Util.Region.SOUTH     },
+      { index: 'ME',  name: 'Maine',           pop:  1328361,  area:  35385, region: Util.Region.NORTHEAST },
+      { index: 'MD',  name: 'Maryland',        pop:  5773552,  area:  12407, region: Util.Region.NORTHEAST },
+      { index: 'MA',  name: 'Massachusetts',   pop:  6547629,  area:  10555, region: Util.Region.NORTHEAST },
+      { index: 'MI',  name: 'Michigan',        pop:  9883640,  area:  96716, region: Util.Region.MIDWEST   },
+      { index: 'MN',  name: 'Minnesota',       pop:  5303925,  area:  86939, region: Util.Region.MIDWEST   },
+      { index: 'MS',  name: 'Mississippi',     pop:  2967297,  area:  48430, region: Util.Region.SOUTH     },
+      { index: 'MO',  name: 'Missouri',        pop:  5988927,  area:  69704, region: Util.Region.MIDWEST   },
+      { index: 'MT',  name: 'Montana',         pop:   989415,  area: 147042, region: Util.Region.WEST      },
+      { index: 'NE',  name: 'Nebraska',        pop:  1826341,  area:  77354, region: Util.Region.MIDWEST   },
+      { index: 'NV',  name: 'Nevada',          pop:  2700551,  area: 110561, region: Util.Region.WEST      },
+      { index: 'NH',  name: 'New Hampshire',   pop:  1316470,  area:   9350, region: Util.Region.NORTHEAST },
+      { index: 'NJ',  name: 'New Jersey',      pop:  8791894,  area:   8721, region: Util.Region.NORTHEAST },
+      { index: 'NM',  name: 'New Mexico',      pop:  2059179,  area: 121589, region: Util.Region.SOUTHWEST },
+      { index: 'NY',  name: 'New York',        pop: 19378102,  area:  54556, region: Util.Region.NORTHEAST },
+      { index: 'NC',  name: 'North Carolina',  pop:  9535483,  area:  53819, region: Util.Region.SOUTH     },
+      { index: 'ND',  name: 'North Dakota',    pop:   672591,  area:  70700, region: Util.Region.MIDWEST   },
+      { index: 'OH',  name: 'Ohio',            pop: 11536504,  area:  44825, region: Util.Region.MIDWEST   },
+      { index: 'OK',  name: 'Oklahoma',        pop:  3751351,  area:  69898, region: Util.Region.SOUTHWEST },
+      { index: 'OR',  name: 'Oregon',          pop:  3831074,  area:  98381, region: Util.Region.WEST      },
+      { index: 'PA',  name: 'Pennsylvania',    pop: 12702379,  area:  46055, region: Util.Region.NORTHEAST },
+      { index: 'RI',  name: 'Rhode Island',    pop:  1052567,  area:   1545, region: Util.Region.NORTHEAST },
+      { index: 'SC',  name: 'South Carolina',  pop:  4625364,  area:  32020, region: Util.Region.SOUTH     },
+      { index: 'SD',  name: 'South Dakota',    pop:   814180,  area:  77117, region: Util.Region.MIDWEST   },
+      { index: 'TN',  name: 'Tennessee',       pop:  6346105,  area:  42143, region: Util.Region.SOUTH     },
+      { index: 'TX',  name: 'Texas',           pop: 25145561,  area: 268581, region: Util.Region.SOUTHWEST },
+      { index: 'UT',  name: 'Utah',            pop:  2763885,  area:  84899, region: Util.Region.WEST      },
+      { index: 'VT',  name: 'Vermont',         pop:   625741,  area:   9614, region: Util.Region.NORTHEAST },
+      { index: 'VA',  name: 'Virginia',        pop:  8260405,  area:  42774, region: Util.Region.SOUTH     },
+      { index: 'WA',  name: 'Washington',      pop:  6971406,  area:  71300, region: Util.Region.WEST      },
+      { index: 'WV',  name: 'West Virginia',   pop:  1854304,  area:  24230, region: Util.Region.SOUTH     },
+      { index: 'WI',  name: 'Wisconsin',       pop:  5686986,  area:  65498, region: Util.Region.MIDWEST   },
+      { index: 'WY',  name: 'Wyoming',         pop:   563626,  area:  97814, region: Util.Region.WEST      },
+    ]
+  }
+
+  /**
+   * NOTE: Type Definition
+   * @typedef {Object} Icon
+   * @property {string} content  - the keyword used for the ligature
+   * @property {string} fallback - unicode code point
+   * @property {string} html     - html entity
+   */
 
   /**
    * List of icon objects used in Conf styles.
-   * Each object has:
-   * - content : @type {string}: keyword
-   * - fallback: @type {string}: unicode code point
-   * - html    : @type {string}: html entity
-   * @type {Array}
+   * @type {Array<Icon>}
    */
-  Util.ICON_DATA = [
-    { content: 'home'           , fallback: '\uE88A', html: '&#xE88A;' } // Home page
-  , { content: 'shopping_cart'  , fallback: '\uE8CC', html: '&#xE8CC;' } // Registration page
-  , { content: 'event'          , fallback: '\uE878', html: '&#xE878;' } // Program page
-  , { content: 'flight'         , fallback: '\uE539', html: '&#xE539;' } // Location page
-  , { content: 'account_box'    , fallback: '\uE851', html: '&#xE851;' } // Speakers page
-  , { content: 'people'         , fallback: '\uE7FB', html: '&#xE7FB;' } // Sponsor page
-  , { content: 'work'           , fallback: '\uE8F9', html: '&#xE8F9;' } // Exhibit page
-  , { content: 'info_outline'   , fallback: '\uE88F', html: '&#xE88F;' } // About page
-  , { content: 'email'          , fallback: '\uE0BE', html: '&#xE0BE;' } // Contact page / social list icon email
-  , { content: 'stars'          , fallback: '\uE8D0', html: '&#xE8D0;' } // Early Bird registration period icon
-  , { content: 'date_range'     , fallback: '\uE916', html: '&#xE916;' } // Advance registration period icon
-  , { content: 'account_balance', fallback: '\uE84F', html: '&#xE84F;' } // Onsite registration period icon
-  , { content: 'insert_drive_file', fallback: '\uE24D', html: '&#xE24D;' } // generic page file (only used in Docs)
-  , { content: 'arrow_upward'   , fallback: '\uE5D8', html: '&#xE5D8;' } // "return to top" button
-  , { content: 'phone'       , fallback: '\uE0CD', html: '&#xE0CD;' } // social list icon phone
-  , { content: 'phone_iphone', fallback: '\uE325', html: '&#xE325;' } // social list icon phone / mobile app callout
-  , { content: 'explore'     , fallback: '\uE87A', html: '&#xE87A;' } // social list icon homepage
-  , { content: 'expand_more' , fallback: '\uE5CF', html: '&#xE5CF;' } // main menu drop-down
-  ]
+  static get ICON_DATA() {
+    return [
+      { content: 'home'              , fallback: '\uE88A', html: '&#xE88A;' }, // Home page
+      { content: 'shopping_cart'     , fallback: '\uE8CC', html: '&#xE8CC;' }, // Registration page
+      { content: 'event'             , fallback: '\uE878', html: '&#xE878;' }, // Program page
+      { content: 'flight'            , fallback: '\uE539', html: '&#xE539;' }, // Location page
+      { content: 'account_box'       , fallback: '\uE851', html: '&#xE851;' }, // Speakers page
+      { content: 'people'            , fallback: '\uE7FB', html: '&#xE7FB;' }, // Sponsor page
+      { content: 'work'              , fallback: '\uE8F9', html: '&#xE8F9;' }, // Exhibit page
+      { content: 'info_outline'      , fallback: '\uE88F', html: '&#xE88F;' }, // About page
+      { content: 'email'             , fallback: '\uE0BE', html: '&#xE0BE;' }, // Contact page / social list icon email
+      { content: 'stars'             , fallback: '\uE8D0', html: '&#xE8D0;' }, // Early Bird registration period icon
+      { content: 'date_range'        , fallback: '\uE916', html: '&#xE916;' }, // Advance registration period icon
+      { content: 'account_balance'   , fallback: '\uE84F', html: '&#xE84F;' }, // Onsite registration period icon
+      { content: 'insert_drive_file' , fallback: '\uE24D', html: '&#xE24D;' }, // generic page file (only used in Docs)
+      { content: 'arrow_upward'      , fallback: '\uE5D8', html: '&#xE5D8;' }, // "return to top" button
+      { content: 'phone'             , fallback: '\uE0CD', html: '&#xE0CD;' }, // social list icon phone
+      { content: 'phone_iphone'      , fallback: '\uE325', html: '&#xE325;' }, // social list icon phone / mobile app callout
+      { content: 'explore'           , fallback: '\uE87A', html: '&#xE87A;' }, // social list icon homepage
+      { content: 'expand_more'       , fallback: '\uE5CF', html: '&#xE5CF;' }, // main menu drop-down
+    ]
+  }
 
   /**
    * Data for social media networks.
-   * @type {Object}
+   * @type {Object<{name:string, icon}>}
    */
-  Util.SOCIAL_DATA = {
-    twitter: {
-      name: 'Twitter'
-    , icon: Util.ICON_DATA[-1]
-    // , toURL: function (handle) { return 'https://twitter.com/' + (handle || '') } // NOTE param validation
-    }
-  , facebook: {
-      name: 'Faceboook'
-    , icon: Util.ICON_DATA[-1]
-    }
-  , google: {
-      name: 'Google+'
-    , icon: Util.ICON_DATA[-1]
-    }
-  , linkedin: {
-      name: 'LinkedIn'
-    , icon: Util.ICON_DATA[-1]
-    }
-  , youtube: {
-      name: 'YouTube'
-    , icon: Util.ICON_DATA[-1]
+  static get SOCIAL_DATA() {
+    return {
+      twitter: {
+        name: 'Twitter',
+        icon: Util.ICON_DATA[-1],
+        // toURL: (handle = '') => `https://twitter.com/${(handle)}`,
+      },
+      facebook: {
+        name: 'Faceboook',
+        icon: Util.ICON_DATA[-1],
+      },
+      google: {
+        name: 'Google+',
+        icon: Util.ICON_DATA[-1],
+      },
+      linkedin: {
+        name: 'LinkedIn',
+        icon: Util.ICON_DATA[-1],
+      },
+      youtube: {
+        name: 'YouTube',
+        icon: Util.ICON_DATA[-1],
+      },
     }
   }
 
@@ -643,7 +503,7 @@ module.exports = (function () {
    * @param  {Date} date the datetime to display
    * @return {string} a string of the format HH:MM[am|pm]
    */
-  Util.hourTime12 = function hourTime12(date) {
+  static hourTime12(date) {
     var hour = '' + ((date.getHours() - 1)%12 + 1)
     var minute = ((date.getMinutes() < 10) ? '0' : '') + date.getMinutes()
     var meridiem = (date.getHours() < 12) ? 'am' : 'pm'
@@ -657,7 +517,7 @@ module.exports = (function () {
    * @param  {Date} date the datetime to display
    * @return {string} a string of the format HHHH:MM
    */
-  Util.hourTime24 = function hourTime24(date) {
+  static hourTime24(date) {
     var hour =   ((date.getHours()   < 10) ? '0' : '') + date.getHours()
     var minute = ((date.getMinutes() < 10) ? '0' : '') + date.getMinutes()
     return hour + ':' + minute
@@ -671,7 +531,7 @@ module.exports = (function () {
    * @param  {Date} date the datetime to display
    * @return {string} a string of the format 'MMM DD'
    */
-  Util.monthDay = function monthDay(date) {
+  static monthDay(date) {
     return Util.MONTH_NAMES[date.getUTCMonth()].slice(0,3) + ' ' + date.getUTCDate()
   }
 
@@ -680,7 +540,7 @@ module.exports = (function () {
    * @param  {string} str a string to convert
    * @return {string} a URL-safe variant of the string given
    */
-  Util.toURL = function toURL(str) {
+  static toURL(str) {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
   }
 
@@ -689,7 +549,7 @@ module.exports = (function () {
    * @param  {string} str a string in any acceptable datetime format
    * @return {Date} a new Date object representation of the argument
    */
-  Util.toDate = function toDate(str) {
+  static toDate(str) {
     return (str) ? new Date(str) : new Date()
   }
 
@@ -699,7 +559,7 @@ module.exports = (function () {
    * @param  {Array} arr the array to modify
    * @param  {unknown} item  the item to remove from the array
    */
-  Util.spliceFromArray = function spliceFromArray(arr, item) {
+  static spliceFromArray(arr, item) {
     var index = arr.indexOf(item)
     if (index >= 0) arr.splice(index, 1)
   }
@@ -712,12 +572,24 @@ module.exports = (function () {
    * @param  {boolean=} fb          true if the fallback is preferred over the content
    * @return {string}               `icon.fallback` if fallback==true, else `icon.content`
    */
-  Util.iconToString = function iconToString(icon, fb) {
+  static iconToString(icon, fb) {
     return (fb) ? icon.fallback : icon.content
   }
 
-  return Util
-})()
+  /**
+   * Enum for state regions
+   * @enum {string}
+   */
+  static get Region() {
+    return {
+      SOUTH    : 's',
+      WEST     : 'w',
+      SOUTHWEST: 'sw',
+      NORTHEAST: 'ne',
+      MIDWEST  : 'mw',
+    }
+  }
+}
 
 },{}],4:[function(require,module,exports){
 var Color = require('csscolor').Color
