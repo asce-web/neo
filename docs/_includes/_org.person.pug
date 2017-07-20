@@ -10,9 +10,9 @@ figure.docs-figure
   figcaption This is a person&rsquo;s #[em.-fw-b full name]: first, middle (if applicable), and last.
   include /_views/_Person.view.pug
   +personFullName(new Person('drew-caracciolo', {
-      given_name      : 'Drew'
-    , additional_name : 'P.'
-    , family_name     : 'Caracciolo'
+      given_name      : 'Drew',
+      additional_name : 'P.',
+      family_name     : 'Caracciolo',
   }))
   +microdataCheckbox('person-full')
     pre.docs-pre.
@@ -25,11 +25,11 @@ figure.docs-figure
   figcaption This is a person&rsquo;s #[em.-fw-b entire name]: full name along with any honorific prefices or suffices.
   include /_views/_Person.view.pug
   +personEntireName(new Person('drew-caracciolo', {
-      given_name      : 'Drew'
-    , additional_name : 'P.'
-    , family_name     : 'Caracciolo'
-    , honorific_prefix: 'Dr.'
-    , honorific_suffix: 'Ph.D., M.ASCE'
+      given_name      : 'Drew',
+      additional_name : 'P.',
+      family_name     : 'Caracciolo',
+      honorific_prefix: 'Dr.',
+      honorific_suffix: 'Ph.D., M.ASCE',
   }))
   +microdataCheckbox('person-entire')
     pre.docs-pre.
@@ -44,11 +44,11 @@ figure.docs-figure
   figcaption This is a person with #[em.-fw-b affiliation]: entire name along with any affiliation.
   include /_views/_Person.view.pug
   +personAffiliation(new Person('drew-caracciolo', {
-      given_name      : 'Drew'
-    , additional_name : 'P.'
-    , family_name     : 'Caracciolo'
-    , honorific_prefix: 'Dr.'
-    , honorific_suffix: 'Ph.D., M.ASCE'
+      given_name      : 'Drew',
+      additional_name : 'P.',
+      family_name     : 'Caracciolo',
+      honorific_prefix: 'Dr.',
+      honorific_suffix: 'Ph.D., M.ASCE',
   }).affiliation('HDR Engineering, Inc.'))
   +microdataCheckbox('person-affiliation')
     pre.docs-pre.
@@ -66,11 +66,11 @@ figure.docs-figure
   figcaption This is a person with #[em.-fw-b contact information]: full name along with email (linked) and phone number.
   include /_views/_Person.view.pug
   +personContact(new Person('drew-caracciolo', {
-      given_name      : 'Drew'
-    , additional_name : 'P.'
-    , family_name     : 'Caracciolo'
-    , honorific_prefix: 'Dr.'
-    , honorific_suffix: 'Ph.D., M.ASCE'
+      given_name      : 'Drew',
+      additional_name : 'P.',
+      family_name     : 'Caracciolo',
+      honorific_prefix: 'Dr.',
+      honorific_suffix: 'Ph.D., M.ASCE',
   }).jobTitle('Senior Coordinator, Conferences & Meetings').email('example@asce.org').phone('(703) 293-5555'))
   +microdataCheckbox('person-contact')
     pre.docs-pre.
