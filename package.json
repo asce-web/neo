@@ -10,7 +10,7 @@
   "scripts": {
     "browserify:principles": "browserify docs/scripts/principles.js > docs/scripts/principles.b.js",
     "browserify:all": "npm run browserify:principles",
-    "build": "npm run browserify:all",
+    "build": "gulp build  &&  npm run browserify:all",
     "unbuild:root": "rm index.html",
     "unbuild:docs": "rm docs/{index,principles,base,obj,comp,org,help,atom}.html",
     "unbuild:css": "rm {neo.css,neo.css.map} docs/styles/{docs.css,docs.css.map}",
