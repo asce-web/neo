@@ -84,4 +84,27 @@ module.exports = class Place {
   get url() {
     return this._URL
   }
+
+
+  /**
+   * Output this person’s name and other information as HTML.
+   * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Place"]`.
+   * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
+   * @return {string} a string representing an HTML DOM snippet
+   */
+  html() {
+    let $name = `<b class="h-Clearfix" itemprop="name">${this.name}</b>`
+    if (this.url) $name = `<a href="${this.url}" itemprop="url">${$name}</a>`
+    return `
+      ${$name}
+      <span itemprop="address" itemscope="" itemtype="https://schema.org/PostalAddress">
+        <span class="h-Clearfix" itemprop="streetAddress">${this.streetAddress}</span>
+        <span itemprop="addressLocality">${this.addressLocality}</span>,
+        <span itemprop="addressRegion">${this.addressRegion}</span>
+        <span class="h-Clearfix" itemprop="postalCode">${this.postalCode}</span>
+        ${(this.addressCountry) ? `<span class="h-Clearfix" itemprop="addressCountry">${this.addressCountry}</span>` : ''}
+      </span>
+      ${(this.telephone) ? `<a href="tel:${this.telephone}" itemprop="telephone">${this.telephone}</a>` : ''}
+    `
+  }
 }

@@ -7,31 +7,30 @@ p.
   #[code.docs-code= '[itemscope="" itemtype="http://schema.org/Place"]'].
 p.-fs-t This Organism uses no other established patterns.
 figure.docs-figure
-  include /_views/_place.view.pug
-  p: +place(new Place('ASCE World Headquarters', {
-    street_address  : '1801 Alexander Bell Drive',
-    address_locality: 'Reston',
-    address_region  : 'VA',
-    postal_code     : '22901-4382',
-    telephone       : '+1-800-548-2723',
-    url             : 'http://www.asce.org/',
-  }))
+  -
+    let asce_hq = new Place('ASCE World Headquarters', {
+      street_address  : '1801 Alexander Bell Drive',
+      address_locality: 'Reston',
+      address_region  : 'VA',
+      postal_code     : '22901-4382',
+      telephone       : '+1-800-548-2723',
+      url             : 'http://www.asce.org/',
+    })
+  p(itemscope="" itemtype="https://schema.org/Place")!= asce_hq.html()
   +microdataCheckbox('place')
     //- REVIEW indentation
     pre.docs-pre.
-        &lt;span class="-fw-700"#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;ASCE World Headquarters&lt;/span&gt;
-        &lt;br/&gt;
-        #[mark.docs-c-Togglable__Text &lt;span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"&gt;]
-          #[mark.docs-c-Togglable__Text &lt;span itemprop="streetAddress"&gt;]1801 Alexander Bell Drive#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
-          &lt;br/&gt;
-          #[mark.docs-c-Togglable__Text &lt;span itemprop="addressLocality"&gt;]Reston#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;'],
-          #[mark.docs-c-Togglable__Text &lt;span itemprop="addressRegion"&gt;]VA#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
-          #[mark.docs-c-Togglable__Text &lt;span itemprop="postalCode"&gt;]22901-4382#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
-        #[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
-        &lt;br/&gt;
-        &lt;a href="tel:+1-800-548-2723"#[mark.docs-c-Togglable__Text  itemprop="telephone"]&gt;+1-800-548-2723&lt;/a&gt;
-        &lt;br/&gt;
-        &lt;a href="http://www.asce.org/"#[mark.docs-c-Togglable__Text  itemprop="url"]&gt;http://www.asce.org/&lt;/a&gt;
+      &lt;a href="http://www.asce.org/"#[mark.docs-c-Togglable__Text  itemprop="url"]&gt;
+        &lt;b class="h-Clearfix"#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;ASCE World Headquarters&lt;/b&gt;
+      &lt;/a&gt;
+      #[mark.docs-c-Togglable__Text &lt;span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"&gt;]
+        #[mark.docs-c-Togglable__Text &lt;span class="h-Clearfix" itemprop="streetAddress"&gt;]1801 Alexander Bell Drive#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
+        #[mark.docs-c-Togglable__Text &lt;span itemprop="addressLocality"&gt;]Reston#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;'],
+        #[mark.docs-c-Togglable__Text &lt;span itemprop="addressRegion"&gt;]VA#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
+        #[mark.docs-c-Togglable__Text &lt;span class="h-Clearfix" itemprop="postalCode"&gt;]22901-4382#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
+        #[mark.docs-c-Togglable__Text &lt;span class="h-Clearfix" itemprop="addressCountry"&gt;]United States#[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
+      #[mark.docs-c-Togglable__Text!= '&lt;/span&gt;']
+      &lt;a href="tel:+1-800-548-2723"#[mark.docs-c-Togglable__Text  itemprop="telephone"]&gt;+1-800-548-2723&lt;/a&gt;
 //- p.
   Use the following CSS selectors to add styling.
 //- pre.docs-pre.
