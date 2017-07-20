@@ -1,9 +1,9 @@
 mixin supporterBlock($supporterLevel, $conference)
-  section.c-SupporterBlock&attributes(attributes)
-    h1.c-SupporterBlock__Hn= $supporterLevel.name
-    ul.o-List.o-ListStacked
+  section.c-SupporterBlock(class=`c-SupporterBlock--${$supporterLevel.size()}`)&attributes(attributes)
+    h1.c-SupporterBlock__Hn= $supporterLevel.name()
+    ul.o-List.o-Flex.c-SupporterBlock__List
       each $supporter in $conference.getSupportersAll().filter(($supporter) => $supporter.level()===$supporterLevel.name)
-        li.o-List__Item.o-ListStacked__Item(itemprop="sponsor" itemscope="" itemtype="http://schema.org/Organization")
-          a.c-SupporterBlock__Logo.h-Block(class=`c-SupporterBlock__Logo--${$supporterLevel.size()}` href=$supporter.url() rel="external nofollow" itemprop="url")
-            img.c-SupporterBlock__Logo__Img(src=$supporter.img() alt=$supporter.name itemprop="logo")
-            meta.c-SupporterBlock__Logo__Name(content=$supporter.name itemprop="name")
+        li.o-List__Item.o-Flex__Item.c-SupporterBlock__List__Item(itemprop="sponsor" itemscope="" itemtype="https://schema.org/Organization")
+          a(href=$supporter.url() rel="external nofollow" itemprop="url")
+            img.c-SupporterBlock__Logo(src=$supporter.img() alt=$supporter.name itemprop="logo")
+            meta(content=$supporter.name itemprop="name")

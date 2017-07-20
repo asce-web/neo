@@ -5,8 +5,8 @@ mixin siteColorList(primary_str, secondary_str)
       figure
         include /docs/_views/_c-ColorBox.view.pug
         +colorBox(96, {
-          svg: { 'data-prop': '--color' + $pairing.suffix }
-        , rect: { class: '-f' + $pairing.suffix }
+          svg: { 'data-prop': '--color' + $pairing.suffix },
+          rect: { class: '-f' + $pairing.suffix },
         })
         p
           b= $pairing.name
@@ -26,7 +26,7 @@ mixin siteColorList(primary_str, secondary_str)
       th(title="Tint 1")
       th(title="Tint 2")
     tbody
-      - for (var i = 0; i < Docs.COLOR_NAMES.length; i += 5)
+      - for (let i = 0; i < Docs.COLOR_NAMES.length; i += 5)
         tr
           each item,index in Docs.COLOR_NAMES.slice(i, i+5)
             +cell(item,index)

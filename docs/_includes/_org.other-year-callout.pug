@@ -18,10 +18,10 @@ ul.-fs-t
 figure.docs-figure
   include /_views/_Conference.view.pug
   +otherYear(new Conference({
-    name      : 'Geo-Risk 2020'
-  , url       : 'http://2017.georiskconference.org/'
-  , start_date: new Date('2020-06-04')
-  , promo_loc : { text: 'Denver, CO', title: 'Denver, Colorado'}
+    name      : 'Geo-Risk 2020',
+    url       : 'http://2017.georiskconference.org/',
+    start_date: new Date('2020-06-04'),
+    promo_loc : { text: 'Denver, CO', title: 'Denver, Colorado'},
   }), 'Plan ahead to attend Geo-Risk next year!')
     +highlightButtons([
       { text: 'Event Details' , href:'#0', attr: {itemprop:'url'} }
@@ -35,7 +35,7 @@ figure.docs-figure
           &lt;p class="c-ConfHed__Detail"#[mark.docs-c-Togglable__Text  itemprop="location"]&gt;
             #[mark.docs-c-Togglable__Text &lt;abbr title="Denver, Colorado"&gt;]Denver, CO#[mark.docs-c-Togglable__Text!= '&lt;/abbr&gt;']
           &lt;/p&gt;
-          &lt;p class="h-Hidden-nsM"&gt;Plan ahead ...&lt;/p&gt;
+          &lt;p class="h-Hidden-nM"&gt;Plan ahead ...&lt;/p&gt;
           &lt;ul class="o-List  o-ListAction"&gt;
             &lt;li class="o-List__Item  o-ListAction__Item"&gt;
               &lt;a class="c-Btn  c-Btn--hilite  c-Btn--ghost  c-Btn--ghost--dark" href="#0"#[mark.docs-c-Togglable__Text  itemprop="url"]&gt;Event Details&lt;/a&gt;

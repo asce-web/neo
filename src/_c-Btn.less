@@ -80,14 +80,13 @@
 .c-Btn {
   // all button styles
   display: inline-block;
-  vertical-align: middle;
   padding: @g-boxpadd_mill;
-  margin-top: 0; // FIXME override negative margin-top from xmeter
   font-weight: 700;
   white-space: nowrap;
+  vertical-align: middle;
   border-radius: 0.25rem;
-  text-shadow: none; // fallback for initial
-  text-shadow: initial; // override .c-Banner
+  text-shadow: none; // HACK fallback
+  text-shadow: initial; // override `.c-Banner--hero`, etc.
   cursor: pointer;
   .transitions(color, background-color, border-color; 250ms);
   a&:not([href]),

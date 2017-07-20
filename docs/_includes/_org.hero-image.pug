@@ -16,17 +16,17 @@ ul.-fs-t
 figure.docs-figure
   include /_views/_Conference.view.pug
   +hero(new Conference({
-    name      : 'Geo-Risk 2017'
-  , url       : 'http://2017.georiskconference.org/'
-  , theme     : 'Geotechincal risk from theory to practice.'
-  , start_date: new Date('2017-06-04')
-  , end_date  : new Date('2017-06-07')
-  , promo_loc : { text: 'Denver, CO', title: 'Denver, Colorado'}
+    name      : 'Geo-Risk 2017',
+    url       : 'http://2017.georiskconference.org/',
+    theme     : 'Geotechincal risk from theory to practice.',
+    start_date: new Date('2017-06-04'),
+    end_date  : new Date('2017-06-07'),
+    promo_loc : { text: 'Denver, CO', title: 'Denver, Colorado'},
   }))
     +highlightButtons([
-      { text: 'Register'      , href:'#0' }
-    , { text: 'Sponsor'       , href:'#0' }
-    , { text: 'Submit a Paper', href:'#0' }
+      { text: 'Register'      , href:'#0' },
+      { text: 'Sponsor'       , href:'#0' },
+      { text: 'Submit a Paper', href:'#0' },
     ], 'c-Btn--primary')
   +microdataCheckbox('hero')
     pre.docs-pre.
@@ -44,7 +44,7 @@ figure.docs-figure
               #[mark.docs-c-Togglable__Text &lt;time datetime="2017-06-07" itemprop="endDate"&gt;]Jun 7#[mark.docs-c-Togglable__Text!= '&lt;/time&gt;']
             &lt;/span&gt;
           &lt;/p&gt;
-          &lt;p class="c-ConfHed__Theme  h-Hidden-nsM"#[mark.docs-c-Togglable__Text  itemprop="description"]&gt;Geotechincal risk ...&lt;/p&gt;
+          &lt;p class="c-ConfHed__Theme  h-Hidden-nM"#[mark.docs-c-Togglable__Text  itemprop="description"]&gt;Geotechincal risk ...&lt;/p&gt;
           &lt;ul class="o-List  o-ListAction"&gt;
             &lt;li class="o-List__Item  o-ListAction__Item"&gt;
               &lt;a class="c-Btn  c-Btn--hilite  c-Btn--primary" href="#0"&gt;Register&lt;/a&gt;

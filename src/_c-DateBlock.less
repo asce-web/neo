@@ -62,9 +62,9 @@
 .c-DateBlock > .c-DateBlock__Date,
 .c-DateBlock > .c-DateBlock__Desc {
   background-color: @g-color-gray_lt-tint2; // HACK fallback
-  border-color: @g-color-gray_dk; // HACK fallback
+  // border-color: @g-color-gray_dk; // HACK fallback
   background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
-  border-color: var(--color-gray_dk, @g-color-gray_dk);
+  // border-color: var(--color-gray_dk, @g-color-gray_dk);
   @media screen                       { padding: @g-boxpadd_micr; }
   @media screen and (min-width: 30em) { padding: @g-boxpadd_mill; }
   @media screen and (min-width: 45em) { padding: @g-boxpadd_norm; }
@@ -73,8 +73,10 @@
 .c-DateBlock__Item {
   margin-bottom: @g-vru; // HACK fallback
   margin-bottom: var(--vru);
-  .border-vert(all; @p-rw);
-  border-style: solid;
+  // .border-vert(all; @p-rw);
+  // border-style: solid;
+  box-shadow: 0 0 0 @p-rw @g-color-gray_dk; // border HACK // HACK fallback
+  box-shadow: 0 0 0 @p-rw var(--color-gray_dk, @g-color-gray_dk); // border HACK
 }
 
 .c-DateBlock__Date {
