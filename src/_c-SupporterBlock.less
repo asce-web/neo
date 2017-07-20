@@ -8,98 +8,143 @@
 @import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
 @import (reference) url('__settings.less');
 
-// mixin for setting the `max-width` and `height` of sponsor logos.
-// `width` should be intrinsically `auto`
+
+html {
+  --supporter-logo-lrg-width: 120px; --supporter-logo-lrg-height: 65px ;
+  --supporter-logo-med-width: 90px ; --supporter-logo-med-height: 48px ;
+  --supporter-logo-sml-width: 68px ; --supporter-logo-sml-height: 36px ;
+  @media screen and (min-width: 30em) {
+    --supporter-logo-lrg-width: 250px; --supporter-logo-lrg-height: 110px;
+    --supporter-logo-med-width: 188px; --supporter-logo-med-height: 82px ;
+    --supporter-logo-sml-width: 140px; --supporter-logo-sml-height: 62px ;
+  }
+  @media screen and (min-width: 60em) {
+    --supporter-logo-lrg-width: 360px; --supporter-logo-lrg-height: 160px;
+    --supporter-logo-med-width: 270px; --supporter-logo-med-height: 120px;
+    --supporter-logo-sml-width: 202px; --supporter-logo-sml-height: 90px ;
+  }
+}
+
+// sizing variables (copied from `html` custom props)
+@p-supporter-logo-lrg-s-width : 120px; @p-supporter-logo-lrg-s-height : 65px ;
+@p-supporter-logo-med-s-width : 90px ; @p-supporter-logo-med-s-height : 48px ;
+@p-supporter-logo-sml-s-width : 68px ; @p-supporter-logo-sml-s-height : 36px ;
+@p-supporter-logo-lrg-sK-width: 250px; @p-supporter-logo-lrg-sK-height: 110px;
+@p-supporter-logo-med-sK-width: 188px; @p-supporter-logo-med-sK-height: 82px ;
+@p-supporter-logo-sml-sK-width: 140px; @p-supporter-logo-sml-sK-height: 62px ;
+@p-supporter-logo-lrg-sG-width: 360px; @p-supporter-logo-lrg-sG-height: 160px;
+@p-supporter-logo-med-sG-width: 270px; @p-supporter-logo-med-sG-height: 120px;
+@p-supporter-logo-sml-sG-width: 202px; @p-supporter-logo-sml-sG-height: 90px ;
+
+// (private) mixin for setting the dimensions of logos.
 .p-dimensions(@x; @y) {
-  max-width: @x;
-  height: @y;
+  .c-SupporterBlock__List__Item {
+    flex: 0 1 @x;
+  }
+  .c-SupporterBlock__Logo {
+    max-height: @y;
+  }
 }
 
 // A section containing one level of sponsor.
 //
 // ^subclasses
-// --separate - visually separates this block from a subsequent one
+// --sml - contains small logos
+// --med - contains medium logos
+// --lrg - contains large logos
 // ^subcomponents
 // __Hn       - name of sponsor level ("Platinum", etc.)
-// __Logo     - structural styles for sponsor link with logo
-//   --sml - small logo size
-//   --med - medium logo size
-//   --lrg - large logo size
-// __Logo__Img  - <img> element in logo
-// __Logo__Name - name of org
+// __List     - structural styles of list of logos
+//   __Item     - structural styles of list item with link and logo
+// __Logo     - <img> element of logo. cosmetic styles
 // ^author
 // : Chris Harvey
 // ^updated
-// 2017-01-06
-
-// @p-color_premier:   #b0bbcb; // CH chose this; may be changed at any time <charvey@asce.org>
-// @p-color_platinum:  #cde1ec;
-// @p-color_gold:      #f8cd79;
-// @p-color_corporate: #9ed8f9;
-// @p-color_silver:    #dbddde;
-// @p-color_bronze:    #d9c5ac;
-// @p-color_copper:    #d6a985; // CH chose this; may be changed at any time <charvey@asce.org>
-// @p-color_coop_bg:   #e8eaeb; // bgcolor for coop orgs
-
+// 2017-07-19
 .c-SupporterBlock {
+  // large logos by default
+  --supporter-logo-width : var(--supporter-logo-lrg-width );
+  --supporter-logo-height: var(--supporter-logo-lrg-height);
   text-align: center;
+  margin-bottom: 2 * @g-vru; // HACK fallback
+  margin-bottom: calc(~'2 * var(--vru)');
 }
-.c-SupporterBlock--separate {
-  .border-vert(bottom; 1px);
-  border-style: solid;
-  border-color: @g-color-gray_lt; // HACK fallback
-  border-color: var(--color-gray_lt);
+.c-SupporterBlock--lrg {
+  // HACK fallbacks below:
+  .p-dimensions(@p-supporter-logo-lrg-s-width; @p-supporter-logo-lrg-s-height);
+  @media screen and (min-width: 30em) {
+    .p-dimensions(@p-supporter-logo-lrg-sK-width; @p-supporter-logo-lrg-sK-height);
+  }
+  @media screen and (min-width: 60em) {
+    .p-dimensions(@p-supporter-logo-lrg-sG-width; @p-supporter-logo-lrg-sG-height);
+  }
+}
+.c-SupporterBlock--med {
+  --supporter-logo-width : var(--supporter-logo-med-width );
+  --supporter-logo-height: var(--supporter-logo-med-height);
+  // HACK fallbacks below:
+  .p-dimensions(@p-supporter-logo-med-s-width; @p-supporter-logo-med-s-height);
+  @media screen and (min-width: 30em) {
+    .p-dimensions(@p-supporter-logo-med-sK-width; @p-supporter-logo-med-sK-height);
+  }
+  @media screen and (min-width: 60em) {
+    .p-dimensions(@p-supporter-logo-med-sG-width; @p-supporter-logo-med-sG-height);
+  }
+}
+.c-SupporterBlock--sml {
+  --supporter-logo-width : var(--supporter-logo-sml-width );
+  --supporter-logo-height: var(--supporter-logo-sml-height);
+  // HACK fallbacks below:
+  .p-dimensions(@p-supporter-logo-sml-s-width; @p-supporter-logo-sml-s-height);
+  @media screen and (min-width: 30em) {
+    .p-dimensions(@p-supporter-logo-sml-sK-width; @p-supporter-logo-sml-sK-height);
+  }
+  @media screen and (min-width: 60em) {
+    .p-dimensions(@p-supporter-logo-sml-sG-width; @p-supporter-logo-sml-sG-height);
+  }
 }
 
 .c-SupporterBlock__Hn {
-  .font-size-el(@g-font_size_h2);
+  .font-size-el(@g-font_size_kilo);
   font-family: inherit;
-  margin-bottom: ~'calc(2 * var(--vru))';
+  font-weight: 900;
+  text-align: center;
   &,
   .c-Banner & { // HACK specificity TODO remove when .c-Banner >> h1 can be removed
   color: @g-color-gray_dk; // HACK fallback
   color: var(--color-gray_dk);
   }
+  // visualization line separator
+  @supports (flex-wrap: wrap) {
+    display: flex;
+    align-items: center;
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      border: 1px solid @g-color-table-br;
+      margin: 0 1rem;
+    }
+  }
+}
+
+.c-SupporterBlock__List {
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.c-SupporterBlock__List__Item {
+  flex: 0 1 var(--supporter-logo-width) !important; // specificity HACK due to calls of .p-dimensions()
+  margin: 0 1rem @g-vru; // HACK fallback
+  margin: 0 1rem var(--vru);
 }
 
 .c-SupporterBlock__Logo {
-  margin: auto;
-  .transitions(@g-prefix_filter; 1000ms);
+  max-height: var(--supporter-logo-height) !important; // specificity HACK due to calls of .p-dimensions()
+  transition: filter 1000ms;
+  // &:not(:hover, :focus) // CHANGED syntax not supported yet
   &:not(:hover):not(:focus) {
-    .filter(grayscale(100%));
+    filter: grayscale(100%);
   }
-}
-.c-SupporterBlock__Logo--sml {
-  .p-dimensions(68px; 36px);
-  @media screen and (min-width: 45em) {
-    .p-dimensions(140px; 62px);
-  }
-  @media screen and (min-width: 60em) {
-    .p-dimensions(202px; 90px);
-  }
-}
-.c-SupporterBlock__Logo--med {
-  .p-dimensions(90px; 48px);
-  @media screen and (min-width: 45em) {
-    .p-dimensions(188px; 82px);
-  }
-  @media screen and (min-width: 60em) {
-    .p-dimensions(270px; 120px);
-  }
-}
-.c-SupporterBlock__Logo--lrg {
-  .p-dimensions(120px; 65px);
-  @media screen and (min-width: 45em) {
-    .p-dimensions(250px; 110px);
-  }
-  @media screen and (min-width: 60em) {
-    .p-dimensions(360px; 160px);
-  }
-}
-
-.c-SupporterBlock__Logo__Img {
-  max-height: 100%;
-}
-
-.c-SupporterBlock__Logo__Name {
 }

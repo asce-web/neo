@@ -63,24 +63,14 @@
 }
 
 // Timeline Visualization
-@media screen {
-  // @supports (color: var(--color-primary)) {
-  //   // HACK `@supports` not supported in harp@0.23.0; commenting out for now
-  //   // checking support for css custom properties (for positioning & sizing of viz)
-  //   .c-TimeBlock__Times::before,
-  //   .c-TimeBlock__Desc:not(.c-TimeBlock__Desc--last)::before {
-  //     content: '';
-  //   }
-  // }
+@supports (content: var(--variable)) {
   .c-TimeBlock__Times,
   .c-TimeBlock__Desc {
     position: relative; // for psuedo-elements in viz
   }
   .c-TimeBlock__Times::before,
   .c-TimeBlock__Desc:not(.c-TimeBlock__Desc--last)::before {
-    // HACK : lack of `@supports` support (see above)
-    --variablessupported: '';
-    content: var(--variablessupported);
+    content: '';
   }
   .c-TimeBlock__Times::before,
   .c-TimeBlock__Desc::before {
