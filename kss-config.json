@@ -8,10 +8,10 @@
     "https://fonts.googleapis.com/icon?family=Material+Icons",
     "https://cdn.rawgit.com/chharvey/xmeter/v5.7.0/xmeter.min.css",
     "https://cdn.rawgit.com/chharvey/bangs/v0.14.0/bangs.min.css",
-    "../3rd_modules/glyphicons_pro_1_9_2/glyphicons/web/html_css/css/glyphicons.css",
-    "../3rd_modules/glyphicons_pro_1_9_2/glyphicons-filetypes/web/html_css/css/glyphicons-filetypes.css",
-    "../3rd_modules/glyphicons_pro_1_9_2/glyphicons-halflings/web/html_css/css/glyphicons-halflings.css",
-    "../3rd_modules/glyphicons_pro_1_9_2/glyphicons-social/web/html_css/css/glyphicons-social.css",
+    "../vendor/glyphicons_pro_1_9_2/glyphicons/web/html_css/css/glyphicons.css",
+    "../vendor/glyphicons_pro_1_9_2/glyphicons-filetypes/web/html_css/css/glyphicons-filetypes.css",
+    "../vendor/glyphicons_pro_1_9_2/glyphicons-halflings/web/html_css/css/glyphicons-halflings.css",
+    "../vendor/glyphicons_pro_1_9_2/glyphicons-social/web/html_css/css/glyphicons-social.css",
     "../neo.css"
   ],
   "js": [
