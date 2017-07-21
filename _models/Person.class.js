@@ -30,7 +30,6 @@ module.exports = class Person {
     /** @private */ this._telephone   = ''
     /** @private */ this._url         = ''
     /** @private */ this._social      = {}
-    /** @private */ this._bio         = ''
     /** @private */ this._is_starred  = false
   }
 
@@ -149,24 +148,6 @@ module.exports = class Person {
   getSocialAll() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._social) // shallow clone this.social into {}
-  }
-
-  /**
-   * Set a short, html-friendly biography (“bio”) for this person.
-   * @param {string} html html-friendly content
-   * @return {Person} this person
-   */
-  setBio(html) {
-    this._bio = html
-    return this
-  }
-  /**
-   * Get the bio of this person.
-   * @param  {boolean=} unescaped whether or not the returned string should be escaped
-   * @return {string} the bio of this person
-   */
-  getBio(unescaped) {
-    return ((unescaped) ? '<!-- warning: unescaped code -->' : '') + this._bio
   }
 
   /**

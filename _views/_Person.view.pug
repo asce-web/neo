@@ -6,13 +6,13 @@ mixin speakerList(speakers)
 
 mixin speaker($person)
   article.c-Speaker(itemprop="performer" itemscope="" itemtype="http://schema.org/Person")
-    div.c-Speaker__Img(style=`background-image:url('${$person.img()}');`)
+    img.c-Speaker__Img.h-Block(src=`${$person.img()}` itemprop="image")
     header.c-Speaker__Head
       h1.c-Speaker__Name(id=$person.id)!= $person.html(Person.Format.ENTIRE_NAME)
       p.c-Speaker__JobTitle(itemprop="jobTitle")= $person.jobTitle()
       p.c-Speaker__Affiliation(itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization")
         span(itemprop="name")= $person.affiliation()
-    div.c-Speaker__Body(itemprop="description")._text-block!= $person.getBio(true)
+    //- div.c-Speaker__Body(itemprop="description")
     footer.c-Speaker__Foot
       include _c-SocialList.view.pug
       +socialList($person.getSocialAll()).c-SocialList--speaker

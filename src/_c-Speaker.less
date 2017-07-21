@@ -2,6 +2,11 @@
 /*################################*\
     neo  |  _c-Speaker.less
 \*################################*/
+@import (reference) url('../node_modules/xmeter/styles/__tool.fontsize.less');
+@import (reference) url('../node_modules/xmeter/styles/__tool.borders.less');
+@import (reference) url('__settings.less');
+@import (reference) url('__tool.logo.less');
+@import (reference) url('__tool.ticket.less');
 
 
 // The Speaker Component
@@ -14,13 +19,13 @@
 // <pre>
 //   include /_views/_Person.view.pug
 //   +speaker(new Person('donna-fulman', {
-//       given_name      : 'Donna',
-//       additional_name : 'A.',
-//       family_name     : 'Fulman',
-//       honorific_suffix: 'P.ASCE',
+//     given_name      : 'Donna',
+//     additional_name : 'A.',
+//     family_name     : 'Fulman',
+//     honorific_suffix: 'P.ASCE',
 //   }).jobTitle('Administrator of Interior Engineering')
 //     .affiliation('German Chamber of Architects')
-//     .img('/sites/default/img/headshot1.jpg')
+//     .img('img/headshot1.jpg')
 //     .email('example@asce.org')
 //     .phone('+1(703)555-5555')
 //     .url('#0')
@@ -29,27 +34,24 @@
 //     .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
 //     .addSocial('google'  , '#0', 'Donna’s Google+ Profile')
 //     .addSocial('youtube' , '#0', 'Donna’s YouTube Channel')
-//     .setBio(`<p>Speaker bio goes here. <b>HTML</b> is allowed.
-//       Block- and text-level elements.</p>`)
 //   )
 // </pre>
 //
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
-//   <dt>updated</dt> <dd><time>2016-10-14</time></dd>
+//   <dt>updated</dt> <dd><time>2017-03-15</time></dd>
 // </dl></header>
 //
 // Markup:
 // <article class="c-Speaker" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
-//   <div class="c-Speaker__Img" style="background-image: url('headshot.jpg');"></div>
-//   <!-- TODO: change this to an <img> element -->
+//   <img class="c-Speaker__Img h-Block" src="headshot.jpg" itemprop="image"/>
 //   <header class="c-Speaker__Head">
 //     <h1 class="c-Speaker__Name">
 //       <span itemprop="name">
-//         <span itemprop="givenName">Donna</span>&nbsp;
-//         <span itemprop="additionalName">A.</span>&nbsp;
+//         <span itemprop="givenName">Donna</span>
+//         <span itemprop="additionalName">A.</span>
 //         <span itemprop="familyName">Fulman</span>
-//       </span>,&nbsp;
+//       </span>,
 //       <span itemprop="honorificSuffix">P.ASCE</span>
 //     </h1>
 //     <p class="c-Speaker__JobTitle" itemprop="jobTitle">Administrator of Interior Engineering</p>
@@ -57,12 +59,9 @@
 //       <span itemprop="name">German Chamber of Architects</span>
 //     </p>
 //   </header>
-//   <div class="c-Speaker__Body" itemprop="description">
-//     <p>Speaker bio goes here. <b>HTML</b> is allowed. Block- and text-level elements.</p>
-//   </div>
-//   <div class="c-Speaker__Foot">
+//   <footer class="c-Speaker__Foot">
 //     <ul class=" o-List o-Flex c-SocialList c-SocialList--speaker">...</ul>
-//   </div>
+//   </footer>
 // </article>
 //
 // Weight: 12
@@ -78,16 +77,15 @@
 }
 
 .c-Speaker__Img {
+  width: 100%;
   height: 60vw;
   @media screen and (min-width: 30em)  { height: 40vw; }
   @media screen and (min-width: 45em)  { height: 20vw; }
   @media screen and (min-width: 90em)  { height: 15vw; }
-  .logo();
-  background-size: cover; // override .logo();
+  object-fit: cover;
 }
 
 .c-Speaker__Head,
-.c-Speaker__Body,
 .c-Speaker__Foot {
   padding: @g-boxpadd_norm;
   & > *:last-child {
@@ -103,15 +101,17 @@
   white-space: nowrap;
 }
 
-.c-Speaker__Body {
-  padding: @g-boxpadd_mill;
-  & > footer > ul {
-    margin-bottom: 0;
-  }
-  .ticket-body();
-}
+// .c-Speaker__Body {
+//   padding: @g-boxpadd_mill;
+//   & > footer > ul {
+//     margin-bottom: 0;
+//   }
+//   .ticket-body();
+// }
 
 .c-Speaker__Foot {
+  .border-vert(top; 2px);
+  border-color: currentColor;
 }
 
 .c-Speaker__Name {
