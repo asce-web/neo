@@ -4,8 +4,6 @@ block append vars
   - var page = Docs.DOCS.find('/docs/org.html')
 
 block append main
-  +newSection(2, Docs.DOCS.find('/docs/org.html#other-year-callout'))
-    include _includes/_org.other-year-callout.pug
   +newSection(2, Docs.DOCS.find('/docs/org.html#program-tabs'))
     include _includes/_org.program-tabs.pug
   +newSection(2, Docs.DOCS.find('/docs/org.html#person'))
