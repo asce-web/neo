@@ -11,37 +11,82 @@
 // # BUTTON STRUCTURE STYLES
 
 
-// Buttons.
+// Buttons
 //
-// ^subclasses
-// : --dark      - normal button but dark
-// : --primary   - site primary color
-// : --secondary - site secondary color
-// : --ghost     - ghost button (border and text only)
-// :   --ghost--dark - like ghost but dark
-// : --glossy    - shiny & 3D button
-// : --flat      - button text to look like a regular link
-// : --hilite    - singular button in highlight block
-// : --inline    - buttons in line with text
-// ^enhancement classes
-// : subclasses used only in the styleguide (not on the conference sites)
-// : ._hover  - indicates hover/focus state
-// : ._active - indicates active/pressed state
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-07-03
+// Buttons are displayed inline-block, so in order to preserve
+// vertical rhythm, be sure to contain them in typographical block-level elements
+// such as paragraphs or lists.
+//
+// Buttons may be in the form of <code>a</code> elements (links or anchors) or
+// <code>button</code> elements.
+//
+// Keep in mind these button usage guidelines:
+// - <code>button</code> elements should indicate action and be worded actionably.
+// - Use an <code>a</code> element instead of a <code>button</code> if there is a
+//   meaningful target href or url.
+// - Of course, <code>a</code> elements as well as <code>button</code> elements
+//   may be styled to look like Button Components.
+//
+// Every Button Component must have styles available for each of the following states:
+// <dl>
+//   <dt><b>default</b></dt>
+//   <dd>the button does something or the link goes somewhere, but the user is not interacting with the component</dd>
+//   <dt><b>hover</b>/<b>focus</b></dt>
+//   <dd>the user’s cursor is hovering over the component, or the user agent is focusing on the component</dd>
+//   <dt><b>active</b></dt>
+//   <dd>the user is in the process of clicking/activating the component</dd>
+//   <dt><b>disabled</b></dt>
+//   <dd>the component is inaccessable and/or does nothing, and the user may not
+//     interact with it; this state is implemented by:
+//     <ul>
+//       <li>a <code>button</code> with the <code>[disabled]</code> attribute, or</li>
+//       <li>an <code>a</code> with the <code>[href]</code> attribute <em>absent</em>
+//         (this is not the same as an empty attribute <code>[href=""]</code>).</li>
+//     </ul>
+//   </dd>
+// </dl>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-07-03</time></dd>
+// </dl></header>
+//
+// Markup:
+// <ul class="o-List o-Flex">
+//   <li class="o-List__Item o-Flex__Item"><a class="c-Btn {{ modifier_class }}" href="#0">link</a></li>
+//   <li class="o-List__Item o-Flex__Item"><a class="c-Btn {{ modifier_class }} _hover" href="#0">link hover</a></li>
+//   <li class="o-List__Item o-Flex__Item"><a class="c-Btn {{ modifier_class }} _active" href="#0">link active</a></li>
+//   <li class="o-List__Item o-Flex__Item"><a class="c-Btn {{ modifier_class }}">link disabled</a></li>
+// </ul>
+// <ul class="o-List o-Flex">
+//   <li class="o-List__Item o-Flex__Item"><button class="c-Btn {{ modifier_class }}">button</a></li>
+//   <li class="o-List__Item o-Flex__Item"><button class="c-Btn {{ modifier_class }} _hover">button hover</a></li>
+//   <li class="o-List__Item o-Flex__Item"><button class="c-Btn {{ modifier_class }} _active">button active</a></li>
+//   <li class="o-List__Item o-Flex__Item"><button class="c-Btn {{ modifier_class }}" disabled="">button disabled</a></li>
+// </ul>
+//
+// .c-Btn--dark      - (color style) generic button but dark
+// .c-Btn--primary   - (color style) site primary color
+// .c-Btn--secondary - (color style) site secondary color
+// .c-Btn--ghost     - (color style) ghost button, for light backgrounds
+// .c-Btn--ghost.c-Btn--ghost--dark - (color style) ghost, for dark backgrounds
+// .c-Btn--glossy    - (texture style) shiny & 3D. Mix with any color style as needed.
+// .c-Btn--hilite    - (sizing style) group of large buttons in a highlight block ("callout"). Use with any color or texture style.
+// .c-Btn--inline    - (sizing style) buttons in-line with text. Use with any color or texture style.
+//
+// Weight: 17
+//
+// Styleguide Components.Btn
 .c-Btn {
   // all button styles
   display: inline-block;
-  vertical-align: middle;
   padding: @g-boxpadd_mill;
-  margin-top: 0; // FIXME override negative margin-top from xmeter
   font-weight: 700;
   white-space: nowrap;
+  vertical-align: middle;
   border-radius: 0.25rem;
-  text-shadow: none; // fallback for initial
-  text-shadow: initial; // override .c-Banner
+  text-shadow: none; // HACK fallback
+  text-shadow: initial; // override `.c-Banner--hero`, etc.
   cursor: pointer;
   .transitions(color, background-color, border-color; 250ms);
   a&:not([href]),
@@ -59,22 +104,22 @@
   // generic button color styles
   background-color: @g-color-gray_lt; // HACK fallback
   color: @g-color-gray_dk-shade2; // HACK fallback
-  background-color: var(--button-color);
-  color: var(--button-text);
+  background-color: var(--button-color, @g-color-gray_lt);
+  color: var(--button-text, @g-color-gray_dk-shade2);
   &:hover,
   &:focus,
   &._hover {
     background-color: @g-color-gray_lt-tint1; // HACK fallback
     // color: @g-color-gray_dk-shade2; // HACK fallback // don’t need: inherits from above
-    background-color: var(--button-color-hover);
-    color: var(--button-text-hover);
+    background-color: var(--button-color-hover, @g-color-gray_lt-tint1);
+    color: var(--button-text-hover, @g-color-gray_dk-shade2);
   }
   &:active,
   &._active {
     background-color: @g-color-gray_lt-shade1; // HACK fallback
     // color: @g-color-gray_dk-shade2; // HACK fallback // don’t need: inherits from above
-    background-color: var(--button-color-active);
-    color: var(--button-text-active);
+    background-color: var(--button-color-active, @g-color-gray_lt-shade1);
+    color: var(--button-text-active, @g-color-gray_dk-shade2);
   }
   a&:not([href]),
   button&:disabled {

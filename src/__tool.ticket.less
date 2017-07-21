@@ -13,19 +13,23 @@
 
 .ticket() {
   .font-size-mod(0.75);
-  .border-vert(all; 1px);
-  border-style: solid;
-  border-color: @g-color-gray_dk; // HACK fallback
+
+  // .border-vert(all; 1px);
+  // border-style: solid;
+  // border-color: @g-color-gray_dk; // HACK fallback
+  box-shadow: 0 0 0 1px @g-color-gray_dk; // border HACK // HACK fallback
   background-color: @g-color-gray_dk; // HACK fallback
   color: @g-color-gray_lt-tint2; // HACK fallback
-  border-color: var(--color-gray_dk);
-  background-color: var(--color-gray_dk);
-  color: var(--color-gray_lt-tint2);
+
+  // border-color: var(--color-gray_dk, @g-color-gray_dk);
+  box-shadow: 0 0 0 1px var(--color-gray_dk, @g-color-gray_dk); // border HACK
+  background-color: var(--color-gray_dk, @g-color-gray_dk);
+  color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
 }
 
 .ticket-body() {
   background-color: @g-color-gray_lt-tint2; // HACK fallback
   color: @g-color-gray_dk-shade2; // HACK fallback
-  background-color: var(--color-gray_lt-tint2);
-  color: var(--color-gray_dk-shade2);
+  background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+  color: var(--color-gray_dk-shade2, @g-color-gray_dk-shade2);
 }

@@ -21,7 +21,7 @@
   margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
   .menufont();
   color: @g-color-gray_lt-tint2; // HACK fallback
-  color: var(--color-gray_lt-tint2);
+  color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   // REVIEW using .material-icons out of component
   // .material-icons {
   //   display: none;
@@ -35,8 +35,8 @@
   &._hover {
     color: @g-color-gray_dk; // HACK fallback
     background-color: @g-color-gray_lt-tint2; // HACK fallback
-    color: var(--color-gray_dk);
-    background-color: var(--color-gray_lt-tint2);
+    color: var(--color-gray_dk, @g-color-gray_dk);
+    background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   }
   &:not(:hover) .c-MenuBar__Sub,
   &:not(:hover) .c-MenuBar__Sub-sM {
@@ -52,7 +52,7 @@
   &:focus,
   &._hover {
     color: @g-color-secondary; // HACK fallback
-    color: var(--color-secondary);
+    color: var(--color-secondary, @g-color-secondary);
   }
 }
 
@@ -77,7 +77,7 @@
   font-weight: 400;     // override `.menufont();`
   text-transform: none; // override `.menufont();`
   background-color: @g-color-gray_lt-tint2; // HACK fallback
-  background-color: var(--color-gray_lt-tint2);
+  background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   .transitions(transform, opacity; @p-trans_dura);
 }
 

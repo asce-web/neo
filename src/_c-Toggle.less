@@ -7,26 +7,51 @@
 @p-trans_dura: 500ms;
 
 
-// Toggle button with "menu" icon in inactive state and "close" icon in active state.
+// The Toggle Button
 //
-// ^subcomponents
-// __Check - checkbox for toggle button
-// __Viz   - graphic visualization
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-07-03
+// Toggle button with "menu" icon in inactive state and "close" icon in active state.
+// This Component is not part of the <a>Button</a> suite of styles; it is a
+// separate Component that just so happens to look like a button.
+// The Toggle Button for the top menu will normally be hidden
+// on Medium screens or larger. However on this page it is always shown
+// for demonstration purposes.
+// When toggled on, it will be fixed to the top right of the screen.
+//
+// No Javascript is required for visual effects!
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-07-03</time></dd>
+// </dl></header>
+//
+// Markup:
+// <label class="c-Toggle" style="display: inline;" aria-label="activate to toggle">
+//   <input class="c-Toggle__Check h-Hidden" type="checkbox" value="toggle is on" role="switch"/>
+//   <svg class="c-Toggle__Viz" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36">
+//     <path d="M0,0 H24 V24 H0 z" fill="transparent"/>
+//     <g transform="translate(3,11)">
+//       <rect class="c-Toggle__Viz__Bar" width="18" height="2"/>
+//       <rect class="c-Toggle__Viz__Bar" width="18" height="2"/>
+//       <rect class="c-Toggle__Viz__Bar" width="18" height="2"/>
+//     </g>
+//   </svg>
+// </label>
+//
+// Weight: 20
+//
+// Styleguide Components.Toggle
 .c-Toggle {
   @media screen and (min-width: 45em) {
     display: none;
   }
-  noscript a {
-    position: absolute;
-    top: ((75px - 48px)/2); // half height of the mast head // FIXME
-    right: 0.5rem;
-    line-height: @g-line_height; // HACK fallback
-    line-height: var(--line-height); // override `label`
-  }
+}
+
+// Link to site map, for when JS is disabled and no mobile menu is available
+header noscript a {
+  position: absolute;
+  top: ((75px - 48px)/2); // half height of the mast head // FIXME
+  right: 0.5rem;
+  line-height: @g-line_height; // HACK fallback
+  line-height: var(--line-height); // override `label`
 }
 
 .c-Toggle__Check {

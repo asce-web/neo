@@ -18,6 +18,10 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
         .add(new Page({ name: 'Derivation of Color Palettes', url: '/docs/principles.html#derivation-color-palettes' }))
         .add(new Page({ name: 'Site Colors'                 , url: '/docs/principles.html#site-colors' }))
       )
+      .add(new Page({ name: 'Formats', url: '/docs/principles.html#formats' })
+        .add(new Page({ name: 'Person', url: '/docs/principles.html#person' }))
+        .add(new Page({ name: 'Place' , url: '/docs/principles.html#place' }))
+      )
     )
     .add(new Page({ name: 'Base Typography', url: '/docs/base.html' })
       .description('Bare, unstyled HTML elements. No classes.')
@@ -49,10 +53,14 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       .add(new Page({ name: 'The Drawer Object', url: '/docs/obj.html#drawer-object' }))
     )
     .add(new Page({ name: 'Components', url: '/docs/comp.html' })
+      // TODO leaving here for reference
       .add(new Page({ name: 'The Mast Component'   , url: '/docs/comp.html#mast-component' }))
       .add(new Page({ name: 'The Site Title'       , url: '/docs/comp.html#site-title' }))
+
       .add(new Page({ name: 'The Mobile Menu'      , url: '/docs/comp.html#mobile-menu' }))
       .add(new Page({ name: 'The Menu Bar'         , url: '/docs/comp.html#menu-bar' }))
+
+      // TODO leaving here for reference
       .add(new Page({ name: 'The Sitemap Component', url: '/docs/comp.html#sitemap-component' }))
       .add(new Page({ name: 'The Banner Component' , url: '/docs/comp.html#banner-component' }))
       .add(new Page({ name: 'The Page Title'       , url: '/docs/comp.html#page-title' }))
@@ -65,12 +73,16 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       .add(new Page({ name: 'The Social List'      , url: '/docs/comp.html#social-list' }))
       .add(new Page({ name: 'The Date Block'       , url: '/docs/comp.html#date-block' }))
       .add(new Page({ name: 'The Callout Component', url: '/docs/comp.html#callout-component' }))
+
       .add(new Page({ name: 'Buttons'              , url: '/docs/comp.html#buttons' }))
+
+      // TODO leaving here for reference
       .add(new Page({ name: 'The Camo Link'        , url: '/docs/comp.html#camo-link' }))
       .add(new Page({ name: 'The Caps Link'        , url: '/docs/comp.html#caps-link' }))
       .add(new Page({ name: 'The Toggle Button'    , url: '/docs/comp.html#toggle-button' }))
     )
     .add(new Page({ name: 'Organisms', url: '/docs/org.html' })
+      // TODO leaving here for reference
       .add(new Page({ name: 'Site Header'              , url: '/docs/org.html#site-header' }))
       .add(new Page({ name: 'Site Footer'              , url: '/docs/org.html#site-footer' }))
       .add(new Page({ name: 'Page Header'              , url: '/docs/org.html#page-header' }))
@@ -78,8 +90,6 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       .add(new Page({ name: 'Hero Image'               , url: '/docs/org.html#hero-image' }))
       .add(new Page({ name: 'Other Year Callout'       , url: '/docs/org.html#other-year-callout' }))
       .add(new Page({ name: 'Program Tabs'             , url: '/docs/org.html#program-tabs' }))
-      .add(new Page({ name: 'Person'                   , url: '/docs/org.html#person' }))
-      .add(new Page({ name: 'Place'                    , url: '/docs/org.html#place' }))
     )
     .add(new Page({ name: 'Helpers', url: '/docs/help.html' })
       .description('Somewhat explicit classes used for enhancing default styles.')
