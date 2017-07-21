@@ -4,8 +4,6 @@ block append vars
   - var page = Docs.DOCS.find('/docs/org.html')
 
 block append main
-  +newSection(2, Docs.DOCS.find('/docs/org.html#page-header'))
-    include _includes/_org.page-header.pug
   +newSection(2, Docs.DOCS.find('/docs/org.html#highlighted-content-block'))
     include _includes/_org.highlighted-content-block.pug
   +newSection(2, Docs.DOCS.find('/docs/org.html#hero-image'))
