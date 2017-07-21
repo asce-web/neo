@@ -276,7 +276,7 @@ module.exports = class Conference {
    * @param {Array<string>} supporter_level_names an array of pre-existing SupporterLevel names
    * @return {Conference} this conference
    */
-  addSupporterLevelList(type, supporter_level_names) {
+  addSupporterLevelQueue(type, supporter_level_names) {
     this._supporter_lists[type] = supporter_level_names
     return this
   }
@@ -285,7 +285,7 @@ module.exports = class Conference {
    * @param  {string} type the name of the subarray
    * @return {Array<SupporterLevel>} the array of SupporterLevel objects belonging to the type
    */
-  getSupporterLevelList(type) {
+  getSupporterLevelQueue(type) {
     return (this._supporter_lists[type] || []).map((el) => this.getSupporterLevel(el))
   }
 
