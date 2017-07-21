@@ -80,8 +80,8 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       .add(new Page({ name: 'Site Footer'              , url: '/docs/org.html#site-footer' }))
       .add(new Page({ name: 'Page Header'              , url: '/docs/org.html#page-header' }))
       .add(new Page({ name: 'Highlighted Content Block', url: '/docs/org.html#highlighted-content-block' }))
-
       .add(new Page({ name: 'Hero Image'               , url: '/docs/org.html#hero-image' }))
+
       .add(new Page({ name: 'Other Year Callout'       , url: '/docs/org.html#other-year-callout' }))
       .add(new Page({ name: 'Program Tabs'             , url: '/docs/org.html#program-tabs' }))
       .add(new Page({ name: 'Person'                   , url: '/docs/org.html#person' }))
