@@ -194,14 +194,14 @@ module.exports = class Conference {
   /**
    * Retrieve a venue of this conference.
    * @param  {string} venue_label the key for accessing the venue
-   * @return {Object} the specified venue
+   * @return {Place} the specified venue
    */
   getVenue(venue_label) {
     return this._venues[venue_label]
   }
   /**
    * Retrieve all venues of this conference.
-   * @return {Array<Object>} a shallow array of all venues of this conference
+   * @return {Object<Place>} a shallow copy of the venues object of this conference
    */
   getVenuesAll() {
     //- NOTE returns shallow clone (like arr.slice())
@@ -212,9 +212,9 @@ module.exports = class Conference {
    * Set or get the official conference venue for this conference.
    * The official conference venue is the venue at which this conference is held.
    * @param  {string} venue_label the key for accessing the venue
-   * @return {(Conference|Object)} this conference || the set conference venue
+   * @return {(Conference|Place)} this conference || the set conference venue
    */
-  conferenceVenue(venue_label) {
+  officialVenue(venue_label) {
     if (arguments.length) {
       this._venue_conf_key = venue_label
       return this
