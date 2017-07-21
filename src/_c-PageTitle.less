@@ -2,21 +2,29 @@
 /*################################*\
     neo  |  _c-PageTitle.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
 
 
-// Title of entire page.
+// The Page Title
 //
-// ^author
-// : Chris Harvey
-// ^updated
-// 2016-04-25
+// Title of entire page / top-level heading of a page.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-04-25</time></dd>
+// </dl></header>
+//
+// Markup:
+// <h1 class="c-PageTitle">A Page Title</h1>
+//
+// Weight: 7
+//
+// Styleguide Components.PageTitle
 .c-PageTitle {
   .font-size-el(@g-font_size_tera; 3);
 }
 
 // A full-width heading that rests just above the bottom of the hero image.
 // Right now this is only used on the **Hotel & Travel** page.
+// Use .c-PageTitle--special if you want a special page title inside a banner.
 //
 // ^author
 // Chris Harvey

@@ -2,23 +2,48 @@
 /*################################*\
     neo  |  _c-Mast.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
-@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
-@import (reference) url('__settings.less');
-@import (reference) url('__tool.logo.less');
 
 
-// Masthead header and footer banners across entire site.
+// The Mast Component
 //
-// ^subclasses
-// --head    - masthead at top of site
-// --menu    - mast containing main menu
-// --sitemap - mast containing sitemap
-// --foot    - copyright footline
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-10-14
+// A Mast is a section or banner that runs across the full width of the page.
+//
+// There are four types of masts: head, main, sitemap, and foot.
+// These four are instances of the generic Mast Component, which
+// uses the site’s <b>Dark Gray</b> background color.
+// In the examples below, we use the <code>div</code> element, but it may be
+// more appropriate to use <code>header</code> or <code>footer</code> on an actual site.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-10-14</time></dd>
+// </dl></header>
+//
+// Markup:
+// <div class="c-Mast {{ modifier_class }}">
+//   <h1>heading</h1>
+//   <p>content</p>
+//   <ul>
+//     <li><a href="#0">link</a></li>
+//     <li><a href="#0" class="_hover">link hover</a></li>
+//     <li><a href="#0" class="_active">link active</a></li>
+//     <li><a>link disabled</a></li>
+//   </ul>
+// </div>
+//
+// .c-Mast--head - contains the <a>Site Title</a> Component.
+//   It has a slight gradient: <b>Dark Gray</b> to <b>Dark Gray t1</b>, left to right.
+// .c-Mast--menu - contains the <a>Menu Bar</a> Component.
+//   It has a slight gradient: <b>Primary s1</b> to <b>Primary</b>, left to right.
+// .c-Mast--sitemap - contains the <a>Sitemap</a> Component.
+//   It uses the <b>Primary</b> background color, and its links are underlined.
+// .c-Mast--foot - contains the copyright line and ASCE contact info.
+//   Its text-align is centered and it also has a slight gradient:
+//   <b>Dark Gray</b> to <b>Dark Gray t1</b>, top to bottom.
+//   Its links are also underlined.
+//
+// Weight: 1
+//
+// Styleguide Components.Mast
 .c-Mast {
   --heading-color: currentColor;
   .font-size-mod(14/16);

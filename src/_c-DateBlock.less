@@ -2,24 +2,53 @@
 /*################################*\
     neo  |  _c-DateBlock.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
-@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
 
 
+// The Date Block
+//
 // A block containing rows of important dates.
 // The first column is the date,
 // the second column is the description.
 //
-// ^subcomponents
-// __Date - the date
-// __Desc - the description
-// __Item - (optional) contains both date and description,
-//          in case DateBlock has a list-like structure
-// __Link - link in the description, if any
-// ^author
-// Chris Harvey
-// ^updated
-// 2017-02-19
+// Use in Pug:
+// <pre>
+//   include /_views/_ImportantDate.view.pug
+//   +dateBlock([
+//     new ImportantDate({name:'Optional Final Papers Due'     , start_time:new Date('2015-10-12')}),
+//     new ImportantDate({name:'Early-Bird Registration Closes', start_time:new Date('2015-12-17')}).url('#0'),
+//   ])
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-02-19</time></dd>
+// </dl></header>
+//
+// Markup:
+// <dl class="o-List c-DateBlock">
+//   <li class="o-List__Item c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
+//     <dt class="c-DateBlock__Date">
+//       <time datetime="2015-10-12" itemprop="startTime">Oct 12, 2015</time>
+//       <!-- TODO: endTime will be added soon... -->
+//     </dt>
+//     <dd class="c-DateBlock__Desc" itemprop="name">
+//       Optional Final Papers Due
+//     </dd>
+//   </li>
+//   <li class="o-List__Item c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
+//     <dt class="c-DateBlock__Date">
+//       <time datetime="2015-12-17" itemprop="startTime">Dec 17, 2015</time>
+//       <!-- TODO: endTime will be added soon... -->
+//     </dt>
+//     <dd class="c-DateBlock__Desc" itemprop="name">
+//       <a class="c-DateBlock__Link" href="#0" itemprop="url">Early-Bird Registration Closes</a>
+//     </dd>
+//   </li>
+// </dl>
+//
+// Weight: 15
+//
+// Styleguide Components.DateBlock
 .c-DateBlock {
   width: 75%;
   margin-left:  auto;

@@ -2,11 +2,7 @@
 /*################################*\
     neo  |  _c-SupporterBlock.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
-@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.filter.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
-@import (reference) url('__settings.less');
+
 
 
 html {
@@ -46,21 +42,77 @@ html {
   }
 }
 
-// A section containing one level of sponsor.
+// The Supporter Block
 //
-// ^subclasses
-// --sml - contains small logos
-// --med - contains medium logos
-// --lrg - contains large logos
-// ^subcomponents
-// __Hn       - name of sponsor level ("Platinum", etc.)
-// __List     - structural styles of list of logos
-//   __Item     - structural styles of list item with link and logo
-// __Logo     - <img> element of logo. cosmetic styles
-// ^author
-// : Chris Harvey
-// ^updated
-// 2017-07-19
+// A section containing one supporter level.
+// On the Sponsor page, each Supporter Block corresponds to one level,
+// e.g., Platinum, Gold, or Corporate.
+// On all other pages, this block may be used to group additional organizations,
+// such as Cooperating Organizations.
+//
+// Use in Pug:
+// <pre>
+//   -
+//     let supporters = [
+//       new Supporter('Bank of America').url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg'),
+//       new Supporter('UPS'            ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg'),
+//       new Supporter('Geico'          ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png'),
+//     ]
+//     let titanium = new SupporterLevel('Titanium').size(SupporterLevel.LogoSize.LARGE)
+//     let platinum = new SupporterLevel('Platinum').size(SupporterLevel.LogoSize.MEDIUM)
+//     let silver   = new SupporterLevel('Silver'  ).size(SupporterLevel.LogoSize.SMALL)
+//     let my_conference = new Conference()
+//       .addSupporter(supporters[0].level('Titanium'))
+//       .addSupporter(supporters[1].level('Titanium'))
+//       .addSupporter(supporters[2].level('Titanium'))
+//       .addSupporter(supporters[0].level('Platinum'))
+//       .addSupporter(supporters[1].level('Platinum'))
+//       .addSupporter(supporters[2].level('Platinum'))
+//       .addSupporter(supporters[0].level('Silver'))
+//       .addSupporter(supporters[1].level('Silver'))
+//       .addSupporter(supporters[2].level('Silver'))
+//   include /_views/_SupporterLevel.view.pug
+//   +supporterBlock(titanium, my_conference)
+//   +supporterBlock(platinum, my_conference)
+//   +supporterBlock(silver  , my_conference)
+// </pre>
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-19</time></dd>
+// </dl></header>
+//
+// Markup:
+// <section class="c-SupporterBlock {{ modifier_class }}">
+//   <h1 class="c-SupporterBlock__Hn">Titanium</h1>
+//   <ul class="o-List o-Flex c-SupporterBlock__List">
+//     <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item" itemprop="sponsor" itemscope="" itemtype="https://schema.org/Organization">
+//       <a href="#0" rel="external nofollow" itemprop="url">
+//         <img class="c-SupporterBlock__Logo" src="http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg" alt="Bank of America" itemprop="logo"/>
+//         <meta content="Bank of America" itemprop="name"/>
+//       </a>
+//     </li>
+//     <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item" itemprop="sponsor" itemscope="" itemtype="https://schema.org/Organization">
+//       <a href="#0" rel="external nofollow" itemprop="url">
+//         <img class="c-SupporterBlock__Logo" src="http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg" alt="UPS" itemprop="logo"/>
+//         <meta content="UPS" itemprop="name"/>
+//       </a>
+//     </li>
+//     <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item" itemprop="sponsor" itemscope="" itemtype="https://schema.org/Organization">
+//       <a href="#0" rel="external nofollow" itemprop="url">
+//         <img class="c-SupporterBlock__Logo" src="http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png" alt="Geico" itemprop="logo"/>
+//         <meta content="Geico" itemprop="name"/>
+//       </a>
+//     </li>
+//   </ul>
+// </section>
+//
+// .c-SupporterBlock--lrg - contains large logos
+// .c-SupporterBlock--med - contains medium logos
+// .c-SupporterBlock--sml - contains small logos
+//
+// Weight: 13
+//
+// Styleguide Components.SupporterBlock
 .c-SupporterBlock {
   // large logos by default
   --supporter-logo-width : var(--supporter-logo-lrg-width );

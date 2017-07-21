@@ -8,6 +8,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "kss": "rm -r styleguide  ;  kss --config kss-config.json",
     "browserify:principles": "browserify docs/scripts/principles.js > docs/scripts/principles.b.js",
     "browserify:all": "npm run browserify:principles",
     "build": "gulp build  &&  npm run browserify:all",
@@ -43,7 +44,8 @@
     "gulp-less": "^3.3.2",
     "gulp-pug": "^3.3.0",
     "gulp-sourcemaps": "^2.6.0",
-    "xmeter": "^5.4.0"
+    "kss": "^3.0.0-beta.18",
+    "xmeter": "^5.7.0"
   },
   "dependencies": {
     "csscolor": "^1.3.1",

@@ -66,12 +66,13 @@ html(lang="en")
               +doctoc({pages: page.findAll(), depth: Infinity})
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous")
-      //- script.
-        var Util = (function () {
-          // copied from /includes/Util.class
-          function Util() {}
-          Util.toURL = function toURL(string) {
-            return encodeURIComponent(string.toLowerCase().replace(/[\W]+/g, '-'))
-          }
-          return Util
-        })()
+      script(src="/scripts/o-Tabs.js")
+      script.
+        // single custom script for drawer docs demos. TODO can be combined into main menu component when made
+        $('#drawer-check').change(function () {
+          $(this).parents('.docs-c-Togglable').siblings('.o-Drawer').toggleClass('o-Drawer--open')
+        })
+        // suite-wide script for toggle button activating drawers. TODO can be combined into main menu component when made
+        $('.c-Toggle__Check').change(function () {
+          $(this).parents('.c-Toggle').siblings('.o-Drawer').toggleClass('o-Drawer--open')
+        })

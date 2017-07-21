@@ -45,3 +45,6 @@ vendor
 .node_repl_history
 
 # Imported source files
+
+# Auto-generated style guides
+styleguide

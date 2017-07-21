@@ -2,35 +2,55 @@
 /*################################*\
     neo  |  _o-ListStacked.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
 
 
-// A row of items that stacks vertically on a small screen.
+// The Stacked List
 //
-// ^subcomponents
-// __Item - an item in the list
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-05-01
+// The Stacked List Object is a list of blocky items.
+// It’s usually an unordered list, though it can be ordered.
+// These items may be sponsor logos, passes, speakers, and more.
+//
+// This Object differs from the plain List Object in the way it responds to screen size.
+// The Stacked List adjusts its items’ widths at different breakpoints, as follows:
+// <dl>
+//   <dt>x-small screen</dt><dd>1 column</dd>
+//   <dt>small screen</dt><dd>2 columns with a small gutter</dd>
+//   <dt>medium screen</dt><dd>3 columns with medium gutters</dd>
+//   <dt>xx-large screen</dt><dd>4 columns with large gutters</dd>
+// </dl>
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-05-01</time></dd>
+// </dl></header>
+//
+// Markup:
+// <ul class="o-List o-ListStacked">
+//   <li class="o-List__Item o-ListStacked__Item"><article><h1>a blocky heading 1</h1><p>blocky content 1</p></article></li>
+//   <li class="o-List__Item o-ListStacked__Item"><article><h1>a blocky heading 2</h1><p>blocky content 2</p></article></li>
+//   <li class="o-List__Item o-ListStacked__Item"><article><h1>a blocky heading 3</h1><p>blocky content 3</p></article></li>
+//   <li class="o-List__Item o-ListStacked__Item"><article><h1>a blocky heading 4</h1><p>blocky content 4</p></article></li>
+// </ul>
+//
+// Weight: 5
+//
+// Styleguide Objects.ListStacked
 .o-ListStacked {
-  .flexbox();
+  display: flex;
   line-height: inherit; // if using on a text-level element
-  .flex-wrap(wrap);
-  .justify-content(space-around);
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 .o-ListStacked__Item {
-  .flex(0 100%);
+  flex: 0 1 100%;
   margin-bottom: @g-vru; // HACK fallback
   margin-bottom: var(--vru);
   @media screen and (min-width: 30em) {
-    .flex-basis(calc(100%/2~' - '0.5rem));
+    flex-basis: calc(100%/2~' - 0.5rem');
   }
   @media screen and (min-width: 45em) {
-    .flex-basis(calc(100%/3~' - '1rem));
+    flex-basis: calc(100%/3~' - 1rem');
   }
   @media screen and (min-width: 90em) {
-    .flex-basis(calc(100%/4~' - '2rem));
+    flex-basis: calc(100%/4~' - 2rem');
   }
 }

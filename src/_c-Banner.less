@@ -2,8 +2,6 @@
 /*################################*\
     neo  |  _c-Banner.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.filter.less');
-@import (reference) url('__settings.less');
 
 
 .p-background-settings() {
@@ -17,20 +15,32 @@
 }
 
 
-// Any major section on any page with a full-width background image.
+// The Banner Component
 //
-// ^subclasses
-// --hero     - banner image on Home page
-// --orgs     - banner for additional organizations
-// --location - banner image on Location page
-// --prev     - banner for previous year’s conference callout
-// --next     - banner for next year’s conference callout
-// --loc      - banner for location callout
-
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-10-21
+//
+// Any major section on any page with a full-width background image.
+// Can be used on Runner or Mast to give a background image.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-10-21</time></dd>
+// </dl></header>
+//
+// Markup:
+// <div class="c-Banner  {{ modifier_class }}">
+//   <h1>banner heading</h1>
+//   <p>banner content</p>
+// </div>
+//
+// .c-Banner--hero     - banner image on Home page
+// .c-Banner--orgs     - banner for additional organizations
+// .c-Banner--location - banner image on Location page
+// .c-Banner--prev     - banner for previous year’s conference callout
+// .c-Banner--next     - banner for next year’s conference callout
+// .c-Banner--loc      - banner for location callout
+//
+// Weight: 6
+//
+// Styleguide Components.Banner
 .c-Banner {
   --heading-color: currentColor;
   color: #fff;
@@ -65,7 +75,7 @@
     left: 0; right: 0; top: 0; bottom: 0;
     z-index: -1; // pseudo is painted after content; must be stacked lower
     .p-background-settings();
-    .filter(blur(4px));
+    filter: blur(4px);
   }
 }
 

@@ -2,32 +2,50 @@
 /*################################*\
     neo  |  _c-SiteTitle.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
-@import (reference) url('__tool.logo.less');
+
+
+// The Site Title
+//
+// The Site Title sets up the visual structure containing the site logo, title, and slogan.
+//
+// Use with Pug:
+// <pre>
+//   include /_views/_ConfSite.view.pug
+//   +siteTitle(new ConfSite('CI Summit', '#0', 'Innovations In Construction')
+//     .logo('http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png'))
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-06-29</time></dd>
+// </dl></header>
+//
+// Markup:
+// <a class="o-GridFloat c-SiteTitle c-LinkCamo h-Block" href="#0">
+//   <span class="o-GridFloat__Item c-SiteTitle__Logo"
+//     style="background-image:url('http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png');"></span>
+//     <!-- TODO: make this span an <img>! -->
+//   <h1 class="o-GridFloat__Item c-SiteTitle__Name">CI Summit</h1>
+//   <p class="o-GridFloat__Item c-SiteTitle__Slogan">Innovations In Construction</p>
+// </a>
+//
+// Weight: 2
+//
+// Styleguide Components.SiteTitle
 
 
 // variable sizes for site logo
 // HACK fallbacks for css vars
 @p-logosize-s: 0;
-@p-logosize-sK: 21px*3; // 21px is taken from the `.c-Mast` line height
-@p-logosize-sM: 21px*5; // 21px is taken from the `.c-Mast` line height
+@p-logosize-sK: 21px*3; // REVIEW 21px is taken from the `.c-Mast` line height
+@p-logosize-sM: 21px*5; // REVIEW 21px is taken from the `.c-Mast` line height
 
-// Component containing the site logo, title, and tagline.
-//
-// ^subcomponents
-// __Logo    - holds the conference logo or institute shield
-// __Name    - the name of the entire site
-// __Slogan  - slogan/tagline for the site
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-06-29
 .c-SiteTitle {
   white-space: nowrap;
   --logosize: 0;
   @media screen                       { --logosize: 0; }
-  @media screen and (min-width: 30em) { --logosize: (21px*3); } // 21px is taken from the `.c-Mast` line height
-  @media screen and (min-width: 45em) { --logosize: (21px*5); } // 21px is taken from the `.c-Mast` line height
+  @media screen and (min-width: 30em) { --logosize: (21px*3); } // REVIEW 21px is taken from the `.c-Mast` line height
+  @media screen and (min-width: 45em) { --logosize: (21px*5); } // REVIEW 21px is taken from the `.c-Mast` line height
 }
 
 .c-SiteTitle__Logo,
