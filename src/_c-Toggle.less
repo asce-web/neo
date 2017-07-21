@@ -43,13 +43,15 @@
   @media screen and (min-width: 45em) {
     display: none;
   }
-  noscript a {
-    position: absolute;
-    top: ((75px - 48px)/2); // half height of the mast head // FIXME
-    right: 0.5rem;
-    line-height: @g-line_height; // HACK fallback
-    line-height: var(--line-height); // override `label`
-  }
+}
+
+// Link to site map, for when JS is disabled and no mobile menu is available
+header noscript a {
+  position: absolute;
+  top: ((75px - 48px)/2); // half height of the mast head // FIXME
+  right: 0.5rem;
+  line-height: @g-line_height; // HACK fallback
+  line-height: var(--line-height); // override `label`
 }
 
 .c-Toggle__Check {
