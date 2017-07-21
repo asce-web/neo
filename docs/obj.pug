@@ -13,9 +13,3 @@ block append main
     include _includes/_obj.runner-object.pug
   +newSection(2, Docs.DOCS.find('/docs/obj.html#drawer-object'))
     include _includes/_obj.drawer-object.pug
-
-block append scripts
-  script.
-    $('#drawer-check').change(function () {
-      $(this).parents('.docs-c-Togglable').siblings('.o-Drawer').toggleClass('o-Drawer--open')
-    })

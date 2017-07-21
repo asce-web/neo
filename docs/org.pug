@@ -2,12 +2,3 @@ extends _docs.tpl.pug
 
 block append vars
   - var page = Docs.DOCS.find('/docs/org.html')
-
-block append main
-
-block append scripts
-  script(src="/scripts/o-Tabs.js")
-  script.
-    $('.c-Toggle__Check').change(function () {
-      $(this).parents('.c-Toggle').siblings('.o-Drawer').toggleClass('o-Drawer--open')
-    })
