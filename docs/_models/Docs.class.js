@@ -75,7 +75,9 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       .add(new Page({ name: 'The Toggle Button'    , url: '/docs/comp.html#toggle-button' }))
     )
     .add(new Page({ name: 'Organisms', url: '/docs/org.html' })
+      // TODO leaving here for reference
       .add(new Page({ name: 'Site Header'              , url: '/docs/org.html#site-header' }))
+
       .add(new Page({ name: 'Site Footer'              , url: '/docs/org.html#site-footer' }))
       .add(new Page({ name: 'Page Header'              , url: '/docs/org.html#page-header' }))
       .add(new Page({ name: 'Highlighted Content Block', url: '/docs/org.html#highlighted-content-block' }))

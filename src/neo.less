@@ -142,6 +142,34 @@
 @import url('_c-SiteTitle.less');
 @import url('_c-MenuMobile.less');
 @import url('_c-MenuBar.less');
+// TODO markup for main menu component
+// header.o-Runner.c-Mast.c-Mast--menu: div.o-Constrain
+//   nav.o-Drawer
+//     h1.h-Hidden#main-menu Main Menu
+//     +sitetoc({
+//       icons: { page: true, sub: true },
+//       depth: 1,
+//       pages: [
+//         new ConfPage('Home', '#0').setIcon('insert_drive_file'),
+//         new ConfPage('Registration', '#0').setIcon('insert_drive_file')
+//           .add(new ConfPage('Why Attend', '#0')),
+//         new ConfPage('Program', '#0').setIcon('insert_drive_file')
+//           .add(new ConfPage('Short Courses', '#0'))
+//           .add(new ConfPage('Technical Tours', '#0')),
+//         new ConfPage('Location', '#0').setIcon('insert_drive_file'),
+//         new ConfPage('Speakers', '#0').setIcon('insert_drive_file'),
+//       ],
+//       classes: {
+//         listclasses: 'o-Flex c-MenuMobile-nM c-MenuBar-sM',
+//         itemclasses: 'o-Flex__Item c-MenuMobile__Item-nM c-MenuBar__Item-sM',
+//         linkclasses: 'c-MenuMobile__Link-nM c-MenuBar__Link-sM h-Block',
+//         sub: {
+//           listclasses: 'c-MenuMobile__Sub-nM c-MenuBar__Sub-sM',
+//           itemclasses: 'c-MenuMobile__Sub__Item-nM c-MenuBar__Sub__Item-sM',
+//           linkclasses: 'c-MenuMobile__Link-nM c-MenuMobile__Sub__Link-nM c-MenuBar__Link-sM c-MenuBar__Sub__Link-sM h-Block',
+//         },
+//       },
+//     })
 @import url('_c-Sitemap.less');
 @import url('_c-Banner.less');
 @import url('_c-PageTitle.less');
@@ -228,7 +256,7 @@
 //     </a>
 //   </div>
 // </header>
-// <header class="o-Runner c-Mast c-Mast--head">
+// <header class="o-Runner c-Mast c-Mast--menu">
 //   <div class="o-Constrain">
 //     <label class="c-Toggle" aria-label="activate to toggle">
 //       <input class="c-Toggle__Check h-Hidden" type="checkbox" value="main menu is open" role="switch"/>
@@ -248,6 +276,12 @@
 //           <li class="o-List__Item o-Flex__Item c-MenuMobile__Item-nM  c-MenuBar__Item-sM">
 //             <a class="c-MenuMobile__Link-nM c-MenuBar__Link-sM h-Block" href="#0">
 //               <i class="material-icons c-MenuMobile__Icon -d-n-sM" role="none">page_icon</i>
+//               <span>Home</span>
+//             </a>
+//           </li>
+//           <li class="o-List__Item o-Flex__Item c-MenuMobile__Item-nM  c-MenuBar__Item-sM">
+//             <a class="c-MenuMobile__Link-nM c-MenuBar__Link-sM h-Block" href="#0">
+//               <i class="material-icons c-MenuMobile__Icon -d-n-sM" role="none">page_icon</i>
 //               <span>Registration</span>
 //               <i class="material-icons c-MenuBar__Icon -d-n-nM" role="none">expand_more</i>
 //             </a>
@@ -255,6 +289,35 @@
 //               <li class="o-List__Item c-MenuBar__Sub__Item-sM">
 //                 <a class="c-MenuBar__Sub__Link-sM h-Block" href="#0">
 //                   <span>Why Attend</span>
+//                 </a>
+//               </li>
+//             </ul>
+//           </li>
+//           <li class="o-List__Item o-Flex__Item c-MenuMobile__Item-nM  c-MenuBar__Item-sM">
+//             <a class="c-MenuMobile__Link-nM c-MenuBar__Link-sM h-Block" href="#0">
+//               <i class="material-icons c-MenuMobile__Icon -d-n-sM" role="none">page_icon</i>
+//               <span>Program</span>
+//               <i class="material-icons c-MenuBar__Icon -d-n-nM" role="none">expand_more</i>
+//             </a>
+//             <ul class="o-List c-MenuBar__Sub-sM">
+//               <li class="o-List__Item c-MenuBar__Sub__Item-sM">
+//                 <a class="c-MenuBar__Sub__Link-sM h-Block" href="#0">
+//                   <span>Events</span>
+//                 </a>
+//               </li>
+//               <li class="o-List__Item c-MenuBar__Sub__Item-sM">
+//                 <a class="c-MenuBar__Sub__Link-sM h-Block" href="#0">
+//                   <span>Short Courses</span>
+//                 </a>
+//               </li>
+//               <li class="o-List__Item c-MenuBar__Sub__Item-sM">
+//                 <a class="c-MenuBar__Sub__Link-sM h-Block" href="#0">
+//                   <span>Technical Tours</span>
+//                 </a>
+//               </li>
+//               <li class="o-List__Item c-MenuBar__Sub__Item-sM">
+//                 <a class="c-MenuBar__Sub__Link-sM h-Block" href="#0">
+//                   <span>Optional Tours</span>
 //                 </a>
 //               </li>
 //             </ul>
