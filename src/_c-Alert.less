@@ -1,14 +1,10 @@
 
 /*################################*\
-    neo  |  _c-Callout.less
+    neo  |  _c-Alert.less
 \*################################*/
 
 
 // Alerts
-//
-// IMPORTANT NOTE: TODO: The classname for this component is <code>.c-Callout</code>
-// but we will be changing it to <code>.c-Alert</code> in the near future, in order to
-// reduce confusion with this component and a “Callout” (highlighted content block).
 //
 // A textual block standing out from normal prose.
 // This may not *necessarily* be a removable aside, that is, it may be integral
@@ -20,27 +16,27 @@
 // Combine this class with various Objects to diversify your alerts.
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
-//   <dt>updated</dt> <dd><time>2016-05-06</time></dd>
+//   <dt>updated</dt> <dd><time>2017-07-21</time></dd>
 // </dl></header>
 //
 // Markup:
-// <p class="c-Callout">An Alert! Use whatever the heck element you want,
+// <p class="c-Alert">An Alert! Use whatever the heck element you want,
 //   even a <code>figure</code>!</p>
-// <ul class="o-List o-ListAction c-Callout">
-//   <li class="o-List__Item o-ListAction__Item c-Callout__Item">This Alert is a list!</li>
-//   <li class="o-List__Item o-ListAction__Item c-Callout__Item">And it’s also an <a>Action List</a>!</li>
-//   <li class="o-List__Item o-ListAction__Item c-Callout__Item">Note how the items differ!</li>
+// <ul class="o-List o-ListAction c-Alert">
+//   <li class="o-List__Item o-ListAction__Item c-Alert__Item">This Alert is a list!</li>
+//   <li class="o-List__Item o-ListAction__Item c-Alert__Item">And it’s also an <a>Action List</a>!</li>
+//   <li class="o-List__Item o-ListAction__Item c-Alert__Item">Note how the items differ!</li>
 // </ul>
 //
 // Weight: 16
 //
 // Styleguide Components.Alert
-.c-Callout {
+.c-Alert {
   .border-vert(topbot; 1px);
   border-style: solid;
   padding: @g-boxpadd_mill;
 }
 
-.c-Callout__Item {
+.c-Alert__Item {
   padding: @g-boxpadd_mill;
 }

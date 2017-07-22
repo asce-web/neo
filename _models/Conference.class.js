@@ -194,14 +194,14 @@ module.exports = class Conference {
   /**
    * Retrieve a venue of this conference.
    * @param  {string} venue_label the key for accessing the venue
-   * @return {Object} the specified venue
+   * @return {Place} the specified venue
    */
   getVenue(venue_label) {
     return this._venues[venue_label]
   }
   /**
    * Retrieve all venues of this conference.
-   * @return {Array<Object>} a shallow array of all venues of this conference
+   * @return {Object<Place>} a shallow copy of the venues object of this conference
    */
   getVenuesAll() {
     //- NOTE returns shallow clone (like arr.slice())
@@ -212,9 +212,9 @@ module.exports = class Conference {
    * Set or get the official conference venue for this conference.
    * The official conference venue is the venue at which this conference is held.
    * @param  {string} venue_label the key for accessing the venue
-   * @return {(Conference|Object)} this conference || the set conference venue
+   * @return {(Conference|Place)} this conference || the set conference venue
    */
-  conferenceVenue(venue_label) {
+  officialVenue(venue_label) {
     if (arguments.length) {
       this._venue_conf_key = venue_label
       return this
@@ -276,7 +276,7 @@ module.exports = class Conference {
    * @param {Array<string>} supporter_level_names an array of pre-existing SupporterLevel names
    * @return {Conference} this conference
    */
-  addSupporterLevelList(type, supporter_level_names) {
+  addSupporterLevelQueue(type, supporter_level_names) {
     this._supporter_lists[type] = supporter_level_names
     return this
   }
@@ -285,7 +285,7 @@ module.exports = class Conference {
    * @param  {string} type the name of the subarray
    * @return {Array<SupporterLevel>} the array of SupporterLevel objects belonging to the type
    */
-  getSupporterLevelList(type) {
+  getSupporterLevelQueue(type) {
     return (this._supporter_lists[type] || []).map((el) => this.getSupporterLevel(el))
   }
 

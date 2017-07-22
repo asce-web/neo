@@ -22,9 +22,8 @@
 //
 // Markup:
 // <a class="o-GridFloat c-SiteTitle c-LinkCamo h-Block" href="#0">
-//   <span class="o-GridFloat__Item c-SiteTitle__Logo"
-//     style="background-image:url('http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png');"></span>
-//     <!-- TODO: make this span an <img>! -->
+//   <img class="o-GridFloat__Item c-SiteTitle__Logo" alt="Home"
+//     src="http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png"/>
 //   <h1 class="o-GridFloat__Item c-SiteTitle__Name">CI Summit</h1>
 //   <p class="o-GridFloat__Item c-SiteTitle__Slogan">Innovations In Construction</p>
 // </a>
@@ -43,7 +42,6 @@
 .c-SiteTitle {
   white-space: nowrap;
   --logosize: 0;
-  @media screen                       { --logosize: 0; }
   @media screen and (min-width: 30em) { --logosize: (21px*3); } // REVIEW 21px is taken from the `.c-Mast` line height
   @media screen and (min-width: 45em) { --logosize: (21px*5); } // REVIEW 21px is taken from the `.c-Mast` line height
 }
@@ -51,34 +49,44 @@
 .c-SiteTitle__Logo,
 .c-SiteTitle__Name,
 .c-SiteTitle__Tagline {
-  .transitions(width, height; 250ms);
+  // .transitions(width, height; 250ms);
   color: inherit; // everything inside the link looks like part of the same link
 }
 .c-SiteTitle__Logo {
   // HACK fallbacks
-  width: @p-logosize-s; height: @p-logosize-s;
-  @media screen and (min-width: 30em) { width: @p-logosize-sK; height: @p-logosize-sK; }
-  @media screen and (min-width: 45em) { width: @p-logosize-sM; height: @p-logosize-sM; }
-  width: var(--logosize); height: var(--logosize);
-  .logo();
+  width: auto; // override .o-GridFloat__Item // fallback for object-fit
+  height: @p-logosize-s;
+  @media screen and (min-width: 30em) { height: @p-logosize-sK; }
+  @media screen and (min-width: 45em) { height: @p-logosize-sM; }
 }
 .c-SiteTitle__Name,
 .c-SiteTitle__Slogan {
   padding-left: 0.5rem;
-  // @media not all and (min-width: 30em) {
-  //   width: 100%; // NOTE not necessary (default)
-  // }
   // HACK fallbacks
   @media screen and (min-width: 30em) { width: calc(~'100% - '@p-logosize-sK); }
   @media screen and (min-width: 45em) { width: calc(~'100% - '@p-logosize-sM); }
+}
+
+// support for object-fit and css variables
+@supports (object-fit: contain) and (width: var(--variable)) {
+.c-SiteTitle__Logo {
+  width : var(--logosize);
+  height: var(--logosize);
+  object-fit: contain;
+}
+.c-SiteTitle__Name,
+.c-SiteTitle__Slogan {
   @media screen and (min-width: 30em) {
     width: calc(~'100% - var(--logosize)');
   }
 }
+}
+
 .c-SiteTitle__Name {
   .font-size-el(2);
   text-align: inherit; // override h1 center
 }
+
 .c-SiteTitle__Slogan {
   font-weight: 300;
   @media not all and (min-width: 45em) {
