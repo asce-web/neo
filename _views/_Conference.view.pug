@@ -1,3 +1,10 @@
+//- /** @private */
+mixin promoLoc(obj)
+  if location.alt
+    abbr(title=obj.alt)= obj.text
+  else
+    = obj.text
+
 mixin hero($conference)
   header.o-Runner.o-Runner--pageHeader.c-Banner.c-Banner--hero.c-ConfHed: div.o-Constrain
     h1.c-PageTitle.c-ConfHed__Name(itemprop="name")= $conference.name
