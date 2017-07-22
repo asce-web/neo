@@ -16,11 +16,11 @@ mixin hero($conference)
       //- (\xa0 === &nbsp;)
     block
 
-mixin otherYear($conference)
+mixin otherYear($conference, blurb)
   +highlight().c-Banner.c-ConfHed(itemscope="" itemtype="http://schema.org/Event")&attributes(attributes)
     h1.c-ConfHed__Name(itemprop="name")= $conference.name
     meta(content=$conference.startDate itemprop="startDate")
     p.c-ConfHed__Detail(itemprop="location")
       +promoLoc($conference.promoLoc)
-    p.h-Hidden-nM= $conference.otherYearBlurb()
+    p.h-Hidden-nM= blurb
     block

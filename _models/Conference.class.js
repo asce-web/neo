@@ -39,7 +39,6 @@ module.exports = class Conference {
     /** @private */ this._important_dates = []
     /** @private */ this._organizers      = []
     /** @private */ this._social          = {}
-    /** @private */ this._other_year_blurb= ''
     /** @private */ this._regpd_curr_index = NaN
     /** @private */ this._venue_conf_key   = ''
   }
@@ -415,22 +414,6 @@ module.exports = class Conference {
   getSocialAll() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._social) // shallow clone this.social into {}
-  }
-
-  /**
-   * Set or get the other year blurb of this conference.
-   * The “other year blurb” is used to promote this conference if it happens
-   * to be the conference of the previous or next year.
-   * The blurb gives reasons to visit the conference page.
-   * For example, promote reasons to attend or promote getting PDHs from a past event.
-   * @param  {string=} text the other year blurb of this conference
-   * @return {(Conference|string)} this conference || the other year blurb of this conference
-   */
-  otherYearBlurb(text) {
-    if (arguments.length) {
-      this._other_year_blurb = text
-      return this
-    } else return this._other_year_blurb
   }
 
   // setPrice(reg_period, pass, membership, price) {
