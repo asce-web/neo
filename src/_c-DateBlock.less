@@ -16,6 +16,7 @@
 //   +dateBlock([
 //     new ImportantDate({name:'Optional Final Papers Due'     , start_time:new Date('2015-10-12')}),
 //     new ImportantDate({name:'Early-Bird Registration Closes', start_time:new Date('2015-12-17')}).url('#0'),
+//     new ImportantDate({name:'Advance Registration Period'   , start_time:new Date('2015-12-18'), end_time:new Date('2015-12-21')}),
 //   ])
 // </pre>
 //
@@ -29,7 +30,6 @@
 //   <li class="o-List__Item c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
 //     <dt class="c-DateBlock__Date">
 //       <time datetime="2015-10-12" itemprop="startTime">Oct 12, 2015</time>
-//       <!-- TODO: endTime will be added soon... -->
 //     </dt>
 //     <dd class="c-DateBlock__Desc" itemprop="name">
 //       Optional Final Papers Due
@@ -38,10 +38,19 @@
 //   <li class="o-List__Item c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
 //     <dt class="c-DateBlock__Date">
 //       <time datetime="2015-12-17" itemprop="startTime">Dec 17, 2015</time>
-//       <!-- TODO: endTime will be added soon... -->
 //     </dt>
 //     <dd class="c-DateBlock__Desc" itemprop="name">
 //       <a class="c-DateBlock__Link" href="#0" itemprop="url">Early-Bird Registration Closes</a>
+//     </dd>
+//   </li>
+//   <li class="o-List__Item c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
+//     <dt class="c-DateBlock__Date">
+//       <time datetime="2015-12-18" itemprop="startTime">Dec 18, 2015</time>
+//       &ndash;
+//       <time datetime="2015-12-21" itemprop="endTime">Dec 21, 2015</time>
+//     </dt>
+//     <dd class="c-DateBlock__Desc" itemprop="name">
+//       Advance Registration Period
 //     </dd>
 //   </li>
 // </dl>

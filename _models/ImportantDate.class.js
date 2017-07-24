@@ -2,16 +2,18 @@ module.exports = class ImportantDate {
   /**
    * An important date.
    * Construct an ImportantDate object.
-   * The name and start time
-   * are immutable and must be provided during construction.
+   * The name and start time must be provided during construction
+   * and are immutable. End time is optional.
    * @constructor
    * @param {Object=} $actioninfo an object with the following immutable properties:
    * @param {string} $actioninfo.name the name of the important date
    * @param {Date} $actioninfo.start_time the start time of the important date
+   * @param {Date=} $actioninfo.end_time the start end of the important date
    */
   constructor($actioninfo = {}) {
     /** @private @final */ this._NAME  = $actioninfo.name
     /** @private @final */ this._START = $actioninfo.start_time
+    /** @private @final */ this._END   = $actioninfo.end_time
     /** @private */ this._url          = ''
     /** @private */ this._is_starred   = false
   }
@@ -25,11 +27,19 @@ module.exports = class ImportantDate {
   }
 
   /**
-   * Get the date value of this important date.
-   * @return {Date} the date of this important date
+   * Return the start date value of this important date.
+   * @return {Date} the start date of this important date
    */
   get startTime() {
     return this._START || new Date()
+  }
+
+  /**
+   * Return the end date value of this important date.
+   * @return {?Date} the end date of this important date
+   */
+  get endTime() {
+    return this._END || null
   }
 
   /**
