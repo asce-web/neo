@@ -2,43 +2,99 @@
 /*################################*\
     neo  |  _o-Tabs.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.align-content.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.align-items.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
-@import (reference) url('__settings.less');
 
 
-// A block containing a list of tabs and corresponding panels.
-// The tabs and corresponding panels follow subsequently, as so:
-// > tab0, panel0, tab1, panel1, tab2, panel2, etc.
+// The Tabs Object
 //
-// ^subcomponents
-// __Tab   - tab for a panel
-//   --selected - style for tab that is selected via `__Check` subcomponent
-// __Check - a radio button in the Tab, used for selecting the desired panel
-// __Panel - panel containing content
-// ^author
-// Chris Harvey
-// ^updated
-// 2017-02-08
+// The Tabs Object contains a series of corresponding tabs and panels.
+// It is similar to a carousel, but only one panel is shown at a time and
+// there is no timed automatic progression.
+//
+// Tabs and corresponding panels follow subsequently, as so:
+// <figure>tab-0, panel-0, tab-1, panel-1, tab-2, panel-2, etc.</figure>
+//
+// Each Tabs Object must have a unique id for the carousel effect to work properly.
+// Enable Javascript to view animation effects.
+//
+// Use in Pug:
+// <pre>
+//   include /_views/_o-Tabs.view.pug
+//   +tabs(3)#demotabs
+//     //- where:
+//       - `3` is the number of tabs you want
+//       - `#demotabs` is your ID for the container
+//         (also used as the name of the radio button group)
+//     mixin tab(i)
+//      //- define your own tab markup here, using `i` as the index
+//     mixin panel(i)
+//      //- define your own panel markup here, using `i` as the index
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-02-08</time></dd>
+// </dl></header>
+//
+// Markup:
+// <dl class="o-Flex o-Tabs" id="demotabs">
+//   <!-- NOTE:
+//     - The value of `[id]` is the unique ID of the Tabs Object.
+//       It may not be used as the `[id]` of any other element on the page.
+//       It is used on the `[name]` attribute for each of its tabs,
+//       creating a radio button group.
+//   -->
+//   <dt class="o-Flex__Item o-Tabs__Tab"><!-- (see Tab subcomponent below) --><label class="h-Block"><input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs" value="0" checked=""/>tab 0</label></dt>
+//   <dd class="o-Flex__Item o-Tabs__Panel">panel 0</dd>
+//   <dt class="o-Flex__Item o-Tabs__Tab"><!-- (see Tab subcomponent below) --><label class="h-Block"><input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs" value="1"/>tab 1</label></dt>
+//   <dd class="o-Flex__Item o-Tabs__Panel">panel 1</dd>
+//   <dt class="o-Flex__Item o-Tabs__Tab"><!-- (see Tab subcomponent below) --><label class="h-Block"><input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs" value="2"/>tab 2</label></dt>
+//   <dd class="o-Flex__Item o-Tabs__Panel">panel 2</dd>
+// </dl>
+//
+// Weight: 6
+//
+// Styleguide Objects.Tabs
+
+
+// Tab
+//
+// The Tab subcomponent is a child of the Tabs Object.
+// It represents a tab for a panel, and semantically consists of a radio button
+// (although it may not appear anything like a radio button).
+//
+// Markup:
+// <dt class="o-Flex__Item o-Tabs__Tab {{ modifier_class }}">
+//   <label class="h-Block">
+//     <input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs1" value="0" checked=""/>
+//     <!-- NOTE:
+//       - The value of `[name]` is the ID of the container Tabs Object
+//       - The value of `[value]` is the ordinal position of the tab. If it is first, use 0.
+//       - Use `[checked=""]` only if the tab should be selected on page load.
+//         Exactly one input in a radio button group must have this.
+//     -->
+//     tab 0
+//   </label>
+// </dt>
+//
+// .o-Tabs__Tab--selected - a tab that is selected
+//
+// Styleguide Objects.Tabs.Tab
+
 @p-transdura: 500ms;
 .o-Tabs {
-  .flex-wrap(wrap);
-  .justify-content(center); // override `.o-Flex`
-  .align-content(flex-start); // push flex items to top
-  .align-items(flex-start); // minimize height of flex items
+  flex-wrap: wrap;
+  justify-content: center; // override `.o-Flex`
+  align-content: flex-start; // push flex items to top
+  align-items: flex-start; // minimize height of flex items
   position: relative;
   // overflow: hidden;
-  .transition(height @p-transdura); // height changes as panel
+  transition: height @p-transdura; // height changes as panel
 }
 
 .o-Tabs__Tab,
 .o-Tabs__Panel {
-  .flex(100%); // override `.o-Flex__Item`
-  .transitions(@g-prefix_transform; @p-transdura);
+  flex: 100%; // override `.o-Flex__Item`
+  transition: transform @p-transdura;
 }
 
 // A tab. Contains a label or heading of the panel.
@@ -52,13 +108,13 @@
 .o-Tabs__Tab {
   text-align: center;
   @media screen and (min-width: 30em) {
-    .flex(1); // equal "main size" for all items
+    flex: 1; // equal "main size" for all items
   }
 }
 // this class should be added via script, NOT manually!
 // .o-Tabs__Tab:has(.o-Tabs__Check:checked), // TODO `:has()` is unsupported
 .o-Tabs__Tab--selected {
-  .transform(scale(1.2));
+  transform: scale(1.2);
 }
 
 .o-Tabs__Check {
@@ -83,19 +139,19 @@
   position: absolute;
   left: 0; right: 0;
   bottom: 0;
-  .flex-order(1);
+  order: 1;
 }
 .o-Tabs__Panel--shown {
 }
 .o-Tabs__Panel--hiddenBefore {
-  .transform(translateY(-100%) scaleY(0));
+  transform: translateY(-100%) scaleY(0);
   @media screen and (min-width: 30em) {
-    .transform(translateX(-100%) scaleX(0));
+    transform: translateX(-100%) scaleX(0);
   }
 }
 .o-Tabs__Panel--hiddenAfter {
-  .transform(translateY(100%) scaleY(0));
+  transform: translateY(100%) scaleY(0);
   @media screen and (min-width: 30em) {
-    .transform(translateX(100%) scaleX(0));
+    transform: translateX(100%) scaleX(0);
   }
 }

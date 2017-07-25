@@ -1,7 +1,7 @@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
     neo
-    Version: 0.2.0
+    Version: 0.4.0
     Licence: MIT
     Repo   : https://github.com/asce-web/neo.git
     Author : ASCE web team (webteam@asce.org)
@@ -11,14 +11,18 @@
 /*================================*\
     neo.less
 \*================================*/
+@import (reference) url('../node_modules/xmeter/src/__settings.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.vertspacing.less'); // TODO remove on xmeter@5.7.2+
+@import (reference) url('../node_modules/xmeter/src/__tool.transitions.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
+@import (reference) url('__settings.less');
+@import (reference) url('__tool.menufont.less');
+@import (reference) url('__tool.logo.less');
+@import (reference) url('__tool.ticket.less');
 
 
-// This stylesheet is the master stylesheet for all conference sites.
-// Each and every conference site imports this stylesheet, which
-// determines all styles for all conference sites.
-// Then each conference site imports an additional stylesheet
-// specific to that conference, which determines the conference-specific
-// styles such as colors.
+// Master stylesheet for all conference sites.
 
 
 /*
@@ -28,6 +32,7 @@
  * __settings.less..........................variables
  * __tool.menufont.less.....................font styles for menu bars
  * __tool.logo.less.........................background-image styles for logos
+ * __tool.ticket.less.......................Passes and Speaker Components
  *
  * # BASE-----------------------------------BARE UNCLASSED ELEMENTS
  * _dev.less................................development code
@@ -58,7 +63,7 @@
  * SupporterBlock...........................block containing one level of sponsors on Sponsors page
  * SocialList...............................list of social media icons
  * DateBlock................................list of important dates
- * Callout..................................textual block standing out from normal prose
+ * Alert....................................textual block standing out visually from normal prose
  * Btn......................................buttons
  * LinkCamo.................................camouflaged links & elements
  * LinkCaps.................................link in all caps, like that of menus
@@ -77,7 +82,7 @@
 //++++++++++++++++++++++++++++++++//
 //    # SETTINGS & TOOLS
 //++++++++++++++++++++++++++++++++//
-// @import url('src/__settings.less');
+// @import url('__settings.less');
 // @import url('__tool.menufont.less');
 // @import url('__tool.logo.less');
 //++++ end # SETTINGS & TOOLS ++++//
@@ -86,47 +91,101 @@
 //++++++++++++++++++++++++++++++++//
 //    # BASE
 //++++++++++++++++++++++++++++++++//
-@import url('src/_dev.less');
-@import url('src/_base.less');
+@import url('_dev.less');
+@import url('_base.less');
 //++++ end # BASE ++++//
 
 
 //++++++++++++++++++++++++++++++++//
 //    # OBJECTS
 //++++++++++++++++++++++++++++++++//
-@import url('src/_o-Runner.less');
-@import url('src/_o-Constrain.less');
-@import url('src/_o-GridFloat.less');
-@import url('src/_o-ListAction.less');
-@import url('src/_o-ListStacked.less');
-@import url('src/_o-Tabs.less');
-@import url('src/_o-Drawer.less');
+
+// Objects
+//
+// Patterns of structure that can be reused many times for many different purposes.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-10</time></dd>
+// </dl></header>
+//
+// Weight: 1
+//
+// Styleguide Objects
+
+@import url('_o-Runner.less');
+@import url('_o-Constrain.less');
+@import url('_o-GridFloat.less');
+@import url('_o-ListAction.less');
+@import url('_o-ListStacked.less');
+@import url('_o-Tabs.less');
+@import url('_o-Drawer.less');
 //++++ end # OBJECTS ++++//
 
 
 //++++++++++++++++++++++++++++++++//
 //    # COMPONENTS
 //++++++++++++++++++++++++++++++++//
-@import url('src/_c-Mast.less');
-@import url('src/_c-SiteTitle.less');
-@import url('src/_c-MenuMobile.less');
-@import url('src/_c-MenuBar.less');
-@import url('src/_c-Sitemap.less');
-@import url('src/_c-Banner.less');
-@import url('src/_c-PageTitle.less');
-@import url('src/_c-ConfHed.less');
-@import url('src/_c-Pass.less');
-@import url('src/_c-ProgramHn.less');
-@import url('src/_c-TimeBlock.less');
-@import url('src/_c-Speaker.less');
-@import url('src/_c-SupporterBlock.less');
-@import url('src/_c-SocialList.less');
-@import url('src/_c-DateBlock.less');
-@import url('src/_c-Callout.less');
-@import url('src/_c-Btn.less');
-@import url('src/_c-LinkCamo.less');
-@import url('src/_c-LinkCaps.less');
-@import url('src/_c-Toggle.less');
+
+// Components
+//
+// Patterns of look-and-feel that are each only used for one purpose.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-10</time></dd>
+// </dl></header>
+//
+// Weight: 2
+//
+// Styleguide Components
+
+@import url('_c-Mast.less');
+@import url('_c-SiteTitle.less');
+@import url('_c-MenuMobile.less');
+@import url('_c-MenuBar.less');
+// TODO markup for main menu component
+// header.o-Runner.c-Mast.c-Mast--menu: div.o-Constrain
+//   nav.o-Drawer
+//     h1.h-Hidden#main-menu Main Menu
+//     +sitetoc({
+//       icons: { page: true, sub: true },
+//       depth: 1,
+//       pages: [
+//         new ConfPage('Home', '#0').setIcon('insert_drive_file'),
+//         new ConfPage('Registration', '#0').setIcon('insert_drive_file')
+//           .add(new ConfPage('Why Attend', '#0')),
+//         new ConfPage('Program', '#0').setIcon('insert_drive_file')
+//           .add(new ConfPage('Short Courses', '#0'))
+//           .add(new ConfPage('Technical Tours', '#0')),
+//         new ConfPage('Location', '#0').setIcon('insert_drive_file'),
+//         new ConfPage('Speakers', '#0').setIcon('insert_drive_file'),
+//       ],
+//       classes: {
+//         listclasses: 'o-Flex c-MenuMobile-nM c-MenuBar-sM',
+//         itemclasses: 'o-Flex__Item c-MenuMobile__Item-nM c-MenuBar__Item-sM',
+//         linkclasses: 'c-MenuMobile__Link-nM c-MenuBar__Link-sM h-Block',
+//         sub: {
+//           listclasses: 'c-MenuMobile__Sub-nM c-MenuBar__Sub-sM',
+//           itemclasses: 'c-MenuMobile__Sub__Item-nM c-MenuBar__Sub__Item-sM',
+//           linkclasses: 'c-MenuMobile__Link-nM c-MenuMobile__Sub__Link-nM c-MenuBar__Link-sM c-MenuBar__Sub__Link-sM h-Block',
+//         },
+//       },
+//     })
+@import url('_c-Sitemap.less');
+@import url('_c-Banner.less');
+@import url('_c-PageTitle.less');
+@import url('_c-ConfHed.less');
+@import url('_c-Pass.less');
+@import url('_c-ProgramHn.less');
+@import url('_c-TimeBlock.less');
+@import url('_c-Speaker.less');
+@import url('_c-SupporterBlock.less');
+@import url('_c-SocialList.less');
+@import url('_c-DateBlock.less');
+@import url('_c-Alert.less');
+@import url('_c-Btn.less');
+@import url('_c-LinkCamo.less');
+@import url('_c-LinkCaps.less');
+@import url('_c-Toggle.less');
   //--------------------------------//
   //    ## Block Section-y Components
   //--------------------------------//
@@ -140,6 +199,28 @@
   //--------------------------------//
   //---- end ## User-Interactive Components ----//
 //++++ end # COMPONENTS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # ORGANISMS
+//++++++++++++++++++++++++++++++++//
+
+// Organisms
+//
+// Compositions of Objects and Components that act together as a single interface.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-10</time></dd>
+// </dl></header>
+//
+// Weight: 3
+//
+// Styleguide Organisms
+
+// @import url('_org.*.less');
+// NOTE no stylesheets; just KSS
+
+//++++ end # ORGANISMS ++++//
 
 
 //++++++++++++++++++++++++++++++++//
@@ -184,6 +265,6 @@
 //++++++++++++++++++++++++++++++++//
 //    # OVERRIDES
 //++++++++++++++++++++++++++++++++//
-@import url('src/_atom.less');
-@import url('src/_shame.less');
+@import url('_atom.less');
+@import url('_shame.less');
 //++++ end # OVERRIDES ++++//

@@ -2,32 +2,84 @@
 /*################################*\
     neo  |  _c-Sitemap.less
 \*################################*/
-@import (reference) url('__tool.menufont.less');
 
 
-// Sitemap for top (site) pages or main (internal) pages.
+// The Site Map
 //
-// ^Subcomponents:
-// __Item - each item in the list
-// __Sub  - a sub menu list
-// __Sub__Item - an item within the SubList
+// The site map for all pages on the site. Appears in the footer.
 //
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-10-12
+// Use with Pug:
+// <pre>
+//   include /_views/_c-Sitemap.view.pug
+//   +sitemap([
+//       new ConfPage('Home', '#0'),
+//       new ConfPage('Registration', '#0')
+//         .add(new ConfPage('Why Attend', '#0')),
+//       new ConfPage('Program', '#0')
+//         .add(new ConfPage('Events'         , '#0'))
+//         .add(new ConfPage('Short Courses'  , '#0'))
+//         .add(new ConfPage('Technical Tours', '#0'))
+//         .add(new ConfPage('Optional Tours' , '#0')),
+//       new ConfPage('Hotel & Travel', '#0')
+//         .add(new ConfPage('International Travel', '#0')),
+//       new ConfPage('Speakers', '#0')
+//         .add(new ConfPage('Distinguished Lecture Series', '#0')),
+//     ])
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-10-12</time></dd>
+// </dl></header>
+//
+// Markup:
+// <ul class="o-List o-Flex c-Sitemap">
+//   <li class="o-List__Item c-Sitemap__Item">
+//     <a href="#0"><span>Home</span></a>
+//   </li>
+//   <li class="o-List__Item c-Sitemap__Item">
+//     <a href="#0"><span>Registration</span></a>
+//     <ul class="o-List c-Sitemap__Sub">
+//       <li class="o-List__Item c-Sitemap__Sub__Item">
+//         <a href="#0"><span>Why Attend</span></a>
+//       </li>
+//     </ul>
+//   </li>
+//   <li class="o-List__Item c-Sitemap__Item">
+//     <a href="#0"><span>Registration</span></a>
+//     <ul class="o-List c-Sitemap__Sub">
+//       <li class="o-List__Item c-Sitemap__Sub__Item">
+//         <a href="#0"><span>Events</span></a>
+//       </li>
+//       <li class="o-List__Item c-Sitemap__Sub__Item">
+//         <a href="#0"><span>Short Courses</span></a>
+//       </li>
+//       <li class="o-List__Item c-Sitemap__Sub__Item">
+//         <a href="#0"><span>Technical Tours</span></a>
+//       </li>
+//       <li class="o-List__Item c-Sitemap__Sub__Item">
+//         <a href="#0"><span>Optional Tours</span></a>
+//       </li>
+//     </ul>
+//   </li>
+// </ul>
+//
+// Weight: 5
+//
+// Styleguide Components.Sitemap
+
 @p-fz: 20/16;
 .c-Sitemap {
   margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
   .menufont();
   @media not all and (min-width: 45em) {
-    .flex-direction(column);
+    flex-direction: column;
     .font-size-mod(@p-fz);
   }
 }
 
 .c-Sitemap__Item {
-  .flex(0 0 auto);
+  flex: 0 0 auto;
   @media not all and (min-width: 45em) {
     &:not(:last-child) {
       margin-bottom: (@p-fz * @g-vru); // HACK fallback // uses module vru

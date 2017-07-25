@@ -1,39 +1,45 @@
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class ImportantDate {
   /**
    * An important date.
    * Construct an ImportantDate object.
-   * The name and start time
-   * are immutable and must be provided during construction.
+   * The name and start time must be provided during construction
+   * and are immutable. End time is optional.
    * @constructor
-   * @param {Object} $actioninfo an object with the following immutable properties:
+   * @param {Object=} $actioninfo an object with the following immutable properties:
    * @param {string} $actioninfo.name the name of the important date
    * @param {Date} $actioninfo.start_time the start time of the important date
+   * @param {Date=} $actioninfo.end_time the start end of the important date
    */
-  function ImportantDate($actioninfo) {
-    var self = this
-    $actioninfo = $actioninfo || {} // NOTE constructor overloading
-    self._NAME  = $actioninfo.name
-    self._START = $actioninfo.start_time
-    self._url       = ''
-    self._is_starred = false
+  constructor($actioninfo = {}) {
+    /** @private @final */ this._NAME  = $actioninfo.name
+    /** @private @final */ this._START = $actioninfo.start_time
+    /** @private @final */ this._END   = $actioninfo.end_time
+    /** @private */ this._url          = ''
+    /** @private */ this._is_starred   = false
   }
 
-  // ACCESSOR FUNCTIONS
   /**
    * Get the name of this important date.
    * @return {string} the name of this important date
    */
-  ImportantDate.prototype.name = function name() {
+  get name() {
     return this._NAME
   }
 
   /**
-   * Get the date value of this important date.
-   * @return {Date} the date of this important date
+   * Return the start date value of this important date.
+   * @return {Date} the start date of this important date
    */
-  ImportantDate.prototype.startTime = function startTime() {
+  get startTime() {
     return this._START || new Date()
+  }
+
+  /**
+   * Return the end date value of this important date.
+   * @return {?Date} the end date of this important date
+   */
+  get endTime() {
+    return this._END || null
   }
 
   /**
@@ -41,7 +47,7 @@ module.exports = (function () {
    * @param  {string=} url the url of this important date
    * @return {(ImportantDate|string)} this important date || the url of this important date
    */
-  ImportantDate.prototype.url = function url(url) {
+  url(url) {
     if (arguments.length) {
       this._url = url
       return this
@@ -53,7 +59,7 @@ module.exports = (function () {
    * @param  {boolean=true} bool if true, mark as starred
    * @return {ImportantDate} this important date
    */
-  ImportantDate.prototype.star = function star(bool) {
+  star(bool) {
     this._is_starred = (arguments.length) ? bool : true
     return this
   }
@@ -61,9 +67,7 @@ module.exports = (function () {
    * Get the starred status of this important date.
    * @return {boolean} whether this important date is starred
    */
-  ImportantDate.prototype.isStarred = function isStarred() {
+  isStarred() {
     return this._is_starred
   }
-
-  return ImportantDate
-})()
+}

@@ -1,48 +1,43 @@
 var Util = require('./Util.class.js')
 
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class Person {
   /**
    * A person.
    * Can be used for any role on the suite.
    * Constructs a Person object.
    * @constructor
    * @param {string} id a unique identifier of the person
-   * @param {Object} $name an object containing the following:
+   * @param {Object=} $name an object containing the following:
    * @param {string} $name.honorific_prefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
    * @param {string} $name.given_name the person’s first name
    * @param {string} $name.additional_name  the person’s middle name or initial
    * @param {string} $name.family_name the person’s last name
    * @param {string} $name.honorific_suffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
    */
-  function Person(id, $name) {
-    var self = this
-    $name = $name || {} // NOTE constructor overloading
-    self._ID   = id
-    self._NAME = {
-      honorific_prefix: $name.honorific_prefix
-    , given_name      : $name.given_name
-    , additional_name : $name.additional_name
-    , family_name     : $name.family_name
-    , honorific_suffix: $name.honorific_suffix
+  constructor(id, $name = {}) {
+    /** @private @final */ this._ID   = id
+    /** @private @final */ this._NAME = {
+      honorific_prefix: $name.honorific_prefix,
+      given_name      : $name.given_name,
+      additional_name : $name.additional_name,
+      family_name     : $name.family_name,
+      honorific_suffix: $name.honorific_suffix,
     }
-    self._jobTitle    = ''
-    self._affiliation = ''
-    self._img         = ''
-    self._email       = ''
-    self._telephone   = ''
-    self._url         = ''
-    self._social      = {}
-    self._bio         = ''
-    self._is_starred  = false
+    /** @private */ this._jobTitle    = ''
+    /** @private */ this._affiliation = ''
+    /** @private */ this._img         = ''
+    /** @private */ this._email       = ''
+    /** @private */ this._telephone   = ''
+    /** @private */ this._url         = ''
+    /** @private */ this._social      = {}
+    /** @private */ this._is_starred  = false
   }
 
-  // ACCESSOR FUNCTIONS
   /**
    * Get the id of this person.
    * @return {string} the unique id of this person
    */
-  Person.prototype.id = function id() {
+  get id() {
     return this._ID
   }
 
@@ -50,7 +45,7 @@ module.exports = (function () {
    * Get the name object of this person.
    * @return {Object} a shallow object representing this person’s name
    */
-  Person.prototype.name = function name() {
+  get name() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._NAME)
   }
@@ -60,7 +55,7 @@ module.exports = (function () {
    * @param  {string=} text the job title
    * @return {(Person|string)} this person || the job title
    */
-  Person.prototype.jobTitle = function jobTitle(text) {
+  jobTitle(text) {
     if (arguments.length) {
       this._jobTitle = text
       return this
@@ -72,7 +67,7 @@ module.exports = (function () {
    * @param  {string=} text the affiliation
    * @return {(Person|string)} this person || the affiliation
    */
-  Person.prototype.affiliation = function affiliation(text) {
+  affiliation(text) {
     if (arguments.length) {
       this._affiliation = text
       return this
@@ -84,7 +79,7 @@ module.exports = (function () {
    * @param  {string=} text the url pointing to the headshot image
    * @return {(Person|string)} this person || the headshot image url
    */
-  Person.prototype.img = function img(url) {
+  img(url) {
     if (arguments.length) {
       this._img = url
       return this
@@ -96,7 +91,7 @@ module.exports = (function () {
    * @param  {string=} text the email address
    * @return {(Person|string)} this person || the email address
    */
-  Person.prototype.email = function email(text) {
+  email(text) {
     if (arguments.length) {
       this._email = text
       return this
@@ -108,7 +103,7 @@ module.exports = (function () {
    * @param  {string=} text the telephone number
    * @return {(Person|string)} this person || the telephone number
    */
-  Person.prototype.phone = function phone(text) {
+  phone(text) {
     if (arguments.length) {
       this._telephone = text
       return this
@@ -120,7 +115,7 @@ module.exports = (function () {
    * @param  {string=} text the homepage
    * @return {(Person|string)} this person || the homepage
    */
-  Person.prototype.url = function url(text) {
+  url(text) {
     if (arguments.length) {
       this._url = text
       return this
@@ -134,7 +129,7 @@ module.exports = (function () {
    * @param {string=} text optional advisory text
    * @return {Person} this person
    */
-  Person.prototype.addSocial = function addSocial(network_name, url, text) {
+  addSocial(network_name, url, text) {
     this._social[network_name] = { url: url, text: text }
     return this
   }
@@ -143,34 +138,16 @@ module.exports = (function () {
    * @param  {string} network_name the name of the social network
    * @return {Object} an object representing the social network profile
    */
-  Person.prototype.getSocial = function getSocial(network_name) {
+  getSocial(network_name) {
     return this._social[network_name]
   }
   /**
    * Return an object representing all social network profiles of this person.
    * @return {Object} shallow clone of this person’s social object
    */
-  Person.prototype.getSocialAll = function getSocialAll() {
+  getSocialAll() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._social) // shallow clone this.social into {}
-  }
-
-  /**
-   * Set a short, html-friendly biography (“bio”) for this person.
-   * @param {string} html html-friendly content
-   * @return {Person} this person
-   */
-  Person.prototype.setBio = function setBio(html) {
-    this._bio = html
-    return this
-  }
-  /**
-   * Get the bio of this person.
-   * @param  {boolean=} unescaped whether or not the returned string should be escaped
-   * @return {string} the bio of this person
-   */
-  Person.prototype.getBio = function getBio(unescaped) {
-    return ((unescaped) ? '<!-- warning: unescaped code -->' : '') + this._bio
   }
 
   /**
@@ -178,7 +155,7 @@ module.exports = (function () {
    * @param  {boolean=true} bool if true, mark as starred
    * @return {Person} this person
    */
-  Person.prototype.star = function star(bool) {
+  star(bool) {
     this._is_starred = (arguments.length) ? bool : true
     return this
   }
@@ -186,41 +163,82 @@ module.exports = (function () {
    * Get the starred status of this person.
    * @return {boolean} whether this person is starred
    */
-  Person.prototype.isStarred = function isStarred() {
+  isStarred() {
     return this._is_starred
   }
 
-  // METHODS
+
   /**
-   * Return a string representing this person’s full name.
-   * The full name consists of:
-   *  - first name
-   *  - middle name/initial
-   *  - last name
-   * REVIEW: this is not needed
-   * @return {string} a string representing this person’s full name
+   * Output this person’s name and other information as HTML.
+   * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Person"]`.
+   * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
+   * @param  {Person.Format} format how to display the output
+   * @return {string} a string representing an HTML DOM snippet
    */
-  Person.prototype.printFullName = function printFullName() {
-    var returned = ''
-    returned += this.name.givenName
-    returned += ' ' + this.name.additionalName
-    returned += ' ' + this.name.familyName
-    return returned
+  html(format) {
+    switch (format) {
+      case Person.Format.NAME:
+        return `
+          <span itemprop="name">
+            <span itemprop="givenName">${this.name.given_name}</span>
+            <span itemprop="familiyName">${this.name.family_name}</span>
+          </span>
+        `
+        break;
+      case Person.Format.FULL_NAME:
+        return `
+          <span itemprop="name">
+            <span itemprop="givenName">${this.name.given_name}</span>
+            <span itemprop="additionalName">${this.name.additional_name}</span>
+            <span itemprop="familiyName">${this.name.family_name}</span>
+          </span>
+        `
+        break;
+      case Person.Format.ENTIRE_NAME:
+        var output = this.html(Person.Format.FULL_NAME) // using `var` because `let` works poorly in `switch`
+        if (this.name.honorific_prefix) {
+          output = `<span itemprop="honorificPrefix">${this.name.honorific_prefix}</span> ${output}`
+        }
+        if (this.name.honorific_suffix) {
+          output = `${output}, <span itemprop="honorificSuffix">${this.name.honorific_suffix}</span>`
+        }
+        return output
+        break;
+      case Person.Format.AFFILIATION:
+        return `${this.html(Person.Format.ENTIRE_NAME)},
+          <span class="-fs-t" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
+            <span itemprop="name">${this.affiliation()}</span>
+          </span>
+        `
+        break;
+      case Person.Format.CONTACT:
+        var output = `
+          <a href="mailto:${this.email()}">${this.html(Person.Format.NAME)}</a>
+        `
+        if (this.jobTitle()) {
+          output = `${output}, <span itemprop="jobTitle">${this.jobTitle()}</span>`
+        }
+        if (this.phone()) {
+          output = `${output} | <a href="tel:${this.phone()}" itemprop="telephone">${this.phone()}</a>`
+        }
+        return output
+        break;
+      default:
+        return this.toString()
+    }
   }
 
   /**
-   * Return a string representing this person’s entire name.
-   * The entire name is the full name along with prefix and suffix.
-   * REVIEW: this is not needed
-   * @return {string} a string representing this person’s entire name
+   * Enum for name formats.
+   * @enum {String}
    */
-  Person.prototype.printEntireName = function printEntireName() {
-    var returned = ''
-    if (this.name.honorificPrefix) returned += this.name.honorificPrefix + ' '
-    returned += this.printFullName()
-    if (this.name.honorificSuffix) returned += ', ' + this.name.honorificSuffix
-    return returned
+  static get Format() {
+    return {
+      /** First Last */                                 NAME       : 'name',
+      /** First Middle Last */                          FULL_NAME  : 'full',
+      /** Px. First Middle Last, Sx. */                 ENTIRE_NAME: 'entire',
+      /** First Middle Last, Affiliation */             AFFILIATION: 'affiliation',
+      /** First Last, Director of ... | 555-555-5555 */ CONTACT    : 'contact',
+    }
   }
-
-  return Person
-})()
+}

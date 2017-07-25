@@ -3,11 +3,14 @@ mixin dateBlock(dates)
     each $importantDate in dates
       li.o-List__Item.c-DateBlock__Item(itemprop="potentialAction" itemscope="" itemtype="http://schema.org/Action")
         dt.c-DateBlock__Date
-          - var date = $importantDate.startTime()
-          time(datetime=date itemprop="startTime")
-            = Util.monthDay(date) + ', ' + date.getFullYear()
+          time(datetime=$importantDate.startTime itemprop="startTime")
+            = `${Util.monthDay($importantDate.startTime)}, ${$importantDate.startTime.getFullYear()}`
+          if $importantDate.endTime
+            span &ndash;
+            time(datetime=$importantDate.endTime itemprop="endTime")
+              = `${Util.monthDay($importantDate.endTime)}, ${$importantDate.endTime.getFullYear()}`
         dd.c-DateBlock__Desc(itemprop="name")
           if $importantDate.url()
-            a.c-DateBlock__Link(href=$importantDate.url() itemprop="url")= $importantDate.name()
+            a.c-DateBlock__Link(href=$importantDate.url() itemprop="url")= $importantDate.name
           else
-            = $importantDate.name()
+            = $importantDate.name
