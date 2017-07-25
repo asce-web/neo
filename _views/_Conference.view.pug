@@ -1,6 +1,6 @@
 //- /** @private */
 mixin promoLoc(obj)
-  if location.alt
+  if obj.alt
     abbr(title=obj.alt)= obj.text
   else
     = obj.text

@@ -1,6 +1,6 @@
 mixin supporterBlock($supporterLevel, $conference)
   section.c-SupporterBlock(class=`c-SupporterBlock--${$supporterLevel.size()}`)&attributes(attributes)
-    h1.c-SupporterBlock__Hn= $supporterLevel.name()
+    h1.c-SupporterBlock__Hn= $supporterLevel.name
     ul.o-List.o-Flex.c-SupporterBlock__List
       each $supporter in $conference.getSupportersAll().filter(($supporter) => $supporter.level()===$supporterLevel.name)
         li.o-List__Item.o-Flex__Item.c-SupporterBlock__List__Item(itemprop="sponsor" itemscope="" itemtype="https://schema.org/Organization")
