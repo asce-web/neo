@@ -1,6 +1,6 @@
 {
   "name": "neo",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Neo theme and style guide for conference sites.",
   "main": "index.js",
@@ -8,19 +8,13 @@
     "doc": "docs"
   },
   "scripts": {
-    "pug:root": "pug index.pug",
-    "pug:docs": "pug -O docs/_models/options.js docs/{index,principles,base,obj,comp,org,help,atom}.pug",
-    "pug:all": "npm run pug:root  &&  npm run pug:docs",
-    "lessc:neo": "lessc neo.less neo.css",
-    "lessc:docs": "lessc docs/styles/docs.less docs/styles/docs.css",
-    "lessc:all": "npm run lessc:neo  &&  npm run lessc:docs",
-    "minify": "cleancss neo.css -o neo.min.css",
+    "kss": "rm -r styleguide  ;  kss --config kss-config.json",
     "browserify:principles": "browserify docs/scripts/principles.js > docs/scripts/principles.b.js",
     "browserify:all": "npm run browserify:principles",
-    "build": "npm run pug:all  &&  npm run lessc:all  &&  npm run minify  &&  npm run browserify:all",
+    "build": "gulp build  &&  npm run kss  &&  npm run browserify:all",
     "unbuild:root": "rm index.html",
     "unbuild:docs": "rm docs/{index,principles,base,obj,comp,org,help,atom}.html",
-    "unbuild:css": "rm neo.css neo.min.css docs/styles/docs.css",
+    "unbuild:css": "rm {neo.css,neo.css.map} docs/styles/docs.css",
     "unbuild:js": "rm docs/scripts/principles.b.js",
     "unbuild": "npm run unbuild:root  &&  npm run unbuild:docs  &&  npm run unbuild:css  &&  npm run unbuild:js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -44,10 +38,14 @@
   "homepage": "https://github.com/asce-web/neo#readme",
   "devDependencies": {
     "browserify": "^14.1.0",
-    "clean-css": "^4.0.8",
-    "less": "^2.7.2",
-    "pug-cli": "^1.0.0-alpha6",
-    "xmeter": "^5.4.0"
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.5.0",
+    "gulp-less": "^3.3.2",
+    "gulp-pug": "^3.3.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "kss": "^3.0.0-beta.18",
+    "xmeter": "^5.7.0"
   },
   "dependencies": {
     "csscolor": "^1.3.1",

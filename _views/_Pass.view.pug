@@ -1,6 +1,6 @@
 mixin passList($conference, starred)
   ul.o-List.o-ListStacked
-    each $pass in $conference.getPassesAll().filter(function ($p) { return (starred) ? $p.isStarred() : true })
+    each $pass in $conference.getPassesAll().filter(($p) => (starred) ? $p.isStarred() : true)
       li.o-List__Item.o-ListStacked__Item
         +pass($pass, $conference)
 
@@ -8,15 +8,15 @@ mixin pass($pass, $conference)
   - var current_period = $conference.currentRegistrationPeriod()
   article.c-Pass
     mixin periodDetails($registrationPeriod, is_body)
-      h1.c-Pass__Period__Hn= $registrationPeriod.name()
+      h1.c-Pass__Period__Hn= $registrationPeriod.name
       dl
         each $attendeeType in $pass.getAttendeeTypesAll()
           - var price = 0;
-          dt.c-Pass__Attendee= $attendeeType.name()
-          dd.c-Pass__Price(class={'c-Pass__Price--featured': is_body && $attendeeType.isFeatured()})
+          dt.c-Pass__Attendee= $attendeeType.name
+          dd.c-Pass__Price(class={'c-Pass__Price--featured': is_body && $attendeeType.isFeatured})
             = price.toLocaleString('en', { style: 'currency', currency: 'USD' })
     header.c-Pass__Head
-      h1.c-Pass__Hn= $pass.name()
+      h1.c-Pass__Hn= $pass.name
       p.c-Pass__Desc
         = $pass.description()
         if $pass.fineprint()

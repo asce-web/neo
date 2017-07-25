@@ -1,14 +1,13 @@
 var Util = require('./Util.class.js')
 
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class Place {
   /**
    * A place.
    * Mostly used for hotel & venue locations.
    * Constructs a Place object.
    * @constructor
    * @param {string} name the name of the place
-   * @param {Object} $placeinfo an object containing the following:
+   * @param {Object=} $placeinfo an object containing the following:
    * @param {string} $placeinfo.street_address the street and number, eg: '1801 Alexander Bell Drive'
    * @param {string} $placeinfo.address_locality the city name, eg: 'Reston'
    * @param {string} $placeinfo.address_region   the state code *[1], eg: 'VA'
@@ -18,76 +17,94 @@ module.exports = (function () {
    * @param {string} $placeinfo.url              the URL of homepage, eg: 'http://www.asce.org/'
    * *[1] zip, state, and country codes should match the ISO-3166 standard format. see https://en.wikipedia.org/wiki/ISO_3166
    */
-  function Place(name, $placeinfo) {
-    var self = this
-    $placeinfo = $placeinfo || {} // NOTE constructor overloading
-    self._NAME = name
-    self._STREET_ADDRESS   = $placeinfo.street_address
-    self._ADDRESS_LOCALITY = $placeinfo.address_locality
-    self._ADDRESS_REGION   = $placeinfo.address_region
-    self._POSTAL_CODE      = $placeinfo.postal_code
-    self._ADDRESS_COUNTRY  = $placeinfo.address_country
-    self._TELEPHONE        = $placeinfo.telephone
-    self._URL              = $placeinfo.url
+  constructor(name, $placeinfo = {}) {
+    /** @private @final */ this._NAME = name
+    /** @private @final */ this._STREET_ADDRESS   = $placeinfo.street_address
+    /** @private @final */ this._ADDRESS_LOCALITY = $placeinfo.address_locality
+    /** @private @final */ this._ADDRESS_REGION   = $placeinfo.address_region
+    /** @private @final */ this._POSTAL_CODE      = $placeinfo.postal_code
+    /** @private @final */ this._ADDRESS_COUNTRY  = $placeinfo.address_country
+    /** @private @final */ this._TELEPHONE        = $placeinfo.telephone
+    /** @private @final */ this._URL              = $placeinfo.url
   }
 
-  // ACCESSOR FUNCTIONS
   /**
    * Get the name of this place.
    * @return {string} the name of this place
    */
-  Place.prototype.name = function name() {
+  get name() {
     return this._NAME
   }
   /**
    * Get the street address of this place.
    * @return {string} the street address of this place
    */
-  Place.prototype.streetAddress = function streetAddress() {
+  get streetAddress() {
     return this._STREET_ADDRESS
   }
   /**
    * Get the address locality (city/town) of this place.
    * @return {string} the address locality (city/town) of this place
    */
-  Place.prototype.addressLocality = function addressLocality() {
+  get addressLocality() {
     return this._ADDRESS_LOCALITY
   }
   /**
    * Get the address region (state/province) of this place.
    * @return {string} the address region (state/province) of this place
    */
-  Place.prototype.addressRegion = function addressRegion() {
+  get addressRegion() {
     return this._ADDRESS_REGION
   }
   /**
    * Get the postal (zip) code of this place.
    * @return {string} the postal (zip) code of this place
    */
-  Place.prototype.postalCode = function postalCode() {
+  get postalCode() {
     return this._POSTAL_CODE
   }
   /**
    * Get the country of this place.
    * @return {string} the country of this place
    */
-  Place.prototype.addressCountry = function addressCountry() {
+  get addressCountry() {
     return this._ADDRESS_COUNTRY
   }
   /**
    * Get the telephone number for this place.
    * @return {string} the telephone number for this place
    */
-  Place.prototype.telephone = function telephone() {
+  get telephone() {
     return this._TELEPHONE
   }
   /**
    * Get the URL for the homepage of this place.
    * @return {string} the URL for the homepage of this place
    */
-  Place.prototype.url = function url() {
+  get url() {
     return this._URL
   }
 
-  return Place
-})()
+
+  /**
+   * Output this person’s name and other information as HTML.
+   * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Place"]`.
+   * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
+   * @return {string} a string representing an HTML DOM snippet
+   */
+  html() {
+    let $name = `<b class="h-Clearfix" itemprop="name">${this.name}</b>`
+    if (this.url) $name = `<a href="${this.url}" itemprop="url">${$name}</a>`
+    return `
+      ${$name}
+      <span itemprop="address" itemscope="" itemtype="https://schema.org/PostalAddress">
+        <span class="h-Clearfix" itemprop="streetAddress">${this.streetAddress}</span>
+        <span itemprop="addressLocality">${this.addressLocality}</span>,
+        <span itemprop="addressRegion">${this.addressRegion}</span>
+        <span class="h-Clearfix" itemprop="postalCode">${this.postalCode}</span>
+        ${(this.addressCountry) ? `<span class="h-Clearfix" itemprop="addressCountry">${this.addressCountry}</span>` : ''}
+      </span>
+      ${(this.telephone) ? `<a href="tel:${this.telephone}" itemprop="telephone">${this.telephone}</a>` : ''}
+    `
+  }
+}

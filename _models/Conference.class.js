@@ -1,5 +1,4 @@
-module.exports = (function () {
-  // CONSTRUCTOR
+module.exports = class Conference {
   /**
    * A conference event.
    * It may have a name, theme, dates, (promoted) location,
@@ -10,7 +9,7 @@ module.exports = (function () {
    * The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
    * @constructor
-   * @param {Object} $confinfo an object with the following immutable properties:
+   * @param {Object=} $confinfo an object with the following immutable properties:
    * @param {string} $confinfo.name the name of this conference
    * @param {string} $confinfo.url the url of this conference
    * @param {string} $confinfo.theme the theme, or slogan, of this conference
@@ -18,41 +17,36 @@ module.exports = (function () {
    * @param {Date} $confinfo.end_date the ending date of this conference
    * @param {Object} $confinfo.promo_loc the promoted location of this conference
    * @param {string} $confinfo.promo_loc.text the promoted location displayed/abbreviated text (eg, "Portland, OR")
-   * @param {string=} $confinfo.promo_loc.title the elongated version of the location (eg, "Portland, Oregon")
-   * @param {string=} $confinfo.promo_loc.blurb small paragraph about location. escaped plain-text (no HTML)
+   * @param {string=} $confinfo.promo_loc.alt the accessible text of the location (eg, "Portland, Oregon")
    */
-  function Conference($confinfo) {
-    var self = this
-    $confinfo = $confinfo || {} // NOTE constructor overloading
-    self._NAME      = $confinfo.name
-    self._URL       = $confinfo.url
-    self._THEME     = $confinfo.theme
-    self._START     = $confinfo.start_date
-    self._END       = $confinfo.end_date
-    self._PROMO_LOC = $confinfo.promo_loc
-    self._reg_periods     = []
-    self._passes          = []
-    self._sessions        = []
-    self._venues          = {}
-    self._speakers        = []
-    self._supporter_levels = []
-    self._supporter_lists  = {}
-    self._supporters       = []
-    self._exhibitors       = []
-    self._important_dates = []
-    self._organizers      = []
-    self._social          = {}
-    self._other_year_blurb= ''
-    self._regpd_curr_index = NaN
-    self._venue_conf_key   = ''
+  constructor($confinfo = {}) {
+    /** @private @final */ this._NAME      = $confinfo.name
+    /** @private @final */ this._URL       = $confinfo.url
+    /** @private @final */ this._THEME     = $confinfo.theme
+    /** @private @final */ this._START     = $confinfo.start_date
+    /** @private @final */ this._END       = $confinfo.end_date
+    /** @private @final */ this._PROMO_LOC = $confinfo.promo_loc
+    /** @private */ this._reg_periods     = []
+    /** @private */ this._passes          = []
+    /** @private */ this._sessions        = []
+    /** @private */ this._venues          = {}
+    /** @private */ this._speakers        = []
+    /** @private */ this._supporter_levels = []
+    /** @private */ this._supporter_lists  = {}
+    /** @private */ this._supporters       = []
+    /** @private */ this._exhibitors       = []
+    /** @private */ this._important_dates = []
+    /** @private */ this._organizers      = []
+    /** @private */ this._social          = {}
+    /** @private */ this._regpd_curr_index = NaN
+    /** @private */ this._venue_conf_key   = ''
   }
 
-  // ACCESSOR FUNCTIONS
   /**
    * Get the name of this conference.
    * @return {string} the name of this conference
    */
-  Conference.prototype.name = function name() {
+  get name() {
     return this._NAME
   }
 
@@ -60,7 +54,7 @@ module.exports = (function () {
    * Get the URL of this conference.
    * @return {string} the URL of this conference
    */
-  Conference.prototype.url = function url() {
+  get url() {
     return this._URL
   }
 
@@ -70,7 +64,7 @@ module.exports = (function () {
    * and may be changed from year to year (from conference to conference).
    * @return {string} the theme of this conference
    */
-  Conference.prototype.theme = function theme() {
+  get theme() {
     return this._THEME || ''
   }
 
@@ -78,7 +72,7 @@ module.exports = (function () {
    * Get the start date of this conference.
    * @return {Date} the start date of this conference
    */
-  Conference.prototype.startDate = function startDate() {
+  get startDate() {
     return this._START || new Date()
   }
 
@@ -86,7 +80,7 @@ module.exports = (function () {
    * Get the end date of this conference.
    * @return {Date} the end date of this conference
    */
-  Conference.prototype.endDate = function endDate() {
+  get endDate() {
     return this._END || new Date()
   }
 
@@ -95,9 +89,9 @@ module.exports = (function () {
    * The promoted location is not necessarily the actual postal address of the conference,
    * but rather a major city nearest to the conference used for
    * promotional and advertising purposes.
-   * @return {Object} the promoted location for this conference
+   * @return {{text:string, alt:string}} the promoted location for this conference
    */
-  Conference.prototype.promoLoc = function promoLoc() {
+  get promoLoc() {
     return this._PROMO_LOC || {}
   }
 
@@ -105,7 +99,7 @@ module.exports = (function () {
    * Add a registration period to this conference.
    * @param {RegistrationPeriod} $registrationPeriod the registration period to add
    */
-  Conference.prototype.addRegistrationPeriod = function addRegistrationPeriod($registrationPeriod) {
+  addRegistrationPeriod($registrationPeriod) {
     this._reg_periods.push($registrationPeriod)
     return this
   }
@@ -114,14 +108,14 @@ module.exports = (function () {
    * @param  {string} name the name of the registration period
    * @return {?RegistrationPeriod} the specified registration period
    */
-  Conference.prototype.getRegistrationPeriod = function getRegistrationPeriod(name) {
-    return this._reg_periods.find(function ($registrationPeriod) { return $registrationPeriod.name() === name }) || null
+  getRegistrationPeriod(name) {
+    return this._reg_periods.find(($registrationPeriod) => $registrationPeriod.name===name) || null
   }
   /**
    * Retrieve all registration periods of this conference.
    * @return {Array<RegistrationPeriod>} a shallow array of all registration periods of this conference.
    */
-  Conference.prototype.getRegistrationPeriodsAll = function getRegistrationPeriodsAll() {
+  getRegistrationPeriodsAll() {
     return this._reg_periods.slice()
   }
 
@@ -131,7 +125,7 @@ module.exports = (function () {
    * @param  {string=} reg_period_name the name of the registration period to set current
    * @return {(Conference|RegistrationPeriod)} this conference || the set current registration period
    */
-  Conference.prototype.currentRegistrationPeriod = function currentRegistrationPeriod(reg_period_name) {
+  currentRegistrationPeriod(reg_period_name) {
     if (arguments.length) {
       this._regpd_curr_index = this._reg_periods.indexOf(this.getRegistrationPeriod(reg_period_name))
       return this
@@ -142,7 +136,7 @@ module.exports = (function () {
    * Add a pass to this conference.
    * @param {Pass} $pass the pass to add
    */
-  Conference.prototype.addPass = function addPass($pass) {
+  addPass($pass) {
     this._passes.push($pass)
     return this
   }
@@ -151,14 +145,14 @@ module.exports = (function () {
    * @param  {string} name the name of the pass
    * @return {?Pass} the specified pass
    */
-  Conference.prototype.getPass = function getPass(name) {
-    return this._passes.find(function ($pass) { return $pass.name() === name }) || null
+  getPass(name) {
+    return this._passes.find(($pass) => $pass.name===name) || null
   }
   /**
    * Retrieve all passes of this conference.
    * @return {Array<Pass>} a shallow array of all passes of this conference
    */
-  Conference.prototype.getPassesAll = function getPassesAll() {
+  getPassesAll() {
     return this._passes.slice()
   }
 
@@ -166,7 +160,7 @@ module.exports = (function () {
    * Add a session to this conference.
    * @param {Session} $session the session to add
    */
-  Conference.prototype.addSession = function addSession($session) {
+  addSession($session) {
     this._sessions.push($session)
     return this
   }
@@ -175,14 +169,14 @@ module.exports = (function () {
    * @param  {string} name the name of the session
    * @return {?Session} the specified session
    */
-  Conference.prototype.getSession = function getSession(name) {
-    return this._sessions.find(function ($session) { return $session.name() === name }) || null
+  getSession(name) {
+    return this._sessions.find(($session) => $session.name===name) || null
   }
   /**
    * Retrieve all sessions of this conference.
    * @return {Array<Session>} a shallow array of all sessions of this conference
    */
-  Conference.prototype.getSessionsAll = function getSessionsAll() {
+  getSessionsAll() {
     return this._sessions.slice()
   }
 
@@ -191,23 +185,23 @@ module.exports = (function () {
    * @param {string} venue_label key for accessing the venue
    * @param {Place} $place the venue to add
    */
-  Conference.prototype.addVenue = function addVenue(venue_label, $place) {
+  addVenue(venue_label, $place) {
     this._venues[venue_label] = $place
     return this
   }
   /**
    * Retrieve a venue of this conference.
    * @param  {string} venue_label the key for accessing the venue
-   * @return {Object} the specified venue
+   * @return {Place} the specified venue
    */
-  Conference.prototype.getVenue = function getVenue(venue_label) {
+  getVenue(venue_label) {
     return this._venues[venue_label]
   }
   /**
    * Retrieve all venues of this conference.
-   * @return {Array<Object>} a shallow array of all venues of this conference
+   * @return {Object<Place>} a shallow copy of the venues object of this conference
    */
-  Conference.prototype.getVenuesAll = function getVenuesAll() {
+  getVenuesAll() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._venues)
   }
@@ -216,9 +210,9 @@ module.exports = (function () {
    * Set or get the official conference venue for this conference.
    * The official conference venue is the venue at which this conference is held.
    * @param  {string} venue_label the key for accessing the venue
-   * @return {(Conference|Object)} this conference || the set conference venue
+   * @return {(Conference|Place)} this conference || the set conference venue
    */
-  Conference.prototype.conferenceVenue = function conferenceVenue(venue_label) {
+  officialVenue(venue_label) {
     if (arguments.length) {
       this._venue_conf_key = venue_label
       return this
@@ -229,7 +223,7 @@ module.exports = (function () {
    * Add a speaker to this conference.
    * @param {Person} $person the speaker to add
    */
-  Conference.prototype.addSpeaker = function addSpeaker($person) {
+  addSpeaker($person) {
     this._speakers.push($person)
     return this
   }
@@ -238,14 +232,14 @@ module.exports = (function () {
    * @param  {string} id the id of the speaker
    * @return {?Person} the specified speaker
    */
-  Conference.prototype.getSpeaker = function getSpeaker(id) {
-    return this._speakers.find(function ($person) { return $person.id() === id }) || null
+  getSpeaker(id) {
+    return this._speakers.find(($person) => $person.id===id) || null
   }
   /**
    * Retrieve all speakers of this conference.
    * @return {Array<Person>} a shallow array of all speakers of this conference
    */
-  Conference.prototype.getSpeakersAll = function getSpeakersAll() {
+  getSpeakersAll() {
     return this._speakers.slice()
   }
 
@@ -254,7 +248,7 @@ module.exports = (function () {
    * @param {SupporterLevel} $supporterLevel the supporter level to add
    * @return {Conference} this conference
    */
-  Conference.prototype.addSupporterLevel = function addSupporterLevel($supporterLevel) {
+  addSupporterLevel($supporterLevel) {
     this._supporter_levels.push($supporterLevel)
     return this
   }
@@ -263,14 +257,14 @@ module.exports = (function () {
    * @param  {string} name the name of the supporter level
    * @return {?SupporterLevel} the specified supporter level
    */
-  Conference.prototype.getSupporterLevel = function getSupporterLevel(name) {
-    return this._supporter_levels.find(function ($supporterLevel) { return $supporterLevel.name() === name }) || null
+  getSupporterLevel(name) {
+    return this._supporter_levels.find(($supporterLevel) => $supporterLevel.name===name) || null
   }
   /**
    * Retrieve all supporter levels of this conference.
    * @return {Array<SupporterLevel>} a shallow array of all supporter levels of this conference
    */
-  Conference.prototype.getSupporterLevelsAll = function getSupporterLevelsAll() {
+  getSupporterLevelsAll() {
     return this._supporter_levels.slice()
   }
 
@@ -280,7 +274,7 @@ module.exports = (function () {
    * @param {Array<string>} supporter_level_names an array of pre-existing SupporterLevel names
    * @return {Conference} this conference
    */
-  Conference.prototype.addSupporterLevelList = function addSupporterLevelList(type, supporter_level_names) {
+  addSupporterLevelQueue(type, supporter_level_names) {
     this._supporter_lists[type] = supporter_level_names
     return this
   }
@@ -289,9 +283,8 @@ module.exports = (function () {
    * @param  {string} type the name of the subarray
    * @return {Array<SupporterLevel>} the array of SupporterLevel objects belonging to the type
    */
-  Conference.prototype.getSupporterLevelList = function getSupporterLevelList(type) {
-    var self = this
-    return (self._supporter_lists[type] || []).map(function (el) { return self.getSupporterLevel(el) })
+  getSupporterLevelQueue(type) {
+    return (this._supporter_lists[type] || []).map((el) => this.getSupporterLevel(el))
   }
 
   /**
@@ -299,7 +292,7 @@ module.exports = (function () {
    * @param {Supporter} $supporter the supporter to add
    * @return {Conference} this conference
    */
-  Conference.prototype.addSupporter = function addSupporter($supporter) {
+  addSupporter($supporter) {
     this._supporters.push($supporter)
     return this
   }
@@ -308,14 +301,14 @@ module.exports = (function () {
    * @param  {string} name the name of the supporter
    * @return {?Supporter} the specified supporter
    */
-  Conference.prototype.getSupporter = function getSupporter(name) {
-    return this._supporters.find(function ($supporter) { return $supporter.name() === name }) || null
+  getSupporter(name) {
+    return this._supporters.find(($supporter) => $supporter.name===name) || null
   }
   /**
    * Retrieve all supporters of this conference.
    * @return {Array<Supporter>} a shallow array of all supporters of this conference
    */
-  Conference.prototype.getSupportersAll = function getSupportersAll() {
+  getSupportersAll() {
     return this._supporters.slice()
   }
 
@@ -324,7 +317,7 @@ module.exports = (function () {
    * @param {Exhibitor} $exhibitor the exhibitor to add
    * @return {Conference} this conference
    */
-  Conference.prototype.addExhibitor = function addExhibitor($exhibitor) {
+  addExhibitor($exhibitor) {
     this._exhibitors.push($exhibitor)
     return this
   }
@@ -333,14 +326,14 @@ module.exports = (function () {
    * @param  {string} name the name of the exhibitor
    * @return {?Exhibitor} the specified exhibitor
    */
-  Conference.prototype.getExhibitor = function getExhibitor(name) {
-    return this._exhibitors.find(function ($exhibitor) { return $exhibitor.name() === name }) || null
+  getExhibitor(name) {
+    return this._exhibitors.find(($exhibitor) => $exhibitor.name===name) || null
   }
   /**
    * Retrieve all exhibitors of this conference.
    * @return {Array<Exhibitor>} a shallow array of all exhibitors of this conference
    */
-  Conference.prototype.getExhibitorsAll = function getExhibitorsAll() {
+  getExhibitorsAll() {
     return this._exhibitors.slice()
   }
 
@@ -348,7 +341,7 @@ module.exports = (function () {
    * Add an important date to this conference.
    * @param {ImportantDate} $importantDate the important date to add
    */
-  Conference.prototype.addImportantDate = function addImportantDate($importantDate) {
+  addImportantDate($importantDate) {
     this._important_dates.push($importantDate)
     return this
   }
@@ -357,14 +350,14 @@ module.exports = (function () {
    * @param  {string} name the name of the important date
    * @return {?ImportantDate} the specified important date
    */
-  Conference.prototype.getImportantDate = function getImportantDate(name) {
-    return this._important_dates.find(function ($importantDate) { return $importantDate.name() === name }) || null
+  getImportantDate(name) {
+    return this._important_dates.find(($importantDate) => $importantDate.name===name) || null
   }
   /**
    * Retrieve all important dates of this conference.
    * @return {Array<ImportantDate>} a shallow array of all important dates of this conference
    */
-  Conference.prototype.getImportantDatesAll = function getImportantDatesAll() {
+  getImportantDatesAll() {
     return this._important_dates.slice()
   }
 
@@ -374,7 +367,7 @@ module.exports = (function () {
    * responsible for organizing the conference.
    * @param {Person} $person the organizer to add
    */
-  Conference.prototype.addOrganizer = function addOrganizer($person) {
+  addOrganizer($person) {
     this._organizers.push($person)
     return this
   }
@@ -383,14 +376,14 @@ module.exports = (function () {
    * @param  {string} id the name of the organizer
    * @return {?Person} the specified organizer
    */
-  Conference.prototype.getOrganizer = function getOrganizer(id) {
-    return this._organizers.find(function ($person) { return $person.id() === id }) || null
+  getOrganizer(id) {
+    return this._organizers.find(($person) => $person.id===id) || null
   }
   /**
    * Retrieve all organizers of this conference.
    * @return {Array<Person>} a shallow array of all organizers of this conference
    */
-  Conference.prototype.getOrganizersAll = function getOrganizersAll() {
+  getOrganizersAll() {
     return this._organizers.slice()
   }
 
@@ -401,7 +394,7 @@ module.exports = (function () {
    * @param {string=} text optional advisory text
    * @return {Conference} this conference
    */
-  Conference.prototype.addSocial = function addSocial(network_name, url, text) {
+  addSocial(network_name, url, text) {
     this._social[network_name] = { url: url, text: text }
     return this
   }
@@ -410,36 +403,19 @@ module.exports = (function () {
    * @param  {string} network_name the name of the social network
    * @return {Object} an object representing the social network profile
    */
-  Conference.prototype.getSocial = function getSocial(network_name) {
+  getSocial(network_name) {
     return this._social[network_name]
   }
   /**
    * Return an object representing all social network profiles of this conference.
    * @return {Object} shallow clone of this conference’s social object
    */
-  Conference.prototype.getSocialAll = function getSocialAll() {
+  getSocialAll() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._social) // shallow clone this.social into {}
   }
 
-  /**
-   * Set or get the other year blurb of this conference.
-   * The “other year blurb” is used to promote this conference if it happens
-   * to be the conference of the previous or next year.
-   * The blurb gives reasons to visit the conference page.
-   * For example, promote reasons to attend or promote getting PDHs from a past event.
-   * @param  {string=} text the other year blurb of this conference
-   * @return {(Conference|string)} this conference || the other year blurb of this conference
-   */
-  Conference.prototype.otherYearBlurb = function otherYearBlurb(text) {
-    if (arguments.length) {
-      this._other_year_blurb = text
-      return this
-    } else return this._other_year_blurb
-  }
-
-  // METHODS
-  // Conference.prototype.setPrice = function setPrice(reg_period, pass, membership, price) {
+  // setPrice(reg_period, pass, membership, price) {
   //   reg_period = reg_period.name || reg_period
   //   pass        = pass.name        || pass
   //   membership  = membership.name  || membership
@@ -464,28 +440,20 @@ module.exports = (function () {
    * @param  {boolean=} starred if true, only consider sessions that are starred
    * @return {Array<SessionGroup>} an array grouping the sessions together
    */
-  Conference.prototype.groupSessions = function groupSessions(starred) {
-    var all_sessions = this.getSessionsAll().filter(function ($session) {
-      return (starred) ? $session.isStarred() : true
-    })
-    var $groupings = []
+  groupSessions(starred) {
+    let all_sessions = this.getSessionsAll().filter(($session) => (starred) ? $session.isStarred() : true)
+    let $groupings = []
     function equalDays(date1, date2) {
       return date1.toISOString().slice(0,10) === date2.toISOString().slice(0,10)
     }
-    for (var $session of all_sessions) {
-      if (!$groupings.find(function ($sessionGroup) {
-        return equalDays($sessionGroup.dateday, $session.startDate())
-      })) {
+    all_sessions.forEach(function ($session) {
+      if (!$groupings.find(($sessionGroup) => equalDays($sessionGroup.dateday, $session.startDate))) {
         $groupings.push({
-          dateday : $session.startDate()
-        , sessions: all_sessions.filter(function (_event) {
-            return equalDays(_event.startDate(), $session.startDate())
-          })
+          dateday : $session.startDate,
+          sessions: all_sessions.filter((_event) => equalDays(_event.startDate, $session.startDate)),
         })
       }
-    }
+    })
     return $groupings
   }
-
-  return Conference
-})()
+}

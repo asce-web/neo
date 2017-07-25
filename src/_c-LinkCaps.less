@@ -2,16 +2,33 @@
 /*################################*\
     neo  |  _c-LinkCaps.less
 \*################################*/
-@import (reference) url('__tool.menufont.less');
 
 
-// A link styled similar to menu links.
-// This may be used outside of a menu, however.
+// The Caps Link
 //
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-10-06
+// A link styled slightly bolder and with all caps, similar to menu links.
+// This style may be used outside of a menu, however. For example,
+// you can use this style as an alternative to a button style in a dialog box.
+// This class can be used on any element, not just anchors.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-10-06</time></dd>
+// </dl></header>
+//
+// <small>(This is an extremely terrible example of a dialog. Please do not do this.)</small>
+//
+// Markup:
+// <div role="dialog">
+//   <p>You are about to cancel your subscription. Are you sure you want to cancel?</p>
+//   <p style="text-align:center;">
+//     <a class="c-LinkCaps" href="#0" style="margin-right:4rem;">Cancel</a>
+//     <button class="c-LinkCamo c-LinkCaps">Yes</button>
+//   </p>
+// </div>
+//
+// Weight: 19
+//
+// Styleguide Components.LinkCaps
 .c-LinkCaps {
   .menufont();
   font-size: (14em/16); // same as Mast
