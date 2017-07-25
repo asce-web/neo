@@ -2,35 +2,45 @@
 /*################################*\
     neo  |  _o-Drawer.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.transform.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
-@import (reference) url('__settings.less');
+
+
+// The Drawer Object
+//
+// The Drawer Object displays normally on Medium screens and larger,
+// but collapses to a pull-out menu on small screens.
+// It has the ability to slide out from the side on mobile devices,
+// most commonly containing the mobile menu.
+//
+// The Drawer Object will be fixed off-screen on Small screens or smaller.
+// Javascript must be enabled to show it on command.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-10-13</time></dd>
+// </dl></header>
+//
+// Markup:
+// <div class="o-Drawer {{ modifier_class }}">
+//   <h1>drawer heading</h1>
+//   <p>drawer content</p>
+// </div>
+//
+// Weight: 7
+//
+// .o-Drawer--open - for when drawer is activated/shown
+//
+// Styleguide Objects.Drawer
 
 
 @p-trans_dura: 250ms;
 
-
-// Drawer object slides out from a side on mobile devices.
-// Most commonly used for a menu.
-//
-// ^subclasses
-// --open - for when drawer is activated/shown
-// ^subcomponents
-// __Item - each item in the list
-// __Link - each link inside an __Item in the menu
-// __Link--current - link to the current convention (home) page
-// ^author
-// Chris Harvey
-// ^updated
-// 2016-10-13
 .o-Drawer {
-  .transitions(@g-prefix_transform, opacity; @p-trans_dura);
+  .transitions(transform, opacity; @p-trans_dura);
   // animation for *closing* drawer
-  .transition-timing-function(@google-accel);
-  // .transition-timing-function(@g-accel_hard);
-  // .transition-timing-function(@g-accel_dram);
-  // .transition-timing-function(@g-decel_extm);
-  @media screen and (max-width: 44.999em) {
+  transition-timing-function: @google-accel;
+  // transition-timing-function: @g-accel_hard;
+  // transition-timing-function: @g-accel_dram;
+  // transition-timing-function: @g-decel_extm;
+  @media not all and (min-width: 45em) {
     @width: 12rem;
     position: fixed;
     top: 0; bottom: 0;
@@ -44,13 +54,13 @@
   }
 }
 .o-Drawer--open {
-  @media screen and (max-width: 44.999em) {
-    .transform(translateX(-100%));
+  @media not all and (min-width: 45em) {
+    transform: translateX(-100%);
     opacity: 1;
     // animation for *opening* drawer
-    .transition-timing-function(@google-decel);
-    // .transition-timing-function(@g-decel_hard);
-    // .transition-timing-function(@g-decel_dram);
-    // .transition-timing-function(@g-accel_extm);
+    transition-timing-function: @google-decel;
+    // transition-timing-function: @g-decel_hard;
+    // transition-timing-function: @g-decel_dram;
+    // transition-timing-function: @g-accel_extm;
   }
 }

@@ -15,7 +15,7 @@ module.exports = class SupporterLevel {
    * Get the name of this supporter level.
    * @return {string} the name of this supporter level
    */
-  name() {
+  get name() {
     return this._NAME
   }
 

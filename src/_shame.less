@@ -2,7 +2,6 @@
 /*################################*\
     neo  |  _shame.less
 \*################################*/
-@import (reference) url('__settings.less');
 
 
 // THIS FILE IS A TEMPORARY FILE.
@@ -12,7 +11,7 @@
 // TODO move these to component files
 .c-TableStripe {
   tr:nth-child(even) {
-    background-color: @g-color_asce_table_bground;
+    background-color: @g-color-table-bg;
   }
 }
 .c-TableBorder {
@@ -54,12 +53,12 @@
     display: block;
     // line-height is determined in `.material-icons`
     font-size: 2.25em;
-    @media screen and (max-width: 44.999em) {
+    @media not all and (min-width: 45em) {
       display: none;
     }
   }
   ._regLegend & + small {
-    @media screen and (max-width: 44.999em) {
+    @media not all and (min-width: 45em) {
       font-size: 1rem;
     }
   }

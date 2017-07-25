@@ -30,7 +30,6 @@ module.exports = class Person {
     /** @private */ this._telephone   = ''
     /** @private */ this._url         = ''
     /** @private */ this._social      = {}
-    /** @private */ this._bio         = ''
     /** @private */ this._is_starred  = false
   }
 
@@ -38,7 +37,7 @@ module.exports = class Person {
    * Get the id of this person.
    * @return {string} the unique id of this person
    */
-  id() {
+  get id() {
     return this._ID
   }
 
@@ -46,7 +45,7 @@ module.exports = class Person {
    * Get the name object of this person.
    * @return {Object} a shallow object representing this person’s name
    */
-  name() {
+  get name() {
     //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._NAME)
   }
@@ -152,24 +151,6 @@ module.exports = class Person {
   }
 
   /**
-   * Set a short, html-friendly biography (“bio”) for this person.
-   * @param {string} html html-friendly content
-   * @return {Person} this person
-   */
-  setBio(html) {
-    this._bio = html
-    return this
-  }
-  /**
-   * Get the bio of this person.
-   * @param  {boolean=} unescaped whether or not the returned string should be escaped
-   * @return {string} the bio of this person
-   */
-  getBio(unescaped) {
-    return ((unescaped) ? '<!-- warning: unescaped code -->' : '') + this._bio
-  }
-
-  /**
    * Mark this person as starred.
    * @param  {boolean=true} bool if true, mark as starred
    * @return {Person} this person
@@ -186,30 +167,78 @@ module.exports = class Person {
     return this._is_starred
   }
 
+
   /**
-   * Return a string representing this person’s full name.
-   * The full name consists of:
-   *  - first name
-   *  - middle name/initial
-   *  - last name
-   * REVIEW: this is not needed
-   * @return {string} a string representing this person’s full name
+   * Output this person’s name and other information as HTML.
+   * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Person"]`.
+   * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
+   * @param  {Person.Format} format how to display the output
+   * @return {string} a string representing an HTML DOM snippet
    */
-  printFullName() {
-    return `${this.name.givenName} ${this.name.additionalName} ${this.name.familyName}`
+  html(format) {
+    switch (format) {
+      case Person.Format.NAME:
+        return `
+          <span itemprop="name">
+            <span itemprop="givenName">${this.name.given_name}</span>
+            <span itemprop="familiyName">${this.name.family_name}</span>
+          </span>
+        `
+        break;
+      case Person.Format.FULL_NAME:
+        return `
+          <span itemprop="name">
+            <span itemprop="givenName">${this.name.given_name}</span>
+            <span itemprop="additionalName">${this.name.additional_name}</span>
+            <span itemprop="familiyName">${this.name.family_name}</span>
+          </span>
+        `
+        break;
+      case Person.Format.ENTIRE_NAME:
+        var output = this.html(Person.Format.FULL_NAME) // using `var` because `let` works poorly in `switch`
+        if (this.name.honorific_prefix) {
+          output = `<span itemprop="honorificPrefix">${this.name.honorific_prefix}</span> ${output}`
+        }
+        if (this.name.honorific_suffix) {
+          output = `${output}, <span itemprop="honorificSuffix">${this.name.honorific_suffix}</span>`
+        }
+        return output
+        break;
+      case Person.Format.AFFILIATION:
+        return `${this.html(Person.Format.ENTIRE_NAME)},
+          <span class="-fs-t" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
+            <span itemprop="name">${this.affiliation()}</span>
+          </span>
+        `
+        break;
+      case Person.Format.CONTACT:
+        var output = `
+          <a href="mailto:${this.email()}">${this.html(Person.Format.NAME)}</a>
+        `
+        if (this.jobTitle()) {
+          output = `${output}, <span itemprop="jobTitle">${this.jobTitle()}</span>`
+        }
+        if (this.phone()) {
+          output = `${output} | <a href="tel:${this.phone()}" itemprop="telephone">${this.phone()}</a>`
+        }
+        return output
+        break;
+      default:
+        return this.toString()
+    }
   }
 
   /**
-   * Return a string representing this person’s entire name.
-   * The entire name is the full name along with prefix and suffix.
-   * REVIEW: this is not needed
-   * @return {string} a string representing this person’s entire name
+   * Enum for name formats.
+   * @enum {String}
    */
-  printEntireName() {
-    let returned = ''
-    if (this.name.honorificPrefix) returned += this.name.honorificPrefix + ' '
-    returned += this.printFullName()
-    if (this.name.honorificSuffix) returned += ', ' + this.name.honorificSuffix
-    return returned
+  static get Format() {
+    return {
+      /** First Last */                                 NAME       : 'name',
+      /** First Middle Last */                          FULL_NAME  : 'full',
+      /** Px. First Middle Last, Sx. */                 ENTIRE_NAME: 'entire',
+      /** First Middle Last, Affiliation */             AFFILIATION: 'affiliation',
+      /** First Last, Director of ... | 555-555-5555 */ CONTACT    : 'contact',
+    }
   }
 }

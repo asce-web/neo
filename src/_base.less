@@ -2,10 +2,6 @@
 /*################################*\
     neo  |  _base.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
-@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
-@import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
-@import (reference) url('__settings.less');
 
 
 // Table of Contents
@@ -44,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: @g-fontfam_hn;
   font-weight: 900;
   color: @g-color-primary; // HACK fallback
-  color: var(--heading-color);
+  color: var(--heading-color, @g-color-primary);
 }
 h1 {
   text-align: center;
@@ -92,7 +88,7 @@ h1 {
   }
   thead,
   tfoot {
-    background-color: @g-color_asce_table_bground;
+    background-color: @g-color-table-bg;
     font-weight: 600;
     .font-size-el(14/12);
   }
@@ -100,7 +96,7 @@ h1 {
   td {
     padding: (0.5 * 0.75*@g-vru) 0.5rem; // HACK fallback
     padding: calc(~'0.5 * var(--vru)') 0.5rem;
-    border: 0 solid @g-color_asce_table_border;
+    border: 0 solid @g-color-table-br;
     border-width: 0 0 1px;
   }
   //---- end ## Tables ----//
@@ -115,13 +111,13 @@ h1 {
   //--------------------------------//
   a {
     color: @g-color-secondary; // HACK fallback
-    color: var(--link-color);
+    color: var(--link-color, @g-color-secondary);
     .transitions(color, background-color; 125ms);
     &:hover,
     &:focus,
     &._hover {
       color: @g-color-gray_lt; // HACK fallback
-      color: var(--link-color-hover);
+      color: var(--link-color-hover, @g-color-gray_lt);
     }
     &:active,
     &._active {

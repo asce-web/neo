@@ -47,12 +47,6 @@ mixin highlightButtons(links, more_classes)
         a.c-Btn.c-Btn--hilite(class=(more_classes || '') href=item.href)&attributes(item.attr || {})
           = item.text
 
-mixin promoLoc(location)
-  if location.title
-    abbr(title=location.title)= location.text
-  else
-    = location.text
-
 mixin highlight()
   aside.o-Runner.o-Runner--highlight&attributes(attributes)
     div.o-Constrain

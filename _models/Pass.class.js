@@ -17,7 +17,7 @@ module.exports = class Pass {
    * Get the name of this pass.
    * @return {string} the name of this pass
    */
-  name() {
+  get name() {
     return this._NAME
   }
 
@@ -53,13 +53,23 @@ module.exports = class Pass {
     this._attend_types.push($attendeeType)
     return this
   }
+  // /**
+  //  * REVIEW: use this method if class AttendeeType is removed.
+  //  * Add an attendee type to this pass.
+  //  * @param {string} name the name of the attendee type
+  //  * @param {boolean} is_featured whether this attendee type is marked as “featured”
+  //  */
+  // addAttendeeType(name, is_featured) {
+  //   this._attend_types.push({name: name, isFeatured: is_featured})
+  //   return this
+  // }
   /**
    * Retrieve an attendee type of this pass.
    * @param  {string} name the name of the attendee type to get
    * @return {?Pass.AtendeeType} the specified attendee type
    */
   getAttendeeType(name) {
-    return this._attend_types.find(($attendeeType) => $attendeeType.name()===name) || null
+    return this._attend_types.find(($attendeeType) => $attendeeType.name===name) || null
   }
   /**
    * Retreive all attendee types of this pass.
@@ -111,14 +121,14 @@ module.exports = class Pass {
        * Get the name of this attendee type.
        * @return {string} the name of this attendee type
        */
-      name() {
+      get name() {
         return this._NAME
       }
       /**
        * Get whether this attendee type is featured.
        * @return {boolean} whether this attendee type is featured
        */
-      isFeatured() {
+      get isFeatured() {
         return this._IS_FEATURED
       }
     }

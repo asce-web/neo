@@ -2,19 +2,33 @@
 /*################################*\
     neo  |  _o-Runner.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.transition.less');
 
 
-// A large, full-width section with padding.
-// May be used for headers, footers, heros, highlight blocks, etc.
+// The Runner Object
 //
-// ^subclasses
-// --pageHeader - A generic header of the entire page.
-// --highlight  - Highlighted content, like a callout.
-// ^author
-// : Chris Harvey
-// ^updated
-// 2016-04-25
+// The Runner Object is a large, full-width section with padding on all four sides.
+// It can be used for headers, footers, heros, highlight blocks, etc.,
+// really, anything that looks like a “row” of a page.
+// Change the window size and watch what happens to the padding.
+// Subclasses of the Runner Object simply vary the padding.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-04-25</time></dd>
+// </dl></header>
+//
+// Markup:
+// <div class="o-Runner {{ modifier_class }}">
+//   <h1>runner heading</h1>
+//   <p>runner content</p>
+// </div>
+//
+// .o-Runner--pageHeader - Headers of pages,
+// whether they be generic pages or special pages with hero banner headers.
+// .o-Runner--highlight  - Highlighted content, like a callout.
+//
+// Weight: 1
+//
+// Styleguide Objects.Runner
 .o-Runner {
   --padding   : @g-boxpadd_micr;
   --padding-sK: @g-boxpadd_mill;
