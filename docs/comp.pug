@@ -1,0 +1,14 @@
+extends _docs.tpl.pug
+
+block append vars
+  - var page = Docs.DOCS.find('/docs/comp.html')
+
+block append main
+  +newSection(2, Docs.DOCS.find('/docs/comp.html#mobile-menu'))
+    include _includes/_comp.mobile-menu.pug
+  +newSection(2, Docs.DOCS.find('/docs/comp.html#menu-bar'))
+    include _includes/_comp.menu-bar.pug
+  +newSection(2, Docs.DOCS.find('/docs/comp.html#benefits-card'))
+    include _includes/_comp.benefits-card.pug
+  +newSection(2, Docs.DOCS.find('/docs/comp.html#buttons'))
+    include _includes/_comp.buttons.pug

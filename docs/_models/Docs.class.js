@@ -1,23 +1,8 @@
 var Page = require('sitepage').Page
 var Color = require('csscolor').Color
 
-module.exports = (function () {
-  // CONSTRUCTOR
-  /**
-   * A set of static members used for the Conf style guide.
-   * Similar to a utility class.
-   * @constructor
-   */
-  function Docs() {}
-
-  // METHODS
-
-  // STATIC MEMBERS
-  /**
-   * The style guide site for this project.
-   * @type {Page}
-   */
-  Docs.DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' })
+const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' })
+  // REVIEW indentation
     .title('ASCE Conferences Pattern Library')
     .description('Pattern Library for conference microsites.')
     .add(new Page({ name: 'Home', url: '/docs/index.html' })
@@ -32,6 +17,10 @@ module.exports = (function () {
       .add(new Page({ name: 'Colors', url: '/docs/principles.html#colors' })
         .add(new Page({ name: 'Derivation of Color Palettes', url: '/docs/principles.html#derivation-color-palettes' }))
         .add(new Page({ name: 'Site Colors'                 , url: '/docs/principles.html#site-colors' }))
+      )
+      .add(new Page({ name: 'Formats', url: '/docs/principles.html#formats' })
+        .add(new Page({ name: 'Person', url: '/docs/principles.html#person' }))
+        .add(new Page({ name: 'Place' , url: '/docs/principles.html#place' }))
       )
     )
     .add(new Page({ name: 'Base Typography', url: '/docs/base.html' })
@@ -52,51 +41,16 @@ module.exports = (function () {
       .add(new Page({ name: 'Interactive Elements', url: '/docs/base.html#interactive-elements' }))
     )
     .add(new Page({ name: 'Objects', url: '/docs/obj.html' })
-      .description('Patterns of structure that can be reused many times for many different purposes.')
       .add(new Page({ name: 'The Runner Object', url: '/docs/obj.html#runner-object' }))
-      .add(new Page({ name: 'Constrain'        , url: '/docs/obj.html#constrain' }))
-      .add(new Page({ name: 'The Float Grid'   , url: '/docs/obj.html#float-grid' }))
-      .add(new Page({ name: 'The Action List'  , url: '/docs/obj.html#action-list' }))
-      .add(new Page({ name: 'The Stacked List' , url: '/docs/obj.html#stacked-list' }))
-      .add(new Page({ name: 'The Tabs Object'  , url: '/docs/obj.html#tabs-object' }))
       .add(new Page({ name: 'The Drawer Object', url: '/docs/obj.html#drawer-object' }))
     )
     .add(new Page({ name: 'Components', url: '/docs/comp.html' })
-      .description('Patterns of look-and-feel that are each only used for one purpose.')
-      .add(new Page({ name: 'The Mast Component'   , url: '/docs/comp.html#mast-component' }))
-      .add(new Page({ name: 'The Site Title'       , url: '/docs/comp.html#site-title' }))
       .add(new Page({ name: 'The Mobile Menu'      , url: '/docs/comp.html#mobile-menu' }))
       .add(new Page({ name: 'The Menu Bar'         , url: '/docs/comp.html#menu-bar' }))
-      .add(new Page({ name: 'The Sitemap Component', url: '/docs/comp.html#sitemap-component' }))
-      .add(new Page({ name: 'The Banner Component' , url: '/docs/comp.html#banner-component' }))
-      .add(new Page({ name: 'The Page Title'       , url: '/docs/comp.html#page-title' }))
-      .add(new Page({ name: 'The Conference Header', url: '/docs/comp.html#conference-header' }))
-      .add(new Page({ name: 'The Pass Component'   , url: '/docs/comp.html#pass-component' }))
-      .add(new Page({ name: 'The Program Heading'  , url: '/docs/comp.html#program-heading' }))
-      .add(new Page({ name: 'The Time Block'       , url: '/docs/comp.html#time-block' }))
-      .add(new Page({ name: 'The Speaker Component', url: '/docs/comp.html#speaker-component' }))
       .add(new Page({ name: 'The Benefits Card'    , url: '/docs/comp.html#benefits-card' }))
-      .add(new Page({ name: 'The Supporter Block'  , url: '/docs/comp.html#supporter-block' }))
-      .add(new Page({ name: 'The Social List'      , url: '/docs/comp.html#social-list' }))
-      .add(new Page({ name: 'The Date Block'       , url: '/docs/comp.html#date-block' }))
-      .add(new Page({ name: 'The Callout Component', url: '/docs/comp.html#callout-component' }))
       .add(new Page({ name: 'Buttons'              , url: '/docs/comp.html#buttons' }))
-      .add(new Page({ name: 'The Camo Link'        , url: '/docs/comp.html#camo-link' }))
-      .add(new Page({ name: 'The Caps Link'        , url: '/docs/comp.html#caps-link' }))
-      .add(new Page({ name: 'The Toggle Button'    , url: '/docs/comp.html#toggle-button' }))
     )
-    .add(new Page({ name: 'Templates', url: '/docs/temp.html' })
-      .description('Compositions of Objects and Components that act as a single organism.')
-      .add(new Page({ name: 'Site Header'              , url: '/docs/temp.html#site-header' }))
-      .add(new Page({ name: 'Page Header'              , url: '/docs/temp.html#page-header' }))
-      .add(new Page({ name: 'Highlighted Content Block', url: '/docs/temp.html#highlighted-content-block' }))
-      .add(new Page({ name: 'Hero Image'               , url: '/docs/temp.html#hero-image' }))
-      .add(new Page({ name: 'Other Year Callout'       , url: '/docs/temp.html#other-year-callout' }))
-      .add(new Page({ name: 'Program Tabs'             , url: '/docs/temp.html#program-tabs' }))
-      .add(new Page({ name: 'Speaker'                  , url: '/docs/temp.html#speaker' }))
-      .add(new Page({ name: 'Important Dates'          , url: '/docs/temp.html#important-dates' }))
-      .add(new Page({ name: 'Person'                   , url: '/docs/temp.html#person' }))
-      .add(new Page({ name: 'Place'                    , url: '/docs/temp.html#place' }))
+    .add(new Page({ name: 'Organisms', url: '/docs/org.html' })
     )
     .add(new Page({ name: 'Helpers', url: '/docs/help.html' })
       .description('Somewhat explicit classes used for enhancing default styles.')
@@ -106,30 +60,55 @@ module.exports = (function () {
       .description('Very specific classes used for creating anomalies or fixing broken styles.')
     )
 
-  Docs.COLORS = require('../../_models/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
+module.exports = class Docs {
+  /**
+   * A set of static members used for the Conf style guide.
+   * Similar to a utility class.
+   * @private
+   * @constructor
+   */
+  constructor() {}
 
-  Docs.COLOR_NAMES = [
-    { name: 'Primary s2'   , suffix: '-primary-shade2' }
-  , { name: 'Primary s1'   , suffix: '-primary-shade1' }
-  , { name: 'Primary'      , suffix: '-primary' }
-  , { name: 'Primary t1'   , suffix: '-primary-tint1' }
-  , { name: 'Primary t2'   , suffix: '-primary-tint2' }
-  , { name: 'Secondary s2' , suffix: '-secondary-shade2' }
-  , { name: 'Secondary s1' , suffix: '-secondary-shade1' }
-  , { name: 'Secondary'    , suffix: '-secondary' }
-  , { name: 'Secondary t1' , suffix: '-secondary-tint1' }
-  , { name: 'Secondary t2' , suffix: '-secondary-tint2' }
-  , { name: 'Dark Gray s2' , suffix: '-gray_dk-shade2' }
-  , { name: 'Dark Gray s1' , suffix: '-gray_dk-shade1' }
-  , { name: 'Dark Gray'    , suffix: '-gray_dk' }
-  , { name: 'Dark Gray t1' , suffix: '-gray_dk-tint1' }
-  , { name: 'Dark Gray t2' , suffix: '-gray_dk-tint2' }
-  , { name: 'Light Gray s2', suffix: '-gray_lt-shade2' }
-  , { name: 'Light Gray s1', suffix: '-gray_lt-shade1' }
-  , { name: 'Light Gray'   , suffix: '-gray_lt' }
-  , { name: 'Light Gray t1', suffix: '-gray_lt-tint1' }
-  , { name: 'Light Gray t2', suffix: '-gray_lt-tint2' }
-  ]
+  /**
+   * The style guide site for this project.
+   * @type {Page}
+   */
+  static get DOCS() { return DOCS }
 
-  return Docs
-})()
+  /**
+   * The color style object for this site.
+   * @type {Object<string>}
+   */
+  static get COLORS() {
+    return require('../../_models/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
+  }
+
+  /**
+   * A list of objects describing suffices used for color names.
+   * @type {Array<{name:string, suffix:string}>}
+   */
+  static get COLOR_NAMES() {
+    return [
+      { name: 'Primary s2'   , suffix: '-primary-shade2'   },
+      { name: 'Primary s1'   , suffix: '-primary-shade1'   },
+      { name: 'Primary'      , suffix: '-primary'          },
+      { name: 'Primary t1'   , suffix: '-primary-tint1'    },
+      { name: 'Primary t2'   , suffix: '-primary-tint2'    },
+      { name: 'Secondary s2' , suffix: '-secondary-shade2' },
+      { name: 'Secondary s1' , suffix: '-secondary-shade1' },
+      { name: 'Secondary'    , suffix: '-secondary'        },
+      { name: 'Secondary t1' , suffix: '-secondary-tint1'  },
+      { name: 'Secondary t2' , suffix: '-secondary-tint2'  },
+      { name: 'Dark Gray s2' , suffix: '-gray_dk-shade2'   },
+      { name: 'Dark Gray s1' , suffix: '-gray_dk-shade1'   },
+      { name: 'Dark Gray'    , suffix: '-gray_dk'          },
+      { name: 'Dark Gray t1' , suffix: '-gray_dk-tint1'    },
+      { name: 'Dark Gray t2' , suffix: '-gray_dk-tint2'    },
+      { name: 'Light Gray s2', suffix: '-gray_lt-shade2'   },
+      { name: 'Light Gray s1', suffix: '-gray_lt-shade1'   },
+      { name: 'Light Gray'   , suffix: '-gray_lt'          },
+      { name: 'Light Gray t1', suffix: '-gray_lt-tint1'    },
+      { name: 'Light Gray t2', suffix: '-gray_lt-tint2'    },
+    ]
+  }
+}

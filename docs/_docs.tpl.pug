@@ -1,0 +1,78 @@
+doctype html
+html(lang="en")
+  include /_includes/__snippets.pug
+  mixin doctoc(args, inner)
+    //- NOTE parameter validation
+    -
+      var pages   = args.pages   || []
+      var classes = args.classes || {}
+      var depth   = +args.depth  || 0
+    ol(class=classes.listclasses)&attributes(inner ? {} : { role: 'directory' })
+      each item in pages
+        li(class=classes.itemclasses)
+          a(class=classes.linkclasses href=item.url())&attributes((page.url()===item.url()) ? {'aria-current':'page'} : {})= item.name()
+          if item.findAll().length && depth > 0
+            +doctoc({pages: item.findAll(), classes: (classes.sub || {}), depth: depth-1}, true)
+  mixin microdataCheckbox(id)
+    div.docs-c-Togglable
+      input.docs-c-Togglable__Check(id=id+'-check' type="checkbox" value=id+'-md-true')
+      label(for=id+'-check') show microdata
+      block
+  mixin newSection(n, page)
+    - var id = page.url().split('#')[1]
+    section(id=id)
+      | <h#{n}>#{page.name()}
+      include ../node_modules/xmeter/_views/_c-Permalink.view.pug
+      +permalink(id)
+      | </h#{n}>
+      block
+  mixin internalLink($page)
+    a(href=$page.url())= $page.name()
+  block vars
+  head
+    title= page.title() || (page.name() + ' | ' + Docs.DOCS.name())
+    meta(charset="utf-8")
+    meta(name="description" content=Docs.DOCS.description())
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    block styles
+      link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic")
+      link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,400italic,700")
+      link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+      link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/xmeter/v5.6.0/xmeter.min.css")
+      link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.11.0/bangs.min.css")
+      link(rel="stylesheet" href="../vendor/glyphicons_pro_1_9_2/glyphicons/web/html_css/css/glyphicons.css")
+      link(rel="stylesheet" href="../vendor/glyphicons_pro_1_9_2/glyphicons-filetypes/web/html_css/css/glyphicons-filetypes.css")
+      link(rel="stylesheet" href="../vendor/glyphicons_pro_1_9_2/glyphicons-halflings/web/html_css/css/glyphicons-halflings.css")
+      link(rel="stylesheet" href="../vendor/glyphicons_pro_1_9_2/glyphicons-social/web/html_css/css/glyphicons-social.css")
+      link(rel="stylesheet" href="../neo.css")
+      link(rel="stylesheet" href="styles/docs.css")
+  body(style=Docs.COLORS)
+    a.h-Hidden(href="#main") skip to main content
+    header
+      h1= Docs.DOCS.name()
+      p= Docs.DOCS.description()
+      p: a(href="/index.html") Return to Landing Page
+      nav#sitemap
+        h1.h-Hidden Sitemap
+        +doctoc({pages: Docs.DOCS.findAll()})
+    main.docs-main#main
+      block main
+        header
+          h1= page.name()
+          p= page.description()
+          block toc
+            nav#contents
+              h2 Contents
+              +doctoc({pages: page.findAll(), depth: Infinity})
+    block scripts
+      script(src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous")
+      script(src="/scripts/o-Tabs.js")
+      script.
+        // single custom script for drawer docs demos. TODO can be combined into main menu component when made
+        $('#drawer-check').change(function () {
+          $(this).parents('.docs-c-Togglable').siblings('.o-Drawer').toggleClass('o-Drawer--open')
+        })
+        // suite-wide script for toggle button activating drawers. TODO can be combined into main menu component when made
+        $('.c-Toggle__Check').change(function () {
+          $(this).parents('.c-Toggle').siblings('.o-Drawer').toggleClass('o-Drawer--open')
+        })

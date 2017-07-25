@@ -15,15 +15,15 @@ mixin tabs(n)
     ```
     +tabs(3)#any-valid-id
     ```
-  dl.o-Grid.o-Tabs&attributes(attributes)
+  dl.o-Flex.o-Tabs&attributes(attributes)
     mixin tab(i)
       | tab #{i}
     mixin panel(i)
       | panel #{i}
     block
     each val,index in new Array(n)
-      dt.o-Grid__Item.o-Tabs__Tab: label.h-Block
-        input.o-Tabs__Check.h-Hidden.-ps-a(type="radio" name=attributes.id value=index)&attributes((index===0) ? {checked:''} : {})
+      dt.o-Flex__Item.o-Tabs__Tab: label.h-Block
+        input.o-Tabs__Check.h-Hidden(type="radio" name=attributes.id value=index)&attributes((index===0) ? {checked:''} : {})
         +tab(index)
-      dd.o-Grid__Item.o-Tabs__Panel
+      dd.o-Flex__Item.o-Tabs__Panel
         +panel(index)

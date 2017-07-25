@@ -1,0 +1,13 @@
+extends _docs.tpl.pug
+
+block append vars
+  - var page = Docs.DOCS.find('/docs/base.html')
+  -
+    var classname = {
+      figure: 'docs-figure'
+    , pre   : 'docs-pre'
+    , code  : 'docs-code'
+    }
+
+block append main
+  include _includes/_base.pug

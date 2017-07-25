@@ -1,0 +1,24 @@
+extends _docs.tpl.pug
+
+block append vars
+  - var page = Docs.DOCS.find('/docs/principles.html')
+
+block append main
+  +newSection(2, Docs.DOCS.find('/docs/principles.html#fonts'))
+    +newSection(3, Docs.DOCS.find('/docs/principles.html#font-sizes'))
+      include _includes/_principles.font-sizes.pug
+    +newSection(3, Docs.DOCS.find('/docs/principles.html#font-families'))
+      include _includes/_principles.font-families.pug
+  +newSection(2, Docs.DOCS.find('/docs/principles.html#colors'))
+    +newSection(3, Docs.DOCS.find('/docs/principles.html#derivation-color-palettes'))
+      include _includes/_principles.derivation-color-palettes.pug
+    +newSection(3, Docs.DOCS.find('/docs/principles.html#site-colors'))
+      include _includes/_principles.site-colors.pug
+  +newSection(2, Docs.DOCS.find('/docs/principles.html#formats'))
+    +newSection(3, Docs.DOCS.find('/docs/principles.html#person'))
+      include _includes/_principles.person.pug
+    +newSection(3, Docs.DOCS.find('/docs/principles.html#place'))
+      include _includes/_principles.place.pug
+
+block append scripts
+  script(src="scripts/principles.b.js")

@@ -1,0 +1,91 @@
+p.
+  The Person content type can be rendered using different formats,
+  many of which aren&rsquo;t design Components.
+  #[a The Speaker Component]
+  is a design Component that can also be used to mark up Person data.
+p.
+  Each of these snippets should be wrapped with an element with the attributes
+  #[code.docs-code= '[itemscope="" itemtype="http://schema.org/Person"]'].
+figure.docs-figure
+  figcaption This is a person&rsquo;s #[em.-fw-b full name]: first, middle (if applicable), and last.
+  -
+    let drew = new Person('drew-caracciolo', {
+      given_name      : 'Drew',
+      additional_name : 'P.',
+      family_name     : 'Caracciolo',
+    })
+  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Format.FULL_NAME)
+  +microdataCheckbox('person-full')
+    pre.docs-pre.
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="givenName"]&gt;Drew&lt;/span&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="additionalName"]&gt;P.&lt;/span&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="familiyName"]&gt;Caracciolo&lt;/span&gt;
+      &lt;/span&gt;
+figure.docs-figure
+  figcaption This is a person&rsquo;s #[em.-fw-b entire name]: full name along with any honorific prefices or suffices.
+  -
+    drew = new Person('drew-caracciolo', {
+      given_name      : 'Drew',
+      additional_name : 'P.',
+      family_name     : 'Caracciolo',
+      honorific_prefix: 'Dr.',
+      honorific_suffix: 'Ph.D., M.ASCE',
+    })
+  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Format.ENTIRE_NAME)
+  +microdataCheckbox('person-entire')
+    pre.docs-pre.
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificPrefix"]&gt;Dr.&lt;/span&gt;
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="givenName"]&gt;Drew&lt;/span&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="additionalName"]&gt;P.&lt;/span&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="familiyName"]&gt;Caracciolo&lt;/span&gt;
+      &lt;/span&gt;,
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificSuffix"]&gt;Ph.D., M.ASCE&lt;/span&gt;
+figure.docs-figure
+  figcaption This is a person with #[em.-fw-b affiliation]: entire name along with any affiliation.
+  -
+    drew = new Person('drew-caracciolo', {
+      given_name      : 'Drew',
+      additional_name : 'P.',
+      family_name     : 'Caracciolo',
+      honorific_prefix: 'Dr.',
+      honorific_suffix: 'Ph.D., M.ASCE',
+    }).affiliation('HDR Engineering, Inc.')
+  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Format.AFFILIATION)
+  +microdataCheckbox('person-affiliation')
+    pre.docs-pre.
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificPrefix"]&gt;Dr.&lt;/span&gt;
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="givenName"]&gt;Drew&lt;/span&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="additionalName"]&gt;P.&lt;/span&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="familiyName"]&gt;Caracciolo&lt;/span&gt;
+      &lt;/span&gt;,
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificSuffix"]&gt;Ph.D., M.ASCE&lt;/span&gt;,
+      &lt;span class="-fs-t"#[mark.docs-c-Togglable__Text  itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization"]&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;HDR Engineering, Inc.&lt;/span&gt;
+      &lt;/span&gt;
+figure.docs-figure
+  figcaption This is a person with #[em.-fw-b contact information]: full name along with email (linked) and phone number.
+  -
+    drew = new Person('drew-caracciolo', {
+      given_name      : 'Drew',
+      additional_name : 'P.',
+      family_name     : 'Caracciolo',
+      honorific_prefix: 'Dr.',
+      honorific_suffix: 'Ph.D., M.ASCE',
+    })
+      .jobTitle('Senior Coordinator, Conferences & Meetings')
+      .email('example@asce.org')
+      .phone('(703) 293-5555')
+  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Format.CONTACT)
+  +microdataCheckbox('person-contact')
+    pre.docs-pre.
+      &lt;a href="example@asce.org"#[mark.docs-c-Togglable__Text  itemprop="email"]&gt;example@asce.org&lt;/a&gt;
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="givenName"]&gt;Drew&lt;/span&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="additionalName"]&gt;P.&lt;/span&gt;
+        &lt;span#[mark.docs-c-Togglable__Text  itemprop="familiyName"]&gt;Caracciolo&lt;/span&gt;
+      &lt;/span&gt;,
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="jobTitle"]&gt;Senior Coordinator, Conferences &amp; Meetings&lt;/span&gt; |
+      &lt;span#[mark.docs-c-Togglable__Text  itemprop="telephone"]&gt;(703) 293-5555&lt;/span&gt;

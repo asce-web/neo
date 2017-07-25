@@ -1,0 +1,15 @@
+extends _docs.tpl.pug
+
+block append vars
+  - var page = Docs.DOCS.find('/docs/obj.html')
+
+block append main
+  p.
+    This style guide imports styles from the Xmeter stylesheet.
+    See the
+    #[a(href="https://cdn.rawgit.com/chharvey/xmeter/master/docs/obj.html") Xmeter style guide]
+    for more information.
+  +newSection(2, Docs.DOCS.find('/docs/obj.html#runner-object'))
+    include _includes/_obj.runner-object.pug
+  +newSection(2, Docs.DOCS.find('/docs/obj.html#drawer-object'))
+    include _includes/_obj.drawer-object.pug

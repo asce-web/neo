@@ -4,14 +4,47 @@
 \*################################*/
 
 
-// Use the GridFloat Object for a grid-like appearance using floats.
+// The Float Grid
 //
-// ^subcomponents
-// : `__Item` - any item inside the grid
-// ^author
-// : Chris Harvey
-// ^updated
-// : 2016-07-08
+// Use the Float Grid Object for a grid-like appearance of a list of items, using floats.
+// It is similar to the Grid Object, except this object uses floating items
+// instead of the Flexbox model or CSS Grid. It should be used only when
+// these new layouts are not supported,
+// such as in older browsers like <cite>Internet Explorer 9</cite>.
+//
+// Each item has 100% width by default, but you can add Helpers or Atoms to override.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-07-08</time></dd>
+// </dl></header>
+//
+// Markup:
+// <ul class="o-List o-GridFloat">
+//   <li class="o-List__Item o-GridFloat__Item">Burns &amp; McDonnell Engineering</li>
+//   <li class="o-List__Item o-GridFloat__Item">DIS-TRAN Steel, LLC</li>
+//   <li class="o-List__Item o-GridFloat__Item">EDM International</li>
+//   <li class="o-List__Item o-GridFloat__Item">Electrical Consultants, Inc.</li>
+//   <li class="o-List__Item o-GridFloat__Item">Fabrimet Inc.</li>
+//   <li class="o-List__Item o-GridFloat__Item">Falcon Steel Company</li>
+//   <li class="o-List__Item o-GridFloat__Item">Sabre-FWT</li>
+//   <li class="o-List__Item o-GridFloat__Item">HDR</li>
+//   <li class="o-List__Item o-GridFloat__Item">Mitas Energy</li>
+//   <li class="o-List__Item o-GridFloat__Item">Power Consulting Associates, LLC</li>
+//   <li class="o-List__Item o-GridFloat__Item">Power Line Systems, Inc.</li>
+//   <li class="o-List__Item o-GridFloat__Item">Quanta Services</li>
+//   <li class="o-List__Item o-GridFloat__Item">ReliaPOLE Inspection Services</li>
+//   <li class="o-List__Item o-GridFloat__Item">Sabre-FWT</li>
+//   <li class="o-List__Item o-GridFloat__Item">SAE Towers</li>
+//   <li class="o-List__Item o-GridFloat__Item">TAPP Steel Poles</li>
+//   <li class="o-List__Item o-GridFloat__Item">Trinity Meyer Utility Structures</li>
+//   <li class="o-List__Item o-GridFloat__Item">TRC Engineers</li>
+//   <li class="o-List__Item o-GridFloat__Item">Underground Devices</li>
+//   <li class="o-List__Item o-GridFloat__Item">Valmont Newmark</li>
+// </ul>
+//
+// Weight: 3
+//
+// Styleguide Objects.GridFloat
 .o-GridFloat {
   &::after {
     // duplicating Xmeter’s .h-Clearfix Helper

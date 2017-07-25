@@ -1,0 +1,272 @@
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
+    neo
+    Version: 0.4.0
+    Licence: MIT
+    Repo   : https://github.com/asce-web/neo.git
+    Author : ASCE web team (webteam@asce.org)
+\*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+/*================================*\
+    neo.less
+\*================================*/
+@import (reference) url('../node_modules/xmeter/src/__settings.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.vertspacing.less'); // TODO remove on xmeter@5.7.2+
+@import (reference) url('../node_modules/xmeter/src/__tool.transitions.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
+@import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
+@import (reference) url('__settings.less');
+@import (reference) url('__tool.menufont.less');
+@import (reference) url('__tool.logo.less');
+@import (reference) url('__tool.ticket.less');
+
+
+// Master stylesheet for all conference sites.
+
+
+/*
+ * Table Of Contents
+ *
+ * # SETTINGS & TOOLS-----------------------PROJECT SETTINGS & MIXINS
+ * __settings.less..........................variables
+ * __tool.menufont.less.....................font styles for menu bars
+ * __tool.logo.less.........................background-image styles for logos
+ * __tool.ticket.less.......................Passes and Speaker Components
+ *
+ * # BASE-----------------------------------BARE UNCLASSED ELEMENTS
+ * _dev.less................................development code
+ * _base.less...............................bare, unclassed elements
+ *
+ * # OBJECTS--------------------------------REUSABLE STRUCTURAL PATTERNS
+ * Runner...................................header and footer
+ * Constrain................................keeps content at max width
+ * GridFloat................................grid of items; legacy support
+ * ListAction...............................list of actionable choices
+ * ListStacked..............................row of stackable items (Sponsors, Passes, Speakers, etc.)
+ * Tabs.....................................tabbed panel interface
+ * Drawer...................................pull-out container
+ *
+ * # COMPONENTS-----------------------------SPECIFIC STYLE PATTERNS
+ * Mast.....................................masthead for the site
+ * SiteTitle................................area containg logo and site title and slogan
+ * MenuMobile...............................mobile menu
+ * MenuBar..................................navigation bar
+ * Sitemap..................................sitemap for top (site) pages or main (internal) pages
+ * Banner...................................full-width block with a background image
+ * PageTitle................................title of entire page
+ * ConfHed..................................promo for any year conference
+ * Pass.....................................a listing of prices for one Pass Type
+ * ProgramHn................................heading for TimeBlock
+ * TimeBlock................................list of sessions for a single day
+ * Speaker..................................(keynote) speaker profile
+ * Benefits.................................list of benefits offered to a sponsorship level
+ * SupporterBlock...........................block containing one level of sponsors on Sponsors page
+ * SocialList...............................list of social media icons
+ * DateBlock................................list of important dates
+ * Alert....................................textual block standing out visually from normal prose
+ * Btn......................................buttons
+ * LinkCamo.................................camouflaged links & elements
+ * LinkCaps.................................link in all caps, like that of menus
+ * Toggle...................................toggle button
+ *   ## Block Section-y Components------------[description]
+ *   ## Typographical Components--------------[description]
+ *   ## User-Interactive Components-----------[description]
+ *
+ * # THEMES & HELPERS-----------------------LOCATION-DEPENDENT STYLES
+ *
+ * # OVERRIDES------------------------------ATOMS & HACKS
+ * _atom.less...............................all uncategorized atoms
+ * _shame.less..............................hacks
+ */
+
+//++++++++++++++++++++++++++++++++//
+//    # SETTINGS & TOOLS
+//++++++++++++++++++++++++++++++++//
+// @import url('__settings.less');
+// @import url('__tool.menufont.less');
+// @import url('__tool.logo.less');
+//++++ end # SETTINGS & TOOLS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # BASE
+//++++++++++++++++++++++++++++++++//
+@import url('_dev.less');
+@import url('_base.less');
+//++++ end # BASE ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # OBJECTS
+//++++++++++++++++++++++++++++++++//
+
+// Objects
+//
+// Patterns of structure that can be reused many times for many different purposes.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-10</time></dd>
+// </dl></header>
+//
+// Weight: 1
+//
+// Styleguide Objects
+
+@import url('_o-Runner.less');
+@import url('_o-Constrain.less');
+@import url('_o-GridFloat.less');
+@import url('_o-ListAction.less');
+@import url('_o-ListStacked.less');
+@import url('_o-Tabs.less');
+@import url('_o-Drawer.less');
+//++++ end # OBJECTS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # COMPONENTS
+//++++++++++++++++++++++++++++++++//
+
+// Components
+//
+// Patterns of look-and-feel that are each only used for one purpose.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-10</time></dd>
+// </dl></header>
+//
+// Weight: 2
+//
+// Styleguide Components
+
+@import url('_c-Mast.less');
+@import url('_c-SiteTitle.less');
+@import url('_c-MenuMobile.less');
+@import url('_c-MenuBar.less');
+// TODO markup for main menu component
+// header.o-Runner.c-Mast.c-Mast--menu: div.o-Constrain
+//   nav.o-Drawer
+//     h1.h-Hidden#main-menu Main Menu
+//     +sitetoc({
+//       icons: { page: true, sub: true },
+//       depth: 1,
+//       pages: [
+//         new ConfPage('Home', '#0').setIcon('insert_drive_file'),
+//         new ConfPage('Registration', '#0').setIcon('insert_drive_file')
+//           .add(new ConfPage('Why Attend', '#0')),
+//         new ConfPage('Program', '#0').setIcon('insert_drive_file')
+//           .add(new ConfPage('Short Courses', '#0'))
+//           .add(new ConfPage('Technical Tours', '#0')),
+//         new ConfPage('Location', '#0').setIcon('insert_drive_file'),
+//         new ConfPage('Speakers', '#0').setIcon('insert_drive_file'),
+//       ],
+//       classes: {
+//         listclasses: 'o-Flex c-MenuMobile-nM c-MenuBar-sM',
+//         itemclasses: 'o-Flex__Item c-MenuMobile__Item-nM c-MenuBar__Item-sM',
+//         linkclasses: 'c-MenuMobile__Link-nM c-MenuBar__Link-sM h-Block',
+//         sub: {
+//           listclasses: 'c-MenuMobile__Sub-nM c-MenuBar__Sub-sM',
+//           itemclasses: 'c-MenuMobile__Sub__Item-nM c-MenuBar__Sub__Item-sM',
+//           linkclasses: 'c-MenuMobile__Link-nM c-MenuMobile__Sub__Link-nM c-MenuBar__Link-sM c-MenuBar__Sub__Link-sM h-Block',
+//         },
+//       },
+//     })
+@import url('_c-Sitemap.less');
+@import url('_c-Banner.less');
+@import url('_c-PageTitle.less');
+@import url('_c-ConfHed.less');
+@import url('_c-Pass.less');
+@import url('_c-ProgramHn.less');
+@import url('_c-TimeBlock.less');
+@import url('_c-Speaker.less');
+@import url('_c-Benefits.less');
+@import url('_c-SupporterBlock.less');
+@import url('_c-SocialList.less');
+@import url('_c-DateBlock.less');
+@import url('_c-Alert.less');
+@import url('_c-Btn.less');
+@import url('_c-LinkCamo.less');
+@import url('_c-LinkCaps.less');
+@import url('_c-Toggle.less');
+  //--------------------------------//
+  //    ## Block Section-y Components
+  //--------------------------------//
+  //---- end ## Block Section-y Components ----//
+  //--------------------------------//
+  //    ## Typographical Components
+  //--------------------------------//
+  //---- end ## Typographical Components ----//
+  //--------------------------------//
+  //    ## User-Interactive Components
+  //--------------------------------//
+  //---- end ## User-Interactive Components ----//
+//++++ end # COMPONENTS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # ORGANISMS
+//++++++++++++++++++++++++++++++++//
+
+// Organisms
+//
+// Compositions of Objects and Components that act together as a single interface.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-10</time></dd>
+// </dl></header>
+//
+// Weight: 3
+//
+// Styleguide Organisms
+
+// @import url('_org.*.less');
+// NOTE no stylesheets; just KSS
+
+//++++ end # ORGANISMS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # THEMES & HELPERS
+//++++++++++++++++++++++++++++++++//
+.t-md {
+  [itemscope] {
+    border: 2px solid #808080;
+  }
+  [itemtype$="Event"] {
+    background-color: rgba(0,0,0,0.15) !important;
+  }
+  [itemprop] {
+    border: 1px solid currentColor;
+  }
+  [itemprop="name"] {
+    border-color: red;
+  }
+  [itemprop="description"] {
+    border-color: yellow;
+  }
+  [itemprop="url"] {
+    border-color: blue;
+  }
+  [itemprop="startDate"],
+  [itemprop="endDate"] {
+    border-color: orange;
+  }
+  [itemprop="location"] {
+    border-color: #0c0;
+  }
+  [itemprop="addressLocality"] {
+    border-color: #0c9;
+  }
+  [itemprop="addressRegion"] {
+    border-color: #9c0;
+  }
+}
+//++++ end # THEMES & HELPERS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # OVERRIDES
+//++++++++++++++++++++++++++++++++//
+@import url('_atom.less');
+@import url('_shame.less');
+//++++ end # OVERRIDES ++++//

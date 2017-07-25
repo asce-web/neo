@@ -1,11 +1,11 @@
 p Some examples of #[a(href="http://glyphicons.com/" rel="external") glyphicons] you can use:
 -
-  var data = [
-    { title: 'PDF Icon     ', classes: ['filetypes' , 'filetypes-pdf'] }
-  , { title: 'Word Doc Icon', classes: ['filetypes' , 'filetypes-docx'] }
-  , { title: 'Email Icon   ', classes: ['glyphicons', 'glyphicons-envelope'] }
+  let data = [
+    { title: 'PDF Icon     ', classes: ['filetypes' , 'filetypes-pdf'] },
+    { title: 'Word Doc Icon', classes: ['filetypes' , 'filetypes-docx'] },
+    { title: 'Email Icon   ', classes: ['glyphicons', 'glyphicons-envelope'] },
   ]
-dl.o-Grid
+dl.o-Grid.o-Grid--3col
   each obj in data
     dt.o-Grid__Item= obj.title
     dd.o-Grid__Item: i.x2(class=obj.classes)

@@ -2,10 +2,6 @@
 /*################################*\
     neo  |  _c-MenuMobile.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__fallback.flexbox.less');
-@import (reference) url('../node_modules/xmeter/src/__fallback.justify-content.less');
-@import (reference) url('__settings.less');
-@import (reference) url('__tool.menufont.less');
 
 
 // Site-wide navigation menu (both mobile and desktop)
@@ -21,15 +17,15 @@
 // ^updated
 // 2016-10-13
 .c-MenuMobile {
-  .flex-direction(column);
-  .justify-content(flex-start);
+  flex-direction: column;
+  justify-content: flex-start;
   height: 100%;
   margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
   .menufont();
   background-color: @g-color-gray_lt; // HACK fallback
   color: @g-color-gray_dk; // HACK fallback
-  background-color: var(--color-gray_lt);
-  color: var(--color-gray_dk);
+  background-color: var(--color-gray_lt, @g-color-gray_lt);
+  color: var(--color-gray_dk, @g-color-gray_dk);
   // REVIEW using .material-icons out of component
   // .material-icons {
   //   margin-right: 1rem;
@@ -37,14 +33,14 @@
 }
 
 .c-MenuMobile__Item {
-  .flex(0 0 auto);
+  flex: 0 0 auto;
   &:hover,
   &:focus,
   &._hover,
   &:active,
   &._active {
     background-color: @g-color-gray_lt-tint2; // HACK fallback
-    background-color: var(--color-gray_lt-tint2);
+    background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   }
 }
 
@@ -68,12 +64,12 @@
   display: none;
 }
 
-@media screen and (max-width: 44.999em) {
-  .c-MenuMobile-nsM       { .c-MenuMobile; }
-  .c-MenuMobile__Item-nsM { .c-MenuMobile__Item; }
-  .c-MenuMobile__Link-nsM { .c-MenuMobile__Link; }
-  .c-MenuMobile__Icon-nsM { .c-MenuMobile__Icon; }
-  .c-MenuMobile__Sub-nsM  { .c-MenuMobile__Sub; }
+@media not all and (min-width: 45em) {
+  .c-MenuMobile-nM       { .c-MenuMobile; }
+  .c-MenuMobile__Item-nM { .c-MenuMobile__Item; }
+  .c-MenuMobile__Link-nM { .c-MenuMobile__Link; }
+  .c-MenuMobile__Icon-nM { .c-MenuMobile__Icon; }
+  .c-MenuMobile__Sub-nM  { .c-MenuMobile__Sub; }
 }
 
 // .c-MenuTop__Link--current {

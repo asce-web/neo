@@ -2,14 +2,13 @@
 /*################################*\
     neo  |  __settings.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__settings.less');
 
 
 //++++++++++++++++++++++++++++++++//
 //    # VARIABLES
 //++++++++++++++++++++++++++++++++//
-@g-prefix_transform: -webkit-transform, -moz-transform, -ms-transform, -o-transform, transform;
-@g-prefix_filter: -webkit-filter, -moz-filter, -ms-filter, -o-filter, filter;
+// @g-prefix_transform: -webkit-transform, -moz-transform, -ms-transform, -o-transform, transform;
+// @g-prefix_filter: -webkit-filter, -moz-filter, -ms-filter, -o-filter, filter;
 
 // Google’s Natural Easing Curves
 // <https://www.google.com/design/spec/motion/duration-easing.html#duration-easing-natural-easing-curves>
@@ -69,20 +68,27 @@
 
 
 //++++++++++++++++++++++++++++++++//
-//    # ASCE COMPANY COLORS
+//    # SUITE-WIDE COLORS
 //++++++++++++++++++++++++++++++++//
 @g-color-asce-blue : #0c5fa8;
 @g-color-asce-green: #62b840;
-@g-color-asce-black: #222;
-@g-color-asce-white: #fff;
+
+@g-color-body-txt: #333;
+@g-color-mast-txt: #fff;
 
 // ASCE table colors
-@g-color_asce_table_border:  #e8e8e8;
-@g-color_asce_table_bground: #f4f4f4;
+@g-color-table-br: #e8e8e8;
+@g-color-table-bg: #f4f4f4;
 
-// ASCE form colors
-@g-color_asce_form_bground: #f4f4f5;
-//++++ end # ASCE COMPANY COLORS ++++ //
+// ASCE sponsorship level colors (not used)
+@g-color-sponsor-platinum:  #cde1ec;
+@g-color-sponsor-gold:      #f8cd79;
+@g-color-sponsor-corporate: #9ed8f9;
+@g-color-sponsor-silver:    #dbddde;
+@g-color-sponsor-bronze:    #d9c5ac;
+@g-color-sponsor-copper:    #d6a985;
+@g-color-sponsor-coop_bg:   #e8eaeb; // bgcolor for coop orgs
+//++++ end # SUITE-WIDE COLORS ++++ //
 
 
 //++++++++++++++++++++++++++++++++//
