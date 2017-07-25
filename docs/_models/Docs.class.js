@@ -47,7 +47,6 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
     .add(new Page({ name: 'Components', url: '/docs/comp.html' })
       .add(new Page({ name: 'The Mobile Menu'      , url: '/docs/comp.html#mobile-menu' }))
       .add(new Page({ name: 'The Menu Bar'         , url: '/docs/comp.html#menu-bar' }))
-      .add(new Page({ name: 'The Benefits Card'    , url: '/docs/comp.html#benefits-card' }))
       .add(new Page({ name: 'Buttons'              , url: '/docs/comp.html#buttons' }))
     )
     .add(new Page({ name: 'Organisms', url: '/docs/org.html' })

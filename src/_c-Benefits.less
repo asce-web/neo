@@ -2,32 +2,81 @@
 /*################################*\
     neo  |  _c-Benefits.less
 \*################################*/
-@import (reference) url('../node_modules/xmeter/src/__tool.fontsize.less');
-@import (reference) url('../node_modules/xmeter/src/__tool.borders.less');
-@import (reference) url('../node_modules/xmeter/src/__tool.border-radius.less');
 
 
+// The Benefits Card
+//
 // A list of benefits offered to a sponsorship level.
 //
-// ^Subcomponents:
-// __Head                     - header containing heading and price
-// __Hn                       - name of the sponsor level (Gold, Silver, etc.)
-// __Price                    - cost of the sponsorship
-// __List                     - the list of benefits offered
-//   __List__Item             - an item within the List
-//   __List__Item--notOffered - an item shown to be not offered
-// __Icon                     - icon indicator of what is offered (either a number, a check, or a “do not” sign)
-// __Icon--numeric            - a numerical indicator icon
+// Use in Pug:
+// <pre>
+//   ... coming soon ...
+//   <small style="display: none;" hidden="">
+//     li.o-List__Item.c-Benefits__List__Item.c-Benefits__List__Item--notOffered
+//       i.c-Benefits__Icon.glyphicons.glyphicons-ban-circle
+//         span.h-Hidden Not Offered:
+//       | Pre/post conference attendee mailing list (sent once before andonce after event)
+//     li.o-List__Item.c-Benefits__List__Item
+//       i.c-Benefits__Icon.glyphicons.glyphicons-ok
+//         span.h-Hidden Offered:
+//       | Special recognition in Conference program
+//     li.o-List__Item.c-Benefits__List__Item
+//       i.c-Benefits__Icon.glyphicons.glyphicons-ok
+//         span.h-Hidden Offered:
+//       | Recognition on conference program
+//     li.o-List__Item.c-Benefits__List__Item
+//       i.c-Benefits__Icon.glyphicons.glyphicons-ok
+//         span.h-Hidden Offered:
+//       | Recognition on sponsor signage
+//     li.o-List__Item.c-Benefits__List__Item
+//       i.c-Benefits__Icon.glyphicons.glyphicons-ok
+//         span.h-Hidden Offered:
+//       | Recognition in conference PowerPoint presentation
+//   </small>
+// </pre>
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-03-29</time></dd>
+// </dl></header>
 //
-// ^author
-// Chris Harvey
-// ^updated
-// 2017-03-29
+// Markup:
+// <section class="c-Benefits" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+//   <header class="c-Benefits__Head">
+//     <h1 class="c-Benefits__Hn">Silver</h1>
+//     <p class="c-Benefits__Price" itemprop="price">$7,500</p>
+//   </header>
+//   <ul class="o-List c-Benefits__List">
+//     <li class="o-List__Item c-Benefits__List__Item">
+//       <i class="c-Benefits__Icon c-Benefits__Icon--numeric">2</i>
+//       Full conference registration passes
+//     </li>
+//     <li class="o-List__Item c-Benefits__List__Item c-Benefits__List__Item--notOffered">
+//       <i class="c-Benefits__Icon c-Benefits__Icon--numeric">0</i>
+//       Extra passes to conference event
+//     </li>
+//     <li class="o-List__Item c-Benefits__List__Item">
+//       <i class="c-Benefits__Icon glyphicons glyphicons-ok">
+//         <span class="h-Hidden">Offered:</span>
+//       </i>
+//       Place on conference handout table to display materials
+//     </li>
+//     <li class="o-List__Item c-Benefits__List__Item c-Benefits__List__Item--notOffered">
+//       <i class="c-Benefits__Icon glyphicons glyphicons-ban-circle">
+//         <span class="h-Hidden">Not Offered:</span>
+//       </i>
+//       Handout included with registration materials
+//     </li>
+//   </ul>
+// </section>
+//
+// Weight: 12.5
+//
+// Styleguide Components.Benefits
 .c-Benefits {
   .font-size-mod(@g-font_size_mill);
   .border-vert(all; 1px);
   border-color: @g-color-gray_dk; // HACK fallback
-  border-color: var(--color-gray_dk);
+  border-color: var(--color-gray_dk, @g-color-gray_dk);
   border-radius: 0.5rem;
   background-color: #fff;
   // overflow: hidden; // __Head appears over border-radius // FIXME: enabling this will hide the price
@@ -42,8 +91,8 @@
   .border-top-radius(0.5rem); // HACK fixes bug from parent overflow: hidden
   background-color: @g-color-primary-shade1; // HACK fallback
   color: #fff; // HACK fallback
-  background-color: var(--header-color);
-  color: var(--header-text);
+  background-color: var(--header-color, @g-color-primary-shade1);
+  color: var(--header-text, #fff);
 }
 
 .c-Benefits__Hn,
@@ -76,8 +125,8 @@
   border-radius: 50%;
   background-color: #fff; // HACK fallback
   color: @g-color-primary-shade1; // HACK fallback
-  background-color: var(--header-text);
-  color: var(--header-color);
+  background-color: var(--header-text, #fff);
+  color: var(--header-color, @g-color-primary-shade1);
 }
 
 .c-Benefits__List.c-Benefits__List { // HACK specificity override `.c-Benefits__List > ul` (will be fixed with CSS custom property support)
@@ -96,7 +145,7 @@
   padding-left: 2rem; // room for the icon // FIXME: prop comes after media query (may break during minification)
   &:nth-of-type(2n) {
     background-color: @g-color-gray_lt-tint2; // HACK fallback
-    background-color: var(--color-gray_lt-tint2);
+    background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   }
   &::before {
     position: absolute;
@@ -112,7 +161,7 @@
 }
 .c-Benefits__List__Item--notOffered {
   color: @g-color-gray_lt-shade2; // HACK fallback
-  color: var(--color-gray_lt-shade2);
+  color: var(--color-gray_lt-shade2, @g-color-gray_lt-shade2);
   &::before {
     // .glyphicons.glyphicons-ban-circle
     content: '\e200';
