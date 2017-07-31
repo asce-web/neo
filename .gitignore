@@ -48,3 +48,6 @@ vendor
 
 # Auto-generated style guides
 styleguide
+
+# Site files and assets
+proto/*/files

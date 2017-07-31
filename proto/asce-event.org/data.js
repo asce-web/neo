@@ -23,7 +23,7 @@ var ImportantDate      = require('neo').ImportantDate
 
     var site = new ConfSite('An ASCE Event', '/sites/asce-event.org/', 'Optional Brand Tagline')
       .keywords(['ASCE', 'civil engineering', 'convention'])
-      .logo('img/site-logo-white.png')
+      .logo('files/site-logo-white.png')
       .colors(Color.fromString('#3fae2a'), Color.fromString('#00a1e1'))
       .init()
 
@@ -389,7 +389,7 @@ var ImportantDate      = require('neo').ImportantDate
         , honorific_suffix: 'P.ASCE'
       }).jobTitle('Administrator of Interior Engineering')
         .affiliation('German Chamber of Architects')
-        .img('img/headshot1.jpg')
+        .img('files/headshot1.jpg')
         .email('example@asce.org')
         .phone('+1(703)555-5555')
         .url('#0')
