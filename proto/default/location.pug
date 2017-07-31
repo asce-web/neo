@@ -1,0 +1,18 @@
+extends _sites.tpl.pug
+
+block append vars
+  - var page = site.find('location.html')
+
+block mainHeader
+  header.o-Runner.o-Runner--pageHeader.c-Banner.c-Banner--location: div.o-Constrain
+    h1.c-PageTitle= page.name()
+
+block mainReference
+  section.o-Runner.o-Runner--highlight.-ta-c#important-locations: div.o-Constrain
+    h1.h-Hidden Important Locations
+    ul.o-List.o-ListAction.c-Alert
+      each $place,key in site.currentConference().getVenuesAll()
+        li.o-List__Item.o-ListAction__Item.c-Alert__Item: section
+          h1.-fz-el-mega= key
+          p(itemscope="" itemtype="http://schema.org/Place")&attributes(($place===site.currentConference().officialVenue()) ? {itemprop:'location'} : {})
+            != $place.html()

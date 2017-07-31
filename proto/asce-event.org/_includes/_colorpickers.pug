@@ -1,0 +1,13 @@
+mixin colorPickers(primary_hex, secondary_hex)
+  style.
+    input[type="color"].js-picker {
+      width: 6rem;
+    }
+  p Use the color pickers to experiment with different combinations!
+    br
+    small.
+      &#x0020;(Javascript must be enabled. Browser support is limited.
+      If you see a text box instead of a color picker, type in the color hex code by hand.)
+  ol.o-List.o-Flex
+    li.o-Flex__Item Primary   color: #[input.js-picker.js-picker-primary(type="color" value=primary_hex)]
+    li.o-Flex__Item Secondary color: #[input.js-picker.js-picker-secondary(type="color" value=secondary_hex)]

@@ -1,0 +1,41 @@
+extends ../default/index.pug
+
+block actionButtons
+  +highlightButtons([
+    { text: 'Register', href:'registration.html' }
+  , { text: 'Sponsor' , href:'sponsor.html' }
+  , { text: 'Submit a Paper' }
+  ], 'c-Btn c-Btn--hilite c-Btn--primary')
+
+block prepend mainBody
+  +highlight()
+    include _includes/_colorpickers.pug
+    +colorPickers('#3fae2a', '#00a1e1')
+
+block mainMinimal
+  include _includes/_text-block.pug
+
+block callouts
+  +highlight().c-Banner
+    include ../default/_includes/highlights/_important-dates.pug
+  +highlight()
+    include ../default/_includes/highlights/_registration.pug
+  +highlight().c-Banner
+    include ../default/_includes/highlights/_program.pug
+  +highlight().c-Banner.c-Banner--loc.-ta-c
+    include _includes/highlights/_location.pug
+  +highlight()
+    include ../default/_includes/highlights/_speakers.pug
+  +highlight().c-Banner
+    include _includes/highlights/_co-chairs.pug
+  +highlight()
+    include ../default/_includes/highlights/_social.pug
+  +highlight().c-Banner
+    include _includes/highlights/_volunteer.pug
+  +highlight()
+    include ../default/_includes/highlights/_mobile.pug
+  +highlight().c-Banner
+    include ../default/_includes/highlights/_contact.pug
+
+block append scripts
+  script(src="js/home.b.js")

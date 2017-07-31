@@ -1,0 +1,105 @@
+
+/*################################*\
+    conf  |  asce-event.org  |  site.less
+\*################################*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// overrides for conf.less
+//
+///////////////////////////////////////////////////////////////////////////////
+
+
+.c-SiteTitle__Name {
+  // padding-bottom -> margin-bottom for background-image
+  // padding-bottom: (14/16 * @g-vru); // HACK fallback
+  // padding-bottom: var(--vru);
+  // margin-bottom: 0 !important; // override `.c-Mast >> h1`
+  // color: transparent !important; // override `.c-Mast >> h1`
+  // background-image: url('../img/site-title-2016.png');
+  // background-position: left;
+  // background-size: contain;
+  // background-repeat: no-repeat;
+}
+
+
+// set urls for each background-image here
+.c-Banner {
+  --img-hero    : url('../files/cable-car.jpg');
+  --img-location: url('../files/portland.jpg');
+  --img-prev    : url('http://2015.asceconvention.org/uploadedImages/__Settings/Conference_Microsite_Settings/hero(2).jpg');
+  --img-next    : url('http://2017.asceconvention.org/sites/2017.asceconvention.org/files/theme/images/convention-2017-hero.jpg');
+
+  // FIXME bug with background image *relative* urls---not supported yet
+  // see https://bugs.chromium.org/p/chromium/issues/detail?id=618165
+  --img-hero    : url('http://2016.asceconvention.org/sites/asceconvention.org/files/portland-skyline-sidebar.jpg');
+  --img-location: url('http://2016.asceconvention.org/sites/asceconvention.org/files/theme/images/portland-mt-hood-asce-2017-banner_0.jpg');
+}
+// HACK fallbacks
+// uncomment for legacy support
+.c-Banner--hero         { background-image: url('../files/cable-car.jpg'); }
+.c-Banner--location     { background-image: url('../files/portland.jpg'); }
+.c-Banner--prev::before { background-image: url('http://2015.asceconvention.org/uploadedImages/__Settings/Conference_Microsite_Settings/hero(2).jpg'); }
+.c-Banner--next::before { background-image: url('http://2017.asceconvention.org/sites/2017.asceconvention.org/files/theme/images/convention-2017-hero.jpg'); }
+.c-Banner--loc::before  { background-image: url('../files/portland.jpg'); }
+
+
+// (bootstrap button colors)
+@p-text-plain-accent:   #28a4c9;
+@p-text-inline-accent:  #3e8f3e;
+@p-text-block-accent:   #e38d13;
+@p-text-section-accent: #b92c28;
+._text-plain,
+._text-inline,
+._text-block,
+._text-section {
+  outline-style: solid;
+  &::before {
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+}
+._text-plain,
+._text-inline {
+  outline-width: 2px;
+}
+._text-block,
+._text-section {
+  outline-width: 8px;
+  border-width: 0 8px;
+  &::before {
+    display: block;
+    margin-bottom: var(--vru);
+  }
+}
+._text-plain {
+  outline-color: @p-text-plain-accent;
+  &::before {
+    content: 'plain text:\ ';
+    color: @p-text-plain-accent;
+  }
+}
+._text-inline {
+  outline-color: @p-text-inline-accent;
+  &::before {
+    content: 'inline text:\ ';
+    color: @p-text-inline-accent;
+  }
+}
+._text-block {
+  outline-color: @p-text-block-accent;
+  border-color: @p-text-block-accent;
+  &::before {
+    content: 'block text';
+    color: @p-text-block-accent;
+  }
+}
+._text-section {
+  outline-color: @p-text-section-accent;
+  border-color: @p-text-section-accent;
+  &::before {
+    content: 'section text';
+    color: @p-text-section-accent;
+  }
+}
