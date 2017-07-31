@@ -8,8 +8,6 @@
     docs.less
 \*================================*/
 @import (reference) url('../../node_modules/xmeter/src/__settings.less');
-@import (reference) url('../../node_modules/xmeter/src/__fallback.flexbox.less');
-@import (reference) url('../../node_modules/xmeter/src/__fallback.transition.less');
 @import (reference) url('../../node_modules/xmeter/src/__tool.borders.less');
 @import (reference) url('../../node_modules/xmeter/src/__tool.delims.less');
 
@@ -121,7 +119,7 @@
   }
   .docs-c-Togglable__Text {
     display: inline-block;
-    .transition(text-indent 500ms);
+    transition: text-indent 500ms;
   }
   .docs-c-Togglable__Check:not(:checked) ~ * .docs-c-Togglable__Text {
     text-indent: -200%;
