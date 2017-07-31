@@ -6,7 +6,7 @@ var clean_css = require('gulp-clean-css')
 var sourcemaps = require('gulp-sourcemaps')
 
 gulp.task('pug:index', function () {
-  return gulp.src('index.pug')
+  return gulp.src(__dirname + '/index.pug')
     .pipe(pug({
       basedir: './',
     }))
@@ -14,7 +14,7 @@ gulp.task('pug:index', function () {
 })
 
 gulp.task('pug:docs', function () {
-  return gulp.src('docs/{index,principles,base,obj,comp,org,help,atom}.pug')
+  return gulp.src(__dirname + '/docs/{index,principles,base,obj,comp,org,help,atom}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
@@ -37,7 +37,46 @@ gulp.task('pug:docs', function () {
     .pipe(gulp.dest('./docs/'))
 })
 
-gulp.task('pug:all', ['pug:index', 'pug:docs'])
+gulp.task('pug:default', function () {
+  var Color = require('csscolor').Color
+  var ConfSite   = require('./_models/ConfSite.class.js'),
+  var ConfPage   = require('./_models/ConfPage.class.js'),
+  var Conference = require('./_models/Conference.class.js'),
+  return gulp.src(__dirname + '/proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
+    .pipe(pug({
+      basedir: './',
+      locals: {
+        Util: require('./_models/Util.class.js'),
+        site: new ConfSite()
+          .colors(Color.fromString('#660000'), Color.fromString('#ff6600')) // default Hokie colors
+          .init()
+          .addConference('default', new Conference({
+            start_date: new Date(),
+            end_date  : new Date(),
+          }))
+          .currentConference('default')
+          .prevConference('default')
+          .nextConference('default'),
+        page: new ConfPage(),
+      },
+    }))
+    .pipe(gulp.dest('./proto/default/'))
+})
+
+gulp.task('pug:sample', function () {
+  return gulp.src(__dirname + '/proto/asce-event.org/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
+    .pipe(pug({
+      basedir: './',
+      locals: {
+        Util: require('./_models/Util.class.js'),
+        Person: require('./_models/Person.class.js'),
+        site: require('./proto/asce-event.org/data.js'),
+      },
+    }))
+    .pipe(gulp.dest('./proto/asce-event.org/'))
+})
+
+gulp.task('pug:all', ['pug:index', 'pug:docs', 'pug:default', 'pug:sample'])
 
 gulp.task('lessc:core', function () {
   return gulp.src(__dirname + '/css/src/neo.less')
@@ -54,7 +93,7 @@ gulp.task('lessc:core', function () {
 })
 
 gulp.task('lessc:docs', function () {
-  return gulp.src('./docs/styles/docs.less')
+  return gulp.src(__dirname + '/docs/styles/docs.less')
     .pipe(less())
     .pipe(autoprefixer({
       grid: true,
@@ -63,6 +102,16 @@ gulp.task('lessc:docs', function () {
     .pipe(gulp.dest('./docs/styles/'))
 })
 
-gulp.task('lessc:all', ['lessc:core', 'lessc:docs'])
+gulp.task('lessc:sample', function () {
+  return gulp.src(__dirname + '/proto/asce-event.org/styles/site.less')
+    .pipe(less())
+    .pipe(autoprefixer({
+      grid: true,
+      cascade: false,
+    }))
+    .pipe(gulp.dest('./proto/asce-event.org/styles/'))
+})
+
+gulp.task('lessc:all', ['lessc:core', 'lessc:docs', 'lessc:sample'])
 
 gulp.task('build', ['pug:all', 'lessc:all'])
