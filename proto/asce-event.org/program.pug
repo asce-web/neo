@@ -1,0 +1,10 @@
+extends ../default/program.pug
+
+block mainMinimal
+  include _includes/_text-block.pug
+
+block callouts
+  +highlight().c-Banner.c-Banner--loc
+    include ../default/_includes/highlights/_location.pug
+  +highlight().c-Banner
+    include _includes/highlights/_volunteer.pug

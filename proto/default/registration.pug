@@ -1,0 +1,34 @@
+extends _sites.tpl.pug
+
+block append vars
+  - var page = site.find('registration.html')
+
+block mainHeader
+  header.o-Runner.o-Runner--pageHeader: div.o-Constrain
+    h1.c-PageTitle Registra&shy;tion
+
+block mainReference
+  section.o-Runner.o-Runner--highlight.c-Banner#full-registration: div.o-Constrain
+    h1.h-Hidden Full Registration
+    include /node_modules/neo/_views/_Pass.view.pug
+    +passList(site.currentConference(), false)
+    ul.o-List.o-ListAction.c-Alert._regLegend
+      each $registrationPeriod in site.currentConference().getRegistrationPeriodsAll()
+        li.o-List__Item.o-ListAction__Item.c-Alert__Item
+          i.material-icons(role="none")= $registrationPeriod.getIcon()
+          small
+            -
+              let start_date = $registrationPeriod.startDate
+              let end_date   = $registrationPeriod.endDate
+              // because the above getters return `new Date()` if none is set
+              let has_start = $registrationPeriod.startDate.toISOString() !== new Date().toISOString()
+              let has_end   = $registrationPeriod.endDate.toISOString()   !== new Date().toISOString()
+            b= $registrationPeriod.name
+            = (has_start && has_end) ? ': ' : (has_start) ? ' begins ' : (has_end) ? ' ends ' : ''
+            if has_start
+              time(datetime=start_date)= Util.monthDay(start_date)
+            if has_stare && has_end
+              | &ndash;
+            if has_end
+              time(datetime=end_date)= Util.monthDay(end_date)
+    +highlightButtons([{text:'Register Today!', href:'#0'}], 'c-Btn--secondary')

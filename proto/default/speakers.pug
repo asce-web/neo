@@ -1,0 +1,10 @@
+extends _sites.tpl.pug
+
+block append vars
+  - var page = site.find('speakers.html')
+
+block mainReference
+  section.o-Runner.o-Runner--highlight.c-Banner#all-speakers: div.o-Constrain
+    h1.h-Hidden All Speakers
+    include /node_modules/neo/_views/_Person.view.pug
+    +speakerList(site.currentConference().getSpeakersAll())

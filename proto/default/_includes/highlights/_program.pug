@@ -1,0 +1,11 @@
+h1#program-highlights Program Highlights
+- var groupings = site.currentConference().groupSessions('starred')
+include /node_modules/neo/_views/_o-Tabs.view.pug
++tabs(groupings.length)#program-highlights-block
+  mixin tab(i)
+    include /node_modules/neo/_views/_Date.view.pug
+    +programHn(groupings[i].dateday)
+  mixin panel(i)
+    include /node_modules/neo/_views/_Session.view.pug
+    +timeBlock(groupings[i].sessions)
++highlightButtons([{text:'Full Program', href:'program.html'}])
