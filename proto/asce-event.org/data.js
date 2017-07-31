@@ -7,19 +7,19 @@
 
 
 var Color              = require('csscolor').Color
-var Util               = require('neo').Util
-var ConfSite           = require('neo').ConfSite
-var ConfPage           = require('neo').ConfPage
-var Conference         = require('neo').Conference
-var SupporterLevel     = require('neo').SupporterLevel
-var Supporter          = require('neo').Supporter
-var Exhibitor          = require('neo').Exhibitor
-var Person             = require('neo').Person
-var Place              = require('neo').Place
-var RegistrationPeriod = require('neo').RegistrationPeriod
-var Pass               = require('neo').Pass
-var Session            = require('neo').Session
-var ImportantDate      = require('neo').ImportantDate
+var Util               = require('../../_models/Util.class.js')
+var ConfSite           = require('../../_models/ConfSite.class.js')
+var ConfPage           = require('../../_models/ConfPage.class.js')
+var Conference         = require('../../_models/Conference.class.js')
+var SupporterLevel     = require('../../_models/SupporterLevel.class.js')
+var Supporter          = require('../../_models/Supporter.class.js')
+var Exhibitor          = require('../../_models/Exhibitor.class.js')
+var Person             = require('../../_models/Person.class.js')
+var Place              = require('../../_models/Place.class.js')
+var RegistrationPeriod = require('../../_models/RegistrationPeriod.class.js')
+var Pass               = require('../../_models/Pass.class.js')
+var Session            = require('../../_models/Session.class.js')
+var ImportantDate      = require('../../_models/ImportantDate.class.js')
 
     var site = new ConfSite('An ASCE Event', '/sites/asce-event.org/', 'Optional Brand Tagline')
       .keywords(['ASCE', 'civil engineering', 'convention'])

@@ -1,6 +1,6 @@
 doctype html
 html(lang="en")
-  include /node_modules/neo/_includes/__snippets.pug
+  include ../../_includes/__snippets.pug
   block vars
   head
     title= page.title()
@@ -16,7 +16,7 @@ html(lang="en")
       link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/xmeter/v5.7.0/xmeter.css")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.14.0/bangs.min.css")
-      link(rel="stylesheet" href="/node_modules/neo/neo.css")
+      link(rel="stylesheet" href="/css/neo.css")
       if site.name()
         //- if this site is an instance of the 'all' template
         link(rel="stylesheet" href="css/site.css")
@@ -31,7 +31,7 @@ html(lang="en")
   body(style=site.colors())
     a.h-Hidden(href="#main") skip to main content
     header.o-Runner.c-Mast.c-Mast--head: div.o-Constrain
-      include /node_modules/neo/_views/_ConfSite.view.pug
+      include ../../_views/_ConfSite.view.pug
       +siteTitle(site)
     header.o-Runner.c-Mast.c-Mast--menu: div.o-Constrain
       label.c-Toggle(aria-label="toggle main menu")
@@ -81,12 +81,12 @@ html(lang="en")
         block additionalSupporters
           +highlight().c-Banner.c-Banner--orgs
             h1.h-Hidden#additional-supporters Additional Supporters
-            include /node_modules/neo/_views/_SupporterLevel.view.pug
+            include ../../_views/_SupporterLevel.view.pug
             each $supporterLevel,index in site.currentConference().getSupporterLevelQueue('Orgs')
               +supporterBlock($supporterLevel, site.currentConference())(class={ 'c-SupporterBlock--separate': index < site.currentConference().getSupporterLevelQueue('Orgs').length-1 })
     footer.o-Runner.c-Mast.c-Mast--sitemap#site-map: nav.o-Constrain
       h1.h-Hidden Site Map
-      include /node_modules/neo/_views/_c-Sitemap.view.pug
+      include ../../_views/_c-Sitemap.view.pug
       +sitemap(site.findAll().slice(1))
     footer.o-Runner.c-Mast.c-Mast--foot#connect-with-asce: div.o-Constrain
       h1.h-Hidden Connect With #[abbr(title="American Society of Civil Engineers") ASCE]
@@ -111,7 +111,7 @@ html(lang="en")
           meta(content="+1-703-295-6300" itemprop="telephone")
           meta(content="United States of America" itemprop="areaServed")
           meta(content="customer support" itemprop="contactType")
-        include /node_modules/neo/_views/_c-SocialList.view.pug
+        include ../../_views/_c-SocialList.view.pug
         +socialList({
           twitter : { url: '//twitter.com/ASCE'    , text: 'Follow ASCE on Twitter' }
         , google  : { url: '//plus.google.com/ASCE', text: 'Follow ASCE on Google+' }
@@ -129,7 +129,7 @@ html(lang="en")
     }): i.material-icons(role="none") arrow_upward
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous")
-      script(src="/node_modules/neo/scripts/o-Tabs.js")
+      script(src="/js/o-Tabs.js")
       script.
         // drawer links untabbed by default
         $('.o-Drawer').find('a').attr('tabindex', -1);

@@ -6,6 +6,6 @@ block append vars
 block sponsors
   section.o-Runner.o-Runner--highlight#thank-you-sponsors: div.o-Constrain
     h1 Thank You to Our Sponsors
-    include /node_modules/neo/_views/_SupporterLevel.view.pug
+    include ../../_views/_SupporterLevel.view.pug
     each $supporterLevel,index in site.currentConference().getSupporterLevelQueue('Sponsors')
       +supporterBlock($supporterLevel, site.currentConference())(class={ 'c-SupporterBlock--separate': index < site.currentConference().getSupporterLevelQueue('Sponsors').length-1 })

@@ -1,3 +1,3 @@
 h1#important-dates Important Dates
-include /node_modules/neo/_views/_ImportantDate.view.pug
+include ../../../../_views/_ImportantDate.view.pug
 +dateBlock(site.currentConference().getImportantDatesAll().filter(function ($importantDate) { return $importantDate.isStarred() }))

@@ -4,6 +4,6 @@ block append vars
   - var page = site.find('index.html')
 
 block mainHeader
-  include /node_modules/neo/_views/_Conference.view.pug
+  include ../../_views/_Conference.view.pug
   +hero(site.currentConference())
     block actionButtons

@@ -7,12 +7,12 @@ block mainReference
   section.o-Runner.o-Runner--highlight.c-Banner#full-program: div.o-Constrain
     h1.h-Hidden Full Program
     - var groupings = site.currentConference().groupSessions(false)
-    include /node_modules/neo/_views/_o-Tabs.view.pug
+    include ../../_views/_o-Tabs.view.pug
     +tabs(groupings.length)#full-program-block
       mixin tab(i)
-        include /node_modules/neo/_views/_Date.view.pug
+        include ../../_views/_Date.view.pug
         +programHn(groupings[i].dateday)
       mixin panel(i)
-        include /node_modules/neo/_views/_Session.view.pug
+        include ../../_views/_Session.view.pug
         +timeBlock(groupings[i].sessions)
     p: small.-fs-t Program subject to change.
