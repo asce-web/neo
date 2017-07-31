@@ -9,8 +9,8 @@
   },
   "scripts": {
     "kss": "rm -r styleguide  ;  kss --config kss-config.json",
-    "browserify:principles": "browserify docs/scripts/principles.js > docs/scripts/principles.b.js",
-    "browserify:sample": "browserify proto/asce-event.org/scripts/home.js > proto/asce-event.org/scripts/home.b.js",
+    "browserify:principles": "browserify docs/js/principles.js > docs/js/principles.b.js",
+    "browserify:sample": "browserify proto/asce-event.org/js/home.js > proto/asce-event.org/js/home.b.js",
     "browserify:all": "npm run browserify:principles  &&  npm run browserify:sample",
     "build": "gulp build  &&  npm run kss  &&  npm run browserify:all",
     "unbuild:root": "rm index.html",
@@ -18,8 +18,8 @@
     "unbuild:default": "rm proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.html",
     "unbuild:sample": "rm proto/asce-event.org/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.html",
     "unbuild:html": "npm run unbuild:root  &&  npm run unbuild:docs  &&  npm run unbuild:default  &&  npm run unbuild:sample",
-    "unbuild:css": "rm css/{neo.css,neo.css.map} docs/styles/docs.css proto/asce-event.org/styles/site.css",
-    "unbuild:js": "rm docs/scripts/principles.b.js proto/asce-event.org/scripts/home.b.js",
+    "unbuild:css": "rm css/{neo.css,neo.css.map} docs/css/docs.css proto/asce-event.org/css/site.css",
+    "unbuild:js": "rm docs/js/principles.b.js proto/asce-event.org/js/home.b.js",
     "unbuild": "npm run unbuild:html  &&  npm run unbuild:css  &&  npm run unbuild:js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
