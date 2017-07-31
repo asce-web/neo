@@ -40,17 +40,17 @@ gulp.task('pug:docs', function () {
 gulp.task('pug:all', ['pug:index', 'pug:docs'])
 
 gulp.task('lessc:core', function () {
-  return gulp.src('src/neo.less')
+  return gulp.src(__dirname + '/css/src/neo.less')
     .pipe(less())
     .pipe(autoprefixer({
       grid: true,
       cascade: false,
     }))
-    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('./css/'))
     .pipe(sourcemaps.init())
     .pipe(clean_css())
     .pipe(sourcemaps.write('./')) // write to an external .map file
-    .pipe(gulp.dest('./'))
+    .pipe(gulp.dest('./css'))
 })
 
 gulp.task('lessc:docs', function () {

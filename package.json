@@ -14,7 +14,7 @@
     "build": "gulp build  &&  npm run kss  &&  npm run browserify:all",
     "unbuild:root": "rm index.html",
     "unbuild:docs": "rm docs/{index,principles,base,obj,comp,org,help,atom}.html",
-    "unbuild:css": "rm {neo.css,neo.css.map} docs/styles/docs.css",
+    "unbuild:css": "rm css/{neo.css,neo.css.map} docs/styles/docs.css",
     "unbuild:js": "rm docs/scripts/principles.b.js",
     "unbuild": "npm run unbuild:root  &&  npm run unbuild:docs  &&  npm run unbuild:css  &&  npm run unbuild:js",
     "test": "echo \"Error: no test specified\" && exit 1"
