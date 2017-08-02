@@ -77,13 +77,10 @@ html(lang="en")
               (see external demo of
               #[a(href="http://go.asce.org/static/sponsors/") sponsors carousel]
               by rank)
-            +highlightButtons([{text:'All Sponsors', href:'sponsor.html'}])
-        block additionalSupporters
-          +highlight().c-Banner.c-Banner--orgs
-            h1.h-Hidden#additional-supporters Additional Supporters
             include ../../_views/_SupporterLevel.view.pug
-            each $supporterLevel,index in site.currentConference().getSupporterLevelQueue('Orgs')
-              +supporterBlock($supporterLevel, site.currentConference())(class={ 'c-SupporterBlock--separate': index < site.currentConference().getSupporterLevelQueue('Orgs').length-1 })
+            each $supporterLevel,index in site.currentConference().getSupporterLevelQueue('home-page')
+              +supporterBlock($supporterLevel, site.currentConference())
+            +highlightButtons([{text:'All Sponsors', href:'sponsor.html'}])
     footer.o-Runner.c-Mast.c-Mast--sitemap#site-map: nav.o-Constrain
       h1.h-Hidden Site Map
       include ../../_views/_c-Sitemap.view.pug
