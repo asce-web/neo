@@ -7,16 +7,15 @@
 .p-background-settings() {
   // default background image
   // override with site-specific stylesheet
-  background-image: linear-gradient(to bottom, #373737, #2f2e33, #1c1b20, #181818); // fallback // image colors
-  background-image: url('https://static.vecteezy.com/system/resources/previews/000/092/552/original/free-abstract-background-vector.jpg');
+  background-image: linear-gradient(to bottom, #373737, #2f2e33, #1c1b20, #181818); // fallback for image (image colors)
+  background-image: url('../images/banner-default.jpg');
   background-position: center;
   background-size: cover;
-  background-color: #272629; // fallback // mix of image colors
+  background-color: #272629; // fallback for gradient (mix of image colors)
 }
 
 
 // The Banner Component
-//
 //
 // Any major section on any page with a full-width background image.
 // Can be used on Runner or Mast to give a background image.
@@ -44,21 +43,14 @@
   --heading-color: currentColor;
   color: #fff;
   .p-background-settings();
+  // text-shadow: 0 0 0.25rem @g-color-gray_dk-shade2; // HACK fallback
+  // text-shadow: 0 0 0.25rem var(--color-gray_dk-shade2, @g-color-gray_dk-shade2);
+  text-shadow: 0 0 0.25rem #000;
   h1, h2, h3, h4, h5, h6 {
     color: inherit; // HACK fallback
   }
 }
 
-.c-Banner--hero,
-.c-Banner--location,
-.c-Banner--prev,
-.c-Banner--next,
-.c-Banner--loc {
-  // NOTE adding text shadow for over top images
-  // text-shadow: 0 0 0.25rem @g-color-gray_dk-shade2; // HACK fallback
-  // text-shadow: 0 0 0.25rem var(--color-gray_dk-shade2, @g-color-gray_dk-shade2);
-  text-shadow: 0 0 0.25rem #000;
-}
 .c-Banner--prev,
 .c-Banner--next,
 .c-Banner--loc {
