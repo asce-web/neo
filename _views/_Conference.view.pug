@@ -24,7 +24,7 @@ mixin hero($conference)
     block
 
 mixin otherYear($conference, blurb)
-  +highlight().c-Banner.c-Banner--blur.c-ConfHed(itemscope="" itemtype="http://schema.org/Event")&attributes(attributes)
+  aside.o-Runner.o-Runner--highlight.c-Banner.c-Banner--blur.c-ConfHed(itemscope="" itemtype="http://schema.org/Event")&attributes(attributes): div.o-Constrain
     h1.c-ConfHed__Name(itemprop="name")= $conference.name
     meta(content=$conference.startDate itemprop="startDate")
     p.c-ConfHed__Detail(itemprop="location")
