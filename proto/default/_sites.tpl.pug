@@ -16,7 +16,12 @@ html(lang="en")
       link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/xmeter/beta-v6/xmeter.css")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.14.1/bangs.min.css")
-      link(rel="stylesheet" href="/css/neo.css")
+      link(rel="stylesheet" href="../../css/neo.css")
+      style.
+        .c-Banner--hero { --banner-img: url('#{site.images().hero}'); }
+        .c-Banner--city { --banner-img: url('#{site.images().city}'); }
+        .c-Banner--prev { --banner-img: url('#{site.images().prev}'); }
+        .c-Banner--next { --banner-img: url('#{site.images().next}'); }
       if site.name()
         //- if this site is an instance of the 'all' template
         link(rel="stylesheet" href="css/site.css")

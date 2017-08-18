@@ -8,7 +8,7 @@
   // default background image
   // override with site-specific stylesheet
   background-image: linear-gradient(to bottom, #373737, #2f2e33, #1c1b20, #181818); // fallback for image (image colors)
-  background-image: url('../images/banner-default.jpg');
+  background-image: var(--banner-img, url('../images/banner-default.jpg'));
   background-position: center;
   background-size: cover;
   background-color: #272629; // fallback for gradient (mix of image colors)
@@ -30,11 +30,7 @@
 //   <p>banner content</p>
 // </div>
 //
-// .c-Banner--hero     - banner image on Home page
-// .c-Banner--location - banner image on Location page
-// .c-Banner--prev     - banner for previous year’s conference callout
-// .c-Banner--next     - banner for next year’s conference callout
-// .c-Banner--loc      - banner for location callout
+// .c-Banner--blur - same as banner image, but blurry background
 //
 // Weight: 6
 //
@@ -51,10 +47,7 @@
   }
 }
 
-.c-Banner--prev,
-.c-Banner--next,
-.c-Banner--loc {
-  // NOTE adding blur background
+.c-Banner--blur {
   position: relative; // for ::before
   background: none; // override `.c-Banner`
   &::before {
@@ -69,25 +62,3 @@
     filter: blur(4px);
   }
 }
-
-
-.c-Banner--hero {
-}
-
-.c-Banner--location {
-}
-
-.c-Banner--prev {
-}
-.c-Banner--next {
-}
-.c-Banner--loc {
-}
-
-// override actual urls in site-specific stylesheet
-// need the `::before` pseudo for the blur effect
-.c-Banner--hero         { background-image: var(--img-hero); }
-.c-Banner--location     { background-image: var(--img-location); }
-.c-Banner--prev::before { background-image: var(--img-prev); }
-.c-Banner--next::before { background-image: var(--img-next); }
-.c-Banner--loc::before  { background-image: var(--img-location); }

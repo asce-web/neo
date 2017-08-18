@@ -19,6 +19,7 @@ module.exports = class ConfSite extends Page {
     super.description(slogan)
     /** @private */ this._logo             = ''
     /** @private */ this._colors           = {}
+    /** @private */ this._images           = {}
     /** @private */ this._conferences      = {}
     /** @private */ this._conf_curr_key   = null
     /** @private */ this._conf_prev_key   = null
@@ -68,6 +69,20 @@ module.exports = class ConfSite extends Page {
       this._colors = ConfSite.colorStyles($primary, $secondary)
       return this
     } else return this._colors
+  }
+
+  /**
+   * Set or get the images of this site.
+   * @param  {Object<string>} $imgs a dictionary of image urls
+   * @return {(ConfSite|Object<string>)} this || an object containing image urls
+   */
+  images($imgs) {
+    if (arguments.length) {
+      ['hero', 'city', 'prev', 'next'].forEach(function (key) {
+        this._images[key] = $imgs[key] || ''
+      }, this)
+      return this
+    } else return this._images
   }
 
   /**

@@ -24,27 +24,6 @@
 }
 
 
-// set urls for each background-image here
-.c-Banner {
-  --img-hero    : url('../files/cable-car.jpg');
-  --img-location: url('../files/portland.jpg');
-  --img-prev    : url('http://2015.asceconvention.org/uploadedImages/__Settings/Conference_Microsite_Settings/hero(2).jpg');
-  --img-next    : url('http://2017.asceconvention.org/sites/2017.asceconvention.org/files/theme/images/convention-2017-hero.jpg');
-
-  // FIXME bug with background image *relative* urls---not supported yet
-  // see https://bugs.chromium.org/p/chromium/issues/detail?id=618165
-  --img-hero    : url('http://2016.asceconvention.org/sites/asceconvention.org/files/portland-skyline-sidebar.jpg');
-  --img-location: url('http://2016.asceconvention.org/sites/asceconvention.org/files/theme/images/portland-mt-hood-asce-2017-banner_0.jpg');
-}
-// HACK fallbacks
-// uncomment for legacy support
-.c-Banner--hero         { background-image: url('../files/cable-car.jpg'); }
-.c-Banner--location     { background-image: url('../files/portland.jpg'); }
-.c-Banner--prev::before { background-image: url('http://2015.asceconvention.org/uploadedImages/__Settings/Conference_Microsite_Settings/hero(2).jpg'); }
-.c-Banner--next::before { background-image: url('http://2017.asceconvention.org/sites/2017.asceconvention.org/files/theme/images/convention-2017-hero.jpg'); }
-.c-Banner--loc::before  { background-image: url('../files/portland.jpg'); }
-
-
 // (bootstrap button colors)
 @p-text-plain-accent:   #28a4c9;
 @p-text-inline-accent:  #3e8f3e;
