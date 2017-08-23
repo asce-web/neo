@@ -184,7 +184,10 @@
   &,
   &:active,
   &._active {
-    color: inherit; // HACK override `.c-Btn` // do not use `--button-text: inherit;`
+    color: inherit; // FIXME overriding `.c-Btn`
+    // we want the value of `--button-text` to be `inherit`, but
+    // we cannot set `--button-text: inherit;` because
+    // that will cause this to inherit the `--button-text` property
   }
 }
 

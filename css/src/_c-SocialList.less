@@ -66,21 +66,9 @@
 
 .c-SocialList--footer {
   width: 50%;
-  @iconsize: 5vw;
-  --iconsize: @iconsize; // TODO remove after fallback
-  // HACK fallbacks
-  .c-SocialList__Link {
-    width:  @iconsize;
-    height: @iconsize;
-  }
+  --iconsize: 5vw;
   @media screen and (min-width: 60em) {
-    @iconsize: 2 * @g-vru;
     --iconsize: calc(~'2 * var(--vru)');
-    // HACK fallbacks
-    .c-SocialList__Link {
-      width:  @iconsize;
-      height: @iconsize;
-    }
   }
   @media screen and (min-width: 75em) {
     width: (100%/3);
@@ -88,24 +76,12 @@
 }
 
 .c-SocialList--speaker {
-  @iconsize: @g-vru;
   --iconsize: var(--vru);
-  // HACK fallbacks
-  .c-SocialList__Link {
-    width:  @iconsize;
-    height: @iconsize;
-  }
 }
 
 .c-SocialList--highlight {
   width: 50%;
-  @iconsize: 10vw;
-  --iconsize: @iconsize; // TODO update after fallback
-  // HACK fallbacks
-  .c-SocialList__Link {
-    width:  @iconsize;
-    height: @iconsize;
-  }
+  --iconsize: 10vw;
   --icon-color: var(--color-gray_dk);
   --icon-color-hover: var(--color-secondary);
   .c-Banner & {
