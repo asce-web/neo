@@ -64,6 +64,8 @@
   margin-right: auto;
   color: @g-color-gray_dk-shade2; // HACK fallback
   color: var(--color-gray_dk-shade2, @g-color-gray_dk-shade2); // override if inside Banner
+  text-shadow: none; // HACK fallback
+  text-shadow: initial; // override `.c-Banner`
 }
 
 @p-rw: 1px;
