@@ -55,6 +55,48 @@
     .-pv-1 { padding-top   : 1 * @p-vru;            padding-bottom: 1 * @p-vru; }
     .-pv-2 { padding-top   : 2 * @p-vru;            padding-bottom: 2 * @p-vru; }
     //**** end ### bangs ****//
+  blockquote {
+    padding: (@p-vru / 2) 0;
+  }
+  th,
+  td {
+    padding: (0.5 * 0.75 * @p-vru) 0.5rem;
+  }
+  .o-ListStacked__Item {
+    margin-bottom: @p-vru;
+  }
+  @media (max-width: 44.999em) {
+    .c-Sitemap__Item:not(:last-child) {
+      margin-bottom: (20/16 * @p-vru);
+    }
+  }
+  .c-ASCELogo {
+    margin-top: (14/16 * @p-vru);
+  }
+  .c-ProgramHn {
+    margin-bottom: @p-vru;
+  }
+  .c-TimeBlock__Times,
+  .c-TimeBlock__Desc {
+    padding-bottom: (2 * @p-vru);
+  }
+  .c-Pass__Foot .c-Pass__Period::after {
+    // for IE11+ supporting rems on pseudo-elements
+    margin: (0.75 * @p-vru) 0;
+  }
+  .c-DateBlock > .c-DateBlock__Desc {
+    margin-bottom: @p-vru;
+  }
+  .c-SupporterBlock {
+    margin-bottom: (2 * @p-vru);
+  }
+  .c-SupporterBlock__List__Item {
+    margin: 0 1rem @p-vru;
+  }
+  .c-Alert__Hn {
+    margin-bottom: @p-vru;
+    padding-top: 0;
+  }
   //---- end ## Vertical rhythm unit ----//
 
 
