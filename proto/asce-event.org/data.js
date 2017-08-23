@@ -25,6 +25,12 @@ var ImportantDate      = require('../../_models/ImportantDate.class.js')
       .keywords(['ASCE', 'civil engineering', 'convention'])
       .logo('files/site-logo-white.png')
       .colors(Color.fromString('#3fae2a'), Color.fromString('#00a1e1'))
+      .images({
+        hero: '/proto/asce-event.org/files/cable-car.jpg',
+        city: '/proto/asce-event.org/files/portland.jpg',
+        prev: '/proto/asce-event.org/files/new-york.jpg',
+        next: '/proto/asce-event.org/files/new-orleans.jpg',
+      })
       .init()
 
     site
@@ -85,16 +91,18 @@ var ImportantDate      = require('../../_models/ImportantDate.class.js')
     // REVIEW TODO move below Speakers
     site.currentConference()
       .addSupporterLevel(new SupporterLevel('Platinum' ).size('lrg'))
-      .addSupporterLevel(new SupporterLevel('Corporate').size('med'))
+      .addSupporterLevel(new SupporterLevel('Corporate').size('lrg'))
       .addSupporterLevel(new SupporterLevel('Silver'   ).size('med'))
-      .addSupporterLevel(new SupporterLevel('Bronze'   ).size('sml'))
-      .addSupporterLevel(new SupporterLevel('Copper'   ).size('sml'))
-      .addSupporterLevel(new SupporterLevel('Charter Members').size('lrg'))
-      .addSupporterLevel(new SupporterLevel('Cooperating Organizations').size('lrg'))
+      .addSupporterLevel(new SupporterLevel('Bronze'   ).size('med'))
+      .addSupporterLevel(new SupporterLevel('Copper'   ).size('med'))
+      .addSupporterLevel(new SupporterLevel('Charter Members').size('sml'))
+      .addSupporterLevel(new SupporterLevel('Cooperating Organizations').size('sml'))
 
     site.currentConference()
-      .addSupporterLevelQueue('Sponsors', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper'])
-      .addSupporterLevelQueue('Orgs', ['Charter Members', 'Cooperating Organizations'])
+      .addSupporterLevelQueue('sponsors', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper'])
+      .addSupporterLevelQueue('orgs', ['Charter Members', 'Cooperating Organizations'])
+      .addSupporterLevelQueue('home-page', ['Platinum', 'Silver', 'Bronze'])
+      .addSupporterLevelQueue('sponsors-page', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper', 'Charter Members', 'Cooperating Organizations'])
 
     site.currentConference()
       .addSupporter(new Supporter('ASCE Foundation')

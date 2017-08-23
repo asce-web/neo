@@ -8,7 +8,7 @@ block actionButtons
   ], 'c-Btn c-Btn--hilite c-Btn--primary')
 
 block prepend mainBody
-  +highlight()
+  +callout()
     include _includes/_colorpickers.pug
     +colorPickers('#3fae2a', '#00a1e1')
 
@@ -16,26 +16,26 @@ block mainMinimal
   include _includes/_text-block.pug
 
 block callouts
-  +highlight().c-Banner
-    include ../default/_includes/highlights/_important-dates.pug
-  +highlight()
-    include ../default/_includes/highlights/_registration.pug
-  +highlight().c-Banner
-    include ../default/_includes/highlights/_program.pug
-  +highlight().c-Banner.c-Banner--loc.-ta-c
-    include _includes/highlights/_location.pug
-  +highlight()
-    include ../default/_includes/highlights/_speakers.pug
-  +highlight().c-Banner
-    include _includes/highlights/_co-chairs.pug
-  +highlight()
-    include ../default/_includes/highlights/_social.pug
-  +highlight().c-Banner
-    include _includes/highlights/_volunteer.pug
-  +highlight()
-    include ../default/_includes/highlights/_mobile.pug
-  +highlight().c-Banner
-    include ../default/_includes/highlights/_contact.pug
+  +callout().c-Banner
+    include ../default/_includes/callouts/_important-dates.pug
+  +callout()
+    include ../default/_includes/callouts/_registration.pug
+  +callout().c-Banner
+    include ../default/_includes/callouts/_program.pug
+  +callout().c-Banner.c-Banner--blur.c-Banner--city
+    include _includes/callouts/_location.pug
+  +callout()
+    include ../default/_includes/callouts/_speakers.pug
+  +callout().c-Banner
+    include _includes/callouts/_co-chairs.pug
+  +callout()
+    include ../default/_includes/callouts/_social.pug
+  +callout().c-Banner
+    include _includes/callouts/_volunteer.pug
+  +callout()
+    include ../default/_includes/callouts/_mobile.pug
+  +callout().c-Banner
+    include ../default/_includes/callouts/_contact.pug
 
 block append scripts
   script(src="js/home.b.js")
