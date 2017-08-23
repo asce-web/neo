@@ -218,6 +218,24 @@
   //-------------------------------//
   // ## Other custom props
   //-------------------------------//
+  .o-Runner {
+                               padding: @g-boxpadd_micr;
+    @media (min-width: 30em) { padding: @g-boxpadd_mill; }
+    @media (min-width: 45em) { padding: @g-boxpadd_norm; }
+    @media (min-width: 60em) { padding: @g-boxpadd_kilo; }
+  }
+  .o-Runner--pageHeader {
+                               padding: @g-boxpadd_norm;
+    @media (min-width: 30em) { padding: @g-boxpadd_norm; }
+    @media (min-width: 45em) { padding: @g-boxpadd_mega; }
+    @media (min-width: 60em) { padding: @g-boxpadd_giga; }
+  }
+  .o-Runner--highlight {
+                               padding: @g-boxpadd_norm;
+    @media (min-width: 30em) { padding: @g-boxpadd_kilo; }
+    @media (min-width: 45em) { padding: @g-boxpadd_giga; }
+    @media (min-width: 60em) { padding: @g-boxpadd_peta; }
+  }
   .c-Banner {
     h1, h2, h3, h4, h5, h6 {
       color: inherit;
