@@ -1,0 +1,130 @@
+
+/*################################*\
+    neo  |  _hack.ie.less
+\*################################*/
+
+
+// IE fixes go here. These styles should *only* be rendered on IE!
+// Using the -ms-high-contrast quirk: only IE supports -ms-high-contrast
+///////////////////////////////////////////////////////////////////////////////
+
+
+// Table of Contents
+// # CUSTOM PROPERTY FALLBACKS
+//   ## Vertical rhythm unit
+//     ### xmeter
+//     ### bangs
+//   ## Supporter logo sizes
+//   ## Site color schemes
+//     ### mixins
+//   ## Other custom props
+
+
+@media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+//+++++++++++++++++++++++++++++++//
+// # CUSTOM PROPERTY FALLBACKS
+//+++++++++++++++++++++++++++++++//
+  //-------------------------------//
+  // ## Vertical rhythm unit
+  //-------------------------------//
+  @p-vru: 1.5rem;
+    //********************************//
+    //  ### xmeter
+    //********************************//
+    h1, h2, h3, h4, h5, h6,
+    p, pre, figure, blockquote,
+    ol, ul, dl,
+    table,
+    form, fieldset, textarea,
+    details {
+      margin-bottom: @p-vru;
+    }
+    h1 {
+      padding-top: @p-vru;
+    }
+    //**** end ### xmeter ****//
+    //********************************//
+    //  ### bangs
+    //********************************//
+    .-mt-1 {  margin-top   : 1 * @p-vru; } .-mb-1 {  margin-bottom: 1 * @p-vru; }
+    .-mt-2 {  margin-top   : 2 * @p-vru; } .-mb-2 {  margin-bottom: 2 * @p-vru; }
+    .-mv-1 {  margin-top   : 1 * @p-vru;             margin-bottom: 1 * @p-vru; }
+    .-mv-2 {  margin-top   : 2 * @p-vru;             margin-bottom: 2 * @p-vru; }
+    .-pt-1 { padding-top   : 1 * @p-vru; } .-pb-1 { padding-bottom: 1 * @p-vru; }
+    .-pt-2 { padding-top   : 2 * @p-vru; } .-pb-2 { padding-bottom: 2 * @p-vru; }
+    .-pv-1 { padding-top   : 1 * @p-vru;            padding-bottom: 1 * @p-vru; }
+    .-pv-2 { padding-top   : 2 * @p-vru;            padding-bottom: 2 * @p-vru; }
+    //**** end ### bangs ****//
+  //---- end ## Vertical rhythm unit ----//
+
+
+  //-------------------------------//
+  // ## Supporter logo sizes
+  //-------------------------------//
+  // sizing variables (copied from `html` custom props)
+  @p-supporter-logo-lrg-s-width : 120px; @p-supporter-logo-lrg-s-height : 65px ;
+  @p-supporter-logo-med-s-width : 90px ; @p-supporter-logo-med-s-height : 48px ;
+  @p-supporter-logo-sml-s-width : 68px ; @p-supporter-logo-sml-s-height : 36px ;
+  @p-supporter-logo-lrg-sK-width: 250px; @p-supporter-logo-lrg-sK-height: 110px;
+  @p-supporter-logo-med-sK-width: 188px; @p-supporter-logo-med-sK-height: 82px ;
+  @p-supporter-logo-sml-sK-width: 140px; @p-supporter-logo-sml-sK-height: 62px ;
+  @p-supporter-logo-lrg-sG-width: 360px; @p-supporter-logo-lrg-sG-height: 160px;
+  @p-supporter-logo-med-sG-width: 270px; @p-supporter-logo-med-sG-height: 120px;
+  @p-supporter-logo-sml-sG-width: 202px; @p-supporter-logo-sml-sG-height: 90px ;
+  // (private) mixin for setting the dimensions of logos
+  .p-dimensions(@x; @y) {
+    .c-SupporterBlock__List__Item {
+      flex: 0 1 @x;
+    }
+    .c-SupporterBlock__Logo {
+      max-height: @y;
+    }
+  }
+  .c-SupporterBlock--lrg {
+    .p-dimensions(@p-supporter-logo-lrg-s-width; @p-supporter-logo-lrg-s-height);
+    @media (min-width: 30em) {
+      .p-dimensions(@p-supporter-logo-lrg-sK-width; @p-supporter-logo-lrg-sK-height);
+    }
+    @media (min-width: 60em) {
+      .p-dimensions(@p-supporter-logo-lrg-sG-width; @p-supporter-logo-lrg-sG-height);
+    }
+  }
+  .c-SupporterBlock--med {
+    .p-dimensions(@p-supporter-logo-med-s-width; @p-supporter-logo-med-s-height);
+    @media (min-width: 30em) {
+      .p-dimensions(@p-supporter-logo-med-sK-width; @p-supporter-logo-med-sK-height);
+    }
+    @media (min-width: 60em) {
+      .p-dimensions(@p-supporter-logo-med-sG-width; @p-supporter-logo-med-sG-height);
+    }
+  }
+  .c-SupporterBlock--sml {
+    .p-dimensions(@p-supporter-logo-sml-s-width; @p-supporter-logo-sml-s-height);
+    @media (min-width: 30em) {
+      .p-dimensions(@p-supporter-logo-sml-sK-width; @p-supporter-logo-sml-sK-height);
+    }
+    @media (min-width: 60em) {
+      .p-dimensions(@p-supporter-logo-sml-sG-width; @p-supporter-logo-sml-sG-height);
+    }
+  }
+  //---- end ## Supporter logo sizes ----//
+
+
+  //-------------------------------//
+  // ## Site color schemes
+  //-------------------------------//
+    //********************************//
+    //  ### mixins
+    //********************************//
+    //**** end ### mixins ****//
+  //---- end ## Site Color Schemes ----//
+
+
+  //-------------------------------//
+  // ## Other custom props
+  //-------------------------------//
+  //---- end ## Other custom props ----//
+//++++ end # CUSTOM PROPERTY FALLBACKS ++++//
+
+
+}

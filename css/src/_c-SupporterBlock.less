@@ -21,26 +21,6 @@ html {
   }
 }
 
-// sizing variables (copied from `html` custom props)
-@p-supporter-logo-lrg-s-width : 120px; @p-supporter-logo-lrg-s-height : 65px ;
-@p-supporter-logo-med-s-width : 90px ; @p-supporter-logo-med-s-height : 48px ;
-@p-supporter-logo-sml-s-width : 68px ; @p-supporter-logo-sml-s-height : 36px ;
-@p-supporter-logo-lrg-sK-width: 250px; @p-supporter-logo-lrg-sK-height: 110px;
-@p-supporter-logo-med-sK-width: 188px; @p-supporter-logo-med-sK-height: 82px ;
-@p-supporter-logo-sml-sK-width: 140px; @p-supporter-logo-sml-sK-height: 62px ;
-@p-supporter-logo-lrg-sG-width: 360px; @p-supporter-logo-lrg-sG-height: 160px;
-@p-supporter-logo-med-sG-width: 270px; @p-supporter-logo-med-sG-height: 120px;
-@p-supporter-logo-sml-sG-width: 202px; @p-supporter-logo-sml-sG-height: 90px ;
-
-// (private) mixin for setting the dimensions of logos.
-.p-dimensions(@x; @y) {
-  .c-SupporterBlock__List__Item {
-    flex: 0 1 @x;
-  }
-  .c-SupporterBlock__Logo {
-    max-height: @y;
-  }
-}
 
 // The Supporter Block
 //
@@ -122,38 +102,14 @@ html {
   margin-bottom: calc(~'2 * var(--vru)');
 }
 .c-SupporterBlock--lrg {
-  // HACK fallbacks below:
-  .p-dimensions(@p-supporter-logo-lrg-s-width; @p-supporter-logo-lrg-s-height);
-  @media screen and (min-width: 30em) {
-    .p-dimensions(@p-supporter-logo-lrg-sK-width; @p-supporter-logo-lrg-sK-height);
-  }
-  @media screen and (min-width: 60em) {
-    .p-dimensions(@p-supporter-logo-lrg-sG-width; @p-supporter-logo-lrg-sG-height);
-  }
 }
 .c-SupporterBlock--med {
   --supporter-logo-width : var(--supporter-logo-med-width );
   --supporter-logo-height: var(--supporter-logo-med-height);
-  // HACK fallbacks below:
-  .p-dimensions(@p-supporter-logo-med-s-width; @p-supporter-logo-med-s-height);
-  @media screen and (min-width: 30em) {
-    .p-dimensions(@p-supporter-logo-med-sK-width; @p-supporter-logo-med-sK-height);
-  }
-  @media screen and (min-width: 60em) {
-    .p-dimensions(@p-supporter-logo-med-sG-width; @p-supporter-logo-med-sG-height);
-  }
 }
 .c-SupporterBlock--sml {
   --supporter-logo-width : var(--supporter-logo-sml-width );
   --supporter-logo-height: var(--supporter-logo-sml-height);
-  // HACK fallbacks below:
-  .p-dimensions(@p-supporter-logo-sml-s-width; @p-supporter-logo-sml-s-height);
-  @media screen and (min-width: 30em) {
-    .p-dimensions(@p-supporter-logo-sml-sK-width; @p-supporter-logo-sml-sK-height);
-  }
-  @media screen and (min-width: 60em) {
-    .p-dimensions(@p-supporter-logo-sml-sG-width; @p-supporter-logo-sml-sG-height);
-  }
 }
 
 .c-SupporterBlock__Hn {
@@ -187,13 +143,13 @@ html {
 }
 
 .c-SupporterBlock__List__Item {
-  flex: 0 1 var(--supporter-logo-width) !important; // specificity HACK due to calls of .p-dimensions()
+  flex: 0 1 var(--supporter-logo-width);
   margin: 0 1rem @g-vru; // HACK fallback
   margin: 0 1rem var(--vru);
 }
 
 .c-SupporterBlock__Logo {
-  max-height: var(--supporter-logo-height) !important; // specificity HACK due to calls of .p-dimensions()
+  max-height: var(--supporter-logo-height);
   transition: filter 1000ms;
   // &:not(:hover, :focus) // CHANGED syntax not supported yet
   &:not(:hover):not(:focus) {
