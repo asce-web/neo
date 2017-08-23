@@ -65,10 +65,6 @@
 .c-Speaker {
   .ticket();
   position: relative; // for the background image
-  .c-Speaker__JobTitle,
-  .c-Speaker__Affiliation { // HACK specificity override `.font-size-mod() >> p`
-    margin-bottom: 0;
-  }
 }
 
 .c-Speaker__Img {
@@ -117,6 +113,7 @@
 
 .c-Speaker__JobTitle,
 .c-Speaker__Affiliation {
+  margin-bottom: 0; // override base p
   font-weight: 300;
 }
 

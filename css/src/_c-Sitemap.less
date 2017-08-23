@@ -69,7 +69,7 @@
 // Styleguide Components.Sitemap
 
 .c-Sitemap {
-  margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
+  margin-bottom: 0; // override base ul
   .menufont();
   @media not all and (min-width: 45em) {
     flex-direction: column;
@@ -87,7 +87,7 @@
 }
 
 .c-Sitemap__Sub {
-  margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
+  margin-bottom: 0; // override base ul
   font-weight: 300;
   .font-size-el(16/20);
   text-transform: initial; // HACK fallback for `unset`

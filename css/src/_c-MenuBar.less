@@ -18,7 +18,7 @@
 @p-trans_dura: 250ms;
 .c-MenuBar {
   justify-content: flex-start; // override .o-Flex `space-between`
-  margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
+  margin-bottom: 0; // override base ul
   .menufont();
   color: @g-color-gray_lt-tint2; // HACK fallback
   color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);

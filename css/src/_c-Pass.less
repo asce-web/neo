@@ -77,20 +77,17 @@
   .ticket();
   text-align: center;
   overflow: hidden;
-  .c-Pass__Period__Hn {
-    margin-bottom: 0; // HACK override `.font-size-mod() >> h1`
-  }
 }
 
 .c-Pass__Head,
 .c-Pass__Body,
 .c-Pass__Foot {
   padding: @g-boxpadd_norm_v @g-boxpadd_mill_h;
+}
+
+.c-Pass__Head {
   & > *:last-child {
     margin-bottom: 0; // override base typog
-  }
-  & > h1:first-child {
-    padding-top: 0; // override base h1
   }
 }
 
@@ -110,6 +107,7 @@
 }
 
 .c-Pass__Hn {
+  padding-top: 0; // override base h1
   .font-size-el(@g-font-size-h2);
 }
 
@@ -155,9 +153,6 @@
   & > *:last-child {
     margin-bottom: 0; // override base typog
   }
-  & > h1:first-child {
-    padding-top: 0; // override base h1
-  }
   .c-Pass__Foot & {
     flex: 1; // override Flex__Item (auto)
     &:not(:last-child) {
@@ -181,6 +176,8 @@
 }
 
 .c-Pass__Period__Hn {
+  margin-bottom: 0; // override base h1
+  padding-top: 0;   // override base h1
   font-weight: 700; // override base 900
   .font-size-el(@g-font-size-h4);
   .c-Pass__Body & {

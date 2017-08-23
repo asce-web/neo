@@ -56,7 +56,7 @@
       text-decoration: none;
       background: transparent;
       border: 0;
-      opacity: 1 !important; // specificity HACK override a:not([href]) from xmeter
+      opacity: 1 !important;
     }
   }
   //---- end ## `initial` ----//
@@ -133,6 +133,9 @@
   .c-Pass__Foot .c-Pass__Period::after {
     // for IE11+ supporting rems on pseudo-elements
     margin: (0.75 * @p-vru) 0;
+  }
+  .c-DateBlock__Item {
+    margin-bottom: @p-vru;
   }
   .c-DateBlock > .c-DateBlock__Desc {
     margin-bottom: @p-vru;
