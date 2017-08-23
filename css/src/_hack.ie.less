@@ -10,6 +10,9 @@
 
 
 // Table of Contents
+// # IE QUIRK FALLBACKS
+//   ## `initial`
+//   ## Pseudo Rems
 // # CUSTOM PROPERTY FALLBACKS
 //   ## Vertical rhythm unit
 //     ### xmeter
@@ -21,6 +24,53 @@
 
 
 @media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+//+++++++++++++++++++++++++++++++//
+// # IE QUIRK FALLBACKS
+//+++++++++++++++++++++++++++++++//
+  //-------------------------------//
+  // ## `initial`
+  //-------------------------------//
+  .c-SiteTitle__Name,
+  .c-SiteTitle__Slogan {
+    padding-left: 0;
+  }
+  .c-Sitemap__Sub {
+    text-transform: none;
+  }
+  .c-Pass__Fine {
+    white-space: normal;
+  }
+  .c-DateBlock {
+    text-shadow: none;
+  }
+  .c-Btn {
+    text-shadow: none;
+  }
+  .c-LinkCamo {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &._hover,
+    &._active {
+      text-decoration: none;
+      background: transparent;
+      border: 0;
+      opacity: 1 !important; // specificity HACK override a:not([href]) from xmeter
+    }
+  }
+  //---- end ## `initial` ----//
+  //-------------------------------//
+  // ## Pseudo Rems
+  //-------------------------------//
+  // IE10 does not support rems on pseudo-elements
+  .c-Pass__Foot .c-Pass__Period::after {
+    margin: (0.75 * 24px) 0;
+  }
+  //---- end ## Pseudo Rems ----//
+//++++ end # IE QUIRK FALLBACKS ++++//
+
+
 //+++++++++++++++++++++++++++++++//
 // # CUSTOM PROPERTY FALLBACKS
 //+++++++++++++++++++++++++++++++//
