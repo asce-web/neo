@@ -1,11 +1,11 @@
 
 /*################################*\
-    neo  |  _c-Btn.less
+    neo  |  _c-Button.less
 \*################################*/
 
 
 // Table of Contents
-// # ALL BUTTON STYLES (.c-Btn)
+// # ALL BUTTON STYLES (.c-Button)
 // # BUTTON COLOR STYLES
 // # BUTTON TEXTURE STYLES
 // # BUTTON STRUCTURE STYLES
@@ -53,31 +53,31 @@
 //
 // Markup:
 // <ul class="o-List o-Flex">
-//   <li class="o-List__Item o-Flex__Item"><a class="c-Btn {{ modifier_class }}" href="#0">link</a></li>
-//   <li class="o-List__Item o-Flex__Item"><a class="c-Btn {{ modifier_class }} _hover" href="#0">link hover</a></li>
-//   <li class="o-List__Item o-Flex__Item"><a class="c-Btn {{ modifier_class }} _active" href="#0">link active</a></li>
-//   <li class="o-List__Item o-Flex__Item"><a class="c-Btn {{ modifier_class }}">link disabled</a></li>
+//   <li class="o-List__Item o-Flex__Item"><a class="c-Button {{ modifier_class }}" href="#0">link</a></li>
+//   <li class="o-List__Item o-Flex__Item"><a class="c-Button {{ modifier_class }} _hover" href="#0">link hover</a></li>
+//   <li class="o-List__Item o-Flex__Item"><a class="c-Button {{ modifier_class }} _active" href="#0">link active</a></li>
+//   <li class="o-List__Item o-Flex__Item"><a class="c-Button {{ modifier_class }}">link disabled</a></li>
 // </ul>
 // <ul class="o-List o-Flex">
-//   <li class="o-List__Item o-Flex__Item"><button class="c-Btn {{ modifier_class }}">button</a></li>
-//   <li class="o-List__Item o-Flex__Item"><button class="c-Btn {{ modifier_class }} _hover">button hover</a></li>
-//   <li class="o-List__Item o-Flex__Item"><button class="c-Btn {{ modifier_class }} _active">button active</a></li>
-//   <li class="o-List__Item o-Flex__Item"><button class="c-Btn {{ modifier_class }}" disabled="">button disabled</a></li>
+//   <li class="o-List__Item o-Flex__Item"><button class="c-Button {{ modifier_class }}">button</a></li>
+//   <li class="o-List__Item o-Flex__Item"><button class="c-Button {{ modifier_class }} _hover">button hover</a></li>
+//   <li class="o-List__Item o-Flex__Item"><button class="c-Button {{ modifier_class }} _active">button active</a></li>
+//   <li class="o-List__Item o-Flex__Item"><button class="c-Button {{ modifier_class }}" disabled="">button disabled</a></li>
 // </ul>
 //
-// .c-Btn--dark      - (color style) generic button but dark
-// .c-Btn--primary   - (color style) site primary color
-// .c-Btn--secondary - (color style) site secondary color
-// .c-Btn--ghost     - (color style) ghost button, for light backgrounds
-// .c-Btn--ghost.c-Btn--ghost--dark - (color style) ghost, for dark backgrounds
-// .c-Btn--glossy    - (texture style) shiny & 3D. Mix with any color style as needed.
-// .c-Btn--hilite    - (sizing style) group of large buttons in a highlight block ("callout"). Use with any color or texture style.
-// .c-Btn--inline    - (sizing style) buttons in-line with text. Use with any color or texture style.
+// .c-Button--dark      - (color style) generic button but dark
+// .c-Button--primary   - (color style) site primary color
+// .c-Button--secondary - (color style) site secondary color
+// .c-Button--ghost     - (color style) ghost button, for light backgrounds
+// .c-Button--ghost.c-Button--ghost--dark - (color style) ghost, for dark backgrounds
+// .c-Button--glossy    - (texture style) shiny & 3D. Mix with any color style as needed.
+// .c-Button--hilite    - (sizing style) group of large buttons in a highlight block ("callout"). Use with any color or texture style.
+// .c-Button--inline    - (sizing style) buttons in-line with text. Use with any color or texture style.
 //
 // Weight: 17
 //
-// Styleguide Components.Btn
-.c-Btn {
+// Styleguide Components.Button
+.c-Button {
   display: inline-block;
   padding: @g-boxpadd_mill;
   font-weight: 700;
@@ -107,7 +107,7 @@
 //++++++++++++++++++++++++++++++++//
 //    # BUTTON COLOR STYLES
 //++++++++++++++++++++++++++++++++//
-.c-Btn {
+.c-Button {
   & {
     --button-lite-color     : var(--color-gray_lt         , @g-color-gray_lt         );
     --button-lite-text      : var(--color-gray_dk-shade2  , @g-color-gray_dk-shade2  );
@@ -140,29 +140,29 @@
 }
 
 
-.c-Btn {
+.c-Button {
   --button-color: var(--button-lite-color);
   --button-text : var(--button-lite-text);
   background-color: var(--button-color);
   color: var(--button-text);
 }
 
-.c-Btn--dark {
+.c-Button--dark {
   --button-color: var(--button-dark-color);
   --button-text : var(--button-dark-text);
 }
 
-.c-Btn--primary {
+.c-Button--primary {
   --button-color: var(--button-primary-color);
   --button-text : var(--button-primary-text);
 }
 
-.c-Btn--secondary {
+.c-Button--secondary {
   --button-color: var(--button-secondary-color);
   --button-text : var(--button-secondary-text);
 }
 
-.c-Btn--ghost {
+.c-Button--ghost {
   --button-color: var(--button-ghost-color);
   --button-text : var(--button-ghost-text);
   border: 2px solid currentColor;
@@ -178,7 +178,7 @@
   }
 }
 
-.c-Btn--ghost--dark {
+.c-Button--ghost--dark {
   &:hover,
   &:focus,
   &._hover {
@@ -196,7 +196,7 @@
 //++++++++++++++++++++++++++++++++//
 //    # BUTTON TEXTURE STYLES
 //++++++++++++++++++++++++++++++++//
-.c-Btn--glossy {
+.c-Button--glossy {
   @bs_x:     0;
   @bs_y:     1em;
   @bs_blur:  0;
@@ -215,13 +215,13 @@
 //++++++++++++++++++++++++++++++++//
 //    # BUTTON STRUCTURE STYLES
 //++++++++++++++++++++++++++++++++//
-.c-Btn--hilite {
+.c-Button--hilite {
   padding: @g-boxpadd_mill_v @g-boxpadd_kilo_h;
   border-radius: 0.5rem;
   font-size: 1.5em;
 }
 
-.c-Btn--inline {
+.c-Button--inline {
   display: inline;
   padding: 0 @g-boxpadd_micr_h;
   font-size: 0.75em;
