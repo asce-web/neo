@@ -98,10 +98,7 @@
   font-family: inherit;
   font-weight: 900;
   text-align: center;
-  &,
-  .c-Banner & { // HACK specificity TODO remove when .c-Banner >> h1 can be removed
-  color: var(--color-gray_dk);
-  }
+  color: var(--color-gray_dk, @g-color-gray_dk);
   // visualization line separator
   @supports (flex-wrap: wrap) {
     display: flex;
