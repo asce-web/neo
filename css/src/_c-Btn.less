@@ -78,7 +78,6 @@
 //
 // Styleguide Components.Btn
 .c-Btn {
-  // all button styles
   display: inline-block;
   padding: @g-boxpadd_mill;
   font-weight: 700;
@@ -92,30 +91,6 @@
   button&:disabled {
     opacity: 0.75; // override xmeter
     cursor: not-allowed;
-  }
-}
-
-
-//++++++++++++++++++++++++++++++++//
-//    # BUTTON COLOR STYLES
-//++++++++++++++++++++++++++++++++//
-.c-Btn {
-  // generic button color styles
-  background-color: var(--button-color, @g-color-gray_lt);
-  color: var(--button-text, @g-color-gray_dk-shade2);
-  &:hover,
-  &:focus,
-  &._hover {
-    background-color: var(--button-color-hover, @g-color-gray_lt-tint1);
-    color: var(--button-text-hover, @g-color-gray_dk-shade2);
-  }
-  &:active,
-  &._active {
-    background-color: var(--button-color-active, @g-color-gray_lt-shade1);
-    color: var(--button-text-active, @g-color-gray_dk-shade2);
-  }
-  a&:not([href]),
-  button&:disabled {
     &,
     &:hover,
     &:focus,
@@ -128,66 +103,92 @@
   }
 }
 
+
+//++++++++++++++++++++++++++++++++//
+//    # BUTTON COLOR STYLES
+//++++++++++++++++++++++++++++++++//
 .c-Btn {
-  // specific button color styles
-  --button-color:        var(--color-gray_lt);
-  --button-color-hover:  var(--color-gray_lt-tint1);
-  --button-color-active: var(--color-gray_lt-shade1);
-  --button-text:         var(--color-gray_dk-shade2);
-  --button-text-hover:   var(--button-text);
-  --button-text-active:  var(--button-text);
+  & {
+    --button-lite-color     : var(--color-gray_lt         , @g-color-gray_lt         );
+    --button-lite-text      : var(--color-gray_dk-shade2  , @g-color-gray_dk-shade2  );
+    --button-dark-color     : var(--color-gray_dk         , @g-color-gray_dk         );
+    --button-dark-text      : var(--color-gray_lt-tint2   , @g-color-gray_lt-tint2   );
+    --button-primary-color  : var(--color-primary-tint1   , @g-color-primary-tint1   );
+    --button-primary-text   : var(--color-gray_lt-tint2   , @g-color-gray_lt-tint2   );
+    --button-secondary-color: var(--color-secondary-shade1, @g-color-secondary-shade1);
+    --button-secondary-text : var(--button-primary-text);
+
+    --button-ghost-color: transparent;
+    --button-ghost-text : currentColor;
+  }
+  &:hover,
+  &:focus,
+  &._hover {
+    --button-lite-color     : var(--color-gray_lt-tint1 , @g-color-gray_lt-tint1 );
+    --button-dark-color     : var(--color-gray_dk-tint1 , @g-color-gray_dk-tint1 );
+    --button-primary-color  : var(--color-primary-tint2 , @g-color-primary-tint2 );
+    --button-secondary-color: var(--color-secondary     , @g-color-secondary     );
+
+  }
+  &:active,
+  &._active {
+    --button-lite-color     : var(--color-gray_lt-shade1  , @g-color-gray_lt-shade1  );
+    --button-dark-color     : var(--color-gray_dk-shade1  , @g-color-gray_dk-shade1  );
+    --button-primary-color  : var(--color-primary         , @g-color-primary         );
+    --button-secondary-color: var(--color-secondary-shade2, @g-color-secondary-shade2);
+  }
+}
+
+
+.c-Btn {
+  --button-color: var(--button-lite-color);
+  --button-text : var(--button-lite-text);
+  background-color: var(--button-color);
+  color: var(--button-text);
 }
 
 .c-Btn--dark {
-  --button-color:        var(--color-gray_dk);
-  --button-color-hover:  var(--color-gray_dk-tint1);
-  --button-color-active: var(--color-gray_dk-shade1);
-  --button-text: var(--color-gray_lt-tint2);
-}
-
-.c-Btn--primary,
-.c-Btn--secondary {
-  --button-text: var(--color-gray_lt-tint2);
+  --button-color: var(--button-dark-color);
+  --button-text : var(--button-dark-text);
 }
 
 .c-Btn--primary {
-  --button-color:        var(--color-primary-tint1);
-  --button-color-hover:  var(--color-primary-tint2);
-  --button-color-active: var(--color-primary);
+  --button-color: var(--button-primary-color);
+  --button-text : var(--button-primary-text);
 }
 
 .c-Btn--secondary {
-  --button-color:        var(--color-secondary-shade1);
-  --button-color-hover:  var(--color-secondary);
-  --button-color-active: var(--color-secondary-shade2);
+  --button-color: var(--button-secondary-color);
+  --button-text : var(--button-secondary-text);
 }
 
 .c-Btn--ghost {
-  --button-color:        transparent;
-  --button-color-hover:  #222;
-  --button-color-active: var(--button-color);
-  --button-text-hover: #fff;
+  --button-color: var(--button-ghost-color);
+  --button-text : var(--button-ghost-text);
   border: 2px solid currentColor;
   &:hover,
   &:focus,
   &._hover {
+    // &:not(:active, ._active), // CHANGED selector not supported yet
     &:not(:active):not(._active) {
+      --button-ghost-color: @g-color-body-txt;
+      --button-ghost-text: @g-color-mast-txt;
       border-color: transparent;
     }
-  }
-  &,
-  &:active,
-  &._active {
-    color: inherit; // FIXME overriding `.c-Btn`
-    // we want the value of `--button-text` to be `inherit`, but
-    // we cannot set `--button-text: inherit;` because
-    // that will cause this to inherit the `--button-text` property
   }
 }
 
 .c-Btn--ghost--dark {
-  --button-color-hover: #fff;
-  --button-text-hover: #222;
+  &:hover,
+  &:focus,
+  &._hover {
+    // &:not(:active, ._active), // CHANGED selector not supported yet
+    &:not(:active):not(._active) {
+      --button-ghost-color: @g-color-mast-txt;
+      --button-ghost-text: @g-color-body-txt;
+      // border-color: transparent; // inherits through OOCSS from --ghost
+    }
+  }
 }
 //++++ end # BUTTON COLOR STYLES ++++//
 
