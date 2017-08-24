@@ -68,13 +68,12 @@
 //
 // Styleguide Components.Sitemap
 
-@p-fz: 20/16;
 .c-Sitemap {
-  margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
+  margin-bottom: 0; // override base ul
   .menufont();
   @media not all and (min-width: 45em) {
     flex-direction: column;
-    .font-size-mod(@p-fz);
+    .font-size-mod(20/16);
   }
 }
 
@@ -82,17 +81,16 @@
   flex: 0 0 auto;
   @media not all and (min-width: 45em) {
     &:not(:last-child) {
-      margin-bottom: (@p-fz * @g-vru); // HACK fallback // uses module vru
       margin-bottom: var(--vru);
     }
   }
 }
 
 .c-Sitemap__Sub {
-  margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
+  margin-bottom: 0; // override base ul
   font-weight: 300;
   .font-size-el(16/20);
-  text-transform: none; text-transform: initial; // HACK fallback
+  text-transform: initial; // HACK fallback for `unset`
   text-transform: unset; // override .menufont()
   @media screen and (min-width: 45em) {
     .font-size-el(12/14);

@@ -65,10 +65,6 @@
 .c-Speaker {
   .ticket();
   position: relative; // for the background image
-  .c-Speaker__JobTitle,
-  .c-Speaker__Affiliation { // HACK specificity override `.font-size-mod() >> p`
-    margin-bottom: 0;
-  }
 }
 
 .c-Speaker__Img {
@@ -86,14 +82,12 @@
   & > *:last-child {
     margin-bottom: 0; // override base typog
   }
-  & > h1:first-child {
-    padding-top: 0; // override base h1
-  }
 }
 
 .c-Speaker__Head {
-  text-align: center;
+  padding-top: 0; // override base h1
   white-space: nowrap;
+  text-align: center;
 }
 
 // .c-Speaker__Body {
@@ -117,6 +111,7 @@
 
 .c-Speaker__JobTitle,
 .c-Speaker__Affiliation {
+  margin-bottom: 0; // override base p
   font-weight: 300;
 }
 

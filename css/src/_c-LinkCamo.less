@@ -41,11 +41,11 @@
   &:active,
   &._hover,
   &._active {
-    // fallbacks (for IE)    // initial values (for non-IE)
-    text-decoration: none;   text-decoration: initial;
-    background: transparent; background:      initial;
-    border: 0;               border:          initial;
-    opacity: 1 !important;   opacity: initial !important; // specificity HACK override a:not([href]) from xmeter
+    // initial values
+    text-decoration: initial;
+    background:      initial;
+    border:          initial;
+    opacity: initial !important; // specificity HACK override a:not([href]) from xmeter
 
     // inherited values
     color: inherit;

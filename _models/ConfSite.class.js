@@ -1,5 +1,6 @@
 var Page = require('sitepage').Page
 var Color = require('csscolor').Color
+var Element = require('./Element.class.js')
 var ConfPage = require('./ConfPage.class.js')
 
 module.exports = class ConfSite extends Page {
@@ -62,7 +63,7 @@ module.exports = class ConfSite extends Page {
    * Set or get the colors for this site.
    * @param {Color=} $primary   a Color object for the primary color
    * @param {Color=} $secondary a Color object for the secondary color
-   * @return {(ConfSite|Object)} this || a CSS style object containg custom properties and color string values
+   * @return {(ConfSite|string)} this || a CSS string containg custom properties with color string values
    */
   colors($primary, $secondary) {
     if (arguments.length) {
@@ -220,7 +221,7 @@ module.exports = class ConfSite extends Page {
    * Generate a color palette and return a style object with custom properties.
    * @param  {Color} $primary   the primary color for the site
    * @param  {Color} $secondary the secondary color for the site
-   * @return {Object<string>} a style object containg custom properties and color string values
+   * @return {string} a valid CSS string; containg custom properties with color string values
    */
   static colorStyles($primary, $secondary) {
     let   primary_s2  =   $primary.darken(2/3, true)
@@ -246,7 +247,7 @@ module.exports = class ConfSite extends Page {
     let gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum(), false)
     let gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum(), false)
 
-    return {
+    return new Element('span').styleObj({
       '--color-primary'  :   $primary.toString('hex'),
       '--color-secondary': $secondary.toString('hex'),
       '--color-gray_dk'  :    gray_dk.toString('hex'),
@@ -271,6 +272,6 @@ module.exports = class ConfSite extends Page {
       '--color-gray_lt-shade1'  :   gray_lt_s1.toString('hex'),
       '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex'),
       '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex'),
-    }
+    }).style()
   }
 }

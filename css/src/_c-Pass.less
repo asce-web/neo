@@ -77,20 +77,17 @@
   .ticket();
   text-align: center;
   overflow: hidden;
-  .c-Pass__Period__Hn {
-    margin-bottom: 0; // HACK override `.font-size-mod() >> h1`
-  }
 }
 
 .c-Pass__Head,
 .c-Pass__Body,
 .c-Pass__Foot {
   padding: @g-boxpadd_norm_v @g-boxpadd_mill_h;
+}
+
+.c-Pass__Head {
   & > *:last-child {
     margin-bottom: 0; // override base typog
-  }
-  & > h1:first-child {
-    padding-top: 0; // override base h1
   }
 }
 
@@ -110,6 +107,7 @@
 }
 
 .c-Pass__Hn {
+  padding-top: 0; // override base h1
   .font-size-el(@g-font-size-h2);
 }
 
@@ -121,7 +119,6 @@
   font-weight: 300;
   font-style: italic;
   .font-size-el(14/16);
-  white-space: normal; // HACK fallback for IE `initial`
   white-space: initial;
 }
 
@@ -156,9 +153,6 @@
   & > *:last-child {
     margin-bottom: 0; // override base typog
   }
-  & > h1:first-child {
-    padding-top: 0; // override base h1
-  }
   .c-Pass__Foot & {
     flex: 1; // override Flex__Item (auto)
     &:not(:last-child) {
@@ -170,8 +164,6 @@
         display: block;
         position: absolute;
         right: 0; top: 0; bottom: 0;
-        margin: (0.75 * 24px) 0; // HACK fallback // IE10 does not support rems on pseudo-elements!!!
-        margin: (0.75 * @g-vru) 0; // HACK fallback // 0.75 from .ticket();
         margin: var(--vru) 0;
         border-right-width: @rw;
         opacity: 0.5;
@@ -184,6 +176,8 @@
 }
 
 .c-Pass__Period__Hn {
+  margin-bottom: 0; // override base h1
+  padding-top: 0;   // override base h1
   font-weight: 700; // override base 900
   .font-size-el(@g-font-size-h4);
   .c-Pass__Body & {
@@ -222,6 +216,5 @@
 .c-Pass__Price--featured {
   .font-size-el(2; 2);
   font-weight: 600;
-  color: @g-color-primary; // HACK fallback
   color: var(--color-primary, @g-color-primary);
 }

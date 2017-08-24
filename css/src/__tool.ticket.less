@@ -13,23 +13,13 @@
 
 .ticket() {
   .font-size-mod(0.75);
-
-  // HACK fallbacks:
-  box-shadow: 0 0 0 1px @g-color-gray_dk; // border hack
-  background-color: @g-color-gray_dk;
-  color: @g-color-gray_lt-tint2;
-
   box-shadow: 0 0 0 1px var(--color-gray_dk, @g-color-gray_dk); // border hack
   background-color: var(--color-gray_dk, @g-color-gray_dk);
   color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
-
-  text-shadow: none; // HACK fallback
-  text-shadow: initial; // override `.c-Banner`
+  text-shadow: none; text-shadow: initial; // override `.c-Banner`
 }
 
 .ticket-body() {
-  background-color: @g-color-gray_lt-tint2; // HACK fallback
-  color: @g-color-gray_dk-shade2; // HACK fallback
   background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   color: var(--color-gray_dk-shade2, @g-color-gray_dk-shade2);
 }

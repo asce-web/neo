@@ -59,7 +59,6 @@
 
 .c-TimeBlock__Times,
 .c-TimeBlock__Desc {
-  padding-bottom: (2*@g-vru); // HACK fallback
   padding-bottom: calc(~'2 * var(--vru)');
   @media not all and (min-width: 30em) {
     flex: 100%;
@@ -108,7 +107,6 @@
     display: block;
     position: absolute;
     box-shadow: 0 0 0 1em currentColor inset, 0 0 1em 0 currentColor;
-    color: @g-color-primary; // HACK fallbak
     color: var(--color-primary);
   }
   .c-TimeBlock__Times::before {

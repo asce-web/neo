@@ -18,9 +18,8 @@
 @p-trans_dura: 250ms;
 .c-MenuBar {
   justify-content: flex-start; // override .o-Flex `space-between`
-  margin-bottom: 0 !important; // HACK override `.font-size-mod() >> ul`
+  margin-bottom: 0; // override base ul
   .menufont();
-  color: @g-color-gray_lt-tint2; // HACK fallback
   color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   // REVIEW using .material-icons out of component
   // .material-icons {
@@ -33,8 +32,6 @@
   transition: background-color @p-trans_dura;
   &:hover,
   &._hover {
-    color: @g-color-gray_dk; // HACK fallback
-    background-color: @g-color-gray_lt-tint2; // HACK fallback
     color: var(--color-gray_dk, @g-color-gray_dk);
     background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   }
@@ -51,7 +48,6 @@
   &:hover,
   &:focus,
   &._hover {
-    color: @g-color-secondary; // HACK fallback
     color: var(--color-secondary, @g-color-secondary);
   }
 }
@@ -76,7 +72,6 @@
   padding: @g-boxpadd_mill;
   font-weight: 400;     // override `.menufont();`
   text-transform: none; // override `.menufont();`
-  background-color: @g-color-gray_lt-tint2; // HACK fallback
   background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   .transitions(transform, opacity; @p-trans_dura);
 }

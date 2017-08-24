@@ -29,9 +29,9 @@
 //    # SECTIONS
 //++++++++++++++++++++++++++++++++//
 body {
-  --heading-color: var(--color-primary);
-  --link-color: var(--color-secondary);
-  --link-color-hover: var(--color-gray_lt);
+  --heading-color: var(--color-primary, @g-color-primary);
+  --link-color: var(--color-secondary, @g-color-secondary);
+  --link-color-hover: var(--color-gray_lt, @g-color-gray_lt);
   font-family: @g-fontfam_body;
   background: #fff;
   color: #222;
@@ -39,8 +39,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: @g-fontfam_hn;
   font-weight: 900;
-  color: @g-color-primary; // HACK fallback
-  color: var(--heading-color, @g-color-primary);
+  color: var(--heading-color);
 }
 h1 {
   text-align: center;
@@ -60,8 +59,7 @@ h1 {
     .font-size-el(@g-font-size-mill);
   }
   blockquote {
-    padding: (@g-vru/2) 0; // HACK fallback
-    padding: calc(~'var(--vru)/2') 0;
+    padding: calc(~'var(--vru) / 2') 0;
     padding-left: 1.5rem;
     border-left: 0.5rem solid rgba(0,0,0,0.25);
     .font-size-el(@g-font-size-kilo);
@@ -94,7 +92,6 @@ h1 {
   }
   th,
   td {
-    padding: (0.5 * 0.75*@g-vru) 0.5rem; // HACK fallback
     padding: calc(~'0.5 * var(--vru)') 0.5rem;
     border: 0 solid @g-color-table-br;
     border-width: 0 0 1px;
@@ -110,14 +107,12 @@ h1 {
   //    ## Links
   //--------------------------------//
   a {
-    color: @g-color-secondary; // HACK fallback
-    color: var(--link-color, @g-color-secondary);
+    color: var(--link-color);
     .transitions(color, background-color; 125ms);
     &:hover,
     &:focus,
     &._hover {
-      color: @g-color-gray_lt; // HACK fallback
-      color: var(--link-color-hover, @g-color-gray_lt);
+      color: var(--link-color-hover);
     }
     &:active,
     &._active {

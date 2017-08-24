@@ -85,7 +85,6 @@
   white-space: nowrap;
   vertical-align: middle;
   border-radius: 0.25rem;
-  text-shadow: none; // HACK fallback
   text-shadow: initial; // override `.c-Banner`
   cursor: pointer;
   .transitions(color, background-color, border-color; 250ms);
@@ -102,22 +101,16 @@
 //++++++++++++++++++++++++++++++++//
 .c-Btn {
   // generic button color styles
-  background-color: @g-color-gray_lt; // HACK fallback
-  color: @g-color-gray_dk-shade2; // HACK fallback
   background-color: var(--button-color, @g-color-gray_lt);
   color: var(--button-text, @g-color-gray_dk-shade2);
   &:hover,
   &:focus,
   &._hover {
-    background-color: @g-color-gray_lt-tint1; // HACK fallback
-    // color: @g-color-gray_dk-shade2; // HACK fallback // don’t need: inherits from above
     background-color: var(--button-color-hover, @g-color-gray_lt-tint1);
     color: var(--button-text-hover, @g-color-gray_dk-shade2);
   }
   &:active,
   &._active {
-    background-color: @g-color-gray_lt-shade1; // HACK fallback
-    // color: @g-color-gray_dk-shade2; // HACK fallback // don’t need: inherits from above
     background-color: var(--button-color-active, @g-color-gray_lt-shade1);
     color: var(--button-text-active, @g-color-gray_dk-shade2);
   }
@@ -185,7 +178,10 @@
   &,
   &:active,
   &._active {
-    color: inherit; // HACK override `.c-Btn` // do not use `--button-text: inherit;`
+    color: inherit; // FIXME overriding `.c-Btn`
+    // we want the value of `--button-text` to be `inherit`, but
+    // we cannot set `--button-text: inherit;` because
+    // that will cause this to inherit the `--button-text` property
   }
 }
 

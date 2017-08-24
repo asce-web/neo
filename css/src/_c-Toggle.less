@@ -82,7 +82,6 @@ header noscript a {
 }
 
 .c-Toggle__Viz__Bar {
-  fill: @g-color-gray_lt-tint2; // HACK fallback
   fill: var(--color-gray_lt-tint2);
   transform-origin: center;
   .transitions(transform, fill; @p-trans_dura);
@@ -92,7 +91,6 @@ header noscript a {
   .c-Toggle__Check:checked ~ .c-Toggle__Viz & {
     &:nth-child(1) {
       transform: scale((24/18),12); // REVIEW magic numbers
-      fill: @g-color-gray_dk; // HACK fallback
       fill: var(--color-gray_dk);
     }
     &:nth-child(2),
