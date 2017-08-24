@@ -143,14 +143,12 @@
   .c-SocialList--highlight & {
     border-radius: 100%;
     background-size: ((2/3) * 100%) ((2/3) * 100%);
-    background-color: @g-color-gray_dk; // HACK fallback
     background-color: var(--icon-color, transparent);
     &:hover,
     &:focus,
     &._hover,
     &:active,
     &._active {
-      background-color: @g-color-secondary; // HACK fallback
       background-color: var(--icon-color-hover, transparent);
     }
   }

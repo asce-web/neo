@@ -29,9 +29,9 @@
 //    # SECTIONS
 //++++++++++++++++++++++++++++++++//
 body {
-  --heading-color: var(--color-primary);
-  --link-color: var(--color-secondary);
-  --link-color-hover: var(--color-gray_lt);
+  --heading-color: var(--color-primary, @g-color-primary);
+  --link-color: var(--color-secondary, @g-color-secondary);
+  --link-color-hover: var(--color-gray_lt, @g-color-gray_lt);
   font-family: @g-fontfam_body;
   background: #fff;
   color: #222;
@@ -39,8 +39,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: @g-fontfam_hn;
   font-weight: 900;
-  color: @g-color-primary; // HACK fallback
-  color: var(--heading-color, @g-color-primary);
+  color: var(--heading-color);
 }
 h1 {
   text-align: center;
@@ -108,14 +107,12 @@ h1 {
   //    ## Links
   //--------------------------------//
   a {
-    color: @g-color-secondary; // HACK fallback
-    color: var(--link-color, @g-color-secondary);
+    color: var(--link-color);
     .transitions(color, background-color; 125ms);
     &:hover,
     &:focus,
     &._hover {
-      color: @g-color-gray_lt; // HACK fallback
-      color: var(--link-color-hover, @g-color-gray_lt);
+      color: var(--link-color-hover);
     }
     &:active,
     &._active {
