@@ -4,13 +4,6 @@
 \*################################*/
 
 
-body {
-  --heading-color-unselected: var(--color-gray_dk);
-}
-.c-Banner {
-  --heading-color-unselected: var(--color-gray_lt);
-}
-
 // The Program Heading
 //
 // A heading for a program <a>Time Block</a>.
@@ -45,7 +38,7 @@ body {
   // some styles from h1
   margin-bottom: var(--vru);
   font-weight: 900;
-  color: var(--heading-color-unselected, @g-color-gray_dk);
+  color: var(--heading-color-unselected);
   @media screen and (min-width: 45em) {
     .font-size-el(1.25);
   }

@@ -4,24 +4,6 @@
 \*################################*/
 
 
-
-html {
-  --supporter-logo-lrg-width: 120px; --supporter-logo-lrg-height: 65px ;
-  --supporter-logo-med-width: 90px ; --supporter-logo-med-height: 48px ;
-  --supporter-logo-sml-width: 68px ; --supporter-logo-sml-height: 36px ;
-  @media screen and (min-width: 30em) {
-    --supporter-logo-lrg-width: 250px; --supporter-logo-lrg-height: 110px;
-    --supporter-logo-med-width: 188px; --supporter-logo-med-height: 82px ;
-    --supporter-logo-sml-width: 140px; --supporter-logo-sml-height: 62px ;
-  }
-  @media screen and (min-width: 60em) {
-    --supporter-logo-lrg-width: 360px; --supporter-logo-lrg-height: 160px;
-    --supporter-logo-med-width: 270px; --supporter-logo-med-height: 120px;
-    --supporter-logo-sml-width: 202px; --supporter-logo-sml-height: 90px ;
-  }
-}
-
-
 // The Supporter Block
 //
 // A section containing one supporter level.
@@ -116,10 +98,7 @@ html {
   font-family: inherit;
   font-weight: 900;
   text-align: center;
-  &,
-  .c-Banner & { // HACK specificity TODO remove when .c-Banner >> h1 can be removed
-  color: var(--color-gray_dk);
-  }
+  color: var(--color-gray_dk, @g-color-gray_dk);
   // visualization line separator
   @supports (flex-wrap: wrap) {
     display: flex;

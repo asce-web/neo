@@ -8,6 +8,6 @@ block append vars
 block mainReference
   include ../../_views/_Conference.view.pug
   +otherYear(site.prevConference(), prev_blurb).c-Banner--prev
-    +highlightButtons([{text:'Event Details', href:site.prevConference().url, attr:{itemprop:'url'}}], 'c-Btn--ghost c-Btn--ghost--dark')
+    +highlightButtons([{text:'Event Details', href:site.prevConference().url, attr:{itemprop:'url'}}], 'c-Button--ghost c-Button--ghost--dark')
   +otherYear(site.nextConference(), next_blurb).c-Banner--next
-    +highlightButtons([{text:'Event Details', href:site.nextConference().url, attr:{itemprop:'url'}}], 'c-Btn--ghost c-Btn--ghost--dark')
+    +highlightButtons([{text:'Event Details', href:site.nextConference().url, attr:{itemprop:'url'}}], 'c-Button--ghost c-Button--ghost--dark')

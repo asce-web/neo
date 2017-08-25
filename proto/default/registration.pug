@@ -12,9 +12,9 @@ block mainReference
     h1.h-Hidden Full Registration
     include ../../_views/_Pass.view.pug
     +passList(site.currentConference(), false)
-    ul.o-List.o-ListAction.c-Alert._regLegend
+    ul.o-List.o-Flex.o-ListAction.c-Alert._regLegend
       each $registrationPeriod in site.currentConference().getRegistrationPeriodsAll()
-        li.o-List__Item.o-ListAction__Item.c-Alert__Item
+        li.o-List__Item.o-Flex__Item.o-ListAction__Item.c-Alert__Item
           i.material-icons(role="none")= $registrationPeriod.getIcon()
           small
             -
@@ -31,4 +31,4 @@ block mainReference
               | &ndash;
             if has_end
               time(datetime=end_date)= Util.monthDay(end_date)
-    +highlightButtons([{text:'Register Today!', href:'#0'}], 'c-Btn--secondary')
+    +highlightButtons([{text:'Register Today!', href:'#0'}], 'c-Button--secondary')
