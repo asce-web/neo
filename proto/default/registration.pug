@@ -26,9 +26,9 @@ block mainReference
             b= $registrationPeriod.name
             = (has_start && has_end) ? ': ' : (has_start) ? ' begins ' : (has_end) ? ' ends ' : ''
             if has_start
-              time(datetime=start_date)= Util.monthDay(start_date)
-            if has_stare && has_end
+              time(datetime=start_date)= Util.Date.FORMATS['M j'](start_date)
+            if has_start && has_end
               | &ndash;
             if has_end
-              time(datetime=end_date)= Util.monthDay(end_date)
+              time(datetime=end_date)= Util.Date.FORMATS['M j'](end_date)
     +highlightButtons([{text:'Register Today!', href:'#0'}], 'c-Button--secondary')

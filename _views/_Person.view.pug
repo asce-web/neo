@@ -23,7 +23,7 @@ mixin speaker($person)
               //- i.material-icons(role="none") email
         if $person.phone()
           li.o-List__Item.o-Flex__Item.c-SocialList__Item
-            a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href=`tel:${Util.toURL($person.phone())}` title=$person.phone() itemprop="telephone")
+            a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href=`tel:${UtilConf.toURL($person.phone())}` title=$person.phone() itemprop="telephone")
               span.h-Hidden call
               //- i.material-icons(role="none") phone
         if $person.url()

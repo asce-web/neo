@@ -7,43 +7,6 @@ module.exports = class Util {
   constructor() {}
 
   /**
-   * List of full month names in English.
-   * @type {Array<string>}
-   */
-  static get MONTH_NAMES() {
-    return [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ]
-  }
-
-  /**
-   * List of full day names in English.
-   * @type {Array<string>}
-   */
-  static get DAY_NAMES() {
-    return [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ]
-  }
-
-  /**
    * NOTE: Type Definition
    * @typedef {Object} StateObj
    * @property {string} index  - the postal code for the state
@@ -178,61 +141,12 @@ module.exports = class Util {
   }
 
   /**
-   * Display a Date object as a string of the format 'HH:MMrr', where
-   * - 'HH' is the 12-hour format hour of day ('1'–'12')
-   * - 'MM' is the minutes of the hour
-   * - 'rr' is 'am' or 'pm' (“Ante Meridiem” or “Post Meridiem”)
-   * @param  {Date} date the datetime to display
-   * @return {string} a string of the format HH:MM[am|pm]
-   */
-  static hourTime12(date) {
-    var hour = '' + ((date.getHours() - 1)%12 + 1)
-    var minute = ((date.getMinutes() < 10) ? '0' : '') + date.getMinutes()
-    var meridiem = (date.getHours() < 12) ? 'am' : 'pm'
-    return hour + ((minute !== '00') ? `:${minute}` : '') + meridiem
-  }
-
-  /**
-   * Display a Date object as a string of the format 'HHHH:MM', where
-   * - 'HHHH' is the 24-hour format hour of day ('00'–'23')
-   * - 'MM' is the minutes of the hour
-   * @param  {Date} date the datetime to display
-   * @return {string} a string of the format HHHH:MM
-   */
-  static hourTime24(date) {
-    var hour =   ((date.getHours()   < 10) ? '0' : '') + date.getHours()
-    var minute = ((date.getMinutes() < 10) ? '0' : '') + date.getMinutes()
-    return hour + ':' + minute
-  }
-
-  /**
-   * Return an abbreviated form of a date.
-   * The format is 'MMM DD', where
-   * - 'MMM' is the first 3 letters of the month in English
-   * - 'DD' is the date (one or two digits)
-   * @param  {Date} date the datetime to display
-   * @return {string} a string of the format 'MMM DD'
-   */
-  static monthDay(date) {
-    return Util.MONTH_NAMES[date.getUTCMonth()].slice(0,3) + ' ' + date.getUTCDate()
-  }
-
-  /**
    * Return a URL-friendly string.
    * @param  {string} str a string to convert
    * @return {string} a URL-safe variant of the string given
    */
   static toURL(str) {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
-  }
-
-  /**
-   * Return a new Date object from a given datetime string.
-   * @param  {string} str a string in any acceptable datetime format
-   * @return {Date} a new Date object representation of the argument
-   */
-  static toDate(str) {
-    return (str) ? new Date(str) : new Date()
   }
 
   /**
@@ -256,19 +170,5 @@ module.exports = class Util {
    */
   static iconToString(icon, fb) {
     return (fb) ? icon.fallback : icon.content
-  }
-
-  /**
-   * Enum for state regions
-   * @enum {string}
-   */
-  static get Region() {
-    return {
-      SOUTH    : 's',
-      WEST     : 'w',
-      SOUTHWEST: 'sw',
-      NORTHEAST: 'ne',
-      MIDWEST  : 'mw',
-    }
   }
 }

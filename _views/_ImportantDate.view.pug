@@ -4,7 +4,8 @@ mixin dateBlock(dates)
       li.o-List__Item.c-DateBlock__Item(itemprop="potentialAction" itemscope="" itemtype="http://schema.org/Action")
         dt.c-DateBlock__Date
           time(datetime=$importantDate.startTime itemprop="startTime")
-            = `${Util.monthDay($importantDate.startTime)}, ${$importantDate.startTime.getFullYear()}`
+            //- = Util.Date.FORMATS['M j, Y']($importantDate.startTime)
+            = `${Util.Date.FORMATS['M j']($importantDate.startTime)}, ${$importantDate.startTime.getFullYear()}`
           if $importantDate.endTime
             span &ndash;
             time(datetime=$importantDate.endTime itemprop="endTime")
