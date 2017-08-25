@@ -41,9 +41,9 @@ mixin sitetoc(args, inner)
     = (promoloc.text || promoloc)
 
 mixin highlightButtons(links, more_classes)
-  ul.o-List.o-ListAction
+  ul.o-List.o-Flex.o-ListAction
     each item in links
-      li.o-List__Item.o-ListAction__Item
+      li.o-List__Item.o-Flex__Item.o-ListAction__Item
         a.c-Button.c-Button--hilite(class=(more_classes || '') href=item.href)&attributes(item.attr || {})
           = item.text
 
