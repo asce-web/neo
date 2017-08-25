@@ -5,9 +5,8 @@ var autoprefixer = require('gulp-autoprefixer')
 var clean_css = require('gulp-clean-css')
 var sourcemaps = require('gulp-sourcemaps')
 var Color = require('csscolor').Color
-var Util = require('helpers-js').Util
 
-var UtilConf           = require('./_models/Util.class.js')
+var Util               = require('./_models/Util.class.js')
 var ConfSite           = require('./_models/ConfSite.class.js')
 var ConfPage           = require('./_models/ConfPage.class.js')
 var Conference         = require('./_models/Conference.class.js')
@@ -78,7 +77,6 @@ gulp.task('pug:sample', function () {
       basedir: './',
       locals: {
         Util: Util,
-        UtilConf: UtilConf,
         Person: Person,
         site  : require('./proto/asce-event.org/data.js'),
       },

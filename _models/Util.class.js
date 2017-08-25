@@ -1,10 +1,9 @@
-module.exports = class Util {
-  /**
-   * A set of static values and functions used site-wide.
-   * @private
-   * @constructor
-   */
-  constructor() {}
+/**
+ * A set of static values and functions used site-wide.
+ * @module
+ */
+module.exports = class Util extends require('helpers-js').Util {
+  /** @private */ constructor() {}
 
   /**
    * NOTE: Type Definition
