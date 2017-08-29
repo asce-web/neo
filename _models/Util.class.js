@@ -6,7 +6,21 @@ module.exports = class Util extends require('helpers-js').Util {
   /** @private */ constructor() {}
 
   /**
-   * NOTE: Type Definition
+   * NOTE: TYPE DEFINITION
+   * {
+   *   "$schema": "http://json-schema.org/schema#",
+   *   "title": "StateObj",
+   *   "type": "object",
+   *   "additionalProperties": false,
+   *   "required": ["index", "name", "pop", "area", "region"],
+   *   "properties": {
+   *     "index" : { "type": "string", "description": "the postal code for the state" },
+   *     "name"  : { "type": "string", "description": "the name of the state" },
+   *     "pop"   : { "type": "number", "description": "population in people" },
+   *     "area"  : { "type": "number", "description": "area in square km" },
+   *     "region": { "type": "Util.Region", "description": "region of US" }
+   *   }
+   * }
    * @typedef {Object} StateObj
    * @property {string} index  - the postal code for the state
    * @property {string} name   - the name of the state
@@ -75,7 +89,19 @@ module.exports = class Util extends require('helpers-js').Util {
   }
 
   /**
-   * NOTE: Type Definition
+   * NOTE: TYPE DEFINITION
+   * {
+   *   "$schema": "http://json-schema.org/schema#",
+   *   "title": "Icon",
+   *   "type": "object",
+   *   "additionalProperties": false,
+   *   "required": ["content", "fallback", "html"],
+   *   "properties": {
+   *     "content" : { "type": "string", "description": "the keyword used for the ligature" },
+   *     "fallback": { "type": "string", "description": "unicode code point" },
+   *     "html"    : { "type": "string", "description": "html entity" }
+   *   }
+   * }
    * @typedef {Object} Icon
    * @property {string} content  - the keyword used for the ligature
    * @property {string} fallback - unicode code point
@@ -169,5 +195,19 @@ module.exports = class Util extends require('helpers-js').Util {
    */
   static iconToString(icon, fb) {
     return (fb) ? icon.fallback : icon.content
+  }
+
+  /**
+   * Enum for state regions.
+   * @enum {string}
+   */
+  static get Region() {
+    return {
+      SOUTH    : 's',
+      WEST     : 'w',
+      SOUTHWEST: 'sw',
+      NORTHEAST: 'ne',
+      MIDWEST  : 'mw',
+    }
   }
 }

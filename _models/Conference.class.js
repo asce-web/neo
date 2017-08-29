@@ -425,13 +425,25 @@ module.exports = class Conference {
   // }
   /**
    * NOTE: TYPE DEFINITION
-   * A group of sessions, all of which share the same date (excluding time of day).
-   * Contains two properties:
-   * - `datestr` - a string representing the date by which the sessions are grouped
-   * - `sessions` - an array of those sessions
+   * {
+   *   "$schema": "http://json-schema.org/schema#",
+   *   "title": "SessionGroup",
+   *   "description": "a group of sessions, all of which share the same date (excluding time of day)",
+   *   "type": "object",
+   *   "additionalProperties": false,
+   *   "required": ["datestr", "sessions"],
+   *   "properties": {
+   *     "datestr" : { "type": "string", "description": "string (in 'YYYY-MM-DD' format) representing the date by which the sessions are grouped" },
+   *     "sessions": {
+   *       "type": "array",
+   *       "description": "an array of Sessions whose members all have the same date",
+   *       "items": { "type": "Session" }
+   *     }
+   *   }
+   * }
    * @typedef {Object} SessionGroup
-   * @property {string} datestr - string in 'YYYY-MM-DD' format of all the sessions in the group
-   * @property {Array<Session>} sessions - an array whose members all have the same date
+   * @property {string} datestr string (in 'YYYY-MM-DD' format) representing the date by which the sessions are grouped
+   * @property {Array<Session>} sessions an array of Sessions whose members all have the same date
    */
   /**
    * Categorize all the sessions of this conference by date and return the grouping.
