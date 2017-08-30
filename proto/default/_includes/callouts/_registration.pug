@@ -1,4 +1,14 @@
 h1#registration Registra&shy;tion
 include ../../../../_views/_Pass.view.pug
 +passList(site.currentConference(), 'starred')
-+highlightButtons([{text:'Registration Details', href:'registration.html'}])
+-
+  let highlight_buttons = Element.data([
+    new Element('a').attr('href','registration.html').addContent(`Registration Details`)
+  ], {
+    attributes: {
+      list : { class: 'o-List o-Flex o-ListAction' },
+      value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
+    },
+    options: {attributes:{list:{ class:'c-Button c-Button--hilite' }}},
+  })
+!= highlight_buttons

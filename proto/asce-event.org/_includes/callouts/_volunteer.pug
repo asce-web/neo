@@ -1,4 +1,14 @@
 h1#volunteer Volunteer
 div._text-block
   p.-ta-c We will need volunteers to act as greeters, direct people to various venues within the hotel, collect tickets, travel with tour buses, provide head counts, and serve as a point of contact with ASCE staff.
-+highlightButtons([{text:'Sign Up', href:'#0'}])
+-
+  let highlight_buttons = Element.data([
+    new Element('a').attr('href','#0').addContent(`Sign Up`)
+  ], {
+    attributes: {
+      list : { class: 'o-List o-Flex o-ListAction' },
+      value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
+    },
+    options: {attributes:{list:{ class:'c-Button c-Button--hilite' }}},
+  })
+!= highlight_buttons

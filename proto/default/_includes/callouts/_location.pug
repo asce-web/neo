@@ -1,3 +1,13 @@
 h1#hotel-travel= site.currentConference().promoLoc.text
 block promoLocationBlurb
-+highlightButtons([{text:'Hotel & Travel', href:'location.html'}], 'c-Button--ghost c-Button--ghost--dark')
+-
+  let highlight_buttons = Element.data([
+    new Element('a').attr('href','location.html').addContent(`Hotel & Travel`)
+  ], {
+    attributes: {
+      list : { class: 'o-List o-Flex o-ListAction' },
+      value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
+    },
+    options: {attributes:{list:{ class:'c-Button c-Button--hilite c-Button--ghost c-Button--ghost--dark' }}},
+  })
+!= highlight_buttons

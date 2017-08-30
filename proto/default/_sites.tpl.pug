@@ -86,7 +86,17 @@ html(lang="en")
             include ../../_views/_SupporterLevel.view.pug
             each $supporterLevel,index in site.currentConference().getSupporterLevelQueue('home-page')
               +supporterBlock($supporterLevel, site.currentConference())
-            +highlightButtons([{text:'All Sponsors', href:'sponsor.html'}])
+            -
+              let highlight_buttons = Element.data([
+                new Element('a').attr('href','sponsor.html').addContent(`All Sponsors`)
+              ], {
+                attributes: {
+                  list : { class: 'o-List o-Flex o-ListAction' },
+                  value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
+                },
+                options: {attributes:{list:{ class:'c-Button c-Button--hilite' }}}
+              })
+            != highlight_buttons
     footer.o-Runner.c-Mast.c-Mast--sitemap#site-map: nav.o-Constrain
       h1.h-Hidden Site Map
       include ../../_views/_c-Sitemap.view.pug
