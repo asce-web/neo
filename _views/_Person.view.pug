@@ -2,32 +2,4 @@ mixin speakerList(speakers)
   ul.o-List.o-ListStacked
     each $person in speakers
       li.o-List__Item.o-ListStacked__Item
-        +speaker($person)
-
-mixin speaker($person)
-  article.c-Speaker(itemprop="performer" itemscope="" itemtype="http://schema.org/Person")
-    img.c-Speaker__Img.h-Block(src=`${$person.img()}` itemprop="image")
-    header.c-Speaker__Head
-      h1.c-Speaker__Name(id=$person.id)!= $person.html(Person.Format.ENTIRE_NAME)
-      p.c-Speaker__JobTitle(itemprop="jobTitle")= $person.jobTitle()
-      p.c-Speaker__Affiliation(itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization")
-        span(itemprop="name")= $person.affiliation()
-    //- div.c-Speaker__Body(itemprop="description")
-    footer.c-Speaker__Foot
-      include _c-SocialList.view.pug
-      +socialList($person.getSocialAll()).c-SocialList--speaker
-        if $person.email()
-          li.o-List__Item.o-Flex__Item.c-SocialList__Item
-            a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href=`mailto:${$person.email()}` title=$person.email() itemprop="email")
-              span.h-Hidden send email
-              //- i.material-icons(role="none") email
-        if $person.phone()
-          li.o-List__Item.o-Flex__Item.c-SocialList__Item
-            a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href=`tel:${Util.toURL($person.phone())}` title=$person.phone() itemprop="telephone")
-              span.h-Hidden call
-              //- i.material-icons(role="none") phone
-        if $person.url()
-          li.o-List__Item.o-Flex__Item.c-SocialList__Item
-            a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href=$person.url() title="visit homepage" itemprop="url")
-              span.h-Hidden visit homepage
-              //- i.material-icons(role="none") explore
+        != $person.html(Person.Format.SPEAKER)

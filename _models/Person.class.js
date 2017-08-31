@@ -177,18 +177,22 @@ module.exports = class Person {
    * @return {string} a string representing an HTML DOM snippet
    */
   html(format = Person.Format.NAME) {
+    /** filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
     return ({
       [Person.Format.NAME]: () =>
-        new Element('span').attr('itemprop','name').addElements([
-          new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)
-          new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)
-        ]).html(),
+        new Element('span').attr('itemprop','name')
+          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
+          .addContent(` `)
+          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
+          .html(),
       [Person.Format.FULL_NAME]: () =>
-        new Element('span').attr('itemprop','name').addElements([
-          new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)
-          new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name)
-          new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)
-        ]).html(),
+        new Element('span').attr('itemprop','name')
+          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
+          .addContent(` `)
+          .addElements([new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name)])
+          .addContent(` `)
+          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
+          .html(),
       [Person.Format.ENTIRE_NAME]: () => {
         let returned = this.html(Person.Format.FULL_NAME)
         if (this.name.honorific_prefix) {
@@ -233,6 +237,52 @@ module.exports = class Person {
         }
         return returned
       },
+      [Person.Format.SPEAKER]: () =>
+        new Element('article').class('c-Speaker').attrObj({
+          itemprop : 'performer',
+          itemscope: '',
+          itemtype : 'http://schema.org/Person',
+        }).addElements([
+          new Element('img').class('c-Speaker__Img h-Block')
+            .attr('src', this.img())
+            .attr('itemprop','image'),
+          new Element('header').class('c-Speaker__Head').addElements([
+            new Element('h1').class('c-Speaker__Name')
+              .id(this.id)
+              .addContent(this.html(Person.Format.ENTIRE_NAME)),
+            new Element('p').class('c-Speaker__JobTitle')
+              .attr('itemprop','jobTitle')
+              .addContent(this.jobTitle()),
+            new Element('p').class('c-Speaker__Affiliation').attrObj({
+              itemprop : 'affiliation',
+              itemscope: '',
+              itemtype : 'http://schema.org/Organization',
+            }).addElements([
+              new Element('span').attr('itemprop','name').addContent(this.affiliation())
+            ]),
+          ]),
+          // new Element('div').class('c-Speaker__Body').attr('itemprop','description'),
+          new Element('footer').class('c-Speaker__Foot').addContent(pug`
+            include ../_views/_c-SocialList.view.pug
+            +socialList(${this.getSocialAll()}).c-SocialList--speaker
+              if ${this.email()}
+                li.o-List__Item.o-Flex__Item.c-SocialList__Item
+                  a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href="mailto:${this.email()}" title="${this.email()}" itemprop="email")
+                    span.h-Hidden send email
+                    //- i.material-icons(role="none") email
+              if ${this.phone()}
+                li.o-List__Item.o-Flex__Item.c-SocialList__Item
+                  a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href="tel:${Util.toURL(this.phone())}" title="${this.phone()}" itemprop="telephone")
+                    span.h-Hidden call
+                    //- i.material-icons(role="none") phone
+              if ${this.url()}
+                li.o-List__Item.o-Flex__Item.c-SocialList__Item
+                  a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href="${this.url()}" title="visit homepage" itemprop="url")
+                    span.h-Hidden visit homepage
+                    //- i.material-icons(role="none") explore
+          `),
+        ])
+        .html(),
     })[format]()
   }
 
@@ -247,6 +297,7 @@ module.exports = class Person {
       /** Px. First Middle Last, Sx. */                 ENTIRE_NAME: 'entire',
       /** First Middle Last, Affiliation */             AFFILIATION: 'affiliation',
       /** First Last, Director of ... | 555-555-5555 */ CONTACT    : 'contact',
+      /** a speaker at a conference */                  SPEAKER    : 'speaker',
     }
   }
 }
