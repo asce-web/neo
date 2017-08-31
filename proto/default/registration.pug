@@ -31,4 +31,8 @@ block mainReference
               | &ndash;
             if has_end
               time(datetime=end_date)= Util.Date.FORMATS['M j'](end_date)
-    +highlightButtons([{text:'Register Today!', href:'#0'}], 'c-Button--secondary')
+    -
+      let highlight_buttons = [
+        new Element('a').attr('href','#0').addContent(`Register Today!`)
+      ]
+    != Util.VIEW.highlightButtons(highlight_buttons, 'c-Button--secondary')

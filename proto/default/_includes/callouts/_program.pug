@@ -8,4 +8,8 @@ include ../../../../_views/_o-Tabs.view.pug
   mixin panel(i)
     include ../../../../_views/_Session.view.pug
     +timeBlock(groupings[i].sessions)
-+highlightButtons([{text:'Full Program', href:'program.html'}])
+-
+  let highlight_buttons = [
+    new Element('a').attr('href','program.html').addContent(`Full Program`)
+  ]
+!= Util.VIEW.highlightButtons(highlight_buttons)

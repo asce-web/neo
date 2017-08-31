@@ -1,11 +1,13 @@
 extends ../default/index.pug
 
 block actionButtons
-  +highlightButtons([
-    { text: 'Register', href:'registration.html' }
-  , { text: 'Sponsor' , href:'sponsor.html' }
-  , { text: 'Submit a Paper' }
-  ], 'c-Button c-Button--hilite c-Button--primary')
+  -
+    let highlight_buttons = [
+      new Element('a').attr('href','registration.html').addContent(`Register`),
+      new Element('a').attr('href','sponsor.html').addContent(`Sponsor`),
+      new Element('a').addContent(`Submit a Paper`),
+    ]
+  != Util.VIEW.highlightButtons(highlight_buttons, 'c-Button--primary')
 
 block prepend mainBody
   +callout()
