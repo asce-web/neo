@@ -1,3 +1,4 @@
+var Element = require('helpers-js').Element
 var Util = require('./Util.class.js')
 
 module.exports = class Person {
@@ -172,60 +173,67 @@ module.exports = class Person {
    * Output this person’s name and other information as HTML.
    * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Person"]`.
    * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
-   * @param  {Person.Format} format how to display the output
+   * @param  {Person.Format=} format how to display the output
    * @return {string} a string representing an HTML DOM snippet
    */
-  html(format) {
-    switch (format) {
-      case Person.Format.NAME:
-        return `
-          <span itemprop="name">
-            <span itemprop="givenName">${this.name.given_name}</span>
-            <span itemprop="familiyName">${this.name.family_name}</span>
-          </span>
-        `
-        break;
-      case Person.Format.FULL_NAME:
-        return `
-          <span itemprop="name">
-            <span itemprop="givenName">${this.name.given_name}</span>
-            <span itemprop="additionalName">${this.name.additional_name}</span>
-            <span itemprop="familiyName">${this.name.family_name}</span>
-          </span>
-        `
-        break;
-      case Person.Format.ENTIRE_NAME:
-        var output = this.html(Person.Format.FULL_NAME) // using `var` because `let` works poorly in `switch`
+  html(format = Person.Format.NAME) {
+    return ({
+      [Person.Format.NAME]: () =>
+        new Element('span').attr('itemprop','name').addElements([
+          new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)
+          new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)
+        ]).html(),
+      [Person.Format.FULL_NAME]: () =>
+        new Element('span').attr('itemprop','name').addElements([
+          new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)
+          new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name)
+          new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)
+        ]).html(),
+      [Person.Format.ENTIRE_NAME]: () => {
+        let returned = this.html(Person.Format.FULL_NAME)
         if (this.name.honorific_prefix) {
-          output = `<span itemprop="honorificPrefix">${this.name.honorific_prefix}</span> ${output}`
+          returned = `${
+            new Element('span').attr('itemprop','honorificPrefix').addContent(this.name.honorific_prefix).html()
+          } ${returned}`
         }
         if (this.name.honorific_suffix) {
-          output = `${output}, <span itemprop="honorificSuffix">${this.name.honorific_suffix}</span>`
+          returned = `${returned}, ${
+            new Element('span').attr('itemprop','honorificSuffix').addContent(this.name.honorific_suffix).html()
+          }`
         }
-        return output
-        break;
-      case Person.Format.AFFILIATION:
-        return `${this.html(Person.Format.ENTIRE_NAME)},
-          <span class="-fs-t" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
-            <span itemprop="name">${this.affiliation()}</span>
-          </span>
-        `
-        break;
-      case Person.Format.CONTACT:
-        var output = `
-          <a href="mailto:${this.email()}">${this.html(Person.Format.NAME)}</a>
-        `
+        return returned
+      },
+      [Person.Format.AFFILIATION]: () => `${this.html(Person.Format.ENTIRE_NAME)}, ${
+        new Element('span').class('-fs-t').attrObj({
+          itemprop : 'affiliation',
+          itemscope: '',
+          itemtype : 'http://schema.org/Organization',
+        }).addElements([
+          new Element('span').attr('itemprop','name').addContent(this.affiliation())
+        ]).html()
+      }`,
+      [Person.Format.CONTACT]: () => {
+        let returned = new Element('a')
+          .attr('href',`mailto:${this.email()}`)
+          .addContent(this.html(Person.Format.NAME))
+          .html()
         if (this.jobTitle()) {
-          output = `${output}, <span itemprop="jobTitle">${this.jobTitle()}</span>`
+          returned = `${returned}, ${
+            new Element('span').attr('itemprop','jobTitle').addContent(this.jobTitle()).html()
+          }`
         }
         if (this.phone()) {
-          output = `${output} | <a href="tel:${this.phone()}" itemprop="telephone">${this.phone()}</a>`
+          returned = `${returned} | ${
+            new Element('a')
+              .attr('href',`tel:${this.phone()}`)
+              .attr('itemprop','telephone')
+              .addContent(this.phone())
+              .html()
+          }`
         }
-        return output
-        break;
-      default:
-        return this.toString()
-    }
+        return returned
+      },
+    })[format]()
   }
 
   /**
