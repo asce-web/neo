@@ -1,3 +1,5 @@
+var Element = require('helpers-js').Element
+
 /**
  * A set of static values and functions used site-wide.
  * @module
@@ -162,6 +164,40 @@ module.exports = class Util extends require('helpers-js').Util {
         name: 'YouTube',
         icon: Util.ICON_DATA[-1],
       },
+    }
+  }
+
+  /**
+   * Miscellaneous views.
+   * These do not belong to any particular content type.
+   * @type {Object<function(...):string>}
+   */
+  static get VIEW() {
+    return {
+      /**
+       * Returns a list of buttons (links) for a highlighted content block.
+       *
+       * ```pug
+       * ul.o-List.o-Flex.o-ListAction
+       *   each item in links
+       *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
+       *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
+       *         = item.contents
+       * ```
+       * @param  {Array<Element>} links the links to mark up
+       * @param  {string} buttonclasses the classes to add to the buttons
+       * @return {string} a <ul> element marking up the links
+       */
+      highlightButtons(links, buttonclasses = '') {
+        return Element.data(links, {
+          ordered: false,
+          attributes: {
+            list:  { class: 'o-List o-Flex o-ListAction' },
+            value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
+          },
+          options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
+        })
+      }
     }
   }
 

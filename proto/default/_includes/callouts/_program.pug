@@ -9,13 +9,7 @@ include ../../../../_views/_o-Tabs.view.pug
     include ../../../../_views/_Session.view.pug
     +timeBlock(groupings[i].sessions)
 -
-  let highlight_buttons = Element.data([
+  let highlight_buttons = [
     new Element('a').attr('href','program.html').addContent(`Full Program`)
-  ], {
-    attributes: {
-      list : { class: 'o-List o-Flex o-ListAction' },
-      value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
-    },
-    options: {attributes:{list:{ class:'c-Button c-Button--hilite' }}},
-  })
-!= highlight_buttons
+  ]
+!= Util.VIEW.highlightButtons(highlight_buttons)

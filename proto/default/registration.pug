@@ -32,13 +32,7 @@ block mainReference
             if has_end
               time(datetime=end_date)= Util.Date.FORMATS['M j'](end_date)
     -
-      let highlight_buttons = Element.data([
+      let highlight_buttons = [
         new Element('a').attr('href','#0').addContent(`Register Today!`)
-      ], {
-        attributes: {
-          list : { class: 'o-List o-Flex o-ListAction' },
-          value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
-        },
-        options: {attributes:{list:{ class:'c-Button c-Button--hilite c-Button--secondary' }}},
-      })
-    != highlight_buttons
+      ]
+    != Util.VIEW.highlightButtons(highlight_buttons, 'c-Button--secondary')

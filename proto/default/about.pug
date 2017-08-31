@@ -5,28 +5,16 @@ block append vars
   - var prev_blurb = 'default text for previous conference'
   - var next_blurb = 'default text for next conference'
   -
-    let highlight_buttons_prev = Element.data([
+    let highlight_buttons_prev = [
       new Element('a').attr('href',site.prevConference().url).attr('itemprop','url').addContent(`Event Details`)
-    ], {
-      attributes: {
-        list : { class: 'o-List o-Flex o-ListAction' },
-        value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
-      },
-      options: {attributes:{list:{ class:'c-Button c-Button--hilite c-Button--ghost c-Button--ghost--dark' }}},
-    })
-    let highlight_buttons_next = Element.data([
+    ]
+    let highlight_buttons_next = [
       new Element('a').attr('href',site.nextConference().url).attr('itemprop','url').addContent(`Event Details`)
-    ], {
-      attributes: {
-        list : { class: 'o-List o-Flex o-ListAction' },
-        value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
-      },
-      options: {attributes:{list:{ class:'c-Button c-Button--hilite c-Button--ghost c-Button--ghost--dark' }}},
-    })
+    ]
 
 block mainReference
   include ../../_views/_Conference.view.pug
   +otherYear(site.prevConference(), prev_blurb).c-Banner--prev
-    != highlight_buttons_prev
+    != Util.VIEW.highlightButtons(highlight_buttons_prev, 'c-Button--ghost c-Button--ghost--dark')
   +otherYear(site.nextConference(), next_blurb).c-Banner--next
-    != highlight_buttons_next
+    != Util.VIEW.highlightButtons(highlight_buttons_next, 'c-Button--ghost c-Button--ghost--dark')
