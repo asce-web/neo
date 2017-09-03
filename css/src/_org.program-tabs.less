@@ -13,8 +13,7 @@
 //   include /_views/_o-Tabs.view.pug
 //   +tabs(2)#demoprogram
 //     mixin tab(i)
-//       include /_views/_Date.view.pug
-//       +programHn([new Date('2016-09-28'),new Date('2016-10-01')][i])
+//       != Util.VIEW.programHn([new Date('2016-09-28'),new Date('2016-10-01')][i])
 //     mixin panel(i)
 //       include /_views/_Session.view.pug
 //       +timeBlock([

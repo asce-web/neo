@@ -3,8 +3,7 @@ h1#program-highlights Program Highlights
 include ../../../../_views/_o-Tabs.view.pug
 +tabs(groupings.length)#program-highlights-block
   mixin tab(i)
-    include ../../../../_views/_Date.view.pug
-    +programHn(groupings[i].dateday)
+    != Util.VIEW.programHn(groupings[i].dateday)
   mixin panel(i)
     include ../../../../_views/_Session.view.pug
     +timeBlock(groupings[i].sessions)
