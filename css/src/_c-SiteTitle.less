@@ -10,9 +10,7 @@
 //
 // Use with Pug:
 // <pre>
-//   include /_views/_ConfSite.view.pug
-//   +siteTitle(new ConfSite('CI Summit', '#0', 'Innovations In Construction')
-//     .logo('http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png'))
+//   != new ConfSite('CI Summit', '#0', 'Innovations In Construction').logo('logo.png').html()
 // </pre>
 //
 // <header><dl>

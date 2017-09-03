@@ -218,6 +218,25 @@ module.exports = class ConfSite extends Page {
 
 
   /**
+   * Markup this conference site in HTML.
+   * @param  {ConfSite.Format=} format how to display the output
+   * @return {string} a string representating an HTML DOM snippet
+   */
+  html(format = ConfSite.Format.SITE_TITLE) {
+    return ({
+      [ConfSite.Format.SITE_TITLE]: () =>
+        new Element('a').class('c-SiteTitle c-LinkCamo h-Block')
+          .attr('href',this.url())
+          .addElements([
+            new Element('img',true).class('c-SiteTitle__Logo').attr('src',this.logo()).attr('alt','Home'),
+            new Element('h1').class('c-SiteTitle__Name').addContent(this.name()),
+            new Element('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
+          ])
+          .html()
+    })[format]()
+  }
+
+  /**
    * Generate a color palette and return a style object with custom properties.
    * @param  {Color} $primary   the primary color for the site
    * @param  {Color} $secondary the secondary color for the site
@@ -273,5 +292,15 @@ module.exports = class ConfSite extends Page {
       '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex'),
       '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex'),
     }).style()
+  }
+
+  /**
+   * Enum for conference site formats.
+   * @enum {string}
+   */
+  static get Format() {
+    return {
+      /** SiteTitle component. */ SITE_TITLE: 'c-SiteTitle',
+    }
   }
 }
