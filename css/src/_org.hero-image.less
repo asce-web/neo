@@ -14,20 +14,23 @@
 //
 // Use in Pug:
 // <pre>
-//   include /_views/_Conference.view.pug
-//   +hero(new Conference({
+// -
+//   let conf = new Conference({
 //     name      : 'Geo-Risk 2017',
 //     url       : 'http://2017.georiskconference.org/',
 //     theme     : 'Geotechincal risk from theory to practice.',
 //     start_date: new Date('2017-06-04'),
 //     end_date  : new Date('2017-06-07'),
 //     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
-//   }))
-//     != Util.VIEW.highlightButtons([
+//   })
+//   let options = {
+//     block: Util.VIEW.highlightButtons([
 //       new Element('a').attr('href','#0').addContent(`Register`),
 //       new Element('a').attr('href','#0').addContent(`Sponsor`),
 //       new Element('a').attr('href','#0').addContent(`Submit a Paper`),
-//     ], 'c-Button--primary')
+//     ], 'c-Button--primary'),
+//   }
+// != conf.view(Conference.Display.HERO, options)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>

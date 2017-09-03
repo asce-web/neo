@@ -1,3 +1,6 @@
+var Element = require('helpers-js').Element
+var Util = require('./Util.class.js')
+
 module.exports = class Conference {
   /**
    * A conference event.
@@ -467,5 +470,111 @@ module.exports = class Conference {
       }
     })
     return $groupings
+  }
+
+
+  /**
+   * Markup this conference in HTML.
+   * @param  {Conference.Display=} display one of the output displays
+   * @param  {Object=} options display-specific options (see inner jsdoc)
+   * @return {string} a string representating an HTML DOM snippet
+   */
+  view(display = Conference.Display.HERO, options = {}) {
+    /**
+     * Mark up the promoted location of this conference.
+     * @param  {Object} obj a `Conference#promoLoc()` object
+     * @return {string} the markup for the location
+     */
+    function promoLoc(obj) {
+      if (obj.alt) return new Element('abbr').attr('title',obj.alt).addContent(obj.text).html()
+      else return obj.text
+    }
+    switch (display) {
+      /**
+       * Return a Hero organism.
+       * @param  {string=} block custom HTML to insert at the end
+       * @return {string} <header> element containing hero image
+       */
+      case Conference.Display.HERO: return (function (block = '') {
+        return new Element('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
+          .addElements([
+            new Element('div').class('o-Constrain')
+              .addElements([
+                new Element('h1').class('c-PageTitle c-ConfHed__Name')
+                  .attr('itemprop','name')
+                  .addContent(this.name),
+                new Element('meta').attr('content',this.url).attr('itemprop','url'),
+                new Element('p').class('o-Flex c-ConfHed__Detail')
+                  .addElements([
+                    new Element('span').class('o-Flex__Item c-ConfHed__Detail__Place h-Block')
+                      .attr('itemprop','location')
+                      .addContent(promoLoc(this.promoLoc)),
+                    new Element('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
+                      .addElements([
+                        new Element('time')
+                          .attr('datetime',this.startDate)
+                          .attr('itemprop','startDate')
+                          .addContent(Util.Date.FORMATS['M j'](this.startDate)),
+                        new Element('span').addContent(`&ndash;`),
+                        new Element('time')
+                          .attr('datetime',this.endDate)
+                          .attr('itemprop','endDate')
+                          .addContent(Util.Date.FORMATS['M j'](this.endDate)),
+                      ]),
+                  ]),
+                new Element('p').class('c-ConfHed__Theme h-Hidden-nM')
+                  .attr('itemprop','description')
+                  .addContent(this.theme || `&nbsp;`), // (`\xa0` === `&nbsp;`)
+              ])
+              .addContent(block),
+          ])
+          .html()
+      }).call(this, options.block)
+      /**
+       * Return an Other Year organism.
+       * @param  {string}  year exactly one of `'prev'` or `'next'`
+       * @param  {string=} blurb custom HTML to advertise the prev/next year
+       * @param  {string=} block custom HTML to insert at the end
+       * @return {string} <aside> element containing prev/next year image
+       */
+      case Conference.Display.OTHER_YEAR: return (function (year, blurb = '', block = '') {
+        return new Element('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
+          .addClass(`c-Banner--${year}`)
+          .attrObj({
+            itemscope: '',
+            itemtype : 'http://schema.org/Event',
+          })
+          .addElements([
+            new Element('div').class('o-Constrain')
+              .addElements([
+                new Element('h1').class('c-ConfHed__Name')
+                  .attr('itemprop','name')
+                  .addContent(this.name),
+                new Element('meta').attr('content',this.startDate).attr('itemprop','startDate'),
+                new Element('p').class('c-ConfHed__Detail')
+                  .attr('itemprop','location')
+                  .addContent(promoLoc(this.promoLoc)),
+                new Element('p').class('h-Hidden-nM').addContent(blurb),
+              ])
+              .addContent(block),
+          ])
+          .html()
+      }).call(this, options.year, options.blurb, options.block)
+      default:
+        return this.view(Conference.Display.HERO)
+    }
+  }
+
+
+
+  /**
+   * Enum for conference site displays.
+   * @enum {string}
+   */
+  static get Display() {
+    return {
+      /** Hero organism. */       HERO: 'hero',
+      /** Other Year organism. */ OTHER_YEAR: 'otherYear',
+    }
   }
 }

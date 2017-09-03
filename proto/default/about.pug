@@ -5,16 +5,13 @@ block append vars
   - var prev_blurb = 'default text for previous conference'
   - var next_blurb = 'default text for next conference'
   -
-    let highlight_buttons_prev = [
+    var prev_content = Util.VIEW.highlightButtons([
       new Element('a').attr('href',site.prevConference().url).attr('itemprop','url').addContent(`Event Details`)
-    ]
-    let highlight_buttons_next = [
+    ], 'c-Button--ghost c-Button--ghost--dark')
+    var next_content = Util.VIEW.highlightButtons([
       new Element('a').attr('href',site.nextConference().url).attr('itemprop','url').addContent(`Event Details`)
-    ]
+    ], 'c-Button--ghost c-Button--ghost--dark')
 
 block mainReference
-  include ../../_views/_Conference.view.pug
-  +otherYear(site.prevConference(), prev_blurb).c-Banner--prev
-    != Util.VIEW.highlightButtons(highlight_buttons_prev, 'c-Button--ghost c-Button--ghost--dark')
-  +otherYear(site.nextConference(), next_blurb).c-Banner--next
-    != Util.VIEW.highlightButtons(highlight_buttons_next, 'c-Button--ghost c-Button--ghost--dark')
+  != site.prevConference().view(Conference.Display.OTHER_YEAR, { year : 'prev', blurb: prev_blurb, block: prev_content })
+  != site.prevConference().view(Conference.Display.OTHER_YEAR, { year : 'next', blurb: next_blurb, block: next_content })

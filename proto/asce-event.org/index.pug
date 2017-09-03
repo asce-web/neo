@@ -1,13 +1,12 @@
 extends ../default/index.pug
 
-block actionButtons
+block append vars
   -
-    let highlight_buttons = [
+    var hero_content = Util.VIEW.highlightButtons([
       new Element('a').attr('href','registration.html').addContent(`Register`),
       new Element('a').attr('href','sponsor.html').addContent(`Sponsor`),
       new Element('a').addContent(`Submit a Paper`),
-    ]
-  != Util.VIEW.highlightButtons(highlight_buttons, 'c-Button--primary')
+    ], 'c-Button--primary')
 
 block prepend mainBody
   +callout()

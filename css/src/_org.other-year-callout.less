@@ -20,17 +20,22 @@
 //
 // Use in Pug:
 // <pre>
-//   include /_views/_Conference.view.pug
-//   +otherYear(new Conference({
+// -
+//   let conf = new Conference({
 //     name      : 'Geo-Risk 2020',
 //     url       : 'http://2020.georiskconference.org/',
 //     theme     : 'Geotechincal risk from theory to practice.',
 //     start_date: new Date('2020-06-04'),
 //     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
-//   }), 'Plan ahead to attend Geo-Risk next year!').c-Banner--blur.c-Banner--prev
-//     != Util.VIEW.highlightButtons([
+//   })
+//   let options = {
+//     year:  'prev',
+//     blurb: 'Plan ahead to attend Geo-Risk next year!',
+//     block: Util.VIEW.highlightButtons([
 //       new Element('a').attr('href','http://2020.georiskconference.org/').attr('itemprop','url'),
-//     ], 'c-Button--ghost c-Button--ghost--dark')
+//     ], 'c-Button--ghost c-Button--ghost--dark'),
+//   }
+// != conf.view(Conference.Display.OTHER_YEAR, options)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
