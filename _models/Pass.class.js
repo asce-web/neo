@@ -1,3 +1,5 @@
+var Element = require('helpers-js').Element
+
 module.exports = class Pass {
   /**
    * A set of prices for registration.
@@ -96,6 +98,84 @@ module.exports = class Pass {
     return this._is_starred
   }
 
+
+  /**
+   * Markup this pass in HTML.
+   * @param  {Conference} $conference the conference to which this pass belongs
+   * @param  {Pass.Format=} format how to display the output
+   * @return {string} a string representating an HTML DOM snippet
+   */
+  html($conference, format = Pass.Format.DEFAULT) {
+    let current_period = $conference.currentRegistrationPeriod()
+    /**
+     * Print the details of a registration period
+     * @param  {registrationPeriod} $registrationPeriod the registration period to mark up
+     * @param  {boolean} is_body `true` if this period belongs in the pass body (if it’s current)
+     * @return {Element} the DOM output of the registration period
+     */
+    function periodDetails($registrationPeriod, is_body) {
+      return new Element('dl').addContent(
+        this.getAttendeeTypesAll().map((att_type) =>
+          new Element('dt').class('c-Pass__Attendee').addContent(att_type.name).html()
+        + new Element('dd').class('c-Pass__Price')
+            .addClass((is_body && att_type.isFeatured) ? 'c-Pass__Price--featured' : '')
+            .addContent((0).toLocaleString('en', { // TODO price is 0 for now
+              style: 'currency',
+              currency: 'USD',
+              minimumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
+              maximumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
+            }))
+            .html()
+        ).join('')
+      )
+    }
+    return ({
+      [Pass.Format.DEFAULT]: () =>
+        new Element('article').class('c-Pass')
+          .addElements([
+            new Element('header').class('c-Pass__Head')
+              .addElements([
+                new Element('h1').class('c-Pass__Hn').addContent(this.name),
+                new Element('p').class('c-Pass__Desc')
+                  .addContent(this.description())
+                  .addElements([
+                    (this.fineprint()) ? new Element('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : new Element('span') // TODO make null on helpers-js v0.4.0
+                  ])
+              ]),
+            ((current_period) ? new Element('div').class('c-Pass__Body').addElements([
+              new Element('section').class('c-Pass__Period')
+                .addElements([
+                  new Element('h1').class('c-Pass__Period__Hn').addContent(current_period.name),
+                  periodDetails.call(this, current_period, true),
+                ])
+            ]) : new Element('div')), // TODO make null on helpers-js v0.4.0
+            new Element('footer').class('o-Flex c-Pass__Foot')
+              .addElements(
+                $conference.getRegistrationPeriodsAll()
+                  .filter((registration_period) => registration_period !== current_period)
+                  .map((registration_period) =>
+                    new Element('section').class('o-Flex__Item c-Pass__Period')
+                      .addElements([
+                        new Element('h1').class('c-Pass__Period__Hn').addContent(registration_period.name),
+                        periodDetails.call(this, registration_period, false),
+                      ])
+                  )
+              ),
+          ])
+          .html()
+    })[format]()
+  }
+
+
+  /**
+   * Enum for pass formats.
+   * @enum {string}
+   */
+  static get Format() {
+    return {
+      /** Default format. */ DEFAULT: 'default',
+    }
+  }
 
   /**
    * REVIEW may not need this class

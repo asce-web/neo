@@ -170,7 +170,7 @@ module.exports = class Person {
 
 
   /**
-   * Output this person’s name and other information as HTML.
+   * Markup this person in HTML.
    * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Person"]`.
    * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
    * @param  {Person.Format=} format how to display the output
@@ -288,7 +288,7 @@ module.exports = class Person {
 
   /**
    * Enum for name formats.
-   * @enum {String}
+   * @enum {string}
    */
   static get Format() {
     return {
