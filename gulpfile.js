@@ -74,6 +74,7 @@ gulp.task('pug:sample', function () {
         Element: Element,
         Util: Util,
         Conference: Conference,
+        Pass: Pass,
         Person: Person,
         site  : require('./proto/asce-event.org/data.js'),
       },

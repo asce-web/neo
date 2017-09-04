@@ -101,11 +101,19 @@ module.exports = class Pass {
 
   /**
    * Markup this pass in HTML.
-   * @param  {Conference} $conference the conference to which this pass belongs
-   * @param  {Pass.Format=} format how to display the output
+   * @param  {Pass.Display=} display one of the output displays
+   * @param  {*=} args display-specific arguments (see inner jsdoc)
    * @return {string} a string representating an HTML DOM snippet
    */
-  html($conference, format = Pass.Format.DEFAULT) {
+  view(display = Pass.Display.PASS, ...args) {
+    let returned = {
+      /**
+       * Return a Pass component.
+       * @param  {Conference} $conference the conference to which this pass belongs
+       * @return {string} site title link in header
+       */
+      [Pass.Display.PASS]: function ($conference) {
+        // REVIEW indentation
     let current_period = $conference.currentRegistrationPeriod()
     /**
      * Print the details of a registration period
@@ -129,9 +137,7 @@ module.exports = class Pass {
         ).join('')
       )
     }
-    return ({
-      [Pass.Format.DEFAULT]: () =>
-        new Element('article').class('c-Pass')
+        return new Element('article').class('c-Pass')
           .addElements([
             new Element('header').class('c-Pass__Head')
               .addElements([
@@ -163,7 +169,12 @@ module.exports = class Pass {
               ),
           ])
           .html()
-    })[format]()
+      },
+      default: function () {
+        return this.view()
+      },
+    }
+    return (returned[display] || returned.default).call(this, ...args)
   }
 
 
@@ -171,7 +182,7 @@ module.exports = class Pass {
    * Enum for pass formats.
    * @enum {string}
    */
-  static get Format() {
+  static get Display() {
     return {
       /** Default format. */ DEFAULT: 'default',
     }

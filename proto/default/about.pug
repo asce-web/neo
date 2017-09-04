@@ -13,5 +13,5 @@ block append vars
     ], 'c-Button--ghost c-Button--ghost--dark')
 
 block mainReference
-  != site.prevConference().view(Conference.Display.OTHER_YEAR, { year : 'prev', blurb: prev_blurb, block: prev_content })
-  != site.prevConference().view(Conference.Display.OTHER_YEAR, { year : 'next', blurb: next_blurb, block: next_content })
+  != site.prevConference().view(Conference.Display.OTHER_YEAR, 'prev', prev_blurb, prev_content)
+  != site.prevConference().view(Conference.Display.OTHER_YEAR, 'next', next_blurb, next_content)

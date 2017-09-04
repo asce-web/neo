@@ -171,30 +171,42 @@ module.exports = class Person {
 
   /**
    * Markup this person in HTML.
-   * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Person"]`.
-   * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
-   * @param  {Person.Format=} format how to display the output
+   * @param  {Person.Display=} display one of the output displays
+   * @param  {*=} args display-specific arguments (see inner jsdoc)
    * @return {string} a string representing an HTML DOM snippet
    */
-  html(format = Person.Format.NAME) {
-    /** filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
-    return ({
-      [Person.Format.NAME]: () =>
-        new Element('span').attr('itemprop','name')
+  view(display = Person.Display.NAME, ...args) {
+    let returned = {
+      /**
+       * Return this person’s name in "First Last" format.
+       * @return {string} HTML snippet representing this person
+       */
+      [Person.Display.NAME]: function () {
+        return new Element('span').attr('itemprop','name')
           .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
           .addContent(` `)
           .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
-          .html(),
-      [Person.Format.FULL_NAME]: () =>
-        new Element('span').attr('itemprop','name')
+          .html()
+      },
+      /**
+       * Return this person’s name in "First Middle Last" format.
+       * @return {string} HTML snippet representing this person
+       */
+      [Person.Display.FULL_NAME]: function () {
+        return new Element('span').attr('itemprop','name')
           .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
           .addContent(` `)
           .addElements([new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name)])
           .addContent(` `)
           .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
-          .html(),
-      [Person.Format.ENTIRE_NAME]: () => {
-        let returned = this.html(Person.Format.FULL_NAME)
+          .html()
+      },
+      /**
+       * Return this person’s name in "Px. First Middle Last, Sx." format.
+       * @return {string} HTML snippet representing this person
+       */
+      [Person.Display.ENTIRE_NAME]: function () {
+        let returned = this.view(Person.Display.FULL_NAME)
         if (this.name.honorific_prefix) {
           returned = `${
             new Element('span').attr('itemprop','honorificPrefix').addContent(this.name.honorific_prefix).html()
@@ -207,7 +219,11 @@ module.exports = class Person {
         }
         return returned
       },
-      [Person.Format.AFFILIATION]: () => `${this.html(Person.Format.ENTIRE_NAME)}, ${
+      /**
+       * Return this person’s name in "First Middle Last, Affiliation" format.
+       * @return {string} HTML snippet representing this person
+       */
+      [Person.Display.AFFILIATION]: () => `${this.view(Person.Display.ENTIRE_NAME)}, ${
         new Element('span').class('-fs-t').attr({
           itemprop : 'affiliation',
           itemscope: '',
@@ -216,10 +232,14 @@ module.exports = class Person {
           new Element('span').attr('itemprop','name').addContent(this.affiliation())
         ]).html()
       }`,
-      [Person.Format.CONTACT]: () => {
+      /**
+       * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
+       * @return {string} HTML snippet representing this person
+       */
+      [Person.Display.CONTACT]: function () {
         let returned = new Element('a')
           .attr('href',`mailto:${this.email()}`)
-          .addContent(this.html(Person.Format.NAME))
+          .addContent(this.view(Person.Display.NAME))
           .html()
         if (this.jobTitle()) {
           returned = `${returned}, ${
@@ -237,8 +257,13 @@ module.exports = class Person {
         }
         return returned
       },
-      [Person.Format.SPEAKER]: () =>
-        new Element('article').class('c-Speaker').attr({
+      /**
+       * Return a Speaker component.
+       * @return {string} <article> element representing this person
+       */
+      [Person.Display.SPEAKER]: function () {
+        /** filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
+        return new Element('article').class('c-Speaker').attr({
           itemprop : 'performer',
           itemscope: '',
           itemtype : 'http://schema.org/Person',
@@ -249,7 +274,7 @@ module.exports = class Person {
           new Element('header').class('c-Speaker__Head').addElements([
             new Element('h1').class('c-Speaker__Name')
               .id(this.id)
-              .addContent(this.html(Person.Format.ENTIRE_NAME)),
+              .addContent(this.view(Person.Display.ENTIRE_NAME)),
             new Element('p').class('c-Speaker__JobTitle')
               .attr('itemprop','jobTitle')
               .addContent(this.jobTitle()),
@@ -282,15 +307,20 @@ module.exports = class Person {
                     //- i.material-icons(role="none") explore
           `),
         ])
-        .html(),
-    })[format]()
+        .html()
+      },
+      default: function () {
+        return this.view()
+      },
+    }
+    return (returned[display] || returned.default).call(this, ...args)
   }
 
   /**
    * Enum for name formats.
    * @enum {string}
    */
-  static get Format() {
+  static get Display() {
     return {
       /** First Last */                                 NAME       : 'name',
       /** First Middle Last */                          FULL_NAME  : 'full',

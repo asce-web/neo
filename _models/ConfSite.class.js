@@ -219,13 +219,18 @@ module.exports = class ConfSite extends Page {
 
   /**
    * Markup this conference site in HTML.
-   * @param  {ConfSite.Format=} format how to display the output
+   * @param  {ConfSite.Display=} display one of the output displays
+   * @param  {*=} args display-specific arguments (see inner jsdoc)
    * @return {string} a string representating an HTML DOM snippet
    */
-  html(format = ConfSite.Format.SITE_TITLE) {
-    return ({
-      [ConfSite.Format.SITE_TITLE]: () =>
-        new Element('a').class('c-SiteTitle c-LinkCamo h-Block')
+  view(display = ConfSite.Display.SITE_TITLE, ...args) {
+    let returned = {
+      /**
+       * Return a SiteTitle component.
+       * @return {string} site title link in header
+       */
+      [ConfSite.Display.SITE_TITLE]: function () {
+        return new Element('a').class('c-SiteTitle c-LinkCamo h-Block')
           .attr('href',this.url())
           .addElements([
             new Element('img').class('c-SiteTitle__Logo').attr('src',this.logo()).attr('alt','Home'),
@@ -233,7 +238,12 @@ module.exports = class ConfSite extends Page {
             new Element('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
           ])
           .html()
-    })[format]()
+      },
+      default: function () {
+        return this.view()
+      },
+    }
+    return (returned[display] || returned.default).call(this, ...args)
   }
 
   /**
@@ -298,9 +308,9 @@ module.exports = class ConfSite extends Page {
    * Enum for conference site formats.
    * @enum {string}
    */
-  static get Format() {
+  static get Display() {
     return {
-      /** SiteTitle component. */ SITE_TITLE: 'c-SiteTitle',
+      /** SiteTitle component. */ SITE_TITLE: 'siteTitle',
     }
   }
 }
