@@ -532,6 +532,7 @@ var ImportantDate      = require('../../_models/ImportantDate.class.js')
       .addImportantDate(new ImportantDate({start_time:new Date('2016-01-12'), name:'Advance Registration Closes'   }).star().url('registration.html'))
       .addImportantDate(new ImportantDate({start_time:new Date('2016-06-12'), name:'Convention Begins'             }).star())
       .addImportantDate(new ImportantDate({start_time:new Date('2016-06-15'), name:'Convention Ends'               }))
+      .addImportantDate(new ImportantDate({start_time:new Date('2016-09-28'), end_time:new Date('2016-10-01'), name:'Convention Dates'}).star())
 
     site.currentConference()
       .addOrganizer(new Person('thomas-mccollough', {

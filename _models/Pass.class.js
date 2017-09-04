@@ -139,7 +139,7 @@ module.exports = class Pass {
                 new Element('p').class('c-Pass__Desc')
                   .addContent(this.description())
                   .addElements([
-                    (this.fineprint()) ? new Element('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : new Element('span') // TODO make null on helpers-js v0.4.0
+                    (this.fineprint()) ? new Element('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null
                   ])
               ]),
             ((current_period) ? new Element('div').class('c-Pass__Body').addElements([
@@ -148,7 +148,7 @@ module.exports = class Pass {
                   new Element('h1').class('c-Pass__Period__Hn').addContent(current_period.name),
                   periodDetails.call(this, current_period, true),
                 ])
-            ]) : new Element('div')), // TODO make null on helpers-js v0.4.0
+            ]) : null),
             new Element('footer').class('o-Flex c-Pass__Foot')
               .addElements(
                 $conference.getRegistrationPeriodsAll()

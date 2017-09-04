@@ -6,9 +6,9 @@ mixin timeBlock(sessions)
           -
             var start = $session.startDate
             var end   = $session.endDate
-          time(datetime=start itemprop="startDate")= Util.Date.FORMATS['g:ia'](start)
+          time(datetime=start itemprop="startDate")= Util.Date.format(start, 'g:ia')
           | &ndash;
-          time(datetime=end itemprop="endDate")= Util.Date.FORMATS['g:ia'](end)
+          time(datetime=end itemprop="endDate")= Util.Date.format(end, 'g:ia')
         dd.o-Flex__Item.c-TimeBlock__Desc(class={'c-TimeBlock__Desc--last': index===sessions.length-1} itemprop="name")
           if $session.url()
             a.c-TimeBlock__Link(href=$session.url() itemprop="url")= $session.name

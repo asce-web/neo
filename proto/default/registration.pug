@@ -26,11 +26,11 @@ block mainReference
             b= $registrationPeriod.name
             = (has_start && has_end) ? ': ' : (has_start) ? ' begins ' : (has_end) ? ' ends ' : ''
             if has_start
-              time(datetime=start_date)= Util.Date.FORMATS['M j'](start_date)
+              time(datetime=start_date)= Util.Date.format(start_date, 'M j')
             if has_start && has_end
               | &ndash;
             if has_end
-              time(datetime=end_date)= Util.Date.FORMATS['M j'](end_date)
+              time(datetime=end_date)= Util.Date.format(end_date, 'M j')
     -
       let highlight_buttons = [
         new Element('a').attr('href','#0').addContent(`Register Today!`)

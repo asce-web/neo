@@ -1,6 +1,6 @@
 var Page = require('sitepage').Page
 var Color = require('csscolor').Color
-var Element = require('./Element.class.js')
+var Element = require('helpers-js').Element
 var ConfPage = require('./ConfPage.class.js')
 
 module.exports = class ConfSite extends Page {
@@ -19,7 +19,7 @@ module.exports = class ConfSite extends Page {
     super({ name: name, url: url })
     super.description(slogan)
     /** @private */ this._logo             = ''
-    /** @private */ this._colors           = {}
+    /** @private */ this._colors           = ''
     /** @private */ this._images           = {}
     /** @private */ this._conferences      = {}
     /** @private */ this._conf_curr_key   = null
@@ -228,7 +228,7 @@ module.exports = class ConfSite extends Page {
         new Element('a').class('c-SiteTitle c-LinkCamo h-Block')
           .attr('href',this.url())
           .addElements([
-            new Element('img',true).class('c-SiteTitle__Logo').attr('src',this.logo()).attr('alt','Home'),
+            new Element('img').class('c-SiteTitle__Logo').attr('src',this.logo()).attr('alt','Home'),
             new Element('h1').class('c-SiteTitle__Name').addContent(this.name()),
             new Element('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
           ])
@@ -266,7 +266,7 @@ module.exports = class ConfSite extends Page {
     let gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum(), false)
     let gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum(), false)
 
-    return new Element('span').styleObj({
+    return new Element('span').style({
       '--color-primary'  :   $primary.toString('hex'),
       '--color-secondary': $secondary.toString('hex'),
       '--color-gray_dk'  :    gray_dk.toString('hex'),

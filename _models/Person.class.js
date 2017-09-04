@@ -208,7 +208,7 @@ module.exports = class Person {
         return returned
       },
       [Person.Format.AFFILIATION]: () => `${this.html(Person.Format.ENTIRE_NAME)}, ${
-        new Element('span').class('-fs-t').attrObj({
+        new Element('span').class('-fs-t').attr({
           itemprop : 'affiliation',
           itemscope: '',
           itemtype : 'http://schema.org/Organization',
@@ -238,7 +238,7 @@ module.exports = class Person {
         return returned
       },
       [Person.Format.SPEAKER]: () =>
-        new Element('article').class('c-Speaker').attrObj({
+        new Element('article').class('c-Speaker').attr({
           itemprop : 'performer',
           itemscope: '',
           itemtype : 'http://schema.org/Person',
@@ -253,7 +253,7 @@ module.exports = class Person {
             new Element('p').class('c-Speaker__JobTitle')
               .attr('itemprop','jobTitle')
               .addContent(this.jobTitle()),
-            new Element('p').class('c-Speaker__Affiliation').attrObj({
+            new Element('p').class('c-Speaker__Affiliation').attr({
               itemprop : 'affiliation',
               itemscope: '',
               itemtype : 'http://schema.org/Organization',

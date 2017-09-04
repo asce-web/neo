@@ -512,14 +512,14 @@ module.exports = class Conference {
                     new Element('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
                       .addElements([
                         new Element('time')
-                          .attr('datetime',this.startDate)
+                          .attr('datetime',this.startDate.toISOString())
                           .attr('itemprop','startDate')
-                          .addContent(Util.Date.FORMATS['M j'](this.startDate)),
+                          .addContent(Util.Date.format(this.startDate, 'M j')),
                         new Element('span').addContent(`&ndash;`),
                         new Element('time')
-                          .attr('datetime',this.endDate)
+                          .attr('datetime',this.endDate.toISOString())
                           .attr('itemprop','endDate')
-                          .addContent(Util.Date.FORMATS['M j'](this.endDate)),
+                          .addContent(Util.Date.format(this.endDate, 'M j')),
                       ]),
                   ]),
                 new Element('p').class('c-ConfHed__Theme h-Hidden-nM')
@@ -540,7 +540,7 @@ module.exports = class Conference {
       case Conference.Display.OTHER_YEAR: return (function (year, blurb = '', block = '') {
         return new Element('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
           .addClass(`c-Banner--${year}`)
-          .attrObj({
+          .attr({
             itemscope: '',
             itemtype : 'http://schema.org/Event',
           })
@@ -550,7 +550,7 @@ module.exports = class Conference {
                 new Element('h1').class('c-ConfHed__Name')
                   .attr('itemprop','name')
                   .addContent(this.name),
-                new Element('meta').attr('content',this.startDate).attr('itemprop','startDate'),
+                new Element('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
                 new Element('p').class('c-ConfHed__Detail')
                   .attr('itemprop','location')
                   .addContent(promoLoc(this.promoLoc)),
