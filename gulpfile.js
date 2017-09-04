@@ -34,16 +34,10 @@ gulp.task('pug:docs', function () {
       basedir: './',
       locals: {
         Color             : Color,
+        ConfSite          : ConfSite,
         ConfPage          : ConfPage,
-        Conference        : Conference,
-        SupporterLevel    : SupporterLevel,
-        Supporter         : Supporter,
         Person            : Person,
         Place             : Place,
-        RegistrationPeriod: RegistrationPeriod,
-        Pass              : Pass,
-        Session           : Session,
-        ImportantDate     : ImportantDate,
         Docs              : require('./docs/_models/Docs.class.js'),
       },
     }))

@@ -18,7 +18,7 @@ html(lang="en")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.14.1/bangs.min.css")
       link(rel="stylesheet" href="../../css/neo.css")
       style.
-        body { #{site.colors()} }
+        body { #{new Element('body').style(site.colors()).style()} }
         .c-Banner--hero { --banner-img: url('#{site.images().hero}'); }
         .c-Banner--city { --banner-img: url('#{site.images().city}'); }
         .c-Banner--prev { --banner-img: url('#{site.images().prev}'); }
