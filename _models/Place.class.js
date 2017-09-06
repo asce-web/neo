@@ -1,3 +1,4 @@
+var Element = require('helpers-js').Element
 var Util = require('./Util.class.js')
 
 module.exports = class Place {
@@ -87,24 +88,65 @@ module.exports = class Place {
 
 
   /**
-   * Output this person’s name and other information as HTML.
-   * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Place"]`.
-   * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
-   * @return {string} a string representing an HTML DOM snippet
+   * Markup this place in HTML.
+   * @param  {Place.Display=} display one of the output displays
+   * @param  {*=} args display-specific arguments (see inner jsdoc)
+   * @return {string} a string representating an HTML DOM snippet
    */
-  html() {
-    let $name = `<b class="h-Clearfix" itemprop="name">${this.name}</b>`
-    if (this.url) $name = `<a href="${this.url}" itemprop="url">${$name}</a>`
-    return `
-      ${$name}
-      <span itemprop="address" itemscope="" itemtype="https://schema.org/PostalAddress">
-        <span class="h-Clearfix" itemprop="streetAddress">${this.streetAddress}</span>
-        <span itemprop="addressLocality">${this.addressLocality}</span>,
-        <span itemprop="addressRegion">${this.addressRegion}</span>
-        <span class="h-Clearfix" itemprop="postalCode">${this.postalCode}</span>
-        ${(this.addressCountry) ? `<span class="h-Clearfix" itemprop="addressCountry">${this.addressCountry}</span>` : ''}
-      </span>
-      ${(this.telephone) ? `<a href="tel:${this.telephone}" itemprop="telephone">${this.telephone}</a>` : ''}
-    `
+  view(display = Place.Display.VENUE, ...args) {
+    let returned = {
+      /**
+       * Return a view for a venue.
+       * @return {string} single DOM snippet representing this place
+       */
+      [Place.Display.VENUE]: function () {
+        let name = new Element('b').class('h-Clearfix').attr('itemprop','name').addContent(this.name)
+        if (this.url) {
+          name = new Element('a').attr({
+            href: this.url,
+            itemprop: 'url',
+          }).addElements([name])
+        }
+        return Element.concat(
+          name,
+          new Element('span')
+            .attr({
+              itemprop : 'address',
+              itemscope: '',
+              itemtype : 'https://schema.org/PostalAddress',
+            })
+            .addElements([
+              new Element('span').class('h-Clearfix').attrStr('itemprop="streetAddress"').addContent(this.streetAddress),
+              new Element('span').attrStr('itemprop="addressLocality"').addContent(this.addressLocality),
+            ])
+            .addContent(`, `)
+            .addElements([
+              new Element('span').attrStr('itemprop="addressRegion"').addContent(this.addressRegion),
+            ])
+            .addContent(` `)
+            .addElements([
+              new Element('span').class('h-Clearfix').attrStr('itemprop="postalCode"').addContent(this.postalCode),
+              (this.addressCountry) ? new Element('span').class('h-Clearfix').attrStr('itemprop="addressCountry"').addContent(this.addressCountry) : null,
+            ]),
+          (this.telephone) ? new Element('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : new Element('span') // TODO make null on helpers-js@0.4.1
+        )
+      },
+      default: function () {
+        return this.view()
+      },
+    }
+    return (returned[display] || returned.default).call(this, ...args)
+  }
+
+
+
+  /**
+   * Enum for session displays.
+   * @enum {string}
+   */
+  static get Display() {
+    return {
+      /** A venue. */ VENUE: 'venue',
+    }
   }
 }
