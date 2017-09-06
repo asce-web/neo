@@ -14,7 +14,7 @@ figure.docs-figure
       additional_name : 'P.',
       family_name     : 'Caracciolo',
     })
-  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Format.FULL_NAME)
+  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.view(Person.Display.FULL_NAME)
   +microdataCheckbox('person-full')
     pre.docs-pre.
       &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
@@ -32,7 +32,7 @@ figure.docs-figure
       honorific_prefix: 'Dr.',
       honorific_suffix: 'Ph.D., M.ASCE',
     })
-  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Format.ENTIRE_NAME)
+  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.view(Person.Display.ENTIRE_NAME)
   +microdataCheckbox('person-entire')
     pre.docs-pre.
       &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificPrefix"]&gt;Dr.&lt;/span&gt;
@@ -52,7 +52,7 @@ figure.docs-figure
       honorific_prefix: 'Dr.',
       honorific_suffix: 'Ph.D., M.ASCE',
     }).affiliation('HDR Engineering, Inc.')
-  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Display.AFFILIATION)
+  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.view(Person.Display.AFFILIATION)
   +microdataCheckbox('person-affiliation')
     pre.docs-pre.
       &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificPrefix"]&gt;Dr.&lt;/span&gt;
@@ -78,7 +78,7 @@ figure.docs-figure
       .jobTitle('Senior Coordinator, Conferences & Meetings')
       .email('example@asce.org')
       .phone('(703) 293-5555')
-  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Format.CONTACT)
+  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.view(Person.Display.CONTACT)
   +microdataCheckbox('person-contact')
     pre.docs-pre.
       &lt;a href="example@asce.org"#[mark.docs-c-Togglable__Text  itemprop="email"]&gt;example@asce.org&lt;/a&gt;

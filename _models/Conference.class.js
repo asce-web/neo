@@ -12,17 +12,17 @@ module.exports = class Conference {
    * The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
    * @constructor
-   * @param {Object=} $confinfo an object with the following immutable properties:
+   * @param {Object} $confinfo an object with the following immutable properties:
    * @param {string} $confinfo.name the name of this conference
    * @param {string} $confinfo.url the url of this conference
-   * @param {string} $confinfo.theme the theme, or slogan, of this conference
+   * @param {string=} $confinfo.theme the theme, or slogan, of this conference
    * @param {Date} $confinfo.start_date the starting date of this conference
    * @param {Date} $confinfo.end_date the ending date of this conference
    * @param {Object} $confinfo.promo_loc the promoted location of this conference
    * @param {string} $confinfo.promo_loc.text the promoted location displayed/abbreviated text (eg, "Portland, OR")
    * @param {string=} $confinfo.promo_loc.alt the accessible text of the location (eg, "Portland, Oregon")
    */
-  constructor($confinfo = {}) {
+  constructor($confinfo) {
     /** @private @final */ this._NAME      = $confinfo.name
     /** @private @final */ this._URL       = $confinfo.url
     /** @private @final */ this._THEME     = $confinfo.theme
@@ -482,7 +482,7 @@ module.exports = class Conference {
   view(display = Conference.Display.HERO, ...args) {
     /**
      * Mark up the promoted location of this conference.
-     * @param  {Object} obj a `Conference#promoLoc()` object
+     * @param  {Object} obj an object returned by `Conference#promoLoc()`
      * @return {string} the markup for the location
      */
     function promoLoc(obj) {

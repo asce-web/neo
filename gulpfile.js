@@ -49,13 +49,18 @@ gulp.task('pug:default', function () {
     .pipe(pug({
       basedir: './',
       locals: {
+        Element: Element,
         Util: Util,
-        site: new ConfSite()
+        Conference: Conference,
+        site: new ConfSite('Civil Engineering Congress', '/sites/default/', 'ConferenceSuite')
           .colors(Color.fromString('#660000'), Color.fromString('#ff6600')) // default Hokie colors
           .init()
           .addConference('default', new Conference({
+            name      : 'Civil Engineering Congress 2016',
+            url       : 'http://2016.cecongress.org/',
             start_date: new Date(),
             end_date  : new Date(),
+            promo_loc : { text : 'Reston, VA' },
           }))
           .currentConference('default')
           .prevConference('default')
