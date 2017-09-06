@@ -28,14 +28,11 @@
 //     start_date: new Date('2020-06-04'),
 //     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
 //   })
-//   let options = {
-//     year:  'prev',
-//     blurb: 'Plan ahead to attend Geo-Risk next year!',
-//     block: Util.VIEW.highlightButtons([
-//       new Element('a').attr('href','http://2020.georiskconference.org/').attr('itemprop','url'),
-//     ], 'c-Button--ghost c-Button--ghost--dark'),
-//   }
-// != conf.view(Conference.Display.OTHER_YEAR, options)
+//   let prev_blurb = 'Plan ahead to attend Geo-Risk next year!'
+//   let prev_content = Util.VIEW.highlightButtons([
+//     new Element('a').attr('href','http://2020.georiskconference.org/').attr('itemprop','url'),
+//   ], 'c-Button--ghost c-Button--ghost--dark')
+// != conf.view(Conference.Display.OTHER_YEAR, 'prev', prev_blurb, prev_content)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>

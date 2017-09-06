@@ -52,7 +52,7 @@ figure.docs-figure
       honorific_prefix: 'Dr.',
       honorific_suffix: 'Ph.D., M.ASCE',
     }).affiliation('HDR Engineering, Inc.')
-  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Format.AFFILIATION)
+  ul: li(itemscope="" itemtype="https://schema.org/Person")!= drew.html(Person.Display.AFFILIATION)
   +microdataCheckbox('person-affiliation')
     pre.docs-pre.
       &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificPrefix"]&gt;Dr.&lt;/span&gt;

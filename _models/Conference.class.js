@@ -476,10 +476,10 @@ module.exports = class Conference {
   /**
    * Markup this conference in HTML.
    * @param  {Conference.Display=} display one of the output displays
-   * @param  {Object=} options display-specific options (see inner jsdoc)
+   * @param  {*=} args display-specific arguments (see inner jsdoc)
    * @return {string} a string representating an HTML DOM snippet
    */
-  view(display = Conference.Display.HERO, options = {}) {
+  view(display = Conference.Display.HERO, ...args) {
     /**
      * Mark up the promoted location of this conference.
      * @param  {Object} obj a `Conference#promoLoc()` object
@@ -489,13 +489,13 @@ module.exports = class Conference {
       if (obj.alt) return new Element('abbr').attr('title',obj.alt).addContent(obj.text).html()
       else return obj.text
     }
-    switch (display) {
+    let returned = {
       /**
        * Return a Hero organism.
        * @param  {string=} block custom HTML to insert at the end
        * @return {string} <header> element containing hero image
        */
-      case Conference.Display.HERO: return (function (block = '') {
+      [Conference.Display.HERO]: function (block = '') {
         return new Element('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
           .addElements([
             new Element('div').class('o-Constrain')
@@ -512,14 +512,14 @@ module.exports = class Conference {
                     new Element('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
                       .addElements([
                         new Element('time')
-                          .attr('datetime',this.startDate)
+                          .attr('datetime',this.startDate.toISOString())
                           .attr('itemprop','startDate')
-                          .addContent(Util.Date.FORMATS['M j'](this.startDate)),
+                          .addContent(Util.Date.format(this.startDate, 'M j')),
                         new Element('span').addContent(`&ndash;`),
                         new Element('time')
-                          .attr('datetime',this.endDate)
+                          .attr('datetime',this.endDate.toISOString())
                           .attr('itemprop','endDate')
-                          .addContent(Util.Date.FORMATS['M j'](this.endDate)),
+                          .addContent(Util.Date.format(this.endDate, 'M j')),
                       ]),
                   ]),
                 new Element('p').class('c-ConfHed__Theme h-Hidden-nM')
@@ -529,7 +529,7 @@ module.exports = class Conference {
               .addContent(block),
           ])
           .html()
-      }).call(this, options.block)
+      },
       /**
        * Return an Other Year organism.
        * @param  {string}  year exactly one of `'prev'` or `'next'`
@@ -537,10 +537,10 @@ module.exports = class Conference {
        * @param  {string=} block custom HTML to insert at the end
        * @return {string} <aside> element containing prev/next year image
        */
-      case Conference.Display.OTHER_YEAR: return (function (year, blurb = '', block = '') {
+      [Conference.Display.OTHER_YEAR]: function (year, blurb = '', block = '') {
         return new Element('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
           .addClass(`c-Banner--${year}`)
-          .attrObj({
+          .attr({
             itemscope: '',
             itemtype : 'http://schema.org/Event',
           })
@@ -550,7 +550,7 @@ module.exports = class Conference {
                 new Element('h1').class('c-ConfHed__Name')
                   .attr('itemprop','name')
                   .addContent(this.name),
-                new Element('meta').attr('content',this.startDate).attr('itemprop','startDate'),
+                new Element('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
                 new Element('p').class('c-ConfHed__Detail')
                   .attr('itemprop','location')
                   .addContent(promoLoc(this.promoLoc)),
@@ -559,10 +559,12 @@ module.exports = class Conference {
               .addContent(block),
           ])
           .html()
-      }).call(this, options.year, options.blurb, options.block)
-      default:
-        return this.view(Conference.Display.HERO)
+      },
+      default: function () {
+        return this.view()
+      },
     }
+    return (returned[display] || returned.default).call(this, ...args)
   }
 
 

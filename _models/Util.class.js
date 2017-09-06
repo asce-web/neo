@@ -206,12 +206,10 @@ module.exports = class Util extends require('helpers-js').Util {
       programHn(date) {
         return new Element('time')
           .class('c-ProgramHn h-Block')
-          // .attr('datetime', Util.Date.format(date, 'Y-m-d'))
-          .attr('datetime', Util.Date.FORMATS['Y-m-d'](date))
+          .attr('datetime', Util.Date.format(date, 'Y-m-d'))
           .addContent(`${Util.Date.DAY_NAMES[date.getUTCDay()]},`)
-          .addElements([new Element('br',true)])
-          // .addContent(Util.Date.format(date, 'M j'))
-          .addContent(Util.Date.FORMATS['M j'](date))
+          .addElements([new Element('br')])
+          .addContent(Util.Date.format(date, 'M j'))
           .html()
       },
     }

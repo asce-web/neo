@@ -101,11 +101,19 @@ module.exports = class Pass {
 
   /**
    * Markup this pass in HTML.
-   * @param  {Conference} $conference the conference to which this pass belongs
-   * @param  {Pass.Format=} format how to display the output
+   * @param  {Pass.Display=} display one of the output displays
+   * @param  {*=} args display-specific arguments (see inner jsdoc)
    * @return {string} a string representating an HTML DOM snippet
    */
-  html($conference, format = Pass.Format.DEFAULT) {
+  view(display = Pass.Display.PASS, ...args) {
+    let returned = {
+      /**
+       * Return a Pass component.
+       * @param  {Conference} $conference the conference to which this pass belongs
+       * @return {string} site title link in header
+       */
+      [Pass.Display.PASS]: function ($conference) {
+        // REVIEW indentation
     let current_period = $conference.currentRegistrationPeriod()
     /**
      * Print the details of a registration period
@@ -129,9 +137,7 @@ module.exports = class Pass {
         ).join('')
       )
     }
-    return ({
-      [Pass.Format.DEFAULT]: () =>
-        new Element('article').class('c-Pass')
+        return new Element('article').class('c-Pass')
           .addElements([
             new Element('header').class('c-Pass__Head')
               .addElements([
@@ -139,7 +145,7 @@ module.exports = class Pass {
                 new Element('p').class('c-Pass__Desc')
                   .addContent(this.description())
                   .addElements([
-                    (this.fineprint()) ? new Element('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : new Element('span') // TODO make null on helpers-js v0.4.0
+                    (this.fineprint()) ? new Element('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null
                   ])
               ]),
             ((current_period) ? new Element('div').class('c-Pass__Body').addElements([
@@ -148,7 +154,7 @@ module.exports = class Pass {
                   new Element('h1').class('c-Pass__Period__Hn').addContent(current_period.name),
                   periodDetails.call(this, current_period, true),
                 ])
-            ]) : new Element('div')), // TODO make null on helpers-js v0.4.0
+            ]) : null),
             new Element('footer').class('o-Flex c-Pass__Foot')
               .addElements(
                 $conference.getRegistrationPeriodsAll()
@@ -163,7 +169,12 @@ module.exports = class Pass {
               ),
           ])
           .html()
-    })[format]()
+      },
+      default: function () {
+        return this.view()
+      },
+    }
+    return (returned[display] || returned.default).call(this, ...args)
   }
 
 
@@ -171,7 +182,7 @@ module.exports = class Pass {
    * Enum for pass formats.
    * @enum {string}
    */
-  static get Format() {
+  static get Display() {
     return {
       /** Default format. */ DEFAULT: 'default',
     }
