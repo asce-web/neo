@@ -10,7 +10,7 @@ block mainReference
     include ../../_views/_o-Tabs.view.pug
     +tabs(groupings.length)#full-program-block
       mixin tab(i)
-        != Util.VIEW.programHn(groupings[i].dateday)
+        != groupings[i].sessions[0].view(Session.Display.PROGRAM_HN)
       mixin panel(i)
         include ../../_views/_Session.view.pug
         +timeBlock(groupings[i].sessions)

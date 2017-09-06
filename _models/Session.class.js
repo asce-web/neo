@@ -1,3 +1,6 @@
+var Element = require('helpers-js').Element
+var Util = require('./Util.class.js')
+
 module.exports = class Session {
   /**
    * A program event.
@@ -69,5 +72,54 @@ module.exports = class Session {
    */
   isStarred() {
     return this._is_starred
+  }
+
+
+  /**
+   * Markup this session in HTML.
+   * @param  {Session.Display=} display one of the output displays
+   * @param  {*=} args display-specific arguments (see inner jsdoc)
+   * @return {string} a string representating an HTML DOM snippet
+   */
+  view(display = Session.Display.TIME_BLOCK, ...args) {
+    let returned = {
+      /**
+       * Return a part of a Time Block component.
+       * @return {string} single DOM snippet representing this session
+       */
+      [Session.Display.TIME_BLOCK]: function () {
+        throw new Error('feature not yet supported')
+      },
+      /**
+       * Return a ProgramHn component.
+       * @return {string} <time> element marking up this session’s start date
+       */
+      [Session.Display.PROGRAM_HN]: function () {
+        return new Element('time').class('c-ProgramHn h-Block')
+          .attr('data-instanceof','Session')
+          .attr('datetime', Util.Date.format(this.startDate, 'Y-m-d'))
+          .addContent(`${Util.Date.DAY_NAMES[this.startDate.getUTCDay()]},`)
+          .addElements([new Element('br')])
+          .addContent(Util.Date.format(this.startDate, 'M j'))
+          .html()
+      },
+      default: function () {
+        return this.view()
+      },
+    }
+    return (returned[display] || returned.default).call(this, ...args)
+  }
+
+
+
+  /**
+   * Enum for session displays.
+   * @enum {string}
+   */
+  static get Display() {
+    return {
+      /** TimeBlock component. */ TIME_BLOCK: 'timeBlock',
+      /** ProgramHn component. */ PROGRAM_HN: 'programHn',
+    }
   }
 }

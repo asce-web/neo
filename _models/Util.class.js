@@ -198,20 +198,6 @@ module.exports = class Util extends require('helpers-js').Util {
           options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
         })
       },
-      /**
-       * Mark up a date as a heading for a time block (a list of Sessions in a program).
-       * @param  {date} date the date to mark up: the date of a session
-       * @return {string} a <time> element marking up the date
-       */
-      programHn(date) {
-        return new Element('time')
-          .class('c-ProgramHn h-Block')
-          .attr('datetime', Util.Date.format(date, 'Y-m-d'))
-          .addContent(`${Util.Date.DAY_NAMES[date.getUTCDay()]},`)
-          .addElements([new Element('br')])
-          .addContent(Util.Date.format(date, 'M j'))
-          .html()
-      },
     }
   }
 
