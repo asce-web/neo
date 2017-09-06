@@ -140,6 +140,9 @@ module.exports = class Pass {
         return new Element('article').class('c-Pass')
           .attr({
             'data-instanceof': 'Pass',
+            itemprop: 'offers',
+            itemscope: '',
+            itemtype: 'https://schema.org/Offer',
           })
           .addElements([
             new Element('header').class('c-Pass__Head')
@@ -155,6 +158,9 @@ module.exports = class Pass {
               new Element('section').class('c-Pass__Period')
                 .addElements([
                   new Element('h1').class('c-Pass__Period__Hn').addContent(current_period.name),
+                  // NOTE the getters below return `new Date()` if none is set
+                  (current_period.startDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:current_period.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
+                  (current_period.  endDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:current_period.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,
                   periodDetails.call(this, current_period, true),
                 ])
             ]) : null),
