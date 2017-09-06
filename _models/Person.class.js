@@ -264,6 +264,7 @@ module.exports = class Person {
       [Person.Display.SPEAKER]: function () {
         /** filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
         return new Element('article').class('c-Speaker').attr({
+          'data-instanceof': 'Person',
           itemprop : 'performer',
           itemscope: '',
           itemtype : 'http://schema.org/Person',

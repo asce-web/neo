@@ -497,6 +497,7 @@ module.exports = class Conference {
        */
       [Conference.Display.HERO]: function (block = '') {
         return new Element('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
+          .attr('data-instanceof','Conference')
           .addElements([
             new Element('div').class('o-Constrain')
               .addElements([
@@ -541,6 +542,7 @@ module.exports = class Conference {
         return new Element('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
           .addClass(`c-Banner--${year}`)
           .attr({
+            'data-instanceof': 'Conference',
             itemscope: '',
             itemtype : 'http://schema.org/Event',
           })

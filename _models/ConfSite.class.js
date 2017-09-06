@@ -231,6 +231,7 @@ module.exports = class ConfSite extends Page {
        */
       [ConfSite.Display.SITE_TITLE]: function () {
         return new Element('a').class('c-SiteTitle c-LinkCamo h-Block')
+          .attr('data-instanceof','ConfSite')
           .attr('href',this.url())
           .addElements([
             new Element('img').class('c-SiteTitle__Logo').attr('src',this.logo()).attr('alt','Home'),

@@ -138,6 +138,9 @@ module.exports = class Pass {
       )
     }
         return new Element('article').class('c-Pass')
+          .attr({
+            'data-instanceof': 'Pass',
+          })
           .addElements([
             new Element('header').class('c-Pass__Head')
               .addElements([
