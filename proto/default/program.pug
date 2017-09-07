@@ -1,0 +1,18 @@
+extends _sites.tpl.pug
+
+block append vars
+  - var page = site.find('program.html')
+
+block mainReference
+  section.o-Runner.o-Runner--highlight.c-Banner#full-program: div.o-Constrain
+    h1.h-Hidden Full Program
+    - var groupings = site.currentConference().groupSessions(false)
+    include ../../_views/_o-Tabs.view.pug
+    +tabs(groupings.length)#full-program-block
+      mixin tab(i)
+        include ../../_views/_Date.view.pug
+        +programHn(groupings[i].dateday)
+      mixin panel(i)
+        include ../../_views/_Session.view.pug
+        +timeBlock(groupings[i].sessions)
+    p: small.-fs-t Program subject to change.

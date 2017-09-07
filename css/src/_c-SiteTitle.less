@@ -1,0 +1,173 @@
+
+/*################################*\
+    neo  |  _c-SiteTitle.less
+\*################################*/
+
+
+// The Site Title
+//
+// The Site Title sets up the visual structure containing the site logo, title, and slogan.
+//
+// Use with Pug:
+// <pre>
+//   include /_views/_ConfSite.view.pug
+//   +siteTitle(new ConfSite('CI Summit', '#0', 'Innovations In Construction')
+//     .logo('http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png'))
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-06-29</time></dd>
+// </dl></header>
+//
+// Markup:
+// <a class="c-SiteTitle c-LinkCamo h-Block" href="#0">
+//   <img class="c-SiteTitle__Logo" alt="Home"
+//     src="http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png"/>
+//   <h1 class="c-SiteTitle__Name">CI Summit</h1>
+//   <p class="c-SiteTitle__Slogan">Innovations In Construction</p>
+// </a>
+//
+// Weight: 2
+//
+// Styleguide Components.SiteTitle
+
+
+//+++++++++++++++++++++++++++++++//
+//    # OBJECT STYLES
+//+++++++++++++++++++++++++++++++//
+
+// no support for @supports, grid, or object-fit.
+@media screen and (min-width: 30em) {
+.c-SiteTitle {
+  &::after {
+    // duplicating .o-GridFloat
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+.c-SiteTitle__Logo,
+.c-SiteTitle__Name,
+.c-SiteTitle__Slogan {
+  // duplicating .o-GridFloat__Item
+  display: inline-block;
+  float: left;
+  width: 100%;
+}
+}
+
+// support for CSS Grid & object-fit
+@supports (display: grid) and (object-fit: contain) {
+.c-SiteTitle {
+  // override .o-GridFloat
+  display: grid;
+  &::after { content: none; }
+}
+.c-SiteTitle__Logo,
+.c-SiteTitle__Name,
+.c-SiteTitle__Slogan {
+  // override .o-GridFloat__Item
+  display: block;
+  float: none;
+  width: auto;
+}
+}
+
+//++++ end # OBJECT STYLES ++++//
+
+
+//+++++++++++++++++++++++++++++++//
+//    # COMPONENT STYLES
+//+++++++++++++++++++++++++++++++//
+@p-logosize: 4rem;
+.c-SiteTitle {
+  @media not all and (min-width: 30em) {
+    text-align: center;
+  }
+}
+
+.c-SiteTitle__Logo,
+.c-SiteTitle__Name,
+.c-SiteTitle__Slogan {
+  color: inherit; // everything inside the link looks like part of the same link
+}
+
+.c-SiteTitle__Logo {
+  width: @p-logosize;
+}
+
+.c-SiteTitle__Name {
+  .font-size-el(2);
+  text-align: inherit; // override h1 center
+}
+
+.c-SiteTitle__Slogan {
+  font-weight: 300;
+  @media not all and (min-width: 45em) {
+    display: none;
+  }
+}
+
+
+
+  //--------------------------------//
+  //    ## Non-Grid Fallback
+  //--------------------------------//
+// no support for @supports, grid, or object-fit.
+.c-SiteTitle__Name,
+.c-SiteTitle__Slogan {
+  @media screen and (min-width: 30em) {
+    width: calc(~'100% - '@p-logosize);
+    padding-left: 0.5rem;
+  }
+}
+  //---- end ## Non-Grid Fallback ----//
+
+
+
+  //--------------------------------//
+  //    ## Grid Support
+  //--------------------------------//
+// support for CSS Grid & object-fit
+@supports (display: grid) and (object-fit: contain) {
+.c-SiteTitle {
+  grid-template-areas:
+    'logo'
+    'name';
+  grid-column-gap: 0.5rem;
+  @media not all and (min-width: 30em) {
+    justify-items: center;
+  }
+  @media screen and (min-width: 30em) {
+    grid-template-areas: 'logo name';
+    justify-content: start;
+  }
+  @media screen and (min-width: 45em) {
+    grid-template-areas:
+      'logo name'
+      'logo slogan';
+  }
+}
+
+.c-SiteTitle__Logo {
+  object-fit: contain;
+  @media screen and (min-width: 30em) {
+    width: auto; // override @p-logosize
+    height: 100%;
+  }
+}
+
+.c-SiteTitle__Name,
+.c-SiteTitle__Slogan {
+  width: auto; // override non-grid fallback
+  padding-left: initial; // HACK fallback for `unset`
+  padding-left: unset; // override non-css-grid fallback
+}
+
+.c-SiteTitle__Logo   { grid-area: logo  ; }
+.c-SiteTitle__Name   { grid-area: name  ; }
+.c-SiteTitle__Slogan { grid-area: slogan; }
+}
+  //---- end ## Grid Support ----//
+//++++ end # COMPONENT STYLES ++++//

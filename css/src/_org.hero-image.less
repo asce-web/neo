@@ -1,0 +1,84 @@
+
+/*################################*\
+    neo  |  _org.hero-image.less
+\*################################*/
+
+
+// Hero Image
+//
+// The Hero Image is the largest image on the home page, containing
+// the current conference name and information, call-to-action buttons,
+// and other patterns.
+// The Hero Image Organism also contains microdata HTML,
+// which is unstyled and not considered part of any design component.
+//
+// Use in Pug:
+// <pre>
+//   include /_views/_Conference.view.pug
+//   +hero(new Conference({
+//     name      : 'Geo-Risk 2017',
+//     url       : 'http://2017.georiskconference.org/',
+//     theme     : 'Geotechincal risk from theory to practice.',
+//     start_date: new Date('2017-06-04'),
+//     end_date  : new Date('2017-06-07'),
+//     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
+//   }))
+//     +highlightButtons([
+//       { text: 'Register'      , href:'#0' },
+//       { text: 'Sponsor'       , href:'#0' },
+//       { text: 'Submit a Paper', href:'#0' },
+//     ], 'c-Button--primary')
+// </pre>
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-20</time></dd>
+// </dl></header>
+// <footer>
+//   Objects this Organism uses:
+//   <ul>
+//     <li><a>The Runner Object</a></li>
+//     <li><a>Constrain</a></li>
+//     <li><a>The Action List</a></li>
+//   </ul>
+//   Components this Organism uses:
+//   <ul>
+//     <li><a>The Banner Component</a></li>
+//     <li><a>The Conference Header</a></li>
+//     <li><a>The Page Title</a></li>
+//     <li><a>Buttons</a></li>
+//   </ul>
+// </footer>
+//
+// Markup:
+// <header class="o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed">
+//   <div class="o-Constrain">
+//     <h1 class="c-PageTitle c-ConfHed__Name" itemprop="name">Geo-Risk 2017</h1>
+//     <meta content="http://2017.georiskconference.org/" itemprop="url"/>
+//     <p class="o-Flex c-ConfHed__Detail">
+//       <span class="o-Flex__Item c-ConfHed__Place h-Block" itemprop="location">
+//         <abbr title="Denver, Colorado">Denver, CO</abbr>
+//       </span>
+//       <span class="o-Flex__Item c-ConfHed__Dates h-Block">
+//         <time datetime="2017-06-04" itemprop="startDate">Jun 4</time>
+//         <span>&ndash;</span>
+//         <time datetime="2017-06-07" itemprop="endDate">Jun 7</time>
+//       </span>
+//     </p>
+//     <p class="c-ConfHed__Theme h-Hidden-nM" itemprop="description">Geotechincal risk from theory to practice.</p>
+//     <ul class="o-List o-Flex o-ListAction">
+//       <li class="o-List__Item o-Flex__Item o-ListAction__Item">
+//         <a class="c-Button c-Button--hilite c-Button--primary" href="#0">Register</a>
+//       </li>
+//       <li class="o-List__Item o-Flex__Item o-ListAction__Item">
+//         <a class="c-Button c-Button--hilite c-Button--primary" href="#0">Sponsor</a>
+//       </li>
+//       <li class="o-List__Item o-Flex__Item o-ListAction__Item">
+//         <a class="c-Button c-Button--hilite c-Button--primary" href="#0">Submit a Paper</a>
+//       </li>
+//     </ul>
+//   </div>
+// </header>
+//
+// Weight: 5
+//
+// Styleguide Organisms.hero-image

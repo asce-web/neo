@@ -1,0 +1,196 @@
+
+/*################################*\
+    neo  |  _base.less
+\*################################*/
+
+
+// Table of Contents
+// # GENERIC........................far-reaching page-wide selectors
+// # SECTIONS.......................sections, articles, headers, footers, headings
+// # GROUPING.......................paragraphs, lists, tables
+//   ## Paragraphs
+//   ## Lists
+//   ## Tables
+// # TEXT...........................phrasing (inline) content and links
+//   ## Links
+//   ## Stress
+//   ## Doc
+//   ## Data
+// # FORMS..........................form elements
+// # EMBEDDED.......................images, videos
+// # INTERACTIVE....................user-interactive HTML elements
+
+
+//++++++++++++++++++++++++++++++++//
+//    # GENERIC
+//++++++++++++++++++++++++++++++++//
+html {
+  --runner-sml-padding: @g-boxpadd_micr;
+  --runner-med-padding: @g-boxpadd_norm;
+  --runner-lrg-padding: @g-boxpadd_norm;
+  --speaker-img-size: 60vw;
+  --supporter-logo-lrg-width: 120px; --supporter-logo-lrg-height: 65px ;
+  --supporter-logo-med-width: 90px ; --supporter-logo-med-height: 48px ;
+  --supporter-logo-sml-width: 68px ; --supporter-logo-sml-height: 36px ;
+  @media screen and (min-width: 30em)  {
+    --runner-sml-padding: @g-boxpadd_mill;
+    --runner-med-padding: @g-boxpadd_norm;
+    --runner-lrg-padding: @g-boxpadd_kilo;
+    --speaker-img-size: 40vw;
+    --supporter-logo-lrg-width: 250px; --supporter-logo-lrg-height: 110px;
+    --supporter-logo-med-width: 188px; --supporter-logo-med-height: 82px ;
+    --supporter-logo-sml-width: 140px; --supporter-logo-sml-height: 62px ;
+  }
+  @media screen and (min-width: 45em)  {
+    --runner-sml-padding: @g-boxpadd_norm;
+    --runner-med-padding: @g-boxpadd_mega;
+    --runner-lrg-padding: @g-boxpadd_giga;
+    --speaker-img-size: 20vw;
+  }
+  @media screen and (min-width: 60em)  {
+    --runner-sml-padding: @g-boxpadd_kilo;
+    --runner-med-padding: @g-boxpadd_giga;
+    --runner-lrg-padding: @g-boxpadd_peta;
+    --supporter-logo-lrg-width: 360px; --supporter-logo-lrg-height: 160px;
+    --supporter-logo-med-width: 270px; --supporter-logo-med-height: 120px;
+    --supporter-logo-sml-width: 202px; --supporter-logo-sml-height: 90px ;
+  }
+  @media screen and (min-width: 75em)  {
+  }
+  @media screen and (min-width: 90em)  {
+    --speaker-img-size: 15vw;
+  }
+}
+body {
+  --heading-color: var(--color-primary, @g-color-primary);
+  --heading-color-unselected: var(--color-gray_dk, @g-color-gray_dk);
+  --link-color: var(--color-secondary, @g-color-secondary);
+  --link-color-hover: var(--color-gray_lt, @g-color-gray_lt);
+  font-family: @g-fontfam_body;
+  background: #fff;
+  color: #222;
+}
+//++++ end # GENERIC ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # SECTIONS
+//++++++++++++++++++++++++++++++++//
+h1, h2, h3, h4, h5, h6 {
+  font-family: @g-fontfam_hn;
+  font-weight: 900;
+  color: var(--heading-color);
+}
+h1 {
+  text-align: center;
+}
+//++++ end # SECTIONS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # GROUPING
+//++++++++++++++++++++++++++++++++//
+  //--------------------------------//
+  //    ## Paragraphs
+  //--------------------------------//
+  figcaption {
+    font-style: italic;
+    font-weight: 300;
+    .font-size-el(@g-font-size-mill);
+  }
+  blockquote {
+    padding: calc(~'var(--vru) / 2') 0;
+    padding-left: 1.5rem;
+    border-left: 0.5rem solid rgba(0,0,0,0.25);
+    .font-size-el(@g-font-size-kilo);
+  }
+  //---- end ## Paragraphs ----//
+
+  //--------------------------------//
+  //    ## Lists
+  //--------------------------------//
+  ul {
+    list-style-type: circle;
+    li & {
+      list-style-type: disc;
+    }
+  }
+  //---- end ## Lists ----//
+
+  //--------------------------------//
+  //    ## Tables
+  //--------------------------------//
+  table {
+    width: 100%;
+    .font-size-mod(0.75);
+  }
+  thead,
+  tfoot {
+    background-color: @g-color-table-bg;
+    font-weight: 600;
+    .font-size-el(14/12);
+  }
+  th,
+  td {
+    padding: calc(~'0.5 * var(--vru)') 0.5rem;
+    border: 0 solid @g-color-table-br;
+    border-width: 0 0 1px;
+  }
+  //---- end ## Tables ----//
+//++++ end # GROUPING ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # TEXT
+//++++++++++++++++++++++++++++++++//
+  //--------------------------------//
+  //    ## Links
+  //--------------------------------//
+  a {
+    color: var(--link-color);
+    .transitions(color, background-color; 125ms);
+    &:hover,
+    &:focus,
+    &._hover {
+      --link-color: var(--link-color-hover);
+    }
+  }
+  [aria-current="page"] {
+    font-weight: 900;
+  }
+  //---- end ## Links ----//
+
+  //--------------------------------//
+  //    ## Stress
+  //--------------------------------//
+  //---- end ## Stress ----//
+
+  //--------------------------------//
+  //    ## Doc
+  //--------------------------------//
+  //---- end ## Doc ----//
+
+  //--------------------------------//
+  //    ## Data
+  //--------------------------------//
+  //---- end ## Data ----//
+
+//++++ end # TEXT ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # FORMS
+//++++++++++++++++++++++++++++++++//
+//++++ end # FORMS ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # EMBEDDED
+//++++++++++++++++++++++++++++++++//
+//++++ end # EMBEDDED ++++//
+
+
+//++++++++++++++++++++++++++++++++//
+//    # INTERACTIVE
+//++++++++++++++++++++++++++++++++//
+//++++ end # INTERACTIVE ++++//

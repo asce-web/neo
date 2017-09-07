@@ -1,0 +1,25 @@
+
+/*################################*\
+    neo  |  __tool.ticket.less
+\*################################*/
+
+
+// Structural styles used for Pass and Speaker components.
+//
+// ^author
+// Chris Harvey
+// ^updated
+// 2016-09-22
+
+.ticket() {
+  .font-size-mod(0.75);
+  box-shadow: 0 0 0 1px var(--color-gray_dk, @g-color-gray_dk); // border hack
+  background-color: var(--color-gray_dk, @g-color-gray_dk);
+  color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+  text-shadow: none; text-shadow: initial; // override `.c-Banner`
+}
+
+.ticket-body() {
+  background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+  color: var(--color-gray_dk-shade2, @g-color-gray_dk-shade2);
+}

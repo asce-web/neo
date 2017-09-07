@@ -1,0 +1,75 @@
+
+/*################################*\
+    neo  |  _c-Alert.less
+\*################################*/
+
+
+// Alerts
+//
+// A textual block standing out from normal prose.
+// An Alert can be a paragraph, a figure, a sectioning element, a list,
+// or anything you want, as long as it’s a block.
+// This may not *necessarily* be a removable aside, that is, it may be integral
+// to the content.
+// Alerts are not necessarily more important than the surrounding content:
+// It may also be deemphasized from normal prose, for example, it may contain
+// fine print or disclaimers of some sort.
+//
+// An Alert can also contain a heading, or a pseudo-heading (an element that looks like a heading),
+// as long as the Alert isn’t a list. If it is a list, you can only include list items.
+//
+// Combine this class with various Objects to diversify your alerts.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-21</time></dd>
+// </dl></header>
+//
+// Markup:
+// <p class="c-Alert">An Alert! Use whatever the heck element you want,
+//   even a <code>figure</code>!</p>
+// <aside class="c-Alert">
+//   <h1 class="c-Alert__Hn">Attention!</h1>
+//   <p>An alert aside with a heading!</p>
+// </aside>
+// <p class="c-Alert">
+//   <strong class="c-Alert__Hn h-Block">New!</strong>
+//   A callout graf with a pseudo-heading!
+// </p>
+// <ul class="o-List o-Flex o-ListAction c-Alert">
+//   <li class="o-List__Item o-Flex__Item o-ListAction__Item c-Alert__Item">This Alert is a list!</li>
+//   <li class="o-List__Item o-Flex__Item o-ListAction__Item c-Alert__Item">And it’s also an <a>Action List</a>!</li>
+//   <li class="o-List__Item o-Flex__Item o-ListAction__Item c-Alert__Item">Note how the items differ!</li>
+// </ul>
+//
+// Weight: 16
+//
+// Styleguide Components.Alert
+.c-Alert {
+  .border-vert(topbot; 1px);
+  border-style: solid;
+  padding: @g-boxpadd_mill;
+}
+
+.c-Alert__Hn {
+  // HACK fallbacks for `unset`
+  font: inherit;
+  padding-top: initial;
+  color: inherit;
+
+  // unset `h1`
+  font: unset;
+  padding-top: unset;
+  color: unset;
+
+  // new styles
+  margin-bottom: var(--vru);
+  font-weight: 900;
+  .font-size-el(1.5);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+
+.c-Alert__Item {
+  padding: @g-boxpadd_mill;
+}

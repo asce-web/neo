@@ -1,0 +1,61 @@
+
+/*################################*\
+    neo  |  _c-Banner.less
+\*################################*/
+
+
+.p-background-settings() {
+  // default background image
+  // override with site-specific stylesheet
+  background-image: linear-gradient(to bottom, #373737, #2f2e33, #1c1b20, #181818); // fallback for image (image colors)
+  background-image: var(--banner-img, url('../images/banner-default.jpg'));
+  background-position: center;
+  background-size: cover;
+  background-color: #272629; // fallback for gradient (mix of image colors)
+}
+
+
+// The Banner Component
+//
+// Any major section on any page with a full-width background image.
+// Can be used on Runner or Mast to give a background image.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-10-21</time></dd>
+// </dl></header>
+//
+// Markup:
+// <div class="c-Banner  {{ modifier_class }}">
+//   <h1>banner heading</h1>
+//   <p>banner content</p>
+// </div>
+//
+// .c-Banner--blur - same as banner image, but blurry background
+//
+// Weight: 1.1
+//
+// Styleguide Components.Banner
+.c-Banner {
+  --heading-color: currentColor;
+  --heading-color-unselected: var(--color-gray_lt, @g-color-gray_lt); // for unselected .c-ProgramHn
+  color: #fff;
+  .p-background-settings();
+  // text-shadow: 0 0 0.25rem var(--color-gray_dk-shade2, @g-color-gray_dk-shade2);
+  text-shadow: 0 0 0.25rem #000;
+}
+
+.c-Banner--blur {
+  position: relative; // for ::before
+  background: none; // override `.c-Banner`
+  &::before {
+    // need `::before` for filter effects
+    // TODO until `backdrop-filter` is supported
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    z-index: -1; // pseudo is painted after content; must be stacked lower
+    .p-background-settings();
+    filter: blur(4px);
+  }
+}

@@ -1,0 +1,13 @@
+extends _sites.tpl.pug
+
+block append vars
+  - var page = site.find('about.html')
+  - var prev_blurb = 'default text for previous conference'
+  - var next_blurb = 'default text for next conference'
+
+block mainReference
+  include ../../_views/_Conference.view.pug
+  +otherYear(site.prevConference(), prev_blurb).c-Banner--prev
+    +highlightButtons([{text:'Event Details', href:site.prevConference().url, attr:{itemprop:'url'}}], 'c-Button--ghost c-Button--ghost--dark')
+  +otherYear(site.nextConference(), next_blurb).c-Banner--next
+    +highlightButtons([{text:'Event Details', href:site.nextConference().url, attr:{itemprop:'url'}}], 'c-Button--ghost c-Button--ghost--dark')

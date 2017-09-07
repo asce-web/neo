@@ -1,0 +1,20 @@
+extends ../default/registration.pug
+
+block mainMinimal
+  include _includes/_text-block.pug
+
+block mainRich
+  include _includes/_text-section.pug
+
+block callouts
+  +callout()
+    h1 Additional Events and Pricing
+    ul.o-List.o-Flex.o-ListAction
+      li.o-List__Item.o-Flex__Item.o-ListAction__Item
+        a.c-Button.c-Button--dark(href="#0") Short Courses
+      li.o-List__Item.o-Flex__Item.o-ListAction__Item
+        a.c-Button.c-Button--dark(href="#0") Technical Tours
+      li.o-List__Item.o-Flex__Item.o-ListAction__Item
+        a.c-Button.c-Button--dark(href="#0") Optional Tours
+  +callout().c-Banner
+    include _includes/callouts/_volunteer.pug

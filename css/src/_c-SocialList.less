@@ -1,0 +1,166 @@
+
+/*################################*\
+    neo  |  _c-SocialList.less
+\*################################*/
+
+
+// The Social List
+//
+// List of social media icons.
+//
+// The generic form of this Component
+// shouldn’t be used on its own; there are three “flavors” of Social List shown below.
+// 1. site mast footer
+//
+// Use in Pug:
+// <pre>
+//   include /_views/_c-SocialList.view.pug
+//   +socialList({
+//     twitter : { url: '#0', text: 'example Twitter link (alt text)' },
+//     google  : { url: '#0', text: 'example Google+ link (alt text)' },
+//     facebook: { url: '#0', text: 'example Facebook link (alt text)' },
+//     linkedin: { url: '#0', text: 'example LinkedIn link (alt text)' },
+//     youtube : { url: '#0', text: 'example YouTube link (alt text)' },
+//   })
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-10-14</time></dd>
+// </dl></header>
+//
+// Markup:
+// <div class="c-Banner">
+//   <ul class="o-List o-Flex c-SocialList {{ modifier_class }}">
+//     <li class="o-List__Item o-Flex__Item c-SocialList__Item">
+//       <a class="c-SocialList__Link c-SocialList__Link--twitter h-Block" href="#0">
+//         <span class="h-Hidden">alt text</span>
+//       </a>
+//     </li>
+//     <li class="o-List__Item o-Flex__Item c-SocialList__Item">
+//       <a class="c-SocialList__Link c-SocialList__Link--facebook h-Block" href="#0">
+//         <span class="h-Hidden">alt text</span>
+//       </a>
+//     </li>
+//   </ul>
+// </div>
+//
+// .c-SocialList--footer    - social list inside home page footer
+// .c-SocialList--speaker   - social list inside <a>Speaker Component</a>
+// .c-SocialList--highlight - social list inside a highlighted content block,
+//   such as the "Join the Conversation" callout.
+//   The logos are larger and each encompassed in a circle.
+//   Logos in a <a>Banner</a> are slightly lighter than those not.
+//
+// Weight: 14
+//
+// Styleguide Components.SocialList
+.c-SocialList {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  &:not(.c-SocialList--speaker) {
+    justify-content: space-around;
+  }
+}
+
+.c-SocialList--footer {
+  width: 50%;
+  --iconsize: 5vw;
+  @media screen and (min-width: 60em) {
+    --iconsize: calc(~'2 * var(--vru)');
+  }
+  @media screen and (min-width: 75em) {
+    width: (100%/3);
+  }
+}
+
+.c-SocialList--speaker {
+  --iconsize: var(--vru);
+}
+
+.c-SocialList--highlight {
+  width: 50%;
+  --iconsize: 10vw;
+  --icon-color: var(--color-gray_dk);
+  --icon-color-hover: var(--color-secondary);
+  .c-Banner & {
+    --icon-color: var(--color-gray_dk-tint2);
+  }
+}
+
+.c-SocialList__Item {
+  flex: none;
+}
+
+// The Social List Link
+//
+// A link to a social network. Each subclass corresponsds to its designated social network.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-07-19</time></dd>
+// </dl></header>
+//
+// Markup:
+// <div class="c-Banner">
+//   <ul class="o-List o-Flex c-SocialList c-SocialList--speaker">
+//     <li class="o-List__Item o-Flex__Item c-SocialList__Item">
+//       <a class="c-SocialList__Link {{ modifier_class }} h-Block" href="#0">
+//         <span class="h-Hidden">alt text</span>
+//       </a>
+//     </li>
+//   </ul>
+// </div>
+//
+// .c-SocialList__Link--email        - email icon
+// .c-SocialList__Link--phone        - telephone icon
+// .c-SocialList__Link--explore      - website/homepage icon
+// .c-SocialList__Link--phone_iphone - mobile phone icon
+// .c-SocialList__Link--twitter      - Twitter icon
+// .c-SocialList__Link--google       - Google+ icon
+// .c-SocialList__Link--facebook     - Facebook icon
+// .c-SocialList__Link--linkedin     - LinkedIn icon
+// .c-SocialList__Link--youtube      - YouTube icon
+// .c-SocialList__Link--email:hover  - on hover
+// .c-SocialList__Link--email:active - on click
+//
+// Styleguide Components.SocialList.Link
+.c-SocialList__Link {
+  width:  var(--iconsize);
+  height: var(--iconsize);
+  .logo();
+  .transitions(background-color, filter; 500ms); // override base `a`
+  .c-SocialList--footer &,
+  .c-SocialList--speaker & {
+    &:hover,
+    &:focus,
+    &._hover,
+    &:active,
+    &._active {
+      filter: blur(2px);
+    }
+  }
+  .c-SocialList--highlight & {
+    border-radius: 100%;
+    background-size: ((2/3) * 100%) ((2/3) * 100%);
+    background-color: var(--icon-color, transparent);
+    &:hover,
+    &:focus,
+    &._hover,
+    &:active,
+    &._active {
+      background-color: var(--icon-color-hover, transparent);
+    }
+  }
+}
+
+.c-SocialList__Link--email        { background-image: url('../images/social-icons/email.svg'); }
+.c-SocialList__Link--phone        { background-image: url('../images/social-icons/phone.svg'); }
+.c-SocialList__Link--explore      { background-image: url('../images/social-icons/explore.svg'); }
+.c-SocialList__Link--phone_iphone { background-image: url('../images/social-icons/phone_iphone.svg'); }
+
+.c-SocialList__Link--twitter  { background-image: url('../images/social-icons/twitter.svg'); }
+.c-SocialList__Link--google   { background-image: url('../images/social-icons/google.svg'); }
+.c-SocialList__Link--facebook { background-image: url('../images/social-icons/facebook.svg'); }
+.c-SocialList__Link--linkedin { background-image: url('../images/social-icons/linkedin.svg'); }
+.c-SocialList__Link--youtube  { background-image: url('../images/social-icons/youtube.svg'); }

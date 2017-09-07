@@ -1,0 +1,10 @@
+extends ../default/program.pug
+
+block mainMinimal
+  include _includes/_text-block.pug
+
+block callouts
+  +callout().c-Banner.c-Banner--blur.c-Banner--city
+    include _includes/callouts/_location.pug
+  +callout().c-Banner
+    include _includes/callouts/_volunteer.pug

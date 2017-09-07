@@ -1,0 +1,11 @@
+extends ../default/speakers.pug
+
+block mainMinimal
+  include _includes/_text-block.pug
+
+block mainRich
+  include _includes/_text-section.pug
+
+block callouts
+  +callout().c-Banner
+    include ../default/_includes/callouts/_social.pug

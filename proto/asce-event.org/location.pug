@@ -1,0 +1,10 @@
+extends ../default/location.pug
+
+block mainRich
+  include _includes/_text-section.pug
+
+block callouts
+  +callout().c-Banner
+    include ../default/_includes/callouts/_important-dates.pug
+  +callout()
+    include ../default/_includes/callouts/_contact.pug

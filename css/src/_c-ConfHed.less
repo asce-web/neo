@@ -1,0 +1,68 @@
+
+/*################################*\
+    neo  |  _c-ConfHed.less
+\*################################*/
+
+
+// The Conference Header
+//
+// Promo for any year’s conference. Typographical styles.
+// On the home page: promote the current conference;
+// on the About page, promote the previous and next years’ conferences.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2016-10-21</time></dd>
+// </dl></header>
+//
+// Markup:
+// <div class="c-ConfHed">
+//   <h1 class="c-ConfHed__Name">Geo-Risk 2017</h1>
+//   <p class="o-Flex c-ConfHed__Detail">
+//     <span class="o-Flex__Item c-ConfHed__Place h-Block">Denver, CO</span>
+//     <span class="o-Flex__Item c-ConfHed__Dates h-Block">Jun 4&ndash;Jun 7</span>
+//   </p>
+//   <p class="c-ConfHed__Theme">Geotechincal risk from theory to practice.</p>
+// </div>
+//
+// Weight: 8
+//
+// Styleguide Components.ConfHed
+.c-ConfHed {
+  text-align: center;
+}
+
+.c-ConfHed__Name {
+}
+
+.c-ConfHed__Detail {
+  justify-content: space-around;
+  font-weight: 600;
+  @media not all and (min-width: 45em) {
+    flex-direction: column;
+  }
+  .o-Runner--pageHeader & {
+    // when inside hero
+    .font-size-el(@g-font-size-mega; 2); // copied from xmeter atom `.-fz-el-mega`
+  }
+  .o-Runner--highlight & {
+    // when inside other-year
+    .font-size-el(@g-font-size-kilo); // copied from xmeter atom `.-fz-el-kilo`
+  }
+}
+
+.c-ConfHed__Place,
+.c-ConfHed__Dates {
+  @media screen and (min-width: 45em) {
+    flex: 50%;
+  }
+}
+
+.c-ConfHed__Place {
+}
+.c-ConfHed__Dates {
+}
+
+.c-ConfHed__Theme {
+  .font-size-el(1.5; 2);
+  font-style: italic;
+}

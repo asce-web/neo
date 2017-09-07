@@ -1,0 +1,19 @@
+extends _sites.tpl.pug
+
+block append vars
+  - var page = site.find('contact.html')
+
+block mainReference
+  section.o-Runner.o-Runner--highlight#contact-us: div.o-Constrain
+    h1.h-Hidden Contact Us
+    form
+      label
+        | name
+        input(type="text")
+      label
+        | email
+        input(type="email")
+      label
+        | message
+        textarea
+      button submit
