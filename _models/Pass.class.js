@@ -1,6 +1,7 @@
 var Element = require('helpers-js').Element
+var RegistrationPeriod = require('./RegistrationPeriod.class.js')
 
-module.exports = class Pass {
+class Pass {
   /**
    * A set of prices for registration.
    * Constructs a Pass object.
@@ -114,83 +115,26 @@ module.exports = class Pass {
        */
       [Pass.Display.PASS]: function ($conference) {
         let current_period = $conference.currentRegistrationPeriod()
-        /**
-         * Print the details of a registration period
-         * @param  {RegistrationPeriod} $registrationPeriod the registration period to mark up
-         * @param  {boolean} is_body `true` if this period belongs in the pass body (if it’s current)
-         * @return {Element} <section>, the DOM output of the registration period
-         */
-        function periodDetails($registrationPeriod, is_body) {
-          return new Element('section').class('c-Pass__Period')
-            .addClass((!is_body) ? 'o-Flex__Item' : '')
-            .attr({
-              'data-instanceof': 'RegistrationPeriod',
-              itemprop: 'offers',
-              itemscope: '',
-              itemtype: 'https://schema.org/AggregateOffer',
-            })
-            .addElements([
-              new Element('h1').class('c-Pass__Period__Hn').attr('itemprop','name')
-                .addElements([ new Element('span').class('-d-n').addContent(`${this.name}: `) ]) // NOTE: `.-d-n` hides from AT but reveals to Microdata
-                .addContent($registrationPeriod.name),
-              // new Element('meta').attr({ content:this.getAttendeeTypesAll().length, itemprop:'offerCount' }), // TODO use number arg on helpers-js@0.4.1 update
-              new Element('meta').attr({ content:`${this.getAttendeeTypesAll().length}`, itemprop:'offerCount' }), // TODO use number arg on helpers-js@0.4.1 update
-              // NOTE the getters below return `new Date()` if none is set
-              ($registrationPeriod.startDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:$registrationPeriod.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
-              ($registrationPeriod.  endDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:$registrationPeriod.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,
-              new Element('dl').addContent(this.getAttendeeTypesAll().map((att_type) =>
-                Element.concat(
-                  new Element('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(att_type.name),
-                  new Element('dd').class('c-Pass__Price')
-                    .addClass((is_body && att_type.isFeatured) ? 'c-Pass__Price--featured' : '')
-                    .attr({
-                      'aria-label': `${0} ${Pass.PRICE_OPTIONS.currency}`, // TODO price is 0 for now
-                      itemprop : 'priceSpecification',
-                      itemscope: '',
-                      itemtype : 'http://schema.org/UnitPriceSpecification',
-                    })
-                    .addElements(
-                      (function (price) {
-                        let split = [
-                          price.toLocaleString('en', Pass.PRICE_OPTIONS).slice(0,1), // first char // .charAt(0)
-                          price.toLocaleString('en', Pass.PRICE_OPTIONS).slice(1),   // rest
-                        ]
-                        return [
-                          new Element('data')
-                            .attr('value',Pass.PRICE_OPTIONS.currency)
-                            .attr('itemprop','priceCurrency')
-                            .addContent(split[0]),
-                          new Element('span')
-                            .attr('itemprop','price')
-                            .addContent(split[1]),
-                        ]
-                      })(0) // TODO price is 0 for now
-                    )
-                )
-              ).join('')),
-            ])
-        }
         return new Element('article').class('c-Pass')
           .attr('data-instanceof','Pass')
           .addElements([
-            new Element('header').class('c-Pass__Head')
-              .addElements([
-                new Element('h1').class('c-Pass__Hn').addContent(this.name),
-                new Element('p').class('c-Pass__Desc')
-                  .addContent(this.description())
-                  .addElements([
-                    (this.fineprint()) ? new Element('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null
-                  ])
-              ]),
-            ((current_period) ? new Element('div').class('c-Pass__Body').addElements([
-              periodDetails.call(this, current_period, true)
-            ]) : null),
-            new Element('footer').class('o-Flex c-Pass__Foot')
-              .addElements(
-                $conference.getRegistrationPeriodsAll()
-                  .filter((registration_period) => registration_period !== current_period)
-                  .map((registration_period) => periodDetails.call(this, registration_period, false))
-              ),
+            new Element('header').class('c-Pass__Head').addElements([
+              new Element('h1').class('c-Pass__Hn').addContent(this.name),
+              new Element('p').class('c-Pass__Desc')
+                .addContent(this.description())
+                .addElements([
+                  (this.fineprint()) ? new Element('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null
+                ])
+            ]),
+            (current_period) ? new Element('div').class('c-Pass__Body').addContent(
+              current_period.view(RegistrationPeriod.Display.PASS_PERIOD, this, true)
+            ) : null,
+            new Element('footer').class('o-Flex c-Pass__Foot').addContent(
+              $conference.getRegistrationPeriodsAll()
+                .filter((registration_period) => registration_period !== current_period)
+                .map((registration_period) => registration_period.view(RegistrationPeriod.Display.PASS_PERIOD, this, false))
+                .join('')
+            ),
           ])
           .html()
       },
@@ -223,7 +167,7 @@ module.exports = class Pass {
    */
   static get Display() {
     return {
-      /** Default format. */ DEFAULT: 'default',
+      /** Pass component. */ PASS: 'pass',
     }
   }
 
@@ -232,8 +176,13 @@ module.exports = class Pass {
    * An Attendee Type ("Member", "Non-Member", etc) of a pass.
    * @inner
    */
-  static get AttendeeType() {
-    return class {
+  static get AttendeeType() { return AttendeeType }
+}
+
+
+
+
+class AttendeeType {
       /**
        * An Attendee Type ("Member", "Non-Member", etc) of a pass.
        * Construct an AttendeeType object, given a name and
@@ -261,6 +210,64 @@ module.exports = class Pass {
       get isFeatured() {
         return this._IS_FEATURED
       }
+
+
+  /**
+   * Markup this attendee type in HTML.
+   * @param  {AttendeeType.Display=} display one of the output displays
+   * @param  {*=} args display-specific arguments (see inner jsdoc)
+   * @return {string} a string representating an HTML DOM snippet
+   */
+  view(display = AttendeeType.Display.PASS_ATTENDEE, ...args) {
+    let returned = {
+      /**
+       * Return a Pass__Period subcomponent.
+       * @param  {number} price the price for this attendee type given a certain pass and registration period
+       * @param  {boolean} is_body `true` if this attendee type happens to be in the pass body
+       * @return {string} a <dt>–<dd> pair DOM output
+       */
+      [AttendeeType.Display.PASS_ATTENDEE]: function (price, is_body) {
+        return Element.concat(
+          new Element('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
+          new Element('dd').class('c-Pass__Price')
+            .addClass((is_body && this.isFeatured) ? 'c-Pass__Price--featured' : '')
+            .attr({
+              'aria-label': `${price} ${Pass.PRICE_OPTIONS.currency}`,
+              itemprop : 'priceSpecification',
+              itemscope: '',
+              itemtype : 'http://schema.org/UnitPriceSpecification',
+            })
+            .addElements([
+              new Element('data')
+                .attr('value',Pass.PRICE_OPTIONS.currency)
+                .attr('itemprop','priceCurrency')
+                .addContent(price.toLocaleString('en', Pass.PRICE_OPTIONS).slice(0,1)), // first char // .charAt(0) // FIXME for USD only!
+              new Element('span')
+                .attr('itemprop','price')
+                .addContent(price.toLocaleString('en', Pass.PRICE_OPTIONS).slice(1)), // rest
+            ])
+        )
+      },
+      default: function () {
+        return this.view()
+      },
+    }
+    return (returned[display] || returned.default).call(this, ...args)
+  }
+
+
+  /**
+   * Enum for AttendeeType formats.
+   * @enum {string}
+   */
+  static get Display() {
+    return {
+      /** A Pass__Attendee subcomponent. */ PASS_ATTENDEE: 'passAttendee',
     }
   }
 }
+
+
+
+
+module.exports = Pass
