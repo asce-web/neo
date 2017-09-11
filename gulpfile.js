@@ -17,8 +17,6 @@ var Person             = require('./_models/Person.class.js')
 var Place              = require('./_models/Place.class.js')
 var RegistrationPeriod = require('./_models/RegistrationPeriod.class.js')
 var Pass               = require('./_models/Pass.class.js')
-var Session            = require('./_models/Session.class.js')
-var ImportantDate      = require('./_models/ImportantDate.class.js')
 
 gulp.task('pug:index', function () {
   return gulp.src(__dirname + '/index.pug')

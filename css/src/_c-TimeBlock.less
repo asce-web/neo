@@ -12,12 +12,12 @@
 // <pre>
 //   include /_views/_Session.view.pug
 //   +timeBlock([
-//     new Session({start_date:new Date('2016-09-28 10:00'), end_date:new Date('2016-09-28 19:00'), name:'Registration'             }),
-//     new Session({start_date:new Date('2016-09-28 10:30'), end_date:new Date('2016-09-28 16:30'), name:'Technical Tours'          }).url('#0'),
-//     new Session({start_date:new Date('2016-09-28 13:00'), end_date:new Date('2016-09-28 17:00'), name:'Short Courses'            }).url('#0'),
-//     new Session({start_date:new Date('2016-09-28 12:00'), end_date:new Date('2016-09-28 17:00'), name:'Optional Tours'           }).url('#0'),
-//     new Session({start_date:new Date('2016-09-28 17:30'), end_date:new Date('2016-09-28 19:30'), name:'Opening Welcome Reception'}),
-//     new Session({start_date:new Date('2016-09-28 13:00'), end_date:new Date('2016-09-28 17:00'), name:'Community Service Project'}),
+//     new DateRange('Registration'             , new Date('2016-09-28 10:00'), new Date('2016-09-28 19:00')),
+//     new DateRange('Technical Tours'          , new Date('2016-09-28 10:30'), new Date('2016-09-28 16:30')).url('#0'),
+//     new DateRange('Short Courses'            , new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')).url('#0'),
+//     new DateRange('Optional Tours'           , new Date('2016-09-28 12:00'), new Date('2016-09-28 17:00')).url('#0'),
+//     new DateRange('Opening Welcome Reception', new Date('2016-09-28 17:30'), new Date('2016-09-28 19:30')),
+//     new DateRange('Community Service Project', new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')),
 //   ])
 // </pre>
 //

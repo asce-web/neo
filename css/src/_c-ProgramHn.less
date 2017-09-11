@@ -14,13 +14,7 @@
 //
 // Use in Pug:
 // <pre>
-// -
-//   let sess = new Session({
-//     start_date: new Date('2017-10-08 10:00'),
-//     end_date  : new Date('2017-10-08 19:00'),
-//     name      : 'Registration',
-//   })
-// != sess.view().programHn(Session.Display.PROGRAM_HN)
+// != new DateRange('Registration', new Date('2017-10-08 10:00'), new Date('2017-10-08 19:00')).view.programHn()
 // </pre>
 //
 // <header><dl>
