@@ -148,17 +148,15 @@ class Pass {
 
   /**
    * Options for formatting pass prices.
-   * Equivalent to the `options` parameter for
-   * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString|Number#toLocaleString()}.
-   * @type {Object}
+   * @type {Intl.NumberFormat}
    */
   static get PRICE_OPTIONS() {
-    return {
+    return new Intl.NumberFormat('en', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
       maximumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
-    }
+    })
   }
 
   /**
@@ -232,19 +230,19 @@ class AttendeeType {
           new Element('dd').class('c-Pass__Price')
             .addClass((is_body && this.isFeatured) ? 'c-Pass__Price--featured' : '')
             .attr({
-              'aria-label': `${price} ${Pass.PRICE_OPTIONS.currency}`,
+              'aria-label': `${price} ${Pass.PRICE_OPTIONS.resolvedOptions().currency}`,
               itemprop : 'priceSpecification',
               itemscope: '',
               itemtype : 'http://schema.org/UnitPriceSpecification',
             })
             .addElements([
               new Element('data')
-                .attr('value',Pass.PRICE_OPTIONS.currency)
+                .attr('value',Pass.PRICE_OPTIONS.resolvedOptions().currency)
                 .attr('itemprop','priceCurrency')
-                .addContent(price.toLocaleString('en', Pass.PRICE_OPTIONS).slice(0,1)), // first char // .charAt(0) // FIXME for USD only!
+                .addContent(Pass.PRICE_OPTIONS.format(price).slice(0,1)), // first char // .charAt(0) // FIXME for USD only!
               new Element('span')
                 .attr('itemprop','price')
-                .addContent(price.toLocaleString('en', Pass.PRICE_OPTIONS).slice(1)), // rest
+                .addContent(Pass.PRICE_OPTIONS.format(price).slice(1)), // rest
             ])
         )
       },
