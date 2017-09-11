@@ -37,7 +37,7 @@ html(lang="en")
   body
     a.h-Hidden(href="#main") skip to main content
     header.o-Runner.c-Mast.c-Mast--head: div.o-Constrain
-      != site.view()
+      != site.view.siteTitle()
     header.o-Runner.c-Mast.c-Mast--menu: div.o-Constrain
       label.c-Toggle(aria-label="toggle main menu")
         input.c-Toggle__Check.h-Hidden(type="checkbox" value="main menu is open" role="switch")
@@ -89,7 +89,7 @@ html(lang="en")
               let highlight_buttons = [
                 new Element('a').attr('href','sponsor.html').addContent(`All Sponsors`)
               ]
-            != Util.VIEW.highlightButtons(highlight_buttons)
+            != Util.view(highlight_buttons).highlightButtons()
     footer.o-Runner.c-Mast.c-Mast--sitemap#site-map: nav.o-Constrain
       h1.h-Hidden Site Map
       include ../../_views/_c-Sitemap.view.pug

@@ -218,18 +218,32 @@ module.exports = class ConfSite extends Page {
 
 
   /**
-   * Markup this conference site in HTML.
-   * @param  {ConfSite.Display=} display one of the output displays
-   * @param  {*=} args display-specific arguments (see inner jsdoc)
-   * @return {string} a string representating an HTML DOM snippet
+   * Render this conference site in HTML.
+   * Displays:
+   * - `ConfSite#view()`           - default display
+   * - `ConfSite#view.siteTitle()` - SiteTitle component
+   * @return {string} HTML output
    */
-  view(display = ConfSite.Display.SITE_TITLE, ...args) {
-    let returned = {
-      /**
-       * Return a SiteTitle component.
-       * @return {string} site title link in header
-       */
-      [ConfSite.Display.SITE_TITLE]: function () {
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Throws error: must call an explicit display.
+     * Call `ConfSite#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `ConfSite#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return an <a.c-SiteTitle> component marking up this conference site’s info.
+     * Call `ConfSite#view.siteTitle()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.siteTitle = function () {
+      return (function () {
         return new Element('a').class('c-SiteTitle c-LinkCamo h-Block')
           .attr('data-instanceof','ConfSite')
           .attr('href',this.url())
@@ -239,13 +253,12 @@ module.exports = class ConfSite extends Page {
             new Element('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
           ])
           .html()
-      },
-      default: function () {
-        return this.view()
-      },
+      }).call(self)
     }
-    return (returned[display] || returned.default).call(this, ...args)
+    return returned
   }
+
+
 
   /**
    * Generate a color palette and return a style object with custom properties.
@@ -302,16 +315,6 @@ module.exports = class ConfSite extends Page {
       '--color-gray_lt-shade1'  :   gray_lt_s1.toString('hex'),
       '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex'),
       '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex'),
-    }
-  }
-
-  /**
-   * Enum for conference site formats.
-   * @enum {string}
-   */
-  static get Display() {
-    return {
-      /** SiteTitle component. */ SITE_TITLE: 'siteTitle',
     }
   }
 }

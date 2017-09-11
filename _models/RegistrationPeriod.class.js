@@ -67,22 +67,34 @@ module.exports = class RegistrationPeriod {
 
 
   /**
-   * Markup this registration period in HTML.
-   * @param  {RegistrationPeriod.Display=} display one of the output displays
-   * @param  {*=} args display-specific arguments (see inner jsdoc)
-   * @return {string} a string representating an HTML DOM snippet
+   * Render this registration period in HTML.
+   * Displays:
+   * - `RegistrationPeriod#view()`      - default display
+   * - `RegistrationPeriod#view.pass()` - Pass component - Pass__Period subcomponent
+   * @return {string} HTML output
    */
-  view(display = RegistrationPeriod.Display.PASS_PERIOD, ...args) {
-    let returned = {
-      /**
-       * Return a Pass__Period subcomponent.
-       * @param  {Pass} $pass the Pass component in which this registration period is rendered
-       * @param  {boolean} is_body `true` if this period belongs in the pass body (if it’s current)
-       * @return {string} a <section> element DOM output
-       */
-      [RegistrationPeriod.Display.PASS_PERIOD]: function ($pass, is_body) {
-        // FIXME HACK cannot require(Pass) because it depends on this class
-        const Pass = { AttendeeType : { Display: { PASS_ATTENDEE: 'passAttendee' } } }
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Throw an error: must call an explicit display.
+     * Call `RegistrationPeriod#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `FegistrationPeriod#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return a <section.c-Pass__Period> subcomponent marking up this period’s info.
+     * Call `RegistrationPeriod#view.pass()` to render this display.
+     * @param  {Pass} $pass the Pass component in which this registration period is rendered
+     * @param  {boolean} is_body `true` if this period belongs in the pass body (if it’s current)
+     * @return {string} HTML output
+     */
+    returned.pass = function ($pass, is_body) {
+      return (function () {
         return new Element('section').class('c-Pass__Period')
           .addClass((!is_body) ? 'o-Flex__Item' : '')
           .attr({
@@ -101,26 +113,12 @@ module.exports = class RegistrationPeriod {
             (this.startDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
             (this.  endDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,
             new Element('dl').addContent($pass.getAttendeeTypesAll().map((att_type) =>
-              att_type.view(Pass.AttendeeType.Display.PASS_ATTENDEE, 42.87, is_body) // TODO price is 42 for now
+              att_type.view.pass(42.87, is_body) // TODO price is 42 for now
             ).join('')),
           ])
           .html()
-      },
-      default: function () {
-        return this.view()
-      },
+      }).call(self)
     }
-    return (returned[display] || returned.default).call(this, ...args)
-  }
-
-
-  /**
-   * Enum for RegistrationPeriod formats.
-   * @enum {string}
-   */
-  static get Display() {
-    return {
-      /** A Pass__Period subcomponent. */ PASS_PERIOD: 'passPeriod',
-    }
+    return returned
   }
 }

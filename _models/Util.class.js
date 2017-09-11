@@ -168,28 +168,31 @@ module.exports = class Util extends require('helpers-js').Util {
   }
 
   /**
+   * Render any data in HTML.
    * Miscellaneous views.
-   * These do not belong to any particular content type.
-   * @type {Object<function(...):string>}
+   * Displays:
+   * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
+   * @param {*} data any data to render
+   * @return {string} HTML output
    */
-  static get VIEW() {
-    return {
-      /**
-       * Returns a list of buttons (links) for a highlighted content block.
-       *
-       * ```pug
-       * ul.o-List.o-Flex.o-ListAction
-       *   each item in links
-       *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
-       *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
-       *         = item.contents
-       * ```
-       * @param  {Array<Element>} links the links to mark up
-       * @param  {string} buttonclasses the classes to add to the buttons
-       * @return {string} a <ul> element marking up the links
-       */
-      highlightButtons(links, buttonclasses = '') {
-        return Element.data(links, {
+  static view(data) {
+    function returned(data) { throw new Error('Please select a display: `Util.view[display](data)`.') }
+    /**
+     * Return a <ul> of button links for a highlighted content block.
+     * ```pug
+     * ul.o-List.o-Flex.o-ListAction
+     *   each item in data
+     *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
+     *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
+     *         = item.contents
+     * ```
+     * Call `Util.view(data).highlightButtons()` to render this display.
+     * @param  {Array<Element>} data the <a> elements to render
+     * @param  {string=} buttonclasses the classes to add to the buttons
+     * @return {string} HTML output
+     */
+    returned.highlightButtons = function (buttonclasses = '') {
+        return Element.data(data, {
           ordered: false,
           attributes: {
             list:  { class: 'o-List o-Flex o-ListAction' },
@@ -197,8 +200,8 @@ module.exports = class Util extends require('helpers-js').Util {
           },
           options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
         })
-      },
     }
+    return returned
   }
 
   /**

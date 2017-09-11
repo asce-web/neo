@@ -77,12 +77,8 @@ gulp.task('pug:sample', function () {
       basedir: './',
       locals: {
         Element: Element,
-        Util: Util,
-        Conference: Conference,
-        Pass: Pass,
-        Session: Session,
-        Person: Person,
-        site  : require('./proto/asce-event.org/data.js'),
+        Util   : Util,
+        site   : require('./proto/asce-event.org/data.js'),
       },
     }))
     .pipe(gulp.dest('./proto/asce-event.org/'))

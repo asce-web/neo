@@ -3,7 +3,7 @@ h1#program-highlights Program Highlights
 include ../../../../_views/_o-Tabs.view.pug
 +tabs(groupings.length)#program-highlights-block
   mixin tab(i)
-    != groupings[i].sessions[0].view(Session.Display.PROGRAM_HN)
+    != groupings[i].sessions[0].view.programHn()
   mixin panel(i)
     include ../../../../_views/_Session.view.pug
     +timeBlock(groupings[i].sessions)
@@ -11,4 +11,4 @@ include ../../../../_views/_o-Tabs.view.pug
   let highlight_buttons = [
     new Element('a').attr('href','program.html').addContent(`Full Program`)
   ]
-!= Util.VIEW.highlightButtons(highlight_buttons)
+!= Util.view(highlight_buttons).highlightButtons()

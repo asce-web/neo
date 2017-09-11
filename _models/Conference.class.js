@@ -474,12 +474,15 @@ module.exports = class Conference {
 
 
   /**
-   * Markup this conference in HTML.
-   * @param  {Conference.Display=} display one of the output displays
-   * @param  {*=} args display-specific arguments (see inner jsdoc)
-   * @return {string} a string representating an HTML DOM snippet
+   * Render this conference in HTML.
+   * Displays:
+   * - `Conference#view()`           - default display
+   * - `Conference#view.hero()`      - Hero Organism
+   * - `Conference#view.otherYear()` - Other Year Organism
+   * @return {string} HTML output
    */
-  view(display = Conference.Display.HERO, ...args) {
+  get view() {
+    let self = this
     /**
      * Mark up the promoted location of this conference.
      * @param  {Object} obj an object returned by `Conference#promoLoc()`
@@ -489,13 +492,25 @@ module.exports = class Conference {
       if (obj.alt) return new Element('abbr').attr('title',obj.alt).addContent(obj.text).html()
       else return obj.text
     }
-    let returned = {
-      /**
-       * Return a Hero organism.
-       * @param  {string=} block custom HTML to insert at the end
-       * @return {string} <header> element containing hero image
-       */
-      [Conference.Display.HERO]: function (block = '') {
+    /**
+     * Default display. Takes no arguments.
+     * Throws error: must call an explicit display.
+     * Call `Conference#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `Conference#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return a <header> element with hero image marking up this conference’s main info.
+     * Call `ConfSite#view.hero()` to render this display.
+     * @param  {string=} block custom HTML to insert at the end
+     * @return {string} HTML output
+     */
+    returned.hero = function (block = '') {
+      return (function () {
         return new Element('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
           .attr('data-instanceof','Conference')
           .addElements([
@@ -530,15 +545,18 @@ module.exports = class Conference {
               .addContent(block),
           ])
           .html()
-      },
-      /**
-       * Return an Other Year organism.
-       * @param  {string}  year exactly one of `'prev'` or `'next'`
-       * @param  {string=} blurb custom HTML to advertise the prev/next year
-       * @param  {string=} block custom HTML to insert at the end
-       * @return {string} <aside> element containing prev/next year image
-       */
-      [Conference.Display.OTHER_YEAR]: function (year, blurb = '', block = '') {
+      }).call(self)
+    }
+    /**
+     * Return an <aside> element with other year backdrop marking up this conference’s main info.
+     * Call `ConfSite#view.otherYear()` to render this display.
+     * @param  {string}  year exactly one of `'prev'` or `'next'`
+     * @param  {string=} blurb custom HTML to advertise the prev/next year
+     * @param  {string=} block custom HTML to insert at the end
+     * @return {string} HTML output
+     */
+    returned.otherYear = function (year, blurb = '', block = '') {
+      return (function () {
         return new Element('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
           .addClass(`c-Banner--${year}`)
           .attr({
@@ -561,24 +579,8 @@ module.exports = class Conference {
               .addContent(block),
           ])
           .html()
-      },
-      default: function () {
-        return this.view()
-      },
+      }).call(self)
     }
-    return (returned[display] || returned.default).call(this, ...args)
-  }
-
-
-
-  /**
-   * Enum for conference site displays.
-   * @enum {string}
-   */
-  static get Display() {
-    return {
-      /** Hero organism. */       HERO: 'hero',
-      /** Other Year organism. */ OTHER_YEAR: 'otherYear',
-    }
+    return returned
   }
 }

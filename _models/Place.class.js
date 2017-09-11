@@ -88,18 +88,32 @@ module.exports = class Place {
 
 
   /**
-   * Markup this place in HTML.
-   * @param  {Place.Display=} display one of the output displays
-   * @param  {*=} args display-specific arguments (see inner jsdoc)
-   * @return {string} a string representating an HTML DOM snippet
+   * Render this place in HTML.
+   * Displays:
+   * - `Place#view()`       - default display
+   * - `Place#view.venue()` - a venue address
+   * @return {string} HTML output
    */
-  view(display = Place.Display.VENUE, ...args) {
-    let returned = {
-      /**
-       * Return a view for a venue.
-       * @return {string} single DOM snippet representing this place
-       */
-      [Place.Display.VENUE]: function () {
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Throw an error: must call an explicit display.
+     * Call `Place#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `Place#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return a DOM snippet marking up this place’s address.
+     * Call `Place#view.venue()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.venue = function () {
+      return (function () {
         let name = new Element('b').class('h-Clearfix').attr('itemprop','name').addContent(this.name)
         if (this.url) {
           name = new Element('a').attr({
@@ -130,23 +144,8 @@ module.exports = class Place {
             ]),
           (this.telephone) ? new Element('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : new Element('span') // TODO make null on helpers-js@0.4.1
         )
-      },
-      default: function () {
-        return this.view()
-      },
+      }).call(self)
     }
-    return (returned[display] || returned.default).call(this, ...args)
-  }
-
-
-
-  /**
-   * Enum for session displays.
-   * @enum {string}
-   */
-  static get Display() {
-    return {
-      /** A venue. */ VENUE: 'venue',
-    }
+    return returned
   }
 }

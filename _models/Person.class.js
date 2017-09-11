@@ -170,29 +170,40 @@ module.exports = class Person {
 
 
   /**
-   * Markup this person in HTML.
-   * @param  {Person.Display=} display one of the output displays
-   * @param  {*=} args display-specific arguments (see inner jsdoc)
-   * @return {string} a string representing an HTML DOM snippet
+   * Render this person in HTML.
+   * Displays:
+   * - `Person#view()`             - default display - “First Last”
+   * - `Person#view.fullName()`    - “First Middle Last”
+   * - `Person#view.entireName()`  - “Px. First Middle Last, Sx.”
+   * - `Person#view.affiliation()` - “First Middle Last, Affiliation”
+   * - `Person#view.contact()`     - “First Last, Director of ... | 555-555-5555”
+   * - `Person#view.speaker()`     - Speaker Component
+   * @return {string} HTML output
    */
-  view(display = Person.Display.NAME, ...args) {
-    let returned = {
-      /**
-       * Return this person’s name in "First Last" format.
-       * @return {string} HTML snippet representing this person
-       */
-      [Person.Display.NAME]: function () {
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Return this person’s name in "First Last" format.
+     * Call `Person#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
         return new Element('span').attr('itemprop','name')
           .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
           .addContent(` `)
           .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
           .html()
-      },
-      /**
-       * Return this person’s name in "First Middle Last" format.
-       * @return {string} HTML snippet representing this person
-       */
-      [Person.Display.FULL_NAME]: function () {
+      }).call(self)
+    }
+    /**
+     * Return this person’s name in "First Middle Last" format.
+     * Call `Person#view.fullName()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.fullName = function () {
+      return (function () {
         return new Element('span').attr('itemprop','name')
           .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
           .addContent(` `)
@@ -200,13 +211,16 @@ module.exports = class Person {
           .addContent(` `)
           .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
           .html()
-      },
-      /**
-       * Return this person’s name in "Px. First Middle Last, Sx." format.
-       * @return {string} HTML snippet representing this person
-       */
-      [Person.Display.ENTIRE_NAME]: function () {
-        let returned = this.view(Person.Display.FULL_NAME)
+      }).call(self)
+    }
+    /**
+     * Return this person’s name in "Px. First Middle Last, Sx." format.
+     * Call `Person#view.entireName()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.entireName = function () {
+      return (function () {
+        let returned = this.view.fullName()
         if (this.name.honorific_prefix) {
           returned = `${
             new Element('span').attr('itemprop','honorificPrefix').addContent(this.name.honorific_prefix).html()
@@ -218,12 +232,16 @@ module.exports = class Person {
           }`
         }
         return returned
-      },
-      /**
-       * Return this person’s name in "First Middle Last, Affiliation" format.
-       * @return {string} HTML snippet representing this person
-       */
-      [Person.Display.AFFILIATION]: () => `${this.view(Person.Display.ENTIRE_NAME)}, ${
+      }).call(self)
+    }
+    /**
+     * Return this person’s name in "First Middle Last, Affiliation" format.
+     * Call `Person#view.affiliation()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.affiliation = function () {
+      return (function () {
+      return `${this.view.entireName()}, ${
         new Element('span').class('-fs-t').attr({
           itemprop : 'affiliation',
           itemscope: '',
@@ -231,15 +249,19 @@ module.exports = class Person {
         }).addElements([
           new Element('span').attr('itemprop','name').addContent(this.affiliation())
         ]).html()
-      }`,
-      /**
-       * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
-       * @return {string} HTML snippet representing this person
-       */
-      [Person.Display.CONTACT]: function () {
+      }`
+      }).call(self)
+    }
+    /**
+     * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
+     * Call `Person#view.contact()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.contact = function () {
+      return (function () {
         let returned = new Element('a')
           .attr('href',`mailto:${this.email()}`)
-          .addContent(this.view(Person.Display.NAME))
+          .addContent(this.view())
           .html()
         if (this.jobTitle()) {
           returned = `${returned}, ${
@@ -256,12 +278,15 @@ module.exports = class Person {
           }`
         }
         return returned
-      },
-      /**
-       * Return a Speaker component.
-       * @return {string} <article> element representing this person
-       */
-      [Person.Display.SPEAKER]: function () {
+      }).call(self)
+    }
+    /**
+     * Return an <article.c-Speaker> component marking up this person’s info.
+     * Call `Person#view.speaker()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.speaker = function () {
+      return (function () {
         /** filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
         return new Element('article').class('c-Speaker').attr({
           'data-instanceof': 'Person',
@@ -275,7 +300,7 @@ module.exports = class Person {
           new Element('header').class('c-Speaker__Head').addElements([
             new Element('h1').class('c-Speaker__Name')
               .id(this.id)
-              .addContent(this.view(Person.Display.ENTIRE_NAME)),
+              .addContent(this.view.entireName()),
             new Element('p').class('c-Speaker__JobTitle')
               .attr('itemprop','jobTitle')
               .addContent(this.jobTitle()),
@@ -309,26 +334,8 @@ module.exports = class Person {
           `),
         ])
         .html()
-      },
-      default: function () {
-        return this.view()
-      },
+      }).call(self)
     }
-    return (returned[display] || returned.default).call(this, ...args)
-  }
-
-  /**
-   * Enum for name formats.
-   * @enum {string}
-   */
-  static get Display() {
-    return {
-      /** First Last */                                 NAME       : 'name',
-      /** First Middle Last */                          FULL_NAME  : 'full',
-      /** Px. First Middle Last, Sx. */                 ENTIRE_NAME: 'entire',
-      /** First Middle Last, Affiliation */             AFFILIATION: 'affiliation',
-      /** First Last, Director of ... | 555-555-5555 */ CONTACT    : 'contact',
-      /** a speaker at a conference */                  SPEAKER    : 'speaker',
-    }
+    return returned
   }
 }

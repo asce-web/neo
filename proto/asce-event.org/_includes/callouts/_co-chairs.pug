@@ -2,6 +2,6 @@ h1#conference-co-chairs Conference Co-Chairs
 div._text-block
   ul
     li(itemprop="organizer" itemscope="" itemtype="http://schema.org/Person")
-      != site.currentConference().getOrganizer('thomas-mccollough').view(Person.Display.AFFILIATION)
+      != site.currentConference().getOrganizer('thomas-mccollough').view.affiliation()
     li(itemprop="organizer" itemscope="" itemtype="http://schema.org/Person")
-      != site.currentConference().getOrganizer('stephen-dickenson').view(Person.Display.ENTIRE_NAME)
+      != site.currentConference().getOrganizer('stephen-dickenson').view.entireName()

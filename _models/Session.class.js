@@ -76,25 +76,32 @@ module.exports = class Session {
 
 
   /**
-   * Markup this session in HTML.
-   * @param  {Session.Display=} display one of the output displays
-   * @param  {*=} args display-specific arguments (see inner jsdoc)
-   * @return {string} a string representating an HTML DOM snippet
+   * Render this session in HTML.
+   * Displays:
+   * - `Session#view()`      - default display - a subcomponent of TimeBlock
+   * - `Session#programHn()` - ProgramHn Component
+   * @return {string} HTML output
    */
-  view(display = Session.Display.TIME_BLOCK, ...args) {
-    let returned = {
-      /**
-       * Return a part of a Time Block component.
-       * @return {string} single DOM snippet representing this session
-       */
-      [Session.Display.TIME_BLOCK]: function () {
-        throw new Error('feature not yet supported')
-      },
-      /**
-       * Return a ProgramHn component.
-       * @return {string} <time> element marking up this session’s start date
-       */
-      [Session.Display.PROGRAM_HN]: function () {
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Return a <dt>–<dd> pair marking up this session’s time and name, respectively, inside a TimeBlock component.
+     * Call `Session#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('feature not yet supported. check back later.')
+      }).call(self)
+    }
+    /**
+     * Return an <time.c-ProgramHn> component marking up this session’s date.
+     * Call `Session#view.programHn()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.programHn = function () {
+      return (function () {
         return new Element('time').class('c-ProgramHn h-Block')
           .attr('data-instanceof','Session')
           .attr('datetime', Util.Date.format(this.startDate, 'Y-m-d'))
@@ -102,24 +109,8 @@ module.exports = class Session {
           .addElements([new Element('br')])
           .addContent(Util.Date.format(this.startDate, 'M j'))
           .html()
-      },
-      default: function () {
-        return this.view()
-      },
+      }).call(self)
     }
-    return (returned[display] || returned.default).call(this, ...args)
-  }
-
-
-
-  /**
-   * Enum for session displays.
-   * @enum {string}
-   */
-  static get Display() {
-    return {
-      /** TimeBlock component. */ TIME_BLOCK: 'timeBlock',
-      /** ProgramHn component. */ PROGRAM_HN: 'programHn',
-    }
+    return returned
   }
 }

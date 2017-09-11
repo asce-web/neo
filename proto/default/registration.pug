@@ -33,4 +33,4 @@ block mainReference
       let highlight_buttons = [
         new Element('a').attr('href','#0').addContent(`Register Today!`)
       ]
-    != Util.VIEW.highlightButtons(highlight_buttons, 'c-Button--secondary')
+    != Util.view(highlight_buttons).highlightButtons('c-Button--secondary')
