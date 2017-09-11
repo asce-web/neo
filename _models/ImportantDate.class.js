@@ -1,3 +1,6 @@
+var Element = require('helpers-js').Element
+var Util = require('./Util.class.js')
+
 module.exports = class ImportantDate {
   /**
    * An important date.
@@ -69,5 +72,58 @@ module.exports = class ImportantDate {
    */
   isStarred() {
     return this._is_starred
+  }
+
+
+  /**
+   * Render this important date in HTML.
+   * Displays:
+   * - `ImportantDate#view()` - default display
+   * @return {string} HTML output
+   */
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Return an <li.c-DateBlock__Item> subcomponent containing a <dt>–<dd> pair,
+     * marking up an important date and description.
+     * Call `ImportantDate#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        return new Element('li').class('o-List__Item c-DateBlock__Item')
+          .attr({
+            itemprop: 'potentialAction',
+            itemscope: '',
+            itemtype: 'http://schema.org/Action',
+          })
+          .addElements([
+            new Element('dt').class('c-DateBlock__Date')
+              .addElements([
+                new Element('time')
+                  .attr({ datetime: this.startTime.toISOString(), itemprop: 'startTime' })
+                  .addContent(Util.Date.format(this.startTime, 'M j, Y'))
+              ])
+              .addContent((this.endTime) ?
+                `\u2013${ // &ndash;
+                  new Element('time')
+                    .attr({ datetime: this.endTime.toISOString(), itemprop: 'endTime' })
+                    .addContent(Util.Date.format(this.endTime, 'M j, Y'))
+                    .html()
+                }` : ''),
+            new Element('dd').class('c-DateBlock__Desc')
+              .attr('itemprop','name')
+              .addContent((this.url()) ?
+                new Element('a').class('c-DateBlock__Link')
+                  .attr({ href: this.url(), itemprop: 'url' })
+                  .addContent(this.name)
+                  .html()
+                : this.name
+              ),
+          ])
+      }).call(self)
+    }
+    return returned
   }
 }

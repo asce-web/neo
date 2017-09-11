@@ -1,16 +1,4 @@
 mixin dateBlock(dates)
   dl.o-List.c-DateBlock
     each $importantDate in dates
-      li.o-List__Item.c-DateBlock__Item(itemprop="potentialAction" itemscope="" itemtype="http://schema.org/Action")
-        dt.c-DateBlock__Date
-          time(datetime=$importantDate.startTime itemprop="startTime")
-            = Util.Date.format($importantDate.startTime, 'M j, Y')
-          if $importantDate.endTime
-            span &ndash;
-            time(datetime=$importantDate.endTime itemprop="endTime")
-              = Util.Date.format($importantDate.endTime, 'M j, Y')
-        dd.c-DateBlock__Desc(itemprop="name")
-          if $importantDate.url()
-            a.c-DateBlock__Link(href=$importantDate.url() itemprop="url")= $importantDate.name
-          else
-            = $importantDate.name
+      != $importantDate.view()
