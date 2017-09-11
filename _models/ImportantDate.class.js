@@ -86,13 +86,14 @@ module.exports = class ImportantDate {
     /**
      * Default display. Takes no arguments.
      * Return an <li.c-DateBlock__Item> subcomponent containing a <dt>–<dd> pair,
-     * marking up an important date and description.
+     * marking up this important date’s date and description.
      * Call `ImportantDate#view()` to render this display.
      * @return {string} HTML output
      */
     function returned() {
       return (function () {
         return new Element('li').class('o-List__Item c-DateBlock__Item')
+          .attr('data-instanceof','ImportantDate')
           .attr({
             itemprop: 'potentialAction',
             itemscope: '',
@@ -105,13 +106,12 @@ module.exports = class ImportantDate {
                   .attr({ datetime: this.startTime.toISOString(), itemprop: 'startTime' })
                   .addContent(Util.Date.format(this.startTime, 'M j, Y'))
               ])
-              .addContent((this.endTime) ?
-                `\u2013${ // &ndash;
-                  new Element('time')
-                    .attr({ datetime: this.endTime.toISOString(), itemprop: 'endTime' })
-                    .addContent(Util.Date.format(this.endTime, 'M j, Y'))
-                    .html()
-                }` : ''),
+              .addContent((this.endTime) ? `\u2013` : ``) // &ndash;
+              .addElements([
+                (this.endTime) ? new Element('time')
+                  .attr({ datetime: this.endTime.toISOString(), itemprop: 'endTime' })
+                  .addContent(Util.Date.format(this.endTime, 'M j, Y')) : null
+              ]),
             new Element('dd').class('c-DateBlock__Desc')
               .attr('itemprop','name')
               .addContent((this.url()) ?
@@ -122,6 +122,7 @@ module.exports = class ImportantDate {
                 : this.name
               ),
           ])
+          .html()
       }).call(self)
     }
     return returned

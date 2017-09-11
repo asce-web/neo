@@ -86,13 +86,56 @@ module.exports = class Session {
     let self = this
     /**
      * Default display. Takes no arguments.
-     * Return a <dt>–<dd> pair marking up this session’s time and name, respectively, inside a TimeBlock component.
+     * Throws error: must call an explicit display.
      * Call `Session#view()` to render this display.
      * @return {string} HTML output
      */
     function returned() {
       return (function () {
-        throw new Error('feature not yet supported. check back later.')
+        throw new Error('Please select a display: `Session#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return an <li.c-TimeBlock__Item> subcomponent containing a <dt>–<dd> pair,
+     * marking up this session’s time and name.
+     * Call `Session#view.timeBlock()` to render this display.
+     * @param  {boolean} is_last `true` if this session is the last in its list
+     * @return {string} HTML output
+     */
+    returned.timeBlock = function (is_last) {
+      return (function () {
+        return new Element('li').class('o-List__Item o-Flex c-TimeBlock__Item')
+          .attr('data-instanceof','Session')
+          .attr({
+            itemprop: 'subEvent',
+            itemscope: '',
+            itemtype: 'http://schema.org/Event',
+          })
+          .addElements([
+            new Element('dt').class('o-Flex__Item c-TimeBlock__Times')
+              .addElements([
+                new Element('time')
+                  .attr({ datetime: this.startDate.toISOString(), itemprop: 'startDate' })
+                  .addContent(Util.Date.format(this.startDate, 'g:ia'))
+              ])
+              .addContent(`\u2013`) // &ndash;
+              .addElements([
+                new Element('time')
+                  .attr({ datetime: this.endDate.toISOString(), itemprop: 'endDate' })
+                  .addContent(Util.Date.format(this.endDate, 'g:ia'))
+              ]),
+            new Element('dd').class('o-Flex__Item c-TimeBlock__Desc')
+              .addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
+              .attr('itemprop','name')
+              .addContent((this.url()) ?
+                new Element('a').class('c-TimeBlock__Link')
+                  .attr({ href: this.url(), itemprop: 'url' })
+                  .addContent(this.name)
+                  .html()
+                : this.name
+              ),
+          ])
+          .html()
       }).call(self)
     }
     /**
