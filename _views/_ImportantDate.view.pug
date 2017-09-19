@@ -1,4 +1,4 @@
 mixin dateBlock(dates)
-  dl.o-List.c-DateBlock
+  table: tbody.c-DateBlock
     each $importantDate in dates
       != $importantDate.view.dateBlock()

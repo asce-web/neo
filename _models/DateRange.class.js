@@ -106,7 +106,7 @@ module.exports = class DateRange {
      */
     returned.dateBlock = function () {
       return (function () {
-        return new Element('li').class('o-List__Item c-DateBlock__Item')
+        return new Element('tr').class('c-DateBlock__Item')
           .attr('data-instanceof','DateRange')
           .attr({
             itemprop: 'potentialAction',
@@ -114,7 +114,7 @@ module.exports = class DateRange {
             itemtype: 'http://schema.org/Action',
           })
           .addElements([
-            new Element('dt').class('c-DateBlock__Date')
+            new Element('td').class('c-DateBlock__Date')
               .addElements([
                 new Element('time')
                   .attr({ datetime: this.start.toISOString(), itemprop: 'startTime' })
@@ -126,7 +126,7 @@ module.exports = class DateRange {
                   .attr({ datetime: this.end.toISOString(), itemprop: 'endTime' })
                   .addContent(Util.Date.format(this.end, 'M j, Y')) : null
               ]),
-            new Element('dd').class('c-DateBlock__Desc')
+            new Element('td').class('c-DateBlock__Desc')
               .attr('itemprop','name')
               .addContent((this.url()) ?
                 new Element('a').class('c-DateBlock__Link')
@@ -148,7 +148,7 @@ module.exports = class DateRange {
      */
     returned.timeBlock = function (is_last) {
       return (function () {
-        return new Element('li').class('o-List__Item o-Flex c-TimeBlock__Item')
+        return new Element('tr').class('c-TimeBlock__Item')
           .attr('data-instanceof','DateRange')
           .attr({
             itemprop: 'subEvent',
@@ -156,7 +156,7 @@ module.exports = class DateRange {
             itemtype: 'http://schema.org/Event',
           })
           .addElements([
-            new Element('dt').class('o-Flex__Item c-TimeBlock__Times')
+            new Element('td').class('c-TimeBlock__Times')
               .addElements([
                 new Element('time')
                   .attr({ datetime: this.start.toISOString(), itemprop: 'startDate' })
@@ -168,7 +168,7 @@ module.exports = class DateRange {
                   .attr({ datetime: this.end.toISOString(), itemprop: 'endDate' })
                   .addContent(Util.Date.format(this.end, 'g:ia')) : null
               ]),
-            new Element('dd').class('o-Flex__Item c-TimeBlock__Desc')
+            new Element('td').class('c-TimeBlock__Desc')
               .addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
               .attr('itemprop','name')
               .addContent((this.url()) ?
