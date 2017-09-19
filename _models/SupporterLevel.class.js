@@ -1,3 +1,5 @@
+var Element = require('helpers-js').Element
+
 module.exports = class SupporterLevel {
   /**
    * A group of supporters with a similar level of support or donation.
@@ -32,6 +34,61 @@ module.exports = class SupporterLevel {
       return this
     } else return this._size
   }
+
+
+  /**
+   * Render this supporter level in HTML.
+   * Displays:
+   * - `SupporterLevel#view()` - default display
+   * - `SupporterLevel#view.supporterBlock()` - SupporterBlock component
+   * @return {string} HTML output
+   */
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Throw an error: must call an explicit display.
+     * Call `SupporterLevel#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `AttendeeType#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return a <section.c-SupporterBlock> component containing the supporters that have this level.
+     * @param  {Conference} $conference the conference from which to extract supporters having this as their level
+     * @return {string} HTML output
+     */
+    returned.supporterBlock = function ($conference) {
+      return (function () {
+        return new Element('section').class('c-SupporterBlock')
+          .addClass((this.size()) ? `c-SupporterBlock--${this.size()}` : '')
+          .addElements([
+            new Element('h1').class('c-SupporterBlock__Hn').addContent(this.name),
+            new Element('ul').class('o-List o-Flex c-SupporterBlock__List').addElements(
+              $conference.getSupportersAll()
+                .filter(($supporter) => $supporter.level()===this.name)
+                .map(($supporter) =>
+                  new Element('li').class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
+                    .attr({ itemprop:'sponsor', itemscope:'', itemtype:'https://schema.org/Organization' })
+                    .addElements([
+                      new Element('a').attr({ href:$supporter.url(), rel:'external nofollow', itemprop:'url' }).addElements([
+                        new Element('img').class('c-SupporterBlock__Logo').attr({ src:$supporter.img(), alt:$supporter.name, itemprop:'logo' }),
+                        new Element('meta').attr({ content:$supporter.name, itemprop:'name' }),
+                      ]),
+                    ])
+                )
+            ),
+          ])
+          .html()
+      }).call(self)
+    }
+    return returned
+  }
+
+
 
   /**
    * Enum for supporter level logo sizes.
