@@ -161,7 +161,7 @@ module.exports = class Conference {
 
   /**
    * Add a session to this conference.
-   * @param {Session} $session the session to add
+   * @param {DateRange} $session the session to add
    */
   addSession($session) {
     this._sessions.push($session)
@@ -170,14 +170,14 @@ module.exports = class Conference {
   /**
    * Retrieve a session of this conference.
    * @param  {string} name the name of the session
-   * @return {?Session} the specified session
+   * @return {?DateRange} the specified session
    */
   getSession(name) {
     return this._sessions.find(($session) => $session.name===name) || null
   }
   /**
    * Retrieve all sessions of this conference.
-   * @return {Array<Session>} a shallow array of all sessions of this conference
+   * @return {Array<DateRange>} a shallow array of all sessions of this conference
    */
   getSessionsAll() {
     return this._sessions.slice()
@@ -342,7 +342,7 @@ module.exports = class Conference {
 
   /**
    * Add an important date to this conference.
-   * @param {ImportantDate} $importantDate the important date to add
+   * @param {DateRange} $importantDate the important date to add
    */
   addImportantDate($importantDate) {
     this._important_dates.push($importantDate)
@@ -351,14 +351,14 @@ module.exports = class Conference {
   /**
    * Retrieve an important date of this conference.
    * @param  {string} name the name of the important date
-   * @return {?ImportantDate} the specified important date
+   * @return {?DateRange} the specified important date
    */
   getImportantDate(name) {
     return this._important_dates.find(($importantDate) => $importantDate.name===name) || null
   }
   /**
    * Retrieve all important dates of this conference.
-   * @return {Array<ImportantDate>} a shallow array of all important dates of this conference
+   * @return {Array<DateRange>} a shallow array of all important dates of this conference
    */
   getImportantDatesAll() {
     return this._important_dates.slice()
@@ -434,38 +434,38 @@ module.exports = class Conference {
    *   "description": "a group of sessions, all of which share the same date (excluding time of day)",
    *   "type": "object",
    *   "additionalProperties": false,
-   *   "required": ["datestr", "sessions"],
+   *   "required": ["dateobj", "sessions"],
    *   "properties": {
-   *     "datestr" : { "type": "string", "description": "string (in 'YYYY-MM-DD' format) representing the date by which the sessions are grouped" },
+   *     "dateobj" : { "type": "Date", "description": "the date by which the sessions are grouped" },
    *     "sessions": {
    *       "type": "array",
    *       "description": "an array of Sessions whose members all have the same date",
-   *       "items": { "type": "Session" }
+   *       "items": { "type": "DateRange" }
    *     }
    *   }
    * }
    * @typedef {Object} SessionGroup
-   * @property {string} datestr string (in 'YYYY-MM-DD' format) representing the date by which the sessions are grouped
-   * @property {Array<Session>} sessions an array of Sessions whose members all have the same date
+   * @property {Date} dateobj the date by which the sessions are grouped
+   * @property {Array<DateRange>} sessions an array of sessions whose members all have the same date
    */
   /**
    * Categorize all the sessions of this conference by date and return the grouping.
    * Sessions with the same date (excluding time of day) are grouped together.
-   * @see Session
+   * @see DateRange
    * @param  {boolean=} starred if true, only consider sessions that are starred
    * @return {Array<SessionGroup>} an array grouping the sessions together
    */
   groupSessions(starred) {
     let all_sessions = this.getSessionsAll().filter(($session) => (starred) ? $session.isStarred() : true)
     let $groupings = []
-    function equalDays(date1, date2) {
+    function sameDate(date1, date2) { // TODO remove on helpers-js@0.6.0
       return date1.toISOString().slice(0,10) === date2.toISOString().slice(0,10)
     }
     all_sessions.forEach(function ($session) {
-      if (!$groupings.find(($sessionGroup) => equalDays($sessionGroup.datestr, $session.startDate))) {
+      if (!$groupings.find(($sessionGroup) => sameDate($sessionGroup.dateobj, $session.start))) {
         $groupings.push({
-          datestr : $session.startDate,
-          sessions: all_sessions.filter((_event) => equalDays(_event.startDate, $session.startDate)),
+          dateobj : $session.start,
+          sessions: all_sessions.filter((_event) => sameDate(_event.start, $session.start)),
         })
       }
     })

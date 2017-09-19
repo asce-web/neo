@@ -18,22 +18,22 @@
 //       include /_views/_Session.view.pug
 //       +timeBlock([
 //         [
-//           new Session({start_date:new Date('2016-09-28 10:00'), end_date:new Date('2016-09-28 19:00'), name:'Registration'             }),
-//           new Session({start_date:new Date('2016-09-28 10:30'), end_date:new Date('2016-09-28 16:30'), name:'Technical Tours'          }).url('#0'),
-//           new Session({start_date:new Date('2016-09-28 13:00'), end_date:new Date('2016-09-28 17:00'), name:'Short Courses'            }).url('#0'),
-//           new Session({start_date:new Date('2016-09-28 12:00'), end_date:new Date('2016-09-28 17:00'), name:'Optional Tours'           }).url('#0'),
-//           new Session({start_date:new Date('2016-09-28 17:30'), end_date:new Date('2016-09-28 19:30'), name:'Opening Welcome Reception'}),
-//           new Session({start_date:new Date('2016-09-28 13:00'), end_date:new Date('2016-09-28 17:00'), name:'Community Service Project'}),
+//           new DateRange('Registration'                           , new Date('2016-09-28 10:00'), new Date('2016-09-28 19:00')),
+//           new DateRange('Technical Tours'                        , new Date('2016-09-28 10:30'), new Date('2016-09-28 16:30')).url('#0'),
+//           new DateRange('Short Courses'                          , new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')).url('#0'),
+//           new DateRange('Optional Tours'                         , new Date('2016-09-28 12:00'), new Date('2016-09-28 17:00')).url('#0'),
+//           new DateRange('Opening Welcome Reception'              , new Date('2016-09-28 17:30'), new Date('2016-09-28 19:30')),
+//           new DateRange('Community Service Project'              , new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')),
 //         ],
 //         [
-//           new Session({start_date:new Date('2016-10-01 07:00'), end_date:new Date('2016-10-01 14:30'), name:'Registration'                           }),
-//           new Session({start_date:new Date('2016-10-01 07:30'), end_date:new Date('2016-10-01 08:15'), name:'Order of the Engineer Ceremony'         }).star(),
-//           new Session({start_date:new Date('2016-10-01 08:45'), end_date:new Date('2016-10-01 11:45'), name:'Optional Tour'                          }).url('#0'),
-//           new Session({start_date:new Date('2016-10-01 08:30'), end_date:new Date('2016-10-01 10:00'), name:'Concurrent Sessions'                    }),
-//           new Session({start_date:new Date('2016-10-01 08:30'), end_date:new Date('2016-10-01 14:00'), name:'Communities and Pavilion'               }),
-//           new Session({start_date:new Date('2016-10-01 10:15'), end_date:new Date('2016-10-01 11:45'), name:'Concurrent Sessions'                    }),
-//           new Session({start_date:new Date('2016-10-01 12:00'), end_date:new Date('2016-10-01 14:00'), name:'ASCE Luncheon & Closing General Session'}).star(),
-//           new Session({start_date:new Date('2016-10-01 14:30'), end_date:new Date('2016-10-01 17:30'), name:'Technical Tours'                        }).url('#0'),
+//           new DateRange('Registration'                           , new Date('2016-10-01 07:00'), new Date('2016-10-01 14:30')),
+//           new DateRange('Order of the Engineer Ceremony'         , new Date('2016-10-01 07:30'), new Date('2016-10-01 08:15')).star(),
+//           new DateRange('Optional Tour'                          , new Date('2016-10-01 08:45'), new Date('2016-10-01 11:45')).url('#0'),
+//           new DateRange('Concurrent Sessions'                    , new Date('2016-10-01 08:30'), new Date('2016-10-01 10:00')),
+//           new DateRange('Communities and Pavilion'               , new Date('2016-10-01 08:30'), new Date('2016-10-01 14:00')),
+//           new DateRange('Concurrent Sessions'                    , new Date('2016-10-01 10:15'), new Date('2016-10-01 11:45')),
+//           new DateRange('ASCE Luncheon & Closing General Session', new Date('2016-10-01 12:00'), new Date('2016-10-01 14:00')).star(),
+//           new DateRange('Technical Tours'                        , new Date('2016-10-01 14:30'), new Date('2016-10-01 17:30')).url('#0'),
 //         ]
 //       ][i])
 // </pre>

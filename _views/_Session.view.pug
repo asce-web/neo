@@ -1,4 +1,4 @@
 mixin timeBlock(sessions)
-  dl.o-List.c-TimeBlock
+  table: tbody.c-TimeBlock
     each $session,index in sessions
       != $session.view.timeBlock(index===sessions.length-1)
