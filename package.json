@@ -44,7 +44,7 @@
     "browserify": "^14.1.0",
     "extrajs": "^0.8.0",
     "extrajs-color": "^2.0.0-alpha",
-    "extrajs-element": "^1.0.0",
+    "extrajs-element": "^2.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-clean-css": "^3.9.0",
