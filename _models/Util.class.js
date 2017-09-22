@@ -1,10 +1,10 @@
-var Element = require('helpers-js').Element
+const Element = require('extrajs-element')
 
 /**
  * A set of static values and functions used site-wide.
  * @module
  */
-module.exports = class Util extends require('helpers-js').Util {
+module.exports = class Util {
   /** @private */ constructor() {}
 
   /**

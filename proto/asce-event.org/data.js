@@ -6,7 +6,8 @@
 //- ///////////////////////////////////////////////////////////////////////////////
 
 
-var Color              = require('csscolor').Color
+const Color = require('extrajs-color')
+
 var Util               = require('../../_models/Util.class.js')
 var ConfSite           = require('../../_models/ConfSite.class.js')
 var ConfPage           = require('../../_models/ConfPage.class.js')

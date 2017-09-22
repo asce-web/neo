@@ -1,4 +1,4 @@
-var Element = require('helpers-js').Element
+const Element = require('extrajs-element')
 
 module.exports = class SupporterLevel {
   /**

@@ -1,5 +1,5 @@
-var Page = require('sitepage').Page
-var Color = require('csscolor').Color
+const Page  = require('sitepage').Page
+const Color = require('extrajs-color')
 
 const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' })
   // REVIEW indentation

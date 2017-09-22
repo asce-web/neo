@@ -1,7 +1,7 @@
-var Page = require('sitepage').Page
-var Color = require('csscolor').Color
-var Element = require('helpers-js').Element
-var ConfPage = require('./ConfPage.class.js')
+const Page     = require('sitepage').Page
+const Element  = require('extrajs-element')
+const Color    = require('extrajs-color')
+const ConfPage = require('./ConfPage.class.js')
 
 module.exports = class ConfSite extends Page {
   /**
@@ -279,16 +279,16 @@ module.exports = class ConfSite extends Page {
     let _g1 = $primary.mix($secondary, 1/4).desaturate(7/8, true)
     let _g2 = $secondary.mix($primary, 1/4).desaturate(7/8, true)
 
-    let gray_dk_s2 = _g1.lighten( 1/12 - _g1.hslLum(), false)
-    let gray_dk_s1 = _g1.lighten( 2/12 - _g1.hslLum(), false)
-    let gray_dk    = _g1.lighten( 3/12 - _g1.hslLum(), false)
-    let gray_dk_t1 = _g1.lighten( 4/12 - _g1.hslLum(), false)
-    let gray_dk_t2 = _g1.lighten( 5/12 - _g1.hslLum(), false)
-    let gray_lt_s2 = _g2.lighten( 7/12 - _g2.hslLum(), false)
-    let gray_lt_s1 = _g2.lighten( 8/12 - _g2.hslLum(), false)
-    let gray_lt    = _g2.lighten( 9/12 - _g2.hslLum(), false)
-    let gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum(), false)
-    let gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum(), false)
+    let gray_dk_s2 = _g1.lighten( 1/12 - _g1.hslLum, false)
+    let gray_dk_s1 = _g1.lighten( 2/12 - _g1.hslLum, false)
+    let gray_dk    = _g1.lighten( 3/12 - _g1.hslLum, false)
+    let gray_dk_t1 = _g1.lighten( 4/12 - _g1.hslLum, false)
+    let gray_dk_t2 = _g1.lighten( 5/12 - _g1.hslLum, false)
+    let gray_lt_s2 = _g2.lighten( 7/12 - _g2.hslLum, false)
+    let gray_lt_s1 = _g2.lighten( 8/12 - _g2.hslLum, false)
+    let gray_lt    = _g2.lighten( 9/12 - _g2.hslLum, false)
+    let gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum, false)
+    let gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum, false)
 
     return {
       '--color-primary'  :   $primary.toString('hex'),

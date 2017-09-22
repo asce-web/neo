@@ -1,5 +1,5 @@
-var Element = require('helpers-js').Element
-var Util = require('./Util.class.js')
+const xjs     = require('extrajs').Util
+const Element = require('extrajs-element')
 
 module.exports = class Conference {
   /**
@@ -530,12 +530,12 @@ module.exports = class Conference {
                         new Element('time')
                           .attr('datetime',this.startDate.toISOString())
                           .attr('itemprop','startDate')
-                          .addContent(Util.Date.format(this.startDate, 'M j')),
+                          .addContent(xjs.Date.format(this.startDate, 'M j')),
                         new Element('span').addContent(`&ndash;`),
                         new Element('time')
                           .attr('datetime',this.endDate.toISOString())
                           .attr('itemprop','endDate')
-                          .addContent(Util.Date.format(this.endDate, 'M j')),
+                          .addContent(xjs.Date.format(this.endDate, 'M j')),
                       ]),
                   ]),
                 new Element('p').class('c-ConfHed__Theme h-Hidden-nM')

@@ -1,5 +1,4 @@
-var Element = require('helpers-js').Element
-var Util = require('./Util.class.js')
+const Element = require('extrajs-element')
 
 module.exports = class Place {
   /**

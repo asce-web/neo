@@ -1,5 +1,5 @@
-var Element = require('helpers-js').Element
-var Util = require('./Util.class.js')
+const xjs     = require('extrajs').Util
+const Element = require('extrajs-element')
 
 /**
  * A range of dates.
@@ -118,13 +118,13 @@ module.exports = class DateRange {
               .addElements([
                 new Element('time')
                   .attr({ datetime: this.start.toISOString(), itemprop: 'startTime' })
-                  .addContent(Util.Date.format(this.start, 'M j, Y'))
+                  .addContent(xjs.Date.format(this.start, 'M j, Y'))
               ])
               .addContent((this.end) ? `&ndash;` : '')
               .addElements([
                 (this.end) ? new Element('time')
                   .attr({ datetime: this.end.toISOString(), itemprop: 'endTime' })
-                  .addContent(Util.Date.format(this.end, 'M j, Y')) : null
+                  .addContent(xjs.Date.format(this.end, 'M j, Y')) : null
               ]),
             new Element('td').class('c-DateBlock__Desc')
               .attr('itemprop','name')
@@ -160,13 +160,13 @@ module.exports = class DateRange {
               .addElements([
                 new Element('time')
                   .attr({ datetime: this.start.toISOString(), itemprop: 'startDate' })
-                  .addContent(Util.Date.format(this.start, 'g:ia'))
+                  .addContent(xjs.Date.format(this.start, 'g:ia'))
               ])
               .addContent((this.end) ? `&ndash;` : '')
               .addElements([
                 (this.end) ? new Element('time')
                   .attr({ datetime: this.end.toISOString(), itemprop: 'endDate' })
-                  .addContent(Util.Date.format(this.end, 'g:ia')) : null
+                  .addContent(xjs.Date.format(this.end, 'g:ia')) : null
               ]),
             new Element('td').class('c-TimeBlock__Desc')
               .addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
@@ -192,9 +192,9 @@ module.exports = class DateRange {
         return new Element('time').class('c-ProgramHn h-Block')
           .attr('data-instanceof','DateRange')
           .attr('datetime',this.start.toISOString())
-          .addContent(`${Util.Date.DAY_NAMES[this.start.getUTCDay()]},`)
+          .addContent(`${xjs.Date.DAY_NAMES[this.start.getUTCDay()]},`)
           .addElements([new Element('br')])
-          .addContent(Util.Date.format(this.start, 'M j'))
+          .addContent(xjs.Date.format(this.start, 'M j'))
           .html()
       }).call(self)
     }

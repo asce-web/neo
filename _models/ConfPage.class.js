@@ -1,5 +1,5 @@
-var Page = require('sitepage').Page
-var Util = require('./Util.class.js')
+const Page = require('sitepage').Page
+const Util = require('./Util.class.js')
 
 module.exports = class ConfPage extends Page {
   /**
