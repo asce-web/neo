@@ -1,12 +1,15 @@
 const Element = require('extrajs-element')
 const Util    = require('./Util.class.js')
 
+/**
+ * A person.
+ * Can be used for any role on the site,
+ * e.g., speaker, chair, or ASCE staff member.
+ * @module
+ */
 module.exports = class Person {
   /**
-   * A person.
-   * Can be used for any role on the suite.
-   * Constructs a Person object.
-   * @constructor
+   * Construct a new Person object.
    * @param {string} id a unique identifier of the person
    * @param {Object=} $name an object containing the following:
    * @param {string} $name.honorific_prefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')

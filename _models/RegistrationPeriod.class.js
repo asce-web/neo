@@ -1,15 +1,16 @@
 const Element = require('extrajs-element')
 const Util    = require('./Util.class.js')
 
+/**
+ * An interval of dates in which registration prices are set.
+ * REVIEW may not need this class
+ * @module
+ */
 module.exports = class RegistrationPeriod {
   /**
-   * REVIEW may not need this class
-   * An interval of dates in which registration prices are set.
-   * Assigned at the conference level.
-   * Construct a RegistrationPeriod object.
+   * Construct a new RegistrationPeriod object.
    * The name, start date, and end date
    * are immutable and must be provided during construction.
-   * @constructor
    * @param {Object} $periodinfo an object with the following immutable properties:
    * @param {string} $periodinfo.name the name of the registration period (e.g., 'Early Bird')
    * @param {Date=} $periodinfo.start_date the date on which this registration period starts

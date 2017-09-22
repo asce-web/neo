@@ -1,21 +1,24 @@
 const Element = require('extrajs-element')
 
+/**
+ * A place.
+ * Mostly used for hotel & venue locations.
+ * @module
+ */
 module.exports = class Place {
   /**
-   * A place.
-   * Mostly used for hotel & venue locations.
-   * Constructs a Place object.
-   * @constructor
+   * Construct a new Place object.
+   * *NOTE: zip, state, and country codes should match the ISO-3166 standard format.
+   * @see https://en.wikipedia.org/wiki/ISO_3166
    * @param {string} name the name of the place
    * @param {Object=} $placeinfo an object containing the following:
    * @param {string} $placeinfo.street_address the street and number, eg: '1801 Alexander Bell Drive'
    * @param {string} $placeinfo.address_locality the city name, eg: 'Reston'
-   * @param {string} $placeinfo.address_region   the state code *[1], eg: 'VA'
-   * @param {string} $placeinfo.postal_code      the zip code, eg: '22901-4382'
-   * @param {string} $placeinfo.country          the country code *[1], eg: 'US'
+   * @param {string} $placeinfo.address_region   the state code*, eg: 'VA'
+   * @param {string} $placeinfo.postal_code      the zip code*, eg: '22901-4382'
+   * @param {string} $placeinfo.country          the country code*, eg: 'US'
    * @param {string} $placeinfo.telephone        the telephone number (no spaces), eg: '+1-800-548-2723'
    * @param {string} $placeinfo.url              the URL of homepage, eg: 'http://www.asce.org/'
-   * *[1] zip, state, and country codes should match the ISO-3166 standard format. see https://en.wikipedia.org/wiki/ISO_3166
    */
   constructor(name, $placeinfo = {}) {
     /** @private @final */ this._NAME = name

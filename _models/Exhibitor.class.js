@@ -1,9 +1,10 @@
+/**
+ * An organization exhibiting at a conference or series of conferences.
+ * @module
+ */
 module.exports = class Exhibitor {
   /**
-   * An organization exhibiting at a conference or series of conferences.
-   * Assigned at the site level, not at an individual conference.
    * Construct a new Exhibitor object, given an (immutable) name.
-   * @constructor
    * @param {string} name the name of the exhibiting organization
    */
   constructor(name) {

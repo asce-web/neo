@@ -3,12 +3,15 @@ const Element  = require('extrajs-element')
 const Color    = require('extrajs-color')
 const ConfPage = require('./ConfPage.class.js')
 
+/**
+ * A conference site.
+ * A website hosting a series of conferences,
+ * with a name, url, slogan, logo, and color scheme.
+ * @module
+ */
 module.exports = class ConfSite extends Page {
   /**
-   * A conference site.
-   * A site hosting a series of conferences,
-   * with a name, url, slogan, logo, and color scheme.
-   * Construct a ConfSite object, given a name and url.
+   * Construct a new ConfSite object.
    * @constructor
    * @extends Page
    * @param {string} name name of this site

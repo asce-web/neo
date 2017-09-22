@@ -59,14 +59,13 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       .description('Very specific classes used for creating anomalies or fixing broken styles.')
     )
 
+/**
+ * A set of static members used for the Conf style guide.
+ * Similar to a utility class.
+ * @module
+ */
 module.exports = class Docs {
-  /**
-   * A set of static members used for the Conf style guide.
-   * Similar to a utility class.
-   * @private
-   * @constructor
-   */
-  constructor() {}
+  /** @private */ constructor() {}
 
   /**
    * The style guide site for this project.

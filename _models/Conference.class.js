@@ -1,17 +1,19 @@
 const xjs     = require('extrajs').Util
 const Element = require('extrajs-element')
 
+/**
+ * A conference event.
+ * It may have a name, theme, dates, (promoted) location,
+ * passes, sessions, venues, speakers,
+ * supporter levels and supporters, exhibitors, contact information,
+ * important dates, organizers, and other properties.
+ * @module
+ */
 module.exports = class Conference {
   /**
-   * A conference event.
-   * It may have a name, theme, dates, (promoted) location,
-   * passes, sessions, venues, speakers,
-   * supporter levels and supporters, exhibitors, contact information,
-   * important dates, organizers, and other properties.
    * Construct a Conference object.
    * The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
-   * @constructor
    * @param {Object} $confinfo an object with the following immutable properties:
    * @param {string} $confinfo.name the name of this conference
    * @param {string} $confinfo.url the url of this conference
