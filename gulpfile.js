@@ -4,17 +4,6 @@ var less = require('gulp-less')
 var autoprefixer = require('gulp-autoprefixer')
 var clean_css = require('gulp-clean-css')
 var sourcemaps = require('gulp-sourcemaps')
-// const xjs     =
-// const Element =
-//
-// var ConfSite           = require('./_models/ConfSite.class.js')
-// var ConfPage           = require('./_models/ConfPage.class.js')
-// var SupporterLevel     = require('./_models/SupporterLevel.class.js')
-// var Supporter          = require('./_models/Supporter.class.js')
-// var Person             = require('./_models/Person.class.js')
-// var Place              = require('./_models/Place.class.js')
-// var RegistrationPeriod = require('./_models/RegistrationPeriod.class.js')
-// var Pass               = require('./_models/Pass.class.js')
 
 gulp.task('pug:index', function () {
   return gulp.src(__dirname + '/index.pug')
@@ -75,7 +64,7 @@ gulp.task('pug:sample', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        xjs    : require('extrajs').Util,
+        xjs    : require('extrajs'),
         Element: require('extrajs-element'),
         Util   : require('./_models/Util.class.js'),
         site   : require('./proto/asce-event.org/data.js'),

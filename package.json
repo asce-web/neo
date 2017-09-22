@@ -42,7 +42,7 @@
   "homepage": "https://github.com/asce-web/neo#readme",
   "devDependencies": {
     "browserify": "^14.1.0",
-    "extrajs": "^0.7.1",
+    "extrajs": "^0.8.0",
     "extrajs-color": "^2.0.0-alpha",
     "extrajs-element": "^1.0.0",
     "gulp": "^3.9.1",
