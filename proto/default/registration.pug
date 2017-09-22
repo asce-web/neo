@@ -18,17 +18,19 @@ block mainReference
           i.material-icons(role="none")= $registrationPeriod.getIcon()
           small
             -
-              let start_date = $registrationPeriod.startDate
-              let end_date   = $registrationPeriod.endDate
+              let start_date = ($registrationPeriod.startDate.toISOString() !== new Date().toISOString()) ? $registrationPeriod.startDate : false
+              let end_date   = ($registrationPeriod.endDate.toISOString()   !== new Date().toISOString()) ? $registrationPeriod.endDate   : false
               // because the above getters return `new Date()` if none is set
-              let has_start = $registrationPeriod.startDate.toISOString() !== new Date().toISOString()
-              let has_end   = $registrationPeriod.endDate.toISOString()   !== new Date().toISOString()
             b= $registrationPeriod.name
-            = (has_start && has_end) ? ': ' : (has_start) ? ' begins ' : (has_end) ? ' ends ' : ''
-            if has_start
-              time(datetime=start_date)= Util.monthDay(start_date)
-            if has_stare && has_end
+            = (start_date && end_date) ? ': ' : (start_date) ? ' begins ' : (end_date) ? ' ends ' : ''
+            if start_date
+              time(datetime=start_date)= Util.Date.format(start_date, 'M j')
+            if start_date && end_date
               | &ndash;
-            if has_end
-              time(datetime=end_date)= Util.monthDay(end_date)
-    +highlightButtons([{text:'Register Today!', href:'#0'}], 'c-Button--secondary')
+            if end_date
+              time(datetime=end_date)= Util.Date.format(end_date, 'M j')
+    -
+      let highlight_buttons = [
+        new Element('a').attr('href','#0').addContent(`Register Today!`)
+      ]
+    != Util.view(highlight_buttons).highlightButtons('c-Button--secondary')

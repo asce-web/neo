@@ -1,3 +1,6 @@
+var Element = require('helpers-js').Element
+var Util = require('./Util.class.js')
+
 module.exports = class Conference {
   /**
    * A conference event.
@@ -9,17 +12,17 @@ module.exports = class Conference {
    * The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
    * @constructor
-   * @param {Object=} $confinfo an object with the following immutable properties:
+   * @param {Object} $confinfo an object with the following immutable properties:
    * @param {string} $confinfo.name the name of this conference
    * @param {string} $confinfo.url the url of this conference
-   * @param {string} $confinfo.theme the theme, or slogan, of this conference
+   * @param {string=} $confinfo.theme the theme, or slogan, of this conference
    * @param {Date} $confinfo.start_date the starting date of this conference
    * @param {Date} $confinfo.end_date the ending date of this conference
    * @param {Object} $confinfo.promo_loc the promoted location of this conference
    * @param {string} $confinfo.promo_loc.text the promoted location displayed/abbreviated text (eg, "Portland, OR")
    * @param {string=} $confinfo.promo_loc.alt the accessible text of the location (eg, "Portland, Oregon")
    */
-  constructor($confinfo = {}) {
+  constructor($confinfo) {
     /** @private @final */ this._NAME      = $confinfo.name
     /** @private @final */ this._URL       = $confinfo.url
     /** @private @final */ this._THEME     = $confinfo.theme
@@ -158,7 +161,7 @@ module.exports = class Conference {
 
   /**
    * Add a session to this conference.
-   * @param {Session} $session the session to add
+   * @param {DateRange} $session the session to add
    */
   addSession($session) {
     this._sessions.push($session)
@@ -167,14 +170,14 @@ module.exports = class Conference {
   /**
    * Retrieve a session of this conference.
    * @param  {string} name the name of the session
-   * @return {?Session} the specified session
+   * @return {?DateRange} the specified session
    */
   getSession(name) {
     return this._sessions.find(($session) => $session.name===name) || null
   }
   /**
    * Retrieve all sessions of this conference.
-   * @return {Array<Session>} a shallow array of all sessions of this conference
+   * @return {Array<DateRange>} a shallow array of all sessions of this conference
    */
   getSessionsAll() {
     return this._sessions.slice()
@@ -339,7 +342,7 @@ module.exports = class Conference {
 
   /**
    * Add an important date to this conference.
-   * @param {ImportantDate} $importantDate the important date to add
+   * @param {DateRange} $importantDate the important date to add
    */
   addImportantDate($importantDate) {
     this._important_dates.push($importantDate)
@@ -348,14 +351,14 @@ module.exports = class Conference {
   /**
    * Retrieve an important date of this conference.
    * @param  {string} name the name of the important date
-   * @return {?ImportantDate} the specified important date
+   * @return {?DateRange} the specified important date
    */
   getImportantDate(name) {
     return this._important_dates.find(($importantDate) => $importantDate.name===name) || null
   }
   /**
    * Retrieve all important dates of this conference.
-   * @return {Array<ImportantDate>} a shallow array of all important dates of this conference
+   * @return {Array<DateRange>} a shallow array of all important dates of this conference
    */
   getImportantDatesAll() {
     return this._important_dates.slice()
@@ -425,35 +428,159 @@ module.exports = class Conference {
   // }
   /**
    * NOTE: TYPE DEFINITION
-   * A group of sessions, all of which share the same date (excluding time of day).
-   * Contains two properties:
-   * - `datestr` - a string representing the date by which the sessions are grouped
-   * - `sessions` - an array of those sessions
+   * {
+   *   "$schema": "http://json-schema.org/schema#",
+   *   "title": "SessionGroup",
+   *   "description": "a group of sessions, all of which share the same date (excluding time of day)",
+   *   "type": "object",
+   *   "additionalProperties": false,
+   *   "required": ["dateobj", "sessions"],
+   *   "properties": {
+   *     "dateobj" : { "type": "Date", "description": "the date by which the sessions are grouped" },
+   *     "sessions": {
+   *       "type": "array",
+   *       "description": "an array of Sessions whose members all have the same date",
+   *       "items": { "type": "DateRange" }
+   *     }
+   *   }
+   * }
    * @typedef {Object} SessionGroup
-   * @property {string} datestr - string in 'YYYY-MM-DD' format of all the sessions in the group
-   * @property {Array<Session>} sessions - an array whose members all have the same date
+   * @property {Date} dateobj the date by which the sessions are grouped
+   * @property {Array<DateRange>} sessions an array of sessions whose members all have the same date
    */
   /**
    * Categorize all the sessions of this conference by date and return the grouping.
    * Sessions with the same date (excluding time of day) are grouped together.
-   * @see Session
+   * @see DateRange
    * @param  {boolean=} starred if true, only consider sessions that are starred
    * @return {Array<SessionGroup>} an array grouping the sessions together
    */
   groupSessions(starred) {
     let all_sessions = this.getSessionsAll().filter(($session) => (starred) ? $session.isStarred() : true)
     let $groupings = []
-    function equalDays(date1, date2) {
+    function sameDate(date1, date2) { // TODO remove on helpers-js@0.6.0
       return date1.toISOString().slice(0,10) === date2.toISOString().slice(0,10)
     }
     all_sessions.forEach(function ($session) {
-      if (!$groupings.find(($sessionGroup) => equalDays($sessionGroup.dateday, $session.startDate))) {
+      if (!$groupings.find(($sessionGroup) => sameDate($sessionGroup.dateobj, $session.start))) {
         $groupings.push({
-          dateday : $session.startDate,
-          sessions: all_sessions.filter((_event) => equalDays(_event.startDate, $session.startDate)),
+          dateobj : $session.start,
+          sessions: all_sessions.filter((_event) => sameDate(_event.start, $session.start)),
         })
       }
     })
     return $groupings
+  }
+
+
+  /**
+   * Render this conference in HTML.
+   * Displays:
+   * - `Conference#view()`           - default display
+   * - `Conference#view.hero()`      - Hero Organism
+   * - `Conference#view.otherYear()` - Other Year Organism
+   * @return {string} HTML output
+   */
+  get view() {
+    let self = this
+    /**
+     * Mark up the promoted location of this conference.
+     * @param  {Object} obj an object returned by `Conference#promoLoc()`
+     * @return {string} the markup for the location
+     */
+    function promoLoc(obj) {
+      if (obj.alt) return new Element('abbr').attr('title',obj.alt).addContent(obj.text).html()
+      else return obj.text
+    }
+    /**
+     * Default display. Takes no arguments.
+     * Throws error: must call an explicit display.
+     * Call `Conference#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `Conference#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return a <header> element with hero image marking up this conference’s main info.
+     * Call `ConfSite#view.hero()` to render this display.
+     * @param  {string=} block custom HTML to insert at the end
+     * @return {string} HTML output
+     */
+    returned.hero = function (block = '') {
+      return (function () {
+        return new Element('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
+          .attr('data-instanceof','Conference')
+          .addElements([
+            new Element('div').class('o-Constrain')
+              .addElements([
+                new Element('h1').class('c-PageTitle c-ConfHed__Name')
+                  .attr('itemprop','name')
+                  .addContent(this.name),
+                new Element('meta').attr('content',this.url).attr('itemprop','url'),
+                new Element('p').class('o-Flex c-ConfHed__Detail')
+                  .addElements([
+                    new Element('span').class('o-Flex__Item c-ConfHed__Detail__Place h-Block')
+                      .attr('itemprop','location')
+                      .addContent(promoLoc(this.promoLoc)),
+                    new Element('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
+                      .addElements([
+                        new Element('time')
+                          .attr('datetime',this.startDate.toISOString())
+                          .attr('itemprop','startDate')
+                          .addContent(Util.Date.format(this.startDate, 'M j')),
+                        new Element('span').addContent(`&ndash;`),
+                        new Element('time')
+                          .attr('datetime',this.endDate.toISOString())
+                          .attr('itemprop','endDate')
+                          .addContent(Util.Date.format(this.endDate, 'M j')),
+                      ]),
+                  ]),
+                new Element('p').class('c-ConfHed__Theme h-Hidden-nM')
+                  .attr('itemprop','description')
+                  .addContent(this.theme || `&nbsp;`), // (`\xa0` === `&nbsp;`)
+              ])
+              .addContent(block),
+          ])
+          .html()
+      }).call(self)
+    }
+    /**
+     * Return an <aside> element with other year backdrop marking up this conference’s main info.
+     * Call `ConfSite#view.otherYear()` to render this display.
+     * @param  {string}  year exactly one of `'prev'` or `'next'`
+     * @param  {string=} blurb custom HTML to advertise the prev/next year
+     * @param  {string=} block custom HTML to insert at the end
+     * @return {string} HTML output
+     */
+    returned.otherYear = function (year, blurb = '', block = '') {
+      return (function () {
+        return new Element('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
+          .addClass(`c-Banner--${year}`)
+          .attr({
+            'data-instanceof': 'Conference',
+            itemscope: '',
+            itemtype : 'http://schema.org/Event',
+          })
+          .addElements([
+            new Element('div').class('o-Constrain')
+              .addElements([
+                new Element('h1').class('c-ConfHed__Name')
+                  .attr('itemprop','name')
+                  .addContent(this.name),
+                new Element('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
+                new Element('p').class('c-ConfHed__Detail')
+                  .attr('itemprop','location')
+                  .addContent(promoLoc(this.promoLoc)),
+                new Element('p').class('h-Hidden-nM').addContent(blurb),
+              ])
+              .addContent(block),
+          ])
+          .html()
+      }).call(self)
+    }
+    return returned
   }
 }

@@ -1,3 +1,4 @@
+var Element = require('helpers-js').Element
 var Util = require('./Util.class.js')
 
 module.exports = class Person {
@@ -169,76 +170,172 @@ module.exports = class Person {
 
 
   /**
-   * Output this person’s name and other information as HTML.
-   * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Person"]`.
-   * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
-   * @param  {Person.Format} format how to display the output
-   * @return {string} a string representing an HTML DOM snippet
+   * Render this person in HTML.
+   * Displays:
+   * - `Person#view()`             - default display - “First Last”
+   * - `Person#view.fullName()`    - “First Middle Last”
+   * - `Person#view.entireName()`  - “Px. First Middle Last, Sx.”
+   * - `Person#view.affiliation()` - “First Middle Last, Affiliation”
+   * - `Person#view.contact()`     - “First Last, Director of ... | 555-555-5555”
+   * - `Person#view.speaker()`     - Speaker Component
+   * @return {string} HTML output
    */
-  html(format) {
-    switch (format) {
-      case Person.Format.NAME:
-        return `
-          <span itemprop="name">
-            <span itemprop="givenName">${this.name.given_name}</span>
-            <span itemprop="familiyName">${this.name.family_name}</span>
-          </span>
-        `
-        break;
-      case Person.Format.FULL_NAME:
-        return `
-          <span itemprop="name">
-            <span itemprop="givenName">${this.name.given_name}</span>
-            <span itemprop="additionalName">${this.name.additional_name}</span>
-            <span itemprop="familiyName">${this.name.family_name}</span>
-          </span>
-        `
-        break;
-      case Person.Format.ENTIRE_NAME:
-        var output = this.html(Person.Format.FULL_NAME) // using `var` because `let` works poorly in `switch`
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Return this person’s name in "First Last" format.
+     * Call `Person#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        return new Element('span').attr('itemprop','name')
+          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
+          .addContent(` `)
+          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
+          .html()
+      }).call(self)
+    }
+    /**
+     * Return this person’s name in "First Middle Last" format.
+     * Call `Person#view.fullName()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.fullName = function () {
+      return (function () {
+        return new Element('span').attr('itemprop','name')
+          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
+          .addContent(` `)
+          .addElements([new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name)])
+          .addContent(` `)
+          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
+          .html()
+      }).call(self)
+    }
+    /**
+     * Return this person’s name in "Px. First Middle Last, Sx." format.
+     * Call `Person#view.entireName()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.entireName = function () {
+      return (function () {
+        let returned = this.view.fullName()
         if (this.name.honorific_prefix) {
-          output = `<span itemprop="honorificPrefix">${this.name.honorific_prefix}</span> ${output}`
+          returned = `${
+            new Element('span').attr('itemprop','honorificPrefix').addContent(this.name.honorific_prefix).html()
+          } ${returned}`
         }
         if (this.name.honorific_suffix) {
-          output = `${output}, <span itemprop="honorificSuffix">${this.name.honorific_suffix}</span>`
+          returned = `${returned}, ${
+            new Element('span').attr('itemprop','honorificSuffix').addContent(this.name.honorific_suffix).html()
+          }`
         }
-        return output
-        break;
-      case Person.Format.AFFILIATION:
-        return `${this.html(Person.Format.ENTIRE_NAME)},
-          <span class="-fs-t" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
-            <span itemprop="name">${this.affiliation()}</span>
-          </span>
-        `
-        break;
-      case Person.Format.CONTACT:
-        var output = `
-          <a href="mailto:${this.email()}">${this.html(Person.Format.NAME)}</a>
-        `
+        return returned
+      }).call(self)
+    }
+    /**
+     * Return this person’s name in "First Middle Last, Affiliation" format.
+     * Call `Person#view.affiliation()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.affiliation = function () {
+      return (function () {
+      return `${this.view.entireName()}, ${
+        new Element('span').class('-fs-t').attr({
+          itemprop : 'affiliation',
+          itemscope: '',
+          itemtype : 'http://schema.org/Organization',
+        }).addElements([
+          new Element('span').attr('itemprop','name').addContent(this.affiliation())
+        ]).html()
+      }`
+      }).call(self)
+    }
+    /**
+     * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
+     * Call `Person#view.contact()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.contact = function () {
+      return (function () {
+        let returned = new Element('a')
+          .attr('href',`mailto:${this.email()}`)
+          .addContent(this.view())
+          .html()
         if (this.jobTitle()) {
-          output = `${output}, <span itemprop="jobTitle">${this.jobTitle()}</span>`
+          returned = `${returned}, ${
+            new Element('span').attr('itemprop','jobTitle').addContent(this.jobTitle()).html()
+          }`
         }
         if (this.phone()) {
-          output = `${output} | <a href="tel:${this.phone()}" itemprop="telephone">${this.phone()}</a>`
+          returned = `${returned} | ${
+            new Element('a')
+              .attr('href',`tel:${this.phone()}`)
+              .attr('itemprop','telephone')
+              .addContent(this.phone())
+              .html()
+          }`
         }
-        return output
-        break;
-      default:
-        return this.toString()
+        return returned
+      }).call(self)
     }
-  }
-
-  /**
-   * Enum for name formats.
-   * @enum {String}
-   */
-  static get Format() {
-    return {
-      /** First Last */                                 NAME       : 'name',
-      /** First Middle Last */                          FULL_NAME  : 'full',
-      /** Px. First Middle Last, Sx. */                 ENTIRE_NAME: 'entire',
-      /** First Middle Last, Affiliation */             AFFILIATION: 'affiliation',
-      /** First Last, Director of ... | 555-555-5555 */ CONTACT    : 'contact',
+    /**
+     * Return an <article.c-Speaker> component marking up this person’s info.
+     * Call `Person#view.speaker()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.speaker = function () {
+      return (function () {
+        /** filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
+        return new Element('article').class('c-Speaker').attr({
+          'data-instanceof': 'Person',
+          itemprop : 'performer',
+          itemscope: '',
+          itemtype : 'http://schema.org/Person',
+        }).addElements([
+          new Element('img').class('c-Speaker__Img h-Block')
+            .attr('src', this.img())
+            .attr('itemprop','image'),
+          new Element('header').class('c-Speaker__Head').addElements([
+            new Element('h1').class('c-Speaker__Name')
+              .id(this.id)
+              .addContent(this.view.entireName()),
+            new Element('p').class('c-Speaker__JobTitle')
+              .attr('itemprop','jobTitle')
+              .addContent(this.jobTitle()),
+            new Element('p').class('c-Speaker__Affiliation').attr({
+              itemprop : 'affiliation',
+              itemscope: '',
+              itemtype : 'http://schema.org/Organization',
+            }).addElements([
+              new Element('span').attr('itemprop','name').addContent(this.affiliation())
+            ]),
+          ]),
+          // new Element('div').class('c-Speaker__Body').attr('itemprop','description'),
+          new Element('footer').class('c-Speaker__Foot').addContent(pug`
+            include ../_views/_c-SocialList.view.pug
+            +socialList(${this.getSocialAll()}).c-SocialList--speaker
+              if ${this.email()}
+                li.o-List__Item.o-Flex__Item.c-SocialList__Item
+                  a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href="mailto:${this.email()}" title="${this.email()}" itemprop="email")
+                    span.h-Hidden send email
+                    //- i.material-icons(role="none") email
+              if ${this.phone()}
+                li.o-List__Item.o-Flex__Item.c-SocialList__Item
+                  a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href="tel:${Util.toURL(this.phone())}" title="${this.phone()}" itemprop="telephone")
+                    span.h-Hidden call
+                    //- i.material-icons(role="none") phone
+              if ${this.url()}
+                li.o-List__Item.o-Flex__Item.c-SocialList__Item
+                  a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href="${this.url()}" title="visit homepage" itemprop="url")
+                    span.h-Hidden visit homepage
+                    //- i.material-icons(role="none") explore
+          `),
+        ])
+        .html()
+      }).call(self)
     }
+    return returned
   }
 }

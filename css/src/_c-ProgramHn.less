@@ -14,8 +14,7 @@
 //
 // Use in Pug:
 // <pre>
-//   include /_views/_Date.view.pug
-//   +programHn(new Date('2017-10-08'))
+// != new DateRange('Registration', new Date('2017-10-08 10:00'), new Date('2017-10-08 19:00')).view.programHn()
 // </pre>
 //
 // <header><dl>
@@ -26,7 +25,7 @@
 // Markup:
 // <div class="{{ modifier_class }}">
 //   <input type="checkbox"/>
-//   <time class="c-ProgramHn h-Block" datetime="2017-10-08">Sunday,<br/>Oct 8</time>
+//   <time class="c-ProgramHn h-Block" datetime="2017-10-08" data-instanceof="Session">Sunday,<br/>Oct 8</time>
 // </div>
 //
 // .c-Banner - Program Headings inside a <a>Banner</a> have different colors.

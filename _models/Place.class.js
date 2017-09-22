@@ -1,3 +1,4 @@
+var Element = require('helpers-js').Element
 var Util = require('./Util.class.js')
 
 module.exports = class Place {
@@ -87,24 +88,64 @@ module.exports = class Place {
 
 
   /**
-   * Output this person’s name and other information as HTML.
-   * NOTE: remember to wrap this output with an `[itemscope=""][itemtype="https://schema.org/Place"]`.
-   * Also remember to unescape this code, or else you will get `&lt;`s and `&gt;`s.
-   * @return {string} a string representing an HTML DOM snippet
+   * Render this place in HTML.
+   * Displays:
+   * - `Place#view()`       - default display
+   * - `Place#view.venue()` - a venue address
+   * @return {string} HTML output
    */
-  html() {
-    let $name = `<b class="h-Clearfix" itemprop="name">${this.name}</b>`
-    if (this.url) $name = `<a href="${this.url}" itemprop="url">${$name}</a>`
-    return `
-      ${$name}
-      <span itemprop="address" itemscope="" itemtype="https://schema.org/PostalAddress">
-        <span class="h-Clearfix" itemprop="streetAddress">${this.streetAddress}</span>
-        <span itemprop="addressLocality">${this.addressLocality}</span>,
-        <span itemprop="addressRegion">${this.addressRegion}</span>
-        <span class="h-Clearfix" itemprop="postalCode">${this.postalCode}</span>
-        ${(this.addressCountry) ? `<span class="h-Clearfix" itemprop="addressCountry">${this.addressCountry}</span>` : ''}
-      </span>
-      ${(this.telephone) ? `<a href="tel:${this.telephone}" itemprop="telephone">${this.telephone}</a>` : ''}
-    `
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Throw an error: must call an explicit display.
+     * Call `Place#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `Place#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return a DOM snippet marking up this place’s address.
+     * Call `Place#view.venue()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.venue = function () {
+      return (function () {
+        let name = new Element('b').class('h-Clearfix').attr('itemprop','name').addContent(this.name)
+        if (this.url) {
+          name = new Element('a').attr({
+            href: this.url,
+            itemprop: 'url',
+          }).addElements([name])
+        }
+        return Element.concat(
+          name,
+          new Element('span')
+            .attr({
+              itemprop : 'address',
+              itemscope: '',
+              itemtype : 'https://schema.org/PostalAddress',
+            })
+            .addElements([
+              new Element('span').class('h-Clearfix').attrStr('itemprop="streetAddress"').addContent(this.streetAddress),
+              new Element('span').attrStr('itemprop="addressLocality"').addContent(this.addressLocality),
+            ])
+            .addContent(`, `)
+            .addElements([
+              new Element('span').attrStr('itemprop="addressRegion"').addContent(this.addressRegion),
+            ])
+            .addContent(` `)
+            .addElements([
+              new Element('span').class('h-Clearfix').attrStr('itemprop="postalCode"').addContent(this.postalCode),
+              (this.addressCountry) ? new Element('span').class('h-Clearfix').attrStr('itemprop="addressCountry"').addContent(this.addressCountry) : null,
+            ]),
+          (this.telephone) ? new Element('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : new Element('span') // TODO make null on helpers-js@0.4.1
+        )
+      }).call(self)
+    }
+    return returned
   }
 }

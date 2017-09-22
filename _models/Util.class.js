@@ -1,50 +1,28 @@
-module.exports = class Util {
-  /**
-   * A set of static values and functions used site-wide.
-   * @private
-   * @constructor
-   */
-  constructor() {}
+var Element = require('helpers-js').Element
+
+/**
+ * A set of static values and functions used site-wide.
+ * @module
+ */
+module.exports = class Util extends require('helpers-js').Util {
+  /** @private */ constructor() {}
 
   /**
-   * List of full month names in English.
-   * @type {Array<string>}
-   */
-  static get MONTH_NAMES() {
-    return [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ]
-  }
-
-  /**
-   * List of full day names in English.
-   * @type {Array<string>}
-   */
-  static get DAY_NAMES() {
-    return [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ]
-  }
-
-  /**
-   * NOTE: Type Definition
+   * NOTE: TYPE DEFINITION
+   * {
+   *   "$schema": "http://json-schema.org/schema#",
+   *   "title": "StateObj",
+   *   "type": "object",
+   *   "additionalProperties": false,
+   *   "required": ["index", "name", "pop", "area", "region"],
+   *   "properties": {
+   *     "index" : { "type": "string", "description": "the postal code for the state" },
+   *     "name"  : { "type": "string", "description": "the name of the state" },
+   *     "pop"   : { "type": "number", "description": "population in people" },
+   *     "area"  : { "type": "number", "description": "area in square km" },
+   *     "region": { "type": "Util.Region", "description": "region of US" }
+   *   }
+   * }
    * @typedef {Object} StateObj
    * @property {string} index  - the postal code for the state
    * @property {string} name   - the name of the state
@@ -113,7 +91,19 @@ module.exports = class Util {
   }
 
   /**
-   * NOTE: Type Definition
+   * NOTE: TYPE DEFINITION
+   * {
+   *   "$schema": "http://json-schema.org/schema#",
+   *   "title": "Icon",
+   *   "type": "object",
+   *   "additionalProperties": false,
+   *   "required": ["content", "fallback", "html"],
+   *   "properties": {
+   *     "content" : { "type": "string", "description": "the keyword used for the ligature" },
+   *     "fallback": { "type": "string", "description": "unicode code point" },
+   *     "html"    : { "type": "string", "description": "html entity" }
+   *   }
+   * }
    * @typedef {Object} Icon
    * @property {string} content  - the keyword used for the ligature
    * @property {string} fallback - unicode code point
@@ -178,43 +168,40 @@ module.exports = class Util {
   }
 
   /**
-   * Display a Date object as a string of the format 'HH:MMrr', where
-   * - 'HH' is the 12-hour format hour of day ('1'–'12')
-   * - 'MM' is the minutes of the hour
-   * - 'rr' is 'am' or 'pm' (“Ante Meridiem” or “Post Meridiem”)
-   * @param  {Date} date the datetime to display
-   * @return {string} a string of the format HH:MM[am|pm]
+   * Render any data in HTML.
+   * Miscellaneous views.
+   * Displays:
+   * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
+   * @param {*} data any data to render
+   * @return {string} HTML output
    */
-  static hourTime12(date) {
-    var hour = '' + ((date.getHours() - 1)%12 + 1)
-    var minute = ((date.getMinutes() < 10) ? '0' : '') + date.getMinutes()
-    var meridiem = (date.getHours() < 12) ? 'am' : 'pm'
-    return hour + ((minute !== '00') ? `:${minute}` : '') + meridiem
-  }
-
-  /**
-   * Display a Date object as a string of the format 'HHHH:MM', where
-   * - 'HHHH' is the 24-hour format hour of day ('00'–'23')
-   * - 'MM' is the minutes of the hour
-   * @param  {Date} date the datetime to display
-   * @return {string} a string of the format HHHH:MM
-   */
-  static hourTime24(date) {
-    var hour =   ((date.getHours()   < 10) ? '0' : '') + date.getHours()
-    var minute = ((date.getMinutes() < 10) ? '0' : '') + date.getMinutes()
-    return hour + ':' + minute
-  }
-
-  /**
-   * Return an abbreviated form of a date.
-   * The format is 'MMM DD', where
-   * - 'MMM' is the first 3 letters of the month in English
-   * - 'DD' is the date (one or two digits)
-   * @param  {Date} date the datetime to display
-   * @return {string} a string of the format 'MMM DD'
-   */
-  static monthDay(date) {
-    return Util.MONTH_NAMES[date.getUTCMonth()].slice(0,3) + ' ' + date.getUTCDate()
+  static view(data) {
+    function returned(data) { throw new Error('Please select a display: `Util.view[display](data)`.') }
+    /**
+     * Return a <ul> of button links for a highlighted content block.
+     * ```pug
+     * ul.o-List.o-Flex.o-ListAction
+     *   each item in data
+     *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
+     *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
+     *         = item.contents
+     * ```
+     * Call `Util.view(data).highlightButtons()` to render this display.
+     * @param  {Array<Element>} data the <a> elements to render
+     * @param  {string=} buttonclasses the classes to add to the buttons
+     * @return {string} HTML output
+     */
+    returned.highlightButtons = function (buttonclasses = '') {
+        return Element.data(data, {
+          ordered: false,
+          attributes: {
+            list:  { class: 'o-List o-Flex o-ListAction' },
+            value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
+          },
+          options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
+        })
+    }
+    return returned
   }
 
   /**
@@ -224,15 +211,6 @@ module.exports = class Util {
    */
   static toURL(str) {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
-  }
-
-  /**
-   * Return a new Date object from a given datetime string.
-   * @param  {string} str a string in any acceptable datetime format
-   * @return {Date} a new Date object representation of the argument
-   */
-  static toDate(str) {
-    return (str) ? new Date(str) : new Date()
   }
 
   /**
@@ -259,7 +237,7 @@ module.exports = class Util {
   }
 
   /**
-   * Enum for state regions
+   * Enum for state regions.
    * @enum {string}
    */
   static get Region() {

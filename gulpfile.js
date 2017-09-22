@@ -5,6 +5,7 @@ var autoprefixer = require('gulp-autoprefixer')
 var clean_css = require('gulp-clean-css')
 var sourcemaps = require('gulp-sourcemaps')
 var Color = require('csscolor').Color
+var Element = require('helpers-js').Element
 
 var Util               = require('./_models/Util.class.js')
 var ConfSite           = require('./_models/ConfSite.class.js')
@@ -16,8 +17,6 @@ var Person             = require('./_models/Person.class.js')
 var Place              = require('./_models/Place.class.js')
 var RegistrationPeriod = require('./_models/RegistrationPeriod.class.js')
 var Pass               = require('./_models/Pass.class.js')
-var Session            = require('./_models/Session.class.js')
-var ImportantDate      = require('./_models/ImportantDate.class.js')
 
 gulp.task('pug:index', function () {
   return gulp.src(__dirname + '/index.pug')
@@ -33,18 +32,10 @@ gulp.task('pug:docs', function () {
       basedir: './',
       locals: {
         Color             : Color,
-        Util              : Util,
         ConfSite          : ConfSite,
         ConfPage          : ConfPage,
-        Conference        : Conference,
-        SupporterLevel    : SupporterLevel,
-        Supporter         : Supporter,
         Person            : Person,
         Place             : Place,
-        RegistrationPeriod: RegistrationPeriod,
-        Pass              : Pass,
-        Session           : Session,
-        ImportantDate     : ImportantDate,
         Docs              : require('./docs/_models/Docs.class.js'),
       },
     }))
@@ -56,13 +47,18 @@ gulp.task('pug:default', function () {
     .pipe(pug({
       basedir: './',
       locals: {
+        Element: Element,
         Util: Util,
-        site: new ConfSite()
+        Conference: Conference,
+        site: new ConfSite('Civil Engineering Congress', '/sites/default/', 'ConferenceSuite')
           .colors(Color.fromString('#660000'), Color.fromString('#ff6600')) // default Hokie colors
           .init()
           .addConference('default', new Conference({
+            name      : 'Civil Engineering Congress 2016',
+            url       : 'http://2016.cecongress.org/',
             start_date: new Date(),
             end_date  : new Date(),
+            promo_loc : { text : 'Reston, VA' },
           }))
           .currentConference('default')
           .prevConference('default')
@@ -78,9 +74,9 @@ gulp.task('pug:sample', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        Util  : Util,
-        Person: Person,
-        site  : require('./proto/asce-event.org/data.js'),
+        Element: Element,
+        Util   : Util,
+        site   : require('./proto/asce-event.org/data.js'),
       },
     }))
     .pipe(gulp.dest('./proto/asce-event.org/'))

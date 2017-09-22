@@ -15,4 +15,4 @@ block mainReference
         li.o-List__Item.o-Flex__Item.o-ListAction__Item.c-Alert__Item: section
           h1.-fz-el-mega= key
           p(itemscope="" itemtype="http://schema.org/Place")&attributes(($place===site.currentConference().officialVenue()) ? {itemprop:'location'} : {})
-            != $place.html()
+            != $place.view.venue()

@@ -1,4 +1,6 @@
-module.exports = class Pass {
+var Element = require('helpers-js').Element
+
+class Pass {
   /**
    * A set of prices for registration.
    * Constructs a Pass object.
@@ -98,12 +100,87 @@ module.exports = class Pass {
 
 
   /**
+   * Render this pass in HTML.
+   * Displays:
+   * - `Pass#view()`      - default display
+   * - `Pass#view.pass()` - Pass component
+   * @return {string} HTML output
+   */
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Throw an error: must call an explicit display.
+     * Call `Pass#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `Pass#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return an <article.c-Pass> component marking up this pass’s info.
+     * Call `Pass#view.pass()` to render this display.
+     * @param  {Conference} $conference the conference to which this pass belongs
+     * @return {string} HTML output
+     */
+    returned.pass = function ($conference) {
+      return (function () {
+        let current_period = $conference.currentRegistrationPeriod()
+        return new Element('article').class('c-Pass')
+          .attr('data-instanceof','Pass')
+          .addElements([
+            new Element('header').class('c-Pass__Head').addElements([
+              new Element('h1').class('c-Pass__Hn').addContent(this.name),
+              new Element('p').class('c-Pass__Desc')
+                .addContent(this.description())
+                .addElements([
+                  (this.fineprint()) ? new Element('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null
+                ])
+            ]),
+            (current_period) ? new Element('div').class('c-Pass__Body').addContent(
+              current_period.view.pass(this, true)
+            ) : null,
+            new Element('footer').class('o-Flex c-Pass__Foot').addContent(
+              $conference.getRegistrationPeriodsAll()
+                .filter((registration_period) => registration_period !== current_period)
+                .map((registration_period) => registration_period.view.pass(this, false))
+                .join('')
+            ),
+          ])
+          .html()
+      }).call(self)
+    }
+    return returned
+  }
+
+
+  /**
+   * Options for formatting pass prices.
+   * @type {Intl.NumberFormat}
+   */
+  static get PRICE_OPTIONS() {
+    return new Intl.NumberFormat('en', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
+      maximumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
+    })
+  }
+
+  /**
    * REVIEW may not need this class
    * An Attendee Type ("Member", "Non-Member", etc) of a pass.
    * @inner
    */
-  static get AttendeeType() {
-    return class {
+  static get AttendeeType() { return AttendeeType }
+}
+
+
+
+
+class AttendeeType {
       /**
        * An Attendee Type ("Member", "Non-Member", etc) of a pass.
        * Construct an AttendeeType object, given a name and
@@ -131,6 +208,64 @@ module.exports = class Pass {
       get isFeatured() {
         return this._IS_FEATURED
       }
+
+
+  /**
+   * Render this attendee type in HTML.
+   * Displays:
+   * - `AttendeeType#view()`      - default display
+   * - `AttendeeType#view.pass()` - Pass__Period subcomponent
+   * @return {string} HTML output
+   */
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Throw an error: must call an explicit display.
+     * Call `AttendeeType#view()` to render this display.
+     * @return {string} HTML output
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `AttendeeType#view[display]()`.')
+      }).call(self)
     }
+    /**
+     * Return an <article.c-Pass> component marking up this pass’s info.
+     * Call `AttendeeType#view.pass()` to render this display.
+     * @param  {number} price the price for this attendee type given a certain pass and registration period
+     * @param  {boolean} is_body `true` if this attendee type happens to be in the pass body
+     * @return {string} HTML output
+     */
+    returned.pass = function (price, is_body) {
+      return (function () {
+        return Element.concat(
+          new Element('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
+          new Element('dd').class('c-Pass__Price')
+            .addClass((is_body && this.isFeatured) ? 'c-Pass__Price--featured' : '')
+            .attr({
+              'aria-label': `${price} ${Pass.PRICE_OPTIONS.resolvedOptions().currency}`,
+              itemprop : 'priceSpecification',
+              itemscope: '',
+              itemtype : 'http://schema.org/UnitPriceSpecification',
+            })
+            .addElements([
+              new Element('data')
+                .attr('value',Pass.PRICE_OPTIONS.resolvedOptions().currency)
+                .attr('itemprop','priceCurrency')
+                .addContent(Pass.PRICE_OPTIONS.format(price).slice(0,1)), // first char // .charAt(0) // FIXME for USD only!
+              new Element('span')
+                .attr('itemprop','price')
+                .addContent(Pass.PRICE_OPTIONS.format(price).slice(1)), // rest
+            ])
+        )
+      }).call(self)
+    }
+    return returned
   }
 }
+
+
+
+
+module.exports = Pass
