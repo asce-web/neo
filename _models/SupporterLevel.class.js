@@ -67,6 +67,7 @@ module.exports = class SupporterLevel {
       return (function () {
         return new Element('section').class('c-SupporterBlock')
           .addClass((this.size()) ? `c-SupporterBlock--${this.size()}` : '')
+          .attr('data-instanceof','SupporterLevel')
           .addElements([
             new Element('h1').class('c-SupporterBlock__Hn').addContent(this.name),
             new Element('ul').class('o-List o-Flex c-SupporterBlock__List').addElements(

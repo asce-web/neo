@@ -89,7 +89,12 @@ module.exports = class Supporter {
      */
     returned.supporterBlock = function () {
       return (function () {
-        return new Element('a').attr({ href:this.url(), rel:'external nofollow', itemprop:'url' }).addElements([
+        return new Element('a').attr({
+          'data-instanceof': 'Supporter',
+          href    : this.url(),
+          rel     : 'external nofollow',
+          itemprop: 'url'
+        }).addElements([
           new Element('img').class('c-SupporterBlock__Logo').attr({ src:this.img(), alt:this.name, itemprop:'logo' }),
           new Element('meta').attr({ content:this.name, itemprop:'name' }),
         ]).html()
