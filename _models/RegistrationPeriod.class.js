@@ -72,19 +72,19 @@ module.exports = class RegistrationPeriod {
    * Displays:
    * - `RegistrationPeriod#view()`      - default display
    * - `RegistrationPeriod#view.pass()` - Pass component - Pass__Period subcomponent
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   get view() {
     let self = this
     /**
      * Default display. Takes no arguments.
-     * Throw an error: must call an explicit display.
      * Call `RegistrationPeriod#view()` to render this display.
      * @return {string} HTML output
+     * @throws {Error} if no display has been chosen
      */
     function returned() {
       return (function () {
-        throw new Error('Please select a display: `FegistrationPeriod#view[display]()`.')
+        throw new Error('Please select a display: `RegistrationPeriod#view[display]()`.')
       }).call(self)
     }
     /**

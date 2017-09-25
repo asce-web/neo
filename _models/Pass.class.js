@@ -107,7 +107,7 @@ class Pass {
    * Displays:
    * - `Pass#view()`      - default display
    * - `Pass#view.pass()` - Pass component
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   get view() {
     let self = this
@@ -220,15 +220,15 @@ class AttendeeType {
    * Displays:
    * - `AttendeeType#view()`      - default display
    * - `AttendeeType#view.pass()` - Pass__Period subcomponent
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   get view() {
     let self = this
     /**
      * Default display. Takes no arguments.
-     * Throw an error: must call an explicit display.
      * Call `AttendeeType#view()` to render this display.
      * @return {string} HTML output
+     * @throws {Error} if no display has been chosen
      */
     function returned() {
       return (function () {

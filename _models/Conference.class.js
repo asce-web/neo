@@ -481,7 +481,7 @@ module.exports = class Conference {
    * - `Conference#view()`           - default display
    * - `Conference#view.hero()`      - Hero Organism
    * - `Conference#view.otherYear()` - Other Year Organism
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   get view() {
     let self = this

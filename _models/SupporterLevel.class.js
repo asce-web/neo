@@ -42,15 +42,15 @@ module.exports = class SupporterLevel {
    * Displays:
    * - `SupporterLevel#view()` - default display
    * - `SupporterLevel#view.supporterBlock()` - SupporterBlock component
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   get view() {
     let self = this
     /**
      * Default display. Takes no arguments.
-     * Throw an error: must call an explicit display.
      * Call `SupporterLevel#view()` to render this display.
      * @return {string} HTML output
+     * @throws {Error} if no display has been chosen
      */
     function returned() {
       return (function () {

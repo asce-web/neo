@@ -181,7 +181,7 @@ module.exports = class Person {
    * - `Person#view.affiliation()` - “First Middle Last, Affiliation”
    * - `Person#view.contact()`     - “First Last, Director of ... | 555-555-5555”
    * - `Person#view.speaker()`     - Speaker Component
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   get view() {
     let self = this

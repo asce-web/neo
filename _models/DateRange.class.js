@@ -83,15 +83,15 @@ module.exports = class DateRange {
    * - `DateRange#view.dateBlock()` - DateBlock Component, as an important date
    * - `DateRange#view.timeBlock()` - TimeBlock Component, as a session
    * - `DateRange#view.programHn()` - ProgramHn Component (heading for a c-TimeBlock)
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   get view() {
     let self = this
     /**
      * Default display. Takes no arguments.
-     * Throws error: must call an explicit display.
      * Call `DateRange#view()` to render this display.
      * @return {string} HTML output
+     * @throws {Error} if no display has been chosen
      */
     function returned() {
       return (function () {

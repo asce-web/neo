@@ -94,15 +94,15 @@ module.exports = class Place {
    * Displays:
    * - `Place#view()`       - default display
    * - `Place#view.venue()` - a venue address
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   get view() {
     let self = this
     /**
      * Default display. Takes no arguments.
-     * Throw an error: must call an explicit display.
      * Call `Place#view()` to render this display.
      * @return {string} HTML output
+     * @throws {Error} if no display has been chosen
      */
     function returned() {
       return (function () {

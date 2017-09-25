@@ -225,15 +225,15 @@ module.exports = class ConfSite extends Page {
    * Displays:
    * - `ConfSite#view()`           - default display
    * - `ConfSite#view.siteTitle()` - SiteTitle component
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   get view() {
     let self = this
     /**
      * Default display. Takes no arguments.
-     * Throws error: must call an explicit display.
      * Call `ConfSite#view()` to render this display.
      * @return {string} HTML output
+     * @throws {Error} if no display has been chosen
      */
     function returned() {
       return (function () {

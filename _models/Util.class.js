@@ -173,10 +173,13 @@ module.exports = class Util {
    * Displays:
    * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
    * @param {*} data any data to render
-   * @return {string} HTML output
+   * @returns {function(?):string} a function returning HTML output
    */
   static view(data) {
-    function returned(data) { throw new Error('Please select a display: `Util.view[display](data)`.') }
+    /**
+     * @throws {Error} if no display has been chosen
+     */
+    function returned(data) { throw new Error('Please select a display: `Util.view(data)[display](...args)`.') }
     /**
      * Return a <ul> of button links for a highlighted content block.
      * ```pug
