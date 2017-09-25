@@ -1,3 +1,5 @@
+const Element = require('extrajs-element')
+
 /**
  * An organization supporting a conference or series of conferences.
  * @module
@@ -57,5 +59,42 @@ module.exports = class Supporter {
       this._level = level
       return this
     } else return this._level
+  }
+
+
+  /**
+   * Render this supporter in HTML.
+   * Displays:
+   * - `Supporter#view()` - default display
+   * - `Supporter#view.supporterBlock()` - SupporterBlock component
+   * @returns {function(?):string} a function returning HTML output
+   */
+  get view() {
+    let self = this
+    /**
+     * Default display. Takes no arguments.
+     * Call `Supporter#view()` to render this display.
+     * @return {string} HTML output
+     * @throws {Error} if no display has been chosen
+     */
+    function returned() {
+      return (function () {
+        throw new Error('Please select a display: `Supporter#view[display]()`.')
+      }).call(self)
+    }
+    /**
+     * Return a <a.c-SupporterBlock__Logo> subcomponent, an image of the supporter logo.
+     * Call `Supporter#view.supporterBlock()` to render this display.
+     * @return {string} HTML output
+     */
+    returned.supporterBlock = function () {
+      return (function () {
+        return new Element('a').attr({ href:this.url(), rel:'external nofollow', itemprop:'url' }).addElements([
+          new Element('img').class('c-SupporterBlock__Logo').attr({ src:this.img(), alt:this.name, itemprop:'logo' }),
+          new Element('meta').attr({ content:this.name, itemprop:'name' }),
+        ]).html()
+      }).call(self)
+    }
+    return returned
   }
 }

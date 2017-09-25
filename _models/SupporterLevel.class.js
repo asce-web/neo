@@ -54,11 +54,12 @@ module.exports = class SupporterLevel {
      */
     function returned() {
       return (function () {
-        throw new Error('Please select a display: `AttendeeType#view[display]()`.')
+        throw new Error('Please select a display: `SupporterLevel#view[display]()`.')
       }).call(self)
     }
     /**
      * Return a <section.c-SupporterBlock> component containing the supporters that have this level.
+     * Call `SupporterLevel#view.supporterBlock()` to render this display.
      * @param  {Conference} $conference the conference from which to extract supporters having this as their level
      * @return {string} HTML output
      */
@@ -74,12 +75,7 @@ module.exports = class SupporterLevel {
                 .map(($supporter) =>
                   new Element('li').class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
                     .attr({ itemprop:'sponsor', itemscope:'', itemtype:'https://schema.org/Organization' })
-                    .addElements([
-                      new Element('a').attr({ href:$supporter.url(), rel:'external nofollow', itemprop:'url' }).addElements([
-                        new Element('img').class('c-SupporterBlock__Logo').attr({ src:$supporter.img(), alt:$supporter.name, itemprop:'logo' }),
-                        new Element('meta').attr({ content:$supporter.name, itemprop:'name' }),
-                      ]),
-                    ])
+                    .addContent($supporter.view.supporterBlock())
                 )
             ),
           ])
