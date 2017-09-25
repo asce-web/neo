@@ -49,8 +49,8 @@ details
     li
       p Darken to 0.25 (#[b Dark Gray]) or lighten to 0.75 (#[b Light Gray]).
       -
-        var d1 = c1.lighten(1/4 - c1.hslLum(), false)
-        var d2 = c2.lighten(3/4 - c2.hslLum(), false)
+        var d1 = c1.lighten(1/4 - c1.hslLum, false)
+        var d2 = c2.lighten(3/4 - c2.hslLum, false)
       ul.o-List.docs-o-ColorList
         li.o-List__Item.docs-o-ColorList__Item: +derivBlock(d1)
         li.o-List__Item.docs-o-ColorList__Item: +derivBlock(d2)
@@ -61,25 +61,25 @@ details
       tr
         td.docs-o-ColorList__Item: +derivBlock(a1.darken(2/3, true), 'Primary s2')
         td.docs-o-ColorList__Item: +derivBlock(a2.darken(2/3, true), 'Secondary s2')
-        td.docs-o-ColorList__Item: +derivBlock(c1.lighten( 1/12 - c1.hslLum(), false), 'Dark Gray s2')
-        td.docs-o-ColorList__Item: +derivBlock(c2.lighten( 7/12 - c2.hslLum(), false), 'Light Gray s2')
+        td.docs-o-ColorList__Item: +derivBlock(c1.lighten( 1/12 - c1.hslLum, false), 'Dark Gray s2')
+        td.docs-o-ColorList__Item: +derivBlock(c2.lighten( 7/12 - c2.hslLum, false), 'Light Gray s2')
       tr
         td.docs-o-ColorList__Item: +derivBlock(a1.darken(1/3, true), 'Primary s1')
         td.docs-o-ColorList__Item: +derivBlock(a2.darken(1/3, true), 'Secondary s1')
-        td.docs-o-ColorList__Item: +derivBlock(c1.lighten( 2/12 - c1.hslLum(), false), 'Dark Gray s1')
-        td.docs-o-ColorList__Item: +derivBlock(c2.lighten( 8/12 - c2.hslLum(), false), 'Light Gray s1')
+        td.docs-o-ColorList__Item: +derivBlock(c1.lighten( 2/12 - c1.hslLum, false), 'Dark Gray s1')
+        td.docs-o-ColorList__Item: +derivBlock(c2.lighten( 8/12 - c2.hslLum, false), 'Light Gray s1')
       tr
         th.docs-o-ColorList__Item: +derivBlock(a1, 'Primary')
         th.docs-o-ColorList__Item: +derivBlock(a2, 'Secondary')
-        th.docs-o-ColorList__Item: +derivBlock(c1.lighten( 3/12 - c1.hslLum(), false), 'Dark Gray')
-        th.docs-o-ColorList__Item: +derivBlock(c2.lighten( 9/12 - c2.hslLum(), false), 'Light Gray')
+        th.docs-o-ColorList__Item: +derivBlock(c1.lighten( 3/12 - c1.hslLum, false), 'Dark Gray')
+        th.docs-o-ColorList__Item: +derivBlock(c2.lighten( 9/12 - c2.hslLum, false), 'Light Gray')
       tr
-        td.docs-o-ColorList__Item: +derivBlock(a1.darken(1/3, true).brighten(1/3, false), 'Primary t1')
-        td.docs-o-ColorList__Item: +derivBlock(a2.darken(1/3, true).brighten(1/3, false), 'Secondary t1')
-        td.docs-o-ColorList__Item: +derivBlock(c1.lighten( 4/12 - c1.hslLum(), false), 'Dark Gray t2')
-        td.docs-o-ColorList__Item: +derivBlock(c2.lighten(10/12 - c2.hslLum(), false), 'Light Gray t1')
+        td.docs-o-ColorList__Item: +derivBlock(a1.darken(1/3, true).lighten(1/3, false), 'Primary t1')
+        td.docs-o-ColorList__Item: +derivBlock(a2.darken(1/3, true).lighten(1/3, false), 'Secondary t1')
+        td.docs-o-ColorList__Item: +derivBlock(c1.lighten( 4/12 - c1.hslLum, false), 'Dark Gray t2')
+        td.docs-o-ColorList__Item: +derivBlock(c2.lighten(10/12 - c2.hslLum, false), 'Light Gray t1')
       tr
-        td.docs-o-ColorList__Item: +derivBlock(a1.darken(2/3, true).brighten(2/3, false), 'Primary t2')
-        td.docs-o-ColorList__Item: +derivBlock(a2.darken(2/3, true).brighten(2/3, false), 'Secondary t2')
-        td.docs-o-ColorList__Item: +derivBlock(c1.lighten( 5/12 - c1.hslLum(), false), 'Dark Gray t1')
-        td.docs-o-ColorList__Item: +derivBlock(c2.lighten(11/12 - c2.hslLum(), false), 'Light Gray t2')
+        td.docs-o-ColorList__Item: +derivBlock(a1.darken(2/3, true).lighten(2/3, false), 'Primary t2')
+        td.docs-o-ColorList__Item: +derivBlock(a2.darken(2/3, true).lighten(2/3, false), 'Secondary t2')
+        td.docs-o-ColorList__Item: +derivBlock(c1.lighten( 5/12 - c1.hslLum, false), 'Dark Gray t1')
+        td.docs-o-ColorList__Item: +derivBlock(c2.lighten(11/12 - c2.hslLum, false), 'Light Gray t2')

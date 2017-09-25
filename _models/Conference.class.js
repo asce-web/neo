@@ -1,17 +1,19 @@
-var Element = require('helpers-js').Element
-var Util = require('./Util.class.js')
+const xjs     = require('extrajs')
+const Element = require('extrajs-element')
 
+/**
+ * A conference event.
+ * It may have a name, theme, dates, (promoted) location,
+ * passes, sessions, venues, speakers,
+ * supporter levels and supporters, exhibitors, contact information,
+ * important dates, organizers, and other properties.
+ * @module
+ */
 module.exports = class Conference {
   /**
-   * A conference event.
-   * It may have a name, theme, dates, (promoted) location,
-   * passes, sessions, venues, speakers,
-   * supporter levels and supporters, exhibitors, contact information,
-   * important dates, organizers, and other properties.
    * Construct a Conference object.
    * The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
-   * @constructor
    * @param {Object} $confinfo an object with the following immutable properties:
    * @param {string} $confinfo.name the name of this conference
    * @param {string} $confinfo.url the url of this conference
@@ -530,12 +532,12 @@ module.exports = class Conference {
                         new Element('time')
                           .attr('datetime',this.startDate.toISOString())
                           .attr('itemprop','startDate')
-                          .addContent(Util.Date.format(this.startDate, 'M j')),
+                          .addContent(xjs.Date.format(this.startDate, 'M j')),
                         new Element('span').addContent(`&ndash;`),
                         new Element('time')
                           .attr('datetime',this.endDate.toISOString())
                           .attr('itemprop','endDate')
-                          .addContent(Util.Date.format(this.endDate, 'M j')),
+                          .addContent(xjs.Date.format(this.endDate, 'M j')),
                       ]),
                   ]),
                 new Element('p').class('c-ConfHed__Theme h-Hidden-nM')

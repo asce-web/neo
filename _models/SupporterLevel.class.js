@@ -1,11 +1,12 @@
-var Element = require('helpers-js').Element
+const Element = require('extrajs-element')
 
+/**
+ * A group of supporters with a similar level of support or donation.
+ * @module
+ */
 module.exports = class SupporterLevel {
   /**
-   * A group of supporters with a similar level of support or donation.
-   * Assigned at the site level, not at an individual conference.
-   * Construct a SupporterLevel object, given an (immutable) name.
-   * @constructor
+   * Construct a new SupporterLevel object, given an (immutable) name.
    * @param {string} name the name of the level (e.g. 'Gold')
    * @param {SupporterLevel.LogoSize} size the sizing of this supporter level’s logos
    */

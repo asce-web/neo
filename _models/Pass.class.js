@@ -1,10 +1,13 @@
-var Element = require('helpers-js').Element
+const Element = require('extrajs-element')
 
+/**
+ * A set of prices for registration.
+ * @module
+ */
 class Pass {
   /**
    * A set of prices for registration.
-   * Constructs a Pass object.
-   * @constructor
+   * Construct a new Pass object.
    * @param {string} name the name or type of the pass
    */
   constructor(name) {
@@ -180,13 +183,15 @@ class Pass {
 
 
 
+/**
+ * An Attendee Type ("Member", "Non-Member", etc) of a pass.
+ */
 class AttendeeType {
       /**
-       * An Attendee Type ("Member", "Non-Member", etc) of a pass.
-       * Construct an AttendeeType object, given a name and
+       * Construct a new AttendeeType object.
+       * Parameters include a name and
        * a boolean specifying whether the object is featured.
        * Both name and “featured” are immutable.
-       * @constructor
        * @param {string} name the name of the attendee type
        * @param {boolean} is_featured whether this attendee type is marked as “featured”
        */

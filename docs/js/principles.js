@@ -1,4 +1,4 @@
-var Color = require('csscolor').Color
+const Color = require('extrajs-color')
 
 $('input.js-picker').change(function () {
   var primary = Color.fromString($('input.js-picker-primary').val())

@@ -4,19 +4,6 @@ var less = require('gulp-less')
 var autoprefixer = require('gulp-autoprefixer')
 var clean_css = require('gulp-clean-css')
 var sourcemaps = require('gulp-sourcemaps')
-var Color = require('csscolor').Color
-var Element = require('helpers-js').Element
-
-var Util               = require('./_models/Util.class.js')
-var ConfSite           = require('./_models/ConfSite.class.js')
-var ConfPage           = require('./_models/ConfPage.class.js')
-var Conference         = require('./_models/Conference.class.js')
-var SupporterLevel     = require('./_models/SupporterLevel.class.js')
-var Supporter          = require('./_models/Supporter.class.js')
-var Person             = require('./_models/Person.class.js')
-var Place              = require('./_models/Place.class.js')
-var RegistrationPeriod = require('./_models/RegistrationPeriod.class.js')
-var Pass               = require('./_models/Pass.class.js')
 
 gulp.task('pug:index', function () {
   return gulp.src(__dirname + '/index.pug')
@@ -31,26 +18,29 @@ gulp.task('pug:docs', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        Color             : Color,
-        ConfSite          : ConfSite,
-        ConfPage          : ConfPage,
-        Person            : Person,
-        Place             : Place,
-        Docs              : require('./docs/_models/Docs.class.js'),
+        Color   : require('extrajs-color'),
+        ConfSite: require('./_models/ConfSite.class.js'),
+        ConfPage: require('./_models/ConfPage.class.js'),
+        Person  : require('./_models/Person.class.js'),
+        Place   : require('./_models/Place.class.js'),
+        Docs    : require('./docs/_models/Docs.class.js'),
       },
     }))
     .pipe(gulp.dest('./docs/'))
 })
 
 gulp.task('pug:default', function () {
+  const Color      = require('extrajs-color')
+  const ConfSite   = require('./_models/ConfSite.class.js')
+  const ConfPage   = require('./_models/ConfPage.class.js')
+  const Conference = require('./_models/Conference.class.js')
   return gulp.src(__dirname + '/proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
-        Element: Element,
-        Util: Util,
-        Conference: Conference,
-        site: new ConfSite('Civil Engineering Congress', '/sites/default/', 'ConferenceSuite')
+        Element   : require('extrajs-element'),
+        Util      : require('./_models/Util.class.js'),
+        site      : new ConfSite('Civil Engineering Congress', '/sites/default/', 'ConferenceSuite')
           .colors(Color.fromString('#660000'), Color.fromString('#ff6600')) // default Hokie colors
           .init()
           .addConference('default', new Conference({
@@ -74,8 +64,9 @@ gulp.task('pug:sample', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        Element: Element,
-        Util   : Util,
+        xjs    : require('extrajs'),
+        Element: require('extrajs-element'),
+        Util   : require('./_models/Util.class.js'),
         site   : require('./proto/asce-event.org/data.js'),
       },
     }))
