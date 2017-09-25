@@ -1,0 +1,53 @@
+
+/*################################*\
+    neo  |  _o-Flex--even.less
+\*################################*/
+
+
+// The Even Flexbox
+//
+// This Object extends [Xmeter’s Flex Object](https://github.com/chharvey/xmeter/blob/v6.0.0-beta/src/_o-Flex.less).
+// Like `o-Flex`, it is a list of flexible items, but it differs in a number of ways:
+//
+// 1. This object responds to screen size, stacking items vertically on
+//    X-Small and Small screens, and becoming horizontal on Medium screens and Larger.
+//    NOTE: The breakpoint is opinionated to this project.
+// 2. Extra space, if any, is distributed evenly around the items, instead of
+//    strictly in-between them.
+//    NOTE: in most cases there will be no extra space, because the items will
+//    add together to the container width. But in the case that this behavior
+//    is overridden, the extra space will be distributed evenly.
+// 3. This Object centers all text.
+// 4. Items are all sized equally, as opposed to automatically, where their size
+//    would depend on content.
+//
+// NOTE: There is no explicit class for children of the `.o-Flex--even` Object;
+// children are styled via descendant selector.
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-09-25</time></dd>
+// </dl></header>
+//
+// Markup:
+// <ul class="o-List o-Flex o-Flex--even">
+//   <li class="o-List__Item o-Flex__Item">Register Now</li>
+//   <li class="o-List__Item o-Flex__Item">Read Specs</li>
+//   <li class="o-List__Item o-Flex__Item">Contact Us</li>
+// </ul>
+//
+// Weight: 0.1
+//
+// Styleguide Objects.Flex--even
+.o-Flex--even {
+  justify-content: space-around; // HACK fallback for space-evenly
+  justify-content: space-evenly;
+  text-align: center;
+  @media not all and (min-width: 45em) {
+    flex-direction: column;
+  }
+}
+
+.o-Flex--even > .o-Flex__Item {
+  flex: 1;
+}

@@ -183,9 +183,9 @@ module.exports = class Util {
     /**
      * Return a <ul> of button links for a highlighted content block.
      * ```pug
-     * ul.o-List.o-Flex.o-ListAction
+     * ul.o-List.o-Flex.o-Flex--even
      *   each item in data
-     *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
+     *     li.o-List__Item.o-Flex__Item
      *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
      *         = item.contents
      * ```
@@ -198,8 +198,8 @@ module.exports = class Util {
         return Element.data(data, {
           ordered: false,
           attributes: {
-            list:  { class: 'o-List o-Flex o-ListAction' },
-            value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
+            list:  { class: 'o-List o-Flex o-Flex--even' },
+            value: { class: 'o-List__Item o-Flex__Item' },
           },
           options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
         })
