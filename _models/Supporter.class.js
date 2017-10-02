@@ -1,4 +1,4 @@
-const Element = require('extrajs-element')
+const Element = require('extrajs-dom').Element
 
 /**
  * An organization supporting a conference or series of conferences.

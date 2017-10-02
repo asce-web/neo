@@ -1,5 +1,5 @@
 const Page     = require('sitepage').Page
-const Element  = require('extrajs-element')
+const Element  = require('extrajs-dom').Element
 const Color    = require('extrajs-color')
 const ConfPage = require('./ConfPage.class.js')
 
