@@ -1,4 +1,5 @@
 const Element = require('extrajs-dom').Element
+const View    = require('extrajs-view')
 
 /**
  * A group of supporters with a similar level of support or donation.

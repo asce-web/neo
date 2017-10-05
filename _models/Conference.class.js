@@ -1,5 +1,6 @@
 const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
+const View    = require('extrajs-view')
 
 /**
  * A conference event.

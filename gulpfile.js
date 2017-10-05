@@ -1,9 +1,9 @@
-var gulp = require('gulp')
-var pug = require('gulp-pug')
-var less = require('gulp-less')
-var autoprefixer = require('gulp-autoprefixer')
-var clean_css = require('gulp-clean-css')
-var sourcemaps = require('gulp-sourcemaps')
+const gulp = require('gulp')
+const pug = require('gulp-pug')
+const less = require('gulp-less')
+const autoprefixer = require('gulp-autoprefixer')
+const clean_css = require('gulp-clean-css')
+const sourcemaps = require('gulp-sourcemaps')
 
 gulp.task('pug:index', function () {
   return gulp.src(__dirname + '/index.pug')

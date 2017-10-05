@@ -1,4 +1,5 @@
 const Element = require('extrajs-dom').Element
+const View    = require('extrajs-view')
 
 /**
  * A place.
