@@ -222,32 +222,26 @@ module.exports = class ConfSite extends Page {
 
 
   /**
-   * Render this conference site in HTML.
-   * Displays:
-   * - `ConfSite#view()`           - default display
-   * - `ConfSite#view.siteTitle()` - SiteTitle component
-   * @returns {function(?):string} a function returning HTML output
+   * @summary Render this conference site in HTML.
+   * @see ConfSite.VIEW
+   * @type {View}
    */
   get view() {
-    let self = this
     /**
-     * Default display. Takes no arguments.
-     * Call `ConfSite#view()` to render this display.
-     * @return {string} HTML output
-     * @throws {Error} if no display has been chosen
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `ConfSite#view.siteTitle()` - SiteTitle component
+     * @namespace ConfSite.VIEW
+     * @type {View}
      */
-    function returned() {
-      return (function () {
-        throw new Error('Please select a display: `ConfSite#view[display]()`.')
-      }).call(self)
-    }
-    /**
-     * Return an <a.c-SiteTitle> component marking up this conference site’s info.
-     * Call `ConfSite#view.siteTitle()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.siteTitle = function () {
-      return (function () {
+    return new View(null, this)
+      /**
+       * Return an <a.c-SiteTitle> component marking up this conference site’s info.
+       * @summary Call `ConfSite#view.siteTitle()` to render this display.
+       * @function ConfSite.VIEW.siteTitle
+       * @returns {string} HTML output
+       */
+      .addDisplay(function siteTitle() {
         return new Element('a').class('c-SiteTitle c-LinkCamo h-Block')
           .attr('data-instanceof','ConfSite')
           .attr('href',this.url())
@@ -257,9 +251,7 @@ module.exports = class ConfSite extends Page {
             new Element('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
           ])
           .html()
-      }).call(self)
-    }
-    return returned
+      })
   }
 
 

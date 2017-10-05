@@ -39,33 +39,27 @@ module.exports = class SupporterLevel {
 
 
   /**
-   * Render this supporter level in HTML.
-   * Displays:
-   * - `SupporterLevel#view()` - default display
-   * - `SupporterLevel#view.supporterBlock()` - SupporterBlock component
-   * @returns {function(?):string} a function returning HTML output
+   * @summary Render this supporter level in HTML.
+   * @see SupporterLevel.VIEW
+   * @type {View}
    */
   get view() {
-    let self = this
     /**
-     * Default display. Takes no arguments.
-     * Call `SupporterLevel#view()` to render this display.
-     * @return {string} HTML output
-     * @throws {Error} if no display has been chosen
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `SupporterLevel#view.supporterBlock()` - SupporterBlock component
+     * @namespace SupporterLevel.VIEW
+     * @type {View}
      */
-    function returned() {
-      return (function () {
-        throw new Error('Please select a display: `SupporterLevel#view[display]()`.')
-      }).call(self)
-    }
-    /**
-     * Return a <section.c-SupporterBlock> component containing the supporters that have this level.
-     * Call `SupporterLevel#view.supporterBlock()` to render this display.
-     * @param  {Conference} $conference the conference from which to extract supporters having this as their level
-     * @return {string} HTML output
-     */
-    returned.supporterBlock = function ($conference) {
-      return (function () {
+    return new View(null, this)
+      /**
+       * Return a <section.c-SupporterBlock> component containing the supporters that have this level.
+       * @summary Call `SupporterLevel#view.supporterBlock()` to render this display.
+       * @function SupporterLevel.VIEW.supporterBlock
+       * @param  {Conference} $conference the conference from which to extract supporters having this as their level
+       * @returns {string} HTML output
+       */
+      .addDisplay(function supporterBlock($conference) {
         return new Element('section').class('c-SupporterBlock')
           .addClass((this.size()) ? `c-SupporterBlock--${this.size()}` : '')
           .attr('data-instanceof','SupporterLevel')
@@ -82,9 +76,7 @@ module.exports = class SupporterLevel {
             ),
           ])
           .html()
-      }).call(self)
-    }
-    return returned
+      })
   }
 
 

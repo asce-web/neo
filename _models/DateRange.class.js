@@ -78,35 +78,29 @@ module.exports = class DateRange {
 
 
   /**
-   * Render this date range in HTML.
-   * Displays:
-   * - `DateRange#view()` - default display
-   * - `DateRange#view.dateBlock()` - DateBlock Component, as an important date
-   * - `DateRange#view.timeBlock()` - TimeBlock Component, as a session
-   * - `DateRange#view.programHn()` - ProgramHn Component (heading for a c-TimeBlock)
-   * @returns {function(?):string} a function returning HTML output
+   * @summary Render this date range in HTML.
+   * @see DateRange.VIEW
+   * @type {View}
    */
   get view() {
-    let self = this
     /**
-     * Default display. Takes no arguments.
-     * Call `DateRange#view()` to render this display.
-     * @return {string} HTML output
-     * @throws {Error} if no display has been chosen
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `DateRange#view.dateBlock()` - DateBlock Component, as an important date
+     * - `DateRange#view.timeBlock()` - TimeBlock Component, as a session
+     * - `DateRange#view.programHn()` - ProgramHn Component (heading for a c-TimeBlock)
+     * @namespace DateRange.VIEW
+     * @type {View}
      */
-    function returned() {
-      return (function () {
-        throw new Error('Please select a display: `DateRange#view[display]()`.')
-      }).call(self)
-    }
-    /**
-     * Return an <li.c-DateBlock__Item> subcomponent containing a <dt>–<dd> pair,
-     * marking up this date range as an important date with date and description.
-     * Call `DateRange#view.dateBlock()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.dateBlock = function () {
-      return (function () {
+    return new View(null, this)
+      /**
+       * Return an <li.c-DateBlock__Item> subcomponent containing a <dt>–<dd> pair,
+       * marking up this date range as an important date with date and description.
+       * @summary Call `DateRange#view.dateBlock()` to render this display.
+       * @function DateRange.VIEW.dateBlock
+       * @returns {string} HTML output
+       */
+      .addDisplay(function dateBlock() {
         return new Element('tr').class('c-DateBlock__Item')
           .attr('data-instanceof','DateRange')
           .attr({
@@ -138,17 +132,16 @@ module.exports = class DateRange {
               ),
           ])
           .html()
-      }).call(self)
-    }
-    /**
-     * Return an <li.c-TimeBlock__Item> subcomponent containing a <dt>–<dd> pair,
-     * marking up this date range as a session with time and name.
-     * Call `DateRange#view.timeBlock()` to render this display.
-     * @param  {boolean} is_last `true` if the session is the last in its list
-     * @return {string} HTML output
-     */
-    returned.timeBlock = function (is_last) {
-      return (function () {
+      })
+      /**
+       * Return an <li.c-TimeBlock__Item> subcomponent containing a <dt>–<dd> pair,
+       * marking up this date range as a session with time and name.
+       * @summary Call `DateRange#view.timeBlock()` to render this display.
+       * @function DateRange.VIEW.timeBlock
+       * @param  {boolean} is_last `true` if the session is the last in its list
+       * @returns {string} HTML output
+       */
+      .addDisplay(function timeBlock(is_last) {
         return new Element('tr').class('c-TimeBlock__Item')
           .attr('data-instanceof','DateRange')
           .attr({
@@ -181,15 +174,14 @@ module.exports = class DateRange {
               ),
           ])
           .html()
-      }).call(self)
-    }
-    /**
-     * Return an <time.c-ProgramHn> component marking up this date range’s start date.
-     * Call `DateRange#view.programHn()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.programHn = function () {
-      return (function () {
+      })
+      /**
+       * Return an <time.c-ProgramHn> component marking up this date range’s start date.
+       * @summary Call `DateRange#view.programHn()` to render this display.
+       * @function DateRange.VIEW.programHn
+       * @returns {string} HTML output
+       */
+      .addDisplay(function programHn() {
         return new Element('time').class('c-ProgramHn h-Block')
           .attr('data-instanceof','DateRange')
           .attr('datetime',this.start.toISOString())
@@ -197,8 +189,6 @@ module.exports = class DateRange {
           .addElements([new Element('br')])
           .addContent(xjs.Date.format(this.start, 'M j'))
           .html()
-      }).call(self)
-    }
-    return returned
+      })
   }
 }

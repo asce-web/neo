@@ -477,17 +477,14 @@ module.exports = class Conference {
 
 
   /**
-   * Render this conference in HTML.
-   * Displays:
-   * - `Conference#view()`           - default display
-   * - `Conference#view.hero()`      - Hero Organism
-   * - `Conference#view.otherYear()` - Other Year Organism
-   * @returns {function(?):string} a function returning HTML output
+   * @summary Render this conference in HTML.
+   * @see Conference.VIEW
+   * @type {View}
    */
   get view() {
-    let self = this
     /**
      * Mark up the promoted location of this conference.
+     * @private
      * @param  {Object} obj an object returned by `Conference#promoLoc()`
      * @return {string} the markup for the location
      */
@@ -496,24 +493,22 @@ module.exports = class Conference {
       else return obj.text
     }
     /**
-     * Default display. Takes no arguments.
-     * Throws error: must call an explicit display.
-     * Call `Conference#view()` to render this display.
-     * @return {string} HTML output
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `Conference#view.hero()`      - Hero Organism
+     * - `Conference#view.otherYear()` - Other Year Organism
+     * @namespace Conference.VIEW
+     * @type {View}
      */
-    function returned() {
-      return (function () {
-        throw new Error('Please select a display: `Conference#view[display]()`.')
-      }).call(self)
-    }
-    /**
-     * Return a <header> element with hero image marking up this conference’s main info.
-     * Call `ConfSite#view.hero()` to render this display.
-     * @param  {string=} block custom HTML to insert at the end
-     * @return {string} HTML output
-     */
-    returned.hero = function (block = '') {
-      return (function () {
+    return new View(null, this)
+      /**
+       * Return a <header> element with hero image marking up this conference’s main info.
+       * @summary Call `Conference#view.hero()` to render this display.
+       * @function Conference.VIEW.hero
+       * @param  {string=} block custom HTML to insert at the end
+       * @returns {string} HTML output
+       */
+      .addDisplay(function hero(block = '') {
         return new Element('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
           .attr('data-instanceof','Conference')
           .addElements([
@@ -548,18 +543,17 @@ module.exports = class Conference {
               .addContent(block),
           ])
           .html()
-      }).call(self)
-    }
-    /**
-     * Return an <aside> element with other year backdrop marking up this conference’s main info.
-     * Call `ConfSite#view.otherYear()` to render this display.
-     * @param  {string}  year exactly one of `'prev'` or `'next'`
-     * @param  {string=} blurb custom HTML to advertise the prev/next year
-     * @param  {string=} block custom HTML to insert at the end
-     * @return {string} HTML output
-     */
-    returned.otherYear = function (year, blurb = '', block = '') {
-      return (function () {
+      })
+      /**
+       * Return an <aside> element with other year backdrop marking up this conference’s main info.
+       * @summary Call `Conference#view.otherYear()` to render this display.
+       * @function Conference.VIEW.otherYear
+       * @param   {string}  year exactly one of `'prev'` or `'next'`
+       * @param   {string=} blurb custom HTML to advertise the prev/next year
+       * @param   {string=} block custom HTML to insert at the end
+       * @returns {string} HTML output
+       */
+      .addDisplay(function otherYear(year, blurb = '', block = '') {
         return new Element('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
           .addClass(`c-Banner--${year}`)
           .attr({
@@ -582,8 +576,6 @@ module.exports = class Conference {
               .addContent(block),
           ])
           .html()
-      }).call(self)
-    }
-    return returned
+      })
   }
 }

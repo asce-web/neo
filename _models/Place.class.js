@@ -91,32 +91,26 @@ module.exports = class Place {
 
 
   /**
-   * Render this place in HTML.
-   * Displays:
-   * - `Place#view()`       - default display
-   * - `Place#view.venue()` - a venue address
-   * @returns {function(?):string} a function returning HTML output
+   * @summary Render this place in HTML.
+   * @see Place.VIEW
+   * @type {View}
    */
   get view() {
-    let self = this
     /**
-     * Default display. Takes no arguments.
-     * Call `Place#view()` to render this display.
-     * @return {string} HTML output
-     * @throws {Error} if no display has been chosen
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `Place#view.venue()` - a venue address
+     * @namespace Place.VIEW
+     * @type {View}
      */
-    function returned() {
-      return (function () {
-        throw new Error('Please select a display: `Place#view[display]()`.')
-      }).call(self)
-    }
-    /**
-     * Return a DOM snippet marking up this place’s address.
-     * Call `Place#view.venue()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.venue = function () {
-      return (function () {
+    return new View(null, this)
+      /**
+       * Return a DOM snippet marking up this place’s address.
+       * @summary Call `Place#view.venue()` to render this display.
+       * @function Place.VIEW.venue
+       * @returns {string} HTML output
+       */
+      .addDisplay(function venue() {
         let name = new Element('b').class('h-Clearfix').attr('itemprop','name').addContent(this.name)
         if (this.url) {
           name = new Element('a').attr({
@@ -147,8 +141,6 @@ module.exports = class Place {
             ]),
           (this.telephone) ? new Element('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : new Element('span') // TODO make null on helpers-js@0.4.1
         )
-      }).call(self)
-    }
-    return returned
+      })
   }
 }

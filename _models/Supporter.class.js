@@ -64,32 +64,26 @@ module.exports = class Supporter {
 
 
   /**
-   * Render this supporter in HTML.
-   * Displays:
-   * - `Supporter#view()` - default display
-   * - `Supporter#view.supporterBlock()` - SupporterBlock component
-   * @returns {function(?):string} a function returning HTML output
+   * @summary Render this supporter in HTML.
+   * @see Supporter.VIEW
+   * @type {View}
    */
   get view() {
-    let self = this
     /**
-     * Default display. Takes no arguments.
-     * Call `Supporter#view()` to render this display.
-     * @return {string} HTML output
-     * @throws {Error} if no display has been chosen
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `Supporter#view.supporterBlock()` - SupporterBlock component
+     * @namespace Supporter.VIEW
+     * @type {View}
      */
-    function returned() {
-      return (function () {
-        throw new Error('Please select a display: `Supporter#view[display]()`.')
-      }).call(self)
-    }
-    /**
-     * Return a <a.c-SupporterBlock__Logo> subcomponent, an image of the supporter logo.
-     * Call `Supporter#view.supporterBlock()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.supporterBlock = function () {
-      return (function () {
+    return new View(null, this)
+      /**
+       * Return a <a.c-SupporterBlock__Logo> subcomponent, an image of the supporter logo.
+       * @summary Call `Supporter#view.supporterBlock()` to render this display.
+       * @function Supporter.VIEW.supporterBlock
+       * @returns {string} HTML output
+       */
+      .addDisplay(function supporterBlock() {
         return new Element('a').attr({
           'data-instanceof': 'Supporter',
           href    : this.url(),
@@ -99,8 +93,6 @@ module.exports = class Supporter {
           new Element('img').class('c-SupporterBlock__Logo').attr({ src:this.img(), alt:this.name, itemprop:'logo' }),
           new Element('meta').attr({ content:this.name, itemprop:'name' }),
         ]).html()
-      }).call(self)
-    }
-    return returned
+      })
   }
 }

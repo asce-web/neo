@@ -69,34 +69,28 @@ module.exports = class RegistrationPeriod {
 
 
   /**
-   * Render this registration period in HTML.
-   * Displays:
-   * - `RegistrationPeriod#view()`      - default display
-   * - `RegistrationPeriod#view.pass()` - Pass component - Pass__Period subcomponent
-   * @returns {function(?):string} a function returning HTML output
+   * @summary Render this registration period in HTML.
+   * @see RegistrationPeriod.VIEW
+   * @type {View}
    */
   get view() {
-    let self = this
     /**
-     * Default display. Takes no arguments.
-     * Call `RegistrationPeriod#view()` to render this display.
-     * @return {string} HTML output
-     * @throws {Error} if no display has been chosen
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `RegistrationPeriod#view.pass()` - Pass component - Pass__Period subcomponent
+     * @namespace RegistrationPeriod.VIEW
+     * @type {View}
      */
-    function returned() {
-      return (function () {
-        throw new Error('Please select a display: `RegistrationPeriod#view[display]()`.')
-      }).call(self)
-    }
-    /**
-     * Return a <section.c-Pass__Period> subcomponent marking up this period’s info.
-     * Call `RegistrationPeriod#view.pass()` to render this display.
-     * @param  {Pass} $pass the Pass component in which this registration period is rendered
-     * @param  {boolean} is_body `true` if this period belongs in the pass body (if it’s current)
-     * @return {string} HTML output
-     */
-    returned.pass = function ($pass, is_body) {
-      return (function () {
+    return new View(null, this)
+      /**
+       * Return a <section.c-Pass__Period> subcomponent marking up this period’s info.
+       * @summary Call `RegistrationPeriod#view.pass()` to render this display.
+       * @function RegistrationPeriod.VIEW.pass
+       * @param  {Pass} $pass the Pass component in which this registration period is rendered
+       * @param  {boolean} is_body `true` if this period belongs in the pass body (if it’s current)
+       * @returns {string} HTML output
+       */
+      .addDisplay(function pass($pass, is_body) {
         return new Element('section').class('c-Pass__Period')
           .addClass((!is_body) ? 'o-Flex__Item' : '')
           .attr({
@@ -119,8 +113,6 @@ module.exports = class RegistrationPeriod {
             ).join('')),
           ])
           .html()
-      }).call(self)
-    }
-    return returned
+      })
   }
 }

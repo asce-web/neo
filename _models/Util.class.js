@@ -192,7 +192,7 @@ module.exports = class Util {
      * Call `Util.view(data).highlightButtons()` to render this display.
      * @param  {Array<Element>} data the <a> elements to render
      * @param  {string=} buttonclasses the classes to add to the buttons
-     * @return {string} HTML output
+     * @returns {string} HTML output
      */
     returned.highlightButtons = function (buttonclasses = '') {
         return Element.data(data, {
