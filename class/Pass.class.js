@@ -6,7 +6,6 @@ const View    = require('extrajs-view')
  */
 class Pass {
   /**
-   * A set of prices for registration.
    * Construct a new Pass object.
    * @param {string} name the name or type of the pass
    */
@@ -19,17 +18,17 @@ class Pass {
   }
 
   /**
-   * Get the name of this pass.
-   * @return {string} the name of this pass
+   * @summary Get the name of this pass.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
 
   /**
-   * Set or get the description of this pass.
-   * @param  {string=} text the description of this pass
-   * @return {(Pass|string)} this pass || the description of this pass
+   * @summary Set or get the description of this pass.
+   * @param   {string=} text the description of this pass
+   * @returns {(Pass|string)} this pass || the description of this pass
    */
   description(text) {
     if (arguments.length) {
@@ -39,9 +38,9 @@ class Pass {
   }
 
   /**
-   * Set or get the fine print of this pass.
-   * @param  {string=} text the fine print of this pass
-   * @return {(Pass|string)} this pass || the fine print of this pass
+   * @summary Set or get the fine print of this pass.
+   * @param   {string=} text the fine print of this pass
+   * @returns {(Pass|string)} this pass || the fine print of this pass
    */
   fineprint(text) {
     if (arguments.length) {
@@ -51,8 +50,9 @@ class Pass {
   }
 
   /**
-   * Add an attendee type to this pass.
-   * @param {Pass.AttendeeType} $attendeeType the attendee type to add
+   * @summary Add an attendee type to this pass.
+   * @param   {Pass.AttendeeType} $attendeeType the attendee type to add
+   * @returns {Pass} this pass
    */
   addAttendeeType($attendeeType) {
     this._attend_types.push($attendeeType)
@@ -60,42 +60,43 @@ class Pass {
   }
   // /**
   //  * REVIEW: use this method if class AttendeeType is removed.
-  //  * Add an attendee type to this pass.
-  //  * @param {string} name the name of the attendee type
-  //  * @param {boolean} is_featured whether this attendee type is marked as “featured”
+  //  * @summary Add an attendee type to this pass.
+  //  * @param   {string} name the name of the attendee type
+  //  * @param   {boolean} is_featured whether this attendee type is marked as “featured”
+  //  * @returns {Pass} this pass
   //  */
   // addAttendeeType(name, is_featured) {
   //   this._attend_types.push({name: name, isFeatured: is_featured})
   //   return this
   // }
   /**
-   * Retrieve an attendee type of this pass.
-   * @param  {string} name the name of the attendee type to get
-   * @return {?Pass.AtendeeType} the specified attendee type
+   * @summary Retrieve an attendee type of this pass.
+   * @param   {string} name the name of the attendee type to get
+   * @returns {?Pass.AtendeeType} the specified attendee type
    */
   getAttendeeType(name) {
     return this._attend_types.find(($attendeeType) => $attendeeType.name===name) || null
   }
   /**
-   * Retreive all attendee types of this pass.
-   * @return {Array<Pass.AttendeeType>} a shallow array of all attendee types of this pass
+   * @summary Retreive all attendee types of this pass.
+   * @returns {Array<Pass.AttendeeType>} a shallow array of all attendee types of this pass
    */
   getAttendeeTypesAll() {
     return this._attend_types.slice()
   }
 
   /**
-   * Mark this pass as starred.
-   * @param  {boolean=true} bool if true, mark as starred
-   * @return {Pass} this pass
+   * @summary Mark this pass as starred.
+   * @param   {boolean=true} bool if true, mark as starred
+   * @returns {Pass} this pass
    */
   star(bool = true) {
     this._is_starred = bool
     return this
   }
   /**
-   * Get the starred status of this pass.
-   * @return {boolean} whether this pass is starred
+   * @summary Get the starred status of this pass.
+   * @returns {boolean} whether this pass is starred
    */
   isStarred() {
     return this._is_starred
@@ -192,14 +193,14 @@ class AttendeeType {
   }
   /**
    * Get the name of this attendee type.
-   * @return {string} the name of this attendee type
+   * @returns {string} the name of this attendee type
    */
   get name() {
     return this._NAME
   }
   /**
    * Get whether this attendee type is featured.
-   * @return {boolean} whether this attendee type is featured
+   * @returns {boolean} whether this attendee type is featured
    */
   get isFeatured() {
     return this._IS_FEATURED

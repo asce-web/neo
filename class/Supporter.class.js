@@ -17,17 +17,17 @@ class Supporter {
   }
 
   /**
-   * Get the name of this supporter.
-   * @return {string} the name of this supporter
+   * @summary Get the name of this supporter.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
 
   /**
-   * Set or get the URL of this supporter.
-   * @param  {string=} url the URL of this supporter
-   * @return {(Supporter|string)} this supporter || the URL of this suppoter
+   * @summary Set or get the URL of this supporter.
+   * @param   {string=} url the URL of this supporter
+   * @returns {(Supporter|string)} this supporter || the URL of this suppoter
    */
   url(url) {
     if (arguments.length) {
@@ -37,9 +37,9 @@ class Supporter {
   }
 
   /**
-   * Set or get the image of this supporter.
-   * @param  {string=} img the image of this supporter
-   * @return {(Supporter|string)} this supporter || the image of this suppoter
+   * @summary Set or get the image of this supporter.
+   * @param   {string=} img the image of this supporter
+   * @returns {(Supporter|string)} this supporter || the image of this suppoter
    */
   img(img) {
     if (arguments.length) {
@@ -49,10 +49,10 @@ class Supporter {
   }
 
   /**
-   * Set or get the supporter level in which this supporter belongs.
+   * @summary Set or get the supporter level in which this supporter belongs.
    * @see SupporterLevel
-   * @param  {string=} level a string matching a the name of a SupporterLevel; the level this supporter belongs in
-   * @return {(Supporter|string)} this supporter || name of the corresponding SupporterLevel object
+   * @param   {string=} level a string matching a the name of a SupporterLevel; the level this supporter belongs in
+   * @returns {(Supporter|string)} this supporter || name of the corresponding SupporterLevel object
    */
   level(level) {
     if (arguments.length) {

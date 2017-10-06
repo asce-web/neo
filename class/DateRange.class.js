@@ -23,33 +23,33 @@ class DateRange {
   }
 
   /**
-   * Get the name of this date range.
-   * @return {string} the name of this date range
+   * @summary Get the name of this date range.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
 
   /**
-   * Return the start date value of this date range.
-   * @return {Date} the start date of this date range
+   * @summary Return the start date value of this date range.
+   * @type {Date}
    */
   get start() {
     return this._START
   }
 
   /**
-   * Return the end date value of this date range.
-   * @return {?Date} the end date of this date range
+   * @summary Return the end date value of this date range.
+   * @type {?Date}
    */
   get end() {
     return this._END || null
   }
 
   /**
-   * Set or get the url of this date range.
-   * @param  {string=} url the url of this date range
-   * @return {(DateRange|string)} this date range || the url of this date range
+   * @summary Set or get the url of this date range.
+   * @param   {string=} url the url of this date range
+   * @returns {(DateRange|string)} this date range || the url of this date range
    */
   url(url) {
     if (arguments.length) {
@@ -59,17 +59,17 @@ class DateRange {
   }
 
   /**
-   * Mark this date range as starred.
-   * @param  {boolean=} bool if `true`, mark as starred
-   * @return {DateRange} this date range
+   * @summary Mark this date range as starred.
+   * @param   {boolean=} bool if `true`, mark as starred
+   * @returns {DateRange} this date range
    */
   star(bool = true) {
     this._is_starred = bool
     return this
   }
   /**
-   * Get the starred status of this date range.
-   * @return {boolean} whether this date range is starred
+   * @summary Get the starred status of this date range.
+   * @returns {boolean} whether this date range is starred
    */
   isStarred() {
     return this._is_starred

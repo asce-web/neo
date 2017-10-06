@@ -16,18 +16,18 @@ class SupporterLevel {
   }
 
   /**
-   * Get the name of this supporter level.
-   * @return {string} the name of this supporter level
+   * @summary Get the name of this supporter level.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
 
   /**
-   * Set or get the sizing of this supporter level.
-   * The sizing informs the size of the supporter logo in this supporter level.
-   * @param  {SupporterLevel.LogoSize} size the sizing of this supporter level’s logos
-   * @return {(SupporterLevel|SupporterLevel.LogoSize)} this supporter level | the sizing
+   * @summary Set or get the sizing of this supporter level.
+   * @description The sizing informs the size of the supporter logo in this supporter level.
+   * @param   {SupporterLevel.LogoSize} size the sizing of this supporter level’s logos
+   * @returns {(SupporterLevel|SupporterLevel.LogoSize)} this supporter level | the sizing
    */
   size(size) {
     if (arguments.length) {

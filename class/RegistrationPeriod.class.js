@@ -23,45 +23,45 @@ class RegistrationPeriod {
   }
 
   /**
-   * Get the name of this registration period.
-   * @return {string} the name of this registration period
+   * @summary Get the name of this registration period.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
 
   /**
-   * Get the start date of this registration period.
-   * @return {Date} the start date of this registration period
+   * @summary Get the start date of this registration period.
+   * @type {Date}
    */
   get startDate() {
     return this._START || new Date()
   }
 
   /**
-   * Get the end date of this registration period.
-   * @return {Date} the end date of this registration period
+   * @summary Get the end date of this registration period.
+   * @type {Date}
    */
   get endDate() {
     return this._END || new Date()
   }
 
   /**
-   * Set the icon of this registration period.
-   * REVIEW: if icons are the same suite-wide, this can be removed.
+   * @summary Set the icon of this registration period.
    * @param {string} key the keyword of the icon to set
    */
   setIcon(key) {
+    // REVIEW: if icons are the same suite-wide, this can be removed.
     this._icon = Util.ICON_DATA.find((item) => item.content===key)
     return this
   }
   /**
-   * Get the icon of this registration period.
-   * REVIEW: if icons are the same suite-wide, this can be removed.
-   * @param  {boolean=} fallback if true, get the unicode code point
-   * @return {string} if fallback, the unicode code point, else, the keyword of the icon
+   * @summary Get the icon of this registration period.
+   * @param   {boolean=} fallback if true, get the unicode code point
+   * @returns {string} if fallback, the unicode code point, else, the keyword of the icon
    */
   getIcon(fallback) {
+    // REVIEW: if icons are the same suite-wide, this can be removed.
     return (this._icon) ? Util.iconToString(this._icon, fallback) : ''
   }
 

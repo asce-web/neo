@@ -33,7 +33,7 @@ class Util {
    */
 
   /**
-   * List of US State objects.
+   * @summary List of US State objects.
    * @type {Array<StateObj>}
    */
   static get STATE_DATA() {
@@ -112,7 +112,7 @@ class Util {
    */
 
   /**
-   * List of icon objects used in Conf styles.
+   * @summary List of icon objects used in Conf styles.
    * @type {Array<Icon>}
    */
   static get ICON_DATA() {
@@ -139,7 +139,7 @@ class Util {
   }
 
   /**
-   * Data for social media networks.
+   * @summary Data for social media networks.
    * @type {Object<{name:string, icon}>}
    */
   static get SOCIAL_DATA() {
@@ -169,7 +169,7 @@ class Util {
   }
 
   /**
-   * Render any data in HTML.
+   * @summary Render any data in HTML.
    * @see Util.VIEW
    * @param   {*} data any data to render
    * @returns {View}
@@ -211,17 +211,17 @@ class Util {
   }
 
   /**
-   * Return a URL-friendly string.
+   * @summary Return a URL-friendly string.
    * @param  {string} str a string to convert
-   * @return {string} a URL-safe variant of the string given
+   * @returns {string} a URL-safe variant of the string given
    */
   static toURL(str) {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
   }
 
   /**
-   * Remove an item from an array.
-   * This method is destructive: it modifies the given argument.
+   * @summary Remove an item from an array.
+   * @description This method is impure: it modifies the given argument.
    * @param  {Array} arr the array to modify
    * @param  {unknown} item  the item to remove from the array
    */
@@ -231,19 +231,19 @@ class Util {
   }
 
   /**
-   * Return a string part of an icon.
-   * @param  {Object} icon          the icon object to parse
-   * @param  {string} icon.content  the keyword of the icon
-   * @param  {string} icon.fallback the unicode codepoint of the icon
-   * @param  {boolean=} fb          true if the fallback is preferred over the content
-   * @return {string}               `icon.fallback` if fallback==true, else `icon.content`
+   * @summary Return a string part of an icon.
+   * @param   {Object} icon          the icon object to parse
+   * @param   {string} icon.content  the keyword of the icon
+   * @param   {string} icon.fallback the unicode codepoint of the icon
+   * @param   {boolean=} fb          true if the fallback is preferred over the content
+   * @returns {string}               `icon.fallback` if fallback==true, else `icon.content`
    */
   static iconToString(icon, fb) {
     return (fb) ? icon.fallback : icon.content
   }
 
   /**
-   * Enum for state regions.
+   * @summary Enum for state regions.
    * @enum {string}
    */
   static get Region() {

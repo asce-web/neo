@@ -16,17 +16,17 @@ class Exhibitor {
   }
 
   /**
-   * Get the name of this exhibitor.
-   * @return {string} the name of this exhibitor
+   * @summary Get the name of this exhibitor.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
 
   /**
-   * Set or get the URL of this exhibitor.
-   * @param  {string=} url the URL of this exhibitor
-   * @return {(Exhibitor|string)} this exhibitor || the URL of this exhibitor
+   * @summary Set or get the URL of this exhibitor.
+   * @param   {string=} url the URL of this exhibitor
+   * @returns {(Exhibitor|string)} this exhibitor || the URL of this exhibitor
    */
   url(url) {
     if (arguments.length) {
@@ -36,9 +36,9 @@ class Exhibitor {
   }
 
   /**
-   * Set or get the image of this exhibitor.
-   * @param  {string=} img the image of this exhibitor
-   * @return {(Exhibitor|string)} this exhibitor || the image of this exhibitor
+   * @summary Set or get the image of this exhibitor.
+   * @param   {string=} img the image of this exhibitor
+   * @returns {(Exhibitor|string)} this exhibitor || the image of this exhibitor
    */
   img(img) {
     if (arguments.length) {
@@ -48,27 +48,27 @@ class Exhibitor {
   }
 
   /**
-   * Set a short, html-friendly description for this exhibitor.
-   * @param {string} html html-friendly content
-   * @return {Exhibitor} this exhibitor
+   * @summary Set a short, html-friendly description for this exhibitor.
+   * @param   {string} html html-friendly content
+   * @returns {Exhibitor} this exhibitor
    */
   setDescription(html) {
     this._description = html
     return this
   }
   /**
-   * Get the description of this exhibitor.
-   * @param  {boolean=} unescaped whether or not the returned string should be escaped
-   * @return {string} the description of this exhibitor
+   * @summary Get the description of this exhibitor.
+   * @param   {boolean=} unescaped whether or not the returned string should be escaped
+   * @returns {string} the description of this exhibitor
    */
   getDescription(unescaped) {
     return ((unescaped) ? '<!-- warning: unescaped code -->' : '') + this._description
   }
 
   /**
-   * Set or get the booth number of this exhibitor.
-   * @param  {number=} num the booth number of this exhibitor
-   * @return {(Exhibitor|number)} this exhibitor || the booth number of this exhibitor
+   * @summary Set or get the booth number of this exhibitor.
+   * @param   {number=} num the booth number of this exhibitor
+   * @returns {(Exhibitor|number)} this exhibitor || the booth number of this exhibitor
    */
   booth(num) {
     if (arguments.length) {
@@ -78,10 +78,10 @@ class Exhibitor {
   }
 
   /**
-   * Set or get whether this exhibitor is also a sponsor.
+   * @summary Set or get whether this exhibitor is also a sponsor.
    * @see Supporter
-   * @param  {boolean=} flag `true` if this exhibitor is also a sponsor
-   * @return {(Exhibitor|boolean)} this exhibitor || `true` if this exhibitor is also a sponsor
+   * @param   {boolean=} flag `true` if this exhibitor is also a sponsor
+   * @returns {(Exhibitor|boolean)} this exhibitor || `true` if this exhibitor is also a sponsor
    */
   isSponsor(flag) {
     if (arguments.length) {

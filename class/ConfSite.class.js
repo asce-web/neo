@@ -8,12 +8,11 @@ const ConfPage = require('./ConfPage.class.js')
  * A conference site.
  * A website hosting a series of conferences,
  * with a name, url, slogan, logo, and color scheme.
+ * @extends Page
  */
 class ConfSite extends Page {
   /**
    * Construct a new ConfSite object.
-   * @constructor
-   * @extends Page
    * @param {string} name name of this site
    * @param {string} url url of the landing page for this site
    * @param {string} slogan the tagline, or slogan, of this site
@@ -31,29 +30,29 @@ class ConfSite extends Page {
   }
 
   /**
-   * Overwrite superclass description() method.
-   * This method only gets the description, it does not set it.
-   * TODO: update this to an ES6 getter once {@link Page#description} is updated.
+   * @summary Overwrite superclass description() method.
+   * @description This method only gets the description, it does not set it.
+   * @todo TODO: update this to an ES6 getter once {@link Page#description} is updated.
    * @override
-   * @param  {*} arg any argument
-   * @return {string} the description of this site
+   * @param   {*} arg any argument
+   * @returns {string} the description of this site
    */
   description(arg) {
     return super.description()
   }
   /**
-   * Get the slogan of this site.
-   * The slogan is very brief, and is fixed for the entire series of conferences.
-   * @return {string} the slogan of this site
+   * @summary Get the slogan of this site.
+   * @description The slogan is very brief, and is fixed for the entire series of conferences.
+   * @returns {string} the slogan of this site
    */
   get slogan() {
     return this.description() || ''
   }
 
   /**
-   * Set or get the logo of this site.
-   * @param  {string=} logo url of the logo file
-   * @return {(ConfSite|string)} this site || url of the logo
+   * @summary Set or get the logo of this site.
+   * @param   {string=} logo url of the logo file
+   * @returns {(ConfSite|string)} this site || url of the logo
    */
   logo(logo) {
     if (arguments.length) {
@@ -63,10 +62,10 @@ class ConfSite extends Page {
   }
 
   /**
-   * Set or get the colors for this site.
-   * @param {Color=} $primary   a Color object for the primary color
-   * @param {Color=} $secondary a Color object for the secondary color
-   * @return {(ConfSite|Object<string>)} this || a CSS object containg custom properties with color string values
+   * @summary Set or get the colors for this site.
+   * @param   {Color=} $primary   a Color object for the primary color
+   * @param   {Color=} $secondary a Color object for the secondary color
+   * @returns {(ConfSite|Object<string>)} this || a CSS object containg custom properties with color string values
    */
   colors($primary, $secondary) {
     if (arguments.length) {
@@ -76,9 +75,9 @@ class ConfSite extends Page {
   }
 
   /**
-   * Set or get the images of this site.
-   * @param  {Object<string>} $imgs a dictionary of image urls
-   * @return {(ConfSite|Object<string>)} this || an object containing image urls
+   * @summary Set or get the images of this site.
+   * @param   {Object<string>} $imgs a dictionary of image urls
+   * @returns {(ConfSite|Object<string>)} this || an object containing image urls
    */
   images($imgs) {
     if (arguments.length) {
@@ -90,27 +89,27 @@ class ConfSite extends Page {
   }
 
   /**
-   * Add a conference to this site.
-   * @param {string} conf_label key for accessing the conference, usually a year
-   * @param {Conference} $conference the conference to add
-   * @return {ConfSite} this site
+   * @summary Add a conference to this site.
+   * @param   {string} conf_label key for accessing the conference, usually a year
+   * @param   {Conference} $conference the conference to add
+   * @returns {ConfSite} this site
    */
   addConference(conf_label, $conference) {
     this._conferences[conf_label] = $conference
     return this
   }
   /**
-   * Retrieve a conference of this site.
-   * @param  {string} conf_label key for accessing the conference, usually a year
-   * @return {Conference} the specified conference
+   * @summary Retrieve a conference of this site.
+   * @param   {string} conf_label key for accessing the conference, usually a year
+   * @returns {Conference} the specified conference
    */
   getConference(conf_label) {
     return this._conferences[conf_label]
   }
   /**
-   * Return an object representing all conferences of this site.
+   * @summary Return an object representing all conferences of this site.
    * FIXME this should return a deep clone, not a shallow clone
-   * @return {Object} shallow clone of this site’s conferences object
+   * @returns {Object} shallow clone of this site’s conferences object
    */
   getConferencesAll() {
     //- NOTE returns shallow clone (like arr.slice())
@@ -122,8 +121,8 @@ class ConfSite extends Page {
    * If setting, provide the argument key for accessing the added conference.
    * If getting, provide no argument.
    * The current conference is the conference that is being promoted this cycle.
-   * @param  {string=} conf_label key for accessing the conference
-   * @return {(ConfSite|Conference)} this site || the current conference
+   * @param   {string=} conf_label key for accessing the conference
+   * @returns {(ConfSite|Conference)} this site || the current conference
    */
   currentConference(conf_label) {
     if (arguments.length) {
@@ -134,12 +133,12 @@ class ConfSite extends Page {
     }
   }
   /**
-   * Set or get the previous conference of this site.
-   * If setting, provide the argument key for accessing the added conference.
+   * @summary Set or get the previous conference of this site.
+   * @description If setting, provide the argument key for accessing the added conference.
    * If getting, provide no argument.
    * The previous conference is the conference that was promoted last cycle.
-   * @param  {string=} conf_label key for accessing the conference
-   * @return {(ConfSite|Conference)} this site || the previous conference
+   * @param   {string=} conf_label key for accessing the conference
+   * @returns {(ConfSite|Conference)} this site || the previous conference
    */
   prevConference(conf_label) {
     if (arguments.length) {
@@ -148,12 +147,12 @@ class ConfSite extends Page {
     } else return this.getConference(this._conf_prev_key)
   }
   /**
-   * Set or get the next conference of this site.
-   * If setting, provide the argument key for accessing the added conference.
+   * @summary Set or get the next conference of this site.
+   * @description If setting, provide the argument key for accessing the added conference.
    * If getting, provide no argument.
    * The next conference is the conference that will be promoted next cycle.
-   * @param  {string=} conf_label key for accessing the conference
-   * @return {(ConfSite|Conference)} this site || the next conference
+   * @param   {string=} conf_label key for accessing the conference
+   * @returns {(ConfSite|Conference)} this site || the next conference
    */
   nextConference(conf_label) {
     if (arguments.length) {
@@ -163,9 +162,9 @@ class ConfSite extends Page {
   }
 
   /**
-   * Initialize this site: add the proper pages.
-   * This method should only be called once; it resets pages every time called.
-   * @return {ConfSite} this site
+   * @summary Initialize this site: add the proper pages.
+   * @description This method should only be called once; it resets pages every time called.
+   * @returns {ConfSite} this site
    */
   init() {
     var self = this
@@ -256,10 +255,10 @@ class ConfSite extends Page {
 
 
   /**
-   * Generate a color palette and return a style object with custom properties.
-   * @param  {Color} $primary   the primary color for the site
-   * @param  {Color} $secondary the secondary color for the site
-   * @return {Object<string>} a CSS object containg custom properties with color string values
+   * @summary Generate a color palette and return a style object with custom properties.
+   * @param   {Color} $primary   the primary color for the site
+   * @param   {Color} $secondary the secondary color for the site
+   * @returns {Object<string>} a CSS object containg custom properties with color string values
    */
   static colorStyles($primary, $secondary) {
     let   primary_s2  =   $primary.darken(2/3, true)
