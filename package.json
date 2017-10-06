@@ -8,7 +8,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "kss": "rm -r styleguide  ;  kss --config kss-config.json",
+    "kss": "rm -r styleguide  ;  kss --config config-kss.json",
     "browserify:principles": "browserify docs/js/principles.js > docs/js/principles.b.js",
     "browserify:sample": "browserify proto/asce-event.org/js/home.js > proto/asce-event.org/js/home.b.js",
     "browserify:all": "npm run browserify:principles  &&  npm run browserify:sample",
@@ -49,12 +49,13 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-clean-css": "^3.9.0",
+    "gulp-jsdoc3": "^1.0.1",
     "gulp-less": "^3.3.2",
     "gulp-pug": "^3.3.0",
     "gulp-sourcemaps": "^2.6.0",
     "kss": "^3.0.0-beta.18",
     "sitepage": "^1.0.0",
-    "xmeter": "git://github.com/chharvey/xmeter.git#v6.0.0-beta"
+    "xmeter": "^6.0.0"
   },
   "dependencies": {}
 }

@@ -1,4 +1,6 @@
+const kss          = require('kss')
 const gulp         = require('gulp')
+const jsdoc        = require('gulp-jsdoc3')
 const pug          = require('gulp-pug')
 const less         = require('gulp-less')
 const autoprefixer = require('gulp-autoprefixer')
@@ -27,6 +29,17 @@ gulp.task('pug:docs', function () {
       },
     }))
     .pipe(gulp.dest('./docs/'))
+})
+
+// HOW-TO: https://github.com/mlucool/gulp-jsdoc3#usage
+gulp.task('docs:api', function () {
+  return gulp.src([], {read:false})
+    .pipe(jsdoc(require('./config-jsdoc.json')))
+})
+
+// HOW-TO: https://github.com/kss-node/kss-node/issues/161#issuecomment-222292620
+gulp.task('docs:kss', function () {
+  return kss(require('./kss-config.json'))
 })
 
 gulp.task('pug:default', function () {
