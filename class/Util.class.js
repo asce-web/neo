@@ -1,4 +1,5 @@
 const Element = require('extrajs-dom').Element
+const View    = require('extrajs-view')
 
 /**
  * A set of static values and functions used site-wide.

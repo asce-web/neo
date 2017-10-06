@@ -78,7 +78,7 @@ module.exports = class Docs {
    * @type {Object<string>}
    */
   static get COLORS() {
-    return require('../../_models/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
+    return require('../../class/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
   }
 
   /**

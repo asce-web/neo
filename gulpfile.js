@@ -1,9 +1,9 @@
-const gulp = require('gulp')
-const pug = require('gulp-pug')
-const less = require('gulp-less')
+const gulp         = require('gulp')
+const pug          = require('gulp-pug')
+const less         = require('gulp-less')
 const autoprefixer = require('gulp-autoprefixer')
-const clean_css = require('gulp-clean-css')
-const sourcemaps = require('gulp-sourcemaps')
+const clean_css    = require('gulp-clean-css')
+const sourcemaps   = require('gulp-sourcemaps')
 
 gulp.task('pug:index', function () {
   return gulp.src(__dirname + '/index.pug')
@@ -19,10 +19,10 @@ gulp.task('pug:docs', function () {
       basedir: './',
       locals: {
         Color   : require('extrajs-color'),
-        ConfSite: require('./_models/ConfSite.class.js'),
-        ConfPage: require('./_models/ConfPage.class.js'),
-        Person  : require('./_models/Person.class.js'),
-        Place   : require('./_models/Place.class.js'),
+        ConfSite: require('./class/ConfSite.class.js'),
+        ConfPage: require('./class/ConfPage.class.js'),
+        Person  : require('./class/Person.class.js'),
+        Place   : require('./class/Place.class.js'),
         Docs    : require('./docs/_models/Docs.class.js'),
       },
     }))
@@ -31,15 +31,15 @@ gulp.task('pug:docs', function () {
 
 gulp.task('pug:default', function () {
   const Color      = require('extrajs-color')
-  const ConfSite   = require('./_models/ConfSite.class.js')
-  const ConfPage   = require('./_models/ConfPage.class.js')
-  const Conference = require('./_models/Conference.class.js')
+  const ConfSite   = require('./class/ConfSite.class.js')
+  const ConfPage   = require('./class/ConfPage.class.js')
+  const Conference = require('./class/Conference.class.js')
   return gulp.src(__dirname + '/proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
         Element   : require('extrajs-dom').Element,
-        Util      : require('./_models/Util.class.js'),
+        Util      : require('./class/Util.class.js'),
         site      : new ConfSite('Civil Engineering Congress', '/sites/default/', 'ConferenceSuite')
           .colors(Color.fromString('#660000'), Color.fromString('#ff6600')) // default Hokie colors
           .init()
@@ -66,7 +66,7 @@ gulp.task('pug:sample', function () {
       locals: {
         xjs    : require('extrajs'),
         Element   : require('extrajs-dom').Element,
-        Util   : require('./_models/Util.class.js'),
+        Util   : require('./class/Util.class.js'),
         site   : require('./proto/asce-event.org/data.js'),
       },
     }))
