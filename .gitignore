@@ -46,8 +46,9 @@ vendor
 
 # Imported source files
 
-# Auto-generated style guides
-styleguide
+# Auto-generated documentation & style guides
+docs/styleguide
+docs/api
 
 # Site files and assets
 proto/*/files

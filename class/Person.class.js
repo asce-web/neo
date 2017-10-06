@@ -1,13 +1,13 @@
-const Element = require('extrajs-element')
+const Element = require('extrajs-dom').Element
+const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
 /**
  * A person.
  * Can be used for any role on the site,
  * e.g., speaker, chair, or ASCE staff member.
- * @module
  */
-module.exports = class Person {
+class Person {
   /**
    * Construct a new Person object.
    * @param {string} id a unique identifier of the person
@@ -38,26 +38,25 @@ module.exports = class Person {
   }
 
   /**
-   * Get the id of this person.
-   * @return {string} the unique id of this person
+   * @summary Get the id of this person.
+   * @type {string}
    */
   get id() {
     return this._ID
   }
 
   /**
-   * Get the name object of this person.
-   * @return {Object} a shallow object representing this person’s name
+   * @summary Get the name object of this person.
+   * @type {Object}
    */
   get name() {
-    //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._NAME)
   }
 
   /**
-   * Set or get this person’s job title.
-   * @param  {string=} text the job title
-   * @return {(Person|string)} this person || the job title
+   * @summary Set or get this person’s job title.
+   * @param   {string=} text the job title
+   * @returns {(Person|string)} this person || the job title
    */
   jobTitle(text) {
     if (arguments.length) {
@@ -67,9 +66,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s affiliation.
-   * @param  {string=} text the affiliation
-   * @return {(Person|string)} this person || the affiliation
+   * @summary Set or get this person’s affiliation.
+   * @param   {string=} text the affiliation
+   * @returns {(Person|string)} this person || the affiliation
    */
   affiliation(text) {
     if (arguments.length) {
@@ -79,9 +78,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s headshot image.
-   * @param  {string=} text the url pointing to the headshot image
-   * @return {(Person|string)} this person || the headshot image url
+   * @summary Set or get this person’s headshot image.
+   * @param   {string=} text the url pointing to the headshot image
+   * @returns {(Person|string)} this person || the headshot image url
    */
   img(url) {
     if (arguments.length) {
@@ -91,9 +90,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s email address.
-   * @param  {string=} text the email address
-   * @return {(Person|string)} this person || the email address
+   * @summary Set or get this person’s email address.
+   * @param   {string=} text the email address
+   * @returns {(Person|string)} this person || the email address
    */
   email(text) {
     if (arguments.length) {
@@ -103,9 +102,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s telephone number.
-   * @param  {string=} text the telephone number
-   * @return {(Person|string)} this person || the telephone number
+   * @summary Set or get this person’s telephone number.
+   * @param   {string=} text the telephone number
+   * @returns {(Person|string)} this person || the telephone number
    */
   phone(text) {
     if (arguments.length) {
@@ -115,9 +114,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s homepage.
-   * @param  {string=} text the homepage
-   * @return {(Person|string)} this person || the homepage
+   * @summary Set or get this person’s homepage.
+   * @param   {string=} text the homepage
+   * @returns {(Person|string)} this person || the homepage
    */
   url(text) {
     if (arguments.length) {
@@ -127,45 +126,45 @@ module.exports = class Person {
   }
 
   /**
-   * Add a social network profile to this person.
-   * @param {string} network_name the name of the social network
-   * @param {string} url the URL of this person’s profile on the network
-   * @param {string=} text optional advisory text
-   * @return {Person} this person
+   * @summary Add a social network profile to this person.
+   * @param   {string} network_name the name of the social network
+   * @param   {string} url the URL of this person’s profile on the network
+   * @param   {string=} text optional advisory text
+   * @returns {Person} this person
    */
   addSocial(network_name, url, text) {
     this._social[network_name] = { url: url, text: text }
     return this
   }
   /**
-   * Retrieve a social network profile of this person.
-   * @param  {string} network_name the name of the social network
-   * @return {Object} an object representing the social network profile
+   * @summary Retrieve a social network profile of this person.
+   * @param   {string} network_name the name of the social network
+   * @returns {Object} an object representing the social network profile
    */
   getSocial(network_name) {
     return this._social[network_name]
   }
   /**
-   * Return an object representing all social network profiles of this person.
-   * @return {Object} shallow clone of this person’s social object
+   * @summary Return an object representing all social network profiles of this person.
+   * @returns {Object} shallow clone of this person’s social object
    */
   getSocialAll() {
     //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._social) // shallow clone this.social into {}
+    return Object.assign({}, this._social)
   }
 
   /**
-   * Mark this person as starred.
-   * @param  {boolean=true} bool if true, mark as starred
-   * @return {Person} this person
+   * @summary Mark this person as starred.
+   * @param   {boolean=} bool if true, mark as starred
+   * @returns {Person} this person
    */
-  star(bool) {
-    this._is_starred = (arguments.length) ? bool : true
+  star(bool = true) {
+    this._is_starred = bool
     return this
   }
   /**
-   * Get the starred status of this person.
-   * @return {boolean} whether this person is starred
+   * @summary Get the starred status of this person.
+   * @returns {boolean} whether this person is starred
    */
   isStarred() {
     return this._is_starred
@@ -173,56 +172,63 @@ module.exports = class Person {
 
 
   /**
-   * Render this person in HTML.
-   * Displays:
-   * - `Person#view()`             - default display - “First Last”
-   * - `Person#view.fullName()`    - “First Middle Last”
-   * - `Person#view.entireName()`  - “Px. First Middle Last, Sx.”
-   * - `Person#view.affiliation()` - “First Middle Last, Affiliation”
-   * - `Person#view.contact()`     - “First Last, Director of ... | 555-555-5555”
-   * - `Person#view.speaker()`     - Speaker Component
-   * @returns {function(?):string} a function returning HTML output
+   * @summary Render this person in HTML.
+   * @see Person.VIEW
+   * @type {View}
    */
   get view() {
-    let self = this
+    /**
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `Person#view()`             - default display - “First Last”
+     * - `Person#view.fullName()`    - “First Middle Last”
+     * - `Person#view.entireName()`  - “Px. First Middle Last, Sx.”
+     * - `Person#view.affiliation()` - “First Middle Last, Affiliation”
+     * - `Person#view.contact()`     - “First Last, Director of ... | 555-555-5555”
+     * - `Person#view.speaker()`     - Speaker Component
+     * @namespace Person.VIEW
+     * @type {View}
+     */
     /**
      * Default display. Takes no arguments.
      * Return this person’s name in "First Last" format.
-     * Call `Person#view()` to render this display.
-     * @return {string} HTML output
+     * @summary Call `Person#view()` to render this display.
+     * @function Person.VIEW.default
+     * @returns {string} HTML output
      */
-    function returned() {
-      return (function () {
+    return new View(function () {
+      return new Element('span').attr('itemprop','name')
+        .addContent([
+          new Element('span').attr('itemprop','givenName').addContent(this.name.given_name),
+          ` `,
+          new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name),
+        ])
+        .html()
+    }, this)
+      /**
+       * Return this person’s name in "First Middle Last" format.
+       * @summary Call `Person#view.fullName()` to render this display.
+       * @function Person.VIEW.fullName
+       * @returns {string} HTML output
+       */
+      .addDisplay(function fullName() {
         return new Element('span').attr('itemprop','name')
-          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
-          .addContent(` `)
-          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
+          .addContent([
+            new Element('span').attr('itemprop','givenName').addContent(this.name.given_name),
+            ` `,
+            new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name),
+            ` `,
+            new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name),
+          ])
           .html()
-      }).call(self)
-    }
-    /**
-     * Return this person’s name in "First Middle Last" format.
-     * Call `Person#view.fullName()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.fullName = function () {
-      return (function () {
-        return new Element('span').attr('itemprop','name')
-          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
-          .addContent(` `)
-          .addElements([new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name)])
-          .addContent(` `)
-          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
-          .html()
-      }).call(self)
-    }
-    /**
-     * Return this person’s name in "Px. First Middle Last, Sx." format.
-     * Call `Person#view.entireName()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.entireName = function () {
-      return (function () {
+      })
+      /**
+       * Return this person’s name in "Px. First Middle Last, Sx." format.
+       * @summary Call `Person#view.entireName()` to render this display.
+       * @function Person.VIEW.entireName
+       * @returns {string} HTML output
+       */
+      .addDisplay(function entireName() {
         let returned = this.view.fullName()
         if (this.name.honorific_prefix) {
           returned = `${
@@ -235,33 +241,26 @@ module.exports = class Person {
           }`
         }
         return returned
-      }).call(self)
-    }
-    /**
-     * Return this person’s name in "First Middle Last, Affiliation" format.
-     * Call `Person#view.affiliation()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.affiliation = function () {
-      return (function () {
-      return `${this.view.entireName()}, ${
-        new Element('span').class('-fs-t').attr({
-          itemprop : 'affiliation',
-          itemscope: '',
-          itemtype : 'http://schema.org/Organization',
-        }).addElements([
-          new Element('span').attr('itemprop','name').addContent(this.affiliation())
-        ]).html()
-      }`
-      }).call(self)
-    }
-    /**
-     * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
-     * Call `Person#view.contact()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.contact = function () {
-      return (function () {
+      })
+      /**
+       * Return this person’s name in "First Middle Last, Affiliation" format.
+       * @summary Call `Person#view.affiliation()` to render this display.
+       * @function Person.VIEW.affiliation
+       * @returns {string} HTML output
+       */
+      .addDisplay(function affiliation() {
+        return `${this.view.entireName()}, ${new Element('span').class('-fs-t')
+          .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
+          .addContent(new Element('span').attr('itemprop','name').addContent(this.affiliation()))
+          .html()}`
+      })
+      /**
+       * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
+       * @summary Call `Person#view.contact()` to render this display.
+       * @function Person.VIEW.contact
+       * @returns {string} HTML output
+       */
+      .addDisplay(function contact() {
         let returned = new Element('a')
           .attr('href',`mailto:${this.email()}`)
           .addContent(this.view())
@@ -281,26 +280,25 @@ module.exports = class Person {
           }`
         }
         return returned
-      }).call(self)
-    }
-    /**
-     * Return an <article.c-Speaker> component marking up this person’s info.
-     * Call `Person#view.speaker()` to render this display.
-     * @return {string} HTML output
-     */
-    returned.speaker = function () {
-      return (function () {
-        /** filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
+      })
+      /**
+       * Return an `<article.c-Speaker>` component marking up this person’s info.
+       * @summary Call `Person#view.speaker()` to render this display.
+       * @function Person.VIEW.speaker
+       * @returns {string} HTML output
+       */
+      .addDisplay(function speaker() {
+        /* filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
         return new Element('article').class('c-Speaker').attr({
           'data-instanceof': 'Person',
           itemprop : 'performer',
           itemscope: '',
           itemtype : 'http://schema.org/Person',
-        }).addElements([
+        }).addContent([
           new Element('img').class('c-Speaker__Img h-Block')
             .attr('src', this.img())
             .attr('itemprop','image'),
-          new Element('header').class('c-Speaker__Head').addElements([
+          new Element('header').class('c-Speaker__Head').addContent([
             new Element('h1').class('c-Speaker__Name')
               .id(this.id)
               .addContent(this.view.entireName()),
@@ -311,9 +309,7 @@ module.exports = class Person {
               itemprop : 'affiliation',
               itemscope: '',
               itemtype : 'http://schema.org/Organization',
-            }).addElements([
-              new Element('span').attr('itemprop','name').addContent(this.affiliation())
-            ]),
+            }).addContent(new Element('span').attr('itemprop','name').addContent(this.affiliation())),
           ]),
           // new Element('div').class('c-Speaker__Body').attr('itemprop','description'),
           new Element('footer').class('c-Speaker__Foot').addContent(pug`
@@ -337,8 +333,8 @@ module.exports = class Person {
           `),
         ])
         .html()
-      }).call(self)
-    }
-    return returned
+      })
   }
 }
+
+module.exports = Person

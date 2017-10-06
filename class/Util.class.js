@@ -1,17 +1,19 @@
-const Element = require('extrajs-element')
+const Element = require('extrajs-dom').Element
+const View    = require('extrajs-view')
 
 /**
  * A set of static values and functions used site-wide.
- * @module
+ * @namespace
  */
-module.exports = class Util {
+class Util {
   /** @private */ constructor() {}
 
   /**
    * NOTE: TYPE DEFINITION
+   * ```json
    * {
    *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "StateObj",
+   *   "title": "Util.StateObj",
    *   "type": "object",
    *   "additionalProperties": false,
    *   "required": ["index", "name", "pop", "area", "region"],
@@ -23,7 +25,8 @@ module.exports = class Util {
    *     "region": { "type": "Util.Region", "description": "region of US" }
    *   }
    * }
-   * @typedef {Object} StateObj
+   * ```
+   * @typedef  {Object} Util.StateObj
    * @property {string} index  - the postal code for the state
    * @property {string} name   - the name of the state
    * @property {number} pop    - population in people
@@ -32,7 +35,7 @@ module.exports = class Util {
    */
 
   /**
-   * List of US State objects.
+   * @summary List of US State objects.
    * @type {Array<StateObj>}
    */
   static get STATE_DATA() {
@@ -92,9 +95,10 @@ module.exports = class Util {
 
   /**
    * NOTE: TYPE DEFINITION
+   * ```json
    * {
    *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "Icon",
+   *   "title": "Util.Icon",
    *   "type": "object",
    *   "additionalProperties": false,
    *   "required": ["content", "fallback", "html"],
@@ -104,15 +108,16 @@ module.exports = class Util {
    *     "html"    : { "type": "string", "description": "html entity" }
    *   }
    * }
-   * @typedef {Object} Icon
+   * ```
+   * @typedef  {Object} Util.Icon
    * @property {string} content  - the keyword used for the ligature
    * @property {string} fallback - unicode code point
    * @property {string} html     - html entity
    */
 
   /**
-   * List of icon objects used in Conf styles.
-   * @type {Array<Icon>}
+   * @summary List of icon objects used in Conf styles.
+   * @type {Array<Util.Icon>}
    */
   static get ICON_DATA() {
     return [
@@ -138,8 +143,8 @@ module.exports = class Util {
   }
 
   /**
-   * Data for social media networks.
-   * @type {Object<{name:string, icon}>}
+   * @summary Data for social media networks.
+   * @type {Object<{name:string, icon:Util.Icon}>}
    */
   static get SOCIAL_DATA() {
     return {
@@ -168,33 +173,36 @@ module.exports = class Util {
   }
 
   /**
-   * Render any data in HTML.
-   * Miscellaneous views.
-   * Displays:
-   * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
-   * @param {*} data any data to render
-   * @returns {function(?):string} a function returning HTML output
+   * @summary Render any data in HTML.
+   * @see Util.VIEW
+   * @param   {*} data any data to render
+   * @returns {View}
    */
   static view(data) {
     /**
-     * @throws {Error} if no display has been chosen
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
+     * @namespace Util.VIEW
+     * @type {View}
      */
-    function returned(data) { throw new Error('Please select a display: `Util.view(data)[display](...args)`.') }
-    /**
-     * Return a <ul> of button links for a highlighted content block.
-     * ```pug
-     * ul.o-List.o-Flex.o-ListAction
-     *   each item in data
-     *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
-     *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
-     *         = item.contents
-     * ```
-     * Call `Util.view(data).highlightButtons()` to render this display.
-     * @param  {Array<Element>} data the <a> elements to render
-     * @param  {string=} buttonclasses the classes to add to the buttons
-     * @return {string} HTML output
-     */
-    returned.highlightButtons = function (buttonclasses = '') {
+    return new View(null, data)
+      /**
+       * Return a `<ul>` of button links for a highlighted content block.
+       * ```pug
+       * ul.o-List.o-Flex.o-ListAction
+       *   each item in data
+       *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
+       *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
+       *         = item.contents
+       * ```
+       * @summary Call `Util.view(data).highlightButtons()` to render this display.
+       * @function Util.VIEW.highlightButtons
+       * @param   {Array<Element>} data the `<a>` elements to render
+       * @param   {string=} buttonclasses the classes to add to the buttons
+       * @returns {string} HTML output
+       */
+      .addDisplay(function highlightButtons(buttonclasses = '') {
         return Element.data(data, {
           ordered: false,
           attributes: {
@@ -203,22 +211,21 @@ module.exports = class Util {
           },
           options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
         })
-    }
-    return returned
+      })
   }
 
   /**
-   * Return a URL-friendly string.
+   * @summary Return a URL-friendly string.
    * @param  {string} str a string to convert
-   * @return {string} a URL-safe variant of the string given
+   * @returns {string} a URL-safe variant of the string given
    */
   static toURL(str) {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
   }
 
   /**
-   * Remove an item from an array.
-   * This method is destructive: it modifies the given argument.
+   * @summary Remove an item from an array.
+   * @description This method is impure: it modifies the given argument.
    * @param  {Array} arr the array to modify
    * @param  {unknown} item  the item to remove from the array
    */
@@ -228,28 +235,28 @@ module.exports = class Util {
   }
 
   /**
-   * Return a string part of an icon.
-   * @param  {Object} icon          the icon object to parse
-   * @param  {string} icon.content  the keyword of the icon
-   * @param  {string} icon.fallback the unicode codepoint of the icon
-   * @param  {boolean=} fb          true if the fallback is preferred over the content
-   * @return {string}               `icon.fallback` if fallback==true, else `icon.content`
+   * @summary Return a string part of an icon.
+   * @param   {Util.Icon} icon the icon object to parse
+   * @param   {boolean=} fb true if the fallback is preferred over the content
+   * @returns {string} if `fb===true`, `icon.fallback`; else `icon.content`
    */
-  static iconToString(icon, fb) {
+  static iconToString(icon, fb = false) {
     return (fb) ? icon.fallback : icon.content
   }
-
-  /**
-   * Enum for state regions.
-   * @enum {string}
-   */
-  static get Region() {
-    return {
-      SOUTH    : 's',
-      WEST     : 'w',
-      SOUTHWEST: 'sw',
-      NORTHEAST: 'ne',
-      MIDWEST  : 'mw',
-    }
-  }
 }
+
+
+
+/**
+ * @summary Enum for state regions.
+ * @enum {string}
+ */
+Util.Region = {
+  SOUTH    : 's',
+  WEST     : 'w',
+  SOUTHWEST: 'sw',
+  NORTHEAST: 'ne',
+  MIDWEST  : 'mw',
+}
+
+module.exports = Util
