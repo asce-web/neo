@@ -1,8 +1,7 @@
 /**
  * An organization exhibiting at a conference or series of conferences.
- * @module
  */
-module.exports = class Exhibitor {
+class Exhibitor {
   /**
    * Construct a new Exhibitor object, given an (immutable) name.
    * @param {string} name the name of the exhibiting organization
@@ -91,3 +90,5 @@ module.exports = class Exhibitor {
     } else return this._is_sponsor
   }
 }
+
+module.exports = Exhibitor

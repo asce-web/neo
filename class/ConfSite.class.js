@@ -8,9 +8,8 @@ const ConfPage = require('./ConfPage.class.js')
  * A conference site.
  * A website hosting a series of conferences,
  * with a name, url, slogan, logo, and color scheme.
- * @module
  */
-module.exports = class ConfSite extends Page {
+class ConfSite extends Page {
   /**
    * Construct a new ConfSite object.
    * @constructor
@@ -34,7 +33,7 @@ module.exports = class ConfSite extends Page {
   /**
    * Overwrite superclass description() method.
    * This method only gets the description, it does not set it.
-   * TODO: update this to an ES6 getter once {@link Page#description()} is updated.
+   * TODO: update this to an ES6 getter once {@link Page#description} is updated.
    * @override
    * @param  {*} arg any argument
    * @return {string} the description of this site
@@ -314,3 +313,5 @@ module.exports = class ConfSite extends Page {
     }
   }
 }
+
+module.exports = ConfSite

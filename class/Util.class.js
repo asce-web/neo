@@ -3,9 +3,9 @@ const View    = require('extrajs-view')
 
 /**
  * A set of static values and functions used site-wide.
- * @module
+ * @namespace
  */
-module.exports = class Util {
+class Util {
   /** @private */ constructor() {}
 
   /**
@@ -256,3 +256,5 @@ module.exports = class Util {
     }
   }
 }
+
+module.exports = Util

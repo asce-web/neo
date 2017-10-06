@@ -3,9 +3,8 @@ const Util = require('./Util.class.js')
 
 /**
  * Any page or subpage within a {@link ConfSite}.
- * @module
  */
-module.exports = class ConfPage extends Page {
+class ConfPage extends Page {
   /**
    * Construct a ConfPage object, given a name and url.
    * @param {string} name name of this page
@@ -51,3 +50,5 @@ module.exports = class ConfPage extends Page {
     return this._is_hidden
   }
 }
+
+module.exports = ConfPage

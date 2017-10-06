@@ -3,9 +3,8 @@ const View    = require('extrajs-view')
 
 /**
  * An organization supporting a conference or series of conferences.
- * @module
  */
-module.exports = class Supporter {
+class Supporter {
   /**
    * Construct a supporter object, given an (immutable) name.
    * @param {string} name the name of the supporting organization
@@ -96,3 +95,5 @@ module.exports = class Supporter {
       })
   }
 }
+
+module.exports = Supporter

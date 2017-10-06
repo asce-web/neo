@@ -4,9 +4,8 @@ const View    = require('extrajs-view')
 /**
  * A place.
  * Mostly used for hotel & venue locations.
- * @module
  */
-module.exports = class Place {
+class Place {
   /**
    * Construct a new Place object.
    * *NOTE: zip, state, and country codes should match the ISO-3166 standard format.
@@ -144,3 +143,5 @@ module.exports = class Place {
       })
   }
 }
+
+module.exports = Place

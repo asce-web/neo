@@ -5,9 +5,8 @@ const View    = require('extrajs-view')
 /**
  * A range of dates.
  * Has start and end dates, name, and optional url.
- * @module
  */
-module.exports = class DateRange {
+class DateRange {
   /**
    * Construct a new DateRange object.
    * @param {Object=} $actioninfo an object with the following immutable properties:
@@ -192,3 +191,5 @@ module.exports = class DateRange {
       })
   }
 }
+
+module.exports = DateRange

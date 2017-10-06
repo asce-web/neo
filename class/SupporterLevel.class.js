@@ -3,9 +3,8 @@ const View    = require('extrajs-view')
 
 /**
  * A group of supporters with a similar level of support or donation.
- * @module
  */
-module.exports = class SupporterLevel {
+class SupporterLevel {
   /**
    * Construct a new SupporterLevel object, given an (immutable) name.
    * @param {string} name the name of the level (e.g. 'Gold')
@@ -93,3 +92,5 @@ module.exports = class SupporterLevel {
     }
   }
 }
+
+module.exports = SupporterLevel

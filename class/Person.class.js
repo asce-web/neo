@@ -6,9 +6,8 @@ const Util    = require('./Util.class.js')
  * A person.
  * Can be used for any role on the site,
  * e.g., speaker, chair, or ASCE staff member.
- * @module
  */
-module.exports = class Person {
+class Person {
   /**
    * Construct a new Person object.
    * @param {string} id a unique identifier of the person
@@ -199,12 +198,11 @@ module.exports = class Person {
      * @returns {string} HTML output
      */
     return new View(function () {
-      // REVIEW INDENTATION
-        return new Element('span').attr('itemprop','name')
-          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
-          .addContent(` `)
-          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
-          .html()
+      return new Element('span').attr('itemprop','name')
+        .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
+        .addContent(` `)
+        .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
+        .html()
     }, this)
       /**
        * Return this person’s name in "First Middle Last" format.
@@ -248,16 +246,15 @@ module.exports = class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
-        // REVIEW INDENTATION
-      return `${this.view.entireName()}, ${
-        new Element('span').class('-fs-t').attr({
-          itemprop : 'affiliation',
-          itemscope: '',
-          itemtype : 'http://schema.org/Organization',
-        }).addElements([
-          new Element('span').attr('itemprop','name').addContent(this.affiliation())
-        ]).html()
-      }`
+        return `${this.view.entireName()}, ${
+          new Element('span').class('-fs-t').attr({
+            itemprop : 'affiliation',
+            itemscope: '',
+            itemtype : 'http://schema.org/Organization',
+          }).addElements([
+            new Element('span').attr('itemprop','name').addContent(this.affiliation())
+          ]).html()
+        }`
       })
       /**
        * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
@@ -343,3 +340,5 @@ module.exports = class Person {
       })
   }
 }
+
+module.exports = Person

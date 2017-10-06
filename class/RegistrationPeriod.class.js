@@ -4,10 +4,8 @@ const Util    = require('./Util.class.js')
 
 /**
  * An interval of dates in which registration prices are set.
- * REVIEW may not need this class
- * @module
  */
-module.exports = class RegistrationPeriod {
+class RegistrationPeriod {
   /**
    * Construct a new RegistrationPeriod object.
    * The name, start date, and end date
@@ -116,3 +114,5 @@ module.exports = class RegistrationPeriod {
       })
   }
 }
+
+module.exports = RegistrationPeriod

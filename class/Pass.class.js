@@ -3,7 +3,6 @@ const View    = require('extrajs-view')
 
 /**
  * A set of prices for registration.
- * @module
  */
 class Pass {
   /**
@@ -166,7 +165,6 @@ class Pass {
   }
 
   /**
-   * REVIEW may not need this class
    * An Attendee Type ("Member", "Non-Member", etc) of a pass.
    * @inner
    */
@@ -180,32 +178,32 @@ class Pass {
  * An Attendee Type ("Member", "Non-Member", etc) of a pass.
  */
 class AttendeeType {
-      /**
-       * Construct a new AttendeeType object.
-       * Parameters include a name and
-       * a boolean specifying whether the object is featured.
-       * Both name and “featured” are immutable.
-       * @param {string} name the name of the attendee type
-       * @param {boolean} is_featured whether this attendee type is marked as “featured”
-       */
-      constructor(name, is_featured) {
-        /** @private @final */ this._NAME        = name
-        /** @private @final */ this._IS_FEATURED = is_featured
-      }
-      /**
-       * Get the name of this attendee type.
-       * @return {string} the name of this attendee type
-       */
-      get name() {
-        return this._NAME
-      }
-      /**
-       * Get whether this attendee type is featured.
-       * @return {boolean} whether this attendee type is featured
-       */
-      get isFeatured() {
-        return this._IS_FEATURED
-      }
+  /**
+   * Construct a new AttendeeType object.
+   * Parameters include a name and
+   * a boolean specifying whether the object is featured.
+   * Both name and “featured” are immutable.
+   * @param {string} name the name of the attendee type
+   * @param {boolean} is_featured whether this attendee type is marked as “featured”
+   */
+  constructor(name, is_featured) {
+    /** @private @final */ this._NAME        = name
+    /** @private @final */ this._IS_FEATURED = is_featured
+  }
+  /**
+   * Get the name of this attendee type.
+   * @return {string} the name of this attendee type
+   */
+  get name() {
+    return this._NAME
+  }
+  /**
+   * Get whether this attendee type is featured.
+   * @return {boolean} whether this attendee type is featured
+   */
+  get isFeatured() {
+    return this._IS_FEATURED
+  }
 
 
   /**
@@ -255,8 +253,5 @@ class AttendeeType {
       })
   }
 }
-
-
-
 
 module.exports = Pass

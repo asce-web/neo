@@ -8,9 +8,8 @@ const View    = require('extrajs-view')
  * passes, sessions, venues, speakers,
  * supporter levels and supporters, exhibitors, contact information,
  * important dates, organizers, and other properties.
- * @module
  */
-module.exports = class Conference {
+class Conference {
   /**
    * Construct a Conference object.
    * The name, url, theme, start date, end date, and promoted location
@@ -579,3 +578,5 @@ module.exports = class Conference {
       })
   }
 }
+
+module.exports = Conference
