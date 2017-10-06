@@ -1,17 +1,19 @@
-var Element = require('helpers-js').Element
+const Element = require('extrajs-dom').Element
+const View    = require('extrajs-view')
 
 /**
  * A set of static values and functions used site-wide.
- * @module
+ * @namespace
  */
-module.exports = class Util extends require('helpers-js').Util {
+class Util {
   /** @private */ constructor() {}
 
   /**
    * NOTE: TYPE DEFINITION
+   * ```json
    * {
    *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "StateObj",
+   *   "title": "Util.StateObj",
    *   "type": "object",
    *   "additionalProperties": false,
    *   "required": ["index", "name", "pop", "area", "region"],
@@ -23,7 +25,8 @@ module.exports = class Util extends require('helpers-js').Util {
    *     "region": { "type": "Util.Region", "description": "region of US" }
    *   }
    * }
-   * @typedef {Object} StateObj
+   * ```
+   * @typedef  {Object} Util.StateObj
    * @property {string} index  - the postal code for the state
    * @property {string} name   - the name of the state
    * @property {number} pop    - population in people
@@ -32,7 +35,7 @@ module.exports = class Util extends require('helpers-js').Util {
    */
 
   /**
-   * List of US State objects.
+   * @summary List of US State objects.
    * @type {Array<StateObj>}
    */
   static get STATE_DATA() {
@@ -92,9 +95,10 @@ module.exports = class Util extends require('helpers-js').Util {
 
   /**
    * NOTE: TYPE DEFINITION
+   * ```json
    * {
    *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "Icon",
+   *   "title": "Util.Icon",
    *   "type": "object",
    *   "additionalProperties": false,
    *   "required": ["content", "fallback", "html"],
@@ -104,15 +108,16 @@ module.exports = class Util extends require('helpers-js').Util {
    *     "html"    : { "type": "string", "description": "html entity" }
    *   }
    * }
-   * @typedef {Object} Icon
+   * ```
+   * @typedef  {Object} Util.Icon
    * @property {string} content  - the keyword used for the ligature
    * @property {string} fallback - unicode code point
    * @property {string} html     - html entity
    */
 
   /**
-   * List of icon objects used in Conf styles.
-   * @type {Array<Icon>}
+   * @summary List of icon objects used in Conf styles.
+   * @type {Array<Util.Icon>}
    */
   static get ICON_DATA() {
     return [
@@ -138,8 +143,8 @@ module.exports = class Util extends require('helpers-js').Util {
   }
 
   /**
-   * Data for social media networks.
-   * @type {Object<{name:string, icon}>}
+   * @summary Data for social media networks.
+   * @type {Object<{name:string, icon:Util.Icon}>}
    */
   static get SOCIAL_DATA() {
     return {
@@ -168,54 +173,121 @@ module.exports = class Util extends require('helpers-js').Util {
   }
 
   /**
-   * Render any data in HTML.
-   * Miscellaneous views.
-   * Displays:
-   * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
-   * @param {*} data any data to render
-   * @return {string} HTML output
+   * @summary Render any data in HTML.
+   * @see Util.VIEW
+   * @param   {*} data any data to render
+   * @returns {View}
    */
   static view(data) {
-    function returned(data) { throw new Error('Please select a display: `Util.view[display](data)`.') }
     /**
-     * Return a <ul> of button links for a highlighted content block.
-     * ```pug
-     * ul.o-List.o-Flex.o-ListAction
-     *   each item in data
-     *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
-     *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
-     *         = item.contents
-     * ```
-     * Call `Util.view(data).highlightButtons()` to render this display.
-     * @param  {Array<Element>} data the <a> elements to render
-     * @param  {string=} buttonclasses the classes to add to the buttons
-     * @return {string} HTML output
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
+     * @namespace Util.VIEW
+     * @type {View}
      */
-    returned.highlightButtons = function (buttonclasses = '') {
+    return new View(null, data)
+      /**
+       * Return a `<ul>` of button links for a highlighted content block.
+       * ```pug
+       * ul.o-List.o-Flex.o-Flex--even
+       *   each item in data
+       *     li.o-List__Item.o-Flex__Item
+       *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
+       *         = item.contents
+       * ```
+       * @summary Call `Util.view(data).highlightButtons()` to render this display.
+       * @function Util.VIEW.highlightButtons
+       * @param   {string=} buttonclasses the classes to add to the buttons
+       * @returns {string} HTML output
+       */
+      .addDisplay(function highlightButtons(buttonclasses = '') {
         return Element.data(data, {
           ordered: false,
           attributes: {
-            list:  { class: 'o-List o-Flex o-ListAction' },
-            value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
+            list:  { class: 'o-List o-Flex o-Flex--even' },
+            value: { class: 'o-List__Item o-Flex__Item' },
           },
           options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
         })
-    }
-    return returned
+      })
+      /**
+       * Return a table containing a `<tbody.c-DateBlock>` component, containing
+       * rows of {@link DateRange.VIEW.dateBlock|DateRange#view.dateBlock()} displays.
+       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of important dates.
+       * @summary Call `Util.view(data).dateBlock()` to render this display.
+       * @function Util.VIEW.dateBlock
+       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
+       * @returns {string} HTML output
+       */
+      .addDisplay(function dateBlock(attr = {}) {
+        return new Element('table').attr(attr).addContent(
+          new Element('tbody').class('c-DateBlock')
+            .addContent(data.map(($importantDate) => $importantDate.view.dateBlock()))
+        ).html()
+      })
+      /**
+       * Return a table containing a `<tbody.c-TimeBlock>` component, containing
+       * rows of {@link DateRange.VIEW.timeBlock|DateRange#view.timeBlock()} displays.
+       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of sessions.
+       * @summary Call `Util.view(data).timeBlock()` to render this display.
+       * @function Util.VIEW.timeBlock
+       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
+       * @returns {string} HTML output
+       */
+      .addDisplay(function timeBlock(attr = {}) {
+        return new Element('table').attr(attr).addContent(
+          new Element('tbody').class('c-TimeBlock')
+            .addContent(data.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
+        ).html()
+      })
+      /**
+       * Return a `<ul.o-ListStacked>` component, containing items of
+       * {@link Pass.VIEW.pass|Pass#view.pass()} displays.
+       * Parameter `data` should be of type `Array<Pass>`.
+       * @summary Call `Util.view(data).pass()` to render this display.
+       * @function Util.VIEW.pass
+       * @param   {Conference} $conference the conference to which these passes belong
+       * @returns {string} HTML output
+       */
+      .addDisplay(function pass($conference) {
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
+          data.map(($pass) =>
+            new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
+              .addContent($pass.view.pass($conference))
+          )
+        ).html()
+      })
+      /**
+       * Return a `<ul.o-ListStacked>` component, containing items of
+       * {@link Person.VIEW.speaker|Person#view.speaker()} displays.
+       * Parameter `data` should be of type `Array<Person>`.
+       * @summary Call `Util.view(data).speaker()` to render this display.
+       * @function Util.VIEW.speaker
+       * @returns {string} HTML output
+       */
+      .addDisplay(function speaker() {
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
+          data.map(($person) =>
+            new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
+              .addContent($person.view.speaker())
+          )
+        ).html()
+      })
   }
 
   /**
-   * Return a URL-friendly string.
+   * @summary Return a URL-friendly string.
    * @param  {string} str a string to convert
-   * @return {string} a URL-safe variant of the string given
+   * @returns {string} a URL-safe variant of the string given
    */
   static toURL(str) {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
   }
 
   /**
-   * Remove an item from an array.
-   * This method is destructive: it modifies the given argument.
+   * @summary Remove an item from an array.
+   * @description This method is impure: it modifies the given argument.
    * @param  {Array} arr the array to modify
    * @param  {unknown} item  the item to remove from the array
    */
@@ -225,28 +297,28 @@ module.exports = class Util extends require('helpers-js').Util {
   }
 
   /**
-   * Return a string part of an icon.
-   * @param  {Object} icon          the icon object to parse
-   * @param  {string} icon.content  the keyword of the icon
-   * @param  {string} icon.fallback the unicode codepoint of the icon
-   * @param  {boolean=} fb          true if the fallback is preferred over the content
-   * @return {string}               `icon.fallback` if fallback==true, else `icon.content`
+   * @summary Return a string part of an icon.
+   * @param   {Util.Icon} icon the icon object to parse
+   * @param   {boolean=} fb true if the fallback is preferred over the content
+   * @returns {string} if `fb===true`, `icon.fallback`; else `icon.content`
    */
-  static iconToString(icon, fb) {
+  static iconToString(icon, fb = false) {
     return (fb) ? icon.fallback : icon.content
   }
-
-  /**
-   * Enum for state regions.
-   * @enum {string}
-   */
-  static get Region() {
-    return {
-      SOUTH    : 's',
-      WEST     : 'w',
-      SOUTHWEST: 'sw',
-      NORTHEAST: 'ne',
-      MIDWEST  : 'mw',
-    }
-  }
 }
+
+
+
+/**
+ * @summary Enum for state regions.
+ * @enum {string}
+ */
+Util.Region = {
+  SOUTH    : 's',
+  WEST     : 'w',
+  SOUTHWEST: 'sw',
+  NORTHEAST: 'ne',
+  MIDWEST  : 'mw',
+}
+
+module.exports = Util

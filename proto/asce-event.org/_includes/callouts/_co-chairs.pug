@@ -1,7 +1,19 @@
 h1#conference-co-chairs Conference Co-Chairs
 div._text-block
-  ul
-    li(itemprop="organizer" itemscope="" itemtype="http://schema.org/Person")
-      != site.currentConference().getOrganizer('thomas-mccollough').view.affiliation()
-    li(itemprop="organizer" itemscope="" itemtype="http://schema.org/Person")
-      != site.currentConference().getOrganizer('stephen-dickenson').view.entireName()
+  -
+    let cochairs = [
+      [
+        site.currentConference().getOrganizer('thomas-mccollough').view.affiliation(),
+        site.currentConference().getOrganizer('stephen-dickenson').view.entireName(),
+      ],
+      {
+        attributes: {
+          value: {
+            itemprop : 'organizer',
+            itemscope: '',
+            itemtype : 'http://schema.org/Person',
+          }
+        }
+      }
+    ]
+  != Element.data(...cochairs)

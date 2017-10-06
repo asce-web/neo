@@ -13,10 +13,9 @@
 //   include /_views/_o-Tabs.view.pug
 //   +tabs(2)#demoprogram
 //     mixin tab(i)
-//       != Util.VIEW.programHn([new Date('2016-09-28'),new Date('2016-10-01')][i])
+//       != Util.view([new Date('2016-09-28'),new Date('2016-10-01')][i]).programHn()
 //     mixin panel(i)
-//       include /_views/_Session.view.pug
-//       +timeBlock([
+//       != Util.view([
 //         [
 //           new DateRange('Registration'                           , new Date('2016-09-28 10:00'), new Date('2016-09-28 19:00')),
 //           new DateRange('Technical Tours'                        , new Date('2016-09-28 10:30'), new Date('2016-09-28 16:30')).url('#0'),
@@ -35,7 +34,7 @@
 //           new DateRange('ASCE Luncheon & Closing General Session', new Date('2016-10-01 12:00'), new Date('2016-10-01 14:00')).star(),
 //           new DateRange('Technical Tours'                        , new Date('2016-10-01 14:30'), new Date('2016-10-01 17:30')).url('#0'),
 //         ]
-//       ][i])
+//       ][i]).timeBlock()
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>

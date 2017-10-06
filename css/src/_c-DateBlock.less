@@ -12,12 +12,11 @@
 //
 // Use in Pug:
 // <pre>
-//   include /_views/_ImportantDate.view.pug
-//   +dateBlock([
-//     new DateRange('Optional Final Papers Due'     , new Date('2015-10-12')),
-//     new DateRange('Early-Bird Registration Closes', new Date('2015-12-17')).url('#0'),
-//     new DateRange('Advance Registration Period'   , new Date('2015-12-18'), new Date('2015-12-21')),
-//   ])
+// != Util.view([
+//   new DateRange('Optional Final Papers Due'     , new Date('2015-10-12')),
+//   new DateRange('Early-Bird Registration Closes', new Date('2015-12-17')).url('#0'),
+//   new DateRange('Advance Registration Period'   , new Date('2015-12-18'), new Date('2015-12-21')),
+// ]).dateBlock()
 // </pre>
 //
 // <header><dl>

@@ -1,4 +1,0 @@
-mixin timeBlock(sessions)
-  table: tbody.c-TimeBlock
-    each $session,index in sessions
-      != $session.view.timeBlock(index===sessions.length-1)

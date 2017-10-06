@@ -10,11 +10,10 @@ block mainHeader
 block mainReference
   section.o-Runner.o-Runner--highlight.c-Banner#full-registration: div.o-Constrain
     h1.h-Hidden Full Registration
-    include ../../_views/_Pass.view.pug
-    +passList(site.currentConference(), false)
-    ul.o-List.o-Flex.o-ListAction.c-Alert._regLegend
+    != Util.view(site.currentConference().getPassesAll()).pass(site.currentConference())
+    ul.o-List.o-Flex.o-Flex--even.c-Alert._regLegend
       each $registrationPeriod in site.currentConference().getRegistrationPeriodsAll()
-        li.o-List__Item.o-Flex__Item.o-ListAction__Item.c-Alert__Item
+        li.o-List__Item.o-Flex__Item.c-Alert__Item
           i.material-icons(role="none")= $registrationPeriod.getIcon()
           small
             -
@@ -24,11 +23,11 @@ block mainReference
             b= $registrationPeriod.name
             = (start_date && end_date) ? ': ' : (start_date) ? ' begins ' : (end_date) ? ' ends ' : ''
             if start_date
-              time(datetime=start_date)= Util.Date.format(start_date, 'M j')
+              time(datetime=start_date)= xjs.Date.format(start_date, 'M j')
             if start_date && end_date
               | &ndash;
             if end_date
-              time(datetime=end_date)= Util.Date.format(end_date, 'M j')
+              time(datetime=end_date)= xjs.Date.format(end_date, 'M j')
     -
       let highlight_buttons = [
         new Element('a').attr('href','#0').addContent(`Register Today!`)
