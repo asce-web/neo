@@ -190,15 +190,14 @@ class Util {
       /**
        * Return a `<ul>` of button links for a highlighted content block.
        * ```pug
-       * ul.o-List.o-Flex.o-ListAction
+       * ul.o-List.o-Flex.o-Flex--even
        *   each item in data
-       *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
+       *     li.o-List__Item.o-Flex__Item
        *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
        *         = item.contents
        * ```
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
-       * @param   {Array<Element>} data the `<a>` elements to render
        * @param   {string=} buttonclasses the classes to add to the buttons
        * @returns {string} HTML output
        */
@@ -206,11 +205,74 @@ class Util {
         return Element.data(data, {
           ordered: false,
           attributes: {
-            list:  { class: 'o-List o-Flex o-ListAction' },
-            value: { class: 'o-List__Item o-Flex__Item o-ListAction__Item' },
+            list:  { class: 'o-List o-Flex o-Flex--even' },
+            value: { class: 'o-List__Item o-Flex__Item' },
           },
           options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
         })
+      })
+      /**
+       * Return a table containing a `<tbody.c-DateBlock>` component, containing
+       * rows of {@link DateRange.VIEW.dateBlock|DateRange#view.dateBlock()} displays.
+       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of important dates.
+       * @summary Call `Util.view(data).dateBlock()` to render this display.
+       * @function Util.VIEW.dateBlock
+       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
+       * @returns {string} HTML output
+       */
+      .addDisplay(function dateBlock(attr = {}) {
+        return new Element('table').attr(attr).addContent(
+          new Element('tbody').class('c-DateBlock')
+            .addContent(data.map(($importantDate) => $importantDate.view.dateBlock()))
+        ).html()
+      })
+      /**
+       * Return a table containing a `<tbody.c-TimeBlock>` component, containing
+       * rows of {@link DateRange.VIEW.timeBlock|DateRange#view.timeBlock()} displays.
+       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of sessions.
+       * @summary Call `Util.view(data).timeBlock()` to render this display.
+       * @function Util.VIEW.timeBlock
+       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
+       * @returns {string} HTML output
+       */
+      .addDisplay(function timeBlock(attr = {}) {
+        return new Element('table').attr(attr).addContent(
+          new Element('tbody').class('c-TimeBlock')
+            .addContent(data.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
+        ).html()
+      })
+      /**
+       * Return a `<ul.o-ListStacked>` component, containing items of
+       * {@link Pass.VIEW.pass|Pass#view.pass()} displays.
+       * Parameter `data` should be of type `Array<Pass>`.
+       * @summary Call `Util.view(data).pass()` to render this display.
+       * @function Util.VIEW.pass
+       * @param   {Conference} $conference the conference to which these passes belong
+       * @returns {string} HTML output
+       */
+      .addDisplay(function pass($conference) {
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
+          data.map(($pass) =>
+            new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
+              .addContent($pass.view.pass($conference))
+          )
+        ).html()
+      })
+      /**
+       * Return a `<ul.o-ListStacked>` component, containing items of
+       * {@link Person.VIEW.speaker|Person#view.speaker()} displays.
+       * Parameter `data` should be of type `Array<Person>`.
+       * @summary Call `Util.view(data).speaker()` to render this display.
+       * @function Util.VIEW.speaker
+       * @returns {string} HTML output
+       */
+      .addDisplay(function speaker() {
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
+          data.map(($person) =>
+            new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
+              .addContent($person.view.speaker())
+          )
+        ).html()
       })
   }
 

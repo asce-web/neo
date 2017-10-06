@@ -12,6 +12,5 @@ block mainReference
       mixin tab(i)
         != groupings[i].sessions[0].view.programHn()
       mixin panel(i)
-        include ../../_views/_Session.view.pug
-        +timeBlock(groupings[i].sessions)
+        != Util.view(groupings[i].sessions).timeBlock()
     p: small.-fs-t Program subject to change.
