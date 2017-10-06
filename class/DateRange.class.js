@@ -107,27 +107,21 @@ class DateRange {
             itemscope: '',
             itemtype: 'http://schema.org/Action',
           })
-          .addElements([
-            new Element('td').class('c-DateBlock__Date')
-              .addElements([
-                new Element('time')
-                  .attr({ datetime: this.start.toISOString(), itemprop: 'startTime' })
-                  .addContent(xjs.Date.format(this.start, 'M j, Y'))
-              ])
-              .addContent((this.end) ? `&ndash;` : '')
-              .addElements([
-                (this.end) ? new Element('time')
-                  .attr({ datetime: this.end.toISOString(), itemprop: 'endTime' })
-                  .addContent(xjs.Date.format(this.end, 'M j, Y')) : null
-              ]),
+          .addContent([
+            new Element('td').class('c-DateBlock__Date').addContent([
+              new Element('time')
+                .attr({ datetime: this.start.toISOString(), itemprop: 'startTime' })
+                .addContent(xjs.Date.format(this.start, 'M j, Y')),
+              (this.end) ? `&ndash;` : '',
+              (this.end) ? new Element('time')
+                .attr({ datetime: this.end.toISOString(), itemprop: 'endTime' })
+                .addContent(xjs.Date.format(this.end, 'M j, Y')) : null,
+            ]),
             new Element('td').class('c-DateBlock__Desc')
               .attr('itemprop','name')
-              .addContent((this.url()) ?
-                new Element('a').class('c-DateBlock__Link')
-                  .attr({ href: this.url(), itemprop: 'url' })
-                  .addContent(this.name)
-                  .html()
-                : this.name
+              .addContent((this.url()) ? new Element('a').class('c-DateBlock__Link')
+                .attr({ href: this.url(), itemprop: 'url' })
+                .addContent(this.name) : this.name
               ),
           ])
           .html()
@@ -148,28 +142,21 @@ class DateRange {
             itemscope: '',
             itemtype: 'http://schema.org/Event',
           })
-          .addElements([
-            new Element('td').class('c-TimeBlock__Times')
-              .addElements([
-                new Element('time')
-                  .attr({ datetime: this.start.toISOString(), itemprop: 'startDate' })
-                  .addContent(xjs.Date.format(this.start, 'g:ia'))
-              ])
-              .addContent((this.end) ? `&ndash;` : '')
-              .addElements([
-                (this.end) ? new Element('time')
-                  .attr({ datetime: this.end.toISOString(), itemprop: 'endDate' })
-                  .addContent(xjs.Date.format(this.end, 'g:ia')) : null
-              ]),
-            new Element('td').class('c-TimeBlock__Desc')
-              .addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
+          .addContent([
+            new Element('td').class('c-TimeBlock__Times').addContent([
+              new Element('time')
+                .attr({ datetime: this.start.toISOString(), itemprop: 'startDate' })
+                .addContent(xjs.Date.format(this.start, 'g:ia')),
+              (this.end) ? `&ndash;` : '',
+              (this.end) ? new Element('time')
+                .attr({ datetime: this.end.toISOString(), itemprop: 'endDate' })
+                .addContent(xjs.Date.format(this.end, 'g:ia')) : null,
+            ]),
+            new Element('td').class('c-TimeBlock__Desc').addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
               .attr('itemprop','name')
-              .addContent((this.url()) ?
-                new Element('a').class('c-TimeBlock__Link')
-                  .attr({ href: this.url(), itemprop: 'url' })
-                  .addContent(this.name)
-                  .html()
-                : this.name
+              .addContent((this.url()) ? new Element('a').class('c-TimeBlock__Link')
+                .attr({ href: this.url(), itemprop: 'url' })
+                .addContent(this.name) : this.name
               ),
           ])
           .html()
@@ -184,9 +171,11 @@ class DateRange {
         return new Element('time').class('c-ProgramHn h-Block')
           .attr('data-instanceof','DateRange')
           .attr('datetime',this.start.toISOString())
-          .addContent(`${xjs.Date.DAY_NAMES[this.start.getUTCDay()]},`)
-          .addElements([new Element('br')])
-          .addContent(xjs.Date.format(this.start, 'M j'))
+          .addContent([
+            `${xjs.Date.DAY_NAMES[this.start.getUTCDay()]},`,
+            new Element('br'),
+            xjs.Date.format(this.start, 'M j'),
+          ])
           .html()
       })
   }

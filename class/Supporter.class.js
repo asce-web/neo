@@ -88,7 +88,7 @@ class Supporter {
           href    : this.url(),
           rel     : 'external nofollow',
           itemprop: 'url'
-        }).addElements([
+        }).addContent([
           new Element('img').class('c-SupporterBlock__Logo').attr({ src:this.img(), alt:this.name, itemprop:'logo' }),
           new Element('meta').attr({ content:this.name, itemprop:'name' }),
         ]).html()

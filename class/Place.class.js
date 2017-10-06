@@ -114,9 +114,9 @@ class Place {
           name = new Element('a').attr({
             href: this.url,
             itemprop: 'url',
-          }).addElements([name])
+          }).addContent(name)
         }
-        return Element.concat(
+        return Element.concat([
           name,
           new Element('span')
             .attr({
@@ -124,21 +124,17 @@ class Place {
               itemscope: '',
               itemtype : 'https://schema.org/PostalAddress',
             })
-            .addElements([
+            .addContent([
               new Element('span').class('h-Clearfix').attrStr('itemprop="streetAddress"').addContent(this.streetAddress),
               new Element('span').attrStr('itemprop="addressLocality"').addContent(this.addressLocality),
-            ])
-            .addContent(`, `)
-            .addElements([
+              `, `,
               new Element('span').attrStr('itemprop="addressRegion"').addContent(this.addressRegion),
-            ])
-            .addContent(` `)
-            .addElements([
+              ` `,
               new Element('span').class('h-Clearfix').attrStr('itemprop="postalCode"').addContent(this.postalCode),
               (this.addressCountry) ? new Element('span').class('h-Clearfix').attrStr('itemprop="addressCountry"').addContent(this.addressCountry) : null,
             ]),
-          (this.telephone) ? new Element('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : null
-        )
+          (this.telephone) ? new Element('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : null,
+        ])
       })
   }
 }

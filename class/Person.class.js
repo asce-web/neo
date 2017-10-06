@@ -198,9 +198,11 @@ class Person {
      */
     return new View(function () {
       return new Element('span').attr('itemprop','name')
-        .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
-        .addContent(` `)
-        .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
+        .addContent([
+          new Element('span').attr('itemprop','givenName').addContent(this.name.given_name),
+          ` `,
+          new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name),
+        ])
         .html()
     }, this)
       /**
@@ -211,11 +213,13 @@ class Person {
        */
       .addDisplay(function fullName() {
         return new Element('span').attr('itemprop','name')
-          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
-          .addContent(` `)
-          .addElements([new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name)])
-          .addContent(` `)
-          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
+          .addContent([
+            new Element('span').attr('itemprop','givenName').addContent(this.name.given_name),
+            ` `,
+            new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name),
+            ` `,
+            new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name),
+          ])
           .html()
       })
       /**
@@ -245,15 +249,10 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
-        return `${this.view.entireName()}, ${
-          new Element('span').class('-fs-t').attr({
-            itemprop : 'affiliation',
-            itemscope: '',
-            itemtype : 'http://schema.org/Organization',
-          }).addElements([
-            new Element('span').attr('itemprop','name').addContent(this.affiliation())
-          ]).html()
-        }`
+        return `${this.view.entireName()}, ${new Element('span').class('-fs-t')
+          .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
+          .addContent(new Element('span').attr('itemprop','name').addContent(this.affiliation()))
+          .html()}`
       })
       /**
        * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
@@ -295,11 +294,11 @@ class Person {
           itemprop : 'performer',
           itemscope: '',
           itemtype : 'http://schema.org/Person',
-        }).addElements([
+        }).addContent([
           new Element('img').class('c-Speaker__Img h-Block')
             .attr('src', this.img())
             .attr('itemprop','image'),
-          new Element('header').class('c-Speaker__Head').addElements([
+          new Element('header').class('c-Speaker__Head').addContent([
             new Element('h1').class('c-Speaker__Name')
               .id(this.id)
               .addContent(this.view.entireName()),
@@ -310,9 +309,7 @@ class Person {
               itemprop : 'affiliation',
               itemscope: '',
               itemtype : 'http://schema.org/Organization',
-            }).addElements([
-              new Element('span').attr('itemprop','name').addContent(this.affiliation())
-            ]),
+            }).addContent(new Element('span').attr('itemprop','name').addContent(this.affiliation())),
           ]),
           // new Element('div').class('c-Speaker__Body').attr('itemprop','description'),
           new Element('footer').class('c-Speaker__Foot').addContent(pug`

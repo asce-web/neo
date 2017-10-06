@@ -62,9 +62,9 @@ class SupporterLevel {
         return new Element('section').class('c-SupporterBlock')
           .addClass((this.size()) ? `c-SupporterBlock--${this.size()}` : '')
           .attr('data-instanceof','SupporterLevel')
-          .addElements([
+          .addContent([
             new Element('h1').class('c-SupporterBlock__Hn').addContent(this.name),
-            new Element('ul').class('o-List o-Flex c-SupporterBlock__List').addElements(
+            new Element('ul').class('o-List o-Flex c-SupporterBlock__List').addContent(
               $conference.getSupportersAll()
                 .filter(($supporter) => $supporter.level()===this.name)
                 .map(($supporter) =>

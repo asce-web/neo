@@ -97,17 +97,17 @@ class RegistrationPeriod {
             itemscope: '',
             itemtype : 'https://schema.org/AggregateOffer',
           })
-          .addElements([
-            new Element('h1').class('c-Pass__Period__Hn').attr('itemprop','name')
-              .addElements([ new Element('span').class('-d-n').addContent(`${$pass.name}: `) ]) // NOTE: `.-d-n` hides from AT but reveals to Microdata
-              .addContent(this.name),
+          .addContent([
+            new Element('h1').class('c-Pass__Period__Hn').attr('itemprop','name').addContent([
+              new Element('span').class('-d-n').addContent(`${$pass.name}: `), // NOTE: `.-d-n` hides from AT but reveals to Microdata
+              this.name
+            ]),
             new Element('meta').attr({ content:$pass.getAttendeeTypesAll().length, itemprop:'offerCount' }),
-            // NOTE the getters below return `new Date()` if none is set
             (this.startDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
             (this.  endDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,
             new Element('dl').addContent($pass.getAttendeeTypesAll().map((att_type) =>
               att_type.view.pass(42.87, is_body) // TODO price is 42 for now
-            ).join('')),
+            )),
           ])
           .html()
       })

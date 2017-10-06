@@ -507,25 +507,25 @@ class Conference {
       .addDisplay(function hero(block = '') {
         return new Element('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
           .attr('data-instanceof','Conference')
-          .addElements([
+          .addContent([
             new Element('div').class('o-Constrain')
-              .addElements([
+              .addContent([
                 new Element('h1').class('c-PageTitle c-ConfHed__Name')
                   .attr('itemprop','name')
                   .addContent(this.name),
                 new Element('meta').attr('content',this.url).attr('itemprop','url'),
                 new Element('p').class('o-Flex c-ConfHed__Detail')
-                  .addElements([
+                  .addContent([
                     new Element('span').class('o-Flex__Item c-ConfHed__Detail__Place h-Block')
                       .attr('itemprop','location')
                       .addContent(promoLoc(this.promoLoc)),
                     new Element('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
-                      .addElements([
+                      .addContent([
                         new Element('time')
                           .attr('datetime',this.startDate.toISOString())
                           .attr('itemprop','startDate')
                           .addContent(xjs.Date.format(this.startDate, 'M j')),
-                        new Element('span').addContent(`&ndash;`),
+                        `&ndash;`,
                         new Element('time')
                           .attr('datetime',this.endDate.toISOString())
                           .attr('itemprop','endDate')
@@ -535,8 +535,8 @@ class Conference {
                 new Element('p').class('c-ConfHed__Theme h-Hidden-nM')
                   .attr('itemprop','description')
                   .addContent(this.theme || `&nbsp;`), // (`\xa0` === `&nbsp;`)
+                block,
               ])
-              .addContent(block),
           ])
           .html()
       })
@@ -557,19 +557,18 @@ class Conference {
             itemscope: '',
             itemtype : 'http://schema.org/Event',
           })
-          .addElements([
-            new Element('div').class('o-Constrain')
-              .addElements([
-                new Element('h1').class('c-ConfHed__Name')
-                  .attr('itemprop','name')
-                  .addContent(this.name),
-                new Element('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
-                new Element('p').class('c-ConfHed__Detail')
-                  .attr('itemprop','location')
-                  .addContent(promoLoc(this.promoLoc)),
-                new Element('p').class('h-Hidden-nM').addContent(blurb),
-              ])
-              .addContent(block),
+          .addContent([
+            new Element('div').class('o-Constrain').addContent([
+              new Element('h1').class('c-ConfHed__Name')
+                .attr('itemprop','name')
+                .addContent(this.name),
+              new Element('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
+              new Element('p').class('c-ConfHed__Detail')
+                .attr('itemprop','location')
+                .addContent(promoLoc(this.promoLoc)),
+              new Element('p').class('h-Hidden-nM').addContent(blurb),
+              block
+            ])
           ])
           .html()
       })
