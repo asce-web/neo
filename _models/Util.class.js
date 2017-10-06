@@ -169,32 +169,35 @@ module.exports = class Util {
 
   /**
    * Render any data in HTML.
-   * Miscellaneous views.
-   * Displays:
-   * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
-   * @param {*} data any data to render
-   * @returns {function(?):string} a function returning HTML output
+   * @see Util.VIEW
+   * @param   {*} data any data to render
+   * @returns {View}
    */
   static view(data) {
     /**
-     * @throws {Error} if no display has been chosen
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
+     * @namespace Util.VIEW
+     * @type {View}
      */
-    function returned(data) { throw new Error('Please select a display: `Util.view(data)[display](...args)`.') }
-    /**
-     * Return a <ul> of button links for a highlighted content block.
-     * ```pug
-     * ul.o-List.o-Flex.o-ListAction
-     *   each item in data
-     *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
-     *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
-     *         = item.contents
-     * ```
-     * Call `Util.view(data).highlightButtons()` to render this display.
-     * @param  {Array<Element>} data the <a> elements to render
-     * @param  {string=} buttonclasses the classes to add to the buttons
-     * @returns {string} HTML output
-     */
-    returned.highlightButtons = function (buttonclasses = '') {
+    return new View(null, data)
+      /**
+       * Return a <ul> of button links for a highlighted content block.
+       * ```pug
+       * ul.o-List.o-Flex.o-ListAction
+       *   each item in data
+       *     li.o-List__Item.o-Flex__Item.o-ListAction__Item
+       *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
+       *         = item.contents
+       * ```
+       * @summary Call `Util.view(data).highlightButtons()` to render this display.
+       * @function Util.VIEW.highlightButtons
+       * @param   {Array<Element>} data the <a> elements to render
+       * @param   {string=} buttonclasses the classes to add to the buttons
+       * @returns {string} HTML output
+       */
+      .addDisplay(function highlightButtons(buttonclasses = '') {
         return Element.data(data, {
           ordered: false,
           attributes: {
@@ -203,8 +206,7 @@ module.exports = class Util {
           },
           options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
         })
-    }
-    return returned
+      })
   }
 
   /**
