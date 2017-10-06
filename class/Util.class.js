@@ -214,7 +214,7 @@ class Util {
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
        * rows of {@link DateRange.VIEW.dateBlock|DateRange#view.dateBlock()} displays.
-       * Parameter `data` should be of type `{Array<DateRange>}`, e.g., a list of important dates.
+       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of important dates.
        * @summary Call `Util.view(data).dateBlock()` to render this display.
        * @function Util.VIEW.dateBlock
        * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
@@ -229,7 +229,7 @@ class Util {
       /**
        * Return a table containing a `<tbody.c-TimeBlock>` component, containing
        * rows of {@link DateRange.VIEW.timeBlock|DateRange#view.timeBlock()} displays.
-       * Parameter `data` should be of type `{Array<DateRange>}`, e.g., a list of sessions.
+       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of sessions.
        * @summary Call `Util.view(data).timeBlock()` to render this display.
        * @function Util.VIEW.timeBlock
        * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
@@ -244,7 +244,7 @@ class Util {
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
        * {@link Pass.VIEW.pass|Pass#view.pass()} displays.
-       * Parameter `data` should be of type `{Array<Pass>}`.
+       * Parameter `data` should be of type `Array<Pass>`.
        * @summary Call `Util.view(data).pass()` to render this display.
        * @function Util.VIEW.pass
        * @param   {Conference} $conference the conference to which these passes belong
@@ -255,6 +255,22 @@ class Util {
           data.map(($pass) =>
             new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
               .addContent($pass.view.pass($conference))
+          )
+        ).html()
+      })
+      /**
+       * Return a `<ul.o-ListStacked>` component, containing items of
+       * {@link Person.VIEW.speaker|Person#view.speaker()} displays.
+       * Parameter `data` should be of type `Array<Person>`.
+       * @summary Call `Util.view(data).speaker()` to render this display.
+       * @function Util.VIEW.speaker
+       * @returns {string} HTML output
+       */
+      .addDisplay(function speaker() {
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
+          data.map(($person) =>
+            new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
+              .addContent($person.view.speaker())
           )
         ).html()
       })

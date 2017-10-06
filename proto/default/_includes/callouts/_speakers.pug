@@ -1,6 +1,5 @@
 h1#speakers Speakers
-include ../../../../_views/_Person.view.pug
-+speakerList(site.currentConference().getSpeakersAll().filter(function ($person) { return $person.isStarred() }))
+!= Util.view(site.currentConference().getSpeakersAll().filter(($s) => $s.isStarred())).speaker()
 -
   let highlight_buttons = [
     new Element('a').attr('href','speakers.html').addContent(`All Speakers`)
