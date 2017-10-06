@@ -7,14 +7,17 @@ const autoprefixer = require('gulp-autoprefixer')
 const clean_css    = require('gulp-clean-css')
 const sourcemaps   = require('gulp-sourcemaps')
 
-gulp.task('pug:index', function () {
-  return gulp.src(__dirname + '/index.pug')
-    .pipe(pug({
-      basedir: './',
-    }))
-    .pipe(gulp.dest('./'))
-})
 
+
+// HOW-TO: https://github.com/mlucool/gulp-jsdoc3#usage
+gulp.task('docs:api', function () {
+  return gulp.src(['README.md', 'class/*.js'], {read:false})
+    .pipe(jsdoc(require('./config-jsdoc.json')))
+})
+// HOW-TO: https://github.com/kss-node/kss-node/issues/161#issuecomment-222292620
+gulp.task('docs:kss', function () {
+  return kss(require('./config-kss.json'))
+})
 gulp.task('pug:docs', function () {
   return gulp.src(__dirname + '/docs/{index,principles,base,obj,comp,org,help,atom}.pug')
     .pipe(pug({
@@ -30,18 +33,27 @@ gulp.task('pug:docs', function () {
     }))
     .pipe(gulp.dest('./docs/'))
 })
-
-// HOW-TO: https://github.com/mlucool/gulp-jsdoc3#usage
-gulp.task('docs:api', function () {
-  return gulp.src([], {read:false})
-    .pipe(jsdoc(require('./config-jsdoc.json')))
+gulp.task('lessc:docs', function () {
+  return gulp.src(__dirname + '/docs/css/docs.less')
+    .pipe(less())
+    .pipe(autoprefixer({
+      grid: true,
+      cascade: false,
+    }))
+    .pipe(gulp.dest('./docs/css/'))
 })
 
-// HOW-TO: https://github.com/kss-node/kss-node/issues/161#issuecomment-222292620
-gulp.task('docs:kss', function () {
-  return kss(require('./kss-config.json'))
-})
+gulp.task('build:docs', ['docs:api', 'docs:kss', 'pug:docs', 'lessc:docs'])
 
+
+
+gulp.task('pug:index', function () {
+  return gulp.src(__dirname + '/index.pug')
+    .pipe(pug({
+      basedir: './',
+    }))
+    .pipe(gulp.dest('./'))
+})
 gulp.task('pug:default', function () {
   const Color      = require('extrajs-color')
   const ConfSite   = require('./class/ConfSite.class.js')
@@ -71,7 +83,6 @@ gulp.task('pug:default', function () {
     }))
     .pipe(gulp.dest('./proto/default/'))
 })
-
 gulp.task('pug:sample', function () {
   return gulp.src(__dirname + '/proto/asce-event.org/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
@@ -85,8 +96,9 @@ gulp.task('pug:sample', function () {
     }))
     .pipe(gulp.dest('./proto/asce-event.org/'))
 })
+gulp.task('pug:sites', ['pug:index', 'pug:default', 'pug:sample'])
 
-gulp.task('pug:all', ['pug:index', 'pug:docs', 'pug:default', 'pug:sample'])
+
 
 gulp.task('lessc:core', function () {
   return gulp.src(__dirname + '/css/src/neo.less')
@@ -101,17 +113,6 @@ gulp.task('lessc:core', function () {
     .pipe(sourcemaps.write('./')) // write to an external .map file
     .pipe(gulp.dest('./css'))
 })
-
-gulp.task('lessc:docs', function () {
-  return gulp.src(__dirname + '/docs/css/docs.less')
-    .pipe(less())
-    .pipe(autoprefixer({
-      grid: true,
-      cascade: false,
-    }))
-    .pipe(gulp.dest('./docs/css/'))
-})
-
 gulp.task('lessc:sample', function () {
   return gulp.src(__dirname + '/proto/asce-event.org/css/site.less')
     .pipe(less())
@@ -121,7 +122,12 @@ gulp.task('lessc:sample', function () {
     }))
     .pipe(gulp.dest('./proto/asce-event.org/css/'))
 })
+gulp.task('lessc:sites', ['lessc:core', 'lessc:sample'])
 
-gulp.task('lessc:all', ['lessc:core', 'lessc:docs', 'lessc:sample'])
 
-gulp.task('build', ['pug:all', 'lessc:all'])
+
+gulp.task('build:sites', ['pug:sites', 'lessc:sites'])
+
+
+
+gulp.task('build', ['build:docs', 'build:sites'])
