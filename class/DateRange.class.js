@@ -5,6 +5,7 @@ const View    = require('extrajs-view')
 /**
  * A range of dates.
  * Has start and end dates, name, and optional url.
+ * Can be used for sessions, important dates, etc.
  */
 class DateRange {
   /**
@@ -93,7 +94,7 @@ class DateRange {
      */
     return new View(null, this)
       /**
-       * Return an `<li.c-DateBlock__Item>` subcomponent containing a <dt>–<dd> pair,
+       * Return a `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
        * marking up this date range as an important date with date and description.
        * @summary Call `DateRange#view.dateBlock()` to render this display.
        * @function DateRange.VIEW.dateBlock
@@ -127,11 +128,11 @@ class DateRange {
           .html()
       })
       /**
-       * Return an `<li.c-TimeBlock__Item>` subcomponent containing a <dt>–<dd> pair,
+       * Return a `<tr.c-TimeBlock__Item>` subcomponent containing a pair of `<td>`s,
        * marking up this date range as a session with time and name.
        * @summary Call `DateRange#view.timeBlock()` to render this display.
        * @function DateRange.VIEW.timeBlock
-       * @param  {boolean} is_last `true` if the session is the last in its list
+       * @param  {boolean} is_last `true` if the TimeBlock__Item is the last in its list
        * @returns {string} HTML output
        */
       .addDisplay(function timeBlock(is_last) {
@@ -162,7 +163,7 @@ class DateRange {
           .html()
       })
       /**
-       * Return an `<time.c-ProgramHn>` component marking up this date range’s start date.
+       * Return a `<time.c-ProgramHn>` component marking up this date range’s start date.
        * @summary Call `DateRange#view.programHn()` to render this display.
        * @function DateRange.VIEW.programHn
        * @returns {string} HTML output

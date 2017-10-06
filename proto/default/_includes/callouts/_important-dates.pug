@@ -1,3 +1,6 @@
 h1#important-dates Important Dates
-include ../../../../_views/_ImportantDate.view.pug
-+dateBlock(site.currentConference().getImportantDatesAll().filter(function ($importantDate) { return $importantDate.isStarred() }))
+-
+  let important_dates = Util.view(
+    site.currentConference().getImportantDatesAll().filter(($impDate) => $impDate.isStarred())
+  ).dateBlock()
+!= important_dates

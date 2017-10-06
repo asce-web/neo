@@ -89,7 +89,7 @@ gulp.task('pug:sample', function () {
       basedir: './',
       locals: {
         xjs    : require('extrajs'),
-        Element   : require('extrajs-dom').Element,
+        Element: require('extrajs-dom').Element,
         Util   : require('./class/Util.class.js'),
         site   : require('./proto/asce-event.org/data.js'),
       },

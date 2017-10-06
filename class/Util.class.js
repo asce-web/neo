@@ -198,7 +198,6 @@ class Util {
        * ```
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
-       * @param   {Array<Element>} data the `<a>` elements to render
        * @param   {string=} buttonclasses the classes to add to the buttons
        * @returns {string} HTML output
        */
@@ -211,6 +210,21 @@ class Util {
           },
           options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
         })
+      })
+      /**
+       * Return a table containing a `<tbody.c-DateBlock>` component, containing
+       * rows of {@link DateRange.VIEW.dateBlock|DateRange#view.dateBlock()} displays.
+       * Parameter `data` should be an {Array<DateRange>}.
+       * @summary Call `Util.view(data).dateBlock()` to render this display.
+       * @function Util.VIEW.dateBlock
+       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
+       * @returns {string} HTML output
+       */
+      .addDisplay(function dateBlock(attr = {}) {
+        return new Element('table').attr(attr).addContent(
+          new Element('tbody').class('c-DateBlock')
+            .addContent(data.map(($importantDate) => $importantDate.view.dateBlock()))
+        ).html()
       })
   }
 
