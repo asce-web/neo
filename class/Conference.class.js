@@ -430,9 +430,10 @@ class Conference {
   // }
   /**
    * NOTE: TYPE DEFINITION
+   * ```json
    * {
    *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "SessionGroup",
+   *   "title": "Conference.SessionGroup",
    *   "description": "a group of sessions, all of which share the same date (excluding time of day)",
    *   "type": "object",
    *   "additionalProperties": false,
@@ -446,7 +447,8 @@ class Conference {
    *     }
    *   }
    * }
-   * @typedef  {Object} SessionGroup
+   * ```
+   * @typedef  {Object} Conference.SessionGroup
    * @property {Date} dateobj the date by which the sessions are grouped
    * @property {Array<DateRange>} sessions an array of sessions whose members all have the same date
    */
@@ -455,7 +457,7 @@ class Conference {
    * @description Sessions with the same date (excluding time of day) are grouped together.
    * @see DateRange
    * @param   {boolean=} starred if true, only consider sessions that are starred
-   * @returns {Array<SessionGroup>} an array grouping the sessions together
+   * @returns {Array<Conference.SessionGroup>} an array grouping the sessions together
    */
   groupSessions(starred) {
     let all_sessions = this.getSessionsAll().filter(($session) => (starred) ? $session.isStarred() : true)
@@ -498,7 +500,7 @@ class Conference {
      */
     return new View(null, this)
       /**
-       * Return a <header> element with hero image marking up this conference’s main info.
+       * Return a `<header>` element with hero image marking up this conference’s main info.
        * @summary Call `Conference#view.hero()` to render this display.
        * @function Conference.VIEW.hero
        * @param  {string=} block custom HTML to insert at the end
@@ -541,7 +543,7 @@ class Conference {
           .html()
       })
       /**
-       * Return an <aside> element with other year backdrop marking up this conference’s main info.
+       * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
        * @summary Call `Conference#view.otherYear()` to render this display.
        * @function Conference.VIEW.otherYear
        * @param   {string}  year exactly one of `'prev'` or `'next'`

@@ -87,7 +87,7 @@ class Pass {
 
   /**
    * @summary Mark this pass as starred.
-   * @param   {boolean=true} bool if true, mark as starred
+   * @param   {boolean=} bool if true, mark as starred
    * @returns {Pass} this pass
    */
   star(bool = true) {
@@ -118,7 +118,7 @@ class Pass {
      */
     return new View(null, this)
       /**
-       * Return an <article.c-Pass> component marking up this pass’s info.
+       * Return an `<article.c-Pass>` component marking up this pass’s info.
        * @summary Call `Pass#view.pass()` to render this display.
        * @function Pass.VIEW.pass
        * @param  {Conference} $conference the conference to which this pass belongs
@@ -149,7 +149,7 @@ class Pass {
 
 
   /**
-   * Options for formatting pass prices.
+   * @summary Options for formatting pass prices.
    * @type {Intl.NumberFormat}
    */
   static get PRICE_OPTIONS() {
@@ -160,21 +160,14 @@ class Pass {
       maximumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
     })
   }
-
-  /**
-   * An Attendee Type ("Member", "Non-Member", etc) of a pass.
-   * @inner
-   */
-  static get AttendeeType() { return AttendeeType }
 }
-
 
 
 
 /**
  * An Attendee Type ("Member", "Non-Member", etc) of a pass.
  */
-class AttendeeType {
+Pass.AttendeeType = class AttendeeType {
   /**
    * Construct a new AttendeeType object.
    * Parameters include a name and
@@ -188,15 +181,15 @@ class AttendeeType {
     /** @private @final */ this._IS_FEATURED = is_featured
   }
   /**
-   * Get the name of this attendee type.
-   * @returns {string} the name of this attendee type
+   * @summary Get the name of this attendee type.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
   /**
-   * Get whether this attendee type is featured.
-   * @returns {boolean} whether this attendee type is featured
+   * @summary Get whether this attendee type is featured.
+   * @type {boolean}
    */
   get isFeatured() {
     return this._IS_FEATURED
@@ -205,7 +198,7 @@ class AttendeeType {
 
   /**
    * @summary Render this attendee type in HTML.
-   * @see AttendeeType.VIEW
+   * @see Pass.AttendeeType.VIEW
    * @type {View}
    */
   get view() {
@@ -214,14 +207,14 @@ class AttendeeType {
      * @description Available displays:
      * - `AttendeeType#view()`      - default display
      * - `AttendeeType#view.pass()` - Pass__Period subcomponent
-     * @namespace AttendeeType.VIEW
+     * @namespace Pass.AttendeeType.VIEW
      * @type {View}
      */
     return new View(null, this)
       /**
        * Return an <article.c-Pass> component marking up this pass’s info.
        * @summary Call `AttendeeType#view.pass()` to render this display.
-       * @function AttendeeType.VIEW.pass
+       * @function Pass.AttendeeType.VIEW.pass
        * @param   {number} price the price for this attendee type given a certain pass and registration period
        * @param   {boolean} is_body `true` if this attendee type happens to be in the pass body
        * @returns {string} HTML output

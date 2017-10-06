@@ -155,11 +155,11 @@ class Person {
 
   /**
    * @summary Mark this person as starred.
-   * @param   {boolean=true} bool if true, mark as starred
+   * @param   {boolean=} bool if true, mark as starred
    * @returns {Person} this person
    */
-  star(bool) {
-    this._is_starred = (arguments.length) ? bool : true
+  star(bool = true) {
+    this._is_starred = bool
     return this
   }
   /**
@@ -282,7 +282,7 @@ class Person {
         return returned
       })
       /**
-       * Return an <article.c-Speaker> component marking up this person’s info.
+       * Return an `<article.c-Speaker>` component marking up this person’s info.
        * @summary Call `Person#view.speaker()` to render this display.
        * @function Person.VIEW.speaker
        * @returns {string} HTML output

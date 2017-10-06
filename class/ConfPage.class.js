@@ -36,11 +36,11 @@ class ConfPage extends Page {
 
   /**
    * @summary Hide or show this page.
-   * @param   {boolean=true} bool hides or shows this page
+   * @param   {boolean=} bool hides or shows this page
    * @returns {Page} this page
    */
-  hide(bool) {
-    this._is_hidden = (arguments.length) ? bool : true
+  hide(bool = true) {
+    this._is_hidden = bool
     return this
   }
   /**

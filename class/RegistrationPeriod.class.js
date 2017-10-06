@@ -81,7 +81,7 @@ class RegistrationPeriod {
      */
     return new View(null, this)
       /**
-       * Return a <section.c-Pass__Period> subcomponent marking up this period’s info.
+       * Return a `<section.c-Pass__Period>` subcomponent marking up this period’s info.
        * @summary Call `RegistrationPeriod#view.pass()` to render this display.
        * @function RegistrationPeriod.VIEW.pass
        * @param  {Pass} $pass the Pass component in which this registration period is rendered

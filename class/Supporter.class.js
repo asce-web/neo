@@ -77,7 +77,7 @@ class Supporter {
      */
     return new View(null, this)
       /**
-       * Return a <a.c-SupporterBlock__Logo> subcomponent, an image of the supporter logo.
+       * Return a `<a.c-SupporterBlock__Logo>` subcomponent, an image of the supporter logo.
        * @summary Call `Supporter#view.supporterBlock()` to render this display.
        * @function Supporter.VIEW.supporterBlock
        * @returns {string} HTML output

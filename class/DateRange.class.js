@@ -93,7 +93,7 @@ class DateRange {
      */
     return new View(null, this)
       /**
-       * Return an <li.c-DateBlock__Item> subcomponent containing a <dt>–<dd> pair,
+       * Return an `<li.c-DateBlock__Item>` subcomponent containing a <dt>–<dd> pair,
        * marking up this date range as an important date with date and description.
        * @summary Call `DateRange#view.dateBlock()` to render this display.
        * @function DateRange.VIEW.dateBlock
@@ -127,7 +127,7 @@ class DateRange {
           .html()
       })
       /**
-       * Return an <li.c-TimeBlock__Item> subcomponent containing a <dt>–<dd> pair,
+       * Return an `<li.c-TimeBlock__Item>` subcomponent containing a <dt>–<dd> pair,
        * marking up this date range as a session with time and name.
        * @summary Call `DateRange#view.timeBlock()` to render this display.
        * @function DateRange.VIEW.timeBlock
@@ -162,7 +162,7 @@ class DateRange {
           .html()
       })
       /**
-       * Return an <time.c-ProgramHn> component marking up this date range’s start date.
+       * Return an `<time.c-ProgramHn>` component marking up this date range’s start date.
        * @summary Call `DateRange#view.programHn()` to render this display.
        * @function DateRange.VIEW.programHn
        * @returns {string} HTML output

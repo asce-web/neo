@@ -233,7 +233,7 @@ class ConfSite extends Page {
      */
     return new View(null, this)
       /**
-       * Return an <a.c-SiteTitle> component marking up this conference site’s info.
+       * Return an `<a.c-SiteTitle>` component marking up this conference site’s info.
        * @summary Call `ConfSite#view.siteTitle()` to render this display.
        * @function ConfSite.VIEW.siteTitle
        * @returns {string} HTML output

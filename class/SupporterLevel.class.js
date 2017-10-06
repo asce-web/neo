@@ -52,7 +52,7 @@ class SupporterLevel {
      */
     return new View(null, this)
       /**
-       * Return a <section.c-SupporterBlock> component containing the supporters that have this level.
+       * Return a `<section.c-SupporterBlock>` component containing the supporters that have this level.
        * @summary Call `SupporterLevel#view.supporterBlock()` to render this display.
        * @function SupporterLevel.VIEW.supporterBlock
        * @param  {Conference} $conference the conference from which to extract supporters having this as their level
@@ -77,20 +77,18 @@ class SupporterLevel {
           .html()
       })
   }
+}
 
 
 
-  /**
-   * Enum for supporter level logo sizes.
-   * @enum {string}
-   */
-  static get LogoSize() {
-    return {
-      /** Logo size for top-level supporters. */ LARGE : 'lrg',
-      /** Logo size for mid-level supporters. */ MEDIUM: 'med',
-      /** Logo size for low-level supporters. */ SMALL : 'sml',
-    }
-  }
+/**
+ * @summary Enum for supporter level logo sizes.
+ * @enum {string}
+ */
+SupporterLevel.LogoSize = {
+  /** Logo size for top-level supporters. */ LARGE : 'lrg',
+  /** Logo size for mid-level supporters. */ MEDIUM: 'med',
+  /** Logo size for low-level supporters. */ SMALL : 'sml',
 }
 
 module.exports = SupporterLevel

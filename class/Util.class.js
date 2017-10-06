@@ -10,9 +10,10 @@ class Util {
 
   /**
    * NOTE: TYPE DEFINITION
+   * ```json
    * {
    *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "StateObj",
+   *   "title": "Util.StateObj",
    *   "type": "object",
    *   "additionalProperties": false,
    *   "required": ["index", "name", "pop", "area", "region"],
@@ -24,7 +25,8 @@ class Util {
    *     "region": { "type": "Util.Region", "description": "region of US" }
    *   }
    * }
-   * @typedef {Object} StateObj
+   * ```
+   * @typedef  {Object} Util.StateObj
    * @property {string} index  - the postal code for the state
    * @property {string} name   - the name of the state
    * @property {number} pop    - population in people
@@ -93,9 +95,10 @@ class Util {
 
   /**
    * NOTE: TYPE DEFINITION
+   * ```json
    * {
    *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "Icon",
+   *   "title": "Util.Icon",
    *   "type": "object",
    *   "additionalProperties": false,
    *   "required": ["content", "fallback", "html"],
@@ -105,7 +108,8 @@ class Util {
    *     "html"    : { "type": "string", "description": "html entity" }
    *   }
    * }
-   * @typedef {Object} Icon
+   * ```
+   * @typedef  {Object} Util.Icon
    * @property {string} content  - the keyword used for the ligature
    * @property {string} fallback - unicode code point
    * @property {string} html     - html entity
@@ -113,7 +117,7 @@ class Util {
 
   /**
    * @summary List of icon objects used in Conf styles.
-   * @type {Array<Icon>}
+   * @type {Array<Util.Icon>}
    */
   static get ICON_DATA() {
     return [
@@ -140,7 +144,7 @@ class Util {
 
   /**
    * @summary Data for social media networks.
-   * @type {Object<{name:string, icon}>}
+   * @type {Object<{name:string, icon:Util.Icon}>}
    */
   static get SOCIAL_DATA() {
     return {
@@ -184,7 +188,7 @@ class Util {
      */
     return new View(null, data)
       /**
-       * Return a <ul> of button links for a highlighted content block.
+       * Return a `<ul>` of button links for a highlighted content block.
        * ```pug
        * ul.o-List.o-Flex.o-ListAction
        *   each item in data
@@ -194,7 +198,7 @@ class Util {
        * ```
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
-       * @param   {Array<Element>} data the <a> elements to render
+       * @param   {Array<Element>} data the `<a>` elements to render
        * @param   {string=} buttonclasses the classes to add to the buttons
        * @returns {string} HTML output
        */
@@ -232,29 +236,27 @@ class Util {
 
   /**
    * @summary Return a string part of an icon.
-   * @param   {Object} icon          the icon object to parse
-   * @param   {string} icon.content  the keyword of the icon
-   * @param   {string} icon.fallback the unicode codepoint of the icon
-   * @param   {boolean=} fb          true if the fallback is preferred over the content
-   * @returns {string}               `icon.fallback` if fallback==true, else `icon.content`
+   * @param   {Util.Icon} icon the icon object to parse
+   * @param   {boolean=} fb true if the fallback is preferred over the content
+   * @returns {string} if `fb===true`, `icon.fallback`; else `icon.content`
    */
-  static iconToString(icon, fb) {
+  static iconToString(icon, fb = false) {
     return (fb) ? icon.fallback : icon.content
   }
+}
 
-  /**
-   * @summary Enum for state regions.
-   * @enum {string}
-   */
-  static get Region() {
-    return {
-      SOUTH    : 's',
-      WEST     : 'w',
-      SOUTHWEST: 'sw',
-      NORTHEAST: 'ne',
-      MIDWEST  : 'mw',
-    }
-  }
+
+
+/**
+ * @summary Enum for state regions.
+ * @enum {string}
+ */
+Util.Region = {
+  SOUTH    : 's',
+  WEST     : 'w',
+  SOUTHWEST: 'sw',
+  NORTHEAST: 'ne',
+  MIDWEST  : 'mw',
 }
 
 module.exports = Util
