@@ -1,5 +1,5 @@
 const Color    = require('extrajs-color')
-const ConfSite = require('../../../_models/ConfSite.class.js')
+const ConfSite = require('../../../class/ConfSite.class.js')
 
 $('input.js-picker').change(function () {
   var primary = Color.fromString($('input.js-picker-primary').val())
