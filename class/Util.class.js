@@ -214,7 +214,7 @@ class Util {
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
        * rows of {@link DateRange.VIEW.dateBlock|DateRange#view.dateBlock()} displays.
-       * Parameter `data` should be an {Array<DateRange>}.
+       * Parameter `data` should be of type `{Array<DateRange>}`, e.g., a list of important dates.
        * @summary Call `Util.view(data).dateBlock()` to render this display.
        * @function Util.VIEW.dateBlock
        * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
@@ -224,6 +224,21 @@ class Util {
         return new Element('table').attr(attr).addContent(
           new Element('tbody').class('c-DateBlock')
             .addContent(data.map(($importantDate) => $importantDate.view.dateBlock()))
+        ).html()
+      })
+      /**
+       * Return a table containing a `<tbody.c-TimeBlock>` component, containing
+       * rows of {@link DateRange.VIEW.timeBlock|DateRange#view.timeBlock()} displays.
+       * Parameter `data` should be of type `{Array<DateRange>}`, e.g., a list of sessions.
+       * @summary Call `Util.view(data).timeBlock()` to render this display.
+       * @function Util.VIEW.timeBlock
+       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
+       * @returns {string} HTML output
+       */
+      .addDisplay(function timeBlock(attr = {}) {
+        return new Element('table').attr(attr).addContent(
+          new Element('tbody').class('c-TimeBlock')
+            .addContent(data.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
         ).html()
       })
   }
