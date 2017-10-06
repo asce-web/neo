@@ -4,10 +4,8 @@ const Util    = require('./Util.class.js')
 
 /**
  * An interval of dates in which registration prices are set.
- * REVIEW may not need this class
- * @module
  */
-module.exports = class RegistrationPeriod {
+class RegistrationPeriod {
   /**
    * Construct a new RegistrationPeriod object.
    * The name, start date, and end date
@@ -25,45 +23,45 @@ module.exports = class RegistrationPeriod {
   }
 
   /**
-   * Get the name of this registration period.
-   * @return {string} the name of this registration period
+   * @summary Get the name of this registration period.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
 
   /**
-   * Get the start date of this registration period.
-   * @return {Date} the start date of this registration period
+   * @summary Get the start date of this registration period.
+   * @type {Date}
    */
   get startDate() {
     return this._START || new Date()
   }
 
   /**
-   * Get the end date of this registration period.
-   * @return {Date} the end date of this registration period
+   * @summary Get the end date of this registration period.
+   * @type {Date}
    */
   get endDate() {
     return this._END || new Date()
   }
 
   /**
-   * Set the icon of this registration period.
-   * REVIEW: if icons are the same suite-wide, this can be removed.
+   * @summary Set the icon of this registration period.
    * @param {string} key the keyword of the icon to set
    */
   setIcon(key) {
+    // REVIEW: if icons are the same suite-wide, this can be removed.
     this._icon = Util.ICON_DATA.find((item) => item.content===key)
     return this
   }
   /**
-   * Get the icon of this registration period.
-   * REVIEW: if icons are the same suite-wide, this can be removed.
-   * @param  {boolean=} fallback if true, get the unicode code point
-   * @return {string} if fallback, the unicode code point, else, the keyword of the icon
+   * @summary Get the icon of this registration period.
+   * @param   {boolean=} fallback if true, get the unicode code point
+   * @returns {string} if fallback, the unicode code point, else, the keyword of the icon
    */
   getIcon(fallback) {
+    // REVIEW: if icons are the same suite-wide, this can be removed.
     return (this._icon) ? Util.iconToString(this._icon, fallback) : ''
   }
 
@@ -99,20 +97,21 @@ module.exports = class RegistrationPeriod {
             itemscope: '',
             itemtype : 'https://schema.org/AggregateOffer',
           })
-          .addElements([
-            new Element('h1').class('c-Pass__Period__Hn').attr('itemprop','name')
-              .addElements([ new Element('span').class('-d-n').addContent(`${$pass.name}: `) ]) // NOTE: `.-d-n` hides from AT but reveals to Microdata
-              .addContent(this.name),
-            // new Element('meta').attr({ content:$pass.getAttendeeTypesAll().length, itemprop:'offerCount' }), // TODO use number arg on helpers-js@0.4.1 update
-            new Element('meta').attr({ content:`${$pass.getAttendeeTypesAll().length}`, itemprop:'offerCount' }), // TODO use number arg on helpers-js@0.4.1 update
-            // NOTE the getters below return `new Date()` if none is set
+          .addContent([
+            new Element('h1').class('c-Pass__Period__Hn').attr('itemprop','name').addContent([
+              new Element('span').class('-d-n').addContent(`${$pass.name}: `), // NOTE: `.-d-n` hides from AT but reveals to Microdata
+              this.name
+            ]),
+            new Element('meta').attr({ content:$pass.getAttendeeTypesAll().length, itemprop:'offerCount' }),
             (this.startDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
             (this.  endDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,
             new Element('dl').addContent($pass.getAttendeeTypesAll().map((att_type) =>
               att_type.view.pass(42.87, is_body) // TODO price is 42 for now
-            ).join('')),
+            )),
           ])
           .html()
       })
   }
 }
+
+module.exports = RegistrationPeriod

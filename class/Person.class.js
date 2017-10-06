@@ -6,9 +6,8 @@ const Util    = require('./Util.class.js')
  * A person.
  * Can be used for any role on the site,
  * e.g., speaker, chair, or ASCE staff member.
- * @module
  */
-module.exports = class Person {
+class Person {
   /**
    * Construct a new Person object.
    * @param {string} id a unique identifier of the person
@@ -39,26 +38,25 @@ module.exports = class Person {
   }
 
   /**
-   * Get the id of this person.
-   * @return {string} the unique id of this person
+   * @summary Get the id of this person.
+   * @type {string}
    */
   get id() {
     return this._ID
   }
 
   /**
-   * Get the name object of this person.
-   * @return {Object} a shallow object representing this person’s name
+   * @summary Get the name object of this person.
+   * @type {Object}
    */
   get name() {
-    //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._NAME)
   }
 
   /**
-   * Set or get this person’s job title.
-   * @param  {string=} text the job title
-   * @return {(Person|string)} this person || the job title
+   * @summary Set or get this person’s job title.
+   * @param   {string=} text the job title
+   * @returns {(Person|string)} this person || the job title
    */
   jobTitle(text) {
     if (arguments.length) {
@@ -68,9 +66,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s affiliation.
-   * @param  {string=} text the affiliation
-   * @return {(Person|string)} this person || the affiliation
+   * @summary Set or get this person’s affiliation.
+   * @param   {string=} text the affiliation
+   * @returns {(Person|string)} this person || the affiliation
    */
   affiliation(text) {
     if (arguments.length) {
@@ -80,9 +78,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s headshot image.
-   * @param  {string=} text the url pointing to the headshot image
-   * @return {(Person|string)} this person || the headshot image url
+   * @summary Set or get this person’s headshot image.
+   * @param   {string=} text the url pointing to the headshot image
+   * @returns {(Person|string)} this person || the headshot image url
    */
   img(url) {
     if (arguments.length) {
@@ -92,9 +90,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s email address.
-   * @param  {string=} text the email address
-   * @return {(Person|string)} this person || the email address
+   * @summary Set or get this person’s email address.
+   * @param   {string=} text the email address
+   * @returns {(Person|string)} this person || the email address
    */
   email(text) {
     if (arguments.length) {
@@ -104,9 +102,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s telephone number.
-   * @param  {string=} text the telephone number
-   * @return {(Person|string)} this person || the telephone number
+   * @summary Set or get this person’s telephone number.
+   * @param   {string=} text the telephone number
+   * @returns {(Person|string)} this person || the telephone number
    */
   phone(text) {
     if (arguments.length) {
@@ -116,9 +114,9 @@ module.exports = class Person {
   }
 
   /**
-   * Set or get this person’s homepage.
-   * @param  {string=} text the homepage
-   * @return {(Person|string)} this person || the homepage
+   * @summary Set or get this person’s homepage.
+   * @param   {string=} text the homepage
+   * @returns {(Person|string)} this person || the homepage
    */
   url(text) {
     if (arguments.length) {
@@ -128,45 +126,45 @@ module.exports = class Person {
   }
 
   /**
-   * Add a social network profile to this person.
-   * @param {string} network_name the name of the social network
-   * @param {string} url the URL of this person’s profile on the network
-   * @param {string=} text optional advisory text
-   * @return {Person} this person
+   * @summary Add a social network profile to this person.
+   * @param   {string} network_name the name of the social network
+   * @param   {string} url the URL of this person’s profile on the network
+   * @param   {string=} text optional advisory text
+   * @returns {Person} this person
    */
   addSocial(network_name, url, text) {
     this._social[network_name] = { url: url, text: text }
     return this
   }
   /**
-   * Retrieve a social network profile of this person.
-   * @param  {string} network_name the name of the social network
-   * @return {Object} an object representing the social network profile
+   * @summary Retrieve a social network profile of this person.
+   * @param   {string} network_name the name of the social network
+   * @returns {Object} an object representing the social network profile
    */
   getSocial(network_name) {
     return this._social[network_name]
   }
   /**
-   * Return an object representing all social network profiles of this person.
-   * @return {Object} shallow clone of this person’s social object
+   * @summary Return an object representing all social network profiles of this person.
+   * @returns {Object} shallow clone of this person’s social object
    */
   getSocialAll() {
     //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._social) // shallow clone this.social into {}
+    return Object.assign({}, this._social)
   }
 
   /**
-   * Mark this person as starred.
-   * @param  {boolean=true} bool if true, mark as starred
-   * @return {Person} this person
+   * @summary Mark this person as starred.
+   * @param   {boolean=true} bool if true, mark as starred
+   * @returns {Person} this person
    */
   star(bool) {
     this._is_starred = (arguments.length) ? bool : true
     return this
   }
   /**
-   * Get the starred status of this person.
-   * @return {boolean} whether this person is starred
+   * @summary Get the starred status of this person.
+   * @returns {boolean} whether this person is starred
    */
   isStarred() {
     return this._is_starred
@@ -199,12 +197,13 @@ module.exports = class Person {
      * @returns {string} HTML output
      */
     return new View(function () {
-      // REVIEW INDENTATION
-        return new Element('span').attr('itemprop','name')
-          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
-          .addContent(` `)
-          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
-          .html()
+      return new Element('span').attr('itemprop','name')
+        .addContent([
+          new Element('span').attr('itemprop','givenName').addContent(this.name.given_name),
+          ` `,
+          new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name),
+        ])
+        .html()
     }, this)
       /**
        * Return this person’s name in "First Middle Last" format.
@@ -214,11 +213,13 @@ module.exports = class Person {
        */
       .addDisplay(function fullName() {
         return new Element('span').attr('itemprop','name')
-          .addElements([new Element('span').attr('itemprop','givenName').addContent(this.name.given_name)])
-          .addContent(` `)
-          .addElements([new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name)])
-          .addContent(` `)
-          .addElements([new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name)])
+          .addContent([
+            new Element('span').attr('itemprop','givenName').addContent(this.name.given_name),
+            ` `,
+            new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name),
+            ` `,
+            new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name),
+          ])
           .html()
       })
       /**
@@ -248,16 +249,10 @@ module.exports = class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
-        // REVIEW INDENTATION
-      return `${this.view.entireName()}, ${
-        new Element('span').class('-fs-t').attr({
-          itemprop : 'affiliation',
-          itemscope: '',
-          itemtype : 'http://schema.org/Organization',
-        }).addElements([
-          new Element('span').attr('itemprop','name').addContent(this.affiliation())
-        ]).html()
-      }`
+        return `${this.view.entireName()}, ${new Element('span').class('-fs-t')
+          .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
+          .addContent(new Element('span').attr('itemprop','name').addContent(this.affiliation()))
+          .html()}`
       })
       /**
        * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
@@ -299,11 +294,11 @@ module.exports = class Person {
           itemprop : 'performer',
           itemscope: '',
           itemtype : 'http://schema.org/Person',
-        }).addElements([
+        }).addContent([
           new Element('img').class('c-Speaker__Img h-Block')
             .attr('src', this.img())
             .attr('itemprop','image'),
-          new Element('header').class('c-Speaker__Head').addElements([
+          new Element('header').class('c-Speaker__Head').addContent([
             new Element('h1').class('c-Speaker__Name')
               .id(this.id)
               .addContent(this.view.entireName()),
@@ -314,9 +309,7 @@ module.exports = class Person {
               itemprop : 'affiliation',
               itemscope: '',
               itemtype : 'http://schema.org/Organization',
-            }).addElements([
-              new Element('span').attr('itemprop','name').addContent(this.affiliation())
-            ]),
+            }).addContent(new Element('span').attr('itemprop','name').addContent(this.affiliation())),
           ]),
           // new Element('div').class('c-Speaker__Body').attr('itemprop','description'),
           new Element('footer').class('c-Speaker__Foot').addContent(pug`
@@ -343,3 +336,5 @@ module.exports = class Person {
       })
   }
 }
+
+module.exports = Person

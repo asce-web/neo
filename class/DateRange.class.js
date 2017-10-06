@@ -5,9 +5,8 @@ const View    = require('extrajs-view')
 /**
  * A range of dates.
  * Has start and end dates, name, and optional url.
- * @module
  */
-module.exports = class DateRange {
+class DateRange {
   /**
    * Construct a new DateRange object.
    * @param {Object=} $actioninfo an object with the following immutable properties:
@@ -24,33 +23,33 @@ module.exports = class DateRange {
   }
 
   /**
-   * Get the name of this date range.
-   * @return {string} the name of this date range
+   * @summary Get the name of this date range.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
 
   /**
-   * Return the start date value of this date range.
-   * @return {Date} the start date of this date range
+   * @summary Return the start date value of this date range.
+   * @type {Date}
    */
   get start() {
     return this._START
   }
 
   /**
-   * Return the end date value of this date range.
-   * @return {?Date} the end date of this date range
+   * @summary Return the end date value of this date range.
+   * @type {?Date}
    */
   get end() {
     return this._END || null
   }
 
   /**
-   * Set or get the url of this date range.
-   * @param  {string=} url the url of this date range
-   * @return {(DateRange|string)} this date range || the url of this date range
+   * @summary Set or get the url of this date range.
+   * @param   {string=} url the url of this date range
+   * @returns {(DateRange|string)} this date range || the url of this date range
    */
   url(url) {
     if (arguments.length) {
@@ -60,17 +59,17 @@ module.exports = class DateRange {
   }
 
   /**
-   * Mark this date range as starred.
-   * @param  {boolean=} bool if `true`, mark as starred
-   * @return {DateRange} this date range
+   * @summary Mark this date range as starred.
+   * @param   {boolean=} bool if `true`, mark as starred
+   * @returns {DateRange} this date range
    */
   star(bool = true) {
     this._is_starred = bool
     return this
   }
   /**
-   * Get the starred status of this date range.
-   * @return {boolean} whether this date range is starred
+   * @summary Get the starred status of this date range.
+   * @returns {boolean} whether this date range is starred
    */
   isStarred() {
     return this._is_starred
@@ -108,27 +107,21 @@ module.exports = class DateRange {
             itemscope: '',
             itemtype: 'http://schema.org/Action',
           })
-          .addElements([
-            new Element('td').class('c-DateBlock__Date')
-              .addElements([
-                new Element('time')
-                  .attr({ datetime: this.start.toISOString(), itemprop: 'startTime' })
-                  .addContent(xjs.Date.format(this.start, 'M j, Y'))
-              ])
-              .addContent((this.end) ? `&ndash;` : '')
-              .addElements([
-                (this.end) ? new Element('time')
-                  .attr({ datetime: this.end.toISOString(), itemprop: 'endTime' })
-                  .addContent(xjs.Date.format(this.end, 'M j, Y')) : null
-              ]),
+          .addContent([
+            new Element('td').class('c-DateBlock__Date').addContent([
+              new Element('time')
+                .attr({ datetime: this.start.toISOString(), itemprop: 'startTime' })
+                .addContent(xjs.Date.format(this.start, 'M j, Y')),
+              (this.end) ? `&ndash;` : '',
+              (this.end) ? new Element('time')
+                .attr({ datetime: this.end.toISOString(), itemprop: 'endTime' })
+                .addContent(xjs.Date.format(this.end, 'M j, Y')) : null,
+            ]),
             new Element('td').class('c-DateBlock__Desc')
               .attr('itemprop','name')
-              .addContent((this.url()) ?
-                new Element('a').class('c-DateBlock__Link')
-                  .attr({ href: this.url(), itemprop: 'url' })
-                  .addContent(this.name)
-                  .html()
-                : this.name
+              .addContent((this.url()) ? new Element('a').class('c-DateBlock__Link')
+                .attr({ href: this.url(), itemprop: 'url' })
+                .addContent(this.name) : this.name
               ),
           ])
           .html()
@@ -149,28 +142,21 @@ module.exports = class DateRange {
             itemscope: '',
             itemtype: 'http://schema.org/Event',
           })
-          .addElements([
-            new Element('td').class('c-TimeBlock__Times')
-              .addElements([
-                new Element('time')
-                  .attr({ datetime: this.start.toISOString(), itemprop: 'startDate' })
-                  .addContent(xjs.Date.format(this.start, 'g:ia'))
-              ])
-              .addContent((this.end) ? `&ndash;` : '')
-              .addElements([
-                (this.end) ? new Element('time')
-                  .attr({ datetime: this.end.toISOString(), itemprop: 'endDate' })
-                  .addContent(xjs.Date.format(this.end, 'g:ia')) : null
-              ]),
-            new Element('td').class('c-TimeBlock__Desc')
-              .addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
+          .addContent([
+            new Element('td').class('c-TimeBlock__Times').addContent([
+              new Element('time')
+                .attr({ datetime: this.start.toISOString(), itemprop: 'startDate' })
+                .addContent(xjs.Date.format(this.start, 'g:ia')),
+              (this.end) ? `&ndash;` : '',
+              (this.end) ? new Element('time')
+                .attr({ datetime: this.end.toISOString(), itemprop: 'endDate' })
+                .addContent(xjs.Date.format(this.end, 'g:ia')) : null,
+            ]),
+            new Element('td').class('c-TimeBlock__Desc').addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
               .attr('itemprop','name')
-              .addContent((this.url()) ?
-                new Element('a').class('c-TimeBlock__Link')
-                  .attr({ href: this.url(), itemprop: 'url' })
-                  .addContent(this.name)
-                  .html()
-                : this.name
+              .addContent((this.url()) ? new Element('a').class('c-TimeBlock__Link')
+                .attr({ href: this.url(), itemprop: 'url' })
+                .addContent(this.name) : this.name
               ),
           ])
           .html()
@@ -185,10 +171,14 @@ module.exports = class DateRange {
         return new Element('time').class('c-ProgramHn h-Block')
           .attr('data-instanceof','DateRange')
           .attr('datetime',this.start.toISOString())
-          .addContent(`${xjs.Date.DAY_NAMES[this.start.getUTCDay()]},`)
-          .addElements([new Element('br')])
-          .addContent(xjs.Date.format(this.start, 'M j'))
+          .addContent([
+            `${xjs.Date.DAY_NAMES[this.start.getUTCDay()]},`,
+            new Element('br'),
+            xjs.Date.format(this.start, 'M j'),
+          ])
           .html()
       })
   }
 }
+
+module.exports = DateRange

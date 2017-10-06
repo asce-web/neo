@@ -3,9 +3,8 @@ const View    = require('extrajs-view')
 
 /**
  * A group of supporters with a similar level of support or donation.
- * @module
  */
-module.exports = class SupporterLevel {
+class SupporterLevel {
   /**
    * Construct a new SupporterLevel object, given an (immutable) name.
    * @param {string} name the name of the level (e.g. 'Gold')
@@ -17,18 +16,18 @@ module.exports = class SupporterLevel {
   }
 
   /**
-   * Get the name of this supporter level.
-   * @return {string} the name of this supporter level
+   * @summary Get the name of this supporter level.
+   * @type {string}
    */
   get name() {
     return this._NAME
   }
 
   /**
-   * Set or get the sizing of this supporter level.
-   * The sizing informs the size of the supporter logo in this supporter level.
-   * @param  {SupporterLevel.LogoSize} size the sizing of this supporter level’s logos
-   * @return {(SupporterLevel|SupporterLevel.LogoSize)} this supporter level | the sizing
+   * @summary Set or get the sizing of this supporter level.
+   * @description The sizing informs the size of the supporter logo in this supporter level.
+   * @param   {SupporterLevel.LogoSize} size the sizing of this supporter level’s logos
+   * @returns {(SupporterLevel|SupporterLevel.LogoSize)} this supporter level | the sizing
    */
   size(size) {
     if (arguments.length) {
@@ -63,9 +62,9 @@ module.exports = class SupporterLevel {
         return new Element('section').class('c-SupporterBlock')
           .addClass((this.size()) ? `c-SupporterBlock--${this.size()}` : '')
           .attr('data-instanceof','SupporterLevel')
-          .addElements([
+          .addContent([
             new Element('h1').class('c-SupporterBlock__Hn').addContent(this.name),
-            new Element('ul').class('o-List o-Flex c-SupporterBlock__List').addElements(
+            new Element('ul').class('o-List o-Flex c-SupporterBlock__List').addContent(
               $conference.getSupportersAll()
                 .filter(($supporter) => $supporter.level()===this.name)
                 .map(($supporter) =>
@@ -93,3 +92,5 @@ module.exports = class SupporterLevel {
     }
   }
 }
+
+module.exports = SupporterLevel
