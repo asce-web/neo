@@ -241,6 +241,23 @@ class Util {
             .addContent(data.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
         ).html()
       })
+      /**
+       * Return a `<ul.o-ListStacked>` component, containing items of
+       * {@link Pass.VIEW.pass|Pass#view.pass()} displays.
+       * Parameter `data` should be of type `{Array<Pass>}`.
+       * @summary Call `Util.view(data).pass()` to render this display.
+       * @function Util.VIEW.pass
+       * @param   {Conference} $conference the conference to which these passes belong
+       * @returns {string} HTML output
+       */
+      .addDisplay(function pass($conference) {
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
+          data.map(($pass) =>
+            new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
+              .addContent($pass.view.pass($conference))
+          )
+        ).html()
+      })
   }
 
   /**

@@ -1,5 +1,0 @@
-mixin passList($conference, starred)
-  ul.o-List.o-Flex.o-ListStacked
-    each $pass in $conference.getPassesAll().filter(($p) => (starred) ? $p.isStarred() : true)
-      li.o-List__Item.o-Flex__Item.o-ListStacked__Item
-        != $pass.view.pass($conference)
