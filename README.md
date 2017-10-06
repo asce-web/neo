@@ -8,7 +8,7 @@ Neo theme and style guide for conference sites.
 $ git clone https://github.com/asce-web/neo.git
 $ cd ./neo/
 $ npm install
-$ gulp build
+$ npm run build
 $ npm install -g harp # may need sudo
 $ harp server -p 9000
 ```
