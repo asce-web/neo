@@ -101,8 +101,7 @@ class RegistrationPeriod {
             new Element('h1').class('c-Pass__Period__Hn').attr('itemprop','name')
               .addElements([ new Element('span').class('-d-n').addContent(`${$pass.name}: `) ]) // NOTE: `.-d-n` hides from AT but reveals to Microdata
               .addContent(this.name),
-            // new Element('meta').attr({ content:$pass.getAttendeeTypesAll().length, itemprop:'offerCount' }), // TODO use number arg on helpers-js@0.4.1 update
-            new Element('meta').attr({ content:`${$pass.getAttendeeTypesAll().length}`, itemprop:'offerCount' }), // TODO use number arg on helpers-js@0.4.1 update
+            new Element('meta').attr({ content:$pass.getAttendeeTypesAll().length, itemprop:'offerCount' }),
             // NOTE the getters below return `new Date()` if none is set
             (this.startDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
             (this.  endDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,

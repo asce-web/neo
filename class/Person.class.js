@@ -50,7 +50,6 @@ class Person {
    * @type {Object}
    */
   get name() {
-    //- NOTE returns shallow clone (like arr.slice())
     return Object.assign({}, this._NAME)
   }
 
@@ -151,7 +150,7 @@ class Person {
    */
   getSocialAll() {
     //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._social) // shallow clone this.social into {}
+    return Object.assign({}, this._social)
   }
 
   /**

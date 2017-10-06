@@ -108,12 +108,11 @@ class ConfSite extends Page {
   }
   /**
    * @summary Return an object representing all conferences of this site.
-   * FIXME this should return a deep clone, not a shallow clone
+   * @description REVIEW: warning: infinite loop possible
    * @returns {Object} shallow clone of this site’s conferences object
    */
   getConferencesAll() {
-    //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._conferences)
+    return xjs.Object.cloneDeep(this._conferences)
   }
 
   /**

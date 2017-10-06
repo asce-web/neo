@@ -417,7 +417,7 @@ class Conference {
    */
   getSocialAll() {
     //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._social) // shallow clone this.social into {}
+    return Object.assign({}, this._social)
   }
 
   // setPrice(reg_period, pass, membership, price) {
@@ -460,14 +460,11 @@ class Conference {
   groupSessions(starred) {
     let all_sessions = this.getSessionsAll().filter(($session) => (starred) ? $session.isStarred() : true)
     let $groupings = []
-    function sameDate(date1, date2) { // TODO remove on helpers-js@0.6.0
-      return date1.toISOString().slice(0,10) === date2.toISOString().slice(0,10)
-    }
     all_sessions.forEach(function ($session) {
-      if (!$groupings.find(($sessionGroup) => sameDate($sessionGroup.dateobj, $session.start))) {
+      if (!$groupings.find(($sessionGroup) => xjs.Date.sameDate($sessionGroup.dateobj, $session.start))) {
         $groupings.push({
           dateobj : $session.start,
-          sessions: all_sessions.filter((_event) => sameDate(_event.start, $session.start)),
+          sessions: all_sessions.filter((_event) => xjs.Date.sameDate(_event.start, $session.start)),
         })
       }
     })

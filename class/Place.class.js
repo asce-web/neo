@@ -137,7 +137,7 @@ class Place {
               new Element('span').class('h-Clearfix').attrStr('itemprop="postalCode"').addContent(this.postalCode),
               (this.addressCountry) ? new Element('span').class('h-Clearfix').attrStr('itemprop="addressCountry"').addContent(this.addressCountry) : null,
             ]),
-          (this.telephone) ? new Element('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : new Element('span') // TODO make null on helpers-js@0.4.1
+          (this.telephone) ? new Element('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : null
         )
       })
   }
