@@ -54,7 +54,7 @@
     "gulp-sourcemaps": "^2.6.0",
     "kss": "^3.0.0-beta.18",
     "sitepage": "^1.0.0",
-    "xmeter": "^6.0.0"
+    "xmeter": "^6.1.0"
   },
   "dependencies": {}
 }
