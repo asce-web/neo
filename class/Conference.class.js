@@ -579,7 +579,13 @@ class Conference {
                       value  : g.dateobj.toISOString(),
                       checked: (index===0) ? '' : null,
                     }),
-                    g.sessions[0].view.programHn(),// TODO make this a Util.view display using a Date obj as data
+                    new Element('time').class('c-ProgramHn h-Block')
+                      .attr('datetime',g.dateobj.toISOString())
+                      .addContent([
+                        `${xjs.Date.DAY_NAMES[g.dateobj.getUTCDay()]},`,
+                        new Element('br'),
+                        xjs.Date.format(g.dateobj, 'M j'),
+                      ]),
                   ])
                 ),
                 new Element('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').addContent(
