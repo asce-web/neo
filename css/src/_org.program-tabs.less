@@ -10,31 +10,7 @@
 //
 // Use in Pug:
 // <pre>
-//   include /_views/_o-Tabs.view.pug
-//   +tabs(2)#demoprogram
-//     mixin tab(i)
-//       != Util.view([new Date('2016-09-28'),new Date('2016-10-01')][i]).programHn()
-//     mixin panel(i)
-//       != Util.view([
-//         [
-//           new DateRange('Registration'                           , new Date('2016-09-28 10:00'), new Date('2016-09-28 19:00')),
-//           new DateRange('Technical Tours'                        , new Date('2016-09-28 10:30'), new Date('2016-09-28 16:30')).url('#0'),
-//           new DateRange('Short Courses'                          , new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')).url('#0'),
-//           new DateRange('Optional Tours'                         , new Date('2016-09-28 12:00'), new Date('2016-09-28 17:00')).url('#0'),
-//           new DateRange('Opening Welcome Reception'              , new Date('2016-09-28 17:30'), new Date('2016-09-28 19:30')),
-//           new DateRange('Community Service Project'              , new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')),
-//         ],
-//         [
-//           new DateRange('Registration'                           , new Date('2016-10-01 07:00'), new Date('2016-10-01 14:30')),
-//           new DateRange('Order of the Engineer Ceremony'         , new Date('2016-10-01 07:30'), new Date('2016-10-01 08:15')).star(),
-//           new DateRange('Optional Tour'                          , new Date('2016-10-01 08:45'), new Date('2016-10-01 11:45')).url('#0'),
-//           new DateRange('Concurrent Sessions'                    , new Date('2016-10-01 08:30'), new Date('2016-10-01 10:00')),
-//           new DateRange('Communities and Pavilion'               , new Date('2016-10-01 08:30'), new Date('2016-10-01 14:00')),
-//           new DateRange('Concurrent Sessions'                    , new Date('2016-10-01 10:15'), new Date('2016-10-01 11:45')),
-//           new DateRange('ASCE Luncheon & Closing General Session', new Date('2016-10-01 12:00'), new Date('2016-10-01 14:00')).star(),
-//           new DateRange('Technical Tours'                        , new Date('2016-10-01 14:30'), new Date('2016-10-01 17:30')).url('#0'),
-//         ]
-//       ][i]).timeBlock()
+// != conference.view.program('id-for-program', false)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
@@ -53,66 +29,81 @@
 // </footer>
 //
 // Markup:
-// <dl class="o-Flex o-Tabs" id="demoprogram">
-//   <dt class="o-Flex__Item o-Tabs__Tab">
-//     <label class="h-Block">
-//       <input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs" value="0" checked=""/>
-//       <time class="c-ProgramHn" datetime="2016-09-28">
-//         Wednesday,<br/>
-//         Sep 28
-//        </time>
-//     </label>
-//   </dt>
-//   <dd class="o-Flex__Item o-Tabs__Panel">
-//     <dl class="o-List c-TimeBlock">
-//       <li class="o-List__Item o-Flex c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
-//         <dt class="o-Flex__Item c-TimeBlock__Times">
-//           <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>&ndash;<time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
-//         </dt>
-//         <dd class="o-Flex__Item c-TimeBlock__Desc" itemprop="name">
-//           Registration
-//         </dd>
-//       </li>
-//       <li class="o-List__Item o-Flex c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
-//         <dt class="o-Flex__Item c-TimeBlock__Times">
-//           <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>&ndash;<time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
-//         </dt>
-//         <dd class="o-Flex__Item c-TimeBlock__Desc c-TimeBlock__Desc--last" itemprop="name">
-//           <a class="c-TimeBlock__Link" href="#0" itemprop="url">Technical Tours</a>
-//         </dd>
-//       </li>
-//     </dl>
-//   </dd>
-//   <dt class="o-Flex__Item o-Tabs__Tab">
-//     <label class="h-Block">
-//       <input class="o-Tabs__Check h-Hidden" type="radio" name="demotabs" value="1"/>
-//       <time class="c-ProgramHn" datetime="2016-10-01">
-//         Saturday,<br/>
-//         Oct 1
-//        </time>
-//     </label>
-//   </dt>
-//   <dd class="o-Flex__Item o-Tabs__Panel">
-//     <dl class="o-List c-TimeBlock">
-//       <li class="o-List__Item o-Flex c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
-//         <dt class="o-Flex__Item c-TimeBlock__Times">
-//           <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>&ndash;<time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
-//         </dt>
-//         <dd class="o-Flex__Item c-TimeBlock__Desc" itemprop="name">
-//           Registration
-//         </dd>
-//       </li>
-//       <li class="o-List__Item o-Flex c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
-//         <dt class="o-Flex__Item c-TimeBlock__Times">
-//           <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>&ndash;<time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
-//         </dt>
-//         <dd class="o-Flex__Item c-TimeBlock__Desc c-TimeBlock__Desc--last" itemprop="name">
-//           <a class="c-TimeBlock__Link" href="#0" itemprop="url">Technical Tours</a>
-//         </dd>
-//       </li>
-//     </dl>
-//   </dd>
-// </dl>
+// <fieldset class="o-Tablist" role="tablist">
+//   <legend class="h-Hidden">Footer Tabs</legend>
+//   <dl class="o-Flex" id="demoprogram">
+//     <dt class="o-Flex__Item o-Tablist__Tab">
+//       <label class="h-Block">
+//         <input class="o-Tablist__Check h-Hidden" type="radio" name="demotabs" value="2017-10-08" checked=""/>
+//         <time class="c-ProgramHn h-Block" datetime="2017-10-08" data-instanceof="Session">Sunday,<br/>Oct 8</time>
+//       </label>
+//     </dt>
+//     <dd class="o-Flex__Item o-Tablist__Panel">
+//       <table><tbody class="c-TimeBlock">
+//         <tr class="c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
+//           <td class="c-TimeBlock__Times">
+//             <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>
+//             &ndash;
+//             <time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
+//           </td>
+//           <td class="c-TimeBlock__Desc" itemprop="name">
+//             Registration
+//           </td>
+//         </tr>
+//         <tr class="c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
+//           <td class="c-TimeBlock__Times">
+//             <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>
+//             &ndash;
+//             <time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
+//           </td>
+//           <td class="c-TimeBlock__Desc c-TimeBlock__Desc--last" itemprop="name">
+//             <a class="c-TimeBlock__Link" href="#0" itemprop="url">Technical Tours</a>
+//           </td>
+//         </tr>
+//       </tbody></table>
+//     </dd>
+//     <dt class="o-Flex__Item o-Tablist__Tab">
+//       <label class="h-Block">
+//         <input class="o-Tablist__Check h-Hidden" type="radio" name="demotabs" value="2017-10-09"/>
+//         <time class="c-ProgramHn h-Block" datetime="2017-10-09" data-instanceof="Session">Monday,<br/>Oct 9</time>
+//       </label>
+//     </dt>
+//     <dd class="o-Flex__Item o-Tablist__Panel">
+//       <table><tbody class="c-TimeBlock">
+//         <tr class="c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
+//           <td class="c-TimeBlock__Times">
+//             <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>
+//             &ndash;
+//             <time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
+//           </td>
+//           <td class="c-TimeBlock__Desc c-TimeBlock__Desc" itemprop="name">
+//             <a class="c-TimeBlock__Link" href="#0" itemprop="url">Optional Tours</a>
+//           </td>
+//         </tr>
+//         <tr class="c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
+//           <td class="c-TimeBlock__Times">
+//             <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>
+//             &ndash;
+//             <time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
+//           </td>
+//           <td class="c-TimeBlock__Desc" itemprop="name">
+//             Networking Break
+//           </td>
+//         </tr>
+//         <tr class="c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
+//           <td class="c-TimeBlock__Times">
+//             <time datetime="2016-09-28 10:00" itemprop="startDate">10am</time>
+//             &ndash;
+//             <time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
+//           </td>
+//           <td class="c-TimeBlock__Desc c-TimeBlock__Desc--last" itemprop="name">
+//             Technical Tours
+//           </td>
+//         </tr>
+//       </tbody></table>
+//     </dd>
+//   </dl>
+// </fieldset>
 //
 // Weight: 7
 //

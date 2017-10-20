@@ -1,6 +1,7 @@
 const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
 const View    = require('extrajs-view')
+const Util    = require('./Util.class.js')
 
 /**
  * A conference event.
@@ -495,6 +496,7 @@ class Conference {
      * @description Available displays:
      * - `Conference#view.hero()`      - Hero Organism
      * - `Conference#view.otherYear()` - Other Year Organism
+     * - `Conference#view.program()`   - Program Tabs Organism
      * @namespace Conference.VIEW
      * @type {View}
      */
@@ -571,6 +573,42 @@ class Conference {
               new Element('p').class('h-Hidden-nM').addContent(blurb),
               block
             ])
+          ])
+          .html()
+      })
+      /**
+       * Return a `<fieldset.o-Tablist>` Object marking up this conference’s program sessions.
+       * Each tab contains a Program Heading Component
+       * and its panel contains a Time Block Component for that date.
+       * @summary Call `Conference#view.program()` to render this display.
+       * @function Conference.VIEW.program
+       * @param   {string} id unique id for form elements
+       * @param   {boolean=} starred `true` if you want only starred sessions to display
+       * @returns {string} HTML output
+       */
+      .addDisplay(function program(id, starred = false) {
+        var groupings = this.groupSessions(starred)
+        return new Element('fieldset').class('o-Tablist').attr('role','tablist')
+          .addContent([
+            new Element('legend').class('h-Hidden').addContent(`Footer Tabs`),
+            new Element('dl').class('o-Flex').id(id).addContent(
+              groupings.map((g, index) => Element.concat([
+                new Element('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').addContent(
+                  new Element('label').class('h-Block').addContent([
+                    new Element('input').class('o-Tablist__Check h-Hidden').attr({
+                      type   : 'radio',
+                      name   : id,
+                      value  : g.dateobj.toISOString(),
+                      checked: (index===0) ? '' : null,
+                    }),
+                    g.sessions[0].view.programHn(),// TODO make this a Util.view display using a Date obj as data
+                  ])
+                ),
+                new Element('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').addContent(
+                  Util.view(g.sessions).timeBlock()
+                ),
+              ]))
+            ),
           ])
           .html()
       })
