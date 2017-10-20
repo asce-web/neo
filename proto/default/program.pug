@@ -6,11 +6,5 @@ block append vars
 block mainReference
   section.o-Runner.o-Runner--highlight.c-Banner#full-program: div.o-Constrain
     h1.h-Hidden Full Program
-    - var groupings = site.currentConference().groupSessions(false)
-    include ../../_views/_o-Tabs.view.pug
-    +tabs(groupings.length)#full-program-block
-      mixin tab(i)
-        != groupings[i].sessions[0].view.programHn()
-      mixin panel(i)
-        != Util.view(groupings[i].sessions).timeBlock()
+    != site.currentConference().view.program('full-program-block', false)
     p: small.-fs-t Program subject to change.

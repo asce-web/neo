@@ -1,6 +1,7 @@
 const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
 const View    = require('extrajs-view')
+const Util    = require('./Util.class.js')
 
 /**
  * A conference event.
@@ -428,50 +429,6 @@ class Conference {
   //   this.registration[reg_period][pass][membership] = price
   //   return this
   // }
-  /**
-   * NOTE: TYPE DEFINITION
-   * ```json
-   * {
-   *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "Conference.SessionGroup",
-   *   "description": "a group of sessions, all of which share the same date (excluding time of day)",
-   *   "type": "object",
-   *   "additionalProperties": false,
-   *   "required": ["dateobj", "sessions"],
-   *   "properties": {
-   *     "dateobj" : { "type": "Date", "description": "the date by which the sessions are grouped" },
-   *     "sessions": {
-   *       "type": "array",
-   *       "description": "an array of Sessions whose members all have the same date",
-   *       "items": { "type": "DateRange" }
-   *     }
-   *   }
-   * }
-   * ```
-   * @typedef  {Object} Conference.SessionGroup
-   * @property {Date} dateobj the date by which the sessions are grouped
-   * @property {Array<DateRange>} sessions an array of sessions whose members all have the same date
-   */
-  /**
-   * @summary Categorize all the sessions of this conference by date and return the grouping.
-   * @description Sessions with the same date (excluding time of day) are grouped together.
-   * @see DateRange
-   * @param   {boolean=} starred if true, only consider sessions that are starred
-   * @returns {Array<Conference.SessionGroup>} an array grouping the sessions together
-   */
-  groupSessions(starred) {
-    let all_sessions = this.getSessionsAll().filter(($session) => (starred) ? $session.isStarred() : true)
-    let $groupings = []
-    all_sessions.forEach(function ($session) {
-      if (!$groupings.find(($sessionGroup) => xjs.Date.sameDate($sessionGroup.dateobj, $session.start))) {
-        $groupings.push({
-          dateobj : $session.start,
-          sessions: all_sessions.filter((_event) => xjs.Date.sameDate(_event.start, $session.start)),
-        })
-      }
-    })
-    return $groupings
-  }
 
 
   /**
@@ -495,6 +452,7 @@ class Conference {
      * @description Available displays:
      * - `Conference#view.hero()`      - Hero Organism
      * - `Conference#view.otherYear()` - Other Year Organism
+     * - `Conference#view.program()`   - Program Tabs Organism
      * @namespace Conference.VIEW
      * @type {View}
      */
@@ -571,6 +529,70 @@ class Conference {
               new Element('p').class('h-Hidden-nM').addContent(blurb),
               block
             ])
+          ])
+          .html()
+      })
+      /**
+       * Return a `<fieldset.o-Tablist>` Object marking up this conference’s program sessions.
+       * Each tab contains a Program Heading Component
+       * and its panel contains a Time Block Component for that date.
+       * @summary Call `Conference#view.program()` to render this display.
+       * @function Conference.VIEW.program
+       * @param   {string} id unique id for form elements
+       * @param   {boolean=} starred `true` if you want only starred sessions to display
+       * @returns {string} HTML output
+       */
+      .addDisplay(function program(id, starred = false) {
+        /**
+         * @summary Categorize all the sessions of this conference by date and return the grouping.
+         * @description
+         * Returns an array of objects, each with a `dateobj` property: a Date;
+         * and a `sessions` property: an array of {@link DateRange} objects,
+         * all of which share the same date (excluding time of day).
+         * @private
+         * @param   {boolean=} starred if true, only consider sessions that are starred
+         * @returns {Array<{dateobj:Date, sessions:Array<DateRange>}>} an array grouping the sessions together
+         */
+        function groupSessions(starred = false) {
+          let all_sessions = this.getSessionsAll().filter((s) => (starred) ? s.isStarred() : true)
+          let returned = []
+          all_sessions.forEach(function (s) {
+            if (!returned.find((sess_group) => xjs.Date.sameDate(sess_group.dateobj, s.start))) {
+              returned.push({
+                dateobj : s.start,
+                sessions: all_sessions.filter((t) => xjs.Date.sameDate(t.start, s.start)),
+              })
+            }
+          })
+          return returned
+        }
+        return new Element('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
+          .addContent([
+            new Element('legend').class('h-Hidden').addContent(`Footer Tabs`),
+            new Element('dl').class('o-Flex').id(id).addContent(
+              groupSessions.call(this, starred).map((g, index) => Element.concat([
+                new Element('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').addContent(
+                  new Element('label').class('h-Block').addContent([
+                    new Element('input').class('o-Tablist__Check h-Hidden').attr({
+                      type   : 'radio',
+                      name   : id,
+                      value  : g.dateobj.toISOString(),
+                      checked: (index===0) ? '' : null,
+                    }),
+                    new Element('time').class('c-ProgramHn h-Block')
+                      .attr('datetime',g.dateobj.toISOString())
+                      .addContent([
+                        `${xjs.Date.DAY_NAMES[g.dateobj.getUTCDay()]},`,
+                        new Element('br'),
+                        xjs.Date.format(g.dateobj, 'M j'),
+                      ]),
+                  ])
+                ),
+                new Element('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').addContent(
+                  Util.view(g.sessions).timeBlock()
+                ),
+              ]))
+            ),
           ])
           .html()
       })

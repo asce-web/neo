@@ -88,7 +88,6 @@ class DateRange {
      * @description Available displays:
      * - `DateRange#view.dateBlock()` - DateBlock Component, as an important date
      * - `DateRange#view.timeBlock()` - TimeBlock Component, as a session
-     * - `DateRange#view.programHn()` - ProgramHn Component (heading for a c-TimeBlock)
      * @namespace DateRange.VIEW
      * @type {View}
      */
@@ -159,23 +158,6 @@ class DateRange {
                 .attr({ href: this.url(), itemprop: 'url' })
                 .addContent(this.name) : this.name
               ),
-          ])
-          .html()
-      })
-      /**
-       * Return a `<time.c-ProgramHn>` component marking up this date range’s start date.
-       * @summary Call `DateRange#view.programHn()` to render this display.
-       * @function DateRange.VIEW.programHn
-       * @returns {string} HTML output
-       */
-      .addDisplay(function programHn() {
-        return new Element('time').class('c-ProgramHn h-Block')
-          .attr('data-instanceof','DateRange')
-          .attr('datetime',this.start.toISOString())
-          .addContent([
-            `${xjs.Date.DAY_NAMES[this.start.getUTCDay()]},`,
-            new Element('br'),
-            xjs.Date.format(this.start, 'M j'),
           ])
           .html()
       })

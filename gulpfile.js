@@ -23,6 +23,7 @@ gulp.task('pug:docs', function () {
     .pipe(pug({
       basedir: './',
       locals: {
+        Xmeter  : require('xmeter'),
         Color   : require('extrajs-color'),
         ConfSite: require('./class/ConfSite.class.js'),
         ConfPage: require('./class/ConfPage.class.js'),

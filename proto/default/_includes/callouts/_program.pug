@@ -1,13 +1,7 @@
 h1#program-highlights Program Highlights
-- var groupings = site.currentConference().groupSessions('starred')
-include ../../../../_views/_o-Tabs.view.pug
-+tabs(groupings.length)#program-highlights-block
-  mixin tab(i)
-    != groupings[i].sessions[0].view.programHn()
-  mixin panel(i)
-    != Util.view(groupings[i].sessions).timeBlock()
 -
   let highlight_buttons = [
     new Element('a').attr('href','program.html').addContent(`Full Program`)
   ]
+!= site.currentConference().view.program('program-highlights-block', true)
 != Util.view(highlight_buttons).highlightButtons()
