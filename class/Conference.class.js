@@ -566,7 +566,7 @@ class Conference {
           })
           return returned
         }
-        return new Element('fieldset').class('o-Tablist').attr('role','tablist')
+        return new Element('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
           .addContent([
             new Element('legend').class('h-Hidden').addContent(`Footer Tabs`),
             new Element('dl').class('o-Flex').id(id).addContent(
