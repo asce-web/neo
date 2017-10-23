@@ -1,3 +1,4 @@
+const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
@@ -110,6 +111,29 @@ class RegistrationPeriod {
             )),
           ])
           .html()
+      })
+      /**
+       * Return a `<li.c-Alert__Item>` component containing icons and dates for this registration period .
+       * @summary Call `RegistrationPeriod#view.legend()` to render this display.
+       * @function RegistrationPeriod.VIEW.legend
+       * @returns {string} HTML output
+       */
+      .addDisplay(function legend() {
+        return new Element('li').class('o-List__Item o-Flex__Item c-Alert__Item').addContent([
+          new Element('i').class('material-icons').attr('role','none').addContent(this.getIcon()),
+          new Element('small').addContent((function () {
+            // test equal ISOStrings because th getters return `new Date()` if none is set
+            let start_date = (this.startDate.toISOString() !== new Date().toISOString()) ? new Element('time').attr('datetime',this.startDate.toISOString()).addContent(xjs.Date.format(this.startDate, 'M j')) : false
+            let end_date   = (this.endDate.toISOString()   !== new Date().toISOString()) ? new Element('time').attr('datetime',this.endDate  .toISOString()).addContent(xjs.Date.format(this.endDate  , 'M j')) : false
+            let returned = []
+            returned.push(new Element('b').addContent(this.name))
+            if (!start_date && !end_date) { ; }
+            else if (!end_date  ) returned.push(` begins `, start_date)
+            else if (!start_date) returned.push(` ends `  , end_date)
+            else returned.push(`: `, start_date, `&ndash;`, end_date)
+            return returned
+          }).call(this)),
+        ]).html()
       })
   }
 }

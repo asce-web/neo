@@ -452,6 +452,7 @@ class Conference {
      * @description Available displays:
      * - `Conference#view.hero()`      - Hero Organism
      * - `Conference#view.otherYear()` - Other Year Organism
+     * - `Conference#view.registrationLegend()` - Legend (list) of registration periods
      * - `Conference#view.program()`   - Program Tabs Organism
      * @namespace Conference.VIEW
      * @type {View}
@@ -531,6 +532,17 @@ class Conference {
             ])
           ])
           .html()
+      })
+      /**
+       * Return a `<ul.c-Alert>` component containing the legend of registration periods for this conference.
+       * @summary Call `Conference#view.registrationLegend()` to render this display.
+       * @function Conference.VIEW.registrationLegend
+       * @returns {string} HTML output
+       */
+      .addDisplay(function registrationLegend() {
+        return new Element('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').addContent(
+          this.getRegistrationPeriodsAll().map((registration_period) => registration_period.view.legend())
+        ).html()
       })
       /**
        * Return a `<fieldset.o-Tablist>` Object marking up this conference’s program sessions.
