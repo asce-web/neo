@@ -205,7 +205,7 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return Element.data(data, {
+        return Element.data(this, {
           ordered: false,
           attributes: {
             list:  { class: 'o-List o-Flex o-Flex--even' },
@@ -226,7 +226,7 @@ class Util {
       .addDisplay(function dateBlock(attr = {}) {
         return new Element('table').attr(attr).addContent(
           new Element('tbody').class('c-DateBlock')
-            .addContent(data.map(($importantDate) => $importantDate.view.dateBlock()))
+            .addContent(this.map(($importantDate) => $importantDate.view.dateBlock()))
         ).html()
       })
       /**
@@ -241,7 +241,7 @@ class Util {
       .addDisplay(function timeBlock(attr = {}) {
         return new Element('table').attr(attr).addContent(
           new Element('tbody').class('c-TimeBlock')
-            .addContent(data.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
+            .addContent(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
         ).html()
       })
       /**
@@ -255,7 +255,7 @@ class Util {
        */
       .addDisplay(function pass($conference) {
         return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
-          data.map(($pass) =>
+          this.map(($pass) =>
             new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
               .addContent($pass.view.pass($conference))
           )
@@ -271,7 +271,7 @@ class Util {
        */
       .addDisplay(function speaker() {
         return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
-          data.map(($person) =>
+          this.map(($person) =>
             new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
               .addContent($person.view.speaker())
           )
