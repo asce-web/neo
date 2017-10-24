@@ -254,7 +254,11 @@ class Util {
        */
       .addDisplay(function registrationLegend() {
         return new Element('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').addContent(
-          this.map((registration_period) => registration_period.view.legend())
+          this.map((registration_period) =>
+            new Element('li').class('o-List__Item o-Flex__Item c-Alert__Item')
+              .attr('data-instanceof','RegistrationPeriod')
+              .addContent(registration_period.view.legend())
+          )
         ).html()
       })
       /**
