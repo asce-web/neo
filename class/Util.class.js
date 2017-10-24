@@ -185,6 +185,7 @@ class Util {
      * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
      * - `Util.view(data).dateblock()` - .c-DateBlock component
      * - `Util.view(data).timeblock()` - .c-TimeBlock component
+     * - `Util.view(data).registrationLegend()` - Legend (list) of registration periods
      * - `Util.view(data).speaker()` - .c-Speaker component
      * @namespace Util.VIEW
      * @type {View}
@@ -242,6 +243,18 @@ class Util {
         return new Element('table').attr(attr).addContent(
           new Element('tbody').class('c-TimeBlock')
             .addContent(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
+        ).html()
+      })
+      /**
+       * Return a `<ul.c-Alert>` component containing the legend of registration periods.
+       * Parameter `data` should be of type `Array<RegistrationPeriod>`.
+       * @summary Call `Util.view(data).registrationLegend()` to render this display.
+       * @function Util.VIEW.registrationLegend
+       * @returns {string} HTML output
+       */
+      .addDisplay(function registrationLegend() {
+        return new Element('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').addContent(
+          this.map((registration_period) => registration_period.view.legend())
         ).html()
       })
       /**

@@ -119,7 +119,9 @@ class RegistrationPeriod {
        * @returns {string} HTML output
        */
       .addDisplay(function legend() {
-        return new Element('li').class('o-List__Item o-Flex__Item c-Alert__Item').addContent([
+        return new Element('li').class('o-List__Item o-Flex__Item c-Alert__Item')
+          .attr('data-instanceof','RegistrationPeriod')
+          .addContent([
           new Element('i').class('material-icons').attr('role','none').addContent(this.getIcon()),
           new Element('small').addContent((function () {
             // test equal ISOStrings because th getters return `new Date()` if none is set
