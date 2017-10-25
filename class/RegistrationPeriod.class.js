@@ -126,7 +126,7 @@ class RegistrationPeriod {
         if (start_date && end_date) small.push(`: `, start_date, `&ndash;`, end_date)
         else if (start_date) small.push(` begins `, start_date)
         else if (end_date  ) small.push(` ends `  , end_date)
-        return Element.concat([
+        return new Element('p').class('c-RegPdIcon').attr('data-instanceof','RegistrationPeriod').addContent([
           new Element('i').class('material-icons').attr('role','none').addContent(this.getIcon()),
           new Element('small').addContent(small),
         ])
