@@ -259,6 +259,14 @@ class Util {
               .addContent(registration_period.view.legend())
           )
         ).html()
+        // TODO on extrajs-dom@3.1.0
+        // return Element.data(this, {
+        //   attributes: {
+        //     list : { class: 'o-List o-Flex o-Flex--even c-Alert _regLegend' },
+        //     value: { class: 'o-List__Item o-Flex__Item c-Alert__Item', 'data-instanceof': 'RegistrationPeriod' },
+        //   },
+        //   options: { display: { name: 'legend' } }
+        // })
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -271,11 +279,19 @@ class Util {
        */
       .addDisplay(function pass($conference) {
         return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
-          this.map(($pass) =>
+          this.map((pass) =>
             new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
-              .addContent($pass.view.pass($conference))
+              .addContent(pass.view.pass($conference))
           )
         ).html()
+        // TODO on extrajs-dom@3.1.0
+        // return Element.data(this, {
+        //   attributes: {
+        //     list : { class: 'o-List o-Flex o-ListStacked' },
+        //     value: { class: 'o-List__Item o-Flex__Item o-ListStacked__Item' },
+        //   },
+        //   options: { display: { name: 'pass', args: [$conference] } }
+        // })
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -287,11 +303,19 @@ class Util {
        */
       .addDisplay(function speaker() {
         return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
-          this.map(($person) =>
+          this.map((person) =>
             new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
-              .addContent($person.view.speaker())
+              .addContent(person.view.speaker())
           )
         ).html()
+        // TODO on extrajs-dom@3.1.0
+        // return Element.data(this, {
+        //   attributes: {
+        //     list : { class: 'o-List o-Flex o-ListStacked' },
+        //     value: { class: 'o-List__Item o-Flex__Item o-ListStacked__Item' },
+        //   },
+        //   options: { display: { name: 'speaker' } }
+        // })
       })
   }
 
