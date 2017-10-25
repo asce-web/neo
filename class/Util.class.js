@@ -182,6 +182,8 @@ class Util {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
+     * - `Util.view(data).pageLink()` - link to a page in a document outline / t.o.c.
+     * - `Util.view(data).pageToc()` - a document outline / t.o.c. of a page
      * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
      * - `Util.view(data).dateblock()` - .c-DateBlock component
      * - `Util.view(data).timeblock()` - .c-TimeBlock component
@@ -191,6 +193,97 @@ class Util {
      * @type {View}
      */
     return new View(null, data)
+      /**
+       * Return a Page object as a link in a document outline.
+       * Parameter `data` should be of type `Page`.
+       * @summary Call `Util.view(data).pageLink()` to render this display.
+       * @todo TODO move this display to `require('sitepage').VIEW`
+       * @function Util.VIEW.pageLink
+       * @param   {!Object=} options options for configuring output
+       * @param   {boolean=} options.icons `true` to render icons alongside the page names
+       * @param   {(boolean|string)=} options.expand `true` to render an "expand more" icon (e.g., a down-chevron),
+       *                                              or a non-empty string render the icon with the specified classes;
+       *                                              else `false` to omit the icon
+       * @param   {?Object<string>=} options.classes group set of css class configurations
+       * @param   {string=} options.classes.link css classes to add to the link
+       * @param   {string=} options.classes.icon css classes to add to the icon
+       * @returns {string} HTML output
+       */
+      .addDisplay(function pageLink(options = {}) {
+        let classes = {
+          link: (options.classes && options.classes.link) || null,
+          icon: (options.classes && options.classes.icon) || '',
+        }
+        return new Element('a').class(classes.link)
+          .attr({
+            'data-instanceof': 'Page',
+            href: this.url(),
+            // 'aria-current': (page.url()===this.url()) ? 'page' : null,
+          })
+          .addContent([
+            (options.icons) ? new Element('i').class('material-icons').addClass(classes.icon)
+              .attr('role','none').attr({role:'none'})
+              .addContent(this.getIcon())
+              : null,
+            new Element('span').addContent(this.name()),
+            (options.expand && this.findAll().length) ? new Element('i').class('material-icons')
+              .addClass((options.expand===true) ? '' : options.expanded)
+              .attr('role','none').attr({role:'none'})
+              .addContent(`expand_more`)
+              : null,
+          ])
+          .html()
+      })
+      /**
+       * Return a Page object’s document outline as a nested ordered list.
+       * Parameter `data` should be of type `Page`.
+       * @summary Call `Util.view(data).pageToc()` to render this display.
+       * @todo TODO move this display to `require('sitepage').VIEW`
+       * @function Util.VIEW.pageToc
+       * @param   {!Object=} options options for configuring output
+       * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
+       * @param   {number=} options.start group set of css class configurations
+       * @param   {number=} options.end group set of css class configurations
+       * @param   {?Object<string>=} options.classes group set of css class configurations
+       * @param   {string=} options.classes.list list classes (`<ul>`)
+       * @param   {string=} options.classes.item item classes (`<li>`)
+       * @param   {!Object=} options.options configurations for nested outlines
+       * @param   {!Object=} linkoptions configuration param to send into {@link Util.VIEW.pageLink|Util#view.pageLink()}
+       * @returns {string} HTML output
+       */
+      .addDisplay(function pageToc(options = {}, linkoptions = {}) {
+        let classes = {
+          list: (options.classes && options.classes.list) || null,
+          item: (options.classes && options.classes.item) || null,
+        }
+        let start = options.start || 0
+        let end   = options.end   || Infinity
+        return Element.data(
+          this.findAll()
+            .slice(start, end)
+            .filter((p) => !p.isHidden())
+            .map((p) =>
+              Util.view(p).pageLink(linkoptions)
+              + ((p.findAll().length && options.depth > 0) ?
+                Util.view(p).pageToc(Object.assign({}, options.options, {
+                  depth  : options.depth-1,
+                  inner  : true,
+                }), linkoptions)
+                : '')
+            ),
+          {
+            attributes: {
+              list: {
+                role : (options.inner) ? null : 'directory',
+                class: classes.list,
+              },
+              value: {
+                class: classes.item,
+              },
+            },
+          }
+        )
+      })
       /**
        * Return a `<ul>` of button links for a highlighted content block.
        * ```pug
