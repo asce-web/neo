@@ -50,21 +50,31 @@ html(lang="en")
           a.c-Button(href="#site-map") Site Map
       nav.o-Drawer#main-menu
         h1.h-Hidden Main Menu
-        +sitetoc({
-          pages: site.findAll().slice(0, -1)
-        , icons: { page: true, sub: true }
-        , depth: 1
-        , classes: {
-            listclasses: 'o-Flex c-MenuMobile-nsM c-MenuBar-sM'
-          , itemclasses: 'o-Flex__Item c-MenuMobile__Item-nsM c-MenuBar__Item-sM'
-          , linkclasses: 'c-MenuMobile__Link-nsM c-MenuBar__Link-sM h-Block'
-          , sub: {
-              listclasses: 'c-MenuMobile__Sub-nsM c-MenuBar__Sub-sM'
-            , itemclasses: 'c-MenuMobile__Sub__Item-nsM c-MenuBar__Sub__Item-sM'
-            , linkclasses: 'c-MenuMobile__Link-nsM c-MenuMobile_Sub_Link-nsM c-MenuBar__Link-sM c-MenuBar__Sub__Link-sM h-Block'
-            }
+        -
+          let mainmenu_options = {
+            depth: 1,
+            end: -1,
+            classes: {
+              list: 'o-List o-Flex c-MenuMobile-nsM c-MenuBar-sM',
+              item: 'o-List__Item o-Flex__Item c-MenuMobile__Item-nsM c-MenuBar__Item-sM',
+            },
+            links: {
+              icons: true,
+              classes: {
+                link  : 'c-MenuMobile__Link-nsM c-MenuBar__Link-sM h-Block',
+                icon  : 'c-MenuMobile__Icon -d-n-sM',
+                expand: 'c-MenuBar__Icon -d-n-nM'
+              },
+            },
+            options: {
+              classes: {
+                list: 'o-List c-MenuMobile__Sub-nsM c-MenuBar__Sub-sM',
+                item: 'o-List__Item c-MenuMobile__Sub__Item-nsM c-MenuBar__Sub__Item-sM',
+              },
+              links: { classes: { link: 'c-MenuMobile__Link-nsM c-MenuMobile_Sub_Link-nsM c-MenuBar__Link-sM c-MenuBar__Sub__Link-sM h-Block' } },
+            },
           }
-        })
+        != Util.view(site).pageToc(mainmenu_options)
     main#main
       article(itemscope="" itemtype="http://schema.org/Event")
         block mainHeader
@@ -103,7 +113,7 @@ html(lang="en")
             classes: {
               list: 'o-List c-Sitemap__Sub',
               item: 'o-List__Item c-Sitemap__Sub__Item',
-            }
+            },
           },
         }
       != Util.view(site).pageToc(sitemap_options)
