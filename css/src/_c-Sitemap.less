@@ -90,8 +90,8 @@
   margin-bottom: 0; // override base ul
   font-weight: 300;
   .font-size-el(16/20);
-  text-transform: initial; // HACK fallback for `unset`
-  text-transform: unset; // override .menufont()
+  text-transform: none; // HACK fallback for `initial`
+  text-transform: initial; // override .menufont()
   @media screen and (min-width: 45em) {
     .font-size-el(12/14);
   }
