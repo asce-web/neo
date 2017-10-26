@@ -1,3 +1,4 @@
+const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
@@ -110,6 +111,25 @@ class RegistrationPeriod {
             )),
           ])
           .html()
+      })
+      /**
+       * Return a `<li.c-Alert__Item>` component containing icons and dates for this registration period .
+       * @summary Call `RegistrationPeriod#view.legend()` to render this display.
+       * @function RegistrationPeriod.VIEW.legend
+       * @returns {string} HTML output
+       */
+      .addDisplay(function legend() {
+        // test equal ISOStrings because the getters return `new Date()` if none is set
+        let start_date = (this.startDate.toISOString() !== new Date().toISOString()) ? new Element('time').attr('datetime',this.startDate.toISOString()).addContent(xjs.Date.format(this.startDate, 'M j')) : null
+        let end_date   = (this.endDate  .toISOString() !== new Date().toISOString()) ? new Element('time').attr('datetime',this.endDate  .toISOString()).addContent(xjs.Date.format(this.endDate  , 'M j')) : null
+        let small = [new Element('b').addContent(this.name)]
+        if (start_date && end_date) small.push(`: `, start_date, `&ndash;`, end_date)
+        else if (start_date) small.push(` begins `, start_date)
+        else if (end_date  ) small.push(` ends `  , end_date)
+        return new Element('p').class('c-RegPdIcon').attr('data-instanceof','RegistrationPeriod').addContent([
+          new Element('i').class('material-icons').attr('role','none').addContent(this.getIcon()),
+          new Element('small').addContent(small),
+        ])
       })
   }
 }

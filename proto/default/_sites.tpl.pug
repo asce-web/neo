@@ -14,7 +14,7 @@ html(lang="en")
       link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic")
       link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,400italic,700")
       link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
-      link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/xmeter/v6.0.0/xmeter.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/xmeter.css")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.15.0/bangs.css")
       link(rel="stylesheet" href="../../css/neo.css")
       style.
@@ -50,21 +50,31 @@ html(lang="en")
           a.c-Button(href="#site-map") Site Map
       nav.o-Drawer#main-menu
         h1.h-Hidden Main Menu
-        +sitetoc({
-          pages: site.findAll().slice(0, -1)
-        , icons: { page: true, sub: true }
-        , depth: 1
-        , classes: {
-            listclasses: 'o-Flex c-MenuMobile-nsM c-MenuBar-sM'
-          , itemclasses: 'o-Flex__Item c-MenuMobile__Item-nsM c-MenuBar__Item-sM'
-          , linkclasses: 'c-MenuMobile__Link-nsM c-MenuBar__Link-sM h-Block'
-          , sub: {
-              listclasses: 'c-MenuMobile__Sub-nsM c-MenuBar__Sub-sM'
-            , itemclasses: 'c-MenuMobile__Sub__Item-nsM c-MenuBar__Sub__Item-sM'
-            , linkclasses: 'c-MenuMobile__Link-nsM c-MenuMobile_Sub_Link-nsM c-MenuBar__Link-sM c-MenuBar__Sub__Link-sM h-Block'
-            }
+        -
+          let mainmenu_options = {
+            depth: 1,
+            end: -1,
+            classes: {
+              list: 'o-List o-Flex c-MenuMobile-nsM c-MenuBar-sM',
+              item: 'o-List__Item o-Flex__Item c-MenuMobile__Item-nsM c-MenuBar__Item-sM',
+            },
+            links: {
+              icons: true,
+              classes: {
+                link  : 'c-MenuMobile__Link-nsM c-MenuBar__Link-sM h-Block',
+                icon  : 'c-MenuMobile__Icon -d-n-sM',
+                expand: 'c-MenuBar__Icon -d-n-nM'
+              },
+            },
+            options: {
+              classes: {
+                list: 'o-List c-MenuMobile__Sub-nsM c-MenuBar__Sub-sM',
+                item: 'o-List__Item c-MenuMobile__Sub__Item-nsM c-MenuBar__Sub__Item-sM',
+              },
+              links: { classes: { link: 'c-MenuMobile__Link-nsM c-MenuMobile_Sub_Link-nsM c-MenuBar__Link-sM c-MenuBar__Sub__Link-sM h-Block' } },
+            },
           }
-        })
+        != Util.view(site).pageToc(mainmenu_options)
     main#main
       article(itemscope="" itemtype="http://schema.org/Event")
         block mainHeader
@@ -91,8 +101,22 @@ html(lang="en")
             != Util.view(highlight_buttons).highlightButtons()
     footer.o-Runner.c-Mast.c-Mast--sitemap#site-map: nav.o-Constrain
       h1.h-Hidden Site Map
-      include ../../_views/_c-Sitemap.view.pug
-      +sitemap(site.findAll().slice(1))
+      -
+        let sitemap_options = {
+          depth: Infinity,
+          start: 1,
+          classes: {
+            list: 'o-List o-Flex c-Sitemap',
+            item: 'o-List__Item o-Flex__Item c-Sitemap__Item',
+          },
+          options: {
+            classes: {
+              list: 'o-List c-Sitemap__Sub',
+              item: 'o-List__Item c-Sitemap__Sub__Item',
+            },
+          },
+        }
+      != Util.view(site).pageToc(sitemap_options)
     footer.o-Runner.c-Mast.c-Mast--foot#connect-with-asce: div.o-Constrain
       h1.h-Hidden Connect With #[abbr(title="American Society of Civil Engineers") ASCE]
       address(itemscope="" itemtype="http://schema.org/NGO")
@@ -134,7 +158,7 @@ html(lang="en")
     }): i.material-icons(role="none") arrow_upward
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous")
-      script(src="/js/o-Tabs.js")
+      script(src="../../node_modules/xmeter/js/o-Tablist.js")
       script.
         // drawer links untabbed by default
         $('.o-Drawer').find('a').attr('tabindex', -1);
