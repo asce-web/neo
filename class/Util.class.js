@@ -192,28 +192,18 @@ class Util {
      */
     return new View(null, data)
       /**
-       * Return a `<ul>` of button links for a highlighted content block.
-       * ```pug
-       * ul.o-List.o-Flex.o-Flex--even
-       *   each item in data
-       *     li.o-List__Item.o-Flex__Item
-       *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
-       *         = item.contents
-       * ```
+       * Return an unordered list of button links for a highlighted content block.
+       * Parameter `data` should be of type `Array<Element>` (TODO: HTMLAnchorElement), i.e., a list of links.
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
        * @param   {string=} buttonclasses the classes to add to the buttons
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return Element.data(this, {
-          ordered: false,
-          attributes: {
-            list:  { class: 'o-List o-Flex o-Flex--even' },
-            value: { class: 'o-List__Item o-Flex__Item' },
-          },
-          options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
-        })
+        return new Element('ul').class('o-List o-Flex o-Flex--even').addContent(this.map((el) =>
+          new Element('li').class('o-List__Item o-Flex__Item')
+            .addContent(el.addClass(`c-Button c-Button--hilite ${buttonclasses}`))
+        )).html()
       })
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
@@ -253,13 +243,9 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function registrationLegend() {
-        return Element.data(this, {
-          attributes: {
-            list : { class: 'o-List o-Flex o-Flex--even c-Alert _regLegend' },
-            value: { class: 'o-List__Item o-Flex__Item c-Alert__Item', 'data-instanceof': 'RegistrationPeriod' },
-          },
-          options: { display: { name: 'legend' } }
-        })
+        return new Element('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').addContent(this.map((period) =>
+          new Element('li').class('o-List__Item o-Flex__Item c-Alert__Item').addContent(period.view.legend())
+        )).html()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -271,13 +257,9 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference) {
-        return Element.data(this, {
-          attributes: {
-            list : { class: 'o-List o-Flex o-ListStacked' },
-            value: { class: 'o-List__Item o-Flex__Item o-ListStacked__Item' },
-          },
-          options: { display: { name: 'pass', args: [$conference] } }
-        })
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((pass) =>
+          new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference))
+        )).html()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -288,13 +270,9 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker() {
-        return Element.data(this, {
-          attributes: {
-            list : { class: 'o-List o-Flex o-ListStacked' },
-            value: { class: 'o-List__Item o-Flex__Item o-ListStacked__Item' },
-          },
-          options: { display: { name: 'speaker' } }
-        })
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((person) =>
+          new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
+        )).html()
       })
   }
 
