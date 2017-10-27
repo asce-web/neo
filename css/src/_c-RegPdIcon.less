@@ -1,0 +1,53 @@
+
+/*################################*\
+    neo  |  _c-RegPdIcon.less
+\*################################*/
+
+
+// The Registration Period Icon
+//
+// An icon for a registration period in a legend with dates.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-10-24</time></dd>
+// </dl></header>
+//
+// Use with Pug:
+// <pre>
+// -
+//   let reg_pd = new RegistrationPeriod({
+//     name      : 'Advance',
+//     start_date: new Date('2016-07-29'),
+//     end_date  : new Date('2016-08-25'),
+//   }).setIcon('date_range')
+// != reg_pd.view.legend()
+// </pre>
+//
+// Markup:
+// <p class="c-RegPdIcon" data-instanceof="RegistrationPeriod">
+//   <i class="material-icons" role="none">date_range</i>
+//   <small><b>Advance</b>: <time datetime="2016-07-29">Jul 29</time>&ndash;<time datetime="2016-08-25">Aug 25</time></small>
+// </p>
+//
+// Weight: 9.1
+//
+// Styleguide Components.RegPdIcon
+.c-RegPdIcon {
+  text-align: center;
+  margin-bottom: 0; margin-bottom: initial;
+  margin-bottom: unset;
+  margin-block-end: unset;
+  small {
+    @media not all and (min-width: 45em) {
+      font-size: 1rem; // REVIEW magic number
+    }
+  }
+  .material-icons {
+    display: block;
+    // line-height is determined in `.material-icons` default
+    font-size: 2.25em; // REVIEW magic number
+    @media not all and (min-width: 45em) {
+      display: none;
+    }
+  }
+}

@@ -39,23 +39,23 @@
  *
  * # OBJECTS--------------------------------REUSABLE STRUCTURAL PATTERNS
  * Flex--even...............................Flexbox with everything even
+ * Tablist--program.........................Tablist extension for Progam Tabs organism
  * Runner...................................header and footer
  * Constrain................................keeps content at max width
  * GridFloat................................grid of items; legacy support
  * ListStacked..............................row of stackable items (Sponsors, Passes, Speakers, etc.)
- * Tabs.....................................tabbed panel interface
  * Drawer...................................pull-out container
  *
  * # COMPONENTS-----------------------------SPECIFIC STYLE PATTERNS
  * Mast.....................................masthead for the site
  * Banner...................................full-width block with a background image
  * SiteTitle................................area containg logo and site title and slogan
- * MenuMobile...............................mobile menu
- * MenuBar..................................navigation bar
+ * MainMenu.................................main navigation bar
  * Sitemap..................................sitemap for top (site) pages or main (internal) pages
  * PageTitle................................title of entire page
  * ConfHed..................................promo for any year conference
  * Pass.....................................a listing of prices for one Pass Type
+ * RegPdIcon................................icon for registration period in a legend
  * ProgramHn................................heading for TimeBlock
  * TimeBlock................................list of sessions for a single day
  * Speaker..................................(keynote) speaker profile
@@ -66,7 +66,7 @@
  * Button...................................buttons
  * LinkCamo.................................camouflaged links & elements
  * LinkCaps.................................link in all caps, like that of menus
- * Toggle...................................toggle button
+ * MobileMenuToggle.........................toggle button for mobile menu
  *   ## Block Section-y Components------------[description]
  *   ## Typographical Components--------------[description]
  *   ## User-Interactive Components-----------[description]
@@ -121,11 +121,11 @@
 // Styleguide Objects
 
 @import url('_o-Flex--even.less');
+@import url('_o-Tablist--program.less');
 @import url('_o-Runner.less');
 @import url('_o-Constrain.less');
 @import url('_o-GridFloat.less');
 @import url('_o-ListStacked.less');
-@import url('_o-Tabs.less');
 @import url('_o-Drawer.less');
 //++++ end # OBJECTS ++++//
 
@@ -149,40 +149,12 @@
 @import url('_c-Mast.less');
 @import url('_c-Banner.less');
 @import url('_c-SiteTitle.less');
-@import url('_c-MenuMobile.less');
-@import url('_c-MenuBar.less');
-// TODO markup for main menu component
-// header.o-Runner.c-Mast.c-Mast--menu: div.o-Constrain
-//   nav.o-Drawer
-//     h1.h-Hidden#main-menu Main Menu
-//     +sitetoc({
-//       icons: { page: true, sub: true },
-//       depth: 1,
-//       pages: [
-//         new ConfPage('Home', '#0').setIcon('insert_drive_file'),
-//         new ConfPage('Registration', '#0').setIcon('insert_drive_file')
-//           .add(new ConfPage('Why Attend', '#0')),
-//         new ConfPage('Program', '#0').setIcon('insert_drive_file')
-//           .add(new ConfPage('Short Courses', '#0'))
-//           .add(new ConfPage('Technical Tours', '#0')),
-//         new ConfPage('Location', '#0').setIcon('insert_drive_file'),
-//         new ConfPage('Speakers', '#0').setIcon('insert_drive_file'),
-//       ],
-//       classes: {
-//         listclasses: 'o-Flex c-MenuMobile-nM c-MenuBar-sM',
-//         itemclasses: 'o-Flex__Item c-MenuMobile__Item-nM c-MenuBar__Item-sM',
-//         linkclasses: 'c-MenuMobile__Link-nM c-MenuBar__Link-sM h-Block',
-//         sub: {
-//           listclasses: 'c-MenuMobile__Sub-nM c-MenuBar__Sub-sM',
-//           itemclasses: 'c-MenuMobile__Sub__Item-nM c-MenuBar__Sub__Item-sM',
-//           linkclasses: 'c-MenuMobile__Link-nM c-MenuMobile__Sub__Link-nM c-MenuBar__Link-sM c-MenuBar__Sub__Link-sM h-Block',
-//         },
-//       },
-//     })
+@import url('_c-MainMenu.less');
 @import url('_c-Sitemap.less');
 @import url('_c-PageTitle.less');
 @import url('_c-ConfHed.less');
 @import url('_c-Pass.less');
+@import url('_c-RegPdIcon.less');
 @import url('_c-ProgramHn.less');
 @import url('_c-TimeBlock.less');
 @import url('_c-Speaker.less');
@@ -193,7 +165,7 @@
 @import url('_c-Button.less');
 @import url('_c-LinkCamo.less');
 @import url('_c-LinkCaps.less');
-@import url('_c-Toggle.less');
+@import url('_c-MobileMenuToggle.less');
   //--------------------------------//
   //    ## Block Section-y Components
   //--------------------------------//

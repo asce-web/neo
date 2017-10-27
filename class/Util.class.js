@@ -1,3 +1,4 @@
+const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
 const View    = require('extrajs-view')
 
@@ -182,34 +183,107 @@ class Util {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
+     * - `Util.view(data).pageLink()` - link to a page in a document outline / t.o.c.
+     * - `Util.view(data).pageToc()` - a document outline / t.o.c. of a page
      * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
+     * - `Util.view(data).dateblock()` - .c-DateBlock component
+     * - `Util.view(data).timeblock()` - .c-TimeBlock component
+     * - `Util.view(data).registrationLegend()` - Legend (list) of registration periods
+     * - `Util.view(data).pass()` - .c-Pass component
+     * - `Util.view(data).speaker()` - .c-Speaker component
      * @namespace Util.VIEW
      * @type {View}
      */
     return new View(null, data)
       /**
-       * Return a `<ul>` of button links for a highlighted content block.
-       * ```pug
-       * ul.o-List.o-Flex.o-Flex--even
-       *   each item in data
-       *     li.o-List__Item.o-Flex__Item
-       *       a.c-Button.c-Button--hilite(class=[buttonclasses,item.attr('class')] href=item.attr('href'))
-       *         = item.contents
-       * ```
+       * Return a Page object as a link in a document outline.
+       * Parameter `data` should be of type `Page`.
+       * @summary Call `Util.view(data).pageLink()` to render this display.
+       * @todo TODO move this display to `require('sitepage').VIEW`
+       * @function Util.VIEW.pageLink
+       * @param   {!Object=} options options for configuring output
+       * @param   {?Object<string>=} options.classes group set of css class configurations
+       * @param   {string=} options.classes.link css classes to add to the link
+       * @param   {string=} options.classes.icon css classes to add to the icon;
+       *                                         if you want the icon but no additional classes, provide the empty string `''`
+       * @param   {string=} options.classes.expand css classes to add to the expand icon;
+       *                                           if you want the icon but no additional classes, provide the empty string `''`
+       * @returns {string} HTML output
+       */
+      .addDisplay(function pageLink(options = {}) {
+        let classes = options.classes || {}
+        return new Element('a').class(classes.link || null)
+          .attr({
+            'data-instanceof': 'Page',
+            href: this.url(),
+            // 'aria-current': (page.url()===this.url()) ? 'page' : null,
+          })
+          .addContent([
+            (xjs.Object.typeOf(classes.icon)==='string') ? new Element('i').class('material-icons')
+              .addClass(classes.icon)
+              .attr('role','none')
+              .addContent(this.getIcon())
+              : null,
+            new Element('span').addContent(this.name()),
+            (xjs.Object.typeOf(classes.expand)==='string' && this.findAll().length) ? new Element('i').class('material-icons')
+              .addClass(classes.expand)
+              .attr('role','none')
+              .addContent(`expand_more`)
+              : null,
+          ])
+          .html()
+      })
+      /**
+       * Return a Page object’s document outline as a nested ordered list.
+       * Parameter `data` should be of type `Page`.
+       * @summary Call `Util.view(data).pageToc()` to render this display.
+       * @todo TODO move this display to `require('sitepage').VIEW`
+       * @function Util.VIEW.pageToc
+       * @param   {!Object=} options options for configuring output
+       * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
+       * @param   {number=} options.start group set of css class configurations
+       * @param   {number=} options.end group set of css class configurations
+       * @param   {?Object<string>=} options.classes group set of css class configurations
+       * @param   {string=} options.classes.list list classes (`<ol>`)
+       * @param   {string=} options.classes.item item classes (`<li>`)
+       * @param   {!Object=} options.links configuration param to send into {@link Util.VIEW.pageLink|Util#view.pageLink()}
+       * @param   {!Object=} options.options configurations for nested outlines; specs identical to `options`
+       * @returns {string} HTML output
+       */
+      .addDisplay(function pageToc(options = {}) {
+        let classes = options.classes || {}
+        let start = options.start || 0
+        let end   = options.end   || Infinity
+        return new Element('ol').class(classes.list || null)
+          .attr('role', (options.inner) ? null : 'directory')
+          .addContent(
+            this.findAll().slice(start, end).filter((p) => !p.isHidden()).map((p) =>
+              new Element('li').class(classes.item || null).addContent([
+                Util.view(p).pageLink(options.links),
+                (p.findAll().length && options.depth > 0) ?
+                  Util.view(p).pageToc(Object.assign({}, options.options, {
+                    depth: options.depth-1,
+                    inner: true,
+                  }))
+                  : '',
+              ])
+            )
+          )
+          .html()
+      })
+      /**
+       * Return an unordered list of button links for a highlighted content block.
+       * Parameter `data` should be of type `Array<Element>` (TODO: HTMLAnchorElement), i.e., a list of links.
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
        * @param   {string=} buttonclasses the classes to add to the buttons
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return Element.data(data, {
-          ordered: false,
-          attributes: {
-            list:  { class: 'o-List o-Flex o-Flex--even' },
-            value: { class: 'o-List__Item o-Flex__Item' },
-          },
-          options: { attributes: { list: { class: `c-Button c-Button--hilite ${buttonclasses}` } } },
-        })
+        return new Element('ul').class('o-List o-Flex o-Flex--even').addContent(this.map((el) =>
+          new Element('li').class('o-List__Item o-Flex__Item')
+            .addContent(el.addClass(`c-Button c-Button--hilite ${buttonclasses}`))
+        )).html()
       })
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
@@ -223,7 +297,7 @@ class Util {
       .addDisplay(function dateBlock(attr = {}) {
         return new Element('table').attr(attr).addContent(
           new Element('tbody').class('c-DateBlock')
-            .addContent(data.map(($importantDate) => $importantDate.view.dateBlock()))
+            .addContent(this.map(($importantDate) => $importantDate.view.dateBlock()))
         ).html()
       })
       /**
@@ -238,8 +312,20 @@ class Util {
       .addDisplay(function timeBlock(attr = {}) {
         return new Element('table').attr(attr).addContent(
           new Element('tbody').class('c-TimeBlock')
-            .addContent(data.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
+            .addContent(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
         ).html()
+      })
+      /**
+       * Return a `<ul.c-Alert>` component containing the legend of registration periods.
+       * Parameter `data` should be of type `Array<RegistrationPeriod>`.
+       * @summary Call `Util.view(data).registrationLegend()` to render this display.
+       * @function Util.VIEW.registrationLegend
+       * @returns {string} HTML output
+       */
+      .addDisplay(function registrationLegend() {
+        return new Element('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').addContent(this.map((period) =>
+          new Element('li').class('o-List__Item o-Flex__Item c-Alert__Item').addContent(period.view.legend())
+        )).html()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -251,12 +337,9 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference) {
-        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
-          data.map(($pass) =>
-            new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
-              .addContent($pass.view.pass($conference))
-          )
-        ).html()
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((pass) =>
+          new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference))
+        )).html()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -267,12 +350,9 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker() {
-        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(
-          data.map(($person) =>
-            new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item')
-              .addContent($person.view.speaker())
-          )
-        ).html()
+        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((person) =>
+          new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
+        )).html()
       })
   }
 
