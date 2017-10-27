@@ -82,8 +82,14 @@
 //
 // Styleguide Components.Sitemap
 
+.c-Sitemap,
+.c-Sitemap__Sub {
+  margin-bottom: initial; // HACK fallback for unset
+  margin-bottom: unset; // HACK fallback for logical properties
+  margin-block-end: unset; // override base ul
+}
+
 .c-Sitemap {
-  margin-bottom: 0; // override base ul
   .menufont();
   @media not all and (min-width: 45em) {
     flex-direction: column;
@@ -92,7 +98,7 @@
 }
 
 .c-Sitemap__Item {
-  flex: 0 0 auto;
+  flex: none;
   @media not all and (min-width: 45em) {
     &:not(:last-child) {
       margin-bottom: var(--vru);
@@ -101,10 +107,8 @@
 }
 
 .c-Sitemap__Sub {
-  margin-bottom: 0; // override base ul
   font-weight: 300;
   .font-size-el(16/20);
-  text-transform: none; // HACK fallback for `initial`
   text-transform: initial; // override .menufont()
   @media screen and (min-width: 45em) {
     .font-size-el(12/14);

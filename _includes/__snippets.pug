@@ -7,29 +7,6 @@
 //- ///////////////////////////////////////////////////////////////////////////////
 
 
-mixin sitetoc(args, inner)
-  //- WHERE +sitetoc() is used:
-  //- - /docs/_includes/_comp.mobile-menu.pug
-  //- - /docs/_includes/_comp.menu-bar.pug
-  //- NOTE parameter validation
-  -
-    var pages   = args.pages   || []
-    var classes = args.classes || {}
-    var depth   = +args.depth  || 0
-    var icons   = args.icons   || {}
-  ul.o-List(class=classes.listclasses)&attributes(inner ? {} : { role: 'directory' })
-    each $confPage in pages
-      unless $confPage.isHidden()
-        li.o-List__Item(class=classes.itemclasses)
-          a(class=classes.linkclasses href=$confPage.url())&attributes((page.url()===$confPage.url()) ? {'aria-current':'page'} : {})
-            if icons && icons.page && $confPage.getIcon()
-              i.material-icons.c-MenuMobile__Icon.-d-n-sM(role="none")= $confPage.getIcon()
-            span= $confPage.name()
-            if icons && icons.sub && $confPage.findAll().length && depth > 0
-              i.material-icons.c-MenuBar__Icon.-d-n-nM(role="none") expand_more
-          if $confPage.findAll().length && depth > 0
-            +sitetoc({pages: $confPage.findAll(), classes: (classes.sub || {}), depth: depth-1, icons: false}, true)
-
 //- mixin promotedLocation(promoloc)
   - promoloc = promoloc || {} // NOTE parameter validation
   if promoloc.title && promoloc.text

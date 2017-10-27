@@ -55,23 +55,22 @@ html(lang="en")
             depth: 1,
             end: -1,
             classes: {
-              list: 'o-List o-Flex c-MenuMobile-nsM c-MenuBar-sM',
-              item: 'o-List__Item o-Flex__Item c-MenuMobile__Item-nsM c-MenuBar__Item-sM',
+              list: 'o-List o-Flex c-MainMenu',
+              item: 'o-List__Item o-Flex__Item c-MainMenu__Item',
             },
             links: {
-              icons: true,
               classes: {
-                link  : 'c-MenuMobile__Link-nsM c-MenuBar__Link-sM h-Block',
-                icon  : 'c-MenuMobile__Icon -d-n-sM',
-                expand: 'c-MenuBar__Icon -d-n-nM'
+                link  : 'c-MainMenu__Link h-Block',
+                icon  : 'c-MainMenu__Icon',
+                expand: 'c-MainMenu__Exp',
               },
             },
             options: {
               classes: {
-                list: 'o-List c-MenuMobile__Sub-nsM c-MenuBar__Sub-sM',
-                item: 'o-List__Item c-MenuMobile__Sub__Item-nsM c-MenuBar__Sub__Item-sM',
+                list: 'o-List c-MainMenu__Sub',
+                item: 'o-List__Item c-MainMenu__Sub__Item',
               },
-              links: { classes: { link: 'c-MenuMobile__Link-nsM c-MenuMobile_Sub_Link-nsM c-MenuBar__Link-sM c-MenuBar__Sub__Link-sM h-Block' } },
+              links: { classes: { link: 'c-MainMenu__Sub__Link' } },
             },
           }
         != Util.view(site).pageToc(mainmenu_options)

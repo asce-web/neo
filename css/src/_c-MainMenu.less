@@ -1,0 +1,216 @@
+
+/*################################*\
+    neo  |  _c-MainMenu.less
+\*################################*/
+@import (reference) url('../../node_modules/xmeter/src/__tool.transitions.less');
+@import (reference) url('__tool.menufont.less');
+
+
+// The Main Menu
+//
+// The menu navigation for all pages on the site. Appears in the header.
+// On small screens, this menu is displayed as a vertical mobile menu. On medium screens
+// and larger, it’s displayed as a horizontal toolbar.
+//
+// Use with Pug:
+// <pre>
+// -
+//   let homepage = new ConfPage('index', '//')
+//     .add(new ConfPage('Home', '#0'))
+//     .add(new ConfPage('Registration', '#0')
+//       .add(new ConfPage('Why Attend', '#0'))
+//     )
+//     .add(new ConfPage('Program', '#0')
+//       .add(new ConfPage('Short Courses'  , '#0'))
+//       .add(new ConfPage('Technical Tours', '#0'))
+//     )
+//     .add(new ConfPage('Location', '#0')
+//       .add(new ConfPage('Hotel & Travel', '#0'))
+//     )
+//     .add(new ConfPage('Speakers', '#0')
+//       .add(new ConfPage('For Speakers', '#0'))
+//     )
+//   let main_menu_options = {
+//     depth: 1,
+//     classes: {
+//       list: 'o-List o-Flex c-MainMenu',
+//       item: 'o-List__Item o-Flex__Item c-MainMenu__Item',
+//     },
+//     links: {
+//       classes: {
+//         link  : 'c-MainMenu__Link h-Block',
+//         icon  : 'c-MainMenu__Icon',
+//         expand: 'c-MainMenu__Exp',
+//       },
+//     }
+//     options: {
+//       classes: {
+//         list: 'o-List c-MainMenu__Sub',
+//         item: 'o-List__Item c-MainMenu__Sub__Item',
+//       },
+//       links: { classes: { link: 'c-MainMenu__Sub__Link h-Block' } },
+//     },
+//   }
+// != Util.view(homepage).pageToc(main_menu_options)
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-10-27</time></dd>
+// </dl></header>
+//
+// Markup:
+// <ul class="o-List o-Flex c-MainMenu" role="directory">
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link h-Block" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Home</span>
+//     </a>
+//   </li>
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link h-Block" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Registration</span>
+//       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
+//     </a>
+//     <ul class="o-List c-MainMenu__Sub">
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>Why Attend</span></a>
+//       </li>
+//     </ul>
+//   </li>
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link h-Block" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Program</span>
+//       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
+//     </a>
+//     <ul class="o-List c-MainMenu__Sub">
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>Short Courses</span></a>
+//       </li>
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>Technical Tours</span></a>
+//       </li>
+//     </ul>
+//   </li>
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link h-Block" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Location</span>
+//       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
+//     </a>
+//     <ul class="o-List c-MainMenu__Sub">
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>Hotel &amp; Travel</span></a>
+//       </li>
+//     </ul>
+//   </li>
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link h-Block" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Speakers</span>
+//       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
+//     </a>
+//     <ul class="o-List c-MainMenu__Sub">
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>For Speakers</span></a>
+//       </li>
+//     </ul>
+//   </li>
+// </ul>
+//
+// Weight: 4
+//
+// Styleguide Components.MainMenu
+
+@p-breakpoint: 45em;
+@p-trans_dura: 250ms;
+
+.c-MainMenu {
+  --link-color: currentColor;
+  justify-content: flex-start;
+  // justify-content: start; // CHANGED not supported yet and breaks flex-start
+  margin-bottom: initial; // HACK fallback for unset
+  margin-bottom: unset; // HACK fallback for logical properties
+  margin-block-end: unset; // override base ul
+  .menufont();
+  color: var(--color-gray_dk, @g-color-gray_dk);
+  @media not all and (min-width: @p-breakpoint) {
+    flex-direction: column;
+    height: 100%; // HACK for logical properties
+    block-size: 100%;
+    background-color: var(--color-gray_lt, @g-color-gray_lt);
+  }
+  @media screen and (min-width: @p-breakpoint) {
+    color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+  }
+}
+
+.c-MainMenu__Item {
+  flex: none;
+  transition: background-color @p-trans_dura;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+  }
+  @media screen and (min-width: @p-breakpoint) {
+    &:hover,
+    &:focus,
+    &:active {
+      --link-color: var(--color-gray_dk, @g-color-gray_dk);
+      --link-color-hover: var(--color-secondary, @g-color-secondary);
+      background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+    }
+  }
+}
+
+.c-MainMenu__Link {
+  padding: @g-boxpadd_norm;
+  @media screen and (min-width: @p-breakpoint) {
+    padding: @g-boxpadd_mill;
+  }
+}
+
+.c-MainMenu__Icon {
+  margin-right: 0.5ch; // HACK fallback for logical properties
+  margin-inline-end: 0.5ch;
+  @media screen and (min-width: @p-breakpoint) {
+    display: none;
+  }
+}
+
+.c-MainMenu__Exp {
+  font-size: inherit; // override `.material-icons`
+  @media not all and (min-width: @p-breakpoint) {
+    display: none;
+  }
+}
+
+
+
+.c-MainMenu__Sub {
+  position: absolute; // don’t affect MainMenu size
+  // z-index: 1; // atop of c-Banner which is relative // REVIEW may not need this
+  transform-origin: left top; // TODO logical properties
+  padding: @g-boxpadd_mill;
+  font-weight: 400;     // override `.menufont();`
+  text-transform: none; // override `.menufont();`
+  background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+  .transitions(transform, opacity; @p-trans_dura);
+  .c-MainMenu__Item:not(:hover) & {
+    transform: scale(0);
+    opacity: 0;
+  }
+  @media not all and (min-width: @p-breakpoint) {
+    display: none;
+  }
+}
+
+.c-MainMenu__Sub__Item {
+}
+
+.c-MainMenu__Sub__Link {
+  padding: @g-boxpadd_micr;
+}
