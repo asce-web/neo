@@ -20,17 +20,19 @@
 //
 // Use in Pug:
 // <pre>
-//   include /_views/_Conference.view.pug
-//   +otherYear(new Conference({
+// -
+//   let conf = new Conference({
 //     name      : 'Geo-Risk 2020',
 //     url       : 'http://2020.georiskconference.org/',
 //     theme     : 'Geotechincal risk from theory to practice.',
 //     start_date: new Date('2020-06-04'),
 //     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
-//   }), 'Plan ahead to attend Geo-Risk next year!').c-Banner--blur.c-Banner--prev
-//     +highlightButtons([
-//       { text: 'Event Details', href:'http://2020.georiskconference.org/', attr: {itemprop:'url'} },
-//     ], 'c-Button--ghost c-Button--ghost--dark')
+//   })
+//   let prev_blurb = 'Plan ahead to attend Geo-Risk next year!'
+//   let prev_content = Util.VIEW.highlightButtons([
+//     new Element('a').attr('href','http://2020.georiskconference.org/').attr('itemprop','url'),
+//   ], 'c-Button--ghost c-Button--ghost--dark')
+// != conf.view(Conference.Display.OTHER_YEAR, 'prev', prev_blurb, prev_content)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
@@ -52,7 +54,7 @@
 // </footer>
 //
 // Markup:
-// <aside class="o-Runner o-Runner--highlight c-Banner c-Banner--blur c-Banner--prev c-ConfHed">
+// <aside class="o-Runner o-Runner--highlight c-Banner c-Banner--blur c-Banner--prev c-ConfHed" data-instanceof="Conference">
 //   <div class="o-Constrain">
 //     <h1 class="c-ConfHed__Name" itemprop="name">Geo-Risk 2020</h1>
 //     <meta content="2020-06-04" itemprop="startDate"/>
@@ -60,8 +62,8 @@
 //       <abbr title="Denver, Colorado">Denver, CO</abbr>
 //     </p>
 //     <p class="h-Hidden-nM">Plan ahead to attend Geo-Risk next year!</p>
-//     <ul class="o-List o-Flex o-ListAction">
-//       <li class="o-List__Item o-Flex__Item o-ListAction__Item">
+//     <ul class="o-List o-Flex o-Flex--even">
+//       <li class="o-List__Item o-Flex__Item">
 //         <a class="c-Button c-Button--hilite c-Button--ghost c-Button--ghost--dark" href="http://2020.georiskconference.org/">Event Details</a>
 //       </li>
 //     </ul>

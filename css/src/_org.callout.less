@@ -17,11 +17,11 @@
 //   +callout()
 //     h1#volunteer Volunteer
 //     p We will need volunteers to act as greeters, ...
-//     +highlightButtons([{text:'Sign Up', href:'#0'}])
+//     != Util.VIEW.highlightButtons([new Element('a').attr('href','#0').addContent(`Sign Up`)])
 //   +callout().c-Banner
 //     h1#volunteer-banner Volunteer Banner
 //     p We will need volunteers to act as greeters, ...
-//     +highlightButtons([{text:'Sign Up', href:'#0'}])
+//     != Util.VIEW.highlightButtons([new Element('a').attr('href','#0').addContent(`Sign Up`)])
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
@@ -46,8 +46,8 @@
 //   <div class="o-Constrain">
 //     <h1>Volunteer</h1>
 //     <p>We will need volunteers to act as greeters, direct people to various venues within the hotel, collect tickets, travel with tour buses, provide head counts, and serve as a point of contact with ASCE staff.</p>
-//     <ul class="o-List o-Flex o-ListAction">
-//       <li class="o-List__Item o-Flex__Item o-ListAction__Item">
+//     <ul class="o-List o-Flex o-Flex--even">
+//       <li class="o-List__Item o-Flex__Item">
 //         <a class="c-Button c-Button--hilite" href="#0">Sign Up</a>
 //       </li>
 //     </ul>

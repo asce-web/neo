@@ -1,0 +1,62 @@
+
+/*################################*\
+    neo  |  _c-MobileMenuToggle.less
+\*################################*/
+@import (reference) url('../../node_modules/xmeter/src/__tool.transitions.less');
+
+
+// The Mobile Menu Toggle Button
+//
+// This button activates and collapses the mobile menu.
+// It has a "menu" icon in the inactive state and a "close" icon in active state.
+// This Component is not part of the <a>Button</a> suite of styles; it is a
+// separate Component that just so happens to look like a button.
+// This Component is shown only on Small screens or smaller.
+// When toggled on, it will be fixed to the top right of the screen.
+//
+// Javascript must be enabled to show it on command.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-10-27</time></dd>
+// </dl></header>
+//
+// Markup:
+// <svg class="c-MobileMenuToggle {{ modifier_class }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36">
+//   <path d="M0,0 H24 V24 H0 z" fill="transparent"/>
+//   <g transform="translate(3,11)">
+//     <rect class="c-MobileMenuToggle__Rect" width="18" height="2"/>
+//     <rect class="c-MobileMenuToggle__Rect" width="18" height="2"/>
+//     <rect class="c-MobileMenuToggle__Rect" width="18" height="2"/>
+//   </g>
+// </svg>
+//
+// .c-MobileMenuToggle--js-close - closes the mobile menu
+//
+// Weight: 20
+//
+// Styleguide Components.MobileMenuToggle
+
+@p-trans_dura: 500ms;
+
+.c-MobileMenuToggle {
+  border-radius: 0.25rem;
+}
+
+.c-MobileMenuToggle__Rect {
+  fill: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
+  transform-origin: center;
+  .transitions(transform, fill; @p-trans_dura);
+  &:nth-child(1) {}
+  &:nth-child(2) { transform: translate(0,-5px); }
+  &:nth-child(3) { transform: translate(0,5px); }
+  .c-MobileMenuToggle--js-close & {
+    &:nth-child(1) {
+      transform: scale((24/18),12); // REVIEW magic numbers
+      fill: var(--color-gray_dk, @g-color-gray_dk);
+    }
+    &:nth-child(2),
+    &:nth-child(3) { transition-delay: (0.5*@p-trans_dura); }
+    &:nth-child(2) { transform: rotate(45deg); }
+    &:nth-child(3) { transform: rotate(-45deg); }
+  }
+}

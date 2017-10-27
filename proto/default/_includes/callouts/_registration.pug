@@ -1,4 +1,7 @@
 h1#registration Registra&shy;tion
-include ../../../../_views/_Pass.view.pug
-+passList(site.currentConference(), 'starred')
-+highlightButtons([{text:'Registration Details', href:'registration.html'}])
+!= Util.view(site.currentConference().getPassesAll().filter(($p) => $p.isStarred())).pass(site.currentConference())
+-
+  let highlight_buttons = [
+    new Element('a').attr('href','registration.html').addContent(`Registration Details`)
+  ]
+!= Util.view(highlight_buttons).highlightButtons()

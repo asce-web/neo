@@ -2,38 +2,51 @@
 /*################################*\
     neo  |  _o-Drawer.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/src/__tool.transitions.less');
 
 
 // The Drawer Object
 //
-// The Drawer Object displays normally on Medium screens and larger,
+// The Drawer Object contains two components: the Button, and the Bar.
+// The Button activates the drawer mechanism of the Bar.
+// This Object displays normally on Medium screens and larger,
 // but collapses to a pull-out menu on small screens.
 // It has the ability to slide out from the side on mobile devices,
 // most commonly containing the mobile menu.
 //
-// The Drawer Object will be fixed off-screen on Small screens or smaller.
+// It will be fixed off-screen on Small screens or smaller.
 // Javascript must be enabled to show it on command.
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
-//   <dt>updated</dt> <dd><time>2016-10-13</time></dd>
+//   <dt>updated</dt> <dd><time>2017-10-27</time></dd>
 // </dl></header>
 //
 // Markup:
-// <div class="o-Drawer {{ modifier_class }}">
-//   <h1>drawer heading</h1>
-//   <p>drawer content</p>
+// <div class="o-Drawer">
+//   <button class="o-Drawer__Button" type="button" aria-controls="drawer" aria-label="toggle drawer">
+//     <svg><!-- visualization of button --></svg>
+//   </button>
+//   <div id="drawer" class="o-Drawer__Bar {{ modifier_class }}" aria-expanded="false" aria-hidden="true">
+//     <h1>drawer heading</h1>
+//     <p>drawer content</p>
+//   </div>
 // </div>
 //
 // Weight: 7
 //
-// .o-Drawer--open - for when drawer is activated/shown
+// .o-Drawer__Bar--js-open - for when drawer is activated/shown
 //
 // Styleguide Objects.Drawer
 
 
+@p-breakpoint: 45em;
 @p-trans_dura: 250ms;
 
-.o-Drawer {
+// no actual styles on this; serves as a container and hook
+.o-Drawer {}
+
+
+.o-Drawer__Bar {
   .transitions(transform, opacity; @p-trans_dura);
   // animation for *closing* drawer
   transition-timing-function: @google-accel;
@@ -50,17 +63,38 @@
     // height: 100%; // fallback for vh
     // height: 100vh; // don’t need this if bottom:0
     border-left: 1px solid currentColor;
+    &:not(.o-Drawer__Bar--js-open) {
     opacity: 0;
+    }
   }
 }
-.o-Drawer--open {
+.o-Drawer__Bar--js-open {
   @media not all and (min-width: 45em) {
     transform: translateX(-100%);
-    opacity: 1;
     // animation for *opening* drawer
     transition-timing-function: @google-decel;
     // transition-timing-function: @g-decel_hard;
     // transition-timing-function: @g-decel_dram;
     // transition-timing-function: @g-accel_extm;
+  }
+}
+
+
+.o-Drawer__Button {
+  // <button> base resets:
+  padding: 0; padding: initial; padding: unset;
+  font-size: inherit; font-size: unset;
+  background: transparent; background: initial; background: unset;
+  border: 0;
+
+  position: absolute;
+  top: ((75px - 48px)/2); // half height of the mast head // FIXME
+  right: 0;
+  z-index: 3; // over Drawer__Bar
+
+  margin: @g-boxpadd_mill;
+
+  @media screen and (min-width: @p-breakpoint) {
+    display: none;
   }
 }

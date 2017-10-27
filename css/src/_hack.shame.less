@@ -8,6 +8,18 @@
 // ALL THE STYLES IN THIS FILE MUST BE MOVED TO ITS PROPER STYLESHEET
 // AT SOME POINT IN TIME.
 
+
+// Link to site map, for when JS is disabled and no mobile menu is available
+noscript .c-Button[href="#sitemap"] {
+  position: absolute;
+  top: ((75px - 48px)/2); // half height of the mast head // FIXME
+  right: 0.5rem;
+  margin: @g-boxpadd_mill;
+  @media screen and (min-width: 45em) {
+    display: none;
+  }
+}
+
 // TODO move these to component files
 .c-TableStripe {
   tr:nth-child(even) {
@@ -49,17 +61,4 @@
 
 .material-icons {
   vertical-align: middle; // fixes Google’s material icons
-  ._regLegend & {
-    display: block;
-    // line-height is determined in `.material-icons`
-    font-size: 2.25em;
-    @media not all and (min-width: 45em) {
-      display: none;
-    }
-  }
-  ._regLegend & + small {
-    @media not all and (min-width: 45em) {
-      font-size: 1rem;
-    }
-  }
 }

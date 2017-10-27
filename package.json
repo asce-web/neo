@@ -8,11 +8,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "kss": "rm -r styleguide  ;  kss --config kss-config.json",
     "browserify:principles": "browserify docs/js/principles.js > docs/js/principles.b.js",
     "browserify:sample": "browserify proto/asce-event.org/js/home.js > proto/asce-event.org/js/home.b.js",
     "browserify:all": "npm run browserify:principles  &&  npm run browserify:sample",
-    "build": "gulp build  &&  npm run kss  &&  npm run browserify:all",
+    "build": "gulp build  &&  npm run browserify:all",
     "unbuild:root": "rm index.html",
     "unbuild:docs": "rm docs/{index,principles,base,obj,comp,org,help,atom}.html",
     "unbuild:default": "rm proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.html",
@@ -41,17 +40,21 @@
   },
   "homepage": "https://github.com/asce-web/neo#readme",
   "devDependencies": {
-    "browserify": "^14.1.0",
-    "csscolor": "^1.3.1",
+    "browserify": "^14.5.0",
+    "extrajs": "^0.9.0",
+    "extrajs-color": "^2.0.0",
+    "extrajs-dom": "^3.1.0-beta",
+    "extrajs-view": "^1.1.0-beta",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
-    "gulp-clean-css": "^3.5.0",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-jsdoc3": "^1.0.1",
     "gulp-less": "^3.3.2",
     "gulp-pug": "^3.3.0",
     "gulp-sourcemaps": "^2.6.0",
     "kss": "^3.0.0-beta.18",
     "sitepage": "^1.0.0",
-    "xmeter": "git://github.com/chharvey/xmeter.git#beta-v6"
+    "xmeter": "^6.1.0"
   },
   "dependencies": {}
 }

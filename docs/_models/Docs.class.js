@@ -1,5 +1,5 @@
-var Page = require('sitepage').Page
-var Color = require('csscolor').Color
+const Page  = require('sitepage').Page
+const Color = require('extrajs-color')
 
 const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' })
   // REVIEW indentation
@@ -45,8 +45,6 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       .add(new Page({ name: 'The Drawer Object', url: '/docs/obj.html#drawer-object' }))
     )
     .add(new Page({ name: 'Components', url: '/docs/comp.html' })
-      .add(new Page({ name: 'The Mobile Menu'      , url: '/docs/comp.html#mobile-menu' }))
-      .add(new Page({ name: 'The Menu Bar'         , url: '/docs/comp.html#menu-bar' }))
       .add(new Page({ name: 'Buttons'              , url: '/docs/comp.html#buttons' }))
     )
     .add(new Page({ name: 'Organisms', url: '/docs/org.html' })
@@ -59,14 +57,13 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       .description('Very specific classes used for creating anomalies or fixing broken styles.')
     )
 
+/**
+ * A set of static members used for the Conf style guide.
+ * Similar to a utility class.
+ * @module
+ */
 module.exports = class Docs {
-  /**
-   * A set of static members used for the Conf style guide.
-   * Similar to a utility class.
-   * @private
-   * @constructor
-   */
-  constructor() {}
+  /** @private */ constructor() {}
 
   /**
    * The style guide site for this project.
@@ -79,7 +76,7 @@ module.exports = class Docs {
    * @type {Object<string>}
    */
   static get COLORS() {
-    return require('../../_models/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
+    return require('../../class/ConfSite.class.js').colorStyles(Color.fromString('#660000'), Color.fromString('#ff6600'))
   }
 
   /**

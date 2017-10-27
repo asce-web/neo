@@ -12,8 +12,8 @@
 //
 // Use in Pug:
 // <pre>
-//   include /_views/_Person.view.pug
-//   +speaker(new Person('donna-fulman', {
+// -
+//   let person = new Person('donna-fulman', {
 //     given_name      : 'Donna',
 //     additional_name : 'A.',
 //     family_name     : 'Fulman',
@@ -29,7 +29,7 @@
 //     .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
 //     .addSocial('google'  , '#0', 'Donna’s Google+ Profile')
 //     .addSocial('youtube' , '#0', 'Donna’s YouTube Channel')
-//   )
+// != person.view.speaker()
 // </pre>
 //
 // <header><dl>
@@ -38,8 +38,8 @@
 // </dl></header>
 //
 // Markup:
-// <article class="c-Speaker" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
-//   <img class="c-Speaker__Img h-Block" src="../proto/asce-event.org/files/headshot1.jpg" alt="" itemprop="image"/>
+// <article class="c-Speaker" data-instanceof="Person" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+//   <img class="c-Speaker__Img h-Block" src="../../proto/asce-event.org/files/headshot1.jpg" alt="" itemprop="image"/>
 //   <header class="c-Speaker__Head">
 //     <h1 class="c-Speaker__Name">
 //       <span itemprop="name">

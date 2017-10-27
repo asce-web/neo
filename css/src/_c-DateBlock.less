@@ -12,12 +12,11 @@
 //
 // Use in Pug:
 // <pre>
-//   include /_views/_ImportantDate.view.pug
-//   +dateBlock([
-//     new ImportantDate({name:'Optional Final Papers Due'     , start_time:new Date('2015-10-12')}),
-//     new ImportantDate({name:'Early-Bird Registration Closes', start_time:new Date('2015-12-17')}).url('#0'),
-//     new ImportantDate({name:'Advance Registration Period'   , start_time:new Date('2015-12-18'), end_time:new Date('2015-12-21')}),
-//   ])
+// != Util.view([
+//   new DateRange('Optional Final Papers Due'     , new Date('2015-10-12')),
+//   new DateRange('Early-Bird Registration Closes', new Date('2015-12-17')).url('#0'),
+//   new DateRange('Advance Registration Period'   , new Date('2015-12-18'), new Date('2015-12-21')),
+// ]).dateBlock()
 // </pre>
 //
 // <header><dl>
@@ -26,87 +25,78 @@
 // </dl></header>
 //
 // Markup:
-// <dl class="o-List c-DateBlock">
-//   <li class="o-List__Item c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
-//     <dt class="c-DateBlock__Date">
+// <table><tbody class="c-DateBlock">
+//   <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
+//     <td class="c-DateBlock__Date">
 //       <time datetime="2015-10-12" itemprop="startTime">Oct 12, 2015</time>
-//     </dt>
-//     <dd class="c-DateBlock__Desc" itemprop="name">
+//     </td>
+//     <td class="c-DateBlock__Desc" itemprop="name">
 //       Optional Final Papers Due
-//     </dd>
-//   </li>
-//   <li class="o-List__Item c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
-//     <dt class="c-DateBlock__Date">
+//     </td>
+//   </tr>
+//   <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
+//     <td class="c-DateBlock__Date">
 //       <time datetime="2015-12-17" itemprop="startTime">Dec 17, 2015</time>
-//     </dt>
-//     <dd class="c-DateBlock__Desc" itemprop="name">
+//     </td>
+//     <td class="c-DateBlock__Desc" itemprop="name">
 //       <a class="c-DateBlock__Link" href="#0" itemprop="url">Early-Bird Registration Closes</a>
-//     </dd>
-//   </li>
-//   <li class="o-List__Item c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
-//     <dt class="c-DateBlock__Date">
+//     </td>
+//   </tr>
+//   <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
+//     <td class="c-DateBlock__Date">
 //       <time datetime="2015-12-18" itemprop="startTime">Dec 18, 2015</time>
-//       <span>&ndash;</span>
+//       &ndash;
 //       <time datetime="2015-12-21" itemprop="endTime">Dec 21, 2015</time>
-//     </dt>
-//     <dd class="c-DateBlock__Desc" itemprop="name">
+//     </td>
+//     <td class="c-DateBlock__Desc" itemprop="name">
 //       Advance Registration Period
-//     </dd>
-//   </li>
-// </dl>
+//     </td>
+//   </tr>
+// </tbody></table>
 //
 // Weight: 15
 //
 // Styleguide Components.DateBlock
-.c-DateBlock {
+
+// override table-* default styles
+.c-DateBlock,
+.c-DateBlock__Item,
+.c-DateBlock__Date,
+.c-DateBlock__Desc {
+  display: block;
+}
+.c-DateBlock__Date,
+.c-DateBlock__Desc {
+  padding: initial; // HACK fallbacks
+  padding: unset;
+}
+
+/*tbody*/.c-DateBlock {
   width: 75%;
+  inline-size: 75%;
   margin-left:  auto;
   margin-right: auto;
+  .font-size-mod(1); // undo _base.less:table
   color: var(--color-gray_dk-shade2, @g-color-gray_dk-shade2); // override if inside Banner
   text-shadow: initial; // override `.c-Banner`
 }
 
-@p-rw: 1px;
-.c-DateBlock__Item,
-.c-DateBlock > .c-DateBlock__Date,
-.c-DateBlock > .c-DateBlock__Desc {
+/*tr*/.c-DateBlock__Item {
+  margin-bottom: var(--vru);
   background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
-  // border-color: var(--color-gray_dk, @g-color-gray_dk);
+  box-shadow: 0 0 0 1px var(--color-gray_dk, @g-color-gray_dk); // border hack
   @media screen                       { padding: @g-boxpadd_micr; }
   @media screen and (min-width: 30em) { padding: @g-boxpadd_mill; }
   @media screen and (min-width: 45em) { padding: @g-boxpadd_norm; }
 }
 
-.c-DateBlock__Item {
-  margin-bottom: var(--vru);
-  box-shadow: 0 0 0 @p-rw var(--color-gray_dk, @g-color-gray_dk); // border hack
-}
-
-.c-DateBlock__Date {
+/*td*/.c-DateBlock__Date {
   font-weight: 300;
 }
 
-.c-DateBlock__Desc {
+/*td*/.c-DateBlock__Desc {
   .font-size-el(1.25);
   font-weight: 600;
-}
-
-// if using __Date & __Desc as direct children
-.c-DateBlock {
-  & > .c-DateBlock__Date,
-  & > .c-DateBlock__Desc {
-    border-width: 0 @p-rw;
-    border-style: solid;
-  }
-  & > .c-DateBlock__Date {
-    .border-vert(top; @p-rw);
-    padding-bottom: 0;
-  }
-  & > .c-DateBlock__Desc {
-    .border-vert(bottom; @p-rw);
-    padding-top: 0;
-    margin-bottom: var(--vru);
-  }
 }
 
 .c-DateBlock__Link {

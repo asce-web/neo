@@ -10,21 +10,35 @@
 //
 // Use with Pug:
 // <pre>
-//   include /_views/_c-Sitemap.view.pug
-//   +sitemap([
-//       new ConfPage('Home', '#0'),
-//       new ConfPage('Registration', '#0')
-//         .add(new ConfPage('Why Attend', '#0')),
-//       new ConfPage('Program', '#0')
-//         .add(new ConfPage('Events'         , '#0'))
-//         .add(new ConfPage('Short Courses'  , '#0'))
-//         .add(new ConfPage('Technical Tours', '#0'))
-//         .add(new ConfPage('Optional Tours' , '#0')),
-//       new ConfPage('Hotel & Travel', '#0')
-//         .add(new ConfPage('International Travel', '#0')),
-//       new ConfPage('Speakers', '#0')
-//         .add(new ConfPage('Distinguished Lecture Series', '#0')),
-//     ])
+// -
+//   let homepage = new ConfPage('index', '//')
+//     .add(new ConfPage('Home', '#0'))
+//     .add(new ConfPage('Registration', '#0')
+//       .add(new ConfPage('Why Attend', '#0')))
+//     .add(new ConfPage('Program', '#0')
+//       .add(new ConfPage('Events'         , '#0'))
+//       .add(new ConfPage('Short Courses'  , '#0'))
+//       .add(new ConfPage('Technical Tours', '#0'))
+//       .add(new ConfPage('Optional Tours' , '#0')))
+//     .add(new ConfPage('Hotel & Travel', '#0')
+//       .add(new ConfPage('International Travel', '#0')))
+//     .add(new ConfPage('Speakers', '#0')
+//       .add(new ConfPage('Distinguished Lecture Series', '#0')))
+//   let sitemap_options = {
+//     depth: Infinity,
+//     start: 1,
+//     classes: {
+//       list: 'o-List o-Flex c-Sitemap',
+//       item: 'o-List__Item o-Flex__Item c-Sitemap__Item',
+//     },
+//     options: {
+//       classes: {
+//         list: 'o-List c-Sitemap__Sub',
+//         item: 'o-List__Item c-Sitemap__Sub__Item',
+//       }
+//     },
+//   }
+// != Util.view(homepage).pageToc(sitemap_options)
 // </pre>
 //
 // <header><dl>
@@ -68,8 +82,14 @@
 //
 // Styleguide Components.Sitemap
 
+.c-Sitemap,
+.c-Sitemap__Sub {
+  margin-bottom: initial; // HACK fallback for unset
+  margin-bottom: unset; // HACK fallback for logical properties
+  margin-block-end: unset; // override base ul
+}
+
 .c-Sitemap {
-  margin-bottom: 0; // override base ul
   .menufont();
   @media not all and (min-width: 45em) {
     flex-direction: column;
@@ -78,7 +98,7 @@
 }
 
 .c-Sitemap__Item {
-  flex: 0 0 auto;
+  flex: none;
   @media not all and (min-width: 45em) {
     &:not(:last-child) {
       margin-bottom: var(--vru);
@@ -87,11 +107,9 @@
 }
 
 .c-Sitemap__Sub {
-  margin-bottom: 0; // override base ul
   font-weight: 300;
   .font-size-el(16/20);
-  text-transform: initial; // HACK fallback for `unset`
-  text-transform: unset; // override .menufont()
+  text-transform: initial; // override .menufont()
   @media screen and (min-width: 45em) {
     .font-size-el(12/14);
   }

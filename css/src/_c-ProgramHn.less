@@ -12,12 +12,6 @@
 //
 // Note that a variation is displayed after a checked input element.
 //
-// Use in Pug:
-// <pre>
-//   include /_views/_Date.view.pug
-//   +programHn(new Date('2017-10-08'))
-// </pre>
-//
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
 //   <dt>updated</dt> <dd><time>2017-02-19</time></dd>
@@ -26,7 +20,7 @@
 // Markup:
 // <div class="{{ modifier_class }}">
 //   <input type="checkbox"/>
-//   <time class="c-ProgramHn h-Block" datetime="2017-10-08">Sunday,<br/>Oct 8</time>
+//   <time class="c-ProgramHn h-Block" datetime="2017-10-08" data-instanceof="Session">Sunday,<br/>Oct 8</time>
 // </div>
 //
 // .c-Banner - Program Headings inside a <a>Banner</a> have different colors.
@@ -38,6 +32,7 @@
   // some styles from h1
   margin-bottom: var(--vru);
   font-weight: 900;
+  text-align: center;
   color: var(--heading-color-unselected);
   @media screen and (min-width: 45em) {
     .font-size-el(1.25);

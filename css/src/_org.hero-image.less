@@ -14,20 +14,21 @@
 //
 // Use in Pug:
 // <pre>
-//   include /_views/_Conference.view.pug
-//   +hero(new Conference({
+// -
+//   let conf = new Conference({
 //     name      : 'Geo-Risk 2017',
 //     url       : 'http://2017.georiskconference.org/',
 //     theme     : 'Geotechincal risk from theory to practice.',
 //     start_date: new Date('2017-06-04'),
 //     end_date  : new Date('2017-06-07'),
 //     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
-//   }))
-//     +highlightButtons([
-//       { text: 'Register'      , href:'#0' },
-//       { text: 'Sponsor'       , href:'#0' },
-//       { text: 'Submit a Paper', href:'#0' },
-//     ], 'c-Button--primary')
+//   })
+//   let hero_content = Util.VIEW.highlightButtons([
+//     new Element('a').attr('href','#0').addContent(`Register`),
+//     new Element('a').attr('href','#0').addContent(`Sponsor`),
+//     new Element('a').attr('href','#0').addContent(`Submit a Paper`),
+//   ], 'c-Button--primary')
+// != conf.view(Conference.Display.HERO, hero_content)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
@@ -50,7 +51,7 @@
 // </footer>
 //
 // Markup:
-// <header class="o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed">
+// <header class="o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed" data-instanceof="Conference">
 //   <div class="o-Constrain">
 //     <h1 class="c-PageTitle c-ConfHed__Name" itemprop="name">Geo-Risk 2017</h1>
 //     <meta content="http://2017.georiskconference.org/" itemprop="url"/>
@@ -65,14 +66,14 @@
 //       </span>
 //     </p>
 //     <p class="c-ConfHed__Theme h-Hidden-nM" itemprop="description">Geotechincal risk from theory to practice.</p>
-//     <ul class="o-List o-Flex o-ListAction">
-//       <li class="o-List__Item o-Flex__Item o-ListAction__Item">
+//     <ul class="o-List o-Flex o-Flex--even">
+//       <li class="o-List__Item o-Flex__Item">
 //         <a class="c-Button c-Button--hilite c-Button--primary" href="#0">Register</a>
 //       </li>
-//       <li class="o-List__Item o-Flex__Item o-ListAction__Item">
+//       <li class="o-List__Item o-Flex__Item">
 //         <a class="c-Button c-Button--hilite c-Button--primary" href="#0">Sponsor</a>
 //       </li>
-//       <li class="o-List__Item o-Flex__Item o-ListAction__Item">
+//       <li class="o-List__Item o-Flex__Item">
 //         <a class="c-Button c-Button--hilite c-Button--primary" href="#0">Submit a Paper</a>
 //       </li>
 //     </ul>
