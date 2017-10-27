@@ -9,6 +9,8 @@
 // The Main Menu
 //
 // The menu navigation for all pages on the site. Appears in the header.
+// On small screens, this menu is displayed as a vertical mobile menu. On medium screens
+// and larger, it’s displayed as a horizontal toolbar.
 //
 // Use with Pug:
 // <pre>
@@ -190,6 +192,7 @@
 
 .c-MainMenu__Sub {
   position: absolute; // don’t affect MainMenu size
+  // z-index: 1; // atop of c-Banner which is relative // REVIEW may not need this
   transform-origin: left top; // TODO logical properties
   padding: @g-boxpadd_mill;
   font-weight: 400;     // override `.menufont();`
