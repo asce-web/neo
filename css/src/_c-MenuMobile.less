@@ -17,48 +17,18 @@
 // ^updated
 // 2016-10-13
 .c-MenuMobile {
-  flex-direction: column;
-  justify-content: flex-start;
-  height: 100%;
-  margin-bottom: 0; // override base ul
-  .menufont();
-  background-color: var(--color-gray_lt, @g-color-gray_lt);
-  color: var(--color-gray_dk, @g-color-gray_dk);
-  // REVIEW using .material-icons out of component
-  // .material-icons {
-  //   margin-right: 1rem;
-  // }
 }
 
 .c-MenuMobile__Item {
-  flex: 0 0 auto;
-  &:hover,
-  &:focus,
-  &._hover,
-  &:active,
-  &._active {
-    background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
-  }
 }
 
 .c-MenuMobile__Link {
-  padding: @g-boxpadd_norm;
-  &,
-  &:hover,
-  &:focus,
-  &._hover,
-  &:active
-  &._active {
-    color: inherit;
-  }
 }
 
 .c-MenuMobile__Icon {
-  margin-right: 1rem;
 }
 
 .c-MenuMobile__Sub {
-  display: none;
 }
 
 @media not all and (min-width: 45em) {
