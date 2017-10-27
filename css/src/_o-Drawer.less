@@ -6,27 +6,34 @@
 
 // The Drawer Object
 //
-// The Drawer Object displays normally on Medium screens and larger,
+// The Drawer Object contains two components: the Button, and the Bar.
+// The Button activates the drawer mechanism of the Bar.
+// This Object displays normally on Medium screens and larger,
 // but collapses to a pull-out menu on small screens.
 // It has the ability to slide out from the side on mobile devices,
 // most commonly containing the mobile menu.
 //
-// The Drawer Object will be fixed off-screen on Small screens or smaller.
+// It will be fixed off-screen on Small screens or smaller.
 // Javascript must be enabled to show it on command.
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
-//   <dt>updated</dt> <dd><time>2016-10-13</time></dd>
+//   <dt>updated</dt> <dd><time>2017-10-27</time></dd>
 // </dl></header>
 //
 // Markup:
-// <div class="o-Drawer {{ modifier_class }}">
-//   <h1>drawer heading</h1>
-//   <p>drawer content</p>
+// <div class="o-Drawer">
+//   <button class="o-Drawer__Button" type="button" aria-controls="drawer" aria-label="toggle drawer">
+//     <svg><!-- visualization of button --></svg>
+//   </button>
+//   <div id="drawer" class="o-Drawer__Bar {{ modifier_class }}" aria-expanded="false" aria-hidden="true">
+//     <h1>drawer heading</h1>
+//     <p>drawer content</p>
+//   </div>
 // </div>
 //
 // Weight: 7
 //
-// .o-Drawer--open - for when drawer is activated/shown
+// .o-Drawer__Bar--js-open - for when drawer is activated/shown
 //
 // Styleguide Objects.Drawer
 
