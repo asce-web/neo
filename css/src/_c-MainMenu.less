@@ -1,0 +1,149 @@
+
+/*################################*\
+    neo  |  _c-MainMenu.less
+\*################################*/
+
+
+// The Main Menu
+//
+// The menu navigation for all pages on the site. Appears in the header.
+//
+// Use with Pug:
+// <pre>
+// -
+//   let homepage = new ConfPage('index', '//')
+//     .add(new ConfPage('Home', '#0'))
+//     .add(new ConfPage('Registration', '#0')
+//       .add(new ConfPage('Why Attend', '#0'))
+//     )
+//     .add(new ConfPage('Program', '#0')
+//       .add(new ConfPage('Short Courses'  , '#0'))
+//       .add(new ConfPage('Technical Tours', '#0'))
+//     )
+//     .add(new ConfPage('Location', '#0')
+//       .add(new ConfPage('Hotel & Travel', '#0'))
+//     )
+//     .add(new ConfPage('Speakers', '#0')
+//       .add(new ConfPage('For Speakers', '#0'))
+//     )
+//   let main_menu_options = {
+//     depth: 1,
+//     classes: {
+//       list: 'o-List o-Flex c-MainMenu',
+//       item: 'o-List__Item o-Flex__Item c-MainMenu__Item',
+//     },
+//     links: {
+//       classes: {
+//         link  : 'c-MainMenu__Link',
+//         icon  : 'c-MainMenu__Icon',
+//         expand: 'c-MainMenu__Exp',
+//       },
+//     }
+//     options: {
+//       classes: {
+//         list: 'o-List c-MainMenu__Sub',
+//         item: 'o-List__Item c-MainMenu__Sub__Item',
+//       },
+//       links: {
+//         classes: { link: 'c-MainMenu__Sub__Link' },
+//       },
+//     },
+//   }
+// != Util.view(homepage).pageToc(main_menu_options)
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-10-27</time></dd>
+// </dl></header>
+//
+// Markup:
+// <ul class="o-List o-Flex c-MainMenu">
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Home</span>
+//     </a>
+//   </li>
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Registration</span>
+//       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
+//     </a>
+//     <ul class="o-List c-MainMenu__Sub">
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link" href="#0"><span>Why Attend</span></a>
+//       </li>
+//     </ul>
+//   </li>
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Program</span>
+//       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
+//     </a>
+//     <ul class="o-List c-MainMenu__Sub">
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link" href="#0"><span>Short Courses</span></a>
+//       </li>
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link" href="#0"><span>Technical Tours</span></a>
+//       </li>
+//     </ul>
+//   </li>
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Location</span>
+//       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
+//     </a>
+//     <ul class="o-List c-MainMenu__Sub">
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link" href="#0"><span>Hotel &amp; Travel</span></a>
+//       </li>
+//     </ul>
+//   </li>
+//   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
+//     <a class="c-MainMenu__Link" href="#0">
+//       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
+//       <span>Speakers</span>
+//       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
+//     </a>
+//     <ul class="o-List c-MainMenu__Sub">
+//       <li class="o-List__Item c-MainMenu__Sub__Item">
+//         <a class="c-MainMenu__Sub__Link" href="#0"><span>For Speakers</span></a>
+//       </li>
+//     </ul>
+//   </li>
+// </ul>
+//
+// Weight: 4
+//
+// Styleguide Components.MainMenu
+
+.c-MainMenu {
+}
+
+.c-MainMenu__Item {
+}
+
+.c-MainMenu__Link {
+}
+
+.c-MainMenu__Icon {
+}
+
+.c-MainMenu__Exp {
+}
+
+
+
+.c-MainMenu__Sub {
+}
+
+.c-MainMenu__Sub__Item {
+}
+
+.c-MainMenu__Sub__Link {
+}
