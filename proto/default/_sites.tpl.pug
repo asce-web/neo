@@ -30,26 +30,22 @@ html(lang="en")
       // remove Toggle menu when JS is disabled
       style.
         @media not all and (min-width: 45em) {
-          .c-Toggle__Check,
-          .c-Toggle__Viz,
-          .o-Drawer { display: none; }
+          .o-Drawer__Button { display: none; }
         }
   body
     a.h-Hidden(href="#main") skip to main content
     header.o-Runner.c-Mast.c-Mast--head: div.o-Constrain
       != site.view.siteTitle()
-    header.o-Runner.c-Mast.c-Mast--menu: div.o-Constrain
-      label.c-Toggle(aria-label="toggle main menu")
-        input.c-Toggle__Check.h-Hidden(type="checkbox" value="main menu is open" role="switch")
-        svg.c-Toggle__Viz(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36")
+    header.o-Runner.c-Mast.c-Mast--menu#main-menu: nav.o-Constrain.o-Drawer
+      h1.h-Hidden Main Menu
+      button.o-Drawer__Button.h-Inline(type="button" aria-controls="main-menu-drawer" aria-label="toggle main menu")
+        svg.c-MobileMenuToggle(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36")
           path(d="M0,0 H24 V24 H0 z" fill="transparent")
           g(transform="translate(3,11)")
             each val in new Array(3)
-              rect.c-Toggle__Viz__Bar(width="18" height="2")
-        noscript
-          a.c-Button(href="#site-map") Site Map
-      nav.o-Drawer#main-menu
-        h1.h-Hidden Main Menu
+              rect.c-MobileMenuToggle__Rect(width="18" height="2")
+      noscript: a.c-Button(href="#sitemap") Site Map
+      div.o-Drawer__Bar#main-menu-drawer
         -
           let mainmenu_options = {
             depth: 1,
@@ -98,8 +94,8 @@ html(lang="en")
                 new Element('a').attr('href','sponsor.html').addContent(`All Sponsors`)
               ]
             != Util.view(highlight_buttons).highlightButtons()
-    footer.o-Runner.c-Mast.c-Mast--sitemap#site-map: nav.o-Constrain
-      h1.h-Hidden Site Map
+    footer.o-Runner.c-Mast.c-Mast--sitemap#sitemap: nav.o-Constrain
+      h1.h-Hidden Sitemap
       -
         let sitemap_options = {
           depth: Infinity,
@@ -158,18 +154,7 @@ html(lang="en")
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous")
       script(src="../../node_modules/xmeter/js/o-Tablist.js")
-      script.
-        // drawer links untabbed by default
-        $('.o-Drawer').find('a').attr('tabindex', -1);
-        $('.c-Toggle__Check').change(function () {
-          // open/close drawer
-          $(this).parents('.c-Toggle').siblings('.o-Drawer').toggleClass('o-Drawer--open')
-          // toggle [tabindex="0"] on links in drawer
-          $(this).parents('.c-Toggle').siblings('.o-Drawer').find('a').each(function () {
-            if ($(this).attr('tabindex') === '0') $(this).attr('tabindex', -1)
-            else $(this).attr('tabindex', 0)
-          })
-        })
+      script(src="../../js/o-Drawer.js")
       //- script.
         $('.c-Speaker__Body').addClass('-h-z')
         $('.c-Speaker__Img').height(function () { return $(this).width() })
