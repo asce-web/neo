@@ -248,7 +248,7 @@ class Util {
        * @param   {number=} options.start group set of css class configurations
        * @param   {number=} options.end group set of css class configurations
        * @param   {?Object<string>=} options.classes group set of css class configurations
-       * @param   {string=} options.classes.list list classes (`<ul>`)
+       * @param   {string=} options.classes.list list classes (`<ol>`)
        * @param   {string=} options.classes.item item classes (`<li>`)
        * @param   {!Object=} options.links configuration param to send into {@link Util.VIEW.pageLink|Util#view.pageLink()}
        * @param   {!Object=} options.options configurations for nested outlines; specs identical to `options`
@@ -261,31 +261,22 @@ class Util {
         }
         let start = options.start || 0
         let end   = options.end   || Infinity
-        return Element.data(
-          this.findAll()
-            .slice(start, end)
-            .filter((p) => !p.isHidden())
-            .map((p) =>
-              Util.view(p).pageLink(options.links)
-              + ((p.findAll().length && options.depth > 0) ?
-                Util.view(p).pageToc(Object.assign({}, options.options, {
-                  depth  : options.depth-1,
-                  inner  : true,
-                }))
-                : '')
-            ),
-          {
-            attributes: {
-              list: {
-                role : (options.inner) ? null : 'directory',
-                class: classes.list,
-              },
-              value: {
-                class: classes.item,
-              },
-            },
-          }
-        )
+        return new Element('ol').class(classes.list)
+          .attr('role', (options.inner) ? null : 'directory')
+          .addContent(
+            this.findAll().slice(start, end).filter((p) => !p.isHidden()).map((p) =>
+              new Element('li').class(classes.item).addContent([
+                Util.view(p).pageLink(options.links),
+                (p.findAll().length && options.depth > 0) ?
+                  Util.view(p).pageToc(Object.assign({}, options.options, {
+                    depth: options.depth-1,
+                    inner: true,
+                  }))
+                  : '',
+              ])
+            )
+          )
+          .html()
       })
       /**
        * Return an unordered list of button links for a highlighted content block.
