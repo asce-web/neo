@@ -5,5 +5,6 @@ $('.o-Drawer__Button').click(function () {
     .toggleClass('o-Drawer__Bar--js-open')
     .attr('aria-expanded', !is_open)
     .attr('aria-hidden'  ,  is_open);
-  $(this).find('.glyphicons').toggleClass('glyphicons-menu-hamburger glyphicons-remove-circle');
+  $(this).toggleClass('-ps-f')
+    .find('.c-MobileMenuToggle').toggleClass('c-MobileMenuToggle--js-close')
 });

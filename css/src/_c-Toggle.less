@@ -1,13 +1,12 @@
 
 /*################################*\
-    neo  |  _c-Toggle.less
+    neo  |  _c-MobileMenuToggle.less
 \*################################*/
 
 
-@p-trans_dura: 500ms;
 
 
-// The Toggle Button
+// The Mobile Menu Toggle Button
 //
 // Toggle button with "menu" icon in inactive state and "close" icon in active state.
 // This Component is not part of the <a>Button</a> suite of styles; it is a
@@ -38,28 +37,9 @@
 //
 // Weight: 20
 //
-// Styleguide Components.Toggle
-.c-Toggle {
-  @media screen and (min-width: 45em) {
-    display: none;
-  }
-}
+// Styleguide Components.MobileMenuToggle
 
-// Link to site map, for when JS is disabled and no mobile menu is available
-header noscript a {
-  position: absolute;
-  top: ((75px - 48px)/2); // half height of the mast head // FIXME
-  right: 0.5rem;
-  line-height: var(--line-height); // override `label`
-}
-
-.c-Toggle__Check {
-  // using `.h-Hidden`
-  &:focus {
-    position: absolute; // override h-Hidden:focus
-  }
-}
-
+@p-trans_dura: 500ms;
 
 // Vizualization for the toggle menu
 //
@@ -69,26 +49,18 @@ header noscript a {
 // Chris Harvey
 // ^updated
 // 2016-07-03
-.c-Toggle__Viz {
-  position: absolute;
-  top: ((75px - 48px)/2); // half height of the mast head // FIXME
-  right: 0;
-  z-index: 3; // over `.o-Drawer`
-  margin: @g-boxpadd_mill;
+.c-MobileMenuToggle {
   border-radius: 0.25rem;
-  .c-Toggle__Check:checked ~ & {
-    position: fixed;
-  }
 }
 
-.c-Toggle__Viz__Bar {
+.c-MobileMenuToggle__Rect {
   fill: var(--color-gray_lt-tint2);
   transform-origin: center;
   .transitions(transform, fill; @p-trans_dura);
   &:nth-child(1) {}
   &:nth-child(2) { transform: translate(0,-5px); }
   &:nth-child(3) { transform: translate(0,5px); }
-  .c-Toggle__Check:checked ~ .c-Toggle__Viz & {
+  .c-MobileMenuToggle--js-close & {
     &:nth-child(1) {
       transform: scale((24/18),12); // REVIEW magic numbers
       fill: var(--color-gray_dk);

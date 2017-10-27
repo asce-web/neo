@@ -8,6 +8,18 @@
 // ALL THE STYLES IN THIS FILE MUST BE MOVED TO ITS PROPER STYLESHEET
 // AT SOME POINT IN TIME.
 
+
+// Link to site map, for when JS is disabled and no mobile menu is available
+noscript .c-Button[href="#sitemap"] {
+  position: absolute;
+  top: ((75px - 48px)/2); // half height of the mast head // FIXME
+  right: 0.5rem;
+  margin: @g-boxpadd_mill;
+  @media screen and (min-width: @p-breakpoint) {
+    display: none;
+  }
+}
+
 // TODO move these to component files
 .c-TableStripe {
   tr:nth-child(even) {

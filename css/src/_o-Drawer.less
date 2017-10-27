@@ -31,9 +31,14 @@
 // Styleguide Objects.Drawer
 
 
+@p-breakpoint: 45em;
 @p-trans_dura: 250ms;
 
-.o-Drawer {
+// no actual styles on this; serves as a container and hook
+.o-Drawer {}
+
+
+.o-Drawer__Bar {
   .transitions(transform, opacity; @p-trans_dura);
   // animation for *closing* drawer
   transition-timing-function: @google-accel;
@@ -50,17 +55,38 @@
     // height: 100%; // fallback for vh
     // height: 100vh; // don’t need this if bottom:0
     border-left: 1px solid currentColor;
+    &:not(.o-Drawer__Bar--js-open) {
     opacity: 0;
+    }
   }
 }
-.o-Drawer--open {
+.o-Drawer__Bar--js-open {
   @media not all and (min-width: 45em) {
     transform: translateX(-100%);
-    opacity: 1;
     // animation for *opening* drawer
     transition-timing-function: @google-decel;
     // transition-timing-function: @g-decel_hard;
     // transition-timing-function: @g-decel_dram;
     // transition-timing-function: @g-accel_extm;
+  }
+}
+
+
+.o-Drawer__Button {
+  // <button> base resets:
+  padding: 0; padding: initial; padding: unset;
+  font-size: inherit; font-size: unset;
+  background: transparent; background: initial; background: unset;
+  border: 0;
+
+  position: absolute;
+  top: ((75px - 48px)/2); // half height of the mast head // FIXME
+  right: 0;
+  z-index: 3; // over Drawer__Bar
+
+  margin: @g-boxpadd_mill;
+
+  @media screen and (min-width: @p-breakpoint) {
+    display: none;
   }
 }

@@ -30,9 +30,7 @@ html(lang="en")
       // remove Toggle menu when JS is disabled
       style.
         @media not all and (min-width: 45em) {
-          .c-Toggle__Check,
-          .c-Toggle__Viz,
-          .o-Drawer { display: none; }
+          .o-Drawer__Button { display: none; }
         }
   body
     a.h-Hidden(href="#main") skip to main content
@@ -40,13 +38,13 @@ html(lang="en")
       != site.view.siteTitle()
     header.o-Runner.c-Mast.c-Mast--menu#main-menu: nav.o-Constrain.o-Drawer
       h1.h-Hidden Main Menu
-      button.o-Drawer__Button(type="button" aria-controls="main-menu-drawer" aria-label="toggle main menu")
-        svg.c-Toggle__Viz(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36")
+      button.o-Drawer__Button.h-Inline(type="button" aria-controls="main-menu-drawer" aria-label="toggle main menu")
+        svg.c-MobileMenuToggle(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36")
           path(d="M0,0 H24 V24 H0 z" fill="transparent")
           g(transform="translate(3,11)")
             each val in new Array(3)
-              rect.c-Toggle__Viz__Bar(width="18" height="2")
-      noscript: a(href="#sitemap") Site Map
+              rect.c-MobileMenuToggle__Rect(width="18" height="2")
+      noscript: a.c-Button(href="#sitemap") Site Map
       div.o-Drawer__Bar#main-menu-drawer
         -
           let mainmenu_options = {
