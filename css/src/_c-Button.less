@@ -21,10 +21,11 @@
 // <code>button</code> elements.
 //
 // Keep in mind these button usage guidelines:
-// - <code>button</code> elements should indicate action and be worded actionably.
-// - Use an <code>a</code> element instead of a <code>button</code> if there is a
-//   meaningful target href or url.
-// - Of course, <code>a</code> elements as well as <code>button</code> elements
+// - `button` elements should indicate action and be worded actionably.
+//   `button`s should initiate action *on the page*, not navigate the user away from the page.
+// - Use an `a` element instead of a `button` if there is a
+//   meaningful URL (or URL fragment), or if the user is navigated *away from the page*.
+// - Of course, `a` elements as well as `button` elements
 //   may be styled to look like Button Components.
 //
 // Every Button Component must have styles available for each of the following states:
@@ -41,7 +42,10 @@
 //     <ul>
 //       <li>a <code>button</code> with the <code>[disabled]</code> attribute, or</li>
 //       <li>an <code>a</code> with the <code>[href]</code> attribute <em>absent</em>
-//         (this is not the same as an empty attribute <code>[href=""]</code>).</li>
+//         (this is not the same as an empty attribute <code>[href=""]</code>).
+//         <small>Note that as of <time>2017-12-01</time>, an <code>a:not([href])</code>
+//         element is not sufficient to implement the <b>disabled</b> style; the
+//         class <code>.c-Button--disabled</code> must be added to do so.</small></li>
 //     </ul>
 //   </dd>
 // </dl>
