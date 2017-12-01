@@ -286,6 +286,25 @@ class Util {
         )).html()
       })
       /**
+       * Return an unordered list of links, with style.
+       * Parameter `data` should be of type `Array<Element>` (TODO: HTMLAnchorElement), i.e., a list of links.
+       * @summary Call `Util.view(data).linkList()` to render this display.
+       * @function Util.VIEW.linkList
+       * @returns {string} HTML output
+       */
+      .addDisplay(function linkList() {
+        return new Element('ul',false).class('o-List c-LinkList').addContent(this.map((anchor) =>
+          new Element('li',false).class('o-List__Item c-LinkList__Item').addContent(
+            anchor.addClass('c-LinkList__Link')
+              .addContent((function () { // HACK find a way to prepend content!
+                let icon = new Element('i',false).class('halflings halflings-circle-arrow-right')
+                this._contents = icon.html() + this._contents
+                return null
+              }).call(anchor))
+          )
+        )).html()
+      })
+      /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
        * rows of {@link DateRange.VIEW.dateBlock|DateRange#view.dateBlock()} displays.
        * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of important dates.
