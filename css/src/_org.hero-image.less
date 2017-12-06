@@ -23,12 +23,12 @@
 //     end_date  : new Date('2017-06-07'),
 //     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
 //   })
-//   let hero_content = Util.VIEW.highlightButtons([
+//   let hero_content = Util.view([
 //     new Element('a').attr('href','#0').addContent(`Register`),
 //     new Element('a').attr('href','#0').addContent(`Sponsor`),
 //     new Element('a').attr('href','#0').addContent(`Submit a Paper`),
-//   ], 'c-Button--primary')
-// != conf.view(Conference.Display.HERO, hero_content)
+//   ]).highlightButtons('c-Button--primary')
+// != conf.view.hero(hero_content)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>

@@ -2,9 +2,9 @@ extends _sites.tpl.pug
 
 block append vars
   - var page = site.find('about.html')
-  - var prev_blurb = 'default text for previous conference'
-  - var next_blurb = 'default text for next conference'
   -
+    var prev_blurb = 'default text for previous conference'
+    var next_blurb = 'default text for next conference'
     var prev_content = Util.view([
       new Element('a').attr('href',site.prevConference().url).attr('itemprop','url').addContent(`Event Details`)
     ]).highlightButtons('c-Button--ghost c-Button--ghost--dark')

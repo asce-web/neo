@@ -10,13 +10,15 @@
 // The first column is the date,
 // the second column is the description.
 //
-// Use in Pug:
+// Pug:
 // <pre>
-// != Util.view([
-//   new DateRange('Optional Final Papers Due'     , new Date('2015-10-12')),
-//   new DateRange('Early-Bird Registration Closes', new Date('2015-12-17')).url('#0'),
-//   new DateRange('Advance Registration Period'   , new Date('2015-12-18'), new Date('2015-12-21')),
-// ]).dateBlock()
+// -
+//   let dates = [
+//     new DateRange('Optional Final Papers Due'     , new Date('2015-10-12')),
+//     new DateRange('Early-Bird Registration Closes', new Date('2015-12-17')).url('#0'),
+//     new DateRange('Advance Registration Period'   , new Date('2015-12-18'), new Date('2015-12-21')),
+//   ]
+// != Util.view(dates).dateBlock()
 // </pre>
 //
 // <header><dl>

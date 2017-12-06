@@ -8,22 +8,20 @@
 //
 // A listing of prices for one Pass Type (e.g. Student, Speaker, Standard, etc.).
 //
-// Use with Pug:
+// Pug:
 // <pre>
 // -
-//   let pass =
-//     new Pass('Speaker Pass')
-//       .description('Speakers and Presenters')
-//       .addAttendeeType(new Pass.AttendeeType('Member', true))
-//       .addAttendeeType(new Pass.AttendeeType('Non-Member'))
-//       .fineprint('Side note or fine print goes here. Only plain text is allowed.')
-//   let conference =
-//     new Conference()
-//       .addRegistrationPeriod(new RegistrationPeriod({ name: 'Early Bird' }))
-//       .addRegistrationPeriod(new RegistrationPeriod({ name: 'Advance' }))
-//       .addRegistrationPeriod(new RegistrationPeriod({ name: 'Onsite' }))
-//       .currentRegistrationPeriod('Advance')
-// != pass.view(Pass.Display.PASS, conference)
+//   let pass = new Pass('Speaker Pass')
+//     .description('Speakers and Presenters')
+//     .addAttendeeType(new Pass.AttendeeType('Member', true))
+//     .addAttendeeType(new Pass.AttendeeType('Non-Member'))
+//     .fineprint('Side note or fine print goes here. Only plain text is allowed.')
+//   let conference = new Conference()
+//     .addRegistrationPeriod(new RegistrationPeriod({ name: 'Early Bird' }))
+//     .addRegistrationPeriod(new RegistrationPeriod({ name: 'Advance' }))
+//     .addRegistrationPeriod(new RegistrationPeriod({ name: 'Onsite' }))
+//     .currentRegistrationPeriod('Advance')
+// != pass.view.pass(conference)
 // </pre>
 //
 // <header><dl>

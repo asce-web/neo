@@ -1,6 +1,4 @@
 h1#important-dates Important Dates
 -
-  let important_dates = Util.view(
-    site.currentConference().getImportantDatesAll().filter(($impDate) => $impDate.isStarred())
-  ).dateBlock()
-!= important_dates
+  let important_dates = site.currentConference().getImportantDatesAll().filter(($impDate) => $impDate.isStarred())
+!= Util.view(important_dates).dateBlock()
