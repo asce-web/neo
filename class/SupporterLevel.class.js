@@ -69,7 +69,7 @@ class SupporterLevel {
                 .filter(($supporter) => $supporter.level()===this.name)
                 .map(($supporter) =>
                   new Element('li').class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
-                    .attr({ itemprop:'sponsor', itemscope:'', itemtype:'https://schema.org/Organization' })
+                    .attr({ itemprop:'sponsor', itemscope:'', itemtype:'http://schema.org/Organization' })
                     .addContent($supporter.view.supporterBlock())
                 )
             ),

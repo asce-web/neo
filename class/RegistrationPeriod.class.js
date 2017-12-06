@@ -96,7 +96,7 @@ class RegistrationPeriod {
             'data-instanceof': 'RegistrationPeriod',
             itemprop : 'offers',
             itemscope: '',
-            itemtype : 'https://schema.org/AggregateOffer',
+            itemtype : 'http://schema.org/AggregateOffer',
           })
           .addContent([
             new Element('h1').class('c-Pass__Period__Hn').attr('itemprop','name').addContent([

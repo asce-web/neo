@@ -122,7 +122,7 @@ class Place {
             .attr({
               itemprop : 'address',
               itemscope: '',
-              itemtype : 'https://schema.org/PostalAddress',
+              itemtype : 'http://schema.org/PostalAddress',
             })
             .addContent([
               new Element('span').class('h-Clearfix').attrStr('itemprop="streetAddress"').addContent(this.streetAddress),
