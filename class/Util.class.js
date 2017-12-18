@@ -1,5 +1,5 @@
 const xjs     = require('extrajs')
-const Element = require('extrajs-dom').Element
+const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 
 /**
@@ -212,20 +212,20 @@ class Util {
        */
       .addDisplay(function pageLink(options = {}) {
         let classes = options.classes || {}
-        return new Element('a').class(classes.link || null)
+        return new HTMLElement('a').class(classes.link || null)
           .attr({
             'data-instanceof': 'Page',
             href: this.url(),
             // 'aria-current': (page.url()===this.url()) ? 'page' : null,
           })
           .addContent([
-            (xjs.Object.typeOf(classes.icon)==='string') ? new Element('i').class('material-icons')
+            (xjs.Object.typeOf(classes.icon)==='string') ? new HTMLElement('i').class('material-icons')
               .addClass(classes.icon)
               .attr('role','none')
               .addContent(this.getIcon())
               : null,
-            new Element('span').addContent(this.name()),
-            (xjs.Object.typeOf(classes.expand)==='string' && this.findAll().length) ? new Element('i').class('material-icons')
+            new HTMLElement('span').addContent(this.name()),
+            (xjs.Object.typeOf(classes.expand)==='string' && this.findAll().length) ? new HTMLElement('i').class('material-icons')
               .addClass(classes.expand)
               .attr('role','none')
               .addContent(`expand_more`)
@@ -254,11 +254,11 @@ class Util {
         let classes = options.classes || {}
         let start = options.start || 0
         let end   = options.end   || Infinity
-        return new Element('ol').class(classes.list || null)
+        return new HTMLElement('ol').class(classes.list || null)
           .attr('role', (options.inner) ? null : 'directory')
           .addContent(
             this.findAll().slice(start, end).filter((p) => !p.isHidden()).map((p) =>
-              new Element('li').class(classes.item || null).addContent([
+              new HTMLElement('li').class(classes.item || null).addContent([
                 Util.view(p).pageLink(options.links),
                 (p.findAll().length && options.depth > 0) ?
                   Util.view(p).pageToc(Object.assign({}, options.options, {
@@ -280,8 +280,8 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return new Element('ul').class('o-List o-Flex o-Flex--even').addContent(this.map((el) =>
-          new Element('li').class('o-List__Item o-Flex__Item')
+        return new HTMLElement('ul').class('o-List o-Flex o-Flex--even').addContent(this.map((el) =>
+          new HTMLElement('li').class('o-List__Item o-Flex__Item')
             .addContent(el.addClass(`c-Button c-Button--hilite ${buttonclasses}`))
         )).html()
       })
@@ -295,8 +295,8 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function dateBlock(attr = {}) {
-        return new Element('table').attr(attr).addContent(
-          new Element('tbody').class('c-DateBlock')
+        return new HTMLElement('table').attr(attr).addContent(
+          new HTMLElement('tbody').class('c-DateBlock')
             .addContent(this.map(($importantDate) => $importantDate.view.dateBlock()))
         ).html()
       })
@@ -310,8 +310,8 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function timeBlock(attr = {}) {
-        return new Element('table').attr(attr).addContent(
-          new Element('tbody').class('c-TimeBlock')
+        return new HTMLElement('table').attr(attr).addContent(
+          new HTMLElement('tbody').class('c-TimeBlock')
             .addContent(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
         ).html()
       })
@@ -323,8 +323,8 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function registrationLegend() {
-        return new Element('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').addContent(this.map((period) =>
-          new Element('li').class('o-List__Item o-Flex__Item c-Alert__Item').addContent(period.view.legend())
+        return new HTMLElement('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').addContent(this.map((period) =>
+          new HTMLElement('li').class('o-List__Item o-Flex__Item c-Alert__Item').addContent(period.view.legend())
         )).html()
       })
       /**
@@ -337,8 +337,8 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference) {
-        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((pass) =>
-          new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference))
+        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((pass) =>
+          new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference))
         )).html()
       })
       /**
@@ -350,8 +350,8 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker() {
-        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((person) =>
-          new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
+        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((person) =>
+          new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
         )).html()
       })
   }

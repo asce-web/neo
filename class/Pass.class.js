@@ -1,4 +1,5 @@
 const Element = require('extrajs-dom').Element
+const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 
 /**
@@ -126,18 +127,18 @@ class Pass {
        */
       .addDisplay(function pass($conference) {
         let current_period = $conference.currentRegistrationPeriod()
-        return new Element('article').class('c-Pass')
+        return new HTMLElement('article').class('c-Pass')
           .attr('data-instanceof','Pass')
           .addContent([
-            new Element('header').class('c-Pass__Head').addContent([
-              new Element('h1').class('c-Pass__Hn').addContent(this.name),
-              new Element('p').class('c-Pass__Desc').addContent([
+            new HTMLElement('header').class('c-Pass__Head').addContent([
+              new HTMLElement('h1').class('c-Pass__Hn').addContent(this.name),
+              new HTMLElement('p').class('c-Pass__Desc').addContent([
                 this.description(),
-                (this.fineprint()) ? new Element('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null,
+                (this.fineprint()) ? new HTMLElement('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null,
               ]),
             ]),
-            (current_period) ? new Element('div').class('c-Pass__Body').addContent(current_period.view.pass(this, true)) : null,
-            new Element('footer').class('o-Flex c-Pass__Foot').addContent(
+            (current_period) ? new HTMLElement('div').class('c-Pass__Body').addContent(current_period.view.pass(this, true)) : null,
+            new HTMLElement('footer').class('o-Flex c-Pass__Foot').addContent(
               $conference.getRegistrationPeriodsAll()
                 .filter((registration_period) => registration_period !== current_period)
                 .map((registration_period) => registration_period.view.pass(this, false))
@@ -221,8 +222,8 @@ Pass.AttendeeType = class AttendeeType {
        */
       .addDisplay(function pass(price, is_body) {
         return Element.concat([
-          new Element('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
-          new Element('dd').class('c-Pass__Price')
+          new HTMLElement('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
+          new HTMLElement('dd').class('c-Pass__Price')
             .addClass((is_body && this.isFeatured) ? 'c-Pass__Price--featured' : '')
             .attr({
               'aria-label': `${price} ${Pass.PRICE_OPTIONS.resolvedOptions().currency}`,
@@ -231,11 +232,11 @@ Pass.AttendeeType = class AttendeeType {
               itemtype : 'http://schema.org/UnitPriceSpecification',
             })
             .addContent([
-              new Element('data')
+              new HTMLElement('data')
                 .attr('value',Pass.PRICE_OPTIONS.resolvedOptions().currency)
                 .attr('itemprop','priceCurrency')
                 .addContent(Pass.PRICE_OPTIONS.format(price).slice(0,1)), // first char // .charAt(0) // FIXME for USD only!
-              new Element('span')
+              new HTMLElement('span')
                 .attr('itemprop','price')
                 .addContent(Pass.PRICE_OPTIONS.format(price).slice(1)), // rest
             ]),

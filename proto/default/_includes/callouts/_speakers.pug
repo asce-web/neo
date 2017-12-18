@@ -2,6 +2,6 @@ h1#speakers Speakers
 != Util.view(site.currentConference().getSpeakersAll().filter(($s) => $s.isStarred())).speaker()
 -
   let highlight_buttons = [
-    new Element('a').attr('href','speakers.html').addContent(`All Speakers`)
+    new HTMLElement('a').attr('href','speakers.html').addContent(`All Speakers`)
   ]
 != Util.view(highlight_buttons).highlightButtons()

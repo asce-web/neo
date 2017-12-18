@@ -1,5 +1,5 @@
 const Page     = require('sitepage').Page
-const Element  = require('extrajs-dom').Element
+const HTMLElement  = require('extrajs-dom').HTMLElement
 const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
 const ConfPage = require('./ConfPage.class.js')
@@ -239,13 +239,13 @@ class ConfSite extends Page {
        * @returns {string} HTML output
        */
       .addDisplay(function siteTitle() {
-        return new Element('a').class('c-SiteTitle c-LinkCamo h-Block')
+        return new HTMLElement('a').class('c-SiteTitle c-LinkCamo h-Block')
           .attr('data-instanceof','ConfSite')
           .attr('href',this.url())
           .addContent([
-            new Element('img').class('c-SiteTitle__Logo').attr('src',this.logo()).attr('alt','Home'),
-            new Element('h1').class('c-SiteTitle__Name').addContent(this.name()),
-            new Element('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
+            new HTMLElement('img').class('c-SiteTitle__Logo').attr('src',this.logo()).attr('alt','Home'),
+            new HTMLElement('h1').class('c-SiteTitle__Name').addContent(this.name()),
+            new HTMLElement('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
           ])
           .html()
       })

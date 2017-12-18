@@ -1,4 +1,4 @@
-const Element = require('extrajs-dom').Element
+const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 
 /**
@@ -83,14 +83,14 @@ class Supporter {
        * @returns {string} HTML output
        */
       .addDisplay(function supporterBlock() {
-        return new Element('a').attr({
+        return new HTMLElement('a').attr({
           'data-instanceof': 'Supporter',
           href    : this.url(),
           rel     : 'external nofollow',
           itemprop: 'url'
         }).addContent([
-          new Element('img').class('c-SupporterBlock__Logo').attr({ src:this.img(), alt:this.name, itemprop:'logo' }),
-          new Element('meta').attr({ content:this.name, itemprop:'name' }),
+          new HTMLElement('img').class('c-SupporterBlock__Logo').attr({ src:this.img(), alt:this.name, itemprop:'logo' }),
+          new HTMLElement('meta').attr({ content:this.name, itemprop:'name' }),
         ]).html()
       })
   }

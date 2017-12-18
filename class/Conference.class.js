@@ -1,5 +1,6 @@
 const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
+const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
@@ -444,7 +445,7 @@ class Conference {
      * @returns {string} the markup for the location
      */
     function promoLoc(obj) {
-      if (obj.alt) return new Element('abbr').attr('title',obj.alt).addContent(obj.text).html()
+      if (obj.alt) return new HTMLElement('abbr').attr('title',obj.alt).addContent(obj.text).html()
       else return obj.text
     }
     /**
@@ -465,34 +466,34 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function hero(block = '') {
-        return new Element('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
+        return new HTMLElement('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
           .attr('data-instanceof','Conference')
           .addContent([
-            new Element('div').class('o-Constrain')
+            new HTMLElement('div').class('o-Constrain')
               .addContent([
-                new Element('h1').class('c-PageTitle c-ConfHed__Name')
+                new HTMLElement('h1').class('c-PageTitle c-ConfHed__Name')
                   .attr('itemprop','name')
                   .addContent(this.name),
-                new Element('meta').attr('content',this.url).attr('itemprop','url'),
-                new Element('p').class('o-Flex c-ConfHed__Detail')
+                new HTMLElement('meta').attr('content',this.url).attr('itemprop','url'),
+                new HTMLElement('p').class('o-Flex c-ConfHed__Detail')
                   .addContent([
-                    new Element('span').class('o-Flex__Item c-ConfHed__Detail__Place h-Block')
+                    new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Place h-Block')
                       .attr('itemprop','location')
                       .addContent(promoLoc(this.promoLoc)),
-                    new Element('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
+                    new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
                       .addContent([
-                        new Element('time')
+                        new HTMLElement('time')
                           .attr('datetime',this.startDate.toISOString())
                           .attr('itemprop','startDate')
                           .addContent(xjs.Date.format(this.startDate, 'M j')),
                         `&ndash;`,
-                        new Element('time')
+                        new HTMLElement('time')
                           .attr('datetime',this.endDate.toISOString())
                           .attr('itemprop','endDate')
                           .addContent(xjs.Date.format(this.endDate, 'M j')),
                       ]),
                   ]),
-                new Element('p').class('c-ConfHed__Theme h-Hidden-nM')
+                new HTMLElement('p').class('c-ConfHed__Theme h-Hidden-nM')
                   .attr('itemprop','description')
                   .addContent(this.theme || `&nbsp;`), // (`\xa0` === `&nbsp;`)
                 block,
@@ -510,7 +511,7 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function otherYear(year, blurb = '', block = '') {
-        return new Element('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
+        return new HTMLElement('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
           .addClass(`c-Banner--${year}`)
           .attr({
             'data-instanceof': 'Conference',
@@ -518,15 +519,15 @@ class Conference {
             itemtype : 'http://schema.org/Event',
           })
           .addContent([
-            new Element('div').class('o-Constrain').addContent([
-              new Element('h1').class('c-ConfHed__Name')
+            new HTMLElement('div').class('o-Constrain').addContent([
+              new HTMLElement('h1').class('c-ConfHed__Name')
                 .attr('itemprop','name')
                 .addContent(this.name),
-              new Element('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
-              new Element('p').class('c-ConfHed__Detail')
+              new HTMLElement('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
+              new HTMLElement('p').class('c-ConfHed__Detail')
                 .attr('itemprop','location')
                 .addContent(promoLoc(this.promoLoc)),
-              new Element('p').class('h-Hidden-nM').addContent(blurb),
+              new HTMLElement('p').class('h-Hidden-nM').addContent(blurb),
               block
             ])
           ])
@@ -566,29 +567,29 @@ class Conference {
           })
           return returned
         }
-        return new Element('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
+        return new HTMLElement('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
           .addContent([
-            new Element('legend').class('h-Hidden').addContent(`Footer Tabs`),
-            new Element('dl').class('o-Flex').id(id).addContent(
+            new HTMLElement('legend').class('h-Hidden').addContent(`Footer Tabs`),
+            new HTMLElement('dl').class('o-Flex').id(id).addContent(
               groupSessions.call(this, starred).map((g, index) => Element.concat([
-                new Element('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').addContent(
-                  new Element('label').class('h-Block').addContent([
-                    new Element('input').class('o-Tablist__Check h-Hidden').attr({
+                new HTMLElement('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').addContent(
+                  new HTMLElement('label').class('h-Block').addContent([
+                    new HTMLElement('input').class('o-Tablist__Check h-Hidden').attr({
                       type   : 'radio',
                       name   : id,
                       value  : g.dateobj.toISOString(),
                       checked: (index===0) ? '' : null,
                     }),
-                    new Element('time').class('c-ProgramHn h-Block')
+                    new HTMLElement('time').class('c-ProgramHn h-Block')
                       .attr('datetime',g.dateobj.toISOString())
                       .addContent([
                         `${xjs.Date.DAY_NAMES[g.dateobj.getUTCDay()]},`,
-                        new Element('br'),
+                        new HTMLElement('br'),
                         xjs.Date.format(g.dateobj, 'M j'),
                       ]),
                   ])
                 ),
-                new Element('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').addContent(
+                new HTMLElement('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').addContent(
                   Util.view(g.sessions).timeBlock()
                 ),
               ]))

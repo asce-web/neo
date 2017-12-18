@@ -1,4 +1,5 @@
 const Element = require('extrajs-dom').Element
+const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 
 /**
@@ -109,31 +110,31 @@ class Place {
        * @returns {string} HTML output
        */
       .addDisplay(function venue() {
-        let name = new Element('b').class('h-Clearfix').attr('itemprop','name').addContent(this.name)
+        let name = new HTMLElement('b').class('h-Clearfix').attr('itemprop','name').addContent(this.name)
         if (this.url) {
-          name = new Element('a').attr({
+          name = new HTMLElement('a').attr({
             href: this.url,
             itemprop: 'url',
           }).addContent(name)
         }
         return Element.concat([
           name,
-          new Element('span')
+          new HTMLElement('span')
             .attr({
               itemprop : 'address',
               itemscope: '',
               itemtype : 'http://schema.org/PostalAddress',
             })
             .addContent([
-              new Element('span').class('h-Clearfix').attrStr('itemprop="streetAddress"').addContent(this.streetAddress),
-              new Element('span').attrStr('itemprop="addressLocality"').addContent(this.addressLocality),
+              new HTMLElement('span').class('h-Clearfix').attrStr('itemprop="streetAddress"').addContent(this.streetAddress),
+              new HTMLElement('span').attrStr('itemprop="addressLocality"').addContent(this.addressLocality),
               `, `,
-              new Element('span').attrStr('itemprop="addressRegion"').addContent(this.addressRegion),
+              new HTMLElement('span').attrStr('itemprop="addressRegion"').addContent(this.addressRegion),
               ` `,
-              new Element('span').class('h-Clearfix').attrStr('itemprop="postalCode"').addContent(this.postalCode),
-              (this.addressCountry) ? new Element('span').class('h-Clearfix').attrStr('itemprop="addressCountry"').addContent(this.addressCountry) : null,
+              new HTMLElement('span').class('h-Clearfix').attrStr('itemprop="postalCode"').addContent(this.postalCode),
+              (this.addressCountry) ? new HTMLElement('span').class('h-Clearfix').attrStr('itemprop="addressCountry"').addContent(this.addressCountry) : null,
             ]),
-          (this.telephone) ? new Element('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : null,
+          (this.telephone) ? new HTMLElement('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : null,
         ])
       })
   }
