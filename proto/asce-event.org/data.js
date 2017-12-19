@@ -21,8 +21,16 @@ const RegistrationPeriod = require('../../class/RegistrationPeriod.class.js')
 const Pass               = require('../../class/Pass.class.js')
 const DateRange          = require('../../class/DateRange.class.js')
 
-    var site = new ConfSite('An ASCE Event', '/sites/asce-event.org/', 'Optional Brand Tagline')
-      .keywords(['ASCE', 'civil engineering', 'convention'])
+var jsondata = {
+  "@context"   : "http://schema.org/",
+  "@type"      : "WebPage",
+  "name"       : "An ASCE Event",
+  "url"        : "/sites/asce-event.org/",
+  "description": "Optional Brand Slogan",
+  "keywords"   : ["ASCE", "civil engineering", "convention"],
+}
+
+    var site = new ConfSite(jsondata)
       .logo('files/site-logo-white.png')
       .colors(Color.fromString('#3fae2a'), Color.fromString('#00a1e1'))
       .images({

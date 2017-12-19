@@ -66,7 +66,13 @@ gulp.task('pug:default', function () {
       locals: {
         HTMLElement   : require('extrajs-dom').HTMLElement,
         Util      : require('./class/Util.class.js'),
-        site      : new ConfSite('Civil Engineering Congress', '/sites/default/', 'ConferenceSuite')
+        site      : new ConfSite({
+          "@context"   : "http://schema.org/",
+          "@type"      : "WebPage",
+          "name"       : "Civil Engineering Congress",
+          "url"        : "/sites/default/",
+          "description": "ConferenceSuite",
+        })
           .colors(Color.fromString('#660000'), Color.fromString('#ff6600')) // default Hokie colors
           .init()
           .addConference('default', new Conference({

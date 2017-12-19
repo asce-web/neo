@@ -13,13 +13,16 @@ const ConfPage = require('./ConfPage.class.js')
 class ConfSite extends Page {
   /**
    * Construct a new ConfSite object.
-   * @param {string} name name of this site
-   * @param {string} url url of the landing page for this site
-   * @param {string} slogan the tagline, or slogan, of this site
+   * @param {Object} jsondata a JSON object that validates against some schema?
+   * @param {string} jsondata.name name of this site
+   * @param {string} jsondata.url url of the landing page for this site
+   * @param {string=} jsondata.description the slogan (or tagline) of this site
+   * @param {Array<string>=} jsondata.keywords keywords for this site
    */
-  constructor(name, url, slogan) {
-    super({ name: name, url: url })
-    super.description(slogan)
+  constructor(jsondata) {
+    super({ name: jsondata.name, url: jsondata.url })
+    super.description(jsondata.description || '')
+    super.keywords(jsondata.keywords || [])
     /** @private */ this._logo             = ''
     /** @private */ this._colors           = {}
     /** @private */ this._images           = {}

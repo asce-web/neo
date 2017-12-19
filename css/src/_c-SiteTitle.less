@@ -10,7 +10,13 @@
 //
 // Pug:
 // <pre>
-// != new ConfSite('CI Summit', '#0', 'Innovations In Construction').logo('logo.png').view()
+// -
+//   var sitedata = {
+//     "name"       : "CI Summit",
+//     "url"        : "//www.cisummit.org/",
+//     "description": "Innovations In Construction",
+//   }
+// != new ConfSite(sitedata).logo('logo.png').view()
 // </pre>
 //
 // <header><dl>
@@ -19,7 +25,7 @@
 // </dl></header>
 //
 // Markup:
-// <a class="c-SiteTitle c-LinkCamo h-Block" data-instanceof="ConfSite" href="#0">
+// <a class="c-SiteTitle c-LinkCamo h-Block" data-instanceof="ConfSite" href="//www.cisummit.org/">
 //   <img class="c-SiteTitle__Logo" alt="Home"
 //     src="http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png"/>
 //   <h1 class="c-SiteTitle__Name">CI Summit</h1>
