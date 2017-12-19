@@ -60,7 +60,7 @@
 // </dl></header>
 //
 // Markup:
-// <ul class="o-List o-Flex c-MainMenu" role="directory">
+// <ol class="o-List o-Flex c-MainMenu" role="directory">
 //   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
 //     <a class="c-MainMenu__Link h-Block" href="#0">
 //       <i class="material-icons c-MainMenu__Icon" role="none">insert_drive_file</i>
@@ -73,11 +73,11 @@
 //       <span>Registration</span>
 //       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
 //     </a>
-//     <ul class="o-List c-MainMenu__Sub">
+//     <ol class="o-List c-MainMenu__Sub">
 //       <li class="o-List__Item c-MainMenu__Sub__Item">
 //         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>Why Attend</span></a>
 //       </li>
-//     </ul>
+//     </ol>
 //   </li>
 //   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
 //     <a class="c-MainMenu__Link h-Block" href="#0">
@@ -85,14 +85,14 @@
 //       <span>Program</span>
 //       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
 //     </a>
-//     <ul class="o-List c-MainMenu__Sub">
+//     <ol class="o-List c-MainMenu__Sub">
 //       <li class="o-List__Item c-MainMenu__Sub__Item">
 //         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>Short Courses</span></a>
 //       </li>
 //       <li class="o-List__Item c-MainMenu__Sub__Item">
 //         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>Technical Tours</span></a>
 //       </li>
-//     </ul>
+//     </ol>
 //   </li>
 //   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
 //     <a class="c-MainMenu__Link h-Block" href="#0">
@@ -100,11 +100,11 @@
 //       <span>Location</span>
 //       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
 //     </a>
-//     <ul class="o-List c-MainMenu__Sub">
+//     <ol class="o-List c-MainMenu__Sub">
 //       <li class="o-List__Item c-MainMenu__Sub__Item">
 //         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>Hotel &amp; Travel</span></a>
 //       </li>
-//     </ul>
+//     </ol>
 //   </li>
 //   <li class="o-List__Item o-Flex__Item c-MainMenu__Item">
 //     <a class="c-MainMenu__Link h-Block" href="#0">
@@ -112,13 +112,13 @@
 //       <span>Speakers</span>
 //       <i class="material-icons c-MainMenu__Exp" role="none">expand_more</i>
 //     </a>
-//     <ul class="o-List c-MainMenu__Sub">
+//     <ol class="o-List c-MainMenu__Sub">
 //       <li class="o-List__Item c-MainMenu__Sub__Item">
 //         <a class="c-MainMenu__Sub__Link h-Block" href="#0"><span>For Speakers</span></a>
 //       </li>
-//     </ul>
+//     </ol>
 //   </li>
-// </ul>
+// </ol>
 //
 // Weight: 4
 //
@@ -134,7 +134,7 @@
   // justify-content: start; // CHANGED not supported yet and breaks flex-start
   margin-bottom: initial; // HACK fallback for unset
   margin-bottom: unset; // HACK fallback for logical properties
-  margin-block-end: unset; // override base ul
+  margin-block-end: unset; // override base ol
   .menufont();
   color: var(--color-gray_dk, @g-color-gray_dk);
   @media not all and (min-width: @p-breakpoint) {
