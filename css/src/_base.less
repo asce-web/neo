@@ -147,12 +147,14 @@ h1 {
   //    ## Links
   //--------------------------------//
   a {
-    color: var(--link-color);
     .transitions(color, background-color; 125ms);
+    &[href] {
+    color: var(--link-color);
     &:hover,
     &:focus,
     &._hover {
       --link-color: var(--link-color-hover);
+    }
     }
   }
   [aria-current="page"] {
