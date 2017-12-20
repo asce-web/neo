@@ -28,7 +28,13 @@ class Conference {
    * @param {string=} $confinfo.promo_loc.alt the accessible text of the location (eg, "Portland, Oregon")
    */
   constructor(jsondata, $confinfo) {
-    /** @private @final */ this._NAME      = $confinfo.name
+    /**
+     * The name of this conference.
+     * @private
+     * @final
+     * @type {[type]}
+     */
+    this._NAME = jsondata.name
     /** @private @final */ this._URL       = $confinfo.url
     /** @private @final */ this._THEME     = $confinfo.theme
     /** @private @final */ this._START     = $confinfo.start_date
@@ -51,7 +57,7 @@ class Conference {
   }
 
   /**
-   * @summary Get the name of this conference.
+   * @summary The name of this conference.
    * @type {string}
    */
   get name() {
