@@ -10,6 +10,29 @@ class Util {
   /** @private */ constructor() {}
 
   /**
+   * @summary Convert a thing into a string.
+   * @description If the argument is an array, it is joined.
+   * Useful for JSON objects when the value could be a single string or an array of strings.
+   * @todo TODO move to `xjs.String`.
+   * @param   {*} thing anything to convert
+   * @param   {boolean=} truthy if `true`, the values `null` and `undefined` are converted to
+   *                            the strings `'null'` and `'undefined'` respectively;
+   *                            else, they are converted to the empty string
+   * @returns {string} a string version of the argument
+   */
+  static stringify(thing, truthy = false) {
+    const returned = {
+      'array'    : function (arg) { return arg.join('') },
+      'object'   : function (arg) { return JSON.stringify(arg) },
+      'string'   : function (arg) { return arg },
+      'null'     : function (arg) { return (truthy) ? 'null'      : '' },
+      'undefined': function (arg) { return (truthy) ? 'undefined' : '' },
+      default(arg) { return arg.toString() },
+    }
+    return (returned[xjs.Object.typeOf(thing)] || returned.default).call(null, thing)
+  }
+
+  /**
    * NOTE: TYPE DEFINITION
    * ```json
    * {

@@ -290,46 +290,45 @@ var jsondata = {
     site.currentConference
       .addPass(new Pass({
         "name": "Standard Pass",
+        "description": "Members & Non-Members",
       })
-        .description('Members & Non-Members')
         .addAttendeeType(new Pass.AttendeeType('Member'))
         .addAttendeeType(new Pass.AttendeeType('Non-Member'))
         .star()
       ).addPass(new Pass({
         "name": "Speaker Pass",
+        "description": "Speakers and Presenters",
       })
-        .description('Speakers and Presenters')
         .addAttendeeType(new Pass.AttendeeType('Member'))
         .addAttendeeType(new Pass.AttendeeType('Non-Member'))
       ).addPass(new Pass({
         "name": "Moderator Pass",
+        "description": "Moderators",
       })
-        .description('Moderators')
         .addAttendeeType(new Pass.AttendeeType('Member'))
         .addAttendeeType(new Pass.AttendeeType('Non-Member'))
       ).addPass(new Pass({
         "name": "Younger Member",
+        "description": "Members 18–35",
       })
-        .description('Members 18–35')
         .addAttendeeType(new Pass.AttendeeType('Member/Non-Member'))
         .star()
       ).addPass(new Pass({
         "name": "Student Pass",
+        "description": "Undergraduates 18–24",
+        "$fineprint" : "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
       })
-        .description('Undergraduates 18–24')
         .addAttendeeType(new Pass.AttendeeType('Member/Non-Member'))
-        .fineprint(`Full-time students must show valid ID
-          onsite at the registration desk when picking up name badge.`)
         .star()
       ).addPass(new Pass({
         "name": "Guest Pass",
+        "description": "Speaker and Moderator Guests",
       })
-        .description('Speaker and Moderator Guests')
         .addAttendeeType(new Pass.AttendeeType('Member/Non-Member'))
       ).addPass(new Pass({
         "name": "Daily Pass",
+        "description": "For One Day Only",
       })
-        .description('For One Day Only')
         .addAttendeeType(new Pass.AttendeeType('Member'))
         .addAttendeeType(new Pass.AttendeeType('Non-Member'))
       )

@@ -1,6 +1,7 @@
 const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
+const Util    = require('./Util.class.js')
 
 /**
  * A set of prices for registration.
@@ -10,6 +11,8 @@ class Pass {
    * Construct a new Pass object.
    * @param {!Object} jsondata a JSON object that validates against some schema?
    * @param {string} jsondata.name the name or type of the pass
+   * @param {string=} jsondata.description a short description of this pass
+   * @param {string=} jsondata.$fineprint further details of this pass
    */
   constructor(jsondata) {
     /**
@@ -19,8 +22,6 @@ class Pass {
      * @type {!Object}
      */
     this._DATA = jsondata
-    /** @private */ this._description  = ''
-    /** @private */ this._fineprint    = ''
     /** @private */ this._attend_types = []
     /** @private */ this._is_starred = false
   }
@@ -34,27 +35,19 @@ class Pass {
   }
 
   /**
-   * @summary Set or get the description of this pass.
-   * @param   {string=} text the description of this pass
-   * @returns {(Pass|string)} this pass || the description of this pass
+   * @summary The description of this pass.
+   * @type {string}
    */
-  description(text) {
-    if (arguments.length) {
-      this._description = text
-      return this
-    } else return this._description
+  get description() {
+    return this._DATA.description || ''
   }
 
   /**
-   * @summary Set or get the fine print of this pass.
-   * @param   {string=} text the fine print of this pass
-   * @returns {(Pass|string)} this pass || the fine print of this pass
+   * @summary The fine print of this pass.
+   * @type {string}
    */
-  fineprint(text) {
-    if (arguments.length) {
-      this._fineprint = text
-      return this
-    } else return this._fineprint
+  get fineprint() {
+    return Util.stringify(this._DATA.$fineprint)
   }
 
   /**
@@ -140,8 +133,8 @@ class Pass {
             new HTMLElement('header').class('c-Pass__Head').addContent([
               new HTMLElement('h1').class('c-Pass__Hn').addContent(this.name),
               new HTMLElement('p').class('c-Pass__Desc').addContent([
-                this.description(),
-                (this.fineprint()) ? new HTMLElement('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null,
+                this.description,
+                (this.fineprint) ? new HTMLElement('small').class('c-Pass__Fine h-Block').addContent(this.fineprint) : null,
               ]),
             ]),
             new HTMLElement('div').class('c-Pass__Body').addContent(current_period.view.pass(this, true)),
