@@ -15,7 +15,6 @@ const Supporter          = require('../../class/Supporter.class.js')
 const Exhibitor          = require('../../class/Exhibitor.class.js')
 const Person             = require('../../class/Person.class.js')
 const Place              = require('../../class/Place.class.js')
-const RegistrationPeriod = require('../../class/RegistrationPeriod.class.js')
 const Pass               = require('../../class/Pass.class.js')
 const DateRange          = require('../../class/DateRange.class.js')
 
@@ -48,6 +47,28 @@ var jsondata = {
     "addressLocality": "Portland",
     "addressRegion"  : "Oregon"
   },
+    "offers": [
+      {
+        "@type"             : "AggregateOffer",
+        "name"              : "Early Bird",
+        "availabilityEnds"  : "2016-07-28",
+        "$icon"             : "stars"
+      },
+      {
+        "@type"             : "AggregateOffer",
+        "name"              : "Advance",
+        "availabilityStarts": "2016-07-29",
+        "availabilityEnds"  : "2016-08-25",
+        "$icon"             : "date_range"
+      },
+      {
+        "@type"             : "AggregateOffer",
+        "name"              : "Onsite",
+        "availabilityStarts": "2016-08-26",
+        "$icon"             : "account_balance"
+      }
+    ],
+    "$currentRegistrationPeriod": "Early Bird",
 },
 "json2015": {
   "@context"   : "http://schema.org/",
@@ -265,14 +286,6 @@ var jsondata = {
         .booth(9)
         .isSponsor(true)
       )
-
-    site.currentConference
-      .addRegistrationPeriod(new RegistrationPeriod({ "@type": "AggregateOffer", "name": "Early Bird",                                     "availabilityEnds": "2016-07-28", "$icon": "stars"           }))
-      .addRegistrationPeriod(new RegistrationPeriod({ "@type": "AggregateOffer", "name": "Advance"   , "availabilityStarts": "2016-07-29", "availabilityEnds": "2016-08-25", "$icon": "date_range"      }))
-      .addRegistrationPeriod(new RegistrationPeriod({ "@type": "AggregateOffer", "name": "Onsite"    , "availabilityStarts": "2016-08-26",                                   "$icon": "account_balance" }))
-
-    site.currentConference
-      .currentRegistrationPeriod('Early Bird')
 
     site.currentConference
       .addPass(new Pass('Standard Pass')

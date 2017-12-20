@@ -126,7 +126,7 @@ class Pass {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference) {
-        let current_period = $conference.currentRegistrationPeriod()
+        let current_period = $conference.currentRegistrationPeriod
         return new HTMLElement('article').class('c-Pass')
           .attr('data-instanceof','Pass')
           .addContent([
@@ -137,10 +137,10 @@ class Pass {
                 (this.fineprint()) ? new HTMLElement('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null,
               ]),
             ]),
-            (current_period) ? new HTMLElement('div').class('c-Pass__Body').addContent(current_period.view.pass(this, true)) : null,
+            new HTMLElement('div').class('c-Pass__Body').addContent(current_period.view.pass(this, true)),
             new HTMLElement('footer').class('o-Flex c-Pass__Foot').addContent(
               $conference.getRegistrationPeriodsAll()
-                .filter((registration_period) => registration_period !== current_period)
+                .filter((registration_period) => registration_period.name !== current_period.name)
                 .map((registration_period) => registration_period.view.pass(this, false))
             ),
           ])

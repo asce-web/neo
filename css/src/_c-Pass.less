@@ -19,11 +19,13 @@
 //   let conference = new Conference({
 //     "@context" : "http://schema.org/",
 //     "@type"    : "Event",
+//     "offers"   : [
+//       { "@type": "AggregateOffer", "name": "Early Bird" },
+//       { "@type": "AggregateOffer", "name": "Advance" },
+//       { "@type": "AggregateOffer", "name": "Onsite" },
+//     ],
+//     "$currentRegistrationPeriod": "Advance",
 //   })
-//     .addRegistrationPeriod(new RegistrationPeriod({ name: 'Early Bird' }))
-//     .addRegistrationPeriod(new RegistrationPeriod({ name: 'Advance' }))
-//     .addRegistrationPeriod(new RegistrationPeriod({ name: 'Onsite' }))
-//     .currentRegistrationPeriod('Advance')
 // != pass.view.pass(conference)
 // </pre>
 //

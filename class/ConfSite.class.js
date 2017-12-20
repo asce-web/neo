@@ -22,6 +22,10 @@ class ConfSite extends Page {
    * @param {string=} jsondata.image url of the logo file
    * @param {Array<string>=} jsondata.colors two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
    * @param {Object<string>=} jsondata.images a dictionary of image urls
+   * @param {!Object<!Object>} jsondata.conferences a dictionary of conferences; types {@link http://schema.org/Event}
+   * @param {string} jsondata.currentConference  the key of an existing conference; used as the current  conference in this series
+   * @param {string} jsondata.previousConference the key of an existing conference; used as the previous conference in this series
+   * @param {string} jsondata.nextConference     the key of an existing conference; used as the next     conference in this series
    */
   constructor(jsondata) {
     super({ name: jsondata.name, url: jsondata.url })

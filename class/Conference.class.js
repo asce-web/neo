@@ -3,6 +3,7 @@ const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
+const RegistrationPeriod = require('./RegistrationPeriod.class.js')
 
 /**
  * A conference event.
@@ -23,6 +24,8 @@ class Conference {
    * @param {string=} jsondata.startDate the starting date of this conference, in ISO string format
    * @param {string=} jsondata.endDate the ending date of this conference, in ISO string format
    * @param {!Object=} jsondata.location the promoted location of this conference; type {@link http://schema.org/PostalAddress}
+   * @param {Array<!Object>=} jsondata.offers a list of registration periods; types {@link http://schema.org/AggregateOffer}
+   * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
    */
   constructor(jsondata) {
     /**
@@ -33,7 +36,6 @@ class Conference {
      */
     this._DATA = jsondata
 
-    /** @private */ this._reg_periods     = []
     /** @private */ this._passes          = []
     /** @private */ this._sessions        = []
     /** @private */ this._venues          = {}
@@ -45,7 +47,6 @@ class Conference {
     /** @private */ this._important_dates = []
     /** @private */ this._organizers      = []
     /** @private */ this._social          = {}
-    /** @private */ this._regpd_curr_index = NaN
     /** @private */ this._venue_conf_key   = ''
   }
 
@@ -103,40 +104,35 @@ class Conference {
   }
 
   /**
-   * @summary Add a registration period to this conference.
-   * @param {RegistrationPeriod} $registrationPeriod the registration period to add
-   */
-  addRegistrationPeriod($registrationPeriod) {
-    this._reg_periods.push($registrationPeriod)
-    return this
-  }
-  /**
    * @summary Retrieve a registration period of this conference.
    * @param  {string} name the name of the registration period
    * @returns {?RegistrationPeriod} the specified registration period
    */
   getRegistrationPeriod(name) {
-    return this._reg_periods.find(($registrationPeriod) => $registrationPeriod.name===name) || null
+    let period = (this._DATA.offers || []).find(($offer) => $offer.name===name)
+    return (period) ? new RegistrationPeriod(period) : null
   }
   /**
    * @summary Retrieve all registration periods of this conference.
    * @returns {Array<RegistrationPeriod>} a shallow array of all registration periods of this conference.
    */
   getRegistrationPeriodsAll() {
-    return this._reg_periods.slice()
+    return (this._DATA.offers || []).map(($offer) => new RegistrationPeriod($offer))
   }
 
   /**
-   * @summary Set or get the current registration period.
+   * @summary The current registration period.
    * @description The current registration period is the registration period that is active at this time.
-   * @param   {string=} reg_period_name the name of the registration period to set current
-   * @returns {(Conference|RegistrationPeriod)} this conference || the set current registration period
+   * If none has been set, the first registration period is returned.
+   * @type {RegistrationPeriod}
    */
-  currentRegistrationPeriod(reg_period_name) {
-    if (arguments.length) {
-      this._regpd_curr_index = this._reg_periods.indexOf(this.getRegistrationPeriod(reg_period_name))
-      return this
-    } else return this._reg_periods[this._regpd_curr_index]
+  get currentRegistrationPeriod() {
+    return (this._DATA.$currentRegistrationPeriod) ?
+      this.getRegistrationPeriod(this._DATA.$currentRegistrationPeriod) :
+      new RegistrationPeriod((this._DATA.offers && this._DATA.offers[0]) || {
+        "@type": "AggregateOffer",
+        "name" : "default",
+      })
   }
 
   /**
