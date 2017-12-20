@@ -71,9 +71,8 @@ gulp.task('pug:default', function () {
           "name"       : "Civil Engineering Congress",
           "url"        : "/sites/default/",
           "description": "ConferenceSuite",
-        })
-          .init()
-          .addConference('default', new Conference({
+          "conferences": {
+            "default": {
             "@context"  : "http://schema.org/",
             "@type"     : "Event",
             "name"      : "Civil Engineering Congress 2016",
@@ -83,7 +82,10 @@ gulp.task('pug:default', function () {
               "addressLocality": "Reston",
               "addressRegion"  : "Virginia"
             },
-          }))
+            }
+          }
+        })
+          .init()
           .currentConference('default')
           .prevConference('default')
           .nextConference('default'),

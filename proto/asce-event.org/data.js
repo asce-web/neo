@@ -33,10 +33,9 @@ var jsondata = {
     "city": "/proto/asce-event.org/files/portland.jpg",
     "prev": "/proto/asce-event.org/files/new-york.jpg",
     "next": "/proto/asce-event.org/files/new-orleans.jpg"
-  }
-}
-
-var json2016 = {
+  },
+  "conferences": {
+"json2016": {
   "@context"   : "http://schema.org/",
   "@type"      : "Event",
   "name"       : "A 2016 Event",
@@ -49,8 +48,8 @@ var json2016 = {
     "addressLocality": "Portland",
     "addressRegion"  : "Oregon"
   },
-}
-var json2015 = {
+},
+"json2015": {
   "@context"   : "http://schema.org/",
   "@type"      : "Event",
   "name"       : "A 2015 Event",
@@ -63,8 +62,8 @@ var json2015 = {
     "addressLocality": "New York",
     "addressRegion"  : "New York"
   },
-}
-var json2017 = {
+},
+"json2017": {
   "@context"   : "http://schema.org/",
   "@type"      : "Event",
   "name"       : "A 2017 Event",
@@ -78,13 +77,15 @@ var json2017 = {
     "addressRegion"  : "Louisiana"
   },
 }
+  },
+}
+
 
     var site = new ConfSite(jsondata)
       .init()
 
     site
-      .addConference('2016', new Conference(json2016))
-      .addConference('2015', new Conference(json2015)
+      .getConference('json2015')
         .addVenue('Conference Venue', new Place('New York Marriott Marquis', {
           street_address  : '1535 Broadway',
           address_locality: 'New York',
@@ -92,20 +93,20 @@ var json2017 = {
           postal_code     : '10036',
           url             : 'http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/',
         }))
-      )
-      .addConference('2017', new Conference(json2017)
+    site
+      .getConference('json2017')
         .addVenue('Conference Venue', new Place('New Orleans Mariott', {
           street_address  : '555 Canal Street',
           address_locality: 'New Orleans',
           address_region  : 'LA',
           postal_code     : '70130',
         }))
-      )
+
 
     site
-      .currentConference('2016')
-      .prevConference('2015')
-      .nextConference('2017')
+      .currentConference('json2016')
+      .prevConference('json2015')
+      .nextConference('json2017')
 
     // REVIEW TODO move below Speakers
     site.currentConference()

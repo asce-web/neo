@@ -2,6 +2,7 @@ const Page     = require('sitepage').Page
 const HTMLElement  = require('extrajs-dom').HTMLElement
 const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
+const Conference = require('./Conference.class.js')
 const ConfPage = require('./ConfPage.class.js')
 
 /**
@@ -35,7 +36,21 @@ class ConfSite extends Page {
      */
     this._DATA = jsondata
 
-    /** @private */ this._conferences      = {}
+    /** @private TEMP: finish */
+    /**
+     * TEMP: list of Conference objects
+     * @todo TODO: remove when all data is imported into JSON
+     * @private
+     * @final
+     * @type {!Object<Conference>}
+     */
+    this._conferences = (function () {
+      const returned = {}
+      for (let key in this._DATA.conferences) {
+        returned[key] = new Conference(this._DATA.conferences[key])
+      }
+      return returned
+    }).call(this)
     /** @private */ this._conf_curr_key   = null
     /** @private */ this._conf_prev_key   = null
     /** @private */ this._conf_next_key   = null
@@ -95,30 +110,12 @@ class ConfSite extends Page {
   }
 
   /**
-   * @summary Add a conference to this site.
-   * @param   {string} conf_label key for accessing the conference, usually a year
-   * @param   {Conference} $conference the conference to add
-   * @returns {ConfSite} this site
-   */
-  addConference(conf_label, $conference) {
-    this._conferences[conf_label] = $conference
-    return this
-  }
-  /**
    * @summary Retrieve a conference of this site.
    * @param   {string} conf_label key for accessing the conference, usually a year
    * @returns {Conference} the specified conference
    */
   getConference(conf_label) {
     return this._conferences[conf_label]
-  }
-  /**
-   * @summary Return an object representing all conferences of this site.
-   * @description REVIEW: warning: infinite loop possible
-   * @returns {Object} shallow clone of this site’s conferences object
-   */
-  getConferencesAll() {
-    return xjs.Object.cloneDeep(this._conferences)
   }
 
   /**
