@@ -218,7 +218,7 @@ class Person {
             ` `,
             new HTMLElement('span').attr('itemprop','additionalName').addContent(this.name.additional_name),
             ` `,
-            new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.family_name),
+            new HTMLElement('span').attr('itemprop','familyName').addContent(this.name.family_name),
           ])
           .html()
       })
