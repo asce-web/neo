@@ -20,9 +20,9 @@ class Conference {
    * @param {string} jsondata.name the name of this conference
    * @param {string} jsondata.url the url of this conference
    * @param {string=} jsondata.description the theme of this conference
+   * @param {string} jsondata.startDate the starting date of this conference, in ISO string format
+   * @param {string} jsondata.endDate the ending date of this conference, in ISO string format
    * @param {Object} $confinfo an object with the following immutable properties:
-   * @param {Date} $confinfo.start_date the starting date of this conference
-   * @param {Date} $confinfo.end_date the ending date of this conference
    * @param {Object} $confinfo.promo_loc the promoted location of this conference
    * @param {string} $confinfo.promo_loc.text the promoted location displayed/abbreviated text (eg, "Portland, OR")
    * @param {string=} $confinfo.promo_loc.alt the accessible text of the location (eg, "Portland, Oregon")
@@ -49,8 +49,20 @@ class Conference {
      * @type {string}
      */
     this._THEME = jsondata.description || ''
-    /** @private @final */ this._START     = $confinfo.start_date
-    /** @private @final */ this._END       = $confinfo.end_date
+    /**
+     * @summary The start date of this conference.
+     * @private
+     * @final
+     * @type {string}
+     */
+    this._START = jsondata.startDate
+    /**
+     * @summary The start date of this conference.
+     * @private
+     * @final
+     * @type {string}
+     */
+    this._END = jsondata.endDate
     /** @private @final */ this._PROMO_LOC = $confinfo.promo_loc
     /** @private */ this._reg_periods     = []
     /** @private */ this._passes          = []
@@ -95,19 +107,19 @@ class Conference {
   }
 
   /**
-   * @summary Get the start date of this conference.
+   * @summary The starting date of this conference.
    * @type {Date}
    */
   get startDate() {
-    return this._START || new Date()
+    return new Date(this._START)
   }
 
   /**
-   * @summary Get the end date of this conference.
+   * @summary The ending date of this conference.
    * @type {Date}
    */
   get endDate() {
-    return this._END || new Date()
+    return new Date(this._END)
   }
 
   /**

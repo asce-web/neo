@@ -42,6 +42,8 @@ var json2016 = {
   "name"       : "A 2016 Event",
   "url"        : "http://2016.asceconvention.org/",
   "description": "Where Engineering Dreams are Built.",
+  "startDate"  : "2016-09-28T07:30",
+  "endDate"    : "2016-10-01T17:00",
 }
 var json2015 = {
   "@context"   : "http://schema.org/",
@@ -49,6 +51,8 @@ var json2015 = {
   "name"       : "A 2015 Event",
   "url"        : "http://2015.asceconvention.org/",
   "description": "Building on the Past.",
+  "startDate"  : "2015-10-11T07:30",
+  "endDate"    : "2015-10-14T17:00",
 }
 var json2017 = {
   "@context"   : "http://schema.org/",
@@ -56,6 +60,8 @@ var json2017 = {
   "name"       : "A 2017 Event",
   "url"        : "http://2017.asceconvention.org/",
   "description": "The Future of Civil Engineering.",
+  "startDate"  : "2017-10-08T07:30",
+  "endDate"    : "2017-10-11T17:00",
 }
 
     var site = new ConfSite(jsondata)
@@ -63,16 +69,12 @@ var json2017 = {
 
     site
       .addConference('2016', new Conference(json2016, {
-        start_date: new Date('2016-09-28'),
-        end_date  : new Date('2016-10-01'),
         promo_loc : {
           text : 'Portland, OR',
           alt  : 'Portland, Oregon',
         },
       }))
       .addConference('2015', new Conference(json2015, {
-        start_date: new Date('2015-10-11'),
-        end_date  : new Date('2015-10-14'),
         promo_loc : {
           text : 'New York, NY',
           alt  : 'New York, New York',
@@ -87,8 +89,6 @@ var json2017 = {
         }))
       )
       .addConference('2017', new Conference(json2017, {
-        start_date: new Date('2017-10-08'),
-        end_date  : new Date('2017-10-11'),
         promo_loc : {
           text : 'New Orleans, LA',
           alt  : 'New Orleans, Louisiana',

@@ -78,9 +78,9 @@ gulp.task('pug:default', function () {
             "@type"     : "Event",
             "name"      : "Civil Engineering Congress 2016",
             "url"       : "http://2016.cecongress.org/",
+            "startDate" : null,
+            "endDate"   : null,
           }, {
-            start_date: new Date(),
-            end_date  : new Date(),
             promo_loc : { text : 'Reston, VA' },
           }))
           .currentConference('default')
