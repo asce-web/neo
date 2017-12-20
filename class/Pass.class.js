@@ -8,10 +8,17 @@ const View    = require('extrajs-view')
 class Pass {
   /**
    * Construct a new Pass object.
-   * @param {string} name the name or type of the pass
+   * @param {!Object} jsondata a JSON object that validates against some schema?
+   * @param {string} jsondata.name the name or type of the pass
    */
-  constructor(name) {
-    /** @private @final */ this._NAME = name
+  constructor(jsondata) {
+    /**
+     * All the data for this pass.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
     /** @private */ this._description  = ''
     /** @private */ this._fineprint    = ''
     /** @private */ this._attend_types = []
@@ -23,7 +30,7 @@ class Pass {
    * @type {string}
    */
   get name() {
-    return this._NAME
+    return this._DATA.name
   }
 
   /**
