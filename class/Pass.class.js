@@ -171,29 +171,23 @@ class Pass {
 Pass.AttendeeType = class AttendeeType {
   /**
    * Construct a new AttendeeType object.
-   * Parameters include a name and
-   * a boolean specifying whether the object is featured.
-   * Both name and “featured” are immutable.
    * @param {string} name the name of the attendee type
-   * @param {boolean} is_featured whether this attendee type is marked as “featured”
    */
-  constructor(name, is_featured) {
-    /** @private @final */ this._NAME        = name
-    /** @private @final */ this._IS_FEATURED = is_featured
+  constructor(name) {
+    /**
+     * All the data for this attendee type.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = { name: name }
   }
   /**
-   * @summary Get the name of this attendee type.
+   * @summary The name of this attendee type.
    * @type {string}
    */
   get name() {
-    return this._NAME
-  }
-  /**
-   * @summary Get whether this attendee type is featured.
-   * @type {boolean}
-   */
-  get isFeatured() {
-    return this._IS_FEATURED
+    return this._DATA.name
   }
 
 
@@ -217,14 +211,14 @@ Pass.AttendeeType = class AttendeeType {
        * @summary Call `AttendeeType#view.pass()` to render this display.
        * @function Pass.AttendeeType.VIEW.pass
        * @param   {number} price the price for this attendee type given a certain pass and registration period
-       * @param   {boolean} is_body `true` if this attendee type happens to be in the pass body
+       * @param   {boolean} is_featured whether this attendee type is marked as “featured”
        * @returns {string} HTML output
        */
-      .addDisplay(function pass(price, is_body) {
+      .addDisplay(function pass(price, is_featured) {
         return Element.concat([
           new HTMLElement('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
           new HTMLElement('dd').class('c-Pass__Price')
-            .addClass((is_body && this.isFeatured) ? 'c-Pass__Price--featured' : '')
+            .addClass((is_featured) ? 'c-Pass__Price--featured' : '')
             .attr({
               'aria-label': `${price} ${Pass.PRICE_OPTIONS.resolvedOptions().currency}`,
               itemprop : 'priceSpecification',
