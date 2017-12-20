@@ -4,7 +4,7 @@ block mainMinimal
   include _includes/_text-block.pug
 
 block callouts
-  +callout().c-Banner.c-Banner--blur.c-Banner--city
+  +callout().c-Banner.c-Banner--blur(style=`--banner-img: url('${site.images.city}');`)
     include _includes/callouts/_location.pug
   +callout().c-Banner
     include _includes/callouts/_volunteer.pug

@@ -5,4 +5,4 @@ block append vars
   - var hero_content = 'default action buttons'
 
 block mainHeader
-  != site.currentConference().view.hero(hero_content)
+  != site.currentConference().view.hero(site.images.hero, hero_content)

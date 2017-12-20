@@ -462,12 +462,14 @@ class Conference {
        * Return a `<header>` element with hero image marking up this conference’s main info.
        * @summary Call `Conference#view.hero()` to render this display.
        * @function Conference.VIEW.hero
-       * @param  {string=} block custom HTML to insert at the end
+       * @param   {?string=} image background image url
+       * @param   {string=} block custom HTML to insert at the end
        * @returns {string} HTML output
        */
-      .addDisplay(function hero(block = '') {
-        return new HTMLElement('header').class('o-Runner o-Runner--pageHeader c-Banner c-Banner--hero c-ConfHed')
+      .addDisplay(function hero(image = null, block = '') {
+        return new HTMLElement('header').class('o-Runner o-Runner--pageHeader c-Banner c-ConfHed')
           .attr('data-instanceof','Conference')
+          .style({ '--banner-img': (image!==null) ? `url('${image}')` : 'none' })
           .addContent([
             new HTMLElement('div').class('o-Constrain')
               .addContent([
@@ -506,13 +508,14 @@ class Conference {
        * @summary Call `Conference#view.otherYear()` to render this display.
        * @function Conference.VIEW.otherYear
        * @param   {string}  year exactly one of `'prev'` or `'next'`
+       * @param   {?string=} image background image url
        * @param   {string=} blurb custom HTML to advertise the prev/next year
        * @param   {string=} block custom HTML to insert at the end
        * @returns {string} HTML output
        */
-      .addDisplay(function otherYear(year, blurb = '', block = '') {
+      .addDisplay(function otherYear(year, image = null, blurb = '', block = '') {
         return new HTMLElement('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
-          .addClass(`c-Banner--${year}`)
+          .style({ '--banner-img': (image!==null) ? `url('${image}')` : 'none' })
           .attr({
             'data-instanceof': 'Conference',
             itemscope: '',
