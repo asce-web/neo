@@ -267,9 +267,9 @@ var jsondata = {
       )
 
     site.currentConference
-      .addRegistrationPeriod(new RegistrationPeriod({name:'Early Bird',                                    end_date:new Date('2016-07-28')}).setIcon('stars'))
-      .addRegistrationPeriod(new RegistrationPeriod({name:'Advance'   , start_date:new Date('2016-07-29'), end_date:new Date('2016-08-25')}).setIcon('date_range'))
-      .addRegistrationPeriod(new RegistrationPeriod({name:'Onsite'    , start_date:new Date('2016-08-26')                                 }).setIcon('account_balance'))
+      .addRegistrationPeriod(new RegistrationPeriod({ "@type": "AggregateOffer", "name": "Early Bird",                                     "availabilityEnds": "2016-07-28", "$icon": "stars"           }))
+      .addRegistrationPeriod(new RegistrationPeriod({ "@type": "AggregateOffer", "name": "Advance"   , "availabilityStarts": "2016-07-29", "availabilityEnds": "2016-08-25", "$icon": "date_range"      }))
+      .addRegistrationPeriod(new RegistrationPeriod({ "@type": "AggregateOffer", "name": "Onsite"    , "availabilityStarts": "2016-08-26",                                   "$icon": "account_balance" }))
 
     site.currentConference
       .currentRegistrationPeriod('Early Bird')

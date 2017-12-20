@@ -11,51 +11,46 @@ class RegistrationPeriod {
    * Construct a new RegistrationPeriod object.
    * The name, start date, and end date
    * are immutable and must be provided during construction.
-   * @param {Object} $periodinfo an object with the following immutable properties:
-   * @param {string} $periodinfo.name the name of the registration period (e.g., 'Early Bird')
-   * @param {Date=} $periodinfo.start_date the date on which this registration period starts
-   * @param {Date=} $periodinfo.end_date the date on which this registration period ends
+   * @param {!Object} jsondata a JSON object that validates against some schema?
+   * @param {string} jsondata.name the name of the registration period (e.g., 'Early Bird')
+   * @param {string=} jsondata.availabilityStarts the date on which this registration period starts
+   * @param {string=} jsondata.availabilityEnds the date on which this registration period ends
+   * @param {string=} jsondata.$icon the icon keyword of this registration period
    */
-  constructor($periodinfo) {
-    /** @private @final */ this._NAME  = $periodinfo.name
-    /** @private @final */ this._START = $periodinfo.start_date
-    /** @private @final */ this._END   = $periodinfo.end_date
-    /** @private */ this._icon = null
+  constructor(jsondata) {
+    /**
+     * All the data for this registration period.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
   }
 
   /**
-   * @summary Get the name of this registration period.
+   * @summary The name of this registration period.
    * @type {string}
    */
   get name() {
-    return this._NAME
+    return this._DATA.name
   }
 
   /**
-   * @summary Get the start date of this registration period.
+   * @summary The start date of this registration period.
    * @type {Date}
    */
   get startDate() {
-    return this._START || new Date()
+    return new Date(this._DATA.availabilityStarts || null)
   }
 
   /**
-   * @summary Get the end date of this registration period.
+   * @summary The end date of this registration period.
    * @type {Date}
    */
   get endDate() {
-    return this._END || new Date()
+    return new Date(this._DATA.availabilityEnds || null)
   }
 
-  /**
-   * @summary Set the icon of this registration period.
-   * @param {string} key the keyword of the icon to set
-   */
-  setIcon(key) {
-    // REVIEW: if icons are the same suite-wide, this can be removed.
-    this._icon = Util.ICON_DATA.find((item) => item.content===key)
-    return this
-  }
   /**
    * @summary Get the icon of this registration period.
    * @param   {boolean=} fallback if true, get the unicode code point
@@ -63,7 +58,8 @@ class RegistrationPeriod {
    */
   getIcon(fallback) {
     // REVIEW: if icons are the same suite-wide, this can be removed.
-    return (this._icon) ? Util.iconToString(this._icon, fallback) : ''
+    let icon = Util.ICON_DATA.find((item) => item.content===this._DATA.$icon)
+    return (icon) ? Util.iconToString(icon, fallback) : ''
   }
 
 
