@@ -6,8 +6,6 @@
 //- ///////////////////////////////////////////////////////////////////////////////
 
 
-const Color = require('extrajs-color')
-
 const Util               = require('../../class/Util.class.js')
 const ConfSite           = require('../../class/ConfSite.class.js')
 const ConfPage           = require('../../class/ConfPage.class.js')
@@ -29,10 +27,10 @@ var jsondata = {
   "description": "Optional Brand Slogan",
   "keywords"   : ["ASCE", "civil engineering", "convention"],
   "image"      : "./files/site-logo-white.png",
+  "colors"     : ["#3fae2a", "#00a1e1"],
 }
 
     var site = new ConfSite(jsondata)
-      .colors(Color.fromString('#3fae2a'), Color.fromString('#00a1e1'))
       .images({
         hero: '/proto/asce-event.org/files/cable-car.jpg',
         city: '/proto/asce-event.org/files/portland.jpg',

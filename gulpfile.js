@@ -56,7 +56,6 @@ gulp.task('pug:index', function () {
     .pipe(gulp.dest('./'))
 })
 gulp.task('pug:default', function () {
-  const Color      = require('extrajs-color')
   const ConfSite   = require('./class/ConfSite.class.js')
   const ConfPage   = require('./class/ConfPage.class.js')
   const Conference = require('./class/Conference.class.js')
@@ -73,7 +72,6 @@ gulp.task('pug:default', function () {
           "url"        : "/sites/default/",
           "description": "ConferenceSuite",
         })
-          .colors(Color.fromString('#660000'), Color.fromString('#ff6600')) // default Hokie colors
           .init()
           .addConference('default', new Conference({
             name      : 'Civil Engineering Congress 2016',

@@ -19,6 +19,7 @@ class ConfSite extends Page {
    * @param {string=} jsondata.description the slogan (or tagline) of this site
    * @param {Array<string>=} jsondata.keywords keywords for this site
    * @param {string=} jsondata.image url of the logo file
+   * @param {Array<string>=} jsondata.colors two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
    */
   constructor(jsondata) {
     super({ name: jsondata.name, url: jsondata.url })
@@ -30,7 +31,15 @@ class ConfSite extends Page {
      * @type {string}
      */
     this._logo = jsondata.image || ''
-    /** @private */ this._colors           = {}
+    /**
+     * @summary This site’s colors.
+     * @private
+     * @type {Array<string>}
+     */
+    this._colors = (jsondata.colors) ? [
+      jsondata.colors[0] || '#660000',
+      jsondata.colors[1] || '#ff6600',
+    ] : ['#660000', '#ff6600'] // default Hokie colors
     /** @private */ this._images           = {}
     /** @private */ this._conferences      = {}
     /** @private */ this._conf_curr_key   = null
@@ -67,16 +76,11 @@ class ConfSite extends Page {
   }
 
   /**
-   * @summary Set or get the colors for this site.
-   * @param   {Color=} $primary   a Color object for the primary color
-   * @param   {Color=} $secondary a Color object for the secondary color
-   * @returns {(ConfSite|Object<string>)} this || a CSS object containg custom properties with color string values
+   * @summary The colors for this site: a CSS object containg custom properties with color string values.
+   * @type {Object<string>}
    */
-  colors($primary, $secondary) {
-    if (arguments.length) {
-      this._colors = ConfSite.colorStyles($primary, $secondary)
-      return this
-    } else return this._colors
+  get colors() {
+    return ConfSite.colorStyles(Color.fromString(this._colors[0]), Color.fromString(this._colors[1]))
   }
 
   /**
