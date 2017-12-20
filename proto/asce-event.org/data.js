@@ -28,10 +28,10 @@ var jsondata = {
   "url"        : "/sites/asce-event.org/",
   "description": "Optional Brand Slogan",
   "keywords"   : ["ASCE", "civil engineering", "convention"],
+  "image"      : "./files/site-logo-white.png",
 }
 
     var site = new ConfSite(jsondata)
-      .logo('files/site-logo-white.png')
       .colors(Color.fromString('#3fae2a'), Color.fromString('#00a1e1'))
       .images({
         hero: '/proto/asce-event.org/files/cable-car.jpg',

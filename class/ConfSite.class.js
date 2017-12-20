@@ -18,12 +18,18 @@ class ConfSite extends Page {
    * @param {string} jsondata.url url of the landing page for this site
    * @param {string=} jsondata.description the slogan (or tagline) of this site
    * @param {Array<string>=} jsondata.keywords keywords for this site
+   * @param {string=} jsondata.image url of the logo file
    */
   constructor(jsondata) {
     super({ name: jsondata.name, url: jsondata.url })
     super.description(jsondata.description || '')
     super.keywords(jsondata.keywords || [])
-    /** @private */ this._logo             = ''
+    /**
+     * This site’s logo.
+     * @private
+     * @type {string}
+     */
+    this._logo = jsondata.image || ''
     /** @private */ this._colors           = {}
     /** @private */ this._images           = {}
     /** @private */ this._conferences      = {}
@@ -53,15 +59,11 @@ class ConfSite extends Page {
   }
 
   /**
-   * @summary Set or get the logo of this site.
-   * @param   {string=} logo url of the logo file
-   * @returns {(ConfSite|string)} this site || url of the logo
+   * @summary The url of this site’s logo.
+   * @type {string} url of the logo
    */
-  logo(logo) {
-    if (arguments.length) {
-      this._logo = logo
-      return this
-    } else return this._logo
+  get logo() {
+    return this._logo
   }
 
   /**
@@ -246,7 +248,7 @@ class ConfSite extends Page {
           .attr('data-instanceof','ConfSite')
           .attr('href',this.url())
           .addContent([
-            new HTMLElement('img').class('c-SiteTitle__Logo').attr('src',this.logo()).attr('alt','Home'),
+            new HTMLElement('img').class('c-SiteTitle__Logo').attr('src',this.logo).attr('alt','Home'),
             new HTMLElement('h1').class('c-SiteTitle__Name').addContent(this.name()),
             new HTMLElement('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
           ])
