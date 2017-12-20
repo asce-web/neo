@@ -26,27 +26,31 @@ class ConfSite extends Page {
     super({ name: jsondata.name, url: jsondata.url })
     super.description(jsondata.description || '')
     super.keywords(jsondata.keywords || [])
+
     /**
      * This site’s logo.
      * @private
+     * @final
      * @type {string}
      */
-    this._logo = jsondata.image || ''
+    this._LOGO = jsondata.image || ''
     /**
      * @summary This site’s colors.
      * @private
+     * @final
      * @type {Array<string>}
      */
-    this._colors = (jsondata.colors) ? [
+    this._COLORS = (jsondata.colors) ? [
       jsondata.colors[0] || '#660000',
       jsondata.colors[1] || '#ff6600',
     ] : ['#660000', '#ff6600'] // default Hokie colors
     /**
      * @summary This site’s images.
      * @private
+     * @final
      * @type {Object<?string>}
      */
-    this._images = {
+    this._IMAGES = {
       hero: (jsondata.images && jsondata.images.hero) || null,
       city: (jsondata.images && jsondata.images.city) || null,
       prev: (jsondata.images && jsondata.images.prev) || null,
@@ -70,12 +74,12 @@ class ConfSite extends Page {
     return super.description()
   }
   /**
-   * @summary Get the slogan of this site.
+   * @summary The slogan of this site.
    * @description The slogan is very brief, and is fixed for the entire series of conferences.
-   * @returns {string} the slogan of this site
+   * @type {string}
    */
   get slogan() {
-    return this.description() || ''
+    return this.description()
   }
 
   /**
@@ -83,7 +87,7 @@ class ConfSite extends Page {
    * @type {string} url of the logo
    */
   get logo() {
-    return this._logo
+    return this._LOGO
   }
 
   /**
@@ -91,7 +95,7 @@ class ConfSite extends Page {
    * @type {Object<string>}
    */
   get colors() {
-    return ConfSite.colorStyles(Color.fromString(this._colors[0]), Color.fromString(this._colors[1]))
+    return ConfSite.colorStyles(Color.fromString(this._COLORS[0]), Color.fromString(this._COLORS[1]))
   }
 
   /**
@@ -99,7 +103,7 @@ class ConfSite extends Page {
    * @type {Object<string>}
    */
   get images() {
-    return Object.assign({}, this._images)
+    return Object.assign({}, this._IMAGES)
   }
 
   /**

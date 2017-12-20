@@ -17,10 +17,10 @@ class Conference {
    * @description The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
    * @param {Object} jsondata a JSON object that validates against some schema?
+   * @param {string} jsondata.name the name of this conference
+   * @param {string} jsondata.url the url of this conference
+   * @param {string=} jsondata.description the theme of this conference
    * @param {Object} $confinfo an object with the following immutable properties:
-   * @param {string} $confinfo.name the name of this conference
-   * @param {string} $confinfo.url the url of this conference
-   * @param {string=} $confinfo.theme the theme, or slogan, of this conference
    * @param {Date} $confinfo.start_date the starting date of this conference
    * @param {Date} $confinfo.end_date the ending date of this conference
    * @param {Object} $confinfo.promo_loc the promoted location of this conference
@@ -29,14 +29,14 @@ class Conference {
    */
   constructor(jsondata, $confinfo) {
     /**
-     * The name of this conference.
+     * @summary The name of this conference.
      * @private
      * @final
      * @type {string}
      */
     this._NAME = jsondata.name
     /**
-     * The url of this conference.
+     * @summary The url of this conference.
      * @private
      * @final
      * @type {string}
@@ -77,7 +77,7 @@ class Conference {
   }
 
   /**
-   * @summary Get the URL of this conference.
+   * @summary The URL of this conference.
    * @type {string}
    */
   get url() {
@@ -85,13 +85,13 @@ class Conference {
   }
 
   /**
-   * @summary Get the theme of this conference.
-   * @description The theme is a one-sentence or one-phrase slogan,
+   * @summary The theme of this conference.
+   * @description The theme is a one-sentence or one-phrase motif,
    * and may be changed from year to year (from conference to conference).
    * @type {string}
    */
   get theme() {
-    return this._THEME || ''
+    return this._THEME
   }
 
   /**
