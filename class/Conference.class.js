@@ -32,10 +32,16 @@ class Conference {
      * The name of this conference.
      * @private
      * @final
-     * @type {[type]}
+     * @type {string}
      */
     this._NAME = jsondata.name
-    /** @private @final */ this._URL       = $confinfo.url
+    /**
+     * The url of this conference.
+     * @private
+     * @final
+     * @type {string}
+     */
+    this._URL = jsondata.url
     /** @private @final */ this._THEME     = $confinfo.theme
     /** @private @final */ this._START     = $confinfo.start_date
     /** @private @final */ this._END       = $confinfo.end_date

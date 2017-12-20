@@ -40,16 +40,19 @@ var json2016 = {
   "@context" : "http://schema.org/",
   "@type"    : "Event",
   "name"     : "A 2016 Event",
+  "url"      : "http://2016.asceconvention.org/",
 }
 var json2015 = {
   "@context" : "http://schema.org/",
   "@type"    : "Event",
   "name"     : "A 2015 Event",
+  "url"      : "http://2015.asceconvention.org/",
 }
 var json2017 = {
   "@context" : "http://schema.org/",
   "@type"    : "Event",
   "name"     : "A 2017 Event",
+  "url"      : "http://2017.asceconvention.org/",
 }
 
     var site = new ConfSite(jsondata)
@@ -60,7 +63,6 @@ var json2017 = {
         theme     : 'Theme for the conference is optional.',
         start_date: new Date('2016-09-28'),
         end_date  : new Date('2016-10-01'),
-        url       : 'http://2016.asceconvention.org/',
         promo_loc : {
           text : 'Portland, OR',
           alt  : 'Portland, Oregon',
@@ -70,7 +72,6 @@ var json2017 = {
         theme     : '',
         start_date: new Date('2015-10-11'),
         end_date  : new Date('2015-10-14'),
-        url       : 'http://2015.asceconvention.org/',
         promo_loc : {
           text : 'New York, NY',
           alt  : 'New York, New York',
@@ -88,7 +89,6 @@ var json2017 = {
         theme     : '',
         start_date: new Date('2017-10-08'),
         end_date  : new Date('2017-10-11'),
-        url       : 'http://2017.asceconvention.org/',
         promo_loc : {
           text : 'New Orleans, LA',
           alt  : 'New Orleans, Louisiana',
