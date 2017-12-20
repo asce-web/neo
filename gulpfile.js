@@ -78,8 +78,6 @@ gulp.task('pug:default', function () {
             "@type"     : "Event",
             "name"      : "Civil Engineering Congress 2016",
             "url"       : "http://2016.cecongress.org/",
-            "startDate" : null,
-            "endDate"   : null,
             "location"  : {
               "@type": "PostalAddress",
               "addressLocality": "Reston",

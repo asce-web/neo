@@ -13,7 +13,7 @@ const ConfPage = require('./ConfPage.class.js')
 class ConfSite extends Page {
   /**
    * Construct a new ConfSite object.
-   * @param {Object} jsondata a JSON object that validates against some schema?
+   * @param {!Object} jsondata a JSON object that validates against some schema?
    * @param {string} jsondata.name name of this site
    * @param {string} jsondata.url url of the landing page for this site
    * @param {string=} jsondata.description the slogan (or tagline) of this site
@@ -28,34 +28,13 @@ class ConfSite extends Page {
     super.keywords(jsondata.keywords || [])
 
     /**
-     * This site’s logo.
+     * All the data for this site.
      * @private
      * @final
-     * @type {string}
+     * @type {!Object}
      */
-    this._LOGO = jsondata.image || ''
-    /**
-     * @summary This site’s colors.
-     * @private
-     * @final
-     * @type {Array<string>}
-     */
-    this._COLORS = (jsondata.colors) ? [
-      jsondata.colors[0] || '#660000',
-      jsondata.colors[1] || '#ff6600',
-    ] : ['#660000', '#ff6600'] // default Hokie colors
-    /**
-     * @summary This site’s images.
-     * @private
-     * @final
-     * @type {Object<?string>}
-     */
-    this._IMAGES = {
-      hero: (jsondata.images && jsondata.images.hero) || null,
-      city: (jsondata.images && jsondata.images.city) || null,
-      prev: (jsondata.images && jsondata.images.prev) || null,
-      next: (jsondata.images && jsondata.images.next) || null,
-    }
+    this._DATA = jsondata
+
     /** @private */ this._conferences      = {}
     /** @private */ this._conf_curr_key   = null
     /** @private */ this._conf_prev_key   = null
@@ -87,7 +66,7 @@ class ConfSite extends Page {
    * @type {string} url of the logo
    */
   get logo() {
-    return this._LOGO
+    return this._DATA.image || ''
   }
 
   /**
@@ -95,15 +74,24 @@ class ConfSite extends Page {
    * @type {Object<string>}
    */
   get colors() {
-    return ConfSite.colorStyles(Color.fromString(this._COLORS[0]), Color.fromString(this._COLORS[1]))
+    let colors = (this._DATA.colors) ? [
+      this._DATA.colors[0] || '#660000',
+      this._DATA.colors[1] || '#ff6600',
+    ] : ['#660000', '#ff6600'] // default Hokie colors
+    return ConfSite.colorStyles(Color.fromString(colors[0]), Color.fromString(colors[1]))
   }
 
   /**
    * @summary The image urls of this site.
-   * @type {Object<string>}
+   * @type {Object<?string>}
    */
   get images() {
-    return Object.assign({}, this._IMAGES)
+    return {
+      hero: (this._DATA.images && this._DATA.images.hero) || null,
+      city: (this._DATA.images && this._DATA.images.city) || null,
+      prev: (this._DATA.images && this._DATA.images.prev) || null,
+      next: (this._DATA.images && this._DATA.images.next) || null,
+    }
   }
 
   /**

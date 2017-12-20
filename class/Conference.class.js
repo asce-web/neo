@@ -16,57 +16,23 @@ class Conference {
    * @summary Construct a Conference object.
    * @description The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
-   * @param {Object} jsondata a JSON object that validates against some schema?
+   * @param {!Object} jsondata a JSON object that validates against some schema?
    * @param {string} jsondata.name the name of this conference
    * @param {string} jsondata.url the url of this conference
    * @param {string=} jsondata.description the theme of this conference
-   * @param {string} jsondata.startDate the starting date of this conference, in ISO string format
-   * @param {string} jsondata.endDate the ending date of this conference, in ISO string format
+   * @param {string=} jsondata.startDate the starting date of this conference, in ISO string format
+   * @param {string=} jsondata.endDate the ending date of this conference, in ISO string format
    * @param {!Object=} jsondata.location the promoted location of this conference; type {@link http://schema.org/PostalAddress}
    */
   constructor(jsondata) {
     /**
-     * @summary The name of this conference.
-     * @private
-     * @final
-     * @type {string}
-     */
-    this._NAME = jsondata.name
-    /**
-     * @summary The url of this conference.
-     * @private
-     * @final
-     * @type {string}
-     */
-    this._URL = jsondata.url
-    /**
-     * @summary The theme of this conference.
-     * @private
-     * @final
-     * @type {string}
-     */
-    this._THEME = jsondata.description || ''
-    /**
-     * @summary The start date of this conference.
-     * @private
-     * @final
-     * @type {string}
-     */
-    this._START = jsondata.startDate
-    /**
-     * @summary The start date of this conference.
-     * @private
-     * @final
-     * @type {string}
-     */
-    this._END = jsondata.endDate
-    /**
-     * @summary The promoted location of this conference.
+     * All the data for this conference.
      * @private
      * @final
      * @type {!Object}
      */
-    this._PROMO_LOC = jsondata.location || { "@type": "PostalAddress" }
+    this._DATA = jsondata
+
     /** @private */ this._reg_periods     = []
     /** @private */ this._passes          = []
     /** @private */ this._sessions        = []
@@ -88,7 +54,7 @@ class Conference {
    * @type {string}
    */
   get name() {
-    return this._NAME
+    return this._DATA.name
   }
 
   /**
@@ -96,7 +62,7 @@ class Conference {
    * @type {string}
    */
   get url() {
-    return this._URL
+    return this._DATA.url
   }
 
   /**
@@ -106,7 +72,7 @@ class Conference {
    * @type {string}
    */
   get theme() {
-    return this._THEME
+    return this._DATA.description || ''
   }
 
   /**
@@ -114,7 +80,7 @@ class Conference {
    * @type {Date}
    */
   get startDate() {
-    return new Date(this._START)
+    return new Date(this._DATA.startDate || null)
   }
 
   /**
@@ -122,7 +88,7 @@ class Conference {
    * @type {Date}
    */
   get endDate() {
-    return new Date(this._END)
+    return new Date(this._DATA.endDate || null)
   }
 
   /**
@@ -133,7 +99,7 @@ class Conference {
    * @type {!Object}
    */
   get promoLoc() {
-    return Object.assign({}, this._PROMO_LOC)
+    return this._DATA.location || { "@type": "PostalAddress" }
   }
 
   /**
