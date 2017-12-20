@@ -28,15 +28,15 @@ var jsondata = {
   "keywords"   : ["ASCE", "civil engineering", "convention"],
   "image"      : "./files/site-logo-white.png",
   "colors"     : ["#3fae2a", "#00a1e1"],
+  "images"     : {
+    "hero": "/proto/asce-event.org/files/cable-car.jpg",
+    "city": "/proto/asce-event.org/files/portland.jpg",
+    "prev": "/proto/asce-event.org/files/new-york.jpg",
+    "next": "/proto/asce-event.org/files/new-orleans.jpg"
+  }
 }
 
     var site = new ConfSite(jsondata)
-      .images({
-        hero: '/proto/asce-event.org/files/cable-car.jpg',
-        city: '/proto/asce-event.org/files/portland.jpg',
-        prev: '/proto/asce-event.org/files/new-york.jpg',
-        next: '/proto/asce-event.org/files/new-orleans.jpg',
-      })
       .init()
 
     site

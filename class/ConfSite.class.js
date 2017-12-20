@@ -20,6 +20,7 @@ class ConfSite extends Page {
    * @param {Array<string>=} jsondata.keywords keywords for this site
    * @param {string=} jsondata.image url of the logo file
    * @param {Array<string>=} jsondata.colors two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
+   * @param {Object<string>=} jsondata.images a dictionary of image urls
    */
   constructor(jsondata) {
     super({ name: jsondata.name, url: jsondata.url })
@@ -40,7 +41,17 @@ class ConfSite extends Page {
       jsondata.colors[0] || '#660000',
       jsondata.colors[1] || '#ff6600',
     ] : ['#660000', '#ff6600'] // default Hokie colors
-    /** @private */ this._images           = {}
+    /**
+     * @summary This site’s images.
+     * @private
+     * @type {Object<?string>}
+     */
+    this._images = {
+      hero: (jsondata.images && jsondata.images.hero) || null,
+      city: (jsondata.images && jsondata.images.city) || null,
+      prev: (jsondata.images && jsondata.images.prev) || null,
+      next: (jsondata.images && jsondata.images.next) || null,
+    }
     /** @private */ this._conferences      = {}
     /** @private */ this._conf_curr_key   = null
     /** @private */ this._conf_prev_key   = null
@@ -84,17 +95,11 @@ class ConfSite extends Page {
   }
 
   /**
-   * @summary Set or get the images of this site.
-   * @param   {Object<string>} $imgs a dictionary of image urls
-   * @returns {(ConfSite|Object<string>)} this || an object containing image urls
+   * @summary The image urls of this site.
+   * @type {Object<string>}
    */
-  images($imgs) {
-    if (arguments.length) {
-      ['hero', 'city', 'prev', 'next'].forEach(function (key) {
-        this._images[key] = $imgs[key] || ''
-      }, this)
-      return this
-    } else return this._images
+  get images() {
+    return Object.assign({}, this._images)
   }
 
   /**
