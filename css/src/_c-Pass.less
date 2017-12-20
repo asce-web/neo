@@ -16,7 +16,10 @@
 //     .addAttendeeType(new Pass.AttendeeType('Member', true))
 //     .addAttendeeType(new Pass.AttendeeType('Non-Member'))
 //     .fineprint('Side note or fine print goes here. Only plain text is allowed.')
-//   let conference = new Conference()
+//   let conference = new Conference({
+//     "@context" : "http://schema.org/",
+//     "@type"    : "Event",
+//   })
 //     .addRegistrationPeriod(new RegistrationPeriod({ name: 'Early Bird' }))
 //     .addRegistrationPeriod(new RegistrationPeriod({ name: 'Advance' }))
 //     .addRegistrationPeriod(new RegistrationPeriod({ name: 'Onsite' }))

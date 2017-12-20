@@ -16,6 +16,7 @@ class Conference {
    * @summary Construct a Conference object.
    * @description The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
+   * @param {Object} jsondata a JSON object that validates against some schema?
    * @param {Object} $confinfo an object with the following immutable properties:
    * @param {string} $confinfo.name the name of this conference
    * @param {string} $confinfo.url the url of this conference
@@ -26,7 +27,7 @@ class Conference {
    * @param {string} $confinfo.promo_loc.text the promoted location displayed/abbreviated text (eg, "Portland, OR")
    * @param {string=} $confinfo.promo_loc.alt the accessible text of the location (eg, "Portland, Oregon")
    */
-  constructor($confinfo) {
+  constructor(jsondata, $confinfo) {
     /** @private @final */ this._NAME      = $confinfo.name
     /** @private @final */ this._URL       = $confinfo.url
     /** @private @final */ this._THEME     = $confinfo.theme

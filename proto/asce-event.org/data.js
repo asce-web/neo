@@ -36,11 +36,24 @@ var jsondata = {
   }
 }
 
+var json2016 = {
+  "@context" : "http://schema.org/",
+  "@type"    : "Event",
+}
+var json2015 = {
+  "@context" : "http://schema.org/",
+  "@type"    : "Event",
+}
+var json2017 = {
+  "@context" : "http://schema.org/",
+  "@type"    : "Event",
+}
+
     var site = new ConfSite(jsondata)
       .init()
 
     site
-      .addConference('2016', new Conference({
+      .addConference('2016', new Conference(json2016, {
         name      : 'A 2016 Event'
       , theme     : 'Theme for the conference is optional.'
       , start_date: new Date('2016-09-28')
@@ -51,7 +64,7 @@ var jsondata = {
         , alt  : 'Portland, Oregon'
         }
       }))
-      .addConference('2015', new Conference({
+      .addConference('2015', new Conference(json2015, {
         name      : 'A 2015 Event'
       , theme     : ''
       , start_date: new Date('2015-10-11')
@@ -70,7 +83,7 @@ var jsondata = {
         , url             : 'http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/'
         }))
       )
-      .addConference('2017', new Conference({
+      .addConference('2017', new Conference(json2017, {
         name      : 'A 2017 Event'
       , theme     : ''
       , start_date: new Date('2017-10-08')

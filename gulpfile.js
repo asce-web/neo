@@ -74,6 +74,9 @@ gulp.task('pug:default', function () {
         })
           .init()
           .addConference('default', new Conference({
+            "@context"  : "http://schema.org/",
+            "@type"     : "Event",
+          }, {
             name      : 'Civil Engineering Congress 2016',
             url       : 'http://2016.cecongress.org/',
             start_date: new Date(),
