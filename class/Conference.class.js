@@ -22,10 +22,7 @@ class Conference {
    * @param {string=} jsondata.description the theme of this conference
    * @param {string} jsondata.startDate the starting date of this conference, in ISO string format
    * @param {string} jsondata.endDate the ending date of this conference, in ISO string format
-   * @param {Object} $confinfo an object with the following immutable properties:
-   * @param {Object} $confinfo.promo_loc the promoted location of this conference
-   * @param {string} $confinfo.promo_loc.text the promoted location displayed/abbreviated text (eg, "Portland, OR")
-   * @param {string=} $confinfo.promo_loc.alt the accessible text of the location (eg, "Portland, Oregon")
+   * @param {!Object=} jsondata.location the promoted location of this conference; type {@link http://schema.org/PostalAddress}
    */
   constructor(jsondata, $confinfo) {
     /**
@@ -63,7 +60,13 @@ class Conference {
      * @type {string}
      */
     this._END = jsondata.endDate
-    /** @private @final */ this._PROMO_LOC = $confinfo.promo_loc
+    /**
+     * @summary The promoted location of this conference.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._PROMO_LOC = jsondata.location || { "@type": "PostalAddress" }
     /** @private */ this._reg_periods     = []
     /** @private */ this._passes          = []
     /** @private */ this._sessions        = []
@@ -127,10 +130,10 @@ class Conference {
    * @description The promoted location is not necessarily the actual postal address of the conference,
    * but rather a major city nearest to the conference used for
    * promotional and advertising purposes.
-   * @type {{text:string, alt:string}}
+   * @type {!Object}
    */
   get promoLoc() {
-    return this._PROMO_LOC || {}
+    return Object.assign({}, this._PROMO_LOC)
   }
 
   /**
@@ -472,12 +475,16 @@ class Conference {
     /**
      * Mark up the promoted location of this conference.
      * @private
-     * @param  {Object} obj an object returned by `Conference#promoLoc()`
-     * @returns {string} the markup for the location
+     * @param  {!Object} $postal_address an object returned by `Conference#promoLoc()`
+     * @returns {Array<(string|Element)>} an array of markup for the location
      */
-    function promoLoc(obj) {
-      if (obj.alt) return new HTMLElement('abbr').attr('title',obj.alt).addContent(obj.text).html()
-      else return obj.text
+    function promoLoc($postal_address) {
+      return [
+        new HTMLElement('span').attr('itemprop','addressLocality').addContent($postal_address.addressLocality),
+        `, `,
+        new HTMLElement('data').attr('itemprop','addressRegion').attr('value',$postal_address.addressRegion).addContent($postal_address.addressRegion),
+        ($postal_address.addressCountry) ? new HTMLElement('data').attr('itemprop','addressCountry').addContent($postal_address.addressCountry) : null,
+      ]
     }
     /**
      * @summary This view object is a set of functions returning HTML output.
@@ -511,7 +518,11 @@ class Conference {
                 new HTMLElement('p').class('o-Flex c-ConfHed__Detail')
                   .addContent([
                     new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Place h-Block')
-                      .attr('itemprop','location')
+                      .attr({
+                        itemprop : 'location',
+                        itemscope: '',
+                        itemtype : 'http://schema.org/PostalAddress',
+                      })
                       .addContent(promoLoc(this.promoLoc)),
                     new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
                       .addContent([
@@ -559,7 +570,11 @@ class Conference {
                 .addContent(this.name),
               new HTMLElement('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
               new HTMLElement('p').class('c-ConfHed__Detail')
-                .attr('itemprop','location')
+                .attr({
+                  itemprop : 'location',
+                  itemscope: '',
+                  itemtype : 'http://schema.org/PostalAddress',
+                })
                 .addContent(promoLoc(this.promoLoc)),
               new HTMLElement('p').class('h-Hidden-nM').addContent(blurb),
               block

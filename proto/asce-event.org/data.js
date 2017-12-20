@@ -44,6 +44,11 @@ var json2016 = {
   "description": "Where Engineering Dreams are Built.",
   "startDate"  : "2016-09-28T07:30",
   "endDate"    : "2016-10-01T17:00",
+  "location"   : {
+    "@type": "PostalAddress",
+    "addressLocality": "Portland",
+    "addressRegion"  : "Oregon"
+  },
 }
 var json2015 = {
   "@context"   : "http://schema.org/",
@@ -53,6 +58,11 @@ var json2015 = {
   "description": "Building on the Past.",
   "startDate"  : "2015-10-11T07:30",
   "endDate"    : "2015-10-14T17:00",
+  "location"   : {
+    "@type": "PostalAddress",
+    "addressLocality": "New York",
+    "addressRegion"  : "New York"
+  },
 }
 var json2017 = {
   "@context"   : "http://schema.org/",
@@ -62,6 +72,11 @@ var json2017 = {
   "description": "The Future of Civil Engineering.",
   "startDate"  : "2017-10-08T07:30",
   "endDate"    : "2017-10-11T17:00",
+  "location"   : {
+    "@type": "PostalAddress",
+    "addressLocality": "New Orleans",
+    "addressRegion"  : "Louisiana"
+  },
 }
 
     var site = new ConfSite(jsondata)
@@ -69,16 +84,8 @@ var json2017 = {
 
     site
       .addConference('2016', new Conference(json2016, {
-        promo_loc : {
-          text : 'Portland, OR',
-          alt  : 'Portland, Oregon',
-        },
       }))
       .addConference('2015', new Conference(json2015, {
-        promo_loc : {
-          text : 'New York, NY',
-          alt  : 'New York, New York',
-        },
       })
         .addVenue('Conference Venue', new Place('New York Marriott Marquis', {
           street_address  : '1535 Broadway',
@@ -89,10 +96,6 @@ var json2017 = {
         }))
       )
       .addConference('2017', new Conference(json2017, {
-        promo_loc : {
-          text : 'New Orleans, LA',
-          alt  : 'New Orleans, Louisiana',
-        },
       })
         .addVenue('Conference Venue', new Place('New Orleans Mariott', {
           street_address  : '555 Canal Street',

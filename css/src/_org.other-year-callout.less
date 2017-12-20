@@ -29,8 +29,12 @@
 //     "description": "Geotechincal risk from theory to practice.",
 //     "startDate"  : "2020-06-04",
 //     "endDate"    : "2020-06-07",
+//     "location"   : {
+//       "@type": "PostalAddress",
+//       "addressLocality": "Denver",
+//       "addressRegion"  : "Colorado"
+//     },
 //   }, {
-//     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
 //   })
 //   let prev_blurb = 'Plan ahead to attend Geo-Risk next year!'
 //   let prev_content = Util.VIEW.highlightButtons([
@@ -62,8 +66,9 @@
 //   <div class="o-Constrain">
 //     <h1 class="c-ConfHed__Name" itemprop="name">Geo-Risk 2020</h1>
 //     <meta content="2020-06-04" itemprop="startDate"/>
-//     <p class="c-ConfHed__Detail" itemprop="location">
-//       <abbr title="Denver, Colorado">Denver, CO</abbr>
+//     <p class="c-ConfHed__Detail" itemprop="location" itemscope="" itemtype="http://schema.org/PostalAddress">
+//       <span itemprop="addressLocality">Denver</span>,
+//       <data itemprop="addressRegion" value="Colorado">Colorado</data>
 //     </p>
 //     <p class="h-Hidden-nM">Plan ahead to attend Geo-Risk next year!</p>
 //     <ul class="o-List o-Flex o-Flex--even">
