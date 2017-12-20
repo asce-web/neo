@@ -42,7 +42,13 @@ class Conference {
      * @type {string}
      */
     this._URL = jsondata.url
-    /** @private @final */ this._THEME     = $confinfo.theme
+    /**
+     * @summary The theme of this conference.
+     * @private
+     * @final
+     * @type {string}
+     */
+    this._THEME = jsondata.description || ''
     /** @private @final */ this._START     = $confinfo.start_date
     /** @private @final */ this._END       = $confinfo.end_date
     /** @private @final */ this._PROMO_LOC = $confinfo.promo_loc
