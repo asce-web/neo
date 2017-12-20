@@ -24,7 +24,7 @@ class Conference {
    * @param {string} jsondata.endDate the ending date of this conference, in ISO string format
    * @param {!Object=} jsondata.location the promoted location of this conference; type {@link http://schema.org/PostalAddress}
    */
-  constructor(jsondata, $confinfo) {
+  constructor(jsondata) {
     /**
      * @summary The name of this conference.
      * @private

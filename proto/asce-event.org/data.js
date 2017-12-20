@@ -83,10 +83,8 @@ var json2017 = {
       .init()
 
     site
-      .addConference('2016', new Conference(json2016, {
-      }))
-      .addConference('2015', new Conference(json2015, {
-      })
+      .addConference('2016', new Conference(json2016))
+      .addConference('2015', new Conference(json2015)
         .addVenue('Conference Venue', new Place('New York Marriott Marquis', {
           street_address  : '1535 Broadway',
           address_locality: 'New York',
@@ -95,8 +93,7 @@ var json2017 = {
           url             : 'http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/',
         }))
       )
-      .addConference('2017', new Conference(json2017, {
-      })
+      .addConference('2017', new Conference(json2017)
         .addVenue('Conference Venue', new Place('New Orleans Mariott', {
           street_address  : '555 Canal Street',
           address_locality: 'New Orleans',

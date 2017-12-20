@@ -80,12 +80,11 @@ gulp.task('pug:default', function () {
             "url"       : "http://2016.cecongress.org/",
             "startDate" : null,
             "endDate"   : null,
-            "location"   : {
+            "location"  : {
               "@type": "PostalAddress",
               "addressLocality": "Reston",
               "addressRegion"  : "Virginia"
             },
-          }, {
           }))
           .currentConference('default')
           .prevConference('default')
