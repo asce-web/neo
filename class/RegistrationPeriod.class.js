@@ -102,8 +102,8 @@ class RegistrationPeriod {
             new HTMLElement('meta').attr({ content:$pass.getAttendeeTypesAll().length, itemprop:'offerCount' }),
             (this.startDate.toISOString() !== new Date().toISOString()) ? new HTMLElement('meta').attr({ content:this.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
             (this.  endDate.toISOString() !== new Date().toISOString()) ? new HTMLElement('meta').attr({ content:this.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,
-            new HTMLElement('dl').addContent($pass.getAttendeeTypesAll().map((att_type, index) =>
-              att_type.view.pass(42.87, is_body && index===0) // TODO price is 42 for now
+            new HTMLElement('dl').addContent($pass.getAttendeeTypesAll().map((att_type) =>
+              att_type.view.pass(42.87) // TODO price is 42 for now
             )),
           ])
           .html()

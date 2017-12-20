@@ -63,11 +63,10 @@ class Pass {
   //  * REVIEW: use this method if class AttendeeType is removed.
   //  * @summary Add an attendee type to this pass.
   //  * @param   {string} name the name of the attendee type
-  //  * @param   {boolean} is_featured whether this attendee type is marked as “featured”
   //  * @returns {Pass} this pass
   //  */
-  // addAttendeeType(name, is_featured) {
-  //   this._attend_types.push({name: name, isFeatured: is_featured})
+  // addAttendeeType(name) {
+  //   this._attend_types.push({name: name})
   //   return this
   // }
   /**
@@ -211,14 +210,12 @@ Pass.AttendeeType = class AttendeeType {
        * @summary Call `AttendeeType#view.pass()` to render this display.
        * @function Pass.AttendeeType.VIEW.pass
        * @param   {number} price the price for this attendee type given a certain pass and registration period
-       * @param   {boolean} is_featured whether this attendee type is marked as “featured”
        * @returns {string} HTML output
        */
-      .addDisplay(function pass(price, is_featured) {
+      .addDisplay(function pass(price) {
         return Element.concat([
           new HTMLElement('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
           new HTMLElement('dd').class('c-Pass__Price')
-            .addClass((is_featured) ? 'c-Pass__Price--featured' : '')
             .attr({
               'aria-label': `${price} ${Pass.PRICE_OPTIONS.resolvedOptions().currency}`,
               itemprop : 'priceSpecification',
