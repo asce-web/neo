@@ -83,12 +83,12 @@ gulp.task('pug:default', function () {
               "addressRegion"  : "Virginia"
             },
             }
-          }
+          },
+          "currentConference" : "default",
+          "previousConference": "default",
+          "nextConference"    : "default",
         })
-          .init()
-          .currentConference('default')
-          .prevConference('default')
-          .nextConference('default'),
+          .init(),
         page: new ConfPage(),
       },
     }))

@@ -78,6 +78,9 @@ var jsondata = {
   },
 }
   },
+  "currentConference" : "json2016",
+  "previousConference": "json2015",
+  "nextConference"    : "json2017",
 }
 
 
@@ -103,13 +106,9 @@ var jsondata = {
         }))
 
 
-    site
-      .currentConference('json2016')
-      .prevConference('json2015')
-      .nextConference('json2017')
 
     // REVIEW TODO move below Speakers
-    site.currentConference()
+    site.currentConference
       .addSupporterLevel(new SupporterLevel('Platinum' , SupporterLevel.LogoSize.LARGE))
       .addSupporterLevel(new SupporterLevel('Corporate', SupporterLevel.LogoSize.LARGE))
       .addSupporterLevel(new SupporterLevel('Silver'   , SupporterLevel.LogoSize.MEDIUM))
@@ -118,13 +117,13 @@ var jsondata = {
       .addSupporterLevel(new SupporterLevel('Charter Members', SupporterLevel.LogoSize.SMALL))
       .addSupporterLevel(new SupporterLevel('Cooperating Organizations', SupporterLevel.LogoSize.SMALL))
 
-    site.currentConference()
+    site.currentConference
       .addSupporterLevelQueue('sponsors', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper'])
       .addSupporterLevelQueue('orgs', ['Charter Members', 'Cooperating Organizations'])
       .addSupporterLevelQueue('home-page', ['Platinum', 'Silver', 'Bronze'])
       .addSupporterLevelQueue('sponsors-page', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper', 'Charter Members', 'Cooperating Organizations'])
 
-    site.currentConference()
+    site.currentConference
       .addSupporter(new Supporter('ASCE Foundation')
         .url('http://www.ascefoundation.org/')
         .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/asce-foundation-logo.png')
@@ -241,7 +240,7 @@ var jsondata = {
         .level('Cooperating Organizations')
       )
 
-    site.currentConference()
+    site.currentConference
       .addExhibitor(new Exhibitor('AISC')
         .url('https://www.aisc.org/')
         .img('https://www.aisc.org/globalassets/aisc/images/logos/aisc_logo-180.png')
@@ -267,15 +266,15 @@ var jsondata = {
         .isSponsor(true)
       )
 
-    site.currentConference()
+    site.currentConference
       .addRegistrationPeriod(new RegistrationPeriod({name:'Early Bird',                                    end_date:new Date('2016-07-28')}).setIcon('stars'))
       .addRegistrationPeriod(new RegistrationPeriod({name:'Advance'   , start_date:new Date('2016-07-29'), end_date:new Date('2016-08-25')}).setIcon('date_range'))
       .addRegistrationPeriod(new RegistrationPeriod({name:'Onsite'    , start_date:new Date('2016-08-26')                                 }).setIcon('account_balance'))
 
-    site.currentConference()
+    site.currentConference
       .currentRegistrationPeriod('Early Bird')
 
-    site.currentConference()
+    site.currentConference
       .addPass(new Pass('Standard Pass')
         .description('Members & Non-Members')
         .addAttendeeType(new Pass.AttendeeType('Member', true))
@@ -308,7 +307,7 @@ var jsondata = {
         .addAttendeeType(new Pass.AttendeeType('Non-Member'))
       )
 
-    //- site.currentConference()
+    //- site.currentConference
     //-   .setPrice('Early Bird', 'Standard Pass' , 'Member'    ,  745)
     //-   .setPrice('Early Bird', 'Standard Pass' , 'Non-Member',  845)
     //-   .setPrice('Advance'   , 'Standard Pass' , 'Member'    ,  845)
@@ -343,7 +342,7 @@ var jsondata = {
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Member'    ,  645)
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Non-Member',  745)
 
-    site.currentConference()
+    site.currentConference
       .addSession(new DateRange('Registration'                           , new Date('2016-09-28 10:00'), new Date('2016-09-28 19:00')))
       .addSession(new DateRange('Technical Tours'                        , new Date('2016-09-28 10:30'), new Date('2016-09-28 16:30')).star().url('#0'))
       .addSession(new DateRange('Short Courses'                          , new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')).star().url('#0'))
@@ -388,7 +387,7 @@ var jsondata = {
       .addSession(new DateRange('ASCE Luncheon & Closing General Session', new Date('2016-10-01 12:00'), new Date('2016-10-01 14:00')).star())
       .addSession(new DateRange('Technical Tours'                        , new Date('2016-10-01 14:30'), new Date('2016-10-01 17:30')).url('#0'))
 
-    site.currentConference()
+    site.currentConference
       .addVenue('Conference Venue', new Place('Oregon Convention Center', {
         street_address  : '777 NE Martin Luther King, Jr. Blvd.'
       , address_locality: 'Portland'
@@ -407,10 +406,10 @@ var jsondata = {
       , postal_code     : '97204'
       }))
 
-    site.currentConference()
+    site.currentConference
       .officialVenue('Conference Venue')
 
-    site.currentConference()
+    site.currentConference
       .addSpeaker(new Person('donna-fulman', {
           given_name      : 'Donna'
         , family_name     : 'Fulman'
@@ -546,7 +545,7 @@ var jsondata = {
         .star()
       )
 
-    site.currentConference()
+    site.currentConference
       .addImportantDate(new DateRange('Optional Final Papers Due'     , new Date('2015-10-12')                        ).star())
       .addImportantDate(new DateRange('Early-Bird Registration Closes', new Date('2015-12-17')                        ).star().url('registration.html'))
       .addImportantDate(new DateRange('Advance Registration Closes'   , new Date('2016-01-12')                        ).star().url('registration.html'))
@@ -554,7 +553,7 @@ var jsondata = {
       .addImportantDate(new DateRange('Convention Ends'               , new Date('2016-06-15')                        ))
       .addImportantDate(new DateRange('Convention Dates'              , new Date('2016-09-28'), new Date('2016-10-01')).star())
 
-    site.currentConference()
+    site.currentConference
       .addOrganizer(new Person('thomas-mccollough', {
           given_name      : 'Thomas'
         , additional_name : 'J.'
@@ -569,7 +568,7 @@ var jsondata = {
         , honorific_suffix: 'Ph.D., P.E., D.PE, M.ASCE'
       }).affiliation('HNTB Corporation'))
 
-    site.currentConference()
+    site.currentConference
       .addSocial('twitter', 'https://twitter.com/hashtag/#asce2016', 'Follow #ASCE2016 on Twitter')
       .addSocial('google', '#0', 'Follow #ASCE2016 on Google+')
       .addSocial('facebook', '#0', 'Follow #ASCE2016 on Facebook')
@@ -764,43 +763,43 @@ var jsondata = {
     site.find('registration.html')
       .add(new ConfPage('Why Attend', '#0')
         .title(function () { return this.name() + ' | ' + site.name() })
-        .description(`Why you should attend ${site.currentConference().name}.`)
+        .description(`Why you should attend ${site.currentConference.name}.`)
       )
       .add(new ConfPage('Volunteer', '#0')
         .title(function () { return this.name() + ' | ' + site.name() })
-        .description(`Volunteer at ${site.currentConference().name}.`)
+        .description(`Volunteer at ${site.currentConference.name}.`)
       )
     site.find('program.html')
       .add(new ConfPage('Short Courses', '#0')
         .title(function () { return this.name() + ' | ' + site.name() })
-        .description(`Short Courses for ${site.currentConference().name}.`)
+        .description(`Short Courses for ${site.currentConference.name}.`)
       )
       .add(new ConfPage('Technical Tours', '#0')
         .title(function () { return this.name() + ' | ' + site.name() })
-        .description(`Technical Tours for ${site.currentConference().name}.`)
+        .description(`Technical Tours for ${site.currentConference.name}.`)
       )
       .add(new ConfPage('Optional Tours', '#0')
         .title(function () { return this.name() + ' | ' + site.name() })
-        .description(`Optional Tours for ${site.currentConference().name}.`)
+        .description(`Optional Tours for ${site.currentConference.name}.`)
       )
     site.find('speakers.html')
       .add(new ConfPage('Distinguished Lecturers', '#0')
         .title(function () { return this.name() + ' | ' + site.name() })
-        .description(`Distinguished lecturers at ${site.currentConference().name}.`)
+        .description(`Distinguished lecturers at ${site.currentConference.name}.`)
       )
     site.find('sponsor.html')
       .add(new ConfPage('Partnering Orgs', '#0')
         .title(function () { return this.name() + ' | ' + site.name() })
-        .description(`Partnering Organizations at ${site.currentConference().name}.`)
+        .description(`Partnering Organizations at ${site.currentConference.name}.`)
       )
       .add(new ConfPage('Cooperating Orgs', '#0')
         .title(function () { return this.name() + ' | ' + site.name() })
-        .description(`Cooperating Organizations at ${site.currentConference().name}.`)
+        .description(`Cooperating Organizations at ${site.currentConference.name}.`)
       )
     site.find('exhibit.html')
       .add(new ConfPage('Exhibitor List', '#0')
         .title(function () { return this.name() + ' | ' + site.name() })
-        .description(`Listing of all Exhibitors at ${site.currentConference().name}.`)
+        .description(`Listing of all Exhibitors at ${site.currentConference.name}.`)
       )
 
 module.exports = site

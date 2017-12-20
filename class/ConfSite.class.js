@@ -51,9 +51,6 @@ class ConfSite extends Page {
       }
       return returned
     }).call(this)
-    /** @private */ this._conf_curr_key   = null
-    /** @private */ this._conf_prev_key   = null
-    /** @private */ this._conf_next_key   = null
   }
 
   /**
@@ -119,48 +116,28 @@ class ConfSite extends Page {
   }
 
   /**
-   * Set or get the current conference of this site.
-   * If setting, provide the argument key for accessing the added conference.
-   * If getting, provide no argument.
-   * The current conference is the conference that is being promoted this cycle.
-   * @param   {string=} conf_label key for accessing the conference
-   * @returns {(ConfSite|Conference)} this site || the current conference
+   * The current conference of this site.
+   * @description The current conference is the conference that is being promoted this cycle.
+   * @type {Conference} the current conference
    */
-  currentConference(conf_label) {
-    if (arguments.length) {
-      this._conf_curr_key = conf_label
-      return this
-    } else {
-      return this.getConference(this._conf_curr_key)
-    }
+  get currentConference() {
+    return this.getConference(this._DATA.currentConference)
   }
   /**
-   * @summary Set or get the previous conference of this site.
-   * @description If setting, provide the argument key for accessing the added conference.
-   * If getting, provide no argument.
-   * The previous conference is the conference that was promoted last cycle.
-   * @param   {string=} conf_label key for accessing the conference
-   * @returns {(ConfSite|Conference)} this site || the previous conference
+   * @summary The previous conference of this site.
+   * @description The previous conference is the conference that was promoted last cycle.
+   * @type {Conference} the previous conference
    */
-  prevConference(conf_label) {
-    if (arguments.length) {
-      this._conf_prev_key = conf_label
-      return this
-    } else return this.getConference(this._conf_prev_key)
+  get prevConference() {
+    return this.getConference(this._DATA.previousConference)
   }
   /**
-   * @summary Set or get the next conference of this site.
-   * @description If setting, provide the argument key for accessing the added conference.
-   * If getting, provide no argument.
-   * The next conference is the conference that will be promoted next cycle.
-   * @param   {string=} conf_label key for accessing the conference
-   * @returns {(ConfSite|Conference)} this site || the next conference
+   * @summary The next conference of this site.
+   * @description The next conference is the conference that will be promoted next cycle.
+   * @type {Conference} the next conference
    */
-  nextConference(conf_label) {
-    if (arguments.length) {
-      this._conf_next_key = conf_label
-      return this
-    } else return this.getConference(this._conf_next_key)
+  get nextConference() {
+    return this.getConference(this._DATA.nextConference)
   }
 
   /**
