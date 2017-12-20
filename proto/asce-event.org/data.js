@@ -291,46 +291,42 @@ var jsondata = {
       .addPass(new Pass({
         "name": "Standard Pass",
         "description": "Members & Non-Members",
+        "$attendeeTypes": ["Member", "Non-Member"],
       })
-        .addAttendeeType(new Pass.AttendeeType('Member'))
-        .addAttendeeType(new Pass.AttendeeType('Non-Member'))
         .star()
       ).addPass(new Pass({
         "name": "Speaker Pass",
         "description": "Speakers and Presenters",
+        "$attendeeTypes": ["Member", "Non-Member"],
       })
-        .addAttendeeType(new Pass.AttendeeType('Member'))
-        .addAttendeeType(new Pass.AttendeeType('Non-Member'))
       ).addPass(new Pass({
         "name": "Moderator Pass",
         "description": "Moderators",
+        "$attendeeTypes": ["Member", "Non-Member"],
       })
-        .addAttendeeType(new Pass.AttendeeType('Member'))
-        .addAttendeeType(new Pass.AttendeeType('Non-Member'))
       ).addPass(new Pass({
         "name": "Younger Member",
         "description": "Members 18–35",
+        "$attendeeTypes": ["Member/Non-Member"],
       })
-        .addAttendeeType(new Pass.AttendeeType('Member/Non-Member'))
         .star()
       ).addPass(new Pass({
         "name": "Student Pass",
         "description": "Undergraduates 18–24",
         "$fineprint" : "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
+        "$attendeeTypes": ["Member/Non-Member"],
       })
-        .addAttendeeType(new Pass.AttendeeType('Member/Non-Member'))
         .star()
       ).addPass(new Pass({
         "name": "Guest Pass",
         "description": "Speaker and Moderator Guests",
+        "$attendeeTypes": ["Member/Non-Member"],
       })
-        .addAttendeeType(new Pass.AttendeeType('Member/Non-Member'))
       ).addPass(new Pass({
         "name": "Daily Pass",
         "description": "For One Day Only",
+        "$attendeeTypes": ["Member", "Non-Member"],
       })
-        .addAttendeeType(new Pass.AttendeeType('Member'))
-        .addAttendeeType(new Pass.AttendeeType('Non-Member'))
       )
 
     //- site.currentConference

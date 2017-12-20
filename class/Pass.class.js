@@ -13,6 +13,8 @@ class Pass {
    * @param {string} jsondata.name the name or type of the pass
    * @param {string=} jsondata.description a short description of this pass
    * @param {string=} jsondata.$fineprint further details of this pass
+   * @param {Array<string>=} jsondata.$attendeeTypes types of attendees that can purchase this pass
+   *                                                 (usually based on membership)
    */
   constructor(jsondata) {
     /**
@@ -22,7 +24,6 @@ class Pass {
      * @type {!Object}
      */
     this._DATA = jsondata
-    /** @private */ this._attend_types = []
     /** @private */ this._is_starred = false
   }
 
@@ -51,39 +52,19 @@ class Pass {
   }
 
   /**
-   * @summary Add an attendee type to this pass.
-   * @param   {Pass.AttendeeType} $attendeeType the attendee type to add
-   * @returns {Pass} this pass
-   */
-  addAttendeeType($attendeeType) {
-    this._attend_types.push($attendeeType)
-    return this
-  }
-  // /**
-  //  * REVIEW: use this method if class AttendeeType is removed.
-  //  * @summary Add an attendee type to this pass.
-  //  * @param   {string} name the name of the attendee type
-  //  * @param   {boolean} is_featured whether this attendee type is marked as “featured”
-  //  * @returns {Pass} this pass
-  //  */
-  // addAttendeeType(name, is_featured) {
-  //   this._attend_types.push({name: name, isFeatured: is_featured})
-  //   return this
-  // }
-  /**
    * @summary Retrieve an attendee type of this pass.
    * @param   {string} name the name of the attendee type to get
    * @returns {?Pass.AtendeeType} the specified attendee type
    */
   getAttendeeType(name) {
-    return this._attend_types.find(($attendeeType) => $attendeeType.name===name) || null
+    return (this._DATA.$attendeeTypes.includes(name)) ? new Pass.AttendeeType(name) : null
   }
   /**
    * @summary Retreive all attendee types of this pass.
    * @returns {Array<Pass.AttendeeType>} a shallow array of all attendee types of this pass
    */
   getAttendeeTypesAll() {
-    return this._attend_types.slice()
+    return this._DATA.$attendeeTypes.map((name) => new Pass.AttendeeType(name))
   }
 
   /**
