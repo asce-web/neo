@@ -15,6 +15,8 @@ class Pass {
    * @param {string=} jsondata.$fineprint further details of this pass
    * @param {Array<string>=} jsondata.$attendeeTypes types of attendees that can purchase this pass
    *                                                 (usually based on membership)
+   * @param {boolean=} jsondata.$starred whether this pass is starred
+   *                                     TODO: use Entity Queues instead!
    */
   constructor(jsondata) {
     /**
@@ -68,20 +70,12 @@ class Pass {
   }
 
   /**
-   * @summary Mark this pass as starred.
-   * @param   {boolean=} bool if true, mark as starred
-   * @returns {Pass} this pass
-   */
-  star(bool = true) {
-    this._is_starred = bool
-    return this
-  }
-  /**
-   * @summary Get the starred status of this pass.
-   * @returns {boolean} whether this pass is starred
+   * @summary Whether this pass is starred.
+   * @todo TODO: use Entity Queues instead!
+   * @type {boolean}
    */
   isStarred() {
-    return this._is_starred
+    return this._DATA.$starred
   }
 
 

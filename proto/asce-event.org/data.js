@@ -292,8 +292,8 @@ var jsondata = {
         "name": "Standard Pass",
         "description": "Members & Non-Members",
         "$attendeeTypes": ["Member", "Non-Member"],
+        "$starred": true
       })
-        .star()
       ).addPass(new Pass({
         "name": "Speaker Pass",
         "description": "Speakers and Presenters",
@@ -308,15 +308,15 @@ var jsondata = {
         "name": "Younger Member",
         "description": "Members 18–35",
         "$attendeeTypes": ["Member/Non-Member"],
+        "$starred": true
       })
-        .star()
       ).addPass(new Pass({
         "name": "Student Pass",
         "description": "Undergraduates 18–24",
         "$fineprint" : "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
         "$attendeeTypes": ["Member/Non-Member"],
+        "$starred": true
       })
-        .star()
       ).addPass(new Pass({
         "name": "Guest Pass",
         "description": "Speaker and Moderator Guests",
