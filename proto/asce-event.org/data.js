@@ -69,6 +69,47 @@ var jsondata = {
       }
     ],
     "$currentRegistrationPeriod": "Early Bird",
+    "$passes": [
+      {
+        "name": "Standard Pass",
+        "description": "Members & Non-Members",
+        "$attendeeTypes": ["Member", "Non-Member"],
+        "$starred": true
+      },
+      {
+        "name": "Speaker Pass",
+        "description": "Speakers and Presenters",
+        "$attendeeTypes": ["Member", "Non-Member"]
+      },
+      {
+        "name": "Moderator Pass",
+        "description": "Moderators",
+        "$attendeeTypes": ["Member", "Non-Member"]
+      },
+      {
+        "name": "Younger Member",
+        "description": "Members 18–35",
+        "$attendeeTypes": ["Member/Non-Member"],
+        "$starred": true
+      },
+      {
+        "name": "Student Pass",
+        "description": "Undergraduates 18–24",
+        "$fineprint" : "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
+        "$attendeeTypes": ["Member/Non-Member"],
+        "$starred": true
+      },
+      {
+        "name": "Guest Pass",
+        "description": "Speaker and Moderator Guests",
+        "$attendeeTypes": ["Member/Non-Member"]
+      },
+      {
+        "name": "Daily Pass",
+        "description": "For One Day Only",
+        "$attendeeTypes": ["Member", "Non-Member"]
+      }
+    ]
 },
 "json2015": {
   "@context"   : "http://schema.org/",
@@ -285,39 +326,6 @@ var jsondata = {
         .setDescription('See how much more you could save with a special discount on auto insurance.')
         .booth(9)
         .isSponsor(true)
-      )
-
-    site.currentConference
-      .addPass(new Pass('Standard Pass')
-        .description('Members & Non-Members')
-        .addAttendeeType(new Pass.AttendeeType('Member'))
-        .addAttendeeType(new Pass.AttendeeType('Non-Member'))
-        .star()
-      ).addPass(new Pass('Speaker Pass')
-        .description('Speakers and Presenters')
-        .addAttendeeType(new Pass.AttendeeType('Member'))
-        .addAttendeeType(new Pass.AttendeeType('Non-Member'))
-      ).addPass(new Pass('Moderator Pass')
-        .description('Moderators')
-        .addAttendeeType(new Pass.AttendeeType('Member'))
-        .addAttendeeType(new Pass.AttendeeType('Non-Member'))
-      ).addPass(new Pass('Younger Member')
-        .description('Members 18–35')
-        .addAttendeeType(new Pass.AttendeeType('Member/Non-Member'))
-        .star()
-      ).addPass(new Pass('Student Pass')
-        .description('Undergraduates 18–24')
-        .addAttendeeType(new Pass.AttendeeType('Member/Non-Member'))
-        .fineprint(`Full-time students must show valid ID
-          onsite at the registration desk when picking up name badge.`)
-        .star()
-      ).addPass(new Pass('Guest Pass')
-        .description('Speaker and Moderator Guests')
-        .addAttendeeType(new Pass.AttendeeType('Member/Non-Member'))
-      ).addPass(new Pass('Daily Pass')
-        .description('For One Day Only')
-        .addAttendeeType(new Pass.AttendeeType('Member'))
-        .addAttendeeType(new Pass.AttendeeType('Non-Member'))
       )
 
     //- site.currentConference

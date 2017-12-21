@@ -1,6 +1,7 @@
 const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
+const Util    = require('./Util.class.js')
 
 /**
  * A set of prices for registration.
@@ -8,13 +9,23 @@ const View    = require('extrajs-view')
 class Pass {
   /**
    * Construct a new Pass object.
-   * @param {string} name the name or type of the pass
+   * @param {!Object} jsondata a JSON object that validates against some schema?
+   * @param {string} jsondata.name the name or type of the pass
+   * @param {string=} jsondata.description a short description of this pass
+   * @param {string=} jsondata.$fineprint further details of this pass
+   * @param {Array<string>=} jsondata.$attendeeTypes types of attendees that can purchase this pass
+   *                                                 (usually based on membership)
+   * @param {boolean=} jsondata.$starred whether this pass is starred
+   *                                     TODO: use Entity Queues instead!
    */
-  constructor(name) {
-    /** @private @final */ this._NAME = name
-    /** @private */ this._description  = ''
-    /** @private */ this._fineprint    = ''
-    /** @private */ this._attend_types = []
+  constructor(jsondata) {
+    /**
+     * All the data for this pass.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
     /** @private */ this._is_starred = false
   }
 
@@ -23,83 +34,48 @@ class Pass {
    * @type {string}
    */
   get name() {
-    return this._NAME
+    return this._DATA.name
   }
 
   /**
-   * @summary Set or get the description of this pass.
-   * @param   {string=} text the description of this pass
-   * @returns {(Pass|string)} this pass || the description of this pass
+   * @summary The description of this pass.
+   * @type {string}
    */
-  description(text) {
-    if (arguments.length) {
-      this._description = text
-      return this
-    } else return this._description
+  get description() {
+    return this._DATA.description || ''
   }
 
   /**
-   * @summary Set or get the fine print of this pass.
-   * @param   {string=} text the fine print of this pass
-   * @returns {(Pass|string)} this pass || the fine print of this pass
+   * @summary The fine print of this pass.
+   * @type {string}
    */
-  fineprint(text) {
-    if (arguments.length) {
-      this._fineprint = text
-      return this
-    } else return this._fineprint
+  get fineprint() {
+    return Util.stringify(this._DATA.$fineprint)
   }
 
-  /**
-   * @summary Add an attendee type to this pass.
-   * @param   {Pass.AttendeeType} $attendeeType the attendee type to add
-   * @returns {Pass} this pass
-   */
-  addAttendeeType($attendeeType) {
-    this._attend_types.push($attendeeType)
-    return this
-  }
-  // /**
-  //  * REVIEW: use this method if class AttendeeType is removed.
-  //  * @summary Add an attendee type to this pass.
-  //  * @param   {string} name the name of the attendee type
-  //  * @returns {Pass} this pass
-  //  */
-  // addAttendeeType(name) {
-  //   this._attend_types.push({name: name})
-  //   return this
-  // }
   /**
    * @summary Retrieve an attendee type of this pass.
    * @param   {string} name the name of the attendee type to get
    * @returns {?Pass.AtendeeType} the specified attendee type
    */
   getAttendeeType(name) {
-    return this._attend_types.find(($attendeeType) => $attendeeType.name===name) || null
+    return (this._DATA.$attendeeTypes.includes(name)) ? new Pass.AttendeeType(name) : null
   }
   /**
    * @summary Retreive all attendee types of this pass.
    * @returns {Array<Pass.AttendeeType>} a shallow array of all attendee types of this pass
    */
   getAttendeeTypesAll() {
-    return this._attend_types.slice()
+    return this._DATA.$attendeeTypes.map((name) => new Pass.AttendeeType(name))
   }
 
   /**
-   * @summary Mark this pass as starred.
-   * @param   {boolean=} bool if true, mark as starred
-   * @returns {Pass} this pass
-   */
-  star(bool = true) {
-    this._is_starred = bool
-    return this
-  }
-  /**
-   * @summary Get the starred status of this pass.
-   * @returns {boolean} whether this pass is starred
+   * @summary Whether this pass is starred.
+   * @todo TODO: use Entity Queues instead!
+   * @type {boolean}
    */
   isStarred() {
-    return this._is_starred
+    return this._DATA.$starred
   }
 
 
@@ -132,8 +108,8 @@ class Pass {
             new HTMLElement('header').class('c-Pass__Head').addContent([
               new HTMLElement('h1').class('c-Pass__Hn').addContent(this.name),
               new HTMLElement('p').class('c-Pass__Desc').addContent([
-                this.description(),
-                (this.fineprint()) ? new HTMLElement('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null,
+                this.description,
+                (this.fineprint) ? new HTMLElement('small').class('c-Pass__Fine h-Block').addContent(this.fineprint) : null,
               ]),
             ]),
             new HTMLElement('div').class('c-Pass__Body').addContent(current_period.view.pass(this, true)),

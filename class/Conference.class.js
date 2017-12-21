@@ -4,6 +4,7 @@ const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 const RegistrationPeriod = require('./RegistrationPeriod.class.js')
+const Pass = require('./Pass.class.js')
 
 /**
  * A conference event.
@@ -26,6 +27,7 @@ class Conference {
    * @param {!Object=} jsondata.location the promoted location of this conference; type {@link http://schema.org/PostalAddress}
    * @param {Array<!Object>=} jsondata.offers a list of registration periods; types {@link http://schema.org/AggregateOffer}
    * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
+   * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
    */
   constructor(jsondata) {
     /**
@@ -36,7 +38,6 @@ class Conference {
      */
     this._DATA = jsondata
 
-    /** @private */ this._passes          = []
     /** @private */ this._sessions        = []
     /** @private */ this._venues          = {}
     /** @private */ this._speakers        = []
@@ -136,27 +137,20 @@ class Conference {
   }
 
   /**
-   * @summary Add a pass to this conference.
-   * @param {Pass} $pass the pass to add
-   */
-  addPass($pass) {
-    this._passes.push($pass)
-    return this
-  }
-  /**
    * @summary Retrieve a pass of this conference.
    * @param   {string} name the name of the pass
    * @returns {?Pass} the specified pass
    */
   getPass(name) {
-    return this._passes.find(($pass) => $pass.name===name) || null
+    let pass = (this._DATA.$passes || []).find(($pass) => $pass.name===name)
+    return (pass) ? new Pass(pass) : null
   }
   /**
    * @summary Retrieve all passes of this conference.
    * @returns {Array<Pass>} a shallow array of all passes of this conference
    */
   getPassesAll() {
-    return this._passes.slice()
+    return (this._DATA.$passes || []).map(($pass) => new Pass($pass))
   }
 
   /**
