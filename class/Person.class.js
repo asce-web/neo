@@ -3,127 +3,138 @@ const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
 /**
- * A person.
+ * A person (alive, dead, undead, or fictional).
  * Can be used for any role on the site,
  * e.g., speaker, chair, or ASCE staff member.
+ * @see https://schema.org/Person
  */
 class Person {
   /**
    * Construct a new Person object.
-   * @param {string} id a unique identifier of the person
-   * @param {Object=} $name an object containing the following:
-   * @param {string} $name.honorific_prefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
-   * @param {string} $name.given_name the person’s first name
-   * @param {string} $name.additional_name  the person’s middle name or initial
-   * @param {string} $name.family_name the person’s last name
-   * @param {string} $name.honorific_suffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
+   * @param {!Object} jsondata a JSON object
+   * @param {string} jsondata.identifier a unique identifier of this person
+   * @param {string=} jsondata.name the string name of this person
+   * @param {!Object=} jsondata.$name if string param `name` is not used, required; an object containing the following:
+   * @param {string} jsondata.$name.givenName the person’s first name
+   * @param {string} jsondata.$name.familyName the person’s last name
+   * @param {string=} jsondata.$name.additionalName  the person’s middle name or initial
+   * @param {string=} jsondata.$name.honorificPrefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
+   * @param {string=} jsondata.$name.honorificSuffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
+   * @param {string=} jsondata.image the url to a headshot image of this person
+   * @param {string=} jsondata.url the url to this person’s homepage or website
+   * @param {string=} jsondata.email this person’s email address
+   * @param {string=} jsondata.telephone this person’s telephone number
+   * @param {string=} jsondata.jobTitle this person’s job title
+   * @param {!Object=} jsondata.affiliation an organization that this person is affiliated with; type {@link http://schema.org/Organization}
+   * @param {string=} jsondata.affiliation.name an organization that this person is affiliated with
+   * @param {boolean=} jsondata.$starred whether this person is starred
+   *                                     TODO: use Entity Queues instead!
    */
-  constructor(id, $name = {}) {
-    /** @private @final */ this._ID   = id
-    /** @private @final */ this._NAME = {
-      honorific_prefix: $name.honorific_prefix,
-      given_name      : $name.given_name,
-      additional_name : $name.additional_name,
-      family_name     : $name.family_name,
-      honorific_suffix: $name.honorific_suffix,
-    }
-    /** @private */ this._jobTitle    = ''
-    /** @private */ this._affiliation = ''
-    /** @private */ this._img         = ''
-    /** @private */ this._email       = ''
-    /** @private */ this._telephone   = ''
-    /** @private */ this._url         = ''
+  constructor(jsondata) {
+    /**
+     * All the data for this person.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
+
+    /**
+     * The string name of this person.
+     * @private
+     * @final
+     * @type {string}
+     */
+    this._NAME = jsondata.name || ''
+    /**
+     * The object name of this person.
+     * @private
+     * @final
+     * @type {?Object}
+     */
+    this._$NAME = jsondata.$name || null
+
     /** @private */ this._social      = {}
     /** @private */ this._is_starred  = false
   }
 
   /**
-   * @summary Get the id of this person.
+   * @summary The id of this person.
    * @type {string}
    */
   get id() {
-    return this._ID
+    return this._DATA.identifier
   }
 
   /**
-   * @summary Get the name object of this person.
-   * @type {Object}
+   * @summary The string name of this person if it exists; else the object name of this person.
+   * @type {(string|!Object)}
    */
   get name() {
-    return Object.assign({}, this._NAME)
+    return this._NAME || this._$NAME || {}
   }
 
   /**
-   * @summary Set or get this person’s job title.
-   * @param   {string=} text the job title
-   * @returns {(Person|string)} this person || the job title
+   * @summary This person’s headshot image.
+   * @type {string}
    */
-  jobTitle(text) {
-    if (arguments.length) {
-      this._jobTitle = text
-      return this
-    } else return this._jobTitle
+  get image() {
+    return this._DATA.image || ''
   }
 
   /**
-   * @summary Set or get this person’s affiliation.
-   * @param   {string=} text the affiliation
-   * @returns {(Person|string)} this person || the affiliation
+   * @summary This person’s homepage or website.
+   * @type {string}
    */
-  affiliation(text) {
-    if (arguments.length) {
-      this._affiliation = text
-      return this
-    } else return this._affiliation
+  get url() {
+    return this._DATA.url || ''
   }
 
   /**
-   * @summary Set or get this person’s headshot image.
-   * @param   {string=} text the url pointing to the headshot image
-   * @returns {(Person|string)} this person || the headshot image url
+   * @summary This person’s email address.
+   * @type {string}
    */
-  img(url) {
-    if (arguments.length) {
-      this._img = url
-      return this
-    } else return this._img
+  get email() {
+    return this._DATA.email || ''
   }
 
   /**
-   * @summary Set or get this person’s email address.
-   * @param   {string=} text the email address
-   * @returns {(Person|string)} this person || the email address
+   * @summary This person’s telephone number.
+   * @type {string}
    */
-  email(text) {
-    if (arguments.length) {
-      this._email = text
-      return this
-    } else return this._email
+  get telephone() {
+    return this._DATA.telephone || ''
+  }
+
+
+  /**
+   * @summary This person’s job title.
+   * @type {string}
+   */
+  get jobTitle() {
+    return this._DATA.jobTitle || ''
   }
 
   /**
-   * @summary Set or get this person’s telephone number.
-   * @param   {string=} text the telephone number
-   * @returns {(Person|string)} this person || the telephone number
+   * @summary The name of this person’s affiliation.
+   * @type {string}
    */
-  phone(text) {
-    if (arguments.length) {
-      this._telephone = text
-      return this
-    } else return this._telephone
+  get affiliation() {
+    return this._DATA.affiliation && this._DATA.affiliation.name || ''
   }
 
   /**
-   * @summary Set or get this person’s homepage.
-   * @param   {string=} text the homepage
-   * @returns {(Person|string)} this person || the homepage
+   * @summary Whether this person is starred.
+   * @todo TODO: use Entity Queues instead!
+   * @type {boolean}
    */
-  url(text) {
-    if (arguments.length) {
-      this._url = text
-      return this
-    } else return this._url
+  isStarred() {
+    return this._DATA.$starred
   }
+
+
+
+
 
   /**
    * @summary Add a social network profile to this person.
@@ -153,22 +164,6 @@ class Person {
     return Object.assign({}, this._social)
   }
 
-  /**
-   * @summary Mark this person as starred.
-   * @param   {boolean=} bool if true, mark as starred
-   * @returns {Person} this person
-   */
-  star(bool = true) {
-    this._is_starred = bool
-    return this
-  }
-  /**
-   * @summary Get the starred status of this person.
-   * @returns {boolean} whether this person is starred
-   */
-  isStarred() {
-    return this._is_starred
-  }
 
 
   /**
