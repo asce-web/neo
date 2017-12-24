@@ -416,20 +416,6 @@ class Conference {
    */
   get view() {
     /**
-     * Mark up the promoted location of this conference.
-     * @private
-     * @param  {!Object} $postal_address an object returned by `Conference#promoLoc()`
-     * @returns {Array<(string|Element)>} an array of markup for the location
-     */
-    function promoLoc($postal_address) {
-      return [
-        new HTMLElement('span').attr('itemprop','addressLocality').addContent($postal_address.addressLocality),
-        `, `,
-        new HTMLElement('data').attr('itemprop','addressRegion').attr('value',$postal_address.addressRegion).addContent($postal_address.addressRegion),
-        ($postal_address.addressCountry) ? new HTMLElement('data').attr('itemprop','addressCountry').addContent($postal_address.addressCountry) : null,
-      ]
-    }
-    /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
      * - `Conference#view.hero()`      - Hero Organism
@@ -466,7 +452,7 @@ class Conference {
                         itemscope: '',
                         itemtype : 'http://schema.org/PostalAddress',
                       })
-                      .addContent(promoLoc(this.promoLoc)),
+                      .addContent(Util.view(this.promoLoc).promoLoc()),
                     new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
                       .addContent([
                         new HTMLElement('time')
@@ -518,7 +504,7 @@ class Conference {
                   itemscope: '',
                   itemtype : 'http://schema.org/PostalAddress',
                 })
-                .addContent(promoLoc(this.promoLoc)),
+                .addContent(Util.view(this.promoLoc).promoLoc()),
               new HTMLElement('p').class('h-Hidden-nM').addContent(blurb),
               block
             ])

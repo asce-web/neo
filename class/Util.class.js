@@ -295,6 +295,22 @@ class Util {
           .html()
       })
       /**
+       * Return a snippet marking up a promoted location.
+       * Parameter `data` should be of type `{@link http://schema.org/PostalAddress}`.
+       * @summary Call `Util.view(data).promoLoc()` to render this display.
+       * @todo TODO move this display to `require('extrajs-geo')`
+       * @function Util.VIEW.pageToc
+       * @returns {string} HTML output
+       */
+      .addDisplay(function promoLoc() {
+        return [
+          new HTMLElement('span').attr('itemprop','addressLocality').addContent(this.addressLocality).html(),
+          `, `,
+          new HTMLElement('data').attr('itemprop','addressRegion').attr('value',this.addressRegion).addContent(this.addressRegion).html(),
+          (this.addressCountry) ? new HTMLElement('span').attr('itemprop','addressCountry').addContent(this.addressCountry) : '',
+        ].join('')
+      })
+      /**
        * Return an unordered list of button links for a highlighted content block.
        * Parameter `data` should be of type `Array<Element>` (TODO: HTMLAnchorElement), i.e., a list of links.
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
