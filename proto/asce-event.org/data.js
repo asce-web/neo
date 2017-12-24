@@ -14,7 +14,6 @@ const SupporterLevel     = require('../../class/SupporterLevel.class.js')
 const Supporter          = require('../../class/Supporter.class.js')
 const Exhibitor          = require('../../class/Exhibitor.class.js')
 const Person             = require('../../class/Person.class.js')
-const Place              = require('../../class/Place.class.js')
 const Pass               = require('../../class/Pass.class.js')
 
 var jsondata = {
@@ -41,11 +40,50 @@ var jsondata = {
   "description": "Where Engineering Dreams are Built.",
   "startDate"  : "2016-09-28T07:30",
   "endDate"    : "2016-10-01T17:00",
-  "location"   : {
-    "@type": "PostalAddress",
-    "addressLocality": "Portland",
-    "addressRegion"  : "Oregon"
-  },
+      "location": [
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "Portland",
+          "addressRegion"  : "Oregon"
+        },
+        {
+          "@type": "Place",
+          "description": "Conference Venue",
+          "name"       : "Orego Convention Center",
+          "url"        : "https://www.oregoncc.org/",
+          "address"    : {
+            "@type": "PostalAddress",
+            "streetAddress"  : "777 NE Martin Luther King, Jr. Blvd",
+            "addressLocality": "Portland",
+            "addressRegion"  : "Oregon",
+            "postalCode"     : "97232"
+          }
+        },
+        {
+          "@type": "Place",
+          "description": "Official Hotel",
+          "name"       : "DoubleTree by Hilton Portland",
+          "address"    : {
+            "@type": "PostalAddress",
+            "streetAddress"  : "1000 NE Multnomah St",
+            "addressLocality": "Portland",
+            "addressRegion"  : "Oregon",
+            "postalCode"     : "97232"
+          }
+        },
+        {
+          "@type": "Place",
+          "description": "Overflows",
+          "name"       : "Courtyard Portland City Center",
+          "address"    : {
+            "@type": "PostalAddress",
+            "streetAddress"  : "550 SW Oak St",
+            "addressLocality": "Portland",
+            "addressRegion"  : "Oregon",
+            "postalCode"     : "97204"
+          }
+        }
+      ],
     "offers": [
       {
         "@type"             : "AggregateOffer",
@@ -171,11 +209,26 @@ var jsondata = {
   "description": "Building on the Past.",
   "startDate"  : "2015-10-11T07:30",
   "endDate"    : "2015-10-14T17:00",
-  "location"   : {
-    "@type": "PostalAddress",
-    "addressLocality": "New York",
-    "addressRegion"  : "New York"
-  },
+      "location": [
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "New York",
+          "addressRegion"  : "New York"
+        },
+    {
+      "@type": "Place",
+      "description": "Conference Venue",
+      "name"       : "New York Marriott Marquis",
+      "url"        : 'http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/',
+      "address"    : {
+        "@type": "PostalAddress",
+        "streetAddress"  : "1535 Broadway",
+        "addressLocality": "New York",
+        "addressRegion"  : "New York",
+        "postalCode"     : "10036"
+      }
+    }
+  ]
 },
 "json2017": {
   "@context"   : "http://schema.org/",
@@ -185,11 +238,25 @@ var jsondata = {
   "description": "The Future of Civil Engineering.",
   "startDate"  : "2017-10-08T07:30",
   "endDate"    : "2017-10-11T17:00",
-  "location"   : {
-    "@type": "PostalAddress",
-    "addressLocality": "New Orleans",
-    "addressRegion"  : "Louisiana"
-  },
+      "location": [
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "New Orleans",
+          "addressRegion"  : "Louisiana"
+        },
+    {
+      "@type": "Place",
+      "description": "Conference Venue",
+      "name"       : "New Orleans Mariott",
+      "address"    : {
+        "@type": "PostalAddress",
+        "streetAddress"  : "555 Canal Street",
+        "addressLocality": "New Orleans",
+        "addressRegion"  : "Louisiana",
+        "postalCode"     : "70130"
+      }
+    }
+  ]
 }
   },
   "currentConference" : "json2016",
@@ -200,25 +267,6 @@ var jsondata = {
 
     var site = new ConfSite(jsondata)
       .init()
-
-    site
-      .getConference('json2015')
-        .addVenue('Conference Venue', new Place('New York Marriott Marquis', {
-          street_address  : '1535 Broadway',
-          address_locality: 'New York',
-          address_region  : 'NY',
-          postal_code     : '10036',
-          url             : 'http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/',
-        }))
-    site
-      .getConference('json2017')
-        .addVenue('Conference Venue', new Place('New Orleans Mariott', {
-          street_address  : '555 Canal Street',
-          address_locality: 'New Orleans',
-          address_region  : 'LA',
-          postal_code     : '70130',
-        }))
-
 
 
     // REVIEW TODO move below Speakers
@@ -414,28 +462,6 @@ var jsondata = {
     //-   .setPrice('Advance'   , 'Daily Pass'    , 'Non-Member',  645)
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Member'    ,  645)
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Non-Member',  745)
-
-    site.currentConference
-      .addVenue('Conference Venue', new Place('Oregon Convention Center', {
-        street_address  : '777 NE Martin Luther King, Jr. Blvd.'
-      , address_locality: 'Portland'
-      , address_region  : 'OR'
-      , postal_code     : '97232'
-      , url             : 'https://www.oregoncc.org/'
-      })).addVenue('Official Hotel', new Place('DoubleTree by Hilton Portland', {
-        street_address  : '1000 NE Multnomah St'
-      , address_locality: 'Portland'
-      , address_region  : 'OR'
-      , postal_code     : '97232'
-      })).addVenue('Overflows', new Place('Courtyard Portland City Center', {
-        street_address  : '550 SW Oak St'
-      , address_locality: 'Portland'
-      , address_region  : 'OR'
-      , postal_code     : '97204'
-      }))
-
-    site.currentConference
-      .officialVenue('Conference Venue')
 
     site.currentConference
       .addSpeaker(new Person('donna-fulman', {

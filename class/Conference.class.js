@@ -6,6 +6,8 @@ const Util    = require('./Util.class.js')
 const RegistrationPeriod = require('./RegistrationPeriod.class.js')
 const Pass = require('./Pass.class.js')
 const DateRange = require('./DateRange.class.js')
+const PostalAddress = require('./PostalAddress.class.js')
+const Venue = require('./Venue.class.js')
 
 /**
  * A conference event.
@@ -25,7 +27,9 @@ class Conference {
    * @param {string=} jsondata.description the theme of this conference
    * @param {string=} jsondata.startDate the starting date of this conference, in ISO string format
    * @param {string=} jsondata.endDate the ending date of this conference, in ISO string format
-   * @param {!Object=} jsondata.location the promoted location of this conference; type {@link http://schema.org/PostalAddress}
+   * @param {Array<!Object>=} jsondata.location a list of locations of this conference: at least 1 entry.
+   *                                            First entry: required; the promoted location; type {@link http://schema.org/PostalAddress}.
+   *                                            Other entries: optional; other venues; type {@link http://schema.org/Place}.
    * @param {Array<!Object>=} jsondata.offers a list of registration periods; types {@link http://schema.org/AggregateOffer}
    * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
    * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
@@ -41,7 +45,6 @@ class Conference {
      */
     this._DATA = jsondata
 
-    /** @private */ this._venues          = {}
     /** @private */ this._speakers        = []
     /** @private */ this._supporter_levels = []
     /** @private */ this._supporter_lists  = {}
@@ -49,7 +52,6 @@ class Conference {
     /** @private */ this._exhibitors       = []
     /** @private */ this._organizers      = []
     /** @private */ this._social          = {}
-    /** @private */ this._venue_conf_key   = ''
   }
 
   /**
@@ -99,10 +101,10 @@ class Conference {
    * @description The promoted location is not necessarily the actual postal address of the conference,
    * but rather a major city nearest to the conference used for
    * promotional and advertising purposes.
-   * @type {!Object}
+   * @type {PostalAddress}
    */
   get promoLoc() {
-    return this._DATA.location || { "@type": "PostalAddress" }
+    return new PostalAddress(this._DATA.location && this._DATA.location[0] || {})
   }
 
   /**
@@ -172,42 +174,20 @@ class Conference {
   }
 
   /**
-   * @summary Add a venue to this conference.
-   * @param {string} venue_label key for accessing the venue
-   * @param {Place} $place the venue to add
-   */
-  addVenue(venue_label, $place) {
-    this._venues[venue_label] = $place
-    return this
-  }
-  /**
    * @summary Retrieve a venue of this conference.
-   * @param   {string} venue_label the key for accessing the venue
-   * @returns {Place} the specified venue
+   * @param   {string} venue_label the label of the venue to access
+   * @returns {?Venue} the specified venue
    */
   getVenue(venue_label) {
-    return this._venues[venue_label]
+    let venue = (this._DATA.location || []).find(($place) => $place.description===venue_label)
+    return (venue) ? new Venue(venue) : null
   }
   /**
    * @summary Retrieve all venues of this conference.
-   * @returns {Object<Place>} a shallow copy of the venues object of this conference
+   * @returns {Array<Venue>} a shallow copy of the venues object of this conference
    */
   getVenuesAll() {
-    //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._venues)
-  }
-
-  /**
-   * @summary Set or get the official conference venue for this conference.
-   * @description The official conference venue is the venue at which this conference is held.
-   * @param   {string} venue_label the key for accessing the venue
-   * @returns {(Conference|Place)} this conference || the set conference venue
-   */
-  officialVenue(venue_label) {
-    if (arguments.length) {
-      this._venue_conf_key = venue_label
-      return this
-    } else return this.getVenue(this._venue_conf_key)
+    return (this._DATA.location || []).slice(1).map(($place) => new Venue($place))
   }
 
   /**
@@ -416,20 +396,6 @@ class Conference {
    */
   get view() {
     /**
-     * Mark up the promoted location of this conference.
-     * @private
-     * @param  {!Object} $postal_address an object returned by `Conference#promoLoc()`
-     * @returns {Array<(string|Element)>} an array of markup for the location
-     */
-    function promoLoc($postal_address) {
-      return [
-        new HTMLElement('span').attr('itemprop','addressLocality').addContent($postal_address.addressLocality),
-        `, `,
-        new HTMLElement('data').attr('itemprop','addressRegion').attr('value',$postal_address.addressRegion).addContent($postal_address.addressRegion),
-        ($postal_address.addressCountry) ? new HTMLElement('data').attr('itemprop','addressCountry').addContent($postal_address.addressCountry) : null,
-      ]
-    }
-    /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
      * - `Conference#view.hero()`      - Hero Organism
@@ -466,7 +432,7 @@ class Conference {
                         itemscope: '',
                         itemtype : 'http://schema.org/PostalAddress',
                       })
-                      .addContent(promoLoc(this.promoLoc)),
+                      .addContent(Util.view(this.promoLoc).promoLoc()),
                     new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
                       .addContent([
                         new HTMLElement('time')
@@ -518,7 +484,7 @@ class Conference {
                   itemscope: '',
                   itemtype : 'http://schema.org/PostalAddress',
                 })
-                .addContent(promoLoc(this.promoLoc)),
+                .addContent(Util.view(this.promoLoc).promoLoc()),
               new HTMLElement('p').class('h-Hidden-nM').addContent(blurb),
               block
             ])

@@ -11,8 +11,8 @@ block mainReference
   section.o-Runner.o-Runner--highlight.-ta-c#important-locations: div.o-Constrain
     h1.h-Hidden Important Locations
     ul.o-List.o-Flex.o-Flex--even.c-Alert
-      each $place,key in site.currentConference.getVenuesAll()
+      each $venue in site.currentConference.getVenuesAll()
         li.o-List__Item.o-Flex__Item.c-Alert__Item: section
-          h1.-fz-el-mega= key
-          p(itemscope="" itemtype="http://schema.org/Place")&attributes(($place===site.currentConference.officialVenue()) ? {itemprop:'location'} : {})
-            != $place.view.venue()
+          h1.-fz-el-mega= $venue.label
+          p(itemprop="location" itemscope="" itemtype="http://schema.org/Place")
+            != $venue.view.venue()
