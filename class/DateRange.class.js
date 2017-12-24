@@ -55,7 +55,7 @@ class DateRange {
    * @summary The url of this date range.
    * @type {string}
    */
-  url(url) {
+  get url() {
     return this._DATA.url
   }
 
@@ -63,7 +63,7 @@ class DateRange {
    * @summary Whether this date range is starred.
    * @type {boolean}
    */
-  isStarred() {
+  get isStarred() {
     return this._DATA.$starred || false
   }
 
@@ -110,8 +110,8 @@ class DateRange {
             ]),
             new HTMLElement('td').class('c-DateBlock__Desc')
               .attr('itemprop','name')
-              .addContent((this.url()) ? new HTMLElement('a').class('c-DateBlock__Link')
-                .attr({ href: this.url(), itemprop: 'url' })
+              .addContent((this.url) ? new HTMLElement('a').class('c-DateBlock__Link')
+                .attr({ href: this.url, itemprop: 'url' })
                 .addContent(this.name) : this.name
               ),
           ])
@@ -145,8 +145,8 @@ class DateRange {
             ]),
             new HTMLElement('td').class('c-TimeBlock__Desc').addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
               .attr('itemprop','name')
-              .addContent((this.url()) ? new HTMLElement('a').class('c-TimeBlock__Link')
-                .attr({ href: this.url(), itemprop: 'url' })
+              .addContent((this.url) ? new HTMLElement('a').class('c-TimeBlock__Link')
+                .attr({ href: this.url, itemprop: 'url' })
                 .addContent(this.name) : this.name
               ),
           ])

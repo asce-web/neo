@@ -5,6 +5,7 @@ const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 const RegistrationPeriod = require('./RegistrationPeriod.class.js')
 const Pass = require('./Pass.class.js')
+const DateRange = require('./DateRange.class.js')
 
 /**
  * A conference event.
@@ -28,6 +29,8 @@ class Conference {
    * @param {Array<!Object>=} jsondata.offers a list of registration periods; types {@link http://schema.org/AggregateOffer}
    * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
    * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
+   * @param {Array<!Object>=} jsondata.subEvent a list of sessions; types {@link http://schema.org/Event}
+   * @param {Array<!Object>=} jsondata.potentialAction a list of sessions; types {@link http://schema.org/Action}
    */
   constructor(jsondata) {
     /**
@@ -38,14 +41,12 @@ class Conference {
      */
     this._DATA = jsondata
 
-    /** @private */ this._sessions        = []
     /** @private */ this._venues          = {}
     /** @private */ this._speakers        = []
     /** @private */ this._supporter_levels = []
     /** @private */ this._supporter_lists  = {}
     /** @private */ this._supporters       = []
     /** @private */ this._exhibitors       = []
-    /** @private */ this._important_dates = []
     /** @private */ this._organizers      = []
     /** @private */ this._social          = {}
     /** @private */ this._venue_conf_key   = ''
@@ -154,27 +155,20 @@ class Conference {
   }
 
   /**
-   * @summary Add a session to this conference.
-   * @param {DateRange} $session the session to add
-   */
-  addSession($session) {
-    this._sessions.push($session)
-    return this
-  }
-  /**
    * @summary Retrieve a session of this conference.
    * @param   {string} name the name of the session
    * @returns {?DateRange} the specified session
    */
   getSession(name) {
-    return this._sessions.find(($session) => $session.name===name) || null
+    let session = (this._DATA.subEvent || []).find(($event) => $event.name===name)
+    return (session) ? new DateRange(session) : null
   }
   /**
    * @summary Retrieve all sessions of this conference.
    * @returns {Array<DateRange>} a shallow array of all sessions of this conference
    */
   getSessionsAll() {
-    return this._sessions.slice()
+    return (this._DATA.subEvent || []).map(($event) => new DateRange($event))
   }
 
   /**
@@ -335,27 +329,20 @@ class Conference {
   }
 
   /**
-   * @summary Add an important date to this conference.
-   * @param {DateRange} $importantDate the important date to add
-   */
-  addImportantDate($importantDate) {
-    this._important_dates.push($importantDate)
-    return this
-  }
-  /**
    * @summary Retrieve an important date of this conference.
    * @param   {string} name the name of the important date
    * @returns {?DateRange} the specified important date
    */
   getImportantDate(name) {
-    return this._important_dates.find(($importantDate) => $importantDate.name===name) || null
+    let date = (this._DATA.potentialAction || []).find(($action) => $action.name===name)
+    return (date) ? new DateRange(date) : null
   }
   /**
    * @summary Retrieve all important dates of this conference.
    * @returns {Array<DateRange>} a shallow array of all important dates of this conference
    */
   getImportantDatesAll() {
-    return this._important_dates.slice()
+    return (this._DATA.potentialAction || []).map(($action) => new DateRange($action))
   }
 
   /**
@@ -560,7 +547,7 @@ class Conference {
          * @returns {Array<{dateobj:Date, sessions:Array<DateRange>}>} an array grouping the sessions together
          */
         function groupSessions(starred = false) {
-          let all_sessions = this.getSessionsAll().filter((s) => (starred) ? s.isStarred() : true)
+          let all_sessions = this.getSessionsAll().filter((s) => (starred) ? s.isStarred : true)
           let returned = []
           all_sessions.forEach(function (s) {
             if (!returned.find((sess_group) => xjs.Date.sameDate(sess_group.dateobj, s.start))) {
