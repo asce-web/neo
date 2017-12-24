@@ -1,4 +1,5 @@
 const xjs     = require('extrajs')
+const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 const STATE_DATA = require('extrajs-geo')
@@ -13,6 +14,14 @@ STATE_DATA.push(...[
  */
 class Util {
   /** @private */ constructor() {}
+
+  // TEMP TODO delete after extrajs-dom@3.3.0
+  static documentFragment(...contents) {
+    if (xjs.Object.typeOf(contents[0]) === 'array') return Util.documentFragment(...contents[0])
+    return contents.map((c) =>
+      (c instanceof Element) ? c.view.html() : c
+    ).join('')
+  }
 
   /**
    * @summary Convert a thing into a string.

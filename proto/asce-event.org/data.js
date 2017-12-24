@@ -464,16 +464,23 @@ var jsondata = {
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Non-Member',  745)
 
     site.currentConference
-      .addSpeaker(new Person('donna-fulman', {
-          given_name      : 'Donna'
-        , family_name     : 'Fulman'
-        , honorific_suffix: 'P.ASCE'
-      }).jobTitle('Administrator of Interior Engineering')
-        .affiliation('German Chamber of Architects')
-        .img('files/headshot1.jpg')
-        .email('example@asce.org')
-        .phone('+1(703)555-5555')
-        .url('#0')
+      .addSpeaker(new Person({
+          "@type": "Person",
+          "identifier": "donna-fulman",
+          "$name": {
+            "givenName"      : "Donna",
+            "additionalName" : "A.",
+            "familyName"     : "Fulman",
+            "honorificSuffix": "P.ASCE"
+          },
+          "image"      : "files/headshot1.jpg",
+          "url"        : "#0",
+          "email"      : "example@asce.org",
+          "telephone"  : "+1(703)555-5555",
+          "jobTitle"   : "Administrator of Interior Engineering",
+          "affiliation": "German Chamber of Architects",
+          "$starred"   : true
+      })
         .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
         .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
         .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
@@ -485,18 +492,23 @@ var jsondata = {
         //   Semplice and at the same time serves on the
         //   <abbr title="American Institute of Graphic Arts">AIGA</abbr>
         //   Board of Directors in New York.</p>`)
-        .star()
       )
-      .addSpeaker(new Person('rachel-falsetti', {
-          given_name      : 'Susan'
-        , additional_name : 'R.'
-        , family_name     : 'Rowghani'
-      }).jobTitle('Director of Water Engineering and Technical Services (WETS)')
-        .affiliation('Los Angeles Department of Water and Power')
-        .img('http://www.cisummit.org/sites/cisummit.org/files/susan-rowghani.jpg')
-        .email('example@asce.org')
-        .phone('+1(703)555-5555')
-        .url('#0')
+      .addSpeaker(new Person({
+          "@type": "Person",
+          "identifier": "rachel-falsetti",
+          "$name": {
+            "givenName"     : "Susan",
+            "additionalName": "R.",
+            "familyName"    : "Rowghani"
+          },
+          "image"      : "http://www.cisummit.org/sites/cisummit.org/files/susan-rowghani.jpg",
+          "url"        : "#0",
+          "email"      : "example@asce.org",
+          "telephone"  : "+1(703)555-5555",
+          "jobTitle"   : "Director of Water Engineering and Technical Services (WETS)",
+          "affiliation": "Los Angeles Department of Water and Power",
+          "$starred"   : false
+      })
         .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
         .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
         .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
@@ -510,15 +522,21 @@ var jsondata = {
         //   program is approximately $1 billion annually; about 50% of that amount
         //   is managed under WETS.</p>`)
       )
-      .addSpeaker(new Person('diego-alvarez', {
-          given_name      : 'Diego'
-        , family_name     : 'Alvarez'
-      }).jobTitle('Director of Modernization and Development')
-        .affiliation('Planning & Development Group (PDG), Los Angeles World Airports')
-        .img('http://www.cisummit.org/sites/cisummit.org/files/diego-alvarez.jpg')
-        .email('example@asce.org')
-        .phone('+1(703)555-5555')
-        .url('#0')
+      .addSpeaker(new Person({
+          "@type": "Person",
+          "identifier": "diego-alvarez",
+          "$name": {
+            "givenName" : "Diego",
+            "familyName": "Alvarez"
+          },
+          "image"      : "http://www.cisummit.org/sites/cisummit.org/files/diego-alvarez.jpg",
+          "url"        : "#0",
+          "email"      : "example@asce.org",
+          "telephone"  : "+1(703)555-5555",
+          "jobTitle"   : "Director of Modernization and Development",
+          "affiliation": "Planning & Development Group (PDG), Los Angeles World Airports",
+          "$starred"   : true
+      })
         .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
         .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
         .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
@@ -538,17 +556,22 @@ var jsondata = {
         //   efforts to update the LAX Master Plan, assessing and entitling critical new
         //   and modified airfield, terminal, and ground access facilities at LAX,
         //   the busiest origin and destination airport in the world.</p>`)
-        .star()
       )
-      .addSpeaker(new Person('jeremy-boak', {
-          given_name      : 'Jeremy'
-        , family_name     : 'Boak'
-      }).jobTitle('Director')
-        .affiliation('Oklahoma Geological Survey')
-        .img('http://www.aei-conference.org/sites/aei-conference.org/files/jeremy-boak.jpg')
-        .email('example@asce.org')
-        .phone('+1(703)555-5555')
-        .url('#0')
+      .addSpeaker(new Person({
+          "@type": "Person",
+          "identifier": "jeremy-boak",
+          "$name": {
+            "givenName" : "Jeremy",
+            "familyName": "Boak"
+          },
+          "image"      : "http://www.aei-conference.org/sites/aei-conference.org/files/jeremy-boak.jpg",
+          "url"        : "#0",
+          "email"      : "example@asce.org",
+          "telephone"  : "+1(703)555-5555",
+          "jobTitle"   : "Director",
+          "affiliation": "Oklahoma Geological Survey",
+          "$starred"   : false
+      })
         .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
         .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
         .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
@@ -566,15 +589,21 @@ var jsondata = {
         //   Dr. Boak is married to Anna Stafford, a petroleum geologist and oil finder,
         //   and has a stepson Chris.</p>`)
       )
-      .addSpeaker(new Person('muralee-muraleetharan', {
-          given_name      : 'Muralee'
-        , family_name     : 'Muraleetharan'
-      }).jobTitle('Geotechnical Engineering Professor, Kimmell-Bernard Chair in Engineering, David Ross Boyd and Presidential Professor')
-        .affiliation('University of Oklahoma')
-        .img('http://www.aei-conference.org/sites/aei-conference.org/files/muralee-muraleetharan.jpg')
-        .email('example@asce.org')
-        .phone('+1(703)555-5555')
-        .url('#0')
+      .addSpeaker(new Person({
+          "@type": "Person",
+          "identifier": "muralee-muraleetharan",
+          "$name": {
+            "givenName" : "Muralee",
+            "familyName": "Muraleetharan"
+          },
+          "image"      : "http://www.aei-conference.org/sites/aei-conference.org/files/muralee-muraleetharan.jpg",
+          "url"        : "#0",
+          "email"      : "example@asce.org",
+          "telephone"  : "+1(703)555-5555",
+          "jobTitle"   : "Geotechnical Engineering Professor, Kimmell-Bernard Chair in Engineering, David Ross Boyd and Presidential Professor",
+          "affiliation": "University of Oklahoma",
+          "$starred"   : true
+      })
         .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
         .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
         .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
@@ -596,23 +625,32 @@ var jsondata = {
         //   using small-scale (e.g. centrifuge models) and full-scale testing, and
         //   resilience of infrastructure following extreme events. His computer simulation
         //   research involves scalable, parallel computing using finite element frameworks.</p>`)
-        .star()
       )
 
     site.currentConference
-      .addOrganizer(new Person('thomas-mccollough', {
-          given_name      : 'Thomas'
-        , additional_name : 'J.'
-        , family_name     : 'McCollough'
-        , honorific_suffix: 'P.E., M.ASCE'
-      }).affiliation('HDR Engineering, Inc.')
-      ).addOrganizer(new Person('stephen-dickenson', {
-          given_name      : 'Stephen'
-        , additional_name : 'E.'
-        , family_name     : 'Dickenson'
-        , honorific_prefix: 'Dr.'
-        , honorific_suffix: 'Ph.D., P.E., D.PE, M.ASCE'
-      }).affiliation('HNTB Corporation'))
+      .addOrganizer(new Person({
+          "@type": "Person",
+          "identifier": "thomas-mccollough",
+          "$name": {
+            "givenName" : "Thomas",
+            "additionalName" : "J.",
+            "familyName": "McCollough",
+            "honorificSuffix" : "P.E., M.ASCE"
+          },
+          "affiliation": "HDR Engineering, Inc."
+      })
+      ).addOrganizer(new Person({
+          "@type": "Person",
+          "identifier": "stephen-dickenson",
+          "$name": {
+            "honorificPrefix" : "Dr.",
+            "givenName" : "Stephen",
+            "additionalName" : "E.",
+            "familyName": "Dickenson",
+            "honorificSuffix" : "Ph.D., P.E., D.PE, M.ASCE"
+          },
+          "affiliation": "HNTB Corporation"
+      }))
 
     site.currentConference
       .addSocial('twitter', 'https://twitter.com/hashtag/#asce2016', 'Follow #ASCE2016 on Twitter')
