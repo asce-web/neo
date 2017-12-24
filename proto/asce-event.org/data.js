@@ -16,7 +16,6 @@ const Exhibitor          = require('../../class/Exhibitor.class.js')
 const Person             = require('../../class/Person.class.js')
 const Place              = require('../../class/Place.class.js')
 const Pass               = require('../../class/Pass.class.js')
-const DateRange          = require('../../class/DateRange.class.js')
 
 var jsondata = {
   "@context"   : "http://schema.org/",
@@ -109,6 +108,59 @@ var jsondata = {
         "description": "For One Day Only",
         "$attendeeTypes": ["Member", "Non-Member"]
       }
+    ],
+    "subEvent": [
+      { "@type": "Event", "name": "Registration"                           , "startDate": "2016-09-28 10:00", "endDate": "2016-09-28 19:00"                                },
+      { "@type": "Event", "name": "Technical Tours"                        , "startDate": "2016-09-28 10:30", "endDate": "2016-09-28 16:30", "$starred": true, "url": "#0" },
+      { "@type": "Event", "name": "Short Courses"                          , "startDate": "2016-09-28 13:00", "endDate": "2016-09-28 17:00", "$starred": true, "url": "#0" },
+      { "@type": "Event", "name": "Optional Tours"                         , "startDate": "2016-09-28 12:00", "endDate": "2016-09-28 17:00", "$starred": true, "url": "#0" },
+      { "@type": "Event", "name": "Opening Welcome Reception"              , "startDate": "2016-09-28 17:30", "endDate": "2016-09-28 19:30"                                },
+      { "@type": "Event", "name": "Community Service Project"              , "startDate": "2016-09-28 13:00", "endDate": "2016-09-28 17:00"                                },
+
+      { "@type": "Event", "name": "Registration"                           , "startDate": "2016-09-29 07:00", "endDate": "2016-09-29 16:30"                                },
+      { "@type": "Event", "name": "Student & Emerging Leaders Welcome"     , "startDate": "2016-09-29 07:30", "endDate": "2016-09-29 08:30"                                },
+      { "@type": "Event", "name": "Opening Plenary Session"                , "startDate": "2016-09-29 08:30", "endDate": "2016-09-29 10:00", "$starred": true              },
+      { "@type": "Event", "name": "Guest Program Orientation & Tour"       , "startDate": "2016-09-29 09:30", "endDate": "2016-09-29 15:30", "$starred": true              },
+      { "@type": "Event", "name": "Beverage Break"                         , "startDate": "2016-09-29 10:00", "endDate": "2016-09-29 10:30"                                },
+      { "@type": "Event", "name": "Concurrent Sessions"                    , "startDate": "2016-09-29 10:30", "endDate": "2016-09-29 11:30"                                },
+      { "@type": "Event", "name": "Celebration of Leaders Luncheon"        , "startDate": "2016-09-29 11:45", "endDate": "2016-09-29 13:45", "$starred": true              },
+      { "@type": "Event", "name": "Concurrent Sessions"                    , "startDate": "2016-09-29 14:00", "endDate": "2016-09-29 15:30"                                },
+      { "@type": "Event", "name": "Communities and Pavilion"               , "startDate": "2016-09-29 14:00", "endDate": "2016-09-29 18:00"                                },
+      { "@type": "Event", "name": "Beverage Break"                         , "startDate": "2016-09-29 15:30", "endDate": "2016-09-29 16:00"                                },
+      { "@type": "Event", "name": "Concurrent Sessions"                    , "startDate": "2016-09-29 16:00", "endDate": "2016-09-29 17:30"                                },
+      { "@type": "Event", "name": "Optional Tour"                          , "startDate": "2016-09-29 18:45", "endDate": "2016-09-29 21:45", "$starred": true, "url": "#0" },
+
+      { "@type": "Event", "name": "Registration"                           , "startDate": "2016-09-30 07:00", "endDate": "2016-09-30 16:30"                                },
+      { "@type": "Event", "name": "Leadership & Society Awards Breakfast"  , "startDate": "2016-09-30 07:30", "endDate": "2016-09-30 08:30"                                },
+      { "@type": "Event", "name": "Communities and Pavilion"               , "startDate": "2016-09-30 08:30", "endDate": "2016-09-30 17:00"                                },
+      { "@type": "Event", "name": "ASCE Annual Business Meeting"           , "startDate": "2016-09-30 08:45", "endDate": "2016-09-30 09:45", "$starred": true              },
+      { "@type": "Event", "name": "Beverage Break"                         , "startDate": "2016-09-30 09:45", "endDate": "2016-09-30 10:15"                                },
+      { "@type": "Event", "name": "Concurrent Sessions"                    , "startDate": "2016-09-30 10:15", "endDate": "2016-09-30 11:45"                                },
+      { "@type": "Event", "name": "Lunch on Your Own"                      , "startDate": "2016-09-30 11:45", "endDate": "2016-09-30 13:15"                                },
+      { "@type": "Event", "name": "International Luncheon (ticketed)"      , "startDate": "2016-09-30 11:45", "endDate": "2016-09-30 13:15"                                },
+      { "@type": "Event", "name": "Concurrent Sessions"                    , "startDate": "2016-09-30 13:15", "endDate": "2016-09-30 14:15"                                },
+      { "@type": "Event", "name": "Optional Tour"                          , "startDate": "2016-09-30 13:00", "endDate": "2016-09-30 17:15", "$starred": true, "url": "#0" },
+      { "@type": "Event", "name": "Industry Leaders Forum"                 , "startDate": "2016-09-30 14:30", "endDate": "2016-09-30 16:00", "$starred": true              },
+      { "@type": "Event", "name": "Beverage Break"                         , "startDate": "2016-09-30 16:00", "endDate": "2016-09-30 16:30"                                },
+      { "@type": "Event", "name": "Concurrent Sessions"                    , "startDate": "2016-09-30 16:30", "endDate": "2016-09-30 17:30"                                },
+      { "@type": "Event", "name": "Theater Night Out"                      , "startDate": "2016-09-30 18:30", "endDate": "2016-09-30 21:30", "$starred": true              },
+
+      { "@type": "Event", "name": "Registration"                           , "startDate": "2016-10-01 07:00", "endDate": "2016-10-01 14:30"                                },
+      { "@type": "Event", "name": "Order of the Engineer Ceremony"         , "startDate": "2016-10-01 07:30", "endDate": "2016-10-01 08:15", "$starred": true              },
+      { "@type": "Event", "name": "Optional Tour"                          , "startDate": "2016-10-01 08:45", "endDate": "2016-10-01 11:45"                  , "url": "#0" },
+      { "@type": "Event", "name": "Concurrent Sessions"                    , "startDate": "2016-10-01 08:30", "endDate": "2016-10-01 10:00"                                },
+      { "@type": "Event", "name": "Communities and Pavilion"               , "startDate": "2016-10-01 08:30", "endDate": "2016-10-01 14:00"                                },
+      { "@type": "Event", "name": "Concurrent Sessions"                    , "startDate": "2016-10-01 10:15", "endDate": "2016-10-01 11:45"                                },
+      { "@type": "Event", "name": "ASCE Luncheon & Closing General Session", "startDate": "2016-10-01 12:00", "endDate": "2016-10-01 14:00", "$starred": true              },
+      { "@type": "Event", "name": "Technical Tours"                        , "startDate": "2016-10-01 14:30", "endDate": "2016-10-01 17:30"                  , "url": "#0" }
+    ],
+    "potentialAction": [
+      { "@type": "Action", "name": 'Optional Final Papers Due'     , "startTime": "2015-10-12"                          , "$starred": true                             },
+      { "@type": "Action", "name": 'Early-Bird Registration Closes', "startTime": "2015-12-17"                          , "$starred": true, "url": "registration.html" },
+      { "@type": "Action", "name": 'Advance Registration Closes'   , "startTime": "2016-01-12"                          , "$starred": true, "url": "registration.html" },
+      { "@type": "Action", "name": 'Convention Begins'             , "startTime": "2016-06-12"                          , "$starred": true                             },
+      { "@type": "Action", "name": 'Convention Ends'               , "startTime": "2016-06-15"                                                                         },
+      { "@type": "Action", "name": 'Convention Dates'              , "startTime": "2016-09-28", "$endTime": "2016-10-01", "$starred": true                             }
     ]
 },
 "json2015": {
@@ -364,51 +416,6 @@ var jsondata = {
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Non-Member',  745)
 
     site.currentConference
-      .addSession(new DateRange('Registration'                           , new Date('2016-09-28 10:00'), new Date('2016-09-28 19:00')))
-      .addSession(new DateRange('Technical Tours'                        , new Date('2016-09-28 10:30'), new Date('2016-09-28 16:30')).star().url('#0'))
-      .addSession(new DateRange('Short Courses'                          , new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')).star().url('#0'))
-      .addSession(new DateRange('Optional Tours'                         , new Date('2016-09-28 12:00'), new Date('2016-09-28 17:00')).star().url('#0'))
-      .addSession(new DateRange('Opening Welcome Reception'              , new Date('2016-09-28 17:30'), new Date('2016-09-28 19:30')))
-      .addSession(new DateRange('Community Service Project'              , new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')))
-
-      .addSession(new DateRange('Registration'                           , new Date('2016-09-29 07:00'), new Date('2016-09-29 16:30')))
-      .addSession(new DateRange('Student & Emerging Leaders Welcome'     , new Date('2016-09-29 07:30'), new Date('2016-09-29 08:30')))
-      .addSession(new DateRange('Opening Plenary Session'                , new Date('2016-09-29 08:30'), new Date('2016-09-29 10:00')).star())
-      .addSession(new DateRange('Guest Program Orientation & Tour'       , new Date('2016-09-29 09:30'), new Date('2016-09-29 15:30')).star())
-      .addSession(new DateRange('Beverage Break'                         , new Date('2016-09-29 10:00'), new Date('2016-09-29 10:30')))
-      .addSession(new DateRange('Concurrent Sessions'                    , new Date('2016-09-29 10:30'), new Date('2016-09-29 11:30')))
-      .addSession(new DateRange('Celebration of Leaders Luncheon'        , new Date('2016-09-29 11:45'), new Date('2016-09-29 13:45')).star())
-      .addSession(new DateRange('Concurrent Sessions'                    , new Date('2016-09-29 14:00'), new Date('2016-09-29 15:30')))
-      .addSession(new DateRange('Communities and Pavilion'               , new Date('2016-09-29 14:00'), new Date('2016-09-29 18:00')))
-      .addSession(new DateRange('Beverage Break'                         , new Date('2016-09-29 15:30'), new Date('2016-09-29 16:00')))
-      .addSession(new DateRange('Concurrent Sessions'                    , new Date('2016-09-29 16:00'), new Date('2016-09-29 17:30')))
-      .addSession(new DateRange('Optional Tour'                          , new Date('2016-09-29 18:45'), new Date('2016-09-29 21:45')).star().url('#0'))
-
-      .addSession(new DateRange('Registration'                           , new Date('2016-09-30 07:00'), new Date('2016-09-30 16:30')))
-      .addSession(new DateRange('Leadership & Society Awards Breakfast'  , new Date('2016-09-30 07:30'), new Date('2016-09-30 08:30')))
-      .addSession(new DateRange('Communities and Pavilion'               , new Date('2016-09-30 08:30'), new Date('2016-09-30 17:00')))
-      .addSession(new DateRange('ASCE Annual Business Meeting'           , new Date('2016-09-30 08:45'), new Date('2016-09-30 09:45')).star())
-      .addSession(new DateRange('Beverage Break'                         , new Date('2016-09-30 09:45'), new Date('2016-09-30 10:15')))
-      .addSession(new DateRange('Concurrent Sessions'                    , new Date('2016-09-30 10:15'), new Date('2016-09-30 11:45')))
-      .addSession(new DateRange('Lunch on Your Own'                      , new Date('2016-09-30 11:45'), new Date('2016-09-30 13:15')))
-      .addSession(new DateRange('International Luncheon (ticketed)'      , new Date('2016-09-30 11:45'), new Date('2016-09-30 13:15')))
-      .addSession(new DateRange('Concurrent Sessions'                    , new Date('2016-09-30 13:15'), new Date('2016-09-30 14:15')))
-      .addSession(new DateRange('Optional Tour'                          , new Date('2016-09-30 13:00'), new Date('2016-09-30 17:15')).star().url('#0'))
-      .addSession(new DateRange('Industry Leaders Forum'                 , new Date('2016-09-30 14:30'), new Date('2016-09-30 16:00')).star())
-      .addSession(new DateRange('Beverage Break'                         , new Date('2016-09-30 16:00'), new Date('2016-09-30 16:30')))
-      .addSession(new DateRange('Concurrent Sessions'                    , new Date('2016-09-30 16:30'), new Date('2016-09-30 17:30')))
-      .addSession(new DateRange('Theater Night Out'                      , new Date('2016-09-30 18:30'), new Date('2016-09-30 21:30')).star())
-
-      .addSession(new DateRange('Registration'                           , new Date('2016-10-01 07:00'), new Date('2016-10-01 14:30')))
-      .addSession(new DateRange('Order of the Engineer Ceremony'         , new Date('2016-10-01 07:30'), new Date('2016-10-01 08:15')).star())
-      .addSession(new DateRange('Optional Tour'                          , new Date('2016-10-01 08:45'), new Date('2016-10-01 11:45')).url('#0'))
-      .addSession(new DateRange('Concurrent Sessions'                    , new Date('2016-10-01 08:30'), new Date('2016-10-01 10:00')))
-      .addSession(new DateRange('Communities and Pavilion'               , new Date('2016-10-01 08:30'), new Date('2016-10-01 14:00')))
-      .addSession(new DateRange('Concurrent Sessions'                    , new Date('2016-10-01 10:15'), new Date('2016-10-01 11:45')))
-      .addSession(new DateRange('ASCE Luncheon & Closing General Session', new Date('2016-10-01 12:00'), new Date('2016-10-01 14:00')).star())
-      .addSession(new DateRange('Technical Tours'                        , new Date('2016-10-01 14:30'), new Date('2016-10-01 17:30')).url('#0'))
-
-    site.currentConference
       .addVenue('Conference Venue', new Place('Oregon Convention Center', {
         street_address  : '777 NE Martin Luther King, Jr. Blvd.'
       , address_locality: 'Portland'
@@ -565,14 +572,6 @@ var jsondata = {
         //   research involves scalable, parallel computing using finite element frameworks.</p>`)
         .star()
       )
-
-    site.currentConference
-      .addImportantDate(new DateRange('Optional Final Papers Due'     , new Date('2015-10-12')                        ).star())
-      .addImportantDate(new DateRange('Early-Bird Registration Closes', new Date('2015-12-17')                        ).star().url('registration.html'))
-      .addImportantDate(new DateRange('Advance Registration Closes'   , new Date('2016-01-12')                        ).star().url('registration.html'))
-      .addImportantDate(new DateRange('Convention Begins'             , new Date('2016-06-12')                        ).star())
-      .addImportantDate(new DateRange('Convention Ends'               , new Date('2016-06-15')                        ))
-      .addImportantDate(new DateRange('Convention Dates'              , new Date('2016-09-28'), new Date('2016-10-01')).star())
 
     site.currentConference
       .addOrganizer(new Person('thomas-mccollough', {
