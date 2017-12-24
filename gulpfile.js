@@ -77,11 +77,6 @@ gulp.task('pug:default', function () {
             "@type"     : "Event",
             "name"      : "Civil Engineering Congress 2016",
             "url"       : "http://2016.cecongress.org/",
-            "location"  : {
-              "@type": "PostalAddress",
-              "addressLocality": "Reston",
-              "addressRegion"  : "Virginia"
-            },
             }
           },
           "currentConference" : "default",

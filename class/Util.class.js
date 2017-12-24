@@ -224,16 +224,16 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function promoLoc(state_code = false) {
-        return [
-          new HTMLElement('span').attr('itemprop','addressLocality').addContent(this.addressLocality).html(),
-          `, `,
-          new HTMLElement('data')
-            .attr('itemprop','addressRegion')
-            .attr('value',this.addressRegion)
+        const returned = []
+        if (this.addressLocality) returned.push(new HTMLElement('span').attr('itemprop','addressLocality').addContent(this.addressLocality).html(), `, `)
+        if (this.addressRegion) {
+          returned.push(new HTMLElement('data')
+            .attr({ itemprop: 'addressRegion', value: this.addressRegion })
             .addContent((state_code) ? STATE_DATA.find((state) => state.name===this.addressRegion).code : this.addressRegion)
-            .html(),
-          (this.addressCountry) ? new HTMLElement('span').attr('itemprop','addressCountry').addContent(this.addressCountry) : '',
-        ].join('')
+            .html())
+        }
+        if (this.addressCountry) returned.push(`, `, new HTMLElement('span').attr('itemprop','addressCountry').addContent(this.addressCountry).html())
+        return returned.join('')
       })
       /**
        * Return an unordered list of button links for a highlighted content block.

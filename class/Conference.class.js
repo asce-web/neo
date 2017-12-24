@@ -27,7 +27,9 @@ class Conference {
    * @param {string=} jsondata.description the theme of this conference
    * @param {string=} jsondata.startDate the starting date of this conference, in ISO string format
    * @param {string=} jsondata.endDate the ending date of this conference, in ISO string format
-   * @param {!Object=} jsondata.location the promoted location of this conference; type {@link http://schema.org/PostalAddress}
+   * @param {Array<!Object>=} jsondata.location a list of locations of this conference: at least 1 entry.
+   *                                            First entry: required; the promoted location; type {@link http://schema.org/PostalAddress}.
+   *                                            Other entries: optional; other venues; type {@link http://schema.org/Place}.
    * @param {Array<!Object>=} jsondata.offers a list of registration periods; types {@link http://schema.org/AggregateOffer}
    * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
    * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
@@ -102,7 +104,7 @@ class Conference {
    * @type {PostalAddress}
    */
   get promoLoc() {
-    return new PostalAddress(this._DATA.location)
+    return new PostalAddress(this._DATA.location && this._DATA.location[0] || {})
   }
 
   /**
@@ -173,11 +175,11 @@ class Conference {
 
   /**
    * @summary Retrieve a venue of this conference.
-   * @param   {string} venue_label the key for accessing the venue
-   * @returns {Venue} the specified venue
+   * @param   {string} venue_label the label of the venue to access
+   * @returns {?Venue} the specified venue
    */
   getVenue(venue_label) {
-    let venue = (this._DATA.$venues || []).find(($place) => $place.description===venue_label)
+    let venue = (this._DATA.location || []).find(($place) => $place.description===venue_label)
     return (venue) ? new Venue(venue) : null
   }
   /**
@@ -185,7 +187,7 @@ class Conference {
    * @returns {Array<Venue>} a shallow copy of the venues object of this conference
    */
   getVenuesAll() {
-    return (this._DATA.$venues || []).map(($place) => new Venue($place))
+    return (this._DATA.location || []).slice(1).map(($place) => new Venue($place))
   }
 
   /**

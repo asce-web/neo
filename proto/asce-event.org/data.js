@@ -40,11 +40,50 @@ var jsondata = {
   "description": "Where Engineering Dreams are Built.",
   "startDate"  : "2016-09-28T07:30",
   "endDate"    : "2016-10-01T17:00",
-  "location"   : {
-    "@type": "PostalAddress",
-    "addressLocality": "Portland",
-    "addressRegion"  : "Oregon"
-  },
+      "location": [
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "Portland",
+          "addressRegion"  : "Oregon"
+        },
+        {
+          "@type": "Place",
+          "description": "Conference Venue",
+          "name"       : "Orego Convention Center",
+          "url"        : "https://www.oregoncc.org/",
+          "address"    : {
+            "@type": "PostalAddress",
+            "streetAddress"  : "777 NE Martin Luther King, Jr. Blvd",
+            "addressLocality": "Portland",
+            "addressRegion"  : "Oregon",
+            "postalCode"     : "97232"
+          }
+        },
+        {
+          "@type": "Place",
+          "description": "Official Hotel",
+          "name"       : "DoubleTree by Hilton Portland",
+          "address"    : {
+            "@type": "PostalAddress",
+            "streetAddress"  : "1000 NE Multnomah St",
+            "addressLocality": "Portland",
+            "addressRegion"  : "Oregon",
+            "postalCode"     : "97232"
+          }
+        },
+        {
+          "@type": "Place",
+          "description": "Overflows",
+          "name"       : "Courtyard Portland City Center",
+          "address"    : {
+            "@type": "PostalAddress",
+            "streetAddress"  : "550 SW Oak St",
+            "addressLocality": "Portland",
+            "addressRegion"  : "Oregon",
+            "postalCode"     : "97204"
+          }
+        }
+      ],
     "offers": [
       {
         "@type"             : "AggregateOffer",
@@ -160,45 +199,6 @@ var jsondata = {
       { "@type": "Action", "name": 'Convention Begins'             , "startTime": "2016-06-12"                          , "$starred": true                             },
       { "@type": "Action", "name": 'Convention Ends'               , "startTime": "2016-06-15"                                                                         },
       { "@type": "Action", "name": 'Convention Dates'              , "startTime": "2016-09-28", "$endTime": "2016-10-01", "$starred": true                             }
-    ],
-    "$venues": [
-      {
-        "@type": "Place",
-        "description": "Conference Venue",
-        "name"       : "Orego Convention Center",
-        "url"        : "https://www.oregoncc.org/",
-        "address"    : {
-          "@type": "PostalAddress",
-          "streetAddress"  : "777 NE Martin Luther King, Jr. Blvd",
-          "addressLocality": "Portland",
-          "addressRegion"  : "Oregon",
-          "postalCode"     : "97232"
-        }
-      },
-      {
-        "@type": "Place",
-        "description": "Official Hotel",
-        "name"       : "DoubleTree by Hilton Portland",
-        "address"    : {
-          "@type": "PostalAddress",
-          "streetAddress"  : "1000 NE Multnomah St",
-          "addressLocality": "Portland",
-          "addressRegion"  : "Oregon",
-          "postalCode"     : "97232"
-        }
-      },
-      {
-        "@type": "Place",
-        "description": "Overflows",
-        "name"       : "Courtyard Portland City Center",
-        "address"    : {
-          "@type": "PostalAddress",
-          "streetAddress"  : "550 SW Oak St",
-          "addressLocality": "Portland",
-          "addressRegion"  : "Oregon",
-          "postalCode"     : "97204"
-        }
-      }
     ]
 },
 "json2015": {
@@ -209,12 +209,12 @@ var jsondata = {
   "description": "Building on the Past.",
   "startDate"  : "2015-10-11T07:30",
   "endDate"    : "2015-10-14T17:00",
-  "location"   : {
-    "@type": "PostalAddress",
-    "addressLocality": "New York",
-    "addressRegion"  : "New York"
-  },
-  "$venues": [
+      "location": [
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "New York",
+          "addressRegion"  : "New York"
+        },
     {
       "@type": "Place",
       "description": "Conference Venue",
@@ -238,12 +238,12 @@ var jsondata = {
   "description": "The Future of Civil Engineering.",
   "startDate"  : "2017-10-08T07:30",
   "endDate"    : "2017-10-11T17:00",
-  "location"   : {
-    "@type": "PostalAddress",
-    "addressLocality": "New Orleans",
-    "addressRegion"  : "Louisiana"
-  },
-  "$venues": [
+      "location": [
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "New Orleans",
+          "addressRegion"  : "Louisiana"
+        },
     {
       "@type": "Place",
       "description": "Conference Venue",
