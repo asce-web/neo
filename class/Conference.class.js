@@ -6,6 +6,7 @@ const Util    = require('./Util.class.js')
 const RegistrationPeriod = require('./RegistrationPeriod.class.js')
 const Pass = require('./Pass.class.js')
 const DateRange = require('./DateRange.class.js')
+const Venue = require('./Venue.class.js')
 
 /**
  * A conference event.
@@ -41,7 +42,6 @@ class Conference {
      */
     this._DATA = jsondata
 
-    /** @private */ this._venues          = {}
     /** @private */ this._speakers        = []
     /** @private */ this._supporter_levels = []
     /** @private */ this._supporter_lists  = {}
@@ -49,7 +49,6 @@ class Conference {
     /** @private */ this._exhibitors       = []
     /** @private */ this._organizers      = []
     /** @private */ this._social          = {}
-    /** @private */ this._venue_conf_key   = ''
   }
 
   /**
@@ -172,42 +171,20 @@ class Conference {
   }
 
   /**
-   * @summary Add a venue to this conference.
-   * @param {string} venue_label key for accessing the venue
-   * @param {Venue} $place the venue to add
-   */
-  addVenue(venue_label, $place) {
-    this._venues[venue_label] = $place
-    return this
-  }
-  /**
    * @summary Retrieve a venue of this conference.
    * @param   {string} venue_label the key for accessing the venue
    * @returns {Venue} the specified venue
    */
   getVenue(venue_label) {
-    return this._venues[venue_label]
+    let venue = (this._DATA.$venues || []).find(($place) => $place.description===venue_label)
+    return (venue) ? new Venue(venue) : null
   }
   /**
    * @summary Retrieve all venues of this conference.
-   * @returns {Object<Venue>} a shallow copy of the venues object of this conference
+   * @returns {Array<Venue>} a shallow copy of the venues object of this conference
    */
   getVenuesAll() {
-    //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._venues)
-  }
-
-  /**
-   * @summary Set or get the official conference venue for this conference.
-   * @description The official conference venue is the venue at which this conference is held.
-   * @param   {string} venue_label the key for accessing the venue
-   * @returns {(Conference|Place)} this conference || the set conference venue
-   */
-  officialVenue(venue_label) {
-    if (arguments.length) {
-      this._venue_conf_key = venue_label
-      return this
-    } else return this.getVenue(this._venue_conf_key)
+    return (this._DATA.$venues || []).map(($place) => new Venue($place))
   }
 
   /**

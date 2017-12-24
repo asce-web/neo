@@ -14,7 +14,6 @@ const SupporterLevel     = require('../../class/SupporterLevel.class.js')
 const Supporter          = require('../../class/Supporter.class.js')
 const Exhibitor          = require('../../class/Exhibitor.class.js')
 const Person             = require('../../class/Person.class.js')
-const Venue              = require('../../class/Venue.class.js')
 const Pass               = require('../../class/Pass.class.js')
 
 var jsondata = {
@@ -161,6 +160,45 @@ var jsondata = {
       { "@type": "Action", "name": 'Convention Begins'             , "startTime": "2016-06-12"                          , "$starred": true                             },
       { "@type": "Action", "name": 'Convention Ends'               , "startTime": "2016-06-15"                                                                         },
       { "@type": "Action", "name": 'Convention Dates'              , "startTime": "2016-09-28", "$endTime": "2016-10-01", "$starred": true                             }
+    ],
+    "$venues": [
+      {
+        "@type": "Place",
+        "description": "Conference Venue",
+        "name"       : "Orego Convention Center",
+        "url"        : "https://www.oregoncc.org/",
+        "address"    : {
+          "@type": "PostalAddress",
+          "streetAddress"  : "777 NE Martin Luther King, Jr. Blvd",
+          "addressLocality": "Portland",
+          "addressRegion"  : "Oregon",
+          "postalCode"     : "97232"
+        }
+      },
+      {
+        "@type": "Place",
+        "description": "Official Hotel",
+        "name"       : "DoubleTree by Hilton Portland",
+        "address"    : {
+          "@type": "PostalAddress",
+          "streetAddress"  : "1000 NE Multnomah St",
+          "addressLocality": "Portland",
+          "addressRegion"  : "Oregon",
+          "postalCode"     : "97232"
+        }
+      },
+      {
+        "@type": "Place",
+        "description": "Overflows",
+        "name"       : "Courtyard Portland City Center",
+        "address"    : {
+          "@type": "PostalAddress",
+          "streetAddress"  : "550 SW Oak St",
+          "addressLocality": "Portland",
+          "addressRegion"  : "Oregon",
+          "postalCode"     : "97204"
+        }
+      }
     ]
 },
 "json2015": {
@@ -176,6 +214,21 @@ var jsondata = {
     "addressLocality": "New York",
     "addressRegion"  : "New York"
   },
+  "$venues": [
+    {
+      "@type": "Place",
+      "description": "Conference Venue",
+      "name"       : "New York Marriott Marquis",
+      "url"        : 'http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/',
+      "address"    : {
+        "@type": "PostalAddress",
+        "streetAddress"  : "1535 Broadway",
+        "addressLocality": "New York",
+        "addressRegion"  : "New York",
+        "postalCode"     : "10036"
+      }
+    }
+  ]
 },
 "json2017": {
   "@context"   : "http://schema.org/",
@@ -190,6 +243,20 @@ var jsondata = {
     "addressLocality": "New Orleans",
     "addressRegion"  : "Louisiana"
   },
+  "$venues": [
+    {
+      "@type": "Place",
+      "description": "Conference Venue",
+      "name"       : "New Orleans Mariott",
+      "address"    : {
+        "@type": "PostalAddress",
+        "streetAddress"  : "555 Canal Street",
+        "addressLocality": "New Orleans",
+        "addressRegion"  : "Louisiana",
+        "postalCode"     : "70130"
+      }
+    }
+  ]
 }
   },
   "currentConference" : "json2016",
@@ -200,35 +267,6 @@ var jsondata = {
 
     var site = new ConfSite(jsondata)
       .init()
-
-    site
-      .getConference('json2015')
-        .addVenue('Conference Venue', new Venue({
-          "name"       : "New York Marriott Marquis",
-          "description": "Conference Venue",
-          "url"        : 'http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/',
-          "address"    : {
-            "@type"          : "PostalAddress",
-            "streetAddress"  : "1535 Broadway",
-            "addressLocality": "New York",
-            "addressRegion"  : "New York",
-            "postalCode"     : "10036"
-          }
-        }))
-    site
-      .getConference('json2017')
-        .addVenue('Conference Venue', new Venue({
-          "name"       : "New Orleans Mariott",
-          "description": "Conference Venue",
-          "address"    : {
-            "@type"          : "PostalAddress",
-            "streetAddress"  : "555 Canal Street",
-            "addressLocality": "New Orleans",
-            "addressRegion"  : "Louisiana",
-            "postalCode"     : "70130"
-          }
-        }))
-
 
 
     // REVIEW TODO move below Speakers
@@ -424,45 +462,6 @@ var jsondata = {
     //-   .setPrice('Advance'   , 'Daily Pass'    , 'Non-Member',  645)
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Member'    ,  645)
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Non-Member',  745)
-
-    site.currentConference
-      .addVenue('Conference Venue', new Venue({
-        "name"       : "Orego Convention Center",
-        "description": "Conference Venue",
-        "url"        : "https://www.oregoncc.org/",
-        "address"    : {
-          "@type"          : "PostalAddress",
-          "streetAddress"  : "777 NE Martin Luther King, Jr. Blvd",
-          "addressLocality": "Portland",
-          "addressRegion"  : "Oregon",
-          "postalCode"     : "97232"
-        }
-      }))
-      .addVenue('Official Hotel', new Venue({
-        "name"       : "DoubleTree by Hilton Portland",
-        "description": "Official Hotel",
-        "address"    : {
-          "@type"          : "PostalAddress",
-          "streetAddress"  : "1000 NE Multnomah St",
-          "addressLocality": "Portland",
-          "addressRegion"  : "Oregon",
-          "postalCode"     : "97232"
-        }
-      }))
-      .addVenue('Overflows', new Venue({
-        "name"       : "Courtyard Portland City Center",
-        "description": "Overflows",
-        "address"    : {
-          "@type"          : "PostalAddress",
-          "streetAddress"  : "550 SW Oak St",
-          "addressLocality": "Portland",
-          "addressRegion"  : "Oregon",
-          "postalCode"     : "97204"
-        }
-      }))
-
-    site.currentConference
-      .officialVenue('Conference Venue')
 
     site.currentConference
       .addSpeaker(new Person('donna-fulman', {
