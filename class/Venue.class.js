@@ -19,13 +19,6 @@ class Venue extends Place {
    */
   constructor(jsondata) {
     super(jsondata)
-    // /**
-    //  * All the data for this venue.
-    //  * @private
-    //  * @final
-    //  * @type {!Object}
-    //  */
-    // this._DATA = jsondata
   }
 
   /**

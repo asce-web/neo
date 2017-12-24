@@ -216,7 +216,7 @@ class Util {
       })
       /**
        * Return a snippet marking up a promoted location.
-       * Parameter `data` should be of type `{@link http://schema.org/PostalAddress}`.
+       * Parameter `data` should be of type `{@link PostalAddress}`.
        * @summary Call `Util.view(data).promoLoc()` to render this display.
        * @todo TODO move this display to `require('extrajs-geo')`
        * @function Util.VIEW.promoLoc

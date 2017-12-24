@@ -1,3 +1,5 @@
+const PostalAddress = require('./PostalAddress.class.js')
+
 /**
  * Entities that have a somewhat fixed, physical extension.
  * @todo TODO move this class to `require('extrajs-geo')`
@@ -12,13 +14,7 @@ class Place {
    * @param {string=} jsondata.url the url of this place
    * @param {string=} jsondata.image the image url for this place
    * @param {string=} jsondata.telephone the telephone number of this place
-   * @param {!Object=} jsondata.address an object of type {@link http://schema.org/PostalAddress}
-   * @param {string=} jsondata.address.streetAddress
-   * @param {string=} jsondata.address.addressLocality
-   * @param {string=} jsondata.address.addressRegion
-   * @param {string=} jsondata.address.postalCode
-   * @param {string=} jsondata.address.addressCountry
-   * @param {string=} jsondata.address.addressCountry
+   * @param {PostalAddress=} jsondata.address the physical address of this place
    */
   constructor(jsondata) {
     /**
@@ -28,6 +24,14 @@ class Place {
      * @type {!Object}
      */
     this._DATA = jsondata
+
+    /**
+     * The physical address of this place.
+     * @private
+     * @final
+     * @type {PostalAddress}
+     */
+    this._address = jsondata.address || new PostalAddress({})
   }
 
   /**
@@ -71,35 +75,35 @@ class Place {
    * @type {string}
    */
   get streetAddress() {
-    return this._DATA.address.streetAddress || ''
+    return this._address.streetAddress
   }
   /**
    * @summary The address locality (city/town) of this place.
    * @type {string}
    */
   get addressLocality() {
-    return this._DATA.address.addressLocality || ''
+    return this._address.addressLocality
   }
   /**
    * @summary The address region (state/province) of this place.
    * @type {string}
    */
   get addressRegion() {
-    return this._DATA.address.addressRegion || ''
+    return this._address.addressRegion
   }
   /**
    * @summary The postal (zip) code of this place.
    * @type {string}
    */
   get postalCode() {
-    return this._DATA.address.postalCode || ''
+    return this._address.postalCode
   }
   /**
    * @summary The country of this place.
    * @type {string}
    */
   get addressCountry() {
-    return this._DATA.address.addressCountry || ''
+    return this._address.addressCountry
   }
 }
 

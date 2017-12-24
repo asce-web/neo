@@ -6,6 +6,7 @@ const Util    = require('./Util.class.js')
 const RegistrationPeriod = require('./RegistrationPeriod.class.js')
 const Pass = require('./Pass.class.js')
 const DateRange = require('./DateRange.class.js')
+const PostalAddress = require('./PostalAddress.class.js')
 const Venue = require('./Venue.class.js')
 
 /**
@@ -98,10 +99,10 @@ class Conference {
    * @description The promoted location is not necessarily the actual postal address of the conference,
    * but rather a major city nearest to the conference used for
    * promotional and advertising purposes.
-   * @type {!Object}
+   * @type {PostalAddress}
    */
   get promoLoc() {
-    return this._DATA.location || { "@type": "PostalAddress" }
+    return new PostalAddress(this._DATA.location)
   }
 
   /**
