@@ -12,8 +12,10 @@ class DateRange {
    * Construct a new DateRange object.
    * @param {!Object} jsondata a JSON object that validates against some schema?
    * @param {string} jsondata.name the name of this date range
-   * @param {string} jsondata.$start the start date/time of this date range, in ISO string format
-   * @param {string=} jsondata.$end the end date/time of this date range, in ISO string format
+   * @param {string=} jsondata.startDate if this date range is an Event  type, the start date, in ISO string format
+   * @param {string=} jsondata.endDate   if this date range is an Event  type, the end   date, in ISO string format
+   * @param {string=} jsondata.startTime if this date range is an Action type, the start time, in ISO string format
+   * @param {string=} jsondata.endTime   if this date range is an Action type, the end   time, in ISO string format
    * @param {string=} jsondata.url the url of this date range
    * @param {boolean=} jsondata.$starred whether this date range is starred
    */
@@ -40,7 +42,7 @@ class DateRange {
    * @type {Date}
    */
   get start() {
-    return new Date(this._DATA.$start || null)
+    return new Date(this._DATA.startDate || this._DATA.startTime || null)
   }
 
   /**
@@ -48,7 +50,7 @@ class DateRange {
    * @type {?Date}
    */
   get end() {
-    return (this._DATA.$end) ? new Date(this._DATA.$end) : null
+    return (this._DATA.endDate || this._DATA.endTime) ? new Date(this._DATA.endDate || this._DATA.endTime) : null
   }
 
   /**
