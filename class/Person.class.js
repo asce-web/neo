@@ -1,3 +1,4 @@
+const xjs = require('extrajs')
 const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
@@ -193,11 +194,11 @@ class Person {
      */
     return new View(function () {
       return new HTMLElement('span').attr('itemprop','name')
-        .addContent([
-          new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.given_name),
+        .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
+          new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
           ` `,
-          new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.family_name),
-        ])
+          new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.familyName),
+        ] : this.name)
         .html()
     }, this)
       /**
@@ -208,13 +209,13 @@ class Person {
        */
       .addDisplay(function fullName() {
         return new HTMLElement('span').attr('itemprop','name')
-          .addContent([
-            new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.given_name),
+          .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
+            new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
             ` `,
-            new HTMLElement('span').attr('itemprop','additionalName').addContent(this.name.additional_name),
+            new HTMLElement('span').attr('itemprop','additionalName').addContent(this.name.additionalName),
             ` `,
-            new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.family_name),
-          ])
+            new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.familyName),
+          ] : this.name)
           .html()
       })
       /**
@@ -225,16 +226,8 @@ class Person {
        */
       .addDisplay(function entireName() {
         let returned = this.view.fullName()
-        if (this.name.honorific_prefix) {
-          returned = `${
-            new HTMLElement('span').attr('itemprop','honorificPrefix').addContent(this.name.honorific_prefix).html()
-          } ${returned}`
-        }
-        if (this.name.honorific_suffix) {
-          returned = `${returned}, ${
-            new HTMLElement('span').attr('itemprop','honorificSuffix').addContent(this.name.honorific_suffix).html()
-          }`
-        }
+        if (this.name.honorificPrefix) returned = `${new HTMLElement('span').attr('itemprop','honorificPrefix').addContent(this.name.honorificPrefix).html()} ${returned}`
+        if (this.name.honorificSuffix) returned = `${returned}, ${new HTMLElement('span').attr('itemprop','honorificSuffix').addContent(this.name.honorificSuffix).html()}`
         return returned
       })
       /**
@@ -244,10 +237,13 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
-        return `${this.view.entireName()}, ${new HTMLElement('span').class('-fs-t')
-          .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
-          .addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation()))
-          .html()}`
+        return Util.documentFragment([
+          this.view.entireName(),
+          `, `,
+          new HTMLElement('span').class('-fs-t')
+            .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
+            .addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation)),
+        ])
       })
       /**
        * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
@@ -257,20 +253,16 @@ class Person {
        */
       .addDisplay(function contact() {
         let returned = new HTMLElement('a')
-          .attr('href',`mailto:${this.email()}`)
+          .attr('href',`mailto:${this.email}`)
           .addContent(this.view())
           .html()
-        if (this.jobTitle()) {
-          returned = `${returned}, ${
-            new HTMLElement('span').attr('itemprop','jobTitle').addContent(this.jobTitle()).html()
-          }`
-        }
-        if (this.phone()) {
+        if (this.jobTitle) returned = `${returned}, ${new HTMLElement('span').attr('itemprop','jobTitle').addContent(this.jobTitle).html()}`
+        if (this.telephone) {
           returned = `${returned} | ${
             new HTMLElement('a')
-              .attr('href',`tel:${this.phone()}`)
+              .attr('href',`tel:${Util.toURL(this.telephone)}`)
               .attr('itemprop','telephone')
-              .addContent(this.phone())
+              .addContent(this.telephone)
               .html()
           }`
         }
@@ -291,7 +283,7 @@ class Person {
           itemtype : 'http://schema.org/Person',
         }).addContent([
           new HTMLElement('img').class('c-Speaker__Img h-Block')
-            .attr('src', this.img())
+            .attr('src', this.image)
             .attr('itemprop','image'),
           new HTMLElement('header').class('c-Speaker__Head').addContent([
             new HTMLElement('h1').class('c-Speaker__Name')
@@ -299,30 +291,30 @@ class Person {
               .addContent(this.view.entireName()),
             new HTMLElement('p').class('c-Speaker__JobTitle')
               .attr('itemprop','jobTitle')
-              .addContent(this.jobTitle()),
+              .addContent(this.jobTitle),
             new HTMLElement('p').class('c-Speaker__Affiliation').attr({
               itemprop : 'affiliation',
               itemscope: '',
               itemtype : 'http://schema.org/Organization',
-            }).addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation())),
+            }).addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation)),
           ]),
           // new HTMLElement('div').class('c-Speaker__Body').attr('itemprop','description'),
           new HTMLElement('footer').class('c-Speaker__Foot').addContent(pug`
             include ../_views/_c-SocialList.view.pug
             +socialList(${this.getSocialAll()}).c-SocialList--speaker
-              if ${this.email()}
+              if ${this.email}
                 li.o-List__Item.o-Flex__Item.c-SocialList__Item
-                  a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href="mailto:${this.email()}" title="${this.email()}" itemprop="email")
+                  a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href="mailto:${this.email}" itemprop="email")
                     span.h-Hidden send email
                     //- i.material-icons(role="none") email
-              if ${this.phone()}
+              if ${this.telephone}
                 li.o-List__Item.o-Flex__Item.c-SocialList__Item
-                  a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href="tel:${Util.toURL(this.phone())}" title="${this.phone()}" itemprop="telephone")
+                  a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href="tel:${Util.toURL(this.telephone)}" itemprop="telephone")
                     span.h-Hidden call
                     //- i.material-icons(role="none") phone
-              if ${this.url()}
+              if ${this.url}
                 li.o-List__Item.o-Flex__Item.c-SocialList__Item
-                  a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href="${this.url()}" title="visit homepage" itemprop="url")
+                  a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href="${this.url}" title="visit homepage" itemprop="url")
                     span.h-Hidden visit homepage
                     //- i.material-icons(role="none") explore
           `),
