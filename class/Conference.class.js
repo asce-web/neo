@@ -174,7 +174,7 @@ class Conference {
   /**
    * @summary Add a venue to this conference.
    * @param {string} venue_label key for accessing the venue
-   * @param {Place} $place the venue to add
+   * @param {Venue} $place the venue to add
    */
   addVenue(venue_label, $place) {
     this._venues[venue_label] = $place
@@ -183,14 +183,14 @@ class Conference {
   /**
    * @summary Retrieve a venue of this conference.
    * @param   {string} venue_label the key for accessing the venue
-   * @returns {Place} the specified venue
+   * @returns {Venue} the specified venue
    */
   getVenue(venue_label) {
     return this._venues[venue_label]
   }
   /**
    * @summary Retrieve all venues of this conference.
-   * @returns {Object<Place>} a shallow copy of the venues object of this conference
+   * @returns {Object<Venue>} a shallow copy of the venues object of this conference
    */
   getVenuesAll() {
     //- NOTE returns shallow clone (like arr.slice())

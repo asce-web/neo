@@ -14,7 +14,7 @@ const SupporterLevel     = require('../../class/SupporterLevel.class.js')
 const Supporter          = require('../../class/Supporter.class.js')
 const Exhibitor          = require('../../class/Exhibitor.class.js')
 const Person             = require('../../class/Person.class.js')
-const Place              = require('../../class/Place.class.js')
+const Venue              = require('../../class/Venue.class.js')
 const Pass               = require('../../class/Pass.class.js')
 
 var jsondata = {
@@ -203,20 +203,30 @@ var jsondata = {
 
     site
       .getConference('json2015')
-        .addVenue('Conference Venue', new Place('New York Marriott Marquis', {
-          street_address  : '1535 Broadway',
-          address_locality: 'New York',
-          address_region  : 'NY',
-          postal_code     : '10036',
-          url             : 'http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/',
+        .addVenue('Conference Venue', new Venue({
+          "name"       : "New York Marriott Marquis",
+          "description": "Conference Venue",
+          "url"        : 'http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/',
+          "address"    : {
+            "@type"          : "PostalAddress",
+            "streetAddress"  : "1535 Broadway",
+            "addressLocality": "New York",
+            "addressRegion"  : "New York",
+            "postalCode"     : "10036"
+          }
         }))
     site
       .getConference('json2017')
-        .addVenue('Conference Venue', new Place('New Orleans Mariott', {
-          street_address  : '555 Canal Street',
-          address_locality: 'New Orleans',
-          address_region  : 'LA',
-          postal_code     : '70130',
+        .addVenue('Conference Venue', new Venue({
+          "name"       : "New Orleans Mariott",
+          "description": "Conference Venue",
+          "address"    : {
+            "@type"          : "PostalAddress",
+            "streetAddress"  : "555 Canal Street",
+            "addressLocality": "New Orleans",
+            "addressRegion"  : "Louisiana",
+            "postalCode"     : "70130"
+          }
         }))
 
 
@@ -416,22 +426,39 @@ var jsondata = {
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Non-Member',  745)
 
     site.currentConference
-      .addVenue('Conference Venue', new Place('Oregon Convention Center', {
-        street_address  : '777 NE Martin Luther King, Jr. Blvd.'
-      , address_locality: 'Portland'
-      , address_region  : 'OR'
-      , postal_code     : '97232'
-      , url             : 'https://www.oregoncc.org/'
-      })).addVenue('Official Hotel', new Place('DoubleTree by Hilton Portland', {
-        street_address  : '1000 NE Multnomah St'
-      , address_locality: 'Portland'
-      , address_region  : 'OR'
-      , postal_code     : '97232'
-      })).addVenue('Overflows', new Place('Courtyard Portland City Center', {
-        street_address  : '550 SW Oak St'
-      , address_locality: 'Portland'
-      , address_region  : 'OR'
-      , postal_code     : '97204'
+      .addVenue('Conference Venue', new Venue({
+        "name"       : "Orego Convention Center",
+        "description": "Conference Venue",
+        "url"        : "https://www.oregoncc.org/",
+        "address"    : {
+          "@type"          : "PostalAddress",
+          "streetAddress"  : "777 NE Martin Luther King, Jr. Blvd",
+          "addressLocality": "Portland",
+          "addressRegion"  : "Oregon",
+          "postalCode"     : "97232"
+        }
+      }))
+      .addVenue('Official Hotel', new Venue({
+        "name"       : "DoubleTree by Hilton Portland",
+        "description": "Official Hotel",
+        "address"    : {
+          "@type"          : "PostalAddress",
+          "streetAddress"  : "1000 NE Multnomah St",
+          "addressLocality": "Portland",
+          "addressRegion"  : "Oregon",
+          "postalCode"     : "97232"
+        }
+      }))
+      .addVenue('Overflows', new Venue({
+        "name"       : "Courtyard Portland City Center",
+        "description": "Overflows",
+        "address"    : {
+          "@type"          : "PostalAddress",
+          "streetAddress"  : "550 SW Oak St",
+          "addressLocality": "Portland",
+          "addressRegion"  : "Oregon",
+          "postalCode"     : "97204"
+        }
       }))
 
     site.currentConference

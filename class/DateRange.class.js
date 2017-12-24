@@ -21,7 +21,7 @@ class DateRange {
    */
   constructor(jsondata) {
     /**
-     * All the data for this pass.
+     * All the data for this date range.
      * @private
      * @final
      * @type {!Object}
