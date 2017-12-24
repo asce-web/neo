@@ -31,7 +31,7 @@ class Place {
      * @final
      * @type {PostalAddress}
      */
-    this._address = jsondata.address || new PostalAddress({})
+    this._ADDRESS = jsondata.address || new PostalAddress({})
   }
 
   /**
@@ -75,35 +75,35 @@ class Place {
    * @type {string}
    */
   get streetAddress() {
-    return this._address.streetAddress
+    return this._ADDRESS.streetAddress
   }
   /**
    * @summary The address locality (city/town) of this place.
    * @type {string}
    */
   get addressLocality() {
-    return this._address.addressLocality
+    return this._ADDRESS.addressLocality
   }
   /**
    * @summary The address region (state/province) of this place.
    * @type {string}
    */
   get addressRegion() {
-    return this._address.addressRegion
+    return this._ADDRESS.addressRegion
   }
   /**
    * @summary The postal (zip) code of this place.
    * @type {string}
    */
   get postalCode() {
-    return this._address.postalCode
+    return this._ADDRESS.postalCode
   }
   /**
    * @summary The country of this place.
    * @type {string}
    */
   get addressCountry() {
-    return this._address.addressCountry
+    return this._ADDRESS.addressCountry
   }
 }
 

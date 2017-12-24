@@ -7,13 +7,18 @@ p.
   #[code.docs-code= '[itemscope="" itemtype="http://schema.org/Place"]'].
 figure.docs-figure
   -
-    let asce_hq = new Place('ASCE World Headquarters', {
-      street_address  : '1801 Alexander Bell Drive',
-      address_locality: 'Reston',
-      address_region  : 'VA',
-      postal_code     : '22901-4382',
-      telephone       : '+1-800-548-2723',
-      url             : 'http://www.asce.org/',
+    let asce_hq = new Venue({
+      "@type": "Place",
+      "name"       : "ASCE World Headquarters",
+      "url"        : "http://www.asce.org/",
+      "telephone"  : "+1-800-548-2723",
+      "address"    : {
+        "@type": "PostalAddress",
+        "streetAddress"  : "1801 Alexander Bell Drive",
+        "addressLocality": "Reston",
+        "addressRegion"  : "Virginia",
+        "postalCode"     : "22901-4382"
+      }
     })
   p(itemscope="" itemtype="http://schema.org/Place")!= asce_hq.view.venue()
   +microdataCheckbox('place')
