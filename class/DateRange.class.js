@@ -10,70 +10,61 @@ const View    = require('extrajs-view')
 class DateRange {
   /**
    * Construct a new DateRange object.
-   * @param {Object=} $actioninfo an object with the following immutable properties:
-   * @param {string} $actioninfo.name the name of the important date
-   * @param {Date} $actioninfo.start_time the start time of the important date
-   * @param {Date=} $actioninfo.end_time the start end of the important date
+   * @param {!Object} jsondata a JSON object that validates against some schema?
+   * @param {string} jsondata.name the name of this date range
+   * @param {string} jsondata.$start the start date/time of this date range, in ISO string format
+   * @param {string=} jsondata.$end the end date/time of this date range, in ISO string format
+   * @param {string=} jsondata.url the url of this date range
+   * @param {boolean=} jsondata.$starred whether this date range is starred
    */
-  constructor(name, start, end) {
-    /** @private @final */ this._NAME  = name
-    /** @private @final */ this._START = start
-    /** @private @final */ this._END   = end
-    /** @private */        this._url          = ''
-    /** @private */        this._is_starred   = false
+  constructor(jsondata) {
+    /**
+     * All the data for this pass.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
   }
 
   /**
-   * @summary Get the name of this date range.
+   * @summary The name of this date range.
    * @type {string}
    */
   get name() {
-    return this._NAME
+    return this._DATA.name
   }
 
   /**
-   * @summary Return the start date value of this date range.
+   * @summary The start date value of this date range.
    * @type {Date}
    */
   get start() {
-    return this._START
+    return new Date(this._DATA.$start || null)
   }
 
   /**
-   * @summary Return the end date value of this date range.
+   * @summary The end date value of this date range.
    * @type {?Date}
    */
   get end() {
-    return this._END || null
+    return (this._DATA.$end) ? new Date(this._DATA.$end) : null
   }
 
   /**
-   * @summary Set or get the url of this date range.
-   * @param   {string=} url the url of this date range
-   * @returns {(DateRange|string)} this date range || the url of this date range
+   * @summary The url of this date range.
+   * @type {string}
    */
   url(url) {
-    if (arguments.length) {
-      this._url = url
-      return this
-    } else return this._url
+    return this._DATA.url
   }
 
   /**
-   * @summary Mark this date range as starred.
-   * @param   {boolean=} bool if `true`, mark as starred
-   * @returns {DateRange} this date range
-   */
-  star(bool = true) {
-    this._is_starred = bool
-    return this
-  }
-  /**
-   * @summary Get the starred status of this date range.
-   * @returns {boolean} whether this date range is starred
+   * @summary Whether this date range is starred.
+   * @type {boolean}
    */
   isStarred() {
-    return this._is_starred
+    return this._DATA.$starred || false
   }
 
 
