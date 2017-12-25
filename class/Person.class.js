@@ -290,8 +290,8 @@ class Person {
           ]),
           // new HTMLElement('div').class('c-Speaker__Body').attr('itemprop','description'),
           new HTMLElement('footer').class('c-Speaker__Foot').addContent(pug`
-            include ../_views/_c-SocialList.view.pug
-            +socialList(${this.getSocialAll()}).c-SocialList--speaker
+            ${Util.view(this.getSocialAll()).socialList('c-SocialList--speaker')}
+            ul.o-List.o-Flex.c-SocialList.c-SocialList--speaker
               if ${this.email}
                 li.o-List__Item.o-Flex__Item.c-SocialList__Item
                   a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href="mailto:${this.email}" itemprop="email")

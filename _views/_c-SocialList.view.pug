@@ -1,7 +1,0 @@
-mixin socialList($social_obj)
-  ul.o-List.o-Flex.c-SocialList&attributes(attributes)
-    block
-    each $val,key in $social_obj
-      li.o-List__Item.o-Flex__Item.c-SocialList__Item
-        a.c-SocialList__Link.h-Block(class=`c-SocialList__Link--${key}` href=$val.url itemprop="sameAs")
-          span.h-Hidden= $val.text || Util.SOCIAL_DATA[key].name
