@@ -66,7 +66,7 @@ class SupporterLevel {
             new HTMLElement('h1').class('c-SupporterBlock__Hn').addContent(this.name),
             new HTMLElement('ul').class('o-List o-Flex c-SupporterBlock__List').addContent(
               $conference.getSupportersAll()
-                .filter(($supporter) => $supporter.level()===this.name)
+                .filter(($supporter) => $supporter.level===this.name)
                 .map(($supporter) =>
                   new HTMLElement('li').class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
                     .attr({ itemprop:'sponsor', itemscope:'', itemtype:'http://schema.org/Organization' })
