@@ -554,11 +554,11 @@ var jsondata = {
           "affiliation": "German Chamber of Architects",
           "$starred"   : true
       })
-        .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
-        .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
-        .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
-        .addSocial('google'  , '#0', 'Donna’s Google+ Profile')
-        .addSocial('youtube' , '#0', 'Donna’s YouTube Channel')
+        .addSocial({ "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" })
+        .addSocial({ "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" })
+        .addSocial({ "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" })
+        .addSocial({ "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" })
+        .addSocial({ "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" })
         // .setBio(`<p>Donna Fulman is an award-winning, German designer raised in Austria
         //   and currently living in New York City.</p>
         //   <p>Former Lead Product Designer and Art Director at Spotify, she recently founded
@@ -582,11 +582,11 @@ var jsondata = {
           "affiliation": "Los Angeles Department of Water and Power",
           "$starred"   : false
       })
-        .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
-        .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
-        .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
-        .addSocial('google'  , '#0', 'Donna’s Google+ Profile')
-        .addSocial('youtube' , '#0', 'Donna’s YouTube Channel')
+        .addSocial({ "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" })
+        .addSocial({ "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" })
+        .addSocial({ "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" })
+        .addSocial({ "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" })
+        .addSocial({ "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" })
         // .setBio(`<p>Susan R. Rowghani is the Director of Water Engineering and
         //   Technical Services (WETS) at the Los Angeles Department of Water and Power (LADWP),
         //   the largest municipally owned utility in the US. In this role, she is responsible
@@ -610,11 +610,11 @@ var jsondata = {
           "affiliation": "Planning & Development Group (PDG), Los Angeles World Airports",
           "$starred"   : true
       })
-        .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
-        .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
-        .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
-        .addSocial('google'  , '#0', 'Donna’s Google+ Profile')
-        .addSocial('youtube' , '#0', 'Donna’s YouTube Channel')
+        .addSocial({ "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" })
+        .addSocial({ "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" })
+        .addSocial({ "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" })
+        .addSocial({ "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" })
+        .addSocial({ "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" })
         // .setBio(`<p>Diego currently serves Los Angeles World Airports (LAWA)
         //   in the Planning & Development Group (PDG) as the Director of Modernization
         //   and Development. In this charge, Diego works on major elements of Los Angeles
@@ -645,11 +645,11 @@ var jsondata = {
           "affiliation": "Oklahoma Geological Survey",
           "$starred"   : false
       })
-        .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
-        .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
-        .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
-        .addSocial('google'  , '#0', 'Donna’s Google+ Profile')
-        .addSocial('youtube' , '#0', 'Donna’s YouTube Channel')
+        .addSocial({ "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" })
+        .addSocial({ "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" })
+        .addSocial({ "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" })
+        .addSocial({ "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" })
+        .addSocial({ "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" })
         // .setBio(`<p>Jeremy Boak started as Director of the Oklahoma Geological Survey
         //   in July 2015. He was Director of the Center for Oil Shale Technology and Research
         //   at the Colorado School of Mines from 2008-2015. Before that, he was a project
@@ -677,11 +677,11 @@ var jsondata = {
           "affiliation": "University of Oklahoma",
           "$starred"   : true
       })
-        .addSocial('linkedin', '#0', 'Connect with Donna on LinkedIn')
-        .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
-        .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
-        .addSocial('google'  , '#0', 'Donna’s Google+ Profile')
-        .addSocial('youtube' , '#0', 'Donna’s YouTube Channel')
+        .addSocial({ "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" })
+        .addSocial({ "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" })
+        .addSocial({ "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" })
+        .addSocial({ "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" })
+        .addSocial({ "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" })
         // .setBio(`<p>Prof. K.K. “Muralee” Muraleetharan is an Associate Director of OU’s
         //   National Institute for Risk and Resilience. He joined OU in 1994 after working
         //   as a consulting engineer in California for 6 years. He is a registered

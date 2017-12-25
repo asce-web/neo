@@ -139,13 +139,14 @@ class Person {
 
   /**
    * @summary Add a social network profile to this person.
-   * @param   {string} network_name the name of the social network
-   * @param   {string} url the URL of this person’s profile on the network
-   * @param   {string=} text optional advisory text
+   * @param   {!Object} jsonurl data
+   * @param   {string} jsonurl.name the name of the social network
+   * @param   {string} jsonurl.url the URL of this person’s profile on the network
+   * @param   {string=} jsonurl.description optional advisory text
    * @returns {Person} this person
    */
-  addSocial(network_name, url, text) {
-    this._social[network_name] = { url: url, text: text }
+  addSocial(jsonurl) {
+    this._social[jsonurl.name] = { url: jsonurl.url, text: jsonurl.description }
     return this
   }
   /**
