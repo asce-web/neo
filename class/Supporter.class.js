@@ -1,64 +1,37 @@
 const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
+const Organization = require('./Organization.class.js')
 
 /**
  * An organization supporting a conference or series of conferences.
+ * @extends Organization
  */
-class Supporter {
+class Supporter extends Organization {
   /**
-   * Construct a supporter object, given an (immutable) name.
-   * @param {string} name the name of the supporting organization
+   * Construct a new Supporter object.
+   * @param {!Object} jsondata a JSON object
+   * @param {string} jsondata.name the name of the organization
+   * @param {string=} jsondata.url the url of the organization
+   * @param {string=} jsondata.image the image url of the organization
+   * @param {string=} json.$level the level of the supporting organization
    */
-  constructor(name) {
-    /** @private @final */ this._NAME = name
-    /** @private */ this._url   = ''
-    /** @private */ this._img   = ''
-    /** @private */ this._level = ''
+  constructor(jsondata) {
+    super(jsondata)
+    /**
+     * All the data for this supporter.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
   }
 
   /**
-   * @summary Get the name of this supporter.
+   * @summary The supporter level in which this supporter belongs.
    * @type {string}
    */
-  get name() {
-    return this._NAME
-  }
-
-  /**
-   * @summary Set or get the URL of this supporter.
-   * @param   {string=} url the URL of this supporter
-   * @returns {(Supporter|string)} this supporter || the URL of this suppoter
-   */
-  url(url) {
-    if (arguments.length) {
-      this._url = url
-      return this
-    } else return this._url
-  }
-
-  /**
-   * @summary Set or get the image of this supporter.
-   * @param   {string=} img the image of this supporter
-   * @returns {(Supporter|string)} this supporter || the image of this suppoter
-   */
-  img(img) {
-    if (arguments.length) {
-      this._img = img
-      return this
-    } else return this._img
-  }
-
-  /**
-   * @summary Set or get the supporter level in which this supporter belongs.
-   * @see SupporterLevel
-   * @param   {string=} level a string matching a the name of a SupporterLevel; the level this supporter belongs in
-   * @returns {(Supporter|string)} this supporter || name of the corresponding SupporterLevel object
-   */
-  level(level) {
-    if (arguments.length) {
-      this._level = level
-      return this
-    } else return this._level
+  get level() {
+    return this._DATA.$level || ''
   }
 
 
@@ -85,11 +58,11 @@ class Supporter {
       .addDisplay(function supporterBlock() {
         return new HTMLElement('a').attr({
           'data-instanceof': 'Supporter',
-          href    : this.url(),
+          href    : this.url,
           rel     : 'external nofollow',
           itemprop: 'url'
         }).addContent([
-          new HTMLElement('img').class('c-SupporterBlock__Logo').attr({ src:this.img(), alt:this.name, itemprop:'logo' }),
+          new HTMLElement('img').class('c-SupporterBlock__Logo').attr({ src:this.img, alt:this.name, itemprop:'logo' }),
           new HTMLElement('meta').attr({ content:this.name, itemprop:'name' }),
         ]).html()
       })

@@ -199,6 +199,201 @@ var jsondata = {
       { "@type": "Action", "name": 'Convention Begins'             , "startTime": "2016-06-12"                          , "$starred": true                             },
       { "@type": "Action", "name": 'Convention Ends'               , "startTime": "2016-06-15"                                                                         },
       { "@type": "Action", "name": 'Convention Dates'              , "startTime": "2016-09-28", "$endTime": "2016-10-01", "$starred": true                             }
+    ],
+    "sponsor": [
+      {
+        "@type" : "Organization",
+        "name"  : "ASCE Foundation",
+        "url"   : "http://www.ascefoundation.org/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/asce-foundation-logo.png",
+        "$level": "Platinum"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Bentley",
+        "url"   : "https://www.bentley.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bentley-logo.png",
+        "$level": "Platinum"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Pennoni",
+        "url"   : "https://www.pennoni.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/pennoni-50th-anniversary-logo.png",
+        "$level": "Silver"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Innovyze",
+        "url"   : "http://www.innovyze.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/innovyze-logo.png",
+        "$level": "Silver"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Fasten Group",
+        "url"   : "http://www.chinafasten.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/fasten-group-logo.png",
+        "$level": "Bronze"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "David Evans and Associates, Inc",
+        "url"   : "http://www.deainc.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/david-evans-associates-logo.png",
+        "$level": "Bronze"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "KCI Technologies",
+        "url"   : "http://www.kci.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/kci-technologies-logo.png",
+        "$level": "Bronze"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "McCormick & Taylor",
+        "url"   : "http://www.mccormicktaylor.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/mccormick-taylor-logo.png",
+        "$level": "Bronze"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Rutgers Center for Advanced Infrastructure and Transportation",
+        "url"   : "http://cait.rutgers.edu/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/rutgers-cait-logo.png",
+        "$level": "Copper"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Kimley-Horn",
+        "url"   : "http://www.kimley-horn.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/kimley-horn-logo.png",
+        "$level": "Copper"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Christopher B. Burke Engineering, Ltd",
+        "url"   : "http://cbbel.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/christopher-b-burke-engineering-logo.png",
+        "$level": "Copper"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Bank of America",
+        "url"   : "http://www.asce.org/member_advantages/#b",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg",
+        "$level": "Corporate"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Geico",
+        "url"   : "https://www.geico.com/landingpage/member-discount/?logo=00774",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png",
+        "$level": "Corporate"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Pearl Insurance",
+        "url"   : "http://asceinsurance.com/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/pearl-insurance-logo.jpg",
+        "$level": "Corporate"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "UPS",
+        "url"   : "http://savewithups.com/asce/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg",
+        "$level": "Corporate"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Keller North America",
+        "url"   : "http://www.keller.co.uk/",
+        "image" : "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/keller-na-logo.png",
+        "$level": "Corporate"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "American Cast Iron Pipe Company",
+        "url"   : "http://www.american-usa.com/",
+        "image" : "http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/american-cast-iron-pipe-company-logo.png",
+        "$level": "Charter Members"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Cardno",
+        "url"   : "http://www.cardno.com/en-us/Pages/Home.aspx",
+        "image" : "http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/cardno-logo.png",
+        "$level": "Charter Members"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Innovyze",
+        "url"   : "http://innovyze.com/",
+        "image" : "http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/innovyze-logo.png",
+        "$level": "Charter Members"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Plastics Pipe Institute",
+        "url"   : "http://plasticpipe.org/",
+        "image" : "http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/plastics-pipe-institute-logo.png",
+        "$level": "Charter Members"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Pure Technologies",
+        "url"   : "https://www.puretechltd.com/",
+        "image" : "http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/pure-technologies-logo.png",
+        "$level": "Charter Members"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "Structural Technologies",
+        "url"   : "http://www.structuraltechnologies.com/",
+        "image" : "http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/structural-technologies-logo.png",
+        "$level": "Charter Members"
+      },
+      {
+        "@type" : "Organization",
+        "name"  : "GIEES",
+        "url"   : "http://giees.org/",
+        "image" : "http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/giees-coop-logo.png",
+        "$level": "Cooperating Organizations"
+      }
+    ],
+    "$exhibitors": [
+      {
+        "@type": "Organization",
+        "name"       : "AISC",
+        "url"        : "https://www.aisc.org/",
+        "image"      : "https://www.aisc.org/globalassets/aisc/images/logos/aisc_logo-180.png",
+        "$booth"     : 25,
+        "description": "The American Institute of Steel Construction (AISC),\
+          headquartered in Chicago, is a not-for-profit technical institute and\
+          trade association established in 1921 to serve the structural steel design community\
+          and construction industry in the United States."
+      },
+      {
+        "@type": "Organization",
+        "name"       : "Geopier Foundations",
+        "url"        : "http://www.geopier.com/",
+        "image"      : "http://www.geopier.com/~/media/Images/Geopier/Tensar_GEOPIER_Logo_186x80.ashx?h=80&la=en&w=186",
+        "$booth"     : 16,
+        "description": "Geopier developed Rammed Aggregate Pier® (RAP) Systems\
+          as efficient and cost effective intermediate foundation solutions for\
+          the support of settlement sensitive structures."
+      },
+      {
+        "@type": "Organization",
+        "name"       : "Geico",
+        "url"        : "https://www.geico.com/landingpage/member-discount/?logo=00774",
+        "image"      : "https://www.geico.com/public/experiments/3.0/images/geico-logo.svg",
+        "$booth"     : 9,
+        "$isSponsor" : true,
+        "description": "See how much more you could save with a special discount on auto insurance."
+      }
     ]
 },
 "json2015": {
@@ -284,149 +479,6 @@ var jsondata = {
       .addSupporterLevelQueue('orgs', ['Charter Members', 'Cooperating Organizations'])
       .addSupporterLevelQueue('home-page', ['Platinum', 'Silver', 'Bronze'])
       .addSupporterLevelQueue('sponsors-page', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper', 'Charter Members', 'Cooperating Organizations'])
-
-    site.currentConference
-      .addSupporter(new Supporter('ASCE Foundation')
-        .url('http://www.ascefoundation.org/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/asce-foundation-logo.png')
-        .level('Platinum')
-      )
-      .addSupporter(new Supporter('Bentley')
-        .url('https://www.bentley.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bentley-logo.png')
-        .level('Platinum')
-      )
-      .addSupporter(new Supporter('Pennoni')
-        .url('https://www.pennoni.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/pennoni-50th-anniversary-logo.png')
-        .level('Silver')
-      )
-      .addSupporter(new Supporter('Innovyze')
-        .url('http://www.innovyze.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/innovyze-logo.png')
-        .level('Silver')
-      )
-      .addSupporter(new Supporter('Fasten Group')
-        .url('http://www.chinafasten.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/fasten-group-logo.png')
-        .level('Bronze')
-      )
-      .addSupporter(new Supporter('David Evans and Associates, Inc.')
-        .url('http://www.deainc.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/david-evans-associates-logo.png')
-        .level('Bronze')
-      )
-      .addSupporter(new Supporter('KCI Technologies')
-        .url('http://www.kci.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/kci-technologies-logo.png')
-        .level('Bronze')
-      )
-      .addSupporter(new Supporter('McCormick & Taylor')
-        .url('http://www.mccormicktaylor.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/mccormick-taylor-logo.png')
-        .level('Bronze')
-      )
-      .addSupporter(new Supporter('Rutgers Center for Advanced Infrastructure and Transportation')
-        .url('http://cait.rutgers.edu/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/rutgers-cait-logo.png')
-        .level('Copper')
-      )
-      .addSupporter(new Supporter('Kimley-Horn')
-        .url('http://www.kimley-horn.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/kimley-horn-logo.png')
-        .level('Copper')
-      )
-      .addSupporter(new Supporter('Christopher B. Burke Engineering, Ltd.')
-        .url('http://cbbel.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/christopher-b-burke-engineering-logo.png')
-        .level('Copper')
-      )
-      .addSupporter(new Supporter('Bank of America')
-        .url('http://www.asce.org/member_advantages/#b')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg')
-        .level('Corporate')
-      )
-      .addSupporter(new Supporter('Geico')
-        .url('https://www.geico.com/landingpage/member-discount/?logo=00774')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png')
-        .level('Corporate')
-      )
-      .addSupporter(new Supporter('Pearl Insurance')
-        .url('http://asceinsurance.com/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/pearl-insurance-logo.jpg')
-        .level('Corporate')
-      )
-      .addSupporter(new Supporter('UPS')
-        .url('http://savewithups.com/asce/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg')
-        .level('Corporate')
-      )
-      .addSupporter(new Supporter('Keller North America')
-        .url('http://www.keller.co.uk/')
-        .img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/keller-na-logo.png')
-        .level('Corporate')
-      )
-      .addSupporter(new Supporter('American Cast Iron Pipe Company')
-        .url('http://www.american-usa.com/')
-        .img('http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/american-cast-iron-pipe-company-logo.png')
-        .level('Charter Members')
-      )
-      .addSupporter(new Supporter('Cardno')
-        .url('http://www.cardno.com/en-us/Pages/Home.aspx')
-        .img('http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/cardno-logo.png')
-        .level('Charter Members')
-      )
-      .addSupporter(new Supporter('Innovyze')
-        .url('http://innovyze.com/')
-        .img('http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/innovyze-logo.png')
-        .level('Charter Members')
-      )
-      .addSupporter(new Supporter('Plastics Pipe Institute')
-        .url('http://plasticpipe.org/')
-        .img('http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/plastics-pipe-institute-logo.png')
-        .level('Charter Members')
-      )
-      .addSupporter(new Supporter('Pure Technologies')
-        .url('https://www.puretechltd.com/')
-        .img('http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/pure-technologies-logo.png')
-        .level('Charter Members')
-      )
-      .addSupporter(new Supporter('Structural Technologies')
-        .url('http://www.structuraltechnologies.com/')
-        .img('http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/structural-technologies-logo.png')
-        .level('Charter Members')
-      )
-      .addSupporter(new Supporter('GIEES')
-        .url('http://giees.org/')
-        .img('http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/giees-coop-logo.png')
-        .level('Cooperating Organizations')
-      )
-
-    site.currentConference
-      .addExhibitor(new Exhibitor('AISC')
-        .url('https://www.aisc.org/')
-        .img('https://www.aisc.org/globalassets/aisc/images/logos/aisc_logo-180.png')
-        .setDescription('The American Institute of Steel Construction (AISC),\
-          headquartered in Chicago, is a not-for-profit technical institute and\
-          trade association established in 1921 to serve the structural steel design community\
-          and construction industry in the United States.')
-        .booth(25)
-      )
-      .addExhibitor(new Exhibitor('Geopier Foundations')
-        .url('http://www.geopier.com/')
-        .img('http://www.geopier.com/~/media/Images/Geopier/Tensar_GEOPIER_Logo_186x80.ashx?h=80&la=en&w=186')
-        .setDescription('Geopier developed Rammed Aggregate Pier® (RAP) Systems\
-          as efficient and cost effective intermediate foundation solutions for\
-          the support of settlement sensitive structures.')
-        .booth(16)
-      )
-      .addExhibitor(new Exhibitor('Geico')
-        .url('https://www.geico.com/landingpage/member-discount/?logo=00774')
-        .img('https://www.geico.com/public/experiments/3.0/images/geico-logo.svg')
-        .setDescription('See how much more you could save with a special discount on auto insurance.')
-        .booth(9)
-        .isSponsor(true)
-      )
 
     //- site.currentConference
     //-   .setPrice('Early Bird', 'Standard Pass' , 'Member'    ,  745)
