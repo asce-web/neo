@@ -132,13 +132,7 @@ html(lang="en")
           meta(content="United States of America" itemprop="areaServed")
           meta(content="customer support" itemprop="contactType")
         include ../../_views/_c-SocialList.view.pug
-        +socialList({
-          twitter : { url: '//twitter.com/ASCE'    , text: 'Follow ASCE on Twitter' }
-        , google  : { url: '//plus.google.com/ASCE', text: 'Follow ASCE on Google+' }
-        , facebook: { url: '//facebook.com/ASCE'   , text: 'Like ASCE on Facebook' }
-        , linkedin: { url: '//linkedin.com/ASCE'   , text: 'Connect with ASCE on LinkedIn' }
-        , youtube : { url: '//youtube.com/ASCE'    , text: 'Watch ASCE on YouTube' }
-        }).c-SocialList--footer
+        +socialList(site.getSocialAll()).c-SocialList--footer
         p: small
           | &copy; #[time 1996]&ndash;#[time 2016],#{' '}
           span(itemprop="name") American Society of Civil Engineers

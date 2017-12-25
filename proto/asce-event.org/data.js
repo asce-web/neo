@@ -528,6 +528,11 @@ var jsondata = {
         },
         "affiliation": "HNTB Corporation"
       }
+    ],
+    "sameAs": [
+      { "@type": "URL", "name": "twitter" , "url": "https://twitter.com/hashtag/#asce2016", "description": "Follow #ASCE2016 on Twitter" },
+      { "@type": "URL", "name": "google"  , "url": "#0"                                   , "description": "Follow #ASCE2016 on Google+" },
+      { "@type": "URL", "name": "facebook", "url": "#0"                                   , "description": "Follow #ASCE2016 on Facebook" },
     ]
 },
 "json2015": {
@@ -591,6 +596,13 @@ var jsondata = {
   "currentConference" : "json2016",
   "previousConference": "json2015",
   "nextConference"    : "json2017",
+  "sameAs": [
+    { "@type": "URL", "name": "twitter" , "url": "//twitter.com/ASCE"    , "description": "Follow ASCE on Twitter" },
+    { "@type": "URL", "name": "google"  , "url": "//plus.google.com/ASCE", "description": "Follow ASCE on Google+" },
+    { "@type": "URL", "name": "facebook", "url": "//facebook.com/ASCE"   , "description": "Like ASCE on Facebook" },
+    { "@type": "URL", "name": "linkedin", "url": "//linkedin.com/ASCE"   , "description": "Connect with ASCE on LinkedIn" },
+    { "@type": "URL", "name": "youtube" , "url": "//youtube.com/ASCE"    , "description": "Watch ASCE on YouTube" }
+  ]
 }
 
 
@@ -713,11 +725,6 @@ var jsondata = {
         //   using small-scale (e.g. centrifuge models) and full-scale testing, and
         //   resilience of infrastructure following extreme events. His computer simulation
         //   research involves scalable, parallel computing using finite element frameworks.</p>`)
-
-    site.currentConference
-      .addSocial('twitter', 'https://twitter.com/hashtag/#asce2016', 'Follow #ASCE2016 on Twitter')
-      .addSocial('google', '#0', 'Follow #ASCE2016 on Google+')
-      .addSocial('facebook', '#0', 'Follow #ASCE2016 on Facebook')
 
     var rawdata = {
       comment: 'this is draft data that I don’t want to delete yet'
