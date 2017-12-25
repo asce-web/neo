@@ -362,6 +362,38 @@ var jsondata = {
         "image" : "http://www.pipelinesconference.org/sites/pipelinesconference.org/files/sponsors/giees-coop-logo.png",
         "$level": "Cooperating Organizations"
       }
+    ],
+    "$exhibitors": [
+      {
+        "@type": "Organization",
+        "name"       : "AISC",
+        "url"        : "https://www.aisc.org/",
+        "image"      : "https://www.aisc.org/globalassets/aisc/images/logos/aisc_logo-180.png",
+        "$booth"     : 25,
+        "description": "The American Institute of Steel Construction (AISC),\
+          headquartered in Chicago, is a not-for-profit technical institute and\
+          trade association established in 1921 to serve the structural steel design community\
+          and construction industry in the United States."
+      },
+      {
+        "@type": "Organization",
+        "name"       : "Geopier Foundations",
+        "url"        : "http://www.geopier.com/",
+        "image"      : "http://www.geopier.com/~/media/Images/Geopier/Tensar_GEOPIER_Logo_186x80.ashx?h=80&la=en&w=186",
+        "$booth"     : 16,
+        "description": "Geopier developed Rammed Aggregate Pier® (RAP) Systems\
+          as efficient and cost effective intermediate foundation solutions for\
+          the support of settlement sensitive structures."
+      },
+      {
+        "@type": "Organization",
+        "name"       : "Geico",
+        "url"        : "https://www.geico.com/landingpage/member-discount/?logo=00774",
+        "image"      : "https://www.geico.com/public/experiments/3.0/images/geico-logo.svg",
+        "$booth"     : 9,
+        "$isSponsor" : true,
+        "description": "See how much more you could save with a special discount on auto insurance."
+      }
     ]
 },
 "json2015": {
@@ -447,41 +479,6 @@ var jsondata = {
       .addSupporterLevelQueue('orgs', ['Charter Members', 'Cooperating Organizations'])
       .addSupporterLevelQueue('home-page', ['Platinum', 'Silver', 'Bronze'])
       .addSupporterLevelQueue('sponsors-page', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper', 'Charter Members', 'Cooperating Organizations'])
-
-    site.currentConference
-      .addExhibitor(new Exhibitor({
-        "@type": "Organization",
-        "name"       : "AISC",
-        "url"        : "https://www.aisc.org/",
-        "image"      : "https://www.aisc.org/globalassets/aisc/images/logos/aisc_logo-180.png",
-        "$booth"     : 25,
-        "description": "The American Institute of Steel Construction (AISC),\
-          headquartered in Chicago, is a not-for-profit technical institute and\
-          trade association established in 1921 to serve the structural steel design community\
-          and construction industry in the United States."
-      })
-      )
-      .addExhibitor(new Exhibitor({
-        "@type": "Organization",
-        "name"       : "Geopier Foundations",
-        "url"        : "http://www.geopier.com/",
-        "image"      : "http://www.geopier.com/~/media/Images/Geopier/Tensar_GEOPIER_Logo_186x80.ashx?h=80&la=en&w=186",
-        "$booth"     : 16,
-        "description": "Geopier developed Rammed Aggregate Pier® (RAP) Systems\
-          as efficient and cost effective intermediate foundation solutions for\
-          the support of settlement sensitive structures."
-      })
-      )
-      .addExhibitor(new Exhibitor({
-        "@type": "Organization",
-        "name"       : "Geico",
-        "url"        : "https://www.geico.com/landingpage/member-discount/?logo=00774",
-        "image"      : "https://www.geico.com/public/experiments/3.0/images/geico-logo.svg",
-        "$booth"     : 9,
-        "$isSponsor" : true,
-        "description": "See how much more you could save with a special discount on auto insurance."
-      })
-      )
 
     //- site.currentConference
     //-   .setPrice('Early Bird', 'Standard Pass' , 'Member'    ,  745)

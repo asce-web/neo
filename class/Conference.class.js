@@ -9,6 +9,7 @@ const DateRange = require('./DateRange.class.js')
 const PostalAddress = require('./PostalAddress.class.js')
 const Venue = require('./Venue.class.js')
 const Supporter = require('./Supporter.class.js')
+const Exhibitor = require('./Exhibitor.class.js')
 
 /**
  * A conference event.
@@ -37,6 +38,7 @@ class Conference {
    * @param {Array<!Object>=} jsondata.subEvent a list of sessions; types {@link http://schema.org/Event}
    * @param {Array<!Object>=} jsondata.potentialAction a list of sessions; types {@link http://schema.org/Action}
    * @param {Array<!Object>=} jsondata.sponsor a list of supporters including non-sponsoring organizations; type {@link http://schema.org/Organization}
+   * @param {Array<!Object>=} jsondata.$exhibitors a list of exhibitors; type {@link http://schema.org/Organization}
    */
   constructor(jsondata) {
     /**
@@ -50,7 +52,6 @@ class Conference {
     /** @private */ this._speakers        = []
     /** @private */ this._supporter_levels = []
     /** @private */ this._supporter_lists  = {}
-    /** @private */ this._exhibitors       = []
     /** @private */ this._organizers      = []
     /** @private */ this._social          = {}
   }
@@ -271,36 +272,30 @@ class Conference {
   }
   /**
    * @summary Retrieve all supporters of this conference.
+   * @todo TODO turn this into a getter
    * @returns {Array<Supporter>} a shallow array of all supporters of this conference
    */
   getSupportersAll() {
-    // TODO turn this into a getter
     return (this._DATA.sponsor || []).map(($org) => new Supporter($org))
   }
 
-  /**
-   * @summary Add an exhibitor to this conference.
-   * @param   {Exhibitor} $exhibitor the exhibitor to add
-   * @returns {Conference} this conference
-   */
-  addExhibitor($exhibitor) {
-    this._exhibitors.push($exhibitor)
-    return this
-  }
   /**
    * @summary Retrieve an exhibitor of this conference.
    * @param   {string} name the name of the exhibitor
    * @returns {?Exhibitor} the specified exhibitor
    */
   getExhibitor(name) {
-    return this._exhibitors.find(($exhibitor) => $exhibitor.name===name) || null
+    let exhibitor = (this._DATA.$exhibitors || []).find(($org) => $org.name===name)
+    return (exhibitor) ? new Exhibitor(exhibitor) : null
+    // return this.getExhibitorsAll().find(($exhibitor) => $exhibitor.name===name) || null // TODO use this pattern instead
   }
   /**
    * @summary Retrieve all exhibitors of this conference.
+   * @todo TODO turn this into a getter
    * @returns {Array<Exhibitor>} a shallow array of all exhibitors of this conference
    */
   getExhibitorsAll() {
-    return this._exhibitors.slice()
+    return (this._DATA.$exhibitors || []).map(($org) => new Exhibitor($org))
   }
 
   /**
