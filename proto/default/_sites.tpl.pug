@@ -83,8 +83,7 @@ html(lang="en")
               (see external demo of
               #[a(href="http://go.asce.org/static/sponsors/") sponsors carousel]
               by rank)
-            each $supporterLevel,index in site.currentConference.getSupporterLevelQueue('home-page')
-              != $supporterLevel.view.supporterBlock(site.currentConference)
+            != site.currentConference.view.supporterLevels(['Platinum', 'Silver', 'Bronze'])
             -
               let highlight_buttons = [
                 new HTMLElement('a').attr('href','sponsor.html').addContent(`All Sponsors`)

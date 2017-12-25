@@ -1,7 +1,9 @@
 const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
+const HTMLUListElement = require('extrajs-dom').HTMLUListElement
 const HTMLDListElement = require('extrajs-dom').HTMLDListElement
+const HTMLLIElement = require('extrajs-dom').HTMLLIElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 const RegistrationPeriod = require('./RegistrationPeriod.class.js')
@@ -526,6 +528,31 @@ class Conference {
             ),
           ])
           .html()
+      })
+      /**
+       * Return a `<section.c-SupporterBlock>` component containing this conference’s supporters
+       * that have the specified level.
+       * @summary Call `Conference#view.supporterLevels()` to render this display.
+       * @function Conference.VIEW.supporterLevels
+       * @param   {Array<string>} levels the levels of supporter to display, in the correct order
+       * @returns {string} HTML output
+       */
+      .addDisplay(function supporterLevels(levels) {
+        return Util.documentFragment(levels.map((level) =>
+          new HTMLElement('section').class('c-SupporterBlock')
+            .addContent([
+              new HTMLElement('h1').class('c-SupporterBlock__Hn').addContent(level),
+              new HTMLUListElement().class('o-List o-Flex c-SupporterBlock__List').addContent(
+                this.getSupportersAll()
+                  .filter((supporter) => supporter.level===level)
+                  .map((supporter) =>
+                    new HTMLLIElement().class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
+                      .attr({ itemprop:'sponsor', itemscope:'', itemtype:'http://schema.org/Organization' })
+                      .addContent(supporter.view())
+                  )
+              ),
+            ])
+        ))
       })
   }
 }

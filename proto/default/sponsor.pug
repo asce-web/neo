@@ -6,5 +6,5 @@ block append vars
 block sponsors
   section.o-Runner.o-Runner--highlight#thank-you-sponsors: div.o-Constrain
     h1 Thank You to Our Sponsors
-    each $supporterLevel,index in site.currentConference.getSupporterLevelQueue('sponsors-page')
-      != $supporterLevel.view.supporterBlock(site.currentConference)
+    != site.currentConference.view.supporterLevels(['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper'])
+    != site.currentConference.view.supporterLevels(['Charter Members', 'Cooperating Organizations'])

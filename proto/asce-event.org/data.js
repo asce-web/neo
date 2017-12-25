@@ -9,7 +9,6 @@
 const Util               = require('../../class/Util.class.js')
 const ConfSite           = require('../../class/ConfSite.class.js')
 const ConfPage           = require('../../class/ConfPage.class.js')
-const SupporterLevel     = require('../../class/SupporterLevel.class.js')
 const Person             = require('../../class/Person.class.js')
 
 var jsondata = {
@@ -611,20 +610,20 @@ var jsondata = {
 
 
     // REVIEW TODO move below Speakers
-    site.currentConference
-      .addSupporterLevel(new SupporterLevel('Platinum' , SupporterLevel.LogoSize.LARGE))
-      .addSupporterLevel(new SupporterLevel('Corporate', SupporterLevel.LogoSize.LARGE))
-      .addSupporterLevel(new SupporterLevel('Silver'   , SupporterLevel.LogoSize.MEDIUM))
-      .addSupporterLevel(new SupporterLevel('Bronze'   , SupporterLevel.LogoSize.MEDIUM))
-      .addSupporterLevel(new SupporterLevel('Copper'   , SupporterLevel.LogoSize.MEDIUM))
-      .addSupporterLevel(new SupporterLevel('Charter Members', SupporterLevel.LogoSize.SMALL))
-      .addSupporterLevel(new SupporterLevel('Cooperating Organizations', SupporterLevel.LogoSize.SMALL))
-
-    site.currentConference
-      .addSupporterLevelQueue('sponsors', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper'])
-      .addSupporterLevelQueue('orgs', ['Charter Members', 'Cooperating Organizations'])
-      .addSupporterLevelQueue('home-page', ['Platinum', 'Silver', 'Bronze'])
-      .addSupporterLevelQueue('sponsors-page', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper', 'Charter Members', 'Cooperating Organizations'])
+    // site.currentConference
+    //   .addSupporterLevel(new SupporterLevel('Platinum' , SupporterLevel.LogoSize.LARGE))
+    //   .addSupporterLevel(new SupporterLevel('Corporate', SupporterLevel.LogoSize.LARGE))
+    //   .addSupporterLevel(new SupporterLevel('Silver'   , SupporterLevel.LogoSize.MEDIUM))
+    //   .addSupporterLevel(new SupporterLevel('Bronze'   , SupporterLevel.LogoSize.MEDIUM))
+    //   .addSupporterLevel(new SupporterLevel('Copper'   , SupporterLevel.LogoSize.MEDIUM))
+    //   .addSupporterLevel(new SupporterLevel('Charter Members', SupporterLevel.LogoSize.SMALL))
+    //   .addSupporterLevel(new SupporterLevel('Cooperating Organizations', SupporterLevel.LogoSize.SMALL))
+    //
+    // site.currentConference
+    //   .addSupporterLevelQueue('sponsors', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper'])
+    //   .addSupporterLevelQueue('orgs', ['Charter Members', 'Cooperating Organizations'])
+    //   .addSupporterLevelQueue('home-page', ['Platinum', 'Silver', 'Bronze'])
+    //   .addSupporterLevelQueue('sponsors-page', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper', 'Charter Members', 'Cooperating Organizations'])
 
     //- site.currentConference
     //-   .setPrice('Early Bird', 'Standard Pass' , 'Member'    ,  745)
