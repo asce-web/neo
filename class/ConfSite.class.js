@@ -26,6 +26,10 @@ class ConfSite extends Page {
    * @param {string} jsondata.currentConference  the key of an existing conference; used as the current  conference in this series
    * @param {string} jsondata.previousConference the key of an existing conference; used as the previous conference in this series
    * @param {string} jsondata.nextConference     the key of an existing conference; used as the next     conference in this series
+   * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this site; type {@link http://schema.org/URL}
+   * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
+   * @param {string} jsondata.sameAs.url the URL of the site’s social media profile or page
+   * @param {string=} jsondata.sameAs.description short alternative text for non-visual media
    */
   constructor(jsondata) {
     super({ name: jsondata.name, url: jsondata.url })
@@ -143,6 +147,24 @@ class ConfSite extends Page {
   get nextConference() {
     return this.getConference(this._DATA.nextConference)
   }
+
+  /**
+   * @summary Retrieve a social network profile of this site.
+   * @param   {string} name the name of the social network
+   * @returns {?Object} an object representing the social network profile
+   */
+  getSocial(name) {
+    return this.getSocialAll().find((url) => url.name===name) || null
+  }
+  /**
+   * @summary Return an object representing all social network profiles of this conference.
+   * @todo TODO turn this into a getter
+   * @returns {Array<!Object>} all this site’s social media networks
+   */
+  getSocialAll() {
+    return (this._DATA.sameAs || []).map((url) => url)
+  }
+
 
   /**
    * @summary Initialize this site: add the proper pages.

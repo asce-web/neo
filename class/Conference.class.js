@@ -38,11 +38,16 @@ class Conference {
    * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
    * @param {Array<!Object>=} jsondata.subEvent a list of sessions; types {@link http://schema.org/Event}
    * @param {Array<!Object>=} jsondata.potentialAction a list of sessions; types {@link http://schema.org/Action}
+   * @param {Array<!Object>=} jsondata.performer a list of speakers at the conference; type {@link http://schema.org/Person}
    * @param {Array<!Object>=} jsondata.sponsor a list of supporters including non-sponsoring organizations; type {@link http://schema.org/Organization}
    * @param {Array<!Object>=} jsondata.$exhibitors a list of exhibitors; type {@link http://schema.org/Organization}
    * @param {Array<!Object>=} jsondata.organizer a list of organizers; type {@link http://schema.org/Person}
    *                                             An organizer is a chairperson, steering committee member,
    *                                             or other person who is responsible for organizing the conference.
+   * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this conference; type {@link http://schema.org/URL}
+   * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
+   * @param {string} jsondata.sameAs.url the URL of the conference’s social media profile or page
+   * @param {string=} jsondata.sameAs.description short alternative text for non-visual media
    */
   constructor(jsondata) {
     /**
@@ -53,10 +58,8 @@ class Conference {
      */
     this._DATA = jsondata
 
-    /** @private */ this._speakers        = []
     /** @private */ this._supporter_levels = []
     /** @private */ this._supporter_lists  = {}
-    /** @private */ this._organizers      = []
     /** @private */ this._social          = {}
   }
 
@@ -197,27 +200,20 @@ class Conference {
   }
 
   /**
-   * @summary Add a speaker to this conference.
-   * @param {Person} $person the speaker to add
-   */
-  addSpeaker($person) {
-    this._speakers.push($person)
-    return this
-  }
-  /**
    * @summary Retrieve a speaker of this conference.
    * @param   {string} id the id of the speaker
    * @returns {?Person} the specified speaker
    */
   getSpeaker(id) {
-    return this._speakers.find(($person) => $person.id===id) || null
+    return this.getSpeakersAll().find((person) => person.id===id) || null
   }
   /**
    * @summary Retrieve all speakers of this conference.
+   * @todo TODO turn this into a getter
    * @returns {Array<Person>} a shallow array of all speakers of this conference
    */
   getSpeakersAll() {
-    return this._speakers.slice()
+    return (this._DATA.performer || []).map((person) => new Person(person))
   }
 
   /**
@@ -339,31 +335,20 @@ class Conference {
   }
 
   /**
-   * @summary Add a social network profile to this conference.
-   * @param   {string} network_name the name of the social network
-   * @param   {string} url the URL of this conference’s profile on the network
-   * @param   {string=} text optional advisory text
-   * @returns {Conference} this conference
-   */
-  addSocial(network_name, url, text) {
-    this._social[network_name] = { url: url, text: text }
-    return this
-  }
-  /**
    * @summary Retrieve a social network profile of this conference.
-   * @param   {string} network_name the name of the social network
-   * @returns {Object} an object representing the social network profile
+   * @param   {string} name the name of the social network
+   * @returns {?Object} an object representing the social network profile
    */
-  getSocial(network_name) {
-    return this._social[network_name]
+  getSocial(name) {
+    return this.getSocialAll().find((url) => url.name===name) || null
   }
   /**
    * @summary Return an object representing all social network profiles of this conference.
-   * @returns {Object} shallow clone of this conference’s social object
+   * @todo TODO turn this into a getter
+   * @returns {Array<!Object>} all this conference’s social media networks
    */
   getSocialAll() {
-    //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._social)
+    return (this._DATA.sameAs || []).map((url) => url)
   }
 
   // setPrice(reg_period, pass, membership, price) {
