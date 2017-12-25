@@ -8,6 +8,7 @@ const Pass = require('./Pass.class.js')
 const DateRange = require('./DateRange.class.js')
 const PostalAddress = require('./PostalAddress.class.js')
 const Venue = require('./Venue.class.js')
+const Person = require('./Person.class.js')
 const Supporter = require('./Supporter.class.js')
 const Exhibitor = require('./Exhibitor.class.js')
 
@@ -39,6 +40,9 @@ class Conference {
    * @param {Array<!Object>=} jsondata.potentialAction a list of sessions; types {@link http://schema.org/Action}
    * @param {Array<!Object>=} jsondata.sponsor a list of supporters including non-sponsoring organizations; type {@link http://schema.org/Organization}
    * @param {Array<!Object>=} jsondata.$exhibitors a list of exhibitors; type {@link http://schema.org/Organization}
+   * @param {Array<!Object>=} jsondata.organizer a list of organizers; type {@link http://schema.org/Person}
+   *                                             An organizer is a chairperson, steering committee member,
+   *                                             or other person who is responsible for organizing the conference.
    */
   constructor(jsondata) {
     /**
@@ -316,29 +320,22 @@ class Conference {
   }
 
   /**
-   * @summary Add an organizer of this conference.
-   * An organizer is a chairperson, steering committee member, or other person who is
-   * responsible for organizing the conference.
-   * @param {Person} $person the organizer to add
-   */
-  addOrganizer($person) {
-    this._organizers.push($person)
-    return this
-  }
-  /**
    * @summary Retrieve an organizer of this conference.
    * @param   {string} id the name of the organizer
    * @returns {?Person} the specified organizer
    */
   getOrganizer(id) {
-    return this._organizers.find(($person) => $person.id===id) || null
+    let organizer = (this._DATA.organizer || []).find(($person) => $person.identifier===id)
+    return (organizer) ? new Person(organizer) : null
+    // return this.getOrganizersAll().find(($organizer) => $organizer.id===id) || null // TODO use this pattern instead
   }
   /**
    * @summary Retrieve all organizers of this conference.
+   * @todo TODO turn this into a getter
    * @returns {Array<Person>} a shallow array of all organizers of this conference
    */
   getOrganizersAll() {
-    return this._organizers.slice()
+    return (this._DATA.organizer || []).map(($person) => new Person($person))
   }
 
   /**

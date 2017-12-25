@@ -9,12 +9,8 @@
 const Util               = require('../../class/Util.class.js')
 const ConfSite           = require('../../class/ConfSite.class.js')
 const ConfPage           = require('../../class/ConfPage.class.js')
-const Conference         = require('../../class/Conference.class.js')
 const SupporterLevel     = require('../../class/SupporterLevel.class.js')
-const Supporter          = require('../../class/Supporter.class.js')
-const Exhibitor          = require('../../class/Exhibitor.class.js')
 const Person             = require('../../class/Person.class.js')
-const Pass               = require('../../class/Pass.class.js')
 
 var jsondata = {
   "@context"   : "http://schema.org/",
@@ -394,6 +390,31 @@ var jsondata = {
         "$isSponsor" : true,
         "description": "See how much more you could save with a special discount on auto insurance."
       }
+    ],
+    "organizer": [
+      {
+        "@type": "Person",
+        "identifier": "thomas-mccollough",
+        "$name": {
+          "givenName"      : "Thomas",
+          "additionalName" : "J.",
+          "familyName"     : "McCollough",
+          "honorificSuffix": "P.E., M.ASCE"
+        },
+        "affiliation": "HDR Engineering, Inc."
+      },
+      {
+        "@type": "Person",
+        "identifier": "stephen-dickenson",
+        "$name": {
+          "honorificPrefix": "Dr.",
+          "givenName"      : "Stephen",
+          "additionalName" : "E.",
+          "familyName"     : "Dickenson",
+          "honorificSuffix": "Ph.D., P.E., D.PE, M.ASCE"
+        },
+        "affiliation": "HNTB Corporation"
+      }
     ]
 },
 "json2015": {
@@ -678,31 +699,6 @@ var jsondata = {
         //   resilience of infrastructure following extreme events. His computer simulation
         //   research involves scalable, parallel computing using finite element frameworks.</p>`)
       )
-
-    site.currentConference
-      .addOrganizer(new Person({
-          "@type": "Person",
-          "identifier": "thomas-mccollough",
-          "$name": {
-            "givenName" : "Thomas",
-            "additionalName" : "J.",
-            "familyName": "McCollough",
-            "honorificSuffix" : "P.E., M.ASCE"
-          },
-          "affiliation": "HDR Engineering, Inc."
-      })
-      ).addOrganizer(new Person({
-          "@type": "Person",
-          "identifier": "stephen-dickenson",
-          "$name": {
-            "honorificPrefix" : "Dr.",
-            "givenName" : "Stephen",
-            "additionalName" : "E.",
-            "familyName": "Dickenson",
-            "honorificSuffix" : "Ph.D., P.E., D.PE, M.ASCE"
-          },
-          "affiliation": "HNTB Corporation"
-      }))
 
     site.currentConference
       .addSocial('twitter', 'https://twitter.com/hashtag/#asce2016', 'Follow #ASCE2016 on Twitter')
