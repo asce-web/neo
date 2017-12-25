@@ -1,3 +1,6 @@
+const HTMLElement  = require('extrajs-dom').HTMLElement
+const View         = require('extrajs-view')
+const Util         = require('./Util.class.js')
 const Organization = require('./Organization.class.js')
 
 /**
@@ -51,6 +54,35 @@ class Exhibitor extends Organization {
    */
   get isSponsor() {
     return this._DATA.$isSponsor || false
+  }
+
+
+  /**
+   * @summary Render this exhibitor in HTML.
+   * @see Exhibitor.VIEW
+   * @type {View}
+   */
+  get view() {
+    /**
+     * @summary This view object is a set of functions returning HTML output.
+     * @description Available displays:
+     * - `Exhibitor#view()` - default display
+     * @namespace Exhibitor.VIEW
+     * @type {View}
+     */
+    /**
+     * COMBAK Exhibitor view has not been decided yet.
+     * @summary Call `Exhibitor#view()` to render this display.
+     * @todo COMBAK Exhibitor view has not been decided yet.
+     * @function Exhibitor.VIEW.default
+     * @returns {string} HTML output
+     */
+    return new View(function () {
+      return Util.documentFragment([
+        new HTMLElement('a').class((this.isSponsor) ? '-fw-b' : null).attr('href', this.url).addContent(`${this.name} (booth ${this.booth})`),
+        new HTMLElement('img').attr('src', this.image || '#0').attr('alt', this.name),
+      ])
+    }, this)
   }
 }
 

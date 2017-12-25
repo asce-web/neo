@@ -9,5 +9,4 @@ block mainReference
     ul
       each $exhibitor in site.currentConference.getExhibitorsAll()
         li
-          a(href=$exhibitor.url class={'-fw-b':$exhibitor.isSponsor})= `${$exhibitor.name} (booth ${$exhibitor.booth})`
-          img(src=$exhibitor.image alt=`${$exhibitor.name}`)
+          != $exhibitor.view()
