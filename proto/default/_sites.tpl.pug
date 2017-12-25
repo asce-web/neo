@@ -90,7 +90,7 @@ html(lang="en")
               ]
             != Util.view(highlight_buttons).highlightButtons()
         +callout()
-          != site.currentConference.view.supporterLevels(site.getQueue('Non-Sponsors') || [])
+          != site.currentConference.view.supporterLevels(site.getQueue('Non-Sponsors') || [], true)
     footer.o-Runner.c-Mast.c-Mast--sitemap#sitemap: nav.o-Constrain
       h1.h-Hidden Sitemap
       -

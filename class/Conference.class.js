@@ -536,11 +536,14 @@ class Conference {
        * @function Conference.VIEW.supporterLevels
        * @param   {(Array<string>|!Object)} levels the levels of supporter to display, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
        * @param   {Array<string>=} levels.itemListElement if `levels` is an {@link http://schema.org/ItemList}, the levels of supporter to display, in the correct order
+       * @param   {boolean=} small if `true`, overrides logo sizing to small
        * @returns {string} HTML output
        */
-      .addDisplay(function supporterLevels(levels) {
-        return Util.documentFragment((levels.itemListElement || levels).map((level) =>
+      .addDisplay(function supporterLevels(levels, small = false) {
+        const supporterlevels = levels.itemListElement || ((xjs.Object.typeOf(levels) === 'array') ? levels : [])
+        return Util.documentFragment(supporterlevels.map((level, index) =>
           new HTMLElement('section').class('c-SupporterBlock')
+            .addClass((small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med') // TODO make small the default size
             .addContent([
               new HTMLElement('h1').class('c-SupporterBlock__Hn').addContent(level),
               new HTMLUListElement().class('o-List o-Flex c-SupporterBlock__List').addContent(
