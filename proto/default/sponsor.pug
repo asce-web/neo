@@ -4,7 +4,7 @@ block append vars
   - var page = site.find('sponsor.html')
 
 block sponsors
-  section.o-Runner.o-Runner--highlight#thank-you-sponsors: div.o-Constrain
+  +callout()#thank-you-sponsors
     h1 Thank You to Our Sponsors
-    != site.currentConference.view.supporterLevels(['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper'])
-    != site.currentConference.view.supporterLevels(['Charter Members', 'Cooperating Organizations'])
+    p.-ta-c The generous contributions from the following sponsors enable our conference to continue its commitment to excellence in programming and networking events for the attendees.
+    != site.currentConference.view.supporterLevels(site.getQueue('All Sponsors') || [])

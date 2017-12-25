@@ -534,11 +534,12 @@ class Conference {
        * that have the specified level.
        * @summary Call `Conference#view.supporterLevels()` to render this display.
        * @function Conference.VIEW.supporterLevels
-       * @param   {Array<string>} levels the levels of supporter to display, in the correct order
+       * @param   {(Array<string>|!Object)} levels the levels of supporter to display, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} levels.itemListElement if `levels` is an {@link http://schema.org/ItemList}, the levels of supporter to display, in the correct order
        * @returns {string} HTML output
        */
       .addDisplay(function supporterLevels(levels) {
-        return Util.documentFragment(levels.map((level) =>
+        return Util.documentFragment((levels.itemListElement || levels).map((level) =>
           new HTMLElement('section').class('c-SupporterBlock')
             .addContent([
               new HTMLElement('h1').class('c-SupporterBlock__Hn').addContent(level),
