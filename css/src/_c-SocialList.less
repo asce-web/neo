@@ -82,10 +82,10 @@
 .c-SocialList--highlight {
   width: 50%;
   --iconsize: 10vw;
-  --icon-color: var(--color-gray_dk);
-  --icon-color-hover: var(--color-secondary);
+  --icon-color: var(--color-gray_dk, @g-color-gray_dk);
+  --icon-color-hover: var(--color-secondary, @g-color-secondary);
   .c-Banner & {
-    --icon-color: var(--color-gray_dk-tint2);
+    --icon-color: var(--color-gray_dk-tint2, @g-color-gray_dk-tint2);
   }
 }
 
