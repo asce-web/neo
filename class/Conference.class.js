@@ -38,6 +38,7 @@ class Conference {
    * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
    * @param {Array<!Object>=} jsondata.subEvent a list of sessions; types {@link http://schema.org/Event}
    * @param {Array<!Object>=} jsondata.potentialAction a list of sessions; types {@link http://schema.org/Action}
+   * @param {Array<!Object>=} jsondata.performer a list of speakers at the conference; type {@link http://schema.org/Person}
    * @param {Array<!Object>=} jsondata.sponsor a list of supporters including non-sponsoring organizations; type {@link http://schema.org/Organization}
    * @param {Array<!Object>=} jsondata.$exhibitors a list of exhibitors; type {@link http://schema.org/Organization}
    * @param {Array<!Object>=} jsondata.organizer a list of organizers; type {@link http://schema.org/Person}
@@ -53,10 +54,8 @@ class Conference {
      */
     this._DATA = jsondata
 
-    /** @private */ this._speakers        = []
     /** @private */ this._supporter_levels = []
     /** @private */ this._supporter_lists  = {}
-    /** @private */ this._organizers      = []
     /** @private */ this._social          = {}
   }
 
@@ -197,27 +196,20 @@ class Conference {
   }
 
   /**
-   * @summary Add a speaker to this conference.
-   * @param {Person} $person the speaker to add
-   */
-  addSpeaker($person) {
-    this._speakers.push($person)
-    return this
-  }
-  /**
    * @summary Retrieve a speaker of this conference.
    * @param   {string} id the id of the speaker
    * @returns {?Person} the specified speaker
    */
   getSpeaker(id) {
-    return this._speakers.find(($person) => $person.id===id) || null
+    return this.getSpeakersAll().find((person) => person.id===id) || null
   }
   /**
    * @summary Retrieve all speakers of this conference.
+   * @todo TODO turn this into a getter
    * @returns {Array<Person>} a shallow array of all speakers of this conference
    */
   getSpeakersAll() {
-    return this._speakers.slice()
+    return (this._DATA.performer || []).map((person) => new Person(person))
   }
 
   /**

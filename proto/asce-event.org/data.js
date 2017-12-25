@@ -196,6 +196,119 @@ var jsondata = {
       { "@type": "Action", "name": 'Convention Ends'               , "startTime": "2016-06-15"                                                                         },
       { "@type": "Action", "name": 'Convention Dates'              , "startTime": "2016-09-28", "$endTime": "2016-10-01", "$starred": true                             }
     ],
+    "performer": [
+      {
+        "@type": "Person",
+        "identifier": "donna-fulman",
+        "$name": {
+          "givenName"      : "Donna",
+          "additionalName" : "A.",
+          "familyName"     : "Fulman",
+          "honorificSuffix": "P.ASCE"
+        },
+        "image"      : "files/headshot1.jpg",
+        "url"        : "#0",
+        "email"      : "example@asce.org",
+        "telephone"  : "+1(703)555-5555",
+        "jobTitle"   : "Administrator of Interior Engineering",
+        "affiliation": "German Chamber of Architects",
+        "sameAs"     : [
+          { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
+          { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
+          { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
+          { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
+          { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+        ],
+        "$starred": true
+      },
+      {
+        "@type": "Person",
+        "identifier": "rachel-falsetti",
+        "$name": {
+          "givenName"     : "Susan",
+          "additionalName": "R.",
+          "familyName"    : "Rowghani"
+        },
+        "image"      : "http://www.cisummit.org/sites/cisummit.org/files/susan-rowghani.jpg",
+        "url"        : "#0",
+        "email"      : "example@asce.org",
+        "telephone"  : "+1(703)555-5555",
+        "jobTitle"   : "Director of Water Engineering and Technical Services (WETS)",
+        "affiliation": "Los Angeles Department of Water and Power",
+        "sameAs"     : [
+          { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
+          { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
+          { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
+          { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
+          { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+        ]
+      },
+      {
+        "@type": "Person",
+        "identifier": "diego-alvarez",
+        "$name": {
+          "givenName" : "Diego",
+          "familyName": "Alvarez"
+        },
+        "image"      : "http://www.cisummit.org/sites/cisummit.org/files/diego-alvarez.jpg",
+        "url"        : "#0",
+        "email"      : "example@asce.org",
+        "telephone"  : "+1(703)555-5555",
+        "jobTitle"   : "Director of Modernization and Development",
+        "affiliation": "Planning & Development Group (PDG), Los Angeles World Airports",
+        "sameAs"     : [
+          { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
+          { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
+          { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
+          { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
+          { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+        ],
+        "$starred": true
+      },
+      {
+        "@type": "Person",
+        "identifier": "jeremy-boak",
+        "$name": {
+          "givenName" : "Jeremy",
+          "familyName": "Boak"
+        },
+        "image"      : "http://www.aei-conference.org/sites/aei-conference.org/files/jeremy-boak.jpg",
+        "url"        : "#0",
+        "email"      : "example@asce.org",
+        "telephone"  : "+1(703)555-5555",
+        "jobTitle"   : "Director",
+        "affiliation": "Oklahoma Geological Survey",
+        "sameAs"     : [
+          { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
+          { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
+          { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
+          { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
+          { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+        ]
+      },
+      {
+        "@type": "Person",
+        "identifier": "muralee-muraleetharan",
+        "$name": {
+          "givenName" : "Muralee",
+          "familyName": "Muraleetharan"
+        },
+        "image"      : "http://www.aei-conference.org/sites/aei-conference.org/files/muralee-muraleetharan.jpg",
+        "url"        : "#0",
+        "email"      : "example@asce.org",
+        "telephone"  : "+1(703)555-5555",
+        "jobTitle"   : "Geotechnical Engineering Professor, Kimmell-Bernard Chair in Engineering, David Ross Boyd and Presidential Professor",
+        "affiliation": "University of Oklahoma",
+        "sameAs"     : [
+          { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
+          { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
+          { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
+          { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
+          { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+        ],
+        "$starred": true
+      }
+    ],
     "sponsor": [
       {
         "@type" : "Organization",
@@ -537,60 +650,15 @@ var jsondata = {
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Non-Member',  745)
 
     site.currentConference
-      .addSpeaker(new Person({
-          "@type": "Person",
-          "identifier": "donna-fulman",
-          "$name": {
-            "givenName"      : "Donna",
-            "additionalName" : "A.",
-            "familyName"     : "Fulman",
-            "honorificSuffix": "P.ASCE"
-          },
-          "image"      : "files/headshot1.jpg",
-          "url"        : "#0",
-          "email"      : "example@asce.org",
-          "telephone"  : "+1(703)555-5555",
-          "jobTitle"   : "Administrator of Interior Engineering",
-          "affiliation": "German Chamber of Architects",
-          "sameAs"     : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
-          ],
-          "$starred"   : true
-      })
+      .getSpeaker('donna-fulman')
         // .setBio(`<p>Donna Fulman is an award-winning, German designer raised in Austria
         //   and currently living in New York City.</p>
         //   <p>Former Lead Product Designer and Art Director at Spotify, she recently founded
         //   Semplice and at the same time serves on the
         //   <abbr title="American Institute of Graphic Arts">AIGA</abbr>
         //   Board of Directors in New York.</p>`)
-      )
-      .addSpeaker(new Person({
-          "@type": "Person",
-          "identifier": "rachel-falsetti",
-          "$name": {
-            "givenName"     : "Susan",
-            "additionalName": "R.",
-            "familyName"    : "Rowghani"
-          },
-          "image"      : "http://www.cisummit.org/sites/cisummit.org/files/susan-rowghani.jpg",
-          "url"        : "#0",
-          "email"      : "example@asce.org",
-          "telephone"  : "+1(703)555-5555",
-          "jobTitle"   : "Director of Water Engineering and Technical Services (WETS)",
-          "affiliation": "Los Angeles Department of Water and Power",
-          "sameAs"     : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
-          ],
-          "$starred"   : false
-      })
+    site.currentConference
+      .getSpeaker('rachel-falsetti')
         // .setBio(`<p>Susan R. Rowghani is the Director of Water Engineering and
         //   Technical Services (WETS) at the Los Angeles Department of Water and Power (LADWP),
         //   the largest municipally owned utility in the US. In this role, she is responsible
@@ -598,29 +666,8 @@ var jsondata = {
         //   major capital construction projects. The Los Angeles Water System capital
         //   program is approximately $1 billion annually; about 50% of that amount
         //   is managed under WETS.</p>`)
-      )
-      .addSpeaker(new Person({
-          "@type": "Person",
-          "identifier": "diego-alvarez",
-          "$name": {
-            "givenName" : "Diego",
-            "familyName": "Alvarez"
-          },
-          "image"      : "http://www.cisummit.org/sites/cisummit.org/files/diego-alvarez.jpg",
-          "url"        : "#0",
-          "email"      : "example@asce.org",
-          "telephone"  : "+1(703)555-5555",
-          "jobTitle"   : "Director of Modernization and Development",
-          "affiliation": "Planning & Development Group (PDG), Los Angeles World Airports",
-          "sameAs"     : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
-          ],
-          "$starred"   : true
-      })
+    site.currentConference
+      .getSpeaker('diego-alvarez')
         // .setBio(`<p>Diego currently serves Los Angeles World Airports (LAWA)
         //   in the Planning & Development Group (PDG) as the Director of Modernization
         //   and Development. In this charge, Diego works on major elements of Los Angeles
@@ -635,29 +682,8 @@ var jsondata = {
         //   efforts to update the LAX Master Plan, assessing and entitling critical new
         //   and modified airfield, terminal, and ground access facilities at LAX,
         //   the busiest origin and destination airport in the world.</p>`)
-      )
-      .addSpeaker(new Person({
-          "@type": "Person",
-          "identifier": "jeremy-boak",
-          "$name": {
-            "givenName" : "Jeremy",
-            "familyName": "Boak"
-          },
-          "image"      : "http://www.aei-conference.org/sites/aei-conference.org/files/jeremy-boak.jpg",
-          "url"        : "#0",
-          "email"      : "example@asce.org",
-          "telephone"  : "+1(703)555-5555",
-          "jobTitle"   : "Director",
-          "affiliation": "Oklahoma Geological Survey",
-          "sameAs"     : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
-          ],
-          "$starred"   : false
-      })
+    site.currentConference
+      .getSpeaker('jeremy-boak')
         // .setBio(`<p>Jeremy Boak started as Director of the Oklahoma Geological Survey
         //   in July 2015. He was Director of the Center for Oil Shale Technology and Research
         //   at the Colorado School of Mines from 2008-2015. Before that, he was a project
@@ -669,29 +695,8 @@ var jsondata = {
         //   He also received an MS degree from the University of Washington in Geological Sciences.
         //   Dr. Boak is married to Anna Stafford, a petroleum geologist and oil finder,
         //   and has a stepson Chris.</p>`)
-      )
-      .addSpeaker(new Person({
-          "@type": "Person",
-          "identifier": "muralee-muraleetharan",
-          "$name": {
-            "givenName" : "Muralee",
-            "familyName": "Muraleetharan"
-          },
-          "image"      : "http://www.aei-conference.org/sites/aei-conference.org/files/muralee-muraleetharan.jpg",
-          "url"        : "#0",
-          "email"      : "example@asce.org",
-          "telephone"  : "+1(703)555-5555",
-          "jobTitle"   : "Geotechnical Engineering Professor, Kimmell-Bernard Chair in Engineering, David Ross Boyd and Presidential Professor",
-          "affiliation": "University of Oklahoma",
-          "sameAs"     : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
-          ],
-          "$starred"   : true
-      })
+    site.currentConference
+      .getSpeaker('muralee-muraleetharan')
         // .setBio(`<p>Prof. K.K. “Muralee” Muraleetharan is an Associate Director of OU’s
         //   National Institute for Risk and Resilience. He joined OU in 1994 after working
         //   as a consulting engineer in California for 6 years. He is a registered
@@ -708,7 +713,6 @@ var jsondata = {
         //   using small-scale (e.g. centrifuge models) and full-scale testing, and
         //   resilience of infrastructure following extreme events. His computer simulation
         //   research involves scalable, parallel computing using finite element frameworks.</p>`)
-      )
 
     site.currentConference
       .addSocial('twitter', 'https://twitter.com/hashtag/#asce2016', 'Follow #ASCE2016 on Twitter')
