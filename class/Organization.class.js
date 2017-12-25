@@ -22,6 +22,7 @@ class Organization {
 
   /**
    * @summary The name of this organization.
+   * @todo TODO move to SchemaObject
    * @type {string}
    */
   get name() {
@@ -30,6 +31,7 @@ class Organization {
 
   /**
    * @summary The URL of this supporter.
+   * @todo TODO move to SchemaObject
    * @type {string}
    */
   get url() {
@@ -38,6 +40,7 @@ class Organization {
 
   /**
    * @summary The image url of this supporter.
+   * @todo TODO move to SchemaObject
    * @type {string}
    */
   get img() {

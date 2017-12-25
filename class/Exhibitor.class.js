@@ -1,93 +1,56 @@
+const Organization = require('./Organization.class.js')
+
 /**
  * An organization exhibiting at a conference or series of conferences.
+ * @extends Organization
  */
-class Exhibitor {
+class Exhibitor extends Organization {
   /**
-   * Construct a new Exhibitor object, given an (immutable) name.
-   * @param {string} name the name of the exhibiting organization
+   * Construct a new Exhibitor object.
+   * @param {!Object} jsondata a JSON object
+   * @param {string} jsondata.name the name of the organization
+   * @param {string=} jsondata.url the url of the organization
+   * @param {string=} jsondata.image the image url of the organization
+   * @param {string=} jsondata.description the name of the organization
+   * @param {number=} jsondata.$booth the booth number of this exhibitor
+   * @param {boolean=} jsondata.$isSponsor whether this exhibitor also happens to be a sponsor
    */
-  constructor(name) {
-    /** @private @final */ this._NAME = name
-    /** @private */ this._url   = ''
-    /** @private */ this._img   = ''
-    /** @private */ this._description = ''
-    /** @private */ this._booth = NaN
-    /** @private */ this._is_sponsor = false
+  constructor(jsondata) {
+    super(jsondata)
+    /**
+     * All the data for this supporter.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
   }
 
   /**
-   * @summary Get the name of this exhibitor.
+   * @summary The description of this exhibitor.
+   * @todo TODO move to SchemaObject
    * @type {string}
    */
-  get name() {
-    return this._NAME
+  get description() {
+    return this._DATA.description || ''
   }
 
   /**
-   * @summary Set or get the URL of this exhibitor.
-   * @param   {string=} url the URL of this exhibitor
-   * @returns {(Exhibitor|string)} this exhibitor || the URL of this exhibitor
+   * @summary The booth number of this exhibitor.
+   * @description Return `NaN` if this exhibitor has no booth number.
+   * @type {number}
    */
-  url(url) {
-    if (arguments.length) {
-      this._url = url
-      return this
-    } else return this._url
+  get booth() {
+    return this._DATA.$booth || NaN
   }
 
   /**
-   * @summary Set or get the image of this exhibitor.
-   * @param   {string=} img the image of this exhibitor
-   * @returns {(Exhibitor|string)} this exhibitor || the image of this exhibitor
-   */
-  img(img) {
-    if (arguments.length) {
-      this._img = img
-      return this
-    } else return this._img
-  }
-
-  /**
-   * @summary Set a short, html-friendly description for this exhibitor.
-   * @param   {string} html html-friendly content
-   * @returns {Exhibitor} this exhibitor
-   */
-  setDescription(html) {
-    this._description = html
-    return this
-  }
-  /**
-   * @summary Get the description of this exhibitor.
-   * @param   {boolean=} unescaped whether or not the returned string should be escaped
-   * @returns {string} the description of this exhibitor
-   */
-  getDescription(unescaped) {
-    return ((unescaped) ? '<!-- warning: unescaped code -->' : '') + this._description
-  }
-
-  /**
-   * @summary Set or get the booth number of this exhibitor.
-   * @param   {number=} num the booth number of this exhibitor
-   * @returns {(Exhibitor|number)} this exhibitor || the booth number of this exhibitor
-   */
-  booth(num) {
-    if (arguments.length) {
-      this._booth = num
-      return this
-    } else return this._booth
-  }
-
-  /**
-   * @summary Set or get whether this exhibitor is also a sponsor.
+   * @summary Whether this exhibitor is also a sponsor.
    * @see Supporter
-   * @param   {boolean=} flag `true` if this exhibitor is also a sponsor
-   * @returns {(Exhibitor|boolean)} this exhibitor || `true` if this exhibitor is also a sponsor
+   * @type {boolean}
    */
-  isSponsor(flag) {
-    if (arguments.length) {
-      this._is_sponsor = flag
-      return this
-    } else return this._is_sponsor
+  get isSponsor() {
+    return this._DATA.$isSponsor || false
   }
 }
 

@@ -4,6 +4,7 @@ const Organization = require('./Organization.class.js')
 
 /**
  * An organization supporting a conference or series of conferences.
+ * @extends Organization
  */
 class Supporter extends Organization {
   /**
