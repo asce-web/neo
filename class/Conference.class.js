@@ -8,6 +8,7 @@ const Pass = require('./Pass.class.js')
 const DateRange = require('./DateRange.class.js')
 const PostalAddress = require('./PostalAddress.class.js')
 const Venue = require('./Venue.class.js')
+const Supporter = require('./Supporter.class.js')
 
 /**
  * A conference event.
@@ -35,6 +36,7 @@ class Conference {
    * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
    * @param {Array<!Object>=} jsondata.subEvent a list of sessions; types {@link http://schema.org/Event}
    * @param {Array<!Object>=} jsondata.potentialAction a list of sessions; types {@link http://schema.org/Action}
+   * @param {Array<!Object>=} jsondata.sponsor a list of supporters including non-sponsoring organizations; type {@link http://schema.org/Organization}
    */
   constructor(jsondata) {
     /**
@@ -48,7 +50,6 @@ class Conference {
     /** @private */ this._speakers        = []
     /** @private */ this._supporter_levels = []
     /** @private */ this._supporter_lists  = {}
-    /** @private */ this._supporters       = []
     /** @private */ this._exhibitors       = []
     /** @private */ this._organizers      = []
     /** @private */ this._social          = {}
@@ -259,28 +260,22 @@ class Conference {
   }
 
   /**
-   * @summary Add a supporter to this conference.
-   * @param   {Supporter} $supporter the supporter to add
-   * @returns {Conference} this conference
-   */
-  addSupporter($supporter) {
-    this._supporters.push($supporter)
-    return this
-  }
-  /**
    * @summary Retrieve a supporter of this conference.
    * @param   {string} name the name of the supporter
    * @returns {?Supporter} the specified supporter
    */
   getSupporter(name) {
-    return this._supporters.find(($supporter) => $supporter.name===name) || null
+    let supporter = (this._DATA.sponsor || []).find(($org) => $org.name===name)
+    return (supporter) ? new Supporter(supporter) : null
+    // return this.getSupportersAll().find(($supporter) => $supporter.name === name) || null // TODO use this pattern instead
   }
   /**
    * @summary Retrieve all supporters of this conference.
    * @returns {Array<Supporter>} a shallow array of all supporters of this conference
    */
   getSupportersAll() {
-    return this._supporters.slice()
+    // TODO turn this into a getter
+    return (this._DATA.sponsor || []).map(($org) => new Supporter($org))
   }
 
   /**

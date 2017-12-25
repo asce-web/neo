@@ -12,12 +12,12 @@ class Supporter extends Organization {
    * @param {string} jsondata.name the name of the organization
    * @param {string=} jsondata.url the url of the organization
    * @param {string=} jsondata.image the image url of the organization
-   * @param {string=} json.level the level of the supporting organization
+   * @param {string=} json.$level the level of the supporting organization
    */
   constructor(jsondata) {
     super(jsondata)
     /**
-     * All the data for this organization.
+     * All the data for this supporter.
      * @private
      * @final
      * @type {!Object}
@@ -30,7 +30,7 @@ class Supporter extends Organization {
    * @type {string}
    */
   get level() {
-    return this._DATA.level || ''
+    return this._DATA.$level || ''
   }
 
 
