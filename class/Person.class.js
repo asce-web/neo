@@ -28,6 +28,10 @@ class Person {
    * @param {string=} jsondata.jobTitle this person’s job title
    * @param {!Object=} jsondata.affiliation an organization that this person is affiliated with; type {@link http://schema.org/Organization}
    * @param {string=} jsondata.affiliation.name an organization that this person is affiliated with
+   * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this person; type {@link http://schema.org/URL}
+   * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
+   * @param {string} jsondata.sameAs.url the URL of the person’s social media profile or page
+   * @param {string=} jsondata.sameAs.description short alternative text for non-visual media
    * @param {boolean=} jsondata.$starred whether this person is starred
    *                                     TODO: use Entity Queues instead!
    */
@@ -54,9 +58,6 @@ class Person {
      * @type {?Object}
      */
     this._$NAME = jsondata.$name || null
-
-    /** @private */ this._social      = {}
-    /** @private */ this._is_starred  = false
   }
 
   /**
@@ -138,32 +139,20 @@ class Person {
 
 
   /**
-   * @summary Add a social network profile to this person.
-   * @param   {!Object} jsonurl data
-   * @param   {string} jsonurl.name the name of the social network
-   * @param   {string} jsonurl.url the URL of this person’s profile on the network
-   * @param   {string=} jsonurl.description optional advisory text
-   * @returns {Person} this person
-   */
-  addSocial(jsonurl) {
-    this._social[jsonurl.name] = { url: jsonurl.url, text: jsonurl.description }
-    return this
-  }
-  /**
    * @summary Retrieve a social network profile of this person.
-   * @param   {string} network_name the name of the social network
-   * @returns {Object} an object representing the social network profile
+   * @param   {string} name the name of the social network
+   * @returns {?Object} an object representing the social network profile
    */
-  getSocial(network_name) {
-    return this._social[network_name]
+  getSocial(name) {
+    return this.getSocialAll().find((url) => url.name===name) || null
   }
   /**
-   * @summary Return an object representing all social network profiles of this person.
-   * @returns {Object} shallow clone of this person’s social object
+   * @summary Return all social network profiles of this person.
+   * @todo TODO turn this into a getter
+   * @returns {Array<!Object>} all this person’s social media networks
    */
   getSocialAll() {
-    //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._social)
+    return (this._DATA.sameAs || []).map((url) => url)
   }
 
 
