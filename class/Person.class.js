@@ -1,5 +1,7 @@
 const xjs = require('extrajs')
 const HTMLElement = require('extrajs-dom').HTMLElement
+const HTMLUListElement = require('extrajs-dom').HTMLUListElement
+const HTMLLIElement = require('extrajs-dom').HTMLLIElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
@@ -265,7 +267,6 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker() {
-        /* filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
         return new HTMLElement('article').class('c-Speaker').attr({
           'data-instanceof': 'Person',
           itemprop : 'performer',
@@ -289,25 +290,27 @@ class Person {
             }).addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation)),
           ]),
           // new HTMLElement('div').class('c-Speaker__Body').attr('itemprop','description'),
-          new HTMLElement('footer').class('c-Speaker__Foot').addContent(pug`
-            include ../_views/_c-SocialList.view.pug
-            +socialList(${this.getSocialAll()}).c-SocialList--speaker
-              if ${this.email}
-                li.o-List__Item.o-Flex__Item.c-SocialList__Item
-                  a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href="mailto:${this.email}" itemprop="email")
-                    span.h-Hidden send email
-                    //- i.material-icons(role="none") email
-              if ${this.telephone}
-                li.o-List__Item.o-Flex__Item.c-SocialList__Item
-                  a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href="tel:${Util.toURL(this.telephone)}" itemprop="telephone")
-                    span.h-Hidden call
-                    //- i.material-icons(role="none") phone
-              if ${this.url}
-                li.o-List__Item.o-Flex__Item.c-SocialList__Item
-                  a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href="${this.url}" title="visit homepage" itemprop="url")
-                    span.h-Hidden visit homepage
-                    //- i.material-icons(role="none") explore
-          `),
+          new HTMLElement('footer').class('c-Speaker__Foot').addContent([
+            Util.view(this.getSocialAll()).socialList('c-SocialList--speaker'),
+            new HTMLUListElement().class('o-List o-Flex c-SocialList').addClass('c-SocialList--speaker')
+              .addContent(['email', 'telephone', 'url'].map(function (prop) {
+                if (!this[prop]) return null
+                let data = ({
+                  url      : { icon: 'explore', url: this.url                           , text: 'visit homepage' },
+                  email    : { icon: 'email'  , url: `mailto:${this.email}`             , text: 'send email' },
+                  telephone: { icon: 'phone'  , url: `tel:${Util.toURL(this.telephone)}`, text: 'call' },
+                })[prop]
+                return new HTMLLIElement().class('o-List__Item o-Flex__Item c-SocialList__Item').addContent(
+                  new HTMLElement('a').class('c-SocialList__Link h-Block')
+                    .addClass(`c-SocialList__Link--${data.icon}`)
+                    .attr({ href: data.url, itemprop: prop })
+                    .addContent([
+                      // new HTMLElement('i').class('material-icons').attr('aria-hidden', true).addContent(data.icon),
+                      new HTMLElement('span').class('h-Hidden').addContent(data.text),
+                    ])
+                )
+              }, this)),
+          ]),
         ])
         .html()
       })

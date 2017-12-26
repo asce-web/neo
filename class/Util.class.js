@@ -1,6 +1,8 @@
 const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
+const HTMLUListElement = require('extrajs-dom').HTMLUListElement
+const HTMLLIElement = require('extrajs-dom').HTMLLIElement
 const View    = require('extrajs-view')
 const STATE_DATA = require('extrajs-geo')
 STATE_DATA.push(...[
@@ -326,6 +328,38 @@ class Util {
         return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((person) =>
           new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
         )).html()
+      })
+      /**
+       * Return a `<ul.c-SocialList>` component, containing
+       * markup for social media profiles.
+       * Parameter `data` should be of type `Array<!Object>`, where each object is of type {@link http://schema.org/URL}.
+       * @summary Call `Util.view(data).socialList()` to render this display.
+       * @function Util.VIEW.socialList
+       * @param   {string=} classes optional classes to add to the `<ul>`
+       * @returns {string} HTML output
+       */
+      .addDisplay(function socialList(classes = '') {
+        return new HTMLUListElement().class('o-List o-Flex c-SocialList')
+          .addClass(classes)
+          .addContent(this.map((url) =>
+            new HTMLLIElement().class('o-List__Item o-Flex__Item c-SocialList__Item')
+              .attr({
+                itemprop : 'sameAs',
+                itemscope: '',
+                itemtype : 'http://schema.org/URL',
+              })
+              .addContent(
+                new HTMLElement('a').class('c-SocialList__Link h-Block')
+                  .addClass(`c-SocialList__Link--${url.name}`)
+                  .attr({ href: url.url, itemprop: 'url' })
+                  .addContent(
+                    new HTMLElement('span').class('h-Hidden')
+                      .attr('itemprop','description')
+                      .addContent(url.description)
+                  )
+              )
+          ))
+          .html()
       })
   }
 

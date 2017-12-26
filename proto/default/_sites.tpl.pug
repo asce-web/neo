@@ -132,8 +132,7 @@ html(lang="en")
           meta(content="+1-703-295-6300" itemprop="telephone")
           meta(content="United States of America" itemprop="areaServed")
           meta(content="customer support" itemprop="contactType")
-        include ../../_views/_c-SocialList.view.pug
-        +socialList(site.getSocialAll()).c-SocialList--footer
+        != Util.view(site.getSocialAll()).socialList('c-SocialList--footer')
         p: small
           | &copy; #[time 1996]&ndash;#[time 2016],#{' '}
           span(itemprop="name") American Society of Civil Engineers
