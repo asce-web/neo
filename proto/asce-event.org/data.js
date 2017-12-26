@@ -9,7 +9,6 @@
 const Util               = require('../../class/Util.class.js')
 const ConfSite           = require('../../class/ConfSite.class.js')
 const ConfPage           = require('../../class/ConfPage.class.js')
-const SupporterLevel     = require('../../class/SupporterLevel.class.js')
 const Person             = require('../../class/Person.class.js')
 
 var jsondata = {
@@ -596,6 +595,36 @@ var jsondata = {
   "currentConference" : "json2016",
   "previousConference": "json2015",
   "nextConference"    : "json2017",
+  "$queues": [
+    {
+      "@type": "ItemList",
+      "name" : "Top Sponsors",
+      "itemListElement": [
+        "Platinum",
+        "Silver",
+        "Bronze"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name" : "Non-Sponsors",
+      "itemListElement": [
+        "Cooperating Organizations",
+        "Charter Members"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name" : "All Sponsors",
+      "itemListElement": [
+        "Platinum",
+        "Corporate",
+        "Silver",
+        "Bronze",
+        "Copper"
+      ]
+    }
+  ],
   "sameAs": [
     { "@type": "URL", "name": "twitter" , "url": "//twitter.com/ASCE"    , "description": "Follow ASCE on Twitter" },
     { "@type": "URL", "name": "google"  , "url": "//plus.google.com/ASCE", "description": "Follow ASCE on Google+" },
@@ -609,22 +638,6 @@ var jsondata = {
     var site = new ConfSite(jsondata)
       .init()
 
-
-    // REVIEW TODO move below Speakers
-    site.currentConference
-      .addSupporterLevel(new SupporterLevel('Platinum' , SupporterLevel.LogoSize.LARGE))
-      .addSupporterLevel(new SupporterLevel('Corporate', SupporterLevel.LogoSize.LARGE))
-      .addSupporterLevel(new SupporterLevel('Silver'   , SupporterLevel.LogoSize.MEDIUM))
-      .addSupporterLevel(new SupporterLevel('Bronze'   , SupporterLevel.LogoSize.MEDIUM))
-      .addSupporterLevel(new SupporterLevel('Copper'   , SupporterLevel.LogoSize.MEDIUM))
-      .addSupporterLevel(new SupporterLevel('Charter Members', SupporterLevel.LogoSize.SMALL))
-      .addSupporterLevel(new SupporterLevel('Cooperating Organizations', SupporterLevel.LogoSize.SMALL))
-
-    site.currentConference
-      .addSupporterLevelQueue('sponsors', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper'])
-      .addSupporterLevelQueue('orgs', ['Charter Members', 'Cooperating Organizations'])
-      .addSupporterLevelQueue('home-page', ['Platinum', 'Silver', 'Bronze'])
-      .addSupporterLevelQueue('sponsors-page', ['Platinum', 'Corporate', 'Silver', 'Bronze', 'Copper', 'Charter Members', 'Cooperating Organizations'])
 
     //- site.currentConference
     //-   .setPrice('Early Bird', 'Standard Pass' , 'Member'    ,  745)

@@ -44,18 +44,17 @@ class Supporter extends Organization {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
-     * - `Supporter#view.supporterBlock()` - SupporterBlock component
+     * - `Supporter#view()` - (default) SupporterBlock component
      * @namespace Supporter.VIEW
      * @type {View}
      */
-    return new View(null, this)
       /**
        * Return a `<a.c-SupporterBlock__Logo>` subcomponent, an image of the supporter logo.
-       * @summary Call `Supporter#view.supporterBlock()` to render this display.
-       * @function Supporter.VIEW.supporterBlock
+       * @summary Call `Supporter#view()` to render this display.
+       * @function Supporter.VIEW.default
        * @returns {string} HTML output
        */
-      .addDisplay(function supporterBlock() {
+    return new View(function () {
         return new HTMLElement('a').attr({
           'data-instanceof': 'Supporter',
           href    : this.url,
@@ -65,7 +64,7 @@ class Supporter extends Organization {
           new HTMLElement('img').class('c-SupporterBlock__Logo').attr({ src:this.img, alt:this.name, itemprop:'logo' }),
           new HTMLElement('meta').attr({ content:this.name, itemprop:'name' }),
         ]).html()
-      })
+    }, this)
   }
 }
 

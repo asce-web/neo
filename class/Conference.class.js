@@ -1,6 +1,9 @@
 const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
+const HTMLUListElement = require('extrajs-dom').HTMLUListElement
+const HTMLDListElement = require('extrajs-dom').HTMLDListElement
+const HTMLLIElement = require('extrajs-dom').HTMLLIElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 const RegistrationPeriod = require('./RegistrationPeriod.class.js')
@@ -217,50 +220,6 @@ class Conference {
   }
 
   /**
-   * @summary Add a supporter level to this conference.
-   * @param   {SupporterLevel} $supporterLevel the supporter level to add
-   * @returns {Conference} this conference
-   */
-  addSupporterLevel($supporterLevel) {
-    this._supporter_levels.push($supporterLevel)
-    return this
-  }
-  /**
-   * @summary Retrieve a supporter level of this conference.
-   * @param   {string} name the name of the supporter level
-   * @returns {?SupporterLevel} the specified supporter level
-   */
-  getSupporterLevel(name) {
-    return this._supporter_levels.find(($supporterLevel) => $supporterLevel.name===name) || null
-  }
-  /**
-   * @summary Retrieve all supporter levels of this conference.
-   * @returns {Array<SupporterLevel>} a shallow array of all supporter levels of this conference
-   */
-  getSupporterLevelsAll() {
-    return this._supporter_levels.slice()
-  }
-
-  /**
-   * @summary Add a named subarray of supporter levels to this conference.
-   * @param   {string} type the name of the subarray
-   * @param   {Array<string>} supporter_level_names an array of pre-existing SupporterLevel names
-   * @returns {Conference} this conference
-   */
-  addSupporterLevelQueue(type, supporter_level_names) {
-    this._supporter_lists[type] = supporter_level_names
-    return this
-  }
-  /**
-   * @summary Get a named subarray of supporter levels of this conference.
-   * @param   {string} type the name of the subarray
-   * @returns {Array<SupporterLevel>} the array of SupporterLevel objects belonging to the type
-   */
-  getSupporterLevelQueue(type) {
-    return (this._supporter_lists[type] || []).map((el) => this.getSupporterLevel(el))
-  }
-
-  /**
    * @summary Retrieve a supporter of this conference.
    * @param   {string} name the name of the supporter
    * @returns {?Supporter} the specified supporter
@@ -373,6 +332,7 @@ class Conference {
      * - `Conference#view.hero()`      - Hero Organism
      * - `Conference#view.otherYear()` - Other Year Organism
      * - `Conference#view.program()`   - Program Tabs Organism
+     * - `Conference#view.supporterLevels()` - multiple SupporterBlock Components
      * @namespace Conference.VIEW
      * @type {View}
      */
@@ -481,12 +441,11 @@ class Conference {
          * and a `sessions` property: an array of {@link DateRange} objects,
          * all of which share the same date (excluding time of day).
          * @private
-         * @param   {boolean=} starred if true, only consider sessions that are starred
          * @returns {Array<{dateobj:Date, sessions:Array<DateRange>}>} an array grouping the sessions together
          */
-        function groupSessions(starred = false) {
-          let all_sessions = this.getSessionsAll().filter((s) => (starred) ? s.isStarred : true)
-          let returned = []
+        function groupSessions() {
+          let all_sessions = this.getSessionsAll()
+          const returned = []
           all_sessions.forEach(function (s) {
             if (!returned.find((sess_group) => xjs.Date.sameDate(sess_group.dateobj, s.start))) {
               returned.push({
@@ -499,9 +458,9 @@ class Conference {
         }
         return new HTMLElement('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
           .addContent([
-            new HTMLElement('legend').class('h-Hidden').addContent(`Footer Tabs`),
-            new HTMLElement('dl').class('o-Flex').id(id).addContent(
-              groupSessions.call(this, starred).map((g, index) => Element.concat([
+            new HTMLElement('legend').class('h-Hidden').addContent(`Program Tabs`),
+            new HTMLDListElement().class('o-Flex').id(id).addContent(
+              groupSessions.call(this).map((g, index) => Element.concat([
                 new HTMLElement('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').addContent(
                   new HTMLElement('label').class('h-Block').addContent([
                     new HTMLElement('input').class('o-Tablist__Check h-Hidden').attr({
@@ -520,12 +479,41 @@ class Conference {
                   ])
                 ),
                 new HTMLElement('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').addContent(
-                  Util.view(g.sessions).timeBlock()
+                  Util.view(g.sessions.filter((s) => (starred) ? s.isStarred : true)).timeBlock()
                 ),
               ]))
             ),
           ])
           .html()
+      })
+      /**
+       * Return a `<section.c-SupporterBlock>` component containing this conference’s supporters
+       * that have the specified level.
+       * @summary Call `Conference#view.supporterLevels()` to render this display.
+       * @function Conference.VIEW.supporterLevels
+       * @param   {(Array<string>|!Object)} levels the levels of supporter to display, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} levels.itemListElement if `levels` is an {@link http://schema.org/ItemList}, the levels of supporter to display, in the correct order
+       * @param   {boolean=} small if `true`, overrides logo sizing to small
+       * @returns {string} HTML output
+       */
+      .addDisplay(function supporterLevels(levels, small = false) {
+        const supporterlevels = levels.itemListElement || ((xjs.Object.typeOf(levels) === 'array') ? levels : [])
+        return Util.documentFragment(supporterlevels.map((level, index) =>
+          new HTMLElement('section').class('c-SupporterBlock')
+            .addClass((small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med') // TODO make small the default size
+            .addContent([
+              new HTMLElement('h1').class('c-SupporterBlock__Hn').addContent(level),
+              new HTMLUListElement().class('o-List o-Flex c-SupporterBlock__List').addContent(
+                this.getSupportersAll()
+                  .filter((supporter) => supporter.level===level)
+                  .map((supporter) =>
+                    new HTMLLIElement().class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
+                      .attr({ itemprop:'sponsor', itemscope:'', itemtype:'http://schema.org/Organization' })
+                      .addContent(supporter.view())
+                  )
+              ),
+            ])
+        ))
       })
   }
 }

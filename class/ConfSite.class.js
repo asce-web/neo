@@ -26,6 +26,7 @@ class ConfSite extends Page {
    * @param {string} jsondata.currentConference  the key of an existing conference; used as the current  conference in this series
    * @param {string} jsondata.previousConference the key of an existing conference; used as the previous conference in this series
    * @param {string} jsondata.nextConference     the key of an existing conference; used as the next     conference in this series
+   * @param {Array<!Object>=} jsondata.$queues a list containing types {@link http://schema.org/ItemList}, which list any number and type of things
    * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this site; type {@link http://schema.org/URL}
    * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
    * @param {string} jsondata.sameAs.url the URL of the site’s social media profile or page
@@ -149,6 +150,23 @@ class ConfSite extends Page {
   }
 
   /**
+   * @summary Retrieve a queue added to this site.
+   * @param   {string} name the name of the queue
+   * @returns {?Object} an {@link http://schema.org/ItemList} type
+   */
+  getQueue(name) {
+    return this.getQueuesAll().find((list) => list.name===name) || null
+  }
+  /**
+   * @summary Return all queues on this site.
+   * @todo TODO turn this into a getter
+   * @returns {Array<!Object>} all this site’s queues
+   */
+  getQueuesAll() {
+    return (this._DATA.$queues || []).map((list) => list)
+  }
+
+  /**
    * @summary Retrieve a social network profile of this site.
    * @param   {string} name the name of the social network
    * @returns {?Object} an object representing the social network profile
@@ -157,7 +175,7 @@ class ConfSite extends Page {
     return this.getSocialAll().find((url) => url.name===name) || null
   }
   /**
-   * @summary Return an object representing all social network profiles of this conference.
+   * @summary Return all social network profiles of this site.
    * @todo TODO turn this into a getter
    * @returns {Array<!Object>} all this site’s social media networks
    */

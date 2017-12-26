@@ -77,19 +77,20 @@ html(lang="en")
           block mainRich
         block callouts
         block sponsors
-          +callout()
-            h1#sponsors Sponsors
+          +callout()#sponsors
+            h1 Sponsors
             p.-ta-c: i.
               (see external demo of
               #[a(href="http://go.asce.org/static/sponsors/") sponsors carousel]
               by rank)
-            each $supporterLevel,index in site.currentConference.getSupporterLevelQueue('home-page')
-              != $supporterLevel.view.supporterBlock(site.currentConference)
+            != site.currentConference.view.supporterLevels(site.getQueue('Top Sponsors') || [])
             -
               let highlight_buttons = [
                 new HTMLElement('a').attr('href','sponsor.html').addContent(`All Sponsors`)
               ]
             != Util.view(highlight_buttons).highlightButtons()
+        +callout()
+          != site.currentConference.view.supporterLevels(site.getQueue('Non-Sponsors') || [], true)
     footer.o-Runner.c-Mast.c-Mast--sitemap#sitemap: nav.o-Constrain
       h1.h-Hidden Sitemap
       -
