@@ -7,6 +7,8 @@ const autoprefixer = require('gulp-autoprefixer')
 const clean_css    = require('gulp-clean-css')
 const sourcemaps   = require('gulp-sourcemaps')
 
+const ConfSite   = require('./class/ConfSite.class.js')
+const ConfPage   = require('./class/ConfPage.class.js')
 
 
 // HOW-TO: https://github.com/mlucool/gulp-jsdoc3#usage
@@ -56,34 +58,14 @@ gulp.task('pug:index', function () {
     .pipe(gulp.dest('./'))
 })
 gulp.task('pug:default', function () {
-  const ConfSite   = require('./class/ConfSite.class.js')
-  const ConfPage   = require('./class/ConfPage.class.js')
-  const Conference = require('./class/Conference.class.js')
+  // const Conference = require('./class/Conference.class.js')
   return gulp.src(__dirname + '/proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
         HTMLElement   : require('extrajs-dom').HTMLElement,
-        Util      : require('./class/Util.class.js'),
-        site      : new ConfSite({
-          "@context"   : "http://schema.org/",
-          "@type"      : "WebPage",
-          "name"       : "Civil Engineering Congress",
-          "url"        : "/sites/default/",
-          "description": "ConferenceSuite",
-          "conferences": {
-            "default": {
-            "@context"  : "http://schema.org/",
-            "@type"     : "Event",
-            "name"      : "Civil Engineering Congress 2016",
-            "url"       : "http://2016.cecongress.org/",
-            }
-          },
-          "currentConference" : "default",
-          "previousConference": "default",
-          "nextConference"    : "default",
-        })
-          .init(),
+        Util: require('./class/Util.class.js'),
+        site: new ConfSite(require('./proto/default/data.json')).init(),
         page: new ConfPage(),
       },
     }))
@@ -97,7 +79,52 @@ gulp.task('pug:sample', function () {
         xjs    : require('extrajs'),
         HTMLElement: require('extrajs-dom').HTMLElement,
         Util   : require('./class/Util.class.js'),
-        site   : require('./proto/asce-event.org/data.js'),
+        site: (function () {
+          const returned = new ConfSite(require('./proto/asce-event.org/data.json')).init()
+          function pageTitle() { return this.name() + ' | ' + returned.name() }
+          returned.find('registration.html')
+            .add(new ConfPage('Why Attend', '#0')
+              .title(pageTitle)
+              .description(`Why you should attend ${returned.currentConference.name}.`)
+            )
+            .add(new ConfPage('Volunteer', '#0')
+              .title(pageTitle)
+              .description(`Volunteer at ${returned.currentConference.name}.`)
+            )
+          returned.find('program.html')
+            .add(new ConfPage('Short Courses', '#0')
+              .title(pageTitle)
+              .description(`Short Courses for ${returned.currentConference.name}.`)
+            )
+            .add(new ConfPage('Technical Tours', '#0')
+              .title(pageTitle)
+              .description(`Technical Tours for ${returned.currentConference.name}.`)
+            )
+            .add(new ConfPage('Optional Tours', '#0')
+              .title(pageTitle)
+              .description(`Optional Tours for ${returned.currentConference.name}.`)
+            )
+          returned.find('speakers.html')
+            .add(new ConfPage('Distinguished Lecturers', '#0')
+              .title(pageTitle)
+              .description(`Distinguished lecturers at ${returned.currentConference.name}.`)
+            )
+          returned.find('sponsor.html')
+            .add(new ConfPage('Partnering Orgs', '#0')
+              .title(pageTitle)
+              .description(`Partnering Organizations at ${returned.currentConference.name}.`)
+            )
+            .add(new ConfPage('Cooperating Orgs', '#0')
+              .title(pageTitle)
+              .description(`Cooperating Organizations at ${returned.currentConference.name}.`)
+            )
+          returned.find('exhibit.html')
+            .add(new ConfPage('Exhibitor List', '#0')
+              .title(pageTitle)
+              .description(`Listing of all Exhibitors at ${returned.currentConference.name}.`)
+            )
+          return returned
+        })()
       },
     }))
     .pipe(gulp.dest('./proto/asce-event.org/'))

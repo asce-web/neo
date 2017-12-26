@@ -1,0 +1,18 @@
+{
+  "@context"   : "http://schema.org/",
+  "@type"      : "WebPage",
+  "name"       : "Civil Engineering Congress",
+  "url"        : "/sites/default/",
+  "description": "ConferenceSuite Slogan",
+  "conferences": {
+    "default": {
+      "@context"  : "http://schema.org/",
+      "@type"     : "Event",
+      "name"      : "Civil Engineering Congress 2016",
+      "url"       : "http://2016.cecongress.org/"
+    }
+  },
+  "currentConference" : "default",
+  "previousConference": "default",
+  "nextConference"    : "default"
+}
