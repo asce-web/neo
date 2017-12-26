@@ -1,28 +1,53 @@
 {
-  "@context"   : "http://schema.org/",
-  "@type"      : "WebPage",
+  "@context": "http://schema.org/",
+  "@type": "WebSite",
   "name"       : "An ASCE Event",
   "url"        : "/sites/asce-event.org/",
   "description": "Optional Brand Slogan",
   "keywords"   : ["ASCE", "civil engineering", "convention"],
   "image"      : "./files/site-logo-white.png",
-  "colors"     : ["#3fae2a", "#00a1e1"],
-  "images"     : {
+  "publisher"  : {
+    "@type": "NGO",
+    "name": "American Society of Civil Engineers",
+    "url" : "http://www.asce.org",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress"  : "1801 Alexander Bell Drive",
+      "addressLocality": "Reston",
+      "addressRegion"  : "VA",
+      "postalCode"     : "22901-4382",
+      "addressCountry" : "US"
+    },
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": "+1-800-548-2723",
+        "contactType": "customer support"
+      },
+      {
+        "@type": "ContactPoint",
+        "telephone": "+1-703-295-6300",
+        "areaServed": "United States of America",
+        "contactType": "customer support"
+      }
+    ]
+  },
+  "$colors": ["#3fae2a", "#00a1e1"],
+  "$images": {
     "hero": "/proto/asce-event.org/files/cable-car.jpg",
     "city": "/proto/asce-event.org/files/portland.jpg",
     "prev": "/proto/asce-event.org/files/new-york.jpg",
     "next": "/proto/asce-event.org/files/new-orleans.jpg"
   },
   "conferences": {
-"json2016": {
-  "@context"   : "http://schema.org/",
-  "@type"      : "Event",
-  "name"       : "A 2016 Event",
-  "url"        : "http://2016.asceconvention.org/",
-  "description": "Where Engineering Dreams are Built.",
-  "startDate"  : "2016-09-28T07:30",
-  "endDate"    : "2016-10-01T17:00",
-      "location": [
+    "json2016": {
+      "@type": "Event",
+      "name"       : "A 2016 Event",
+      "url"        : "http://2016.asceconvention.org/",
+      "description": "Where Engineering Dreams are Built.",
+      "startDate"  : "2016-09-28T07:30",
+      "endDate"    : "2016-10-01T17:00",
+      "location"   : [
         {
           "@type": "PostalAddress",
           "addressLocality": "Portland",
@@ -524,15 +549,14 @@
       { "@type": "URL", "name": "google"  , "url": "#0"                                   , "description": "Follow #ASCE2016 on Google+" },
       { "@type": "URL", "name": "facebook", "url": "#0"                                   , "description": "Follow #ASCE2016 on Facebook" }
     ]
-},
-"json2015": {
-  "@context"   : "http://schema.org/",
-  "@type"      : "Event",
-  "name"       : "A 2015 Event",
-  "url"        : "http://2015.asceconvention.org/",
-  "description": "Building on the Past.",
-  "startDate"  : "2015-10-11T07:30",
-  "endDate"    : "2015-10-14T17:00",
+    },
+    "json2015": {
+      "@type": "Event",
+      "name"       : "A 2015 Event",
+      "url"        : "http://2015.asceconvention.org/",
+      "description": "Building on the Past.",
+      "startDate"  : "2015-10-11T07:30",
+      "endDate"    : "2015-10-14T17:00",
       "location": [
         {
           "@type": "PostalAddress",
@@ -552,16 +576,15 @@
         "postalCode"     : "10036"
       }
     }
-  ]
-},
-"json2017": {
-  "@context"   : "http://schema.org/",
-  "@type"      : "Event",
-  "name"       : "A 2017 Event",
-  "url"        : "http://2017.asceconvention.org/",
-  "description": "The Future of Civil Engineering.",
-  "startDate"  : "2017-10-08T07:30",
-  "endDate"    : "2017-10-11T17:00",
+      ]
+    },
+    "json2017": {
+      "@type": "Event",
+      "name"       : "A 2017 Event",
+      "url"        : "http://2017.asceconvention.org/",
+      "description": "The Future of Civil Engineering.",
+      "startDate"  : "2017-10-08T07:30",
+      "endDate"    : "2017-10-11T17:00",
       "location": [
         {
           "@type": "PostalAddress",
@@ -580,8 +603,8 @@
         "postalCode"     : "70130"
       }
     }
-  ]
-}
+      ]
+    }
   },
   "currentConference" : "json2016",
   "previousConference": "json2015",

@@ -20,8 +20,8 @@ class ConfSite extends Page {
    * @param {string=} jsondata.description the slogan (or tagline) of this site
    * @param {Array<string>=} jsondata.keywords keywords for this site
    * @param {string=} jsondata.image url of the logo file
-   * @param {Array<string>=} jsondata.colors two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
-   * @param {Object<string>=} jsondata.images a dictionary of image urls
+   * @param {Array<string>=} jsondata.$colors two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
+   * @param {Object<string>=} jsondata.$images a dictionary of image urls
    * @param {!Object<!Object>} jsondata.conferences a dictionary of conferences; types {@link http://schema.org/Event}
    * @param {string} jsondata.currentConference  the key of an existing conference; used as the current  conference in this series
    * @param {string} jsondata.previousConference the key of an existing conference; used as the previous conference in this series
@@ -95,9 +95,9 @@ class ConfSite extends Page {
    * @type {Object<string>}
    */
   get colors() {
-    let colors = (this._DATA.colors) ? [
-      this._DATA.colors[0] || '#660000',
-      this._DATA.colors[1] || '#ff6600',
+    let colors = (this._DATA.$colors) ? [
+      this._DATA.$colors[0] || '#660000',
+      this._DATA.$colors[1] || '#ff6600',
     ] : ['#660000', '#ff6600'] // default Hokie colors
     return ConfSite.colorStyles(Color.fromString(colors[0]), Color.fromString(colors[1]))
   }
@@ -108,10 +108,10 @@ class ConfSite extends Page {
    */
   get images() {
     return {
-      hero: (this._DATA.images && this._DATA.images.hero) || null,
-      city: (this._DATA.images && this._DATA.images.city) || null,
-      prev: (this._DATA.images && this._DATA.images.prev) || null,
-      next: (this._DATA.images && this._DATA.images.next) || null,
+      hero: (this._DATA.$images && this._DATA.$images.hero) || null,
+      city: (this._DATA.$images && this._DATA.$images.city) || null,
+      prev: (this._DATA.$images && this._DATA.$images.prev) || null,
+      next: (this._DATA.$images && this._DATA.$images.next) || null,
     }
   }
 
