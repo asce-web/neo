@@ -15,36 +15,16 @@
 // Pug:
 // <pre>
 // -
-//   let supporters = [
-//     new Supporter('Bank of America').url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg'),
-//     new Supporter('UPS'            ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg'),
-//     new Supporter('Geico'          ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png'),
-//     new Supporter('Bank of America').url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg'),
-//     new Supporter('UPS'            ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg'),
-//     new Supporter('Geico'          ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png'),
-//     new Supporter('Bank of America').url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg'),
-//     new Supporter('UPS'            ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg'),
-//     new Supporter('Geico'          ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png'),
-//   ]
-//   let titanium = new SupporterLevel('Titanium').size(SupporterLevel.LogoSize.LARGE)
-//   let platinum = new SupporterLevel('Platinum').size(SupporterLevel.LogoSize.MEDIUM)
-//   let silver   = new SupporterLevel('Silver'  ).size(SupporterLevel.LogoSize.SMALL)
 //   let my_conference = new Conference({
 //     "@context" : "http://schema.org/",
 //     "@type"    : "Event",
+//     "sponsor": [
+//       { "@type": "Organization", "name": "Bank of America", "url": "#0", "$level": "Titanium", "image": "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg" },
+//       { "@type": "Organization", "name": "UPS"            , "url": "#0", "$level": "Titanium", "image": "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg" },
+//       { "@type": "Organization", "name": "Geico"          , "url": "#0", "$level": "Titanium", "image": "http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png" },
+//     ]
 //   })
-//     .addSupporter(supporters[0].level('Titanium'))
-//     .addSupporter(supporters[1].level('Titanium'))
-//     .addSupporter(supporters[2].level('Titanium'))
-//     .addSupporter(supporters[3].level('Platinum'))
-//     .addSupporter(supporters[4].level('Platinum'))
-//     .addSupporter(supporters[5].level('Platinum'))
-//     .addSupporter(supporters[6].level('Silver'))
-//     .addSupporter(supporters[7].level('Silver'))
-//     .addSupporter(supporters[8].level('Silver'))
-// != titanium.view.supporterBlock(my_conference)
-// != platinum.view.supporterBlock(my_conference)
-// != silver  .view.supporterBlock(my_conference)
+// != my_conference.view.supporterLevels(["Titanium"])
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>

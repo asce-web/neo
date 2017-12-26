@@ -220,50 +220,6 @@ class Conference {
   }
 
   /**
-   * @summary Add a supporter level to this conference.
-   * @param   {SupporterLevel} $supporterLevel the supporter level to add
-   * @returns {Conference} this conference
-   */
-  addSupporterLevel($supporterLevel) {
-    this._supporter_levels.push($supporterLevel)
-    return this
-  }
-  /**
-   * @summary Retrieve a supporter level of this conference.
-   * @param   {string} name the name of the supporter level
-   * @returns {?SupporterLevel} the specified supporter level
-   */
-  getSupporterLevel(name) {
-    return this._supporter_levels.find(($supporterLevel) => $supporterLevel.name===name) || null
-  }
-  /**
-   * @summary Retrieve all supporter levels of this conference.
-   * @returns {Array<SupporterLevel>} a shallow array of all supporter levels of this conference
-   */
-  getSupporterLevelsAll() {
-    return this._supporter_levels.slice()
-  }
-
-  /**
-   * @summary Add a named subarray of supporter levels to this conference.
-   * @param   {string} type the name of the subarray
-   * @param   {Array<string>} supporter_level_names an array of pre-existing SupporterLevel names
-   * @returns {Conference} this conference
-   */
-  addSupporterLevelQueue(type, supporter_level_names) {
-    this._supporter_lists[type] = supporter_level_names
-    return this
-  }
-  /**
-   * @summary Get a named subarray of supporter levels of this conference.
-   * @param   {string} type the name of the subarray
-   * @returns {Array<SupporterLevel>} the array of SupporterLevel objects belonging to the type
-   */
-  getSupporterLevelQueue(type) {
-    return (this._supporter_lists[type] || []).map((el) => this.getSupporterLevel(el))
-  }
-
-  /**
    * @summary Retrieve a supporter of this conference.
    * @param   {string} name the name of the supporter
    * @returns {?Supporter} the specified supporter
@@ -376,6 +332,7 @@ class Conference {
      * - `Conference#view.hero()`      - Hero Organism
      * - `Conference#view.otherYear()` - Other Year Organism
      * - `Conference#view.program()`   - Program Tabs Organism
+     * - `Conference#view.supporterLevels()` - multiple SupporterBlock Components
      * @namespace Conference.VIEW
      * @type {View}
      */
