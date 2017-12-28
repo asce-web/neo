@@ -211,12 +211,10 @@
       {
         "@type": "Person",
         "identifier": "donna-fulman",
-        "$name": {
           "givenName"      : "Donna",
           "additionalName" : "A.",
           "familyName"     : "Fulman",
-          "honorificSuffix": "P.ASCE"
-        },
+          "honorificSuffix": "P.ASCE",
         "image"      : "files/headshot1.jpg",
         "url"        : "#0",
         "email"      : "example@asce.org",
@@ -235,11 +233,9 @@
       {
         "@type": "Person",
         "identifier": "rachel-falsetti",
-        "$name": {
           "givenName"     : "Susan",
           "additionalName": "R.",
-          "familyName"    : "Rowghani"
-        },
+          "familyName"    : "Rowghani",
         "image"      : "http://www.cisummit.org/sites/cisummit.org/files/susan-rowghani.jpg",
         "url"        : "#0",
         "email"      : "example@asce.org",
@@ -257,10 +253,8 @@
       {
         "@type": "Person",
         "identifier": "diego-alvarez",
-        "$name": {
           "givenName" : "Diego",
-          "familyName": "Alvarez"
-        },
+          "familyName": "Alvarez",
         "image"      : "http://www.cisummit.org/sites/cisummit.org/files/diego-alvarez.jpg",
         "url"        : "#0",
         "email"      : "example@asce.org",
@@ -279,10 +273,8 @@
       {
         "@type": "Person",
         "identifier": "jeremy-boak",
-        "$name": {
           "givenName" : "Jeremy",
-          "familyName": "Boak"
-        },
+          "familyName": "Boak",
         "image"      : "http://www.aei-conference.org/sites/aei-conference.org/files/jeremy-boak.jpg",
         "url"        : "#0",
         "email"      : "example@asce.org",
@@ -300,10 +292,8 @@
       {
         "@type": "Person",
         "identifier": "muralee-muraleetharan",
-        "$name": {
           "givenName" : "Muralee",
-          "familyName": "Muraleetharan"
-        },
+          "familyName": "Muraleetharan",
         "image"      : "http://www.aei-conference.org/sites/aei-conference.org/files/muralee-muraleetharan.jpg",
         "url"        : "#0",
         "email"      : "example@asce.org",
@@ -523,24 +513,20 @@
       {
         "@type": "Person",
         "identifier": "thomas-mccollough",
-        "$name": {
           "givenName"      : "Thomas",
           "additionalName" : "J.",
           "familyName"     : "McCollough",
-          "honorificSuffix": "P.E., M.ASCE"
-        },
+          "honorificSuffix": "P.E., M.ASCE",
         "affiliation": "HDR Engineering, Inc."
       },
       {
         "@type": "Person",
         "identifier": "stephen-dickenson",
-        "$name": {
           "honorificPrefix": "Dr.",
           "givenName"      : "Stephen",
           "additionalName" : "E.",
           "familyName"     : "Dickenson",
-          "honorificSuffix": "Ph.D., P.E., D.PE, M.ASCE"
-        },
+          "honorificSuffix": "Ph.D., P.E., D.PE, M.ASCE",
         "affiliation": "HNTB Corporation"
       }
     ],

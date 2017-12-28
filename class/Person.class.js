@@ -17,12 +17,11 @@ class Person {
    * @param {!Object} jsondata a JSON object
    * @param {string} jsondata.identifier a unique identifier of this person
    * @param {string=} jsondata.name the string name of this person
-   * @param {!Object=} jsondata.$name if string param `name` is not used, required; an object containing the following:
-   * @param {string} jsondata.$name.givenName the person’s first name
-   * @param {string} jsondata.$name.familyName the person’s last name
-   * @param {string=} jsondata.$name.additionalName  the person’s middle name or initial
-   * @param {string=} jsondata.$name.honorificPrefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
-   * @param {string=} jsondata.$name.honorificSuffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
+   * @param {string} jsondata.givenName the person’s first name
+   * @param {string} jsondata.familyName the person’s last name
+   * @param {string=} jsondata.additionalName  the person’s middle name or initial
+   * @param {string=} jsondata.honorificPrefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
+   * @param {string=} jsondata.honorificSuffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
    * @param {string=} jsondata.image the url to a headshot image of this person
    * @param {string=} jsondata.url the url to this person’s homepage or website
    * @param {string=} jsondata.email this person’s email address
@@ -57,9 +56,15 @@ class Person {
      * The object name of this person.
      * @private
      * @final
-     * @type {?Object}
+     * @type {!Object}
      */
-    this._$NAME = jsondata.$name || null
+    this._$NAME = {
+      givenName      : jsondata.givenName       || '',
+      familyName     : jsondata.familyName      || '',
+      additionalName : jsondata.additionalName  || '',
+      honorificPrefix: jsondata.honorificPrefix || '',
+      honorificSuffix: jsondata.honorificSuffix || '',
+    }
   }
 
   /**
@@ -72,10 +77,11 @@ class Person {
 
   /**
    * @summary The string name of this person if it exists; else the object name of this person.
+   * @todo TODO `get name()` should inherit from `Thing`, and make this `get $name()` a new method
    * @type {(string|!Object)}
    */
   get name() {
-    return this._NAME || this._$NAME || {}
+    return this._NAME || this._$NAME
   }
 
   /**
