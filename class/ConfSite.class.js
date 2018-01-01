@@ -22,10 +22,10 @@ class ConfSite extends Page {
    * @param {string=} jsondata.image url of the logo file
    * @param {Array<string>=} jsondata.$colors two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
    * @param {Object<string>=} jsondata.$images a dictionary of image urls
-   * @param {!Object<!Object>} jsondata.conferences a dictionary of conferences; types {@link http://schema.org/Event}
-   * @param {string} jsondata.currentConference  the key of an existing conference; used as the current  conference in this series
-   * @param {string} jsondata.previousConference the key of an existing conference; used as the previous conference in this series
-   * @param {string} jsondata.nextConference     the key of an existing conference; used as the next     conference in this series
+   * @param {Array<!Object>} jsondata.$conferences an array of conferences; types {@link http://schema.org/Event}
+   * @param {string} jsondata.$currentConference  the url of an existing conference; used as the current  conference in this series
+   * @param {string} jsondata.$previousConference the url of an existing conference; used as the previous conference in this series
+   * @param {string} jsondata.$nextConference     the url of an existing conference; used as the next     conference in this series
    * @param {Array<!Object>=} jsondata.$queues a list containing types {@link http://schema.org/ItemList}, which list any number and type of things
    * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this site; type {@link http://schema.org/URL}
    * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
@@ -44,22 +44,6 @@ class ConfSite extends Page {
      * @type {!Object}
      */
     this._DATA = jsondata
-
-    /** @private TEMP: finish */
-    /**
-     * TEMP: list of Conference objects
-     * @todo TODO: remove when all data is imported into JSON
-     * @private
-     * @final
-     * @type {!Object<Conference>}
-     */
-    this._conferences = (function () {
-      const returned = {}
-      for (let key in this._DATA.conferences) {
-        returned[key] = new Conference(this._DATA.conferences[key])
-      }
-      return returned
-    }).call(this)
   }
 
   /**
@@ -117,20 +101,27 @@ class ConfSite extends Page {
 
   /**
    * @summary Retrieve a conference of this site.
-   * @param   {string} conf_label key for accessing the conference, usually a year
-   * @returns {Conference} the specified conference
+   * @param   {string} url the unique url of the conference to get
+   * @returns {?Conference} the specified conference
    */
-  getConference(conf_label) {
-    return this._conferences[conf_label]
+  getConference(url) {
+    return this.getConferencesAll().find((conference) => conference.url===url) || null
   }
-
+  /**
+   * @summary Retrieve all conferences added to this site.
+   * @todo TODO make this a getter
+   * @returns {Array<Conference>} all conferences of this site
+   */
+  getConferencesAll() {
+    return this._DATA.$conferences.map((event) => new Conference(event))
+  }
   /**
    * The current conference of this site.
    * @description The current conference is the conference that is being promoted this cycle.
    * @type {Conference} the current conference
    */
   get currentConference() {
-    return this.getConference(this._DATA.currentConference)
+    return this.getConference(this._DATA.$currentConference)
   }
   /**
    * @summary The previous conference of this site.
@@ -138,7 +129,7 @@ class ConfSite extends Page {
    * @type {Conference} the previous conference
    */
   get prevConference() {
-    return this.getConference(this._DATA.previousConference)
+    return this.getConference(this._DATA.$previousConference)
   }
   /**
    * @summary The next conference of this site.
@@ -146,7 +137,7 @@ class ConfSite extends Page {
    * @type {Conference} the next conference
    */
   get nextConference() {
-    return this.getConference(this._DATA.nextConference)
+    return this.getConference(this._DATA.$nextConference)
   }
 
   /**
