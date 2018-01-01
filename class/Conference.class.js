@@ -31,10 +31,12 @@ class Conference {
    * @param {string} jsondata.name the name of this conference
    * @param {string} jsondata.url the url of this conference
    * @param {string=} jsondata.description the theme of this conference
+   * @param {string=} jsondata.image the hero image for this conference
    * @param {string=} jsondata.startDate the starting date of this conference, in ISO string format
    * @param {string=} jsondata.endDate the ending date of this conference, in ISO string format
    * @param {Array<!Object>=} jsondata.location a list of locations of this conference: at least 1 entry.
-   *                                            First entry: required; the promoted location; type {@link http://schema.org/PostalAddress}.
+   *                                            First entry: required; the promoted location; type {@link http://schema.org/PostalAddress};
+   *                                            provide `image` property for location image.
    *                                            Other entries: optional; other venues; type {@link http://schema.org/Place}.
    * @param {Array<!Object>=} jsondata.offers a list of registration periods; types {@link http://schema.org/AggregateOffer}
    * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
@@ -93,6 +95,14 @@ class Conference {
   }
 
   /**
+   * @summary The hero image of this conference.
+   * @type {string}
+   */
+  get heroImage() {
+    return this._DATA.image || ''
+  }
+
+  /**
    * @summary The starting date of this conference.
    * @type {Date}
    */
@@ -117,6 +127,14 @@ class Conference {
    */
   get promoLoc() {
     return new PostalAddress(this._DATA.location && this._DATA.location[0] || {})
+  }
+
+  /**
+   * @summary The location image of this conference.
+   * @type {string}
+   */
+  get promoLocImage() {
+    return this._DATA.location && this._DATA.location[0] && this._DATA.location[0].image || ''
   }
 
   /**
@@ -341,14 +359,13 @@ class Conference {
        * Return a `<header>` element with hero image marking up this conference’s main info.
        * @summary Call `Conference#view.hero()` to render this display.
        * @function Conference.VIEW.hero
-       * @param   {?string=} image background image url
        * @param   {string=} block custom HTML to insert at the end
        * @returns {string} HTML output
        */
-      .addDisplay(function hero(image = null, block = '') {
+      .addDisplay(function hero(block = '') {
         return new HTMLElement('header').class('o-Runner o-Runner--pageHeader c-Banner c-ConfHed')
           .attr('data-instanceof','Conference')
-          .style({ '--banner-img': (image!==null) ? `url('${image}')` : 'none' })
+          .style((this.heroImage !== '') ? { '--banner-img': `url('${this.heroImage}')` } : null)
           .addContent([
             new HTMLElement('div').class('o-Constrain')
               .addContent([
@@ -390,15 +407,13 @@ class Conference {
        * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
        * @summary Call `Conference#view.otherYear()` to render this display.
        * @function Conference.VIEW.otherYear
-       * @param   {string}  year exactly one of `'prev'` or `'next'`
-       * @param   {?string=} image background image url
        * @param   {string=} blurb custom HTML to advertise the prev/next year
        * @param   {string=} block custom HTML to insert at the end
        * @returns {string} HTML output
        */
-      .addDisplay(function otherYear(year, image = null, blurb = '', block = '') {
+      .addDisplay(function otherYear(blurb = '', block = '') {
         return new HTMLElement('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
-          .style({ '--banner-img': (image!==null) ? `url('${image}')` : 'none' })
+          .style((this.heroImage !== '') ? { '--banner-img': `url('${this.heroImage}')` } : null)
           .attr({
             'data-instanceof': 'Conference',
             itemscope: '',

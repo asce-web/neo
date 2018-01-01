@@ -22,7 +22,6 @@ class ConfSite extends Page {
    * @param {string=} jsondata.image url of the logo file
    * @param {Array<string>=} jsondata.color two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
    * @param {!Object=} jsondata.brand the publisher/brand responsible for this site; type {@link http://schema.org/Organization}
-   * @param {Object<string>=} jsondata.$images a dictionary of image urls
    * @param {Array<!Object>} jsondata.$conferences an array of conferences; types {@link http://schema.org/Event}
    * @param {string} jsondata.$currentConference  the url of an existing conference; used as the current  conference in this series
    * @param {string} jsondata.$previousConference the url of an existing conference; used as the previous conference in this series
@@ -85,19 +84,6 @@ class ConfSite extends Page {
       Color.fromString(this._DATA.color && this._DATA.color[0] || '#660000'),  // default Hokie colors
       Color.fromString(this._DATA.color && this._DATA.color[1] || '#ff6600')   // default Hokie colors
     )
-  }
-
-  /**
-   * @summary The image urls of this site.
-   * @type {Object<?string>}
-   */
-  get images() {
-    return {
-      hero: (this._DATA.$images && this._DATA.$images.hero) || null,
-      city: (this._DATA.$images && this._DATA.$images.city) || null,
-      prev: (this._DATA.$images && this._DATA.$images.prev) || null,
-      next: (this._DATA.$images && this._DATA.$images.next) || null,
-    }
   }
 
   /**

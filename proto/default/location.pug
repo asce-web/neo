@@ -4,7 +4,7 @@ block append vars
   - var page = site.find('location.html')
 
 block mainHeader
-  header.o-Runner.o-Runner--pageHeader.c-Banner(style=`--banner-img: url('${site.images.city}');`): div.o-Constrain
+  header.o-Runner.o-Runner--pageHeader.c-Banner(style=`--banner-img: url('${site.currentConference.promoLocImage}');`): div.o-Constrain
     h1.c-PageTitle= page.name()
 
 block mainReference

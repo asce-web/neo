@@ -41,23 +41,19 @@
       }
     ]
   },
-  "$images": {
-    "hero": "/proto/asce-event.org/files/cable-car.jpg",
-    "city": "/proto/asce-event.org/files/portland.jpg",
-    "prev": "/proto/asce-event.org/files/new-york.jpg",
-    "next": "/proto/asce-event.org/files/new-orleans.jpg"
-  },
   "$conferences": [
     {
       "@type": "Event",
       "name"       : "A 2016 Event",
       "url"        : "https://2016.asce-event.org/",
       "description": "Where Engineering Dreams are Built.",
+      "image"      : "/proto/asce-event.org/files/cable-car.jpg",
       "startDate"  : "2016-09-28T07:30",
       "endDate"    : "2016-10-01T17:00",
       "location"   : [
         {
           "@type": "PostalAddress",
+          "image"          : "/proto/asce-event.org/files/portland.jpg",
           "addressLocality": "Portland",
           "addressRegion"  : "Oregon"
         },
@@ -549,6 +545,7 @@
       "name"       : "A 2015 Event",
       "url"        : "https://2015.asce-event.org/",
       "description": "Building on the Past.",
+      "image"      : "/proto/asce-event.org/files/new-york.jpg",
       "startDate"  : "2015-10-11T07:30",
       "endDate"    : "2015-10-14T17:00",
       "location": [
@@ -577,6 +574,7 @@
       "name"       : "A 2017 Event",
       "url"        : "https://2017.asce-event.org/",
       "description": "The Future of Civil Engineering.",
+      "image"      : "/proto/asce-event.org/files/new-orleans.jpg",
       "startDate"  : "2017-10-08T07:30",
       "endDate"    : "2017-10-11T17:00",
       "location": [
