@@ -1,5 +1,5 @@
 h1#registration Registra&shy;tion
-!= Util.view(site.currentConference.getPassesAll().filter(($p) => $p.isStarred())).pass(site.currentConference)
+!= Util.view(site.currentConference.getPassesAll()).pass(site.currentConference, site.getQueue('Featured Passes'))
 -
   let highlight_buttons = [
     new HTMLElement('a').attr('href','registration.html').addContent(`Registration Details`)

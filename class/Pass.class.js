@@ -15,8 +15,6 @@ class Pass {
    * @param {string=} jsondata.$fineprint further details of this pass
    * @param {Array<string>=} jsondata.$attendeeTypes types of attendees that can purchase this pass
    *                                                 (usually based on membership)
-   * @param {boolean=} jsondata.$starred whether this pass is starred
-   *                                     TODO: use Entity Queues instead!
    */
   constructor(jsondata) {
     /**
@@ -26,7 +24,6 @@ class Pass {
      * @type {!Object}
      */
     this._DATA = jsondata
-    /** @private */ this._is_starred = false
   }
 
   /**
@@ -67,15 +64,6 @@ class Pass {
    */
   getAttendeeTypesAll() {
     return this._DATA.$attendeeTypes.map((name) => new Pass.AttendeeType(name))
-  }
-
-  /**
-   * @summary Whether this pass is starred.
-   * @todo TODO: use Entity Queues instead!
-   * @type {boolean}
-   */
-  isStarred() {
-    return this._DATA.$starred
   }
 
 

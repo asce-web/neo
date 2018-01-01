@@ -506,13 +506,13 @@ class Conference {
        * that have the specified level.
        * @summary Call `Conference#view.supporterLevels()` to render this display.
        * @function Conference.VIEW.supporterLevels
-       * @param   {(Array<string>|!Object)} levels the levels of supporter to display, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-       * @param   {Array<string>=} levels.itemListElement if `levels` is an {@link http://schema.org/ItemList}, the levels of supporter to display, in the correct order
+       * @param   {(Array<string>|!Object)} queue the list of supporter levels to display, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the supporter levels
        * @param   {boolean=} small if `true`, overrides logo sizing to small
        * @returns {string} HTML output
        */
-      .addDisplay(function supporterLevels(levels, small = false) {
-        const supporterlevels = levels.itemListElement || ((xjs.Object.typeOf(levels) === 'array') ? levels : [])
+      .addDisplay(function supporterLevels(queue, small = false) {
+        const supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         return Util.documentFragment(supporterlevels.map((level, index) =>
           new HTMLElement('section').class('c-SupporterBlock')
             .addClass((small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med') // TODO make small the default size

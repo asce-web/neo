@@ -309,12 +309,16 @@ class Util {
        * @summary Call `Util.view(data).pass()` to render this display.
        * @function Util.VIEW.pass
        * @param   {Conference} $conference the conference to which these passes belong
+       * @param   {(Array<string>|!Object)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
        * @returns {string} HTML output
        */
-      .addDisplay(function pass($conference) {
-        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((pass) =>
-          new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference))
-        )).html()
+      .addDisplay(function pass($conference, queue = null) {
+        const pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this
+          .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
+          .map((pass) => new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference)))
+        ).html()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of

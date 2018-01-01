@@ -27,6 +27,11 @@ class ConfSite extends Page {
    * @param {string} jsondata.$previousConference the url of an existing conference; used as the previous conference in this series
    * @param {string} jsondata.$nextConference     the url of an existing conference; used as the next     conference in this series
    * @param {Array<!Object>=} jsondata.$queues a list containing types {@link http://schema.org/ItemList}, which list any number and type of things
+   *                                           The following queues are recommended:
+   *                                           - Featured Passes
+   *                                           - Top Sponsors
+   *                                           - Non-Sponsors
+   *                                           - All Sponsors
    * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this site; type {@link http://schema.org/URL}
    * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
    * @param {string} jsondata.sameAs.url the URL of the site’s social media profile or page

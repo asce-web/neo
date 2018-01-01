@@ -121,8 +121,7 @@
       {
         "name": "Standard Pass",
         "description": "Members & Non-Members",
-        "$attendeeTypes": ["Member", "Non-Member"],
-        "$starred": true
+        "$attendeeTypes": ["Member", "Non-Member"]
       },
       {
         "name": "Speaker Pass",
@@ -137,15 +136,13 @@
       {
         "name": "Younger Member",
         "description": "Members 18–35",
-        "$attendeeTypes": ["Member/Non-Member"],
-        "$starred": true
+        "$attendeeTypes": ["Member/Non-Member"]
       },
       {
         "name": "Student Pass",
         "description": "Undergraduates 18–24",
         "$fineprint" : "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
-        "$attendeeTypes": ["Member/Non-Member"],
-        "$starred": true
+        "$attendeeTypes": ["Member/Non-Member"]
       },
       {
         "name": "Guest Pass",
@@ -602,6 +599,15 @@
   "$previousConference": "https://2015.asce-event.org/",
   "$nextConference"    : "https://2017.asce-event.org/",
   "$queues": [
+    {
+      "@type": "ItemList",
+      "name" : "Featured Passes",
+      "itemListElement": [
+        "Standard Pass",
+        "Younger Member",
+        "Student Pass"
+      ]
+    },
     {
       "@type": "ItemList",
       "name" : "Top Sponsors",
