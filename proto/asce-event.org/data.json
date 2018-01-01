@@ -228,8 +228,7 @@
           { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
           { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
           { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
-        ],
-        "$starred": true
+        ]
       },
       {
         "@type": "Person",
@@ -268,8 +267,7 @@
           { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
           { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
           { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
-        ],
-        "$starred": true
+        ]
       },
       {
         "@type": "Person",
@@ -307,8 +305,7 @@
           { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
           { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
           { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
-        ],
-        "$starred": true
+        ]
       }
     ],
     "sponsor": [
@@ -606,6 +603,15 @@
         "Standard Pass",
         "Younger Member",
         "Student Pass"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name" : "Featured Speakers",
+      "itemListElement": [
+        "diego-alvarez",
+        "donna-fulman",
+        "muralee-muraleetharan"
       ]
     },
     {

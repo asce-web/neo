@@ -33,8 +33,6 @@ class Person {
    * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
    * @param {string} jsondata.sameAs.url the URL of the person’s social media profile or page
    * @param {string=} jsondata.sameAs.description short alternative text for non-visual media
-   * @param {boolean=} jsondata.$starred whether this person is starred
-   *                                     TODO: use Entity Queues instead!
    */
   constructor(jsondata) {
     /**
@@ -134,19 +132,6 @@ class Person {
   }
 
   /**
-   * @summary Whether this person is starred.
-   * @todo TODO: use Entity Queues instead!
-   * @type {boolean}
-   */
-  isStarred() {
-    return this._DATA.$starred
-  }
-
-
-
-
-
-  /**
    * @summary Retrieve a social network profile of this person.
    * @param   {string} name the name of the social network
    * @returns {?Object} an object representing the social network profile
@@ -162,7 +147,6 @@ class Person {
   getSocialAll() {
     return (this._DATA.sameAs || []).map((url) => url)
   }
-
 
 
   /**

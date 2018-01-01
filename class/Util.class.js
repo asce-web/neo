@@ -326,11 +326,15 @@ class Util {
        * Parameter `data` should be of type `Array<Person>`.
        * @summary Call `Util.view(data).speaker()` to render this display.
        * @function Util.VIEW.speaker
+       * @param   {(Array<string>|!Object)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
        * @returns {string} HTML output
        */
-      .addDisplay(function speaker() {
-        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((person) =>
-          new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
+      .addDisplay(function speaker(queue = null) {
+        const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this
+          .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
+          .map((person) => new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
         )).html()
       })
       /**

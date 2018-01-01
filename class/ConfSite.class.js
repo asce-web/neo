@@ -29,6 +29,7 @@ class ConfSite extends Page {
    * @param {Array<!Object>=} jsondata.$queues a list containing types {@link http://schema.org/ItemList}, which list any number and type of things
    *                                           The following queues are recommended:
    *                                           - Featured Passes
+   *                                           - Featured Speakers
    *                                           - Top Sponsors
    *                                           - Non-Sponsors
    *                                           - All Sponsors
