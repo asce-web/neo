@@ -1,15 +1,24 @@
 {
   "@context": "http://schema.org/",
-  "@type": "WebSite",
+  "@type": "Product",
+  "additionalType": "http://schema.org/WebSite",
   "name"       : "An ASCE Event",
   "url"        : "/sites/asce-event.org/",
   "description": "Optional Brand Slogan",
   "keywords"   : ["ASCE", "civil engineering", "convention"],
   "image"      : "./files/site-logo-white.png",
-  "publisher"  : {
+  "color"      : ["#3fae2a", "#00a1e1"],
+  "brand"      : {
     "@type": "NGO",
     "name": "American Society of Civil Engineers",
     "url" : "http://www.asce.org",
+    "sameAs": [
+      { "@type": "URL", "name": "twitter" , "url": "//twitter.com/ASCE"    , "description": "Follow ASCE on Twitter" },
+      { "@type": "URL", "name": "google"  , "url": "//plus.google.com/ASCE", "description": "Follow ASCE on Google+" },
+      { "@type": "URL", "name": "facebook", "url": "//facebook.com/ASCE"   , "description": "Like ASCE on Facebook" },
+      { "@type": "URL", "name": "linkedin", "url": "//linkedin.com/ASCE"   , "description": "Connect with ASCE on LinkedIn" },
+      { "@type": "URL", "name": "youtube" , "url": "//youtube.com/ASCE"    , "description": "Watch ASCE on YouTube" }
+    ],
     "address": {
       "@type": "PostalAddress",
       "streetAddress"  : "1801 Alexander Bell Drive",
@@ -32,7 +41,6 @@
       }
     ]
   },
-  "$colors": ["#3fae2a", "#00a1e1"],
   "$images": {
     "hero": "/proto/asce-event.org/files/cable-car.jpg",
     "city": "/proto/asce-event.org/files/portland.jpg",
@@ -624,12 +632,5 @@
         "Copper"
       ]
     }
-  ],
-  "sameAs": [
-    { "@type": "URL", "name": "twitter" , "url": "//twitter.com/ASCE"    , "description": "Follow ASCE on Twitter" },
-    { "@type": "URL", "name": "google"  , "url": "//plus.google.com/ASCE", "description": "Follow ASCE on Google+" },
-    { "@type": "URL", "name": "facebook", "url": "//facebook.com/ASCE"   , "description": "Like ASCE on Facebook" },
-    { "@type": "URL", "name": "linkedin", "url": "//linkedin.com/ASCE"   , "description": "Connect with ASCE on LinkedIn" },
-    { "@type": "URL", "name": "youtube" , "url": "//youtube.com/ASCE"    , "description": "Watch ASCE on YouTube" }
   ]
 }

@@ -20,7 +20,8 @@ class ConfSite extends Page {
    * @param {string=} jsondata.description the slogan (or tagline) of this site
    * @param {Array<string>=} jsondata.keywords keywords for this site
    * @param {string=} jsondata.image url of the logo file
-   * @param {Array<string>=} jsondata.$colors two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
+   * @param {Array<string>=} jsondata.color two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
+   * @param {!Object=} jsondata.brand the publisher/brand responsible for this site; type {@link http://schema.org/Organization}
    * @param {Object<string>=} jsondata.$images a dictionary of image urls
    * @param {Array<!Object>} jsondata.$conferences an array of conferences; types {@link http://schema.org/Event}
    * @param {string} jsondata.$currentConference  the url of an existing conference; used as the current  conference in this series
@@ -76,14 +77,14 @@ class ConfSite extends Page {
 
   /**
    * @summary The colors for this site: a CSS object containg custom properties with color string values.
+   * @todo TODO use a CSSRuleset object
    * @type {Object<string>}
    */
   get colors() {
-    let colors = (this._DATA.$colors) ? [
-      this._DATA.$colors[0] || '#660000',
-      this._DATA.$colors[1] || '#ff6600',
-    ] : ['#660000', '#ff6600'] // default Hokie colors
-    return ConfSite.colorStyles(Color.fromString(colors[0]), Color.fromString(colors[1]))
+    return ConfSite.colorStyles(
+      Color.fromString(this._DATA.color && this._DATA.color[0] || '#660000'),  // default Hokie colors
+      Color.fromString(this._DATA.color && this._DATA.color[1] || '#ff6600')   // default Hokie colors
+    )
   }
 
   /**
