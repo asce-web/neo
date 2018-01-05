@@ -1,5 +1,5 @@
 const xjs     = require('extrajs')
-const Element = require('extrajs-dom').Element
+const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
@@ -90,23 +90,23 @@ class RegistrationPeriod {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($pass, is_body) {
-        return new Element('section').class('c-Pass__Period')
+        return new HTMLElement('section').class('c-Pass__Period')
           .addClass((!is_body) ? 'o-Flex__Item' : '')
           .attr({
             'data-instanceof': 'RegistrationPeriod',
             itemprop : 'offers',
             itemscope: '',
-            itemtype : 'https://schema.org/AggregateOffer',
+            itemtype : 'http://schema.org/AggregateOffer',
           })
           .addContent([
-            new Element('h1').class('c-Pass__Period__Hn').attr('itemprop','name').addContent([
-              new Element('span').class('-d-n').addContent(`${$pass.name}: `), // NOTE: `.-d-n` hides from AT but reveals to Microdata
+            new HTMLElement('h1').class('c-Pass__Period__Hn').attr('itemprop','name').addContent([
+              new HTMLElement('span').class('-d-n').addContent(`${$pass.name}: `), // NOTE: `.-d-n` hides from AT but reveals to Microdata
               this.name
             ]),
-            new Element('meta').attr({ content:$pass.getAttendeeTypesAll().length, itemprop:'offerCount' }),
-            (this.startDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
-            (this.  endDate.toISOString() !== new Date().toISOString()) ? new Element('meta').attr({ content:this.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,
-            new Element('dl').addContent($pass.getAttendeeTypesAll().map((att_type) =>
+            new HTMLElement('meta').attr({ content:$pass.getAttendeeTypesAll().length, itemprop:'offerCount' }),
+            (this.startDate.toISOString() !== new Date().toISOString()) ? new HTMLElement('meta').attr({ content:this.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
+            (this.  endDate.toISOString() !== new Date().toISOString()) ? new HTMLElement('meta').attr({ content:this.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,
+            new HTMLElement('dl').addContent($pass.getAttendeeTypesAll().map((att_type) =>
               att_type.view.pass(42.87, is_body) // TODO price is 42 for now
             )),
           ])
@@ -120,15 +120,15 @@ class RegistrationPeriod {
        */
       .addDisplay(function legend() {
         // test equal ISOStrings because the getters return `new Date()` if none is set
-        let start_date = (this.startDate.toISOString() !== new Date().toISOString()) ? new Element('time').attr('datetime',this.startDate.toISOString()).addContent(xjs.Date.format(this.startDate, 'M j')) : null
-        let end_date   = (this.endDate  .toISOString() !== new Date().toISOString()) ? new Element('time').attr('datetime',this.endDate  .toISOString()).addContent(xjs.Date.format(this.endDate  , 'M j')) : null
-        let small = [new Element('b').addContent(this.name)]
+        let start_date = (this.startDate.toISOString() !== new Date().toISOString()) ? new HTMLElement('time').attr('datetime',this.startDate.toISOString()).addContent(xjs.Date.format(this.startDate, 'M j')) : null
+        let end_date   = (this.endDate  .toISOString() !== new Date().toISOString()) ? new HTMLElement('time').attr('datetime',this.endDate  .toISOString()).addContent(xjs.Date.format(this.endDate  , 'M j')) : null
+        let small = [new HTMLElement('b').addContent(this.name)]
         if (start_date && end_date) small.push(`: `, start_date, `&ndash;`, end_date)
         else if (start_date) small.push(` begins `, start_date)
         else if (end_date  ) small.push(` ends `  , end_date)
-        return new Element('p').class('c-RegPdIcon').attr('data-instanceof','RegistrationPeriod').addContent([
-          new Element('i').class('material-icons').attr('role','none').addContent(this.getIcon()),
-          new Element('small').addContent(small),
+        return new HTMLElement('p').class('c-RegPdIcon').attr('data-instanceof','RegistrationPeriod').addContent([
+          new HTMLElement('i').class('material-icons').attr('role','none').addContent(this.getIcon()),
+          new HTMLElement('small').addContent(small),
         ])
       })
   }

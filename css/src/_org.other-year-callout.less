@@ -18,7 +18,7 @@
 //
 // (Use `.c-Banner--prev` or `.c-Banner--next` accordingly.)
 //
-// Use in Pug:
+// Pug:
 // <pre>
 // -
 //   let conf = new Conference({
@@ -30,9 +30,9 @@
 //   })
 //   let prev_blurb = 'Plan ahead to attend Geo-Risk next year!'
 //   let prev_content = Util.VIEW.highlightButtons([
-//     new Element('a').attr('href','http://2020.georiskconference.org/').attr('itemprop','url'),
+//     new HTMLElement('a').attr('href','http://2020.georiskconference.org/').attr('itemprop','url'),
 //   ], 'c-Button--ghost c-Button--ghost--dark')
-// != conf.view(Conference.Display.OTHER_YEAR, 'prev', prev_blurb, prev_content)
+// != conf.view.otherYear('prev', prev_blurb, prev_content)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>

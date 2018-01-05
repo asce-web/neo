@@ -12,31 +12,36 @@
 // On all other pages, this block may be used to group additional organizations,
 // such as Cooperating Organizations.
 //
-// Use in Pug:
+// Pug:
 // <pre>
-//   -
-//     let supporters = [
-//       new Supporter('Bank of America').url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg'),
-//       new Supporter('UPS'            ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg'),
-//       new Supporter('Geico'          ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png'),
-//     ]
-//     let titanium = new SupporterLevel('Titanium').size(SupporterLevel.LogoSize.LARGE)
-//     let platinum = new SupporterLevel('Platinum').size(SupporterLevel.LogoSize.MEDIUM)
-//     let silver   = new SupporterLevel('Silver'  ).size(SupporterLevel.LogoSize.SMALL)
-//     let my_conference = new Conference()
-//       .addSupporter(supporters[0].level('Titanium'))
-//       .addSupporter(supporters[1].level('Titanium'))
-//       .addSupporter(supporters[2].level('Titanium'))
-//       .addSupporter(supporters[0].level('Platinum'))
-//       .addSupporter(supporters[1].level('Platinum'))
-//       .addSupporter(supporters[2].level('Platinum'))
-//       .addSupporter(supporters[0].level('Silver'))
-//       .addSupporter(supporters[1].level('Silver'))
-//       .addSupporter(supporters[2].level('Silver'))
-//   include /_views/_SupporterLevel.view.pug
-//   +supporterBlock(titanium, my_conference)
-//   +supporterBlock(platinum, my_conference)
-//   +supporterBlock(silver  , my_conference)
+// -
+//   let supporters = [
+//     new Supporter('Bank of America').url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg'),
+//     new Supporter('UPS'            ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg'),
+//     new Supporter('Geico'          ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png'),
+//     new Supporter('Bank of America').url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg'),
+//     new Supporter('UPS'            ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg'),
+//     new Supporter('Geico'          ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png'),
+//     new Supporter('Bank of America').url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg'),
+//     new Supporter('UPS'            ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg'),
+//     new Supporter('Geico'          ).url('#0').img('http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png'),
+//   ]
+//   let titanium = new SupporterLevel('Titanium').size(SupporterLevel.LogoSize.LARGE)
+//   let platinum = new SupporterLevel('Platinum').size(SupporterLevel.LogoSize.MEDIUM)
+//   let silver   = new SupporterLevel('Silver'  ).size(SupporterLevel.LogoSize.SMALL)
+//   let my_conference = new Conference()
+//     .addSupporter(supporters[0].level('Titanium'))
+//     .addSupporter(supporters[1].level('Titanium'))
+//     .addSupporter(supporters[2].level('Titanium'))
+//     .addSupporter(supporters[3].level('Platinum'))
+//     .addSupporter(supporters[4].level('Platinum'))
+//     .addSupporter(supporters[5].level('Platinum'))
+//     .addSupporter(supporters[6].level('Silver'))
+//     .addSupporter(supporters[7].level('Silver'))
+//     .addSupporter(supporters[8].level('Silver'))
+// != titanium.view.supporterBlock(my_conference)
+// != platinum.view.supporterBlock(my_conference)
+// != silver  .view.supporterBlock(my_conference)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
@@ -47,19 +52,19 @@
 // <section class="c-SupporterBlock {{ modifier_class }}">
 //   <h1 class="c-SupporterBlock__Hn">Titanium</h1>
 //   <ul class="o-List o-Flex c-SupporterBlock__List">
-//     <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item" itemprop="sponsor" itemscope="" itemtype="https://schema.org/Organization">
+//     <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item" itemprop="sponsor" itemscope="" itemtype="http://schema.org/Organization">
 //       <a href="#0" rel="external nofollow" itemprop="url">
 //         <img class="c-SupporterBlock__Logo" src="http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/bank-of-america-logo.jpg" alt="Bank of America" itemprop="logo"/>
 //         <meta content="Bank of America" itemprop="name"/>
 //       </a>
 //     </li>
-//     <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item" itemprop="sponsor" itemscope="" itemtype="https://schema.org/Organization">
+//     <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item" itemprop="sponsor" itemscope="" itemtype="http://schema.org/Organization">
 //       <a href="#0" rel="external nofollow" itemprop="url">
 //         <img class="c-SupporterBlock__Logo" src="http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/ups-logo.jpg" alt="UPS" itemprop="logo"/>
 //         <meta content="UPS" itemprop="name"/>
 //       </a>
 //     </li>
-//     <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item" itemprop="sponsor" itemscope="" itemtype="https://schema.org/Organization">
+//     <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item" itemprop="sponsor" itemscope="" itemtype="http://schema.org/Organization">
 //       <a href="#0" rel="external nofollow" itemprop="url">
 //         <img class="c-SupporterBlock__Logo" src="http://www.asceconvention.org/sites/asceconvention.org/files/sponsors/geico-asce-convention-logo.png" alt="Geico" itemprop="logo"/>
 //         <meta content="Geico" itemprop="name"/>

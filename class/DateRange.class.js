@@ -1,5 +1,5 @@
 const xjs     = require('extrajs')
-const Element = require('extrajs-dom').Element
+const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 
 /**
@@ -100,7 +100,7 @@ class DateRange {
        * @returns {string} HTML output
        */
       .addDisplay(function dateBlock() {
-        return new Element('tr').class('c-DateBlock__Item')
+        return new HTMLElement('tr').class('c-DateBlock__Item')
           .attr('data-instanceof','DateRange')
           .attr({
             itemprop: 'potentialAction',
@@ -108,18 +108,18 @@ class DateRange {
             itemtype: 'http://schema.org/Action',
           })
           .addContent([
-            new Element('td').class('c-DateBlock__Date').addContent([
-              new Element('time')
+            new HTMLElement('td').class('c-DateBlock__Date').addContent([
+              new HTMLElement('time')
                 .attr({ datetime: this.start.toISOString(), itemprop: 'startTime' })
                 .addContent(xjs.Date.format(this.start, 'M j, Y')),
               (this.end) ? `&ndash;` : '',
-              (this.end) ? new Element('time')
+              (this.end) ? new HTMLElement('time')
                 .attr({ datetime: this.end.toISOString(), itemprop: 'endTime' })
                 .addContent(xjs.Date.format(this.end, 'M j, Y')) : null,
             ]),
-            new Element('td').class('c-DateBlock__Desc')
+            new HTMLElement('td').class('c-DateBlock__Desc')
               .attr('itemprop','name')
-              .addContent((this.url()) ? new Element('a').class('c-DateBlock__Link')
+              .addContent((this.url()) ? new HTMLElement('a').class('c-DateBlock__Link')
                 .attr({ href: this.url(), itemprop: 'url' })
                 .addContent(this.name) : this.name
               ),
@@ -135,7 +135,7 @@ class DateRange {
        * @returns {string} HTML output
        */
       .addDisplay(function timeBlock(is_last) {
-        return new Element('tr').class('c-TimeBlock__Item')
+        return new HTMLElement('tr').class('c-TimeBlock__Item')
           .attr('data-instanceof','DateRange')
           .attr({
             itemprop: 'subEvent',
@@ -143,18 +143,18 @@ class DateRange {
             itemtype: 'http://schema.org/Event',
           })
           .addContent([
-            new Element('td').class('c-TimeBlock__Times').addContent([
-              new Element('time')
+            new HTMLElement('td').class('c-TimeBlock__Times').addContent([
+              new HTMLElement('time')
                 .attr({ datetime: this.start.toISOString(), itemprop: 'startDate' })
                 .addContent(xjs.Date.format(this.start, 'g:ia')),
               (this.end) ? `&ndash;` : '',
-              (this.end) ? new Element('time')
+              (this.end) ? new HTMLElement('time')
                 .attr({ datetime: this.end.toISOString(), itemprop: 'endDate' })
                 .addContent(xjs.Date.format(this.end, 'g:ia')) : null,
             ]),
-            new Element('td').class('c-TimeBlock__Desc').addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
+            new HTMLElement('td').class('c-TimeBlock__Desc').addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
               .attr('itemprop','name')
-              .addContent((this.url()) ? new Element('a').class('c-TimeBlock__Link')
+              .addContent((this.url()) ? new HTMLElement('a').class('c-TimeBlock__Link')
                 .attr({ href: this.url(), itemprop: 'url' })
                 .addContent(this.name) : this.name
               ),

@@ -1,4 +1,4 @@
-const Element = require('extrajs-dom').Element
+const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 
 /**
@@ -59,17 +59,17 @@ class SupporterLevel {
        * @returns {string} HTML output
        */
       .addDisplay(function supporterBlock($conference) {
-        return new Element('section').class('c-SupporterBlock')
+        return new HTMLElement('section').class('c-SupporterBlock')
           .addClass((this.size()) ? `c-SupporterBlock--${this.size()}` : '')
           .attr('data-instanceof','SupporterLevel')
           .addContent([
-            new Element('h1').class('c-SupporterBlock__Hn').addContent(this.name),
-            new Element('ul').class('o-List o-Flex c-SupporterBlock__List').addContent(
+            new HTMLElement('h1').class('c-SupporterBlock__Hn').addContent(this.name),
+            new HTMLElement('ul').class('o-List o-Flex c-SupporterBlock__List').addContent(
               $conference.getSupportersAll()
                 .filter(($supporter) => $supporter.level()===this.name)
                 .map(($supporter) =>
-                  new Element('li').class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
-                    .attr({ itemprop:'sponsor', itemscope:'', itemtype:'https://schema.org/Organization' })
+                  new HTMLElement('li').class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
+                    .attr({ itemprop:'sponsor', itemscope:'', itemtype:'http://schema.org/Organization' })
                     .addContent($supporter.view.supporterBlock())
                 )
             ),

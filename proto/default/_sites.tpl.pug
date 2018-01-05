@@ -18,7 +18,7 @@ html(lang="en")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.15.0/bangs.css")
       link(rel="stylesheet" href="../../css/neo.css")
       style.
-        body { #{new Element('body').style(site.colors()).style()} }
+        body { #{new HTMLElement('body').style(site.colors()).style()} }
         .c-Banner--hero { --banner-img: url('#{site.images().hero}'); }
         .c-Banner--city { --banner-img: url('#{site.images().city}'); }
         .c-Banner--prev { --banner-img: url('#{site.images().prev}'); }
@@ -66,7 +66,7 @@ html(lang="en")
                 list: 'o-List c-MainMenu__Sub',
                 item: 'o-List__Item c-MainMenu__Sub__Item',
               },
-              links: { classes: { link: 'c-MainMenu__Sub__Link' } },
+              links: { classes: { link: 'c-MainMenu__Sub__Link h-Block' } },
             },
           }
         != Util.view(site).pageToc(mainmenu_options)
@@ -91,7 +91,7 @@ html(lang="en")
               != $supporterLevel.view.supporterBlock(site.currentConference())
             -
               let highlight_buttons = [
-                new Element('a').attr('href','sponsor.html').addContent(`All Sponsors`)
+                new HTMLElement('a').attr('href','sponsor.html').addContent(`All Sponsors`)
               ]
             != Util.view(highlight_buttons).highlightButtons()
     footer.o-Runner.c-Mast.c-Mast--sitemap#sitemap: nav.o-Constrain

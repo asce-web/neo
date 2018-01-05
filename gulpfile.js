@@ -64,7 +64,7 @@ gulp.task('pug:default', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        Element   : require('extrajs-dom').Element,
+        HTMLElement   : require('extrajs-dom').HTMLElement,
         Util      : require('./class/Util.class.js'),
         site      : new ConfSite('Civil Engineering Congress', '/sites/default/', 'ConferenceSuite')
           .colors(Color.fromString('#660000'), Color.fromString('#ff6600')) // default Hokie colors
@@ -90,7 +90,7 @@ gulp.task('pug:sample', function () {
       basedir: './',
       locals: {
         xjs    : require('extrajs'),
-        Element: require('extrajs-dom').Element,
+        HTMLElement: require('extrajs-dom').HTMLElement,
         Util   : require('./class/Util.class.js'),
         site   : require('./proto/asce-event.org/data.js'),
       },

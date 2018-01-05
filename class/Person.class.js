@@ -1,4 +1,4 @@
-const Element = require('extrajs-dom').Element
+const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
@@ -197,11 +197,11 @@ class Person {
      * @returns {string} HTML output
      */
     return new View(function () {
-      return new Element('span').attr('itemprop','name')
+      return new HTMLElement('span').attr('itemprop','name')
         .addContent([
-          new Element('span').attr('itemprop','givenName').addContent(this.name.given_name),
+          new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.given_name),
           ` `,
-          new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name),
+          new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.family_name),
         ])
         .html()
     }, this)
@@ -212,13 +212,13 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function fullName() {
-        return new Element('span').attr('itemprop','name')
+        return new HTMLElement('span').attr('itemprop','name')
           .addContent([
-            new Element('span').attr('itemprop','givenName').addContent(this.name.given_name),
+            new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.given_name),
             ` `,
-            new Element('span').attr('itemprop','additionalName').addContent(this.name.additional_name),
+            new HTMLElement('span').attr('itemprop','additionalName').addContent(this.name.additional_name),
             ` `,
-            new Element('span').attr('itemprop','familiyName').addContent(this.name.family_name),
+            new HTMLElement('span').attr('itemprop','familyName').addContent(this.name.family_name),
           ])
           .html()
       })
@@ -232,12 +232,12 @@ class Person {
         let returned = this.view.fullName()
         if (this.name.honorific_prefix) {
           returned = `${
-            new Element('span').attr('itemprop','honorificPrefix').addContent(this.name.honorific_prefix).html()
+            new HTMLElement('span').attr('itemprop','honorificPrefix').addContent(this.name.honorific_prefix).html()
           } ${returned}`
         }
         if (this.name.honorific_suffix) {
           returned = `${returned}, ${
-            new Element('span').attr('itemprop','honorificSuffix').addContent(this.name.honorific_suffix).html()
+            new HTMLElement('span').attr('itemprop','honorificSuffix').addContent(this.name.honorific_suffix).html()
           }`
         }
         return returned
@@ -249,9 +249,9 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
-        return `${this.view.entireName()}, ${new Element('span').class('-fs-t')
+        return `${this.view.entireName()}, ${new HTMLElement('span').class('-fs-t')
           .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
-          .addContent(new Element('span').attr('itemprop','name').addContent(this.affiliation()))
+          .addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation()))
           .html()}`
       })
       /**
@@ -261,18 +261,18 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function contact() {
-        let returned = new Element('a')
+        let returned = new HTMLElement('a')
           .attr('href',`mailto:${this.email()}`)
           .addContent(this.view())
           .html()
         if (this.jobTitle()) {
           returned = `${returned}, ${
-            new Element('span').attr('itemprop','jobTitle').addContent(this.jobTitle()).html()
+            new HTMLElement('span').attr('itemprop','jobTitle').addContent(this.jobTitle()).html()
           }`
         }
         if (this.phone()) {
           returned = `${returned} | ${
-            new Element('a')
+            new HTMLElement('a')
               .attr('href',`tel:${this.phone()}`)
               .attr('itemprop','telephone')
               .addContent(this.phone())
@@ -289,30 +289,30 @@ class Person {
        */
       .addDisplay(function speaker() {
         /* filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
-        return new Element('article').class('c-Speaker').attr({
+        return new HTMLElement('article').class('c-Speaker').attr({
           'data-instanceof': 'Person',
           itemprop : 'performer',
           itemscope: '',
           itemtype : 'http://schema.org/Person',
         }).addContent([
-          new Element('img').class('c-Speaker__Img h-Block')
+          new HTMLElement('img').class('c-Speaker__Img h-Block')
             .attr('src', this.img())
             .attr('itemprop','image'),
-          new Element('header').class('c-Speaker__Head').addContent([
-            new Element('h1').class('c-Speaker__Name')
+          new HTMLElement('header').class('c-Speaker__Head').addContent([
+            new HTMLElement('h1').class('c-Speaker__Name')
               .id(this.id)
               .addContent(this.view.entireName()),
-            new Element('p').class('c-Speaker__JobTitle')
+            new HTMLElement('p').class('c-Speaker__JobTitle')
               .attr('itemprop','jobTitle')
               .addContent(this.jobTitle()),
-            new Element('p').class('c-Speaker__Affiliation').attr({
+            new HTMLElement('p').class('c-Speaker__Affiliation').attr({
               itemprop : 'affiliation',
               itemscope: '',
               itemtype : 'http://schema.org/Organization',
-            }).addContent(new Element('span').attr('itemprop','name').addContent(this.affiliation())),
+            }).addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation())),
           ]),
-          // new Element('div').class('c-Speaker__Body').attr('itemprop','description'),
-          new Element('footer').class('c-Speaker__Foot').addContent(pug`
+          // new HTMLElement('div').class('c-Speaker__Body').attr('itemprop','description'),
+          new HTMLElement('footer').class('c-Speaker__Foot').addContent(pug`
             include ../_views/_c-SocialList.view.pug
             +socialList(${this.getSocialAll()}).c-SocialList--speaker
               if ${this.email()}
