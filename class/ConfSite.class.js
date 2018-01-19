@@ -1,9 +1,20 @@
+const Ajv      = require('ajv')
+
 const Page     = require('sitepage').Page
 const HTMLElement  = require('extrajs-dom').HTMLElement
 const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
+
+const { SCHEMATA } = require('schemaorg-jsd')
+
 const Conference = require('./Conference.class.js')
 const ConfPage = require('./ConfPage.class.js')
+
+
+const path = require('path')
+const requireOther = require('schemaorg-jsd/lib/requireOther.js')
+const NEO_SCHEMA = requireOther(path.join(__dirname, '../neo.jsd'))
+
 
 /**
  * A conference site.
@@ -42,6 +53,16 @@ class ConfSite extends Page {
     super({ name: jsondata.name, url: jsondata.url })
     super.description(jsondata.description || '')
     super.keywords(jsondata.keywords || [])
+
+    let ajv = new Ajv()
+    ajv.addSchema(SCHEMATA)
+    let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata)
+    if (!is_data_valid) {
+      let e = new TypeError(ajv.errors[0].message)
+      e.details = ajv.errors[0]
+      console.error(e)
+      throw e
+    }
 
     /**
      * All the data for this site.
