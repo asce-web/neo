@@ -2,8 +2,8 @@ h1#conference-co-chairs Conference Co-Chairs
 div._text-block
   -
     let cochairs = new HTMLElement('ul').addContent([
-      site.currentConference().getOrganizer('thomas-mccollough').view.affiliation(),
-      site.currentConference().getOrganizer('stephen-dickenson').view.entireName(),
+      site.currentConference.getOrganizer('thomas-mccollough').view.affiliation(),
+      site.currentConference.getOrganizer('stephen-dickenson').view.entireName(),
     ].map((d) =>
       new HTMLElement('li').attr({
         itemprop : 'organizer',

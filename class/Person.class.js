@@ -1,173 +1,151 @@
+const xjs = require('extrajs')
 const HTMLElement = require('extrajs-dom').HTMLElement
+const HTMLUListElement = require('extrajs-dom').HTMLUListElement
+const HTMLLIElement = require('extrajs-dom').HTMLLIElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
 /**
- * A person.
+ * A person (alive, dead, undead, or fictional).
  * Can be used for any role on the site,
  * e.g., speaker, chair, or ASCE staff member.
+ * @see https://schema.org/Person
  */
 class Person {
   /**
    * Construct a new Person object.
-   * @param {string} id a unique identifier of the person
-   * @param {Object=} $name an object containing the following:
-   * @param {string} $name.honorific_prefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
-   * @param {string} $name.given_name the person’s first name
-   * @param {string} $name.additional_name  the person’s middle name or initial
-   * @param {string} $name.family_name the person’s last name
-   * @param {string} $name.honorific_suffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
+   * @param {!Object} jsondata a JSON object
+   * @param {string} jsondata.identifier a unique identifier of this person
+   * @param {string=} jsondata.name the string name of this person
+   * @param {string} jsondata.givenName the person’s first name
+   * @param {string} jsondata.familyName the person’s last name
+   * @param {string=} jsondata.additionalName  the person’s middle name or initial
+   * @param {string=} jsondata.honorificPrefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
+   * @param {string=} jsondata.honorificSuffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
+   * @param {string=} jsondata.image the url to a headshot image of this person
+   * @param {string=} jsondata.url the url to this person’s homepage or website
+   * @param {string=} jsondata.email this person’s email address
+   * @param {string=} jsondata.telephone this person’s telephone number
+   * @param {string=} jsondata.jobTitle this person’s job title
+   * @param {!Object=} jsondata.affiliation an organization that this person is affiliated with; type {@link http://schema.org/Organization}
+   * @param {string=} jsondata.affiliation.name an organization that this person is affiliated with
+   * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this person; type {@link http://schema.org/URL}
+   * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
+   * @param {string} jsondata.sameAs.url the URL of the person’s social media profile or page
+   * @param {string=} jsondata.sameAs.description short alternative text for non-visual media
    */
-  constructor(id, $name = {}) {
-    /** @private @final */ this._ID   = id
-    /** @private @final */ this._NAME = {
-      honorific_prefix: $name.honorific_prefix,
-      given_name      : $name.given_name,
-      additional_name : $name.additional_name,
-      family_name     : $name.family_name,
-      honorific_suffix: $name.honorific_suffix,
+  constructor(jsondata) {
+    /**
+     * All the data for this person.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
+
+    /**
+     * The string name of this person.
+     * @private
+     * @final
+     * @type {string}
+     */
+    this._NAME = jsondata.name || ''
+    /**
+     * The object name of this person.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._$NAME = {
+      givenName      : jsondata.givenName       || '',
+      familyName     : jsondata.familyName      || '',
+      additionalName : jsondata.additionalName  || '',
+      honorificPrefix: jsondata.honorificPrefix || '',
+      honorificSuffix: jsondata.honorificSuffix || '',
     }
-    /** @private */ this._jobTitle    = ''
-    /** @private */ this._affiliation = ''
-    /** @private */ this._img         = ''
-    /** @private */ this._email       = ''
-    /** @private */ this._telephone   = ''
-    /** @private */ this._url         = ''
-    /** @private */ this._social      = {}
-    /** @private */ this._is_starred  = false
   }
 
   /**
-   * @summary Get the id of this person.
+   * @summary The id of this person.
    * @type {string}
    */
   get id() {
-    return this._ID
+    return this._DATA.identifier
   }
 
   /**
-   * @summary Get the name object of this person.
-   * @type {Object}
+   * @summary The string name of this person if it exists; else the object name of this person.
+   * @todo TODO `get name()` should inherit from `Thing`, and make this `get $name()` a new method
+   * @type {(string|!Object)}
    */
   get name() {
-    return Object.assign({}, this._NAME)
+    return this._NAME || this._$NAME
   }
 
   /**
-   * @summary Set or get this person’s job title.
-   * @param   {string=} text the job title
-   * @returns {(Person|string)} this person || the job title
+   * @summary This person’s headshot image.
+   * @type {string}
    */
-  jobTitle(text) {
-    if (arguments.length) {
-      this._jobTitle = text
-      return this
-    } else return this._jobTitle
+  get image() {
+    return this._DATA.image || ''
   }
 
   /**
-   * @summary Set or get this person’s affiliation.
-   * @param   {string=} text the affiliation
-   * @returns {(Person|string)} this person || the affiliation
+   * @summary This person’s homepage or website.
+   * @type {string}
    */
-  affiliation(text) {
-    if (arguments.length) {
-      this._affiliation = text
-      return this
-    } else return this._affiliation
+  get url() {
+    return this._DATA.url || ''
   }
 
   /**
-   * @summary Set or get this person’s headshot image.
-   * @param   {string=} text the url pointing to the headshot image
-   * @returns {(Person|string)} this person || the headshot image url
+   * @summary This person’s email address.
+   * @type {string}
    */
-  img(url) {
-    if (arguments.length) {
-      this._img = url
-      return this
-    } else return this._img
+  get email() {
+    return this._DATA.email || ''
   }
 
   /**
-   * @summary Set or get this person’s email address.
-   * @param   {string=} text the email address
-   * @returns {(Person|string)} this person || the email address
+   * @summary This person’s telephone number.
+   * @type {string}
    */
-  email(text) {
-    if (arguments.length) {
-      this._email = text
-      return this
-    } else return this._email
+  get telephone() {
+    return this._DATA.telephone || ''
+  }
+
+
+  /**
+   * @summary This person’s job title.
+   * @type {string}
+   */
+  get jobTitle() {
+    return this._DATA.jobTitle || ''
   }
 
   /**
-   * @summary Set or get this person’s telephone number.
-   * @param   {string=} text the telephone number
-   * @returns {(Person|string)} this person || the telephone number
+   * @summary The name of this person’s affiliation.
+   * @type {string}
    */
-  phone(text) {
-    if (arguments.length) {
-      this._telephone = text
-      return this
-    } else return this._telephone
+  get affiliation() {
+    return this._DATA.affiliation && this._DATA.affiliation.name || ''
   }
 
-  /**
-   * @summary Set or get this person’s homepage.
-   * @param   {string=} text the homepage
-   * @returns {(Person|string)} this person || the homepage
-   */
-  url(text) {
-    if (arguments.length) {
-      this._url = text
-      return this
-    } else return this._url
-  }
-
-  /**
-   * @summary Add a social network profile to this person.
-   * @param   {string} network_name the name of the social network
-   * @param   {string} url the URL of this person’s profile on the network
-   * @param   {string=} text optional advisory text
-   * @returns {Person} this person
-   */
-  addSocial(network_name, url, text) {
-    this._social[network_name] = { url: url, text: text }
-    return this
-  }
   /**
    * @summary Retrieve a social network profile of this person.
-   * @param   {string} network_name the name of the social network
-   * @returns {Object} an object representing the social network profile
+   * @param   {string} name the name of the social network
+   * @returns {?Object} an object representing the social network profile
    */
-  getSocial(network_name) {
-    return this._social[network_name]
+  getSocial(name) {
+    return this.getSocialAll().find((url) => url.name===name) || null
   }
   /**
-   * @summary Return an object representing all social network profiles of this person.
-   * @returns {Object} shallow clone of this person’s social object
+   * @summary Return all social network profiles of this person.
+   * @todo TODO turn this into a getter
+   * @returns {Array<!Object>} all this person’s social media networks
    */
   getSocialAll() {
-    //- NOTE returns shallow clone (like arr.slice())
-    return Object.assign({}, this._social)
-  }
-
-  /**
-   * @summary Mark this person as starred.
-   * @param   {boolean=} bool if true, mark as starred
-   * @returns {Person} this person
-   */
-  star(bool = true) {
-    this._is_starred = bool
-    return this
-  }
-  /**
-   * @summary Get the starred status of this person.
-   * @returns {boolean} whether this person is starred
-   */
-  isStarred() {
-    return this._is_starred
+    return (this._DATA.sameAs || []).map((url) => url)
   }
 
 
@@ -198,11 +176,11 @@ class Person {
      */
     return new View(function () {
       return new HTMLElement('span').attr('itemprop','name')
-        .addContent([
-          new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.given_name),
+        .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
+          new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
           ` `,
-          new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.family_name),
-        ])
+          new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.familyName),
+        ] : this.name)
         .html()
     }, this)
       /**
@@ -213,13 +191,13 @@ class Person {
        */
       .addDisplay(function fullName() {
         return new HTMLElement('span').attr('itemprop','name')
-          .addContent([
-            new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.given_name),
+          .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
+            new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
             ` `,
-            new HTMLElement('span').attr('itemprop','additionalName').addContent(this.name.additional_name),
+            new HTMLElement('span').attr('itemprop','additionalName').addContent(this.name.additionalName),
             ` `,
-            new HTMLElement('span').attr('itemprop','familyName').addContent(this.name.family_name),
-          ])
+            new HTMLElement('span').attr('itemprop','familyName').addContent(this.name.familyName),
+          ] : this.name)
           .html()
       })
       /**
@@ -230,16 +208,8 @@ class Person {
        */
       .addDisplay(function entireName() {
         let returned = this.view.fullName()
-        if (this.name.honorific_prefix) {
-          returned = `${
-            new HTMLElement('span').attr('itemprop','honorificPrefix').addContent(this.name.honorific_prefix).html()
-          } ${returned}`
-        }
-        if (this.name.honorific_suffix) {
-          returned = `${returned}, ${
-            new HTMLElement('span').attr('itemprop','honorificSuffix').addContent(this.name.honorific_suffix).html()
-          }`
-        }
+        if (this.name.honorificPrefix) returned = `${new HTMLElement('span').attr('itemprop','honorificPrefix').addContent(this.name.honorificPrefix).html()} ${returned}`
+        if (this.name.honorificSuffix) returned = `${returned}, ${new HTMLElement('span').attr('itemprop','honorificSuffix').addContent(this.name.honorificSuffix).html()}`
         return returned
       })
       /**
@@ -249,10 +219,13 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
-        return `${this.view.entireName()}, ${new HTMLElement('span').class('-fs-t')
-          .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
-          .addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation()))
-          .html()}`
+        return Util.documentFragment([
+          this.view.entireName(),
+          `, `,
+          new HTMLElement('span').class('-fs-t')
+            .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
+            .addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation)),
+        ])
       })
       /**
        * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
@@ -262,20 +235,16 @@ class Person {
        */
       .addDisplay(function contact() {
         let returned = new HTMLElement('a')
-          .attr('href',`mailto:${this.email()}`)
+          .attr('href',`mailto:${this.email}`)
           .addContent(this.view())
           .html()
-        if (this.jobTitle()) {
-          returned = `${returned}, ${
-            new HTMLElement('span').attr('itemprop','jobTitle').addContent(this.jobTitle()).html()
-          }`
-        }
-        if (this.phone()) {
+        if (this.jobTitle) returned = `${returned}, ${new HTMLElement('span').attr('itemprop','jobTitle').addContent(this.jobTitle).html()}`
+        if (this.telephone) {
           returned = `${returned} | ${
             new HTMLElement('a')
-              .attr('href',`tel:${this.phone()}`)
+              .attr('href',`tel:${Util.toURL(this.telephone)}`)
               .attr('itemprop','telephone')
-              .addContent(this.phone())
+              .addContent(this.telephone)
               .html()
           }`
         }
@@ -288,7 +257,6 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker() {
-        /* filler placeholder */ function pug(strings, ...exprs) { return strings.join('') }
         return new HTMLElement('article').class('c-Speaker').attr({
           'data-instanceof': 'Person',
           itemprop : 'performer',
@@ -296,7 +264,7 @@ class Person {
           itemtype : 'http://schema.org/Person',
         }).addContent([
           new HTMLElement('img').class('c-Speaker__Img h-Block')
-            .attr('src', this.img())
+            .attr('src', this.image)
             .attr('itemprop','image'),
           new HTMLElement('header').class('c-Speaker__Head').addContent([
             new HTMLElement('h1').class('c-Speaker__Name')
@@ -304,33 +272,35 @@ class Person {
               .addContent(this.view.entireName()),
             new HTMLElement('p').class('c-Speaker__JobTitle')
               .attr('itemprop','jobTitle')
-              .addContent(this.jobTitle()),
+              .addContent(this.jobTitle),
             new HTMLElement('p').class('c-Speaker__Affiliation').attr({
               itemprop : 'affiliation',
               itemscope: '',
               itemtype : 'http://schema.org/Organization',
-            }).addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation())),
+            }).addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation)),
           ]),
           // new HTMLElement('div').class('c-Speaker__Body').attr('itemprop','description'),
-          new HTMLElement('footer').class('c-Speaker__Foot').addContent(pug`
-            include ../_views/_c-SocialList.view.pug
-            +socialList(${this.getSocialAll()}).c-SocialList--speaker
-              if ${this.email()}
-                li.o-List__Item.o-Flex__Item.c-SocialList__Item
-                  a.c-SocialList__Link.c-SocialList__Link--email.h-Block(href="mailto:${this.email()}" title="${this.email()}" itemprop="email")
-                    span.h-Hidden send email
-                    //- i.material-icons(role="none") email
-              if ${this.phone()}
-                li.o-List__Item.o-Flex__Item.c-SocialList__Item
-                  a.c-SocialList__Link.c-SocialList__Link--phone.h-Block(href="tel:${Util.toURL(this.phone())}" title="${this.phone()}" itemprop="telephone")
-                    span.h-Hidden call
-                    //- i.material-icons(role="none") phone
-              if ${this.url()}
-                li.o-List__Item.o-Flex__Item.c-SocialList__Item
-                  a.c-SocialList__Link.c-SocialList__Link--explore.h-Block(href="${this.url()}" title="visit homepage" itemprop="url")
-                    span.h-Hidden visit homepage
-                    //- i.material-icons(role="none") explore
-          `),
+          new HTMLElement('footer').class('c-Speaker__Foot').addContent([
+            Util.view(this.getSocialAll()).socialList('c-SocialList--speaker'),
+            new HTMLUListElement().class('o-List o-Flex c-SocialList').addClass('c-SocialList--speaker')
+              .addContent(['email', 'telephone', 'url'].map(function (prop) {
+                if (!this[prop]) return null
+                let data = ({
+                  url      : { icon: 'explore', url: this.url                           , text: 'visit homepage' },
+                  email    : { icon: 'email'  , url: `mailto:${this.email}`             , text: 'send email' },
+                  telephone: { icon: 'phone'  , url: `tel:${Util.toURL(this.telephone)}`, text: 'call' },
+                })[prop]
+                return new HTMLLIElement().class('o-List__Item o-Flex__Item c-SocialList__Item').addContent(
+                  new HTMLElement('a').class('c-SocialList__Link h-Block')
+                    .addClass(`c-SocialList__Link--${data.icon}`)
+                    .attr({ href: data.url, itemprop: prop })
+                    .addContent([
+                      // new HTMLElement('i').class('material-icons').attr('aria-hidden', true).addContent(data.icon),
+                      new HTMLElement('span').class('h-Hidden').addContent(data.text),
+                    ])
+                )
+              }, this)),
+          ]),
         ])
         .html()
       })

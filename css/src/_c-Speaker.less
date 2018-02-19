@@ -13,17 +13,22 @@
 // Pug:
 // <pre>
 // -
-//   let person = new Person('donna-fulman', {
-//     given_name      : 'Donna',
-//     additional_name : 'A.',
-//     family_name     : 'Fulman',
-//     honorific_suffix: 'P.ASCE',
-//   }).jobTitle('Administrator of Interior Engineering')
-//     .affiliation('German Chamber of Architects')
-//     .img('headshot.jpg')
-//     .email('example@asce.org')
-//     .phone('+1(703)555-5555')
-//     .url('#0')
+//   let person = new Person({
+//     "@type": "Person",
+//     "identifier": "donna-fulman",
+//     "$name": {
+//       "givenName"      : "Donna",
+//       "additionalName" : "A.",
+//       "familyName"     : "Fulman",
+//       "honorificSuffix": "P.ASCE"
+//     },
+//     "image"      : "files/headshot1.jpg",
+//     "url"        : "#0",
+//     "email"      : "example@asce.org",
+//     "telephone"  : "+1(703)555-5555",
+//     "jobTitle"   : "Administrator of Interior Engineering",
+//     "affiliation": "German Chamber of Architects"
+//   })
 //     .addSocial('linkedin', '#0')
 //     .addSocial('twitter' , '#0', 'Follow @Donna on Twitter')
 //     .addSocial('facebook', '#0', 'Donna’s Facebook Profile')

@@ -1,6 +1,7 @@
 const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
 const View    = require('extrajs-view')
+const Util    = require('./Util.class.js')
 
 /**
  * A set of prices for registration.
@@ -8,14 +9,21 @@ const View    = require('extrajs-view')
 class Pass {
   /**
    * Construct a new Pass object.
-   * @param {string} name the name or type of the pass
+   * @param {!Object} jsondata a JSON object that validates against some schema?
+   * @param {string} jsondata.name the name or type of the pass
+   * @param {string=} jsondata.description a short description of this pass
+   * @param {string=} jsondata.$fineprint further details of this pass
+   * @param {Array<string>=} jsondata.$attendeeTypes types of attendees that can purchase this pass
+   *                                                 (usually based on membership)
    */
-  constructor(name) {
-    /** @private @final */ this._NAME = name
-    /** @private */ this._description  = ''
-    /** @private */ this._fineprint    = ''
-    /** @private */ this._attend_types = []
-    /** @private */ this._is_starred = false
+  constructor(jsondata) {
+    /**
+     * All the data for this pass.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
   }
 
   /**
@@ -23,84 +31,39 @@ class Pass {
    * @type {string}
    */
   get name() {
-    return this._NAME
+    return this._DATA.name
   }
 
   /**
-   * @summary Set or get the description of this pass.
-   * @param   {string=} text the description of this pass
-   * @returns {(Pass|string)} this pass || the description of this pass
+   * @summary The description of this pass.
+   * @type {string}
    */
-  description(text) {
-    if (arguments.length) {
-      this._description = text
-      return this
-    } else return this._description
+  get description() {
+    return this._DATA.description || ''
   }
 
   /**
-   * @summary Set or get the fine print of this pass.
-   * @param   {string=} text the fine print of this pass
-   * @returns {(Pass|string)} this pass || the fine print of this pass
+   * @summary The fine print of this pass.
+   * @type {string}
    */
-  fineprint(text) {
-    if (arguments.length) {
-      this._fineprint = text
-      return this
-    } else return this._fineprint
+  get fineprint() {
+    return Util.stringify(this._DATA.$fineprint)
   }
 
-  /**
-   * @summary Add an attendee type to this pass.
-   * @param   {Pass.AttendeeType} $attendeeType the attendee type to add
-   * @returns {Pass} this pass
-   */
-  addAttendeeType($attendeeType) {
-    this._attend_types.push($attendeeType)
-    return this
-  }
-  // /**
-  //  * REVIEW: use this method if class AttendeeType is removed.
-  //  * @summary Add an attendee type to this pass.
-  //  * @param   {string} name the name of the attendee type
-  //  * @param   {boolean} is_featured whether this attendee type is marked as “featured”
-  //  * @returns {Pass} this pass
-  //  */
-  // addAttendeeType(name, is_featured) {
-  //   this._attend_types.push({name: name, isFeatured: is_featured})
-  //   return this
-  // }
   /**
    * @summary Retrieve an attendee type of this pass.
    * @param   {string} name the name of the attendee type to get
    * @returns {?Pass.AtendeeType} the specified attendee type
    */
   getAttendeeType(name) {
-    return this._attend_types.find(($attendeeType) => $attendeeType.name===name) || null
+    return (this._DATA.$attendeeTypes.includes(name)) ? new Pass.AttendeeType(name) : null
   }
   /**
    * @summary Retreive all attendee types of this pass.
    * @returns {Array<Pass.AttendeeType>} a shallow array of all attendee types of this pass
    */
   getAttendeeTypesAll() {
-    return this._attend_types.slice()
-  }
-
-  /**
-   * @summary Mark this pass as starred.
-   * @param   {boolean=} bool if true, mark as starred
-   * @returns {Pass} this pass
-   */
-  star(bool = true) {
-    this._is_starred = bool
-    return this
-  }
-  /**
-   * @summary Get the starred status of this pass.
-   * @returns {boolean} whether this pass is starred
-   */
-  isStarred() {
-    return this._is_starred
+    return this._DATA.$attendeeTypes.map((name) => new Pass.AttendeeType(name))
   }
 
 
@@ -126,21 +89,21 @@ class Pass {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference) {
-        let current_period = $conference.currentRegistrationPeriod()
+        let current_period = $conference.currentRegistrationPeriod
         return new HTMLElement('article').class('c-Pass')
           .attr('data-instanceof','Pass')
           .addContent([
             new HTMLElement('header').class('c-Pass__Head').addContent([
               new HTMLElement('h1').class('c-Pass__Hn').addContent(this.name),
               new HTMLElement('p').class('c-Pass__Desc').addContent([
-                this.description(),
-                (this.fineprint()) ? new HTMLElement('small').class('c-Pass__Fine h-Block').addContent(this.fineprint()) : null,
+                this.description,
+                (this.fineprint) ? new HTMLElement('small').class('c-Pass__Fine h-Block').addContent(this.fineprint) : null,
               ]),
             ]),
-            (current_period) ? new HTMLElement('div').class('c-Pass__Body').addContent(current_period.view.pass(this, true)) : null,
+            new HTMLElement('div').class('c-Pass__Body').addContent(current_period.view.pass(this, true)),
             new HTMLElement('footer').class('o-Flex c-Pass__Foot').addContent(
               $conference.getRegistrationPeriodsAll()
-                .filter((registration_period) => registration_period !== current_period)
+                .filter((registration_period) => registration_period.name !== current_period.name)
                 .map((registration_period) => registration_period.view.pass(this, false))
             ),
           ])
@@ -171,29 +134,23 @@ class Pass {
 Pass.AttendeeType = class AttendeeType {
   /**
    * Construct a new AttendeeType object.
-   * Parameters include a name and
-   * a boolean specifying whether the object is featured.
-   * Both name and “featured” are immutable.
    * @param {string} name the name of the attendee type
-   * @param {boolean} is_featured whether this attendee type is marked as “featured”
    */
-  constructor(name, is_featured) {
-    /** @private @final */ this._NAME        = name
-    /** @private @final */ this._IS_FEATURED = is_featured
+  constructor(name) {
+    /**
+     * All the data for this attendee type.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = { name: name }
   }
   /**
-   * @summary Get the name of this attendee type.
+   * @summary The name of this attendee type.
    * @type {string}
    */
   get name() {
-    return this._NAME
-  }
-  /**
-   * @summary Get whether this attendee type is featured.
-   * @type {boolean}
-   */
-  get isFeatured() {
-    return this._IS_FEATURED
+    return this._DATA.name
   }
 
 
@@ -217,14 +174,12 @@ Pass.AttendeeType = class AttendeeType {
        * @summary Call `AttendeeType#view.pass()` to render this display.
        * @function Pass.AttendeeType.VIEW.pass
        * @param   {number} price the price for this attendee type given a certain pass and registration period
-       * @param   {boolean} is_body `true` if this attendee type happens to be in the pass body
        * @returns {string} HTML output
        */
-      .addDisplay(function pass(price, is_body) {
+      .addDisplay(function pass(price) {
         return Element.concat([
           new HTMLElement('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
           new HTMLElement('dd').class('c-Pass__Price')
-            .addClass((is_body && this.isFeatured) ? 'c-Pass__Price--featured' : '')
             .attr({
               'aria-label': `${price} ${Pass.PRICE_OPTIONS.resolvedOptions().currency}`,
               itemprop : 'priceSpecification',
