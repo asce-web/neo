@@ -1,6 +1,8 @@
-const Element = require('extrajs-dom').Element
-const HTMLElement = require('extrajs-dom').HTMLElement
+const path = require('path')
+
+const xjs = require('extrajs-dom')
 const View    = require('extrajs-view')
+
 const Util    = require('./Util.class.js')
 
 /**
@@ -89,30 +91,7 @@ class Pass {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference) {
-        return ``
-        // return Pass.TEMPLATE.render({
-        //   ...this._DATA,
-        //   $conference,
-        // })
-        let current_period = $conference.currentRegistrationPeriod
-        return new HTMLElement('article').class('c-Pass')
-          .attr('data-instanceof','Pass')
-          .addContent([
-            new HTMLElement('header').class('c-Pass__Head').addContent([
-              new HTMLElement('h1').class('c-Pass__Hn').addContent(this.name),
-              new HTMLElement('p').class('c-Pass__Desc').addContent([
-                this.description,
-                (this.fineprint) ? new HTMLElement('small').class('c-Pass__Fine h-Block').addContent(this.fineprint) : null,
-              ]),
-            ]),
-            new HTMLElement('div').class('c-Pass__Body').addContent(current_period.view.pass(this, true)),
-            new HTMLElement('footer').class('o-Flex c-Pass__Foot').addContent(
-              $conference.getRegistrationPeriodsAll()
-                .filter((registration_period) => registration_period.name !== current_period.name)
-                .map((registration_period) => registration_period.view.pass(this, false))
-            ),
-          ])
-          .html()
+        return new xjs.DocumentFragment(Pass.TEMPLATE.render({...this._DATA, $conference})).innerHTML()
       })
   }
 
@@ -205,5 +184,15 @@ Pass.AttendeeType = class AttendeeType {
       })
   }
 }
+
+/**
+ * @summary A set of prices for registration.
+ * @description An `<article.c-Pass>` element.
+ * @see xPass
+ * @type {xjs.HTMLTemplateElement}
+ */
+Pass.TEMPLATE = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, '../tpl/x-pass.tpl.html'))
+  .setRenderer(require('../tpl/x-pass.tpl.js'))
 
 module.exports = Pass

@@ -86,7 +86,7 @@ class RegistrationPeriod {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($pass, is_body) {
-        return ``
+        return `RegistrationPeriod#view.pass(${$pass}, ${is_body})`
         return new HTMLElement('section').class('c-Pass__Period')
           .addClass((!is_body) ? 'o-Flex__Item' : '')
           .attr({

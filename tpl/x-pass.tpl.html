@@ -1,0 +1,13 @@
+<template>
+  <article class="c-Pass">
+    <header class="c-Pass__Head">
+      <h1 class="c-Pass__Hn">{{ name }}</h1>
+      <p class="c-Pass__Desc">
+        <slot>{{ description }}</slot>
+        <small class="c-Pass__Fine h-Block">{{ fineprint }}</small>
+      </p>
+    </header>
+    <div class="c-Pass__Body">{{ ./x-registration-period.tpl.html }}</div>
+    <footer class="o-Flex c-Pass__Foot">{{ ./x-registration-period.tpl.html }}</footer>
+  </article>
+</template>
