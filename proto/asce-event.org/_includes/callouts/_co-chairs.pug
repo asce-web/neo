@@ -1,14 +1,14 @@
 h1#conference-co-chairs Conference Co-Chairs
 div._text-block
   -
-    let cochairs = new HTMLElement('ul').addContent([
+    let cochairs = ElemName('ul').append(...[
       site.currentConference.getOrganizer('thomas-mccollough').view.affiliation(),
       site.currentConference.getOrganizer('stephen-dickenson').view.entireName(),
     ].map((d) =>
-      new HTMLElement('li').attr({
+      ElemName('li').attr({
         itemprop : 'organizer',
         itemscope: '',
         itemtype : 'http://schema.org/Person',
-      }).addContent(d))
+      }).innerHTML(d))
     )
-  != cochairs.html()
+  != cochairs.outerHTML()

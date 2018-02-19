@@ -51,6 +51,7 @@ class Venue extends Place {
        * @returns {string} HTML output
        */
       .addDisplay(function venue() {
+        return ``
         let name = new HTMLElement('b').class('h-Clearfix').attr('itemprop','name').addContent(this.name)
         if (this.url) {
           name = new HTMLElement('a').attr({

@@ -363,6 +363,7 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function hero(block = '') {
+        return ``
         return new HTMLElement('header').class('o-Runner o-Runner--pageHeader c-Banner c-ConfHed')
           .attr('data-instanceof','Conference')
           .style((this.heroImage !== '') ? { '--banner-img': `url('${this.heroImage}')` } : null)
@@ -412,6 +413,7 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function otherYear(blurb = '', block = '') {
+        return ``
         return new HTMLElement('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
           .style((this.heroImage !== '') ? { '--banner-img': `url('${this.heroImage}')` } : null)
           .attr({
@@ -449,6 +451,7 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function program(id, starred = false) {
+        return ``
         /**
          * @summary Categorize all the sessions of this conference by date and return the grouping.
          * @description
@@ -512,6 +515,7 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function supporterLevels(queue, small = false) {
+        return ``
         const supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         return Util.documentFragment(supporterlevels.map((level, index) =>
           new HTMLElement('section').class('c-SupporterBlock')

@@ -78,6 +78,7 @@ class Exhibitor extends Organization {
      * @returns {string} HTML output
      */
     return new View(function () {
+      return ``
       return Util.documentFragment([
         new HTMLElement('a').class((this.isSponsor) ? '-fw-b' : null).attr('href', this.url).addContent(`${this.name} (booth ${this.booth})`),
         new HTMLElement('img').attr('src', this.image || '#0').attr('alt', this.name),

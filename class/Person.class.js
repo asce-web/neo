@@ -175,6 +175,7 @@ class Person {
      * @returns {string} HTML output
      */
     return new View(function () {
+        return ``
       return new HTMLElement('span').attr('itemprop','name')
         .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
           new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
@@ -190,6 +191,7 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function fullName() {
+        return ``
         return new HTMLElement('span').attr('itemprop','name')
           .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
             new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
@@ -207,6 +209,7 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function entireName() {
+        return ``
         let returned = this.view.fullName()
         if (this.name.honorificPrefix) returned = `${new HTMLElement('span').attr('itemprop','honorificPrefix').addContent(this.name.honorificPrefix).html()} ${returned}`
         if (this.name.honorificSuffix) returned = `${returned}, ${new HTMLElement('span').attr('itemprop','honorificSuffix').addContent(this.name.honorificSuffix).html()}`
@@ -219,6 +222,7 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
+        return ``
         return Util.documentFragment([
           this.view.entireName(),
           `, `,
@@ -234,6 +238,7 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function contact() {
+        return ``
         let returned = new HTMLElement('a')
           .attr('href',`mailto:${this.email}`)
           .addContent(this.view())
@@ -257,6 +262,7 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker() {
+        return ``
         return new HTMLElement('article').class('c-Speaker').attr({
           'data-instanceof': 'Person',
           itemprop : 'performer',

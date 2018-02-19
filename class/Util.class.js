@@ -1,13 +1,15 @@
-const xjs     = require('extrajs')
-const Element = require('extrajs-dom').Element
-const HTMLElement = require('extrajs-dom').HTMLElement
-const HTMLUListElement = require('extrajs-dom').HTMLUListElement
-const HTMLLIElement = require('extrajs-dom').HTMLLIElement
+const jsdom = require('jsdom')
+const xjs     = {
+  ...require('extrajs'),
+  ...require('extrajs-dom'),
+}
 const View    = require('extrajs-view')
 const STATE_DATA = require('extrajs-geo')
 STATE_DATA.push(...[
   { "code": "DC", "name": "District of Columbia" },
 ])
+
+const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 
 
 /**
@@ -166,26 +168,26 @@ class Util {
        */
       .addDisplay(function pageLink(options = {}) {
         let classes = options.classes || {}
-        return new HTMLElement('a').class(classes.link || null)
+        return ElemName('a').class(classes.link || null)
           .attr({
             'data-instanceof': 'Page',
             href: this.url(),
             // 'aria-current': (page.url()===this.url()) ? 'page' : null,
           })
-          .addContent([
-            (xjs.Object.typeOf(classes.icon)==='string') ? new HTMLElement('i').class('material-icons')
+          .append(...[
+            (xjs.Object.typeOf(classes.icon)==='string') ? ElemName('i').class('material-icons')
               .addClass(classes.icon)
               .attr('role','none')
-              .addContent(this.getIcon())
+              .textContent(this.getIcon())
               : null,
-            new HTMLElement('span').addContent(this.name()),
-            (xjs.Object.typeOf(classes.expand)==='string' && this.findAll().length) ? new HTMLElement('i').class('material-icons')
+            ElemName('span').textContent(this.name()),
+            (xjs.Object.typeOf(classes.expand)==='string' && this.findAll().length) ? ElemName('i').class('material-icons')
               .addClass(classes.expand)
               .attr('role','none')
-              .addContent(`expand_more`)
+              .textContent(`expand_more`)
               : null,
           ])
-          .html()
+          .outerHTML()
       })
       /**
        * Return a Page object’s document outline as a nested ordered list.
@@ -208,11 +210,11 @@ class Util {
         let classes = options.classes || {}
         let start = options.start || 0
         let end   = options.end   || Infinity
-        return new HTMLElement('ol').class(classes.list || null)
+        return ElemName('ol').class(classes.list || null)
           .attr('role', (options.inner) ? null : 'directory')
-          .addContent(
-            this.findAll().slice(start, end).filter((p) => !p.isHidden()).map((p) =>
-              new HTMLElement('li').class(classes.item || null).addContent([
+          .append(
+            ...this.findAll().slice(start, end).filter((p) => !p.isHidden()).map((p) =>
+              ElemName('li').class(classes.item || null).innerHTML([
                 Util.view(p).pageLink(options.links),
                 (p.findAll().length && options.depth > 0) ?
                   Util.view(p).pageToc(Object.assign({}, options.options, {
@@ -220,10 +222,10 @@ class Util {
                     inner: true,
                   }))
                   : '',
-              ])
+              ].join(''))
             )
           )
-          .html()
+          .outerHTML()
       })
       /**
        * Return a snippet marking up a promoted location.
@@ -236,14 +238,14 @@ class Util {
        */
       .addDisplay(function promoLoc(state_code = false) {
         const returned = []
-        if (this.addressLocality) returned.push(new HTMLElement('span').attr('itemprop','addressLocality').addContent(this.addressLocality).html(), `, `)
+        if (this.addressLocality) returned.push(ElemName('span').attr('itemprop','addressLocality').addContent(this.addressLocality).html(), `, `)
         if (this.addressRegion) {
-          returned.push(new HTMLElement('data')
+          returned.push(ElemName('data')
             .attr({ itemprop: 'addressRegion', value: this.addressRegion })
             .addContent((state_code) ? STATE_DATA.find((state) => state.name===this.addressRegion).code : this.addressRegion)
             .html())
         }
-        if (this.addressCountry) returned.push(`, `, new HTMLElement('span').attr('itemprop','addressCountry').addContent(this.addressCountry).html())
+        if (this.addressCountry) returned.push(`, `, ElemName('span').attr('itemprop','addressCountry').addContent(this.addressCountry).html())
         return returned.join('')
       })
       /**
@@ -255,10 +257,17 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return new HTMLElement('ul').class('o-List o-Flex o-Flex--even').addContent(this.map((el) =>
-          new HTMLElement('li').class('o-List__Item o-Flex__Item')
-            .addContent(el.addClass(`c-Button c-Button--hilite ${buttonclasses}`))
-        )).html()
+        return ElemName('ul').class('o-List o-Flex o-Flex--even').append(...this.map((el) =>
+          ElemName('li').class('o-List__Item o-Flex__Item')
+            .append(el.addClass(`c-Button c-Button--hilite ${buttonclasses}`))
+        )).outerHTML()
+        return `
+<ul class="o-List o-Flex o-Flex--even">${
+  this.map((el) => `
+    <li class="o-List__Item o-Flex__Item">${el.addClass(`c-Button c-Button--hilite ${buttonclasses}`).outerHTML()}</li>
+  `)
+}</ul>
+        `
       })
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
@@ -270,10 +279,15 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function dateBlock(attr = {}) {
-        return new HTMLElement('table').attr(attr).addContent(
-          new HTMLElement('tbody').class('c-DateBlock')
-            .addContent(this.map(($importantDate) => $importantDate.view.dateBlock()))
-        ).html()
+        return ElemName('table').attr(attr).append(
+          ElemName('tbody').class('c-DateBlock')
+            .innerHTML(this.map(($importantDate) => $importantDate.view.dateBlock()).join(''))
+        ).outerHTML()
+        return `
+<table>
+  <tbody class="c-DateBlock">${ this.map(($importantDate) => $importantDate.view.dateBlock()) }</tbody>
+</table>
+        `
       })
       /**
        * Return a table containing a `<tbody.c-TimeBlock>` component, containing
@@ -285,10 +299,15 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function timeBlock(attr = {}) {
-        return new HTMLElement('table').attr(attr).addContent(
-          new HTMLElement('tbody').class('c-TimeBlock')
-            .addContent(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
-        ).html()
+        return ElemName('table').attr(attr).append(
+          ElemName('tbody').class('c-TimeBlock')
+            .innerHTML(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
+        ).outerHTML()
+        return `
+<table>
+  <tbody class="c-TimeBlock">${ this.map(($session, index) => $session.view.timeBlock(index===this.length-1)) }</tbody>
+</table>
+        `
       })
       /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.
@@ -298,9 +317,14 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function registrationLegend() {
-        return new HTMLElement('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').addContent(this.map((period) =>
-          new HTMLElement('li').class('o-List__Item o-Flex__Item c-Alert__Item').addContent(period.view.legend())
-        )).html()
+        return ElemName('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').append(...this.map((period) =>
+          ElemName('li').class('o-List__Item o-Flex__Item c-Alert__Item').innerHTML(period.view.legend())
+        )).outerHTML()
+        return `
+<ul class="o-List o-Flex o-Flex--even c-Alert _regLegend">${
+  this.map((period) => `<li class="o-List__Item o-Flex__Item c-Alert__Item">${period.view.legend()}</li>`)
+}</ul>
+        `
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -315,10 +339,17 @@ class Util {
        */
       .addDisplay(function pass($conference, queue = null) {
         const pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this
+        return ElemName('ul').class('o-List o-Flex o-ListStacked').append(...this
           .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
-          .map((pass) => new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference)))
-        ).html()
+          .map((pass) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').innerHTML(pass.view.pass($conference)))
+        ).outerHTML()
+        return `
+<ul class="o-List o-Flex o-ListStacked">${
+  this
+    .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
+    .map((pass) => `<li class="o-List__Item o-Flex__Item o-ListStacked__Item">${pass.view.pass($conference)}</li>`)
+}</ul>
+        `
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -332,10 +363,17 @@ class Util {
        */
       .addDisplay(function speaker(queue = null) {
         const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this
+        return ElemName('ul').class('o-List o-Flex o-ListStacked').append(...this
           .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
-          .map((person) => new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
-        )).html()
+          .map((person) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').innerHTML(person.view.speaker())
+        )).outerHTML()
+        return `
+<ul class="o-List o-Flex o-ListStacked">${
+  this
+    .filter((person) => (queue) ? speaker_ids.includes(person.name) : true)
+    .map((person) => `<li class="o-List__Item o-Flex__Item o-ListStacked__Item">${pass.view.speaker()}</li>`)
+}</ul>
+        `
       })
       /**
        * Return a `<ul.c-SocialList>` component, containing
@@ -347,27 +385,38 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function socialList(classes = '') {
-        return new HTMLUListElement().class('o-List o-Flex c-SocialList')
+        return ElemName('ul').class('o-List o-Flex c-SocialList')
           .addClass(classes)
-          .addContent(this.map((url) =>
-            new HTMLLIElement().class('o-List__Item o-Flex__Item c-SocialList__Item')
+          .append(...this.map((url) =>
+            ElemName('li').class('o-List__Item o-Flex__Item c-SocialList__Item')
               .attr({
                 itemprop : 'sameAs',
                 itemscope: '',
                 itemtype : 'http://schema.org/URL',
               })
-              .addContent(
-                new HTMLElement('a').class('c-SocialList__Link h-Block')
+              .append(
+                ElemName('a').class('c-SocialList__Link h-Block')
                   .addClass(`c-SocialList__Link--${url.name}`)
                   .attr({ href: url.url, itemprop: 'url' })
-                  .addContent(
-                    new HTMLElement('span').class('h-Hidden')
+                  .append(
+                    ElemName('span').class('h-Hidden')
                       .attr('itemprop','description')
-                      .addContent(url.description)
+                      .textContent(url.description)
                   )
               )
           ))
-          .html()
+          .outerHTML()
+        return `
+<ul class="o-List o-Flex c-SocialList ${classes}">${
+  this.map((url) => `
+    <li class="o-List__Item o-Flex__Item c-SocialList__Item" itemprop="sameAs" itemscope="" itemtype="http://schema.org/URL">
+      <a class="c-SocialList__Link h-Block c-SocialList__Link--${url.name}">
+        <span class="h-Hidden" itemprop="description">${url.description}</span>
+      </a>
+    </li>
+  `)
+}</ul>
+        `
       })
   }
 

@@ -89,6 +89,11 @@ class Pass {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference) {
+        return ``
+        // return Pass.TEMPLATE.render({
+        //   ...this._DATA,
+        //   $conference,
+        // })
         let current_period = $conference.currentRegistrationPeriod
         return new HTMLElement('article').class('c-Pass')
           .attr('data-instanceof','Pass')
@@ -177,6 +182,7 @@ Pass.AttendeeType = class AttendeeType {
        * @returns {string} HTML output
        */
       .addDisplay(function pass(price) {
+        return ``
         return Element.concat([
           new HTMLElement('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
           new HTMLElement('dd').class('c-Pass__Price')

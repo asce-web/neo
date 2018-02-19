@@ -3,9 +3,9 @@ extends ../default/index.pug
 block append vars
   -
     var hero_content = Util.view([
-      new HTMLElement('a').attr('href','registration.html').addContent(`Register`),
-      new HTMLElement('a').attr('href','sponsor.html').addContent(`Sponsor`),
-      new HTMLElement('a').addContent(`Submit a Paper`),
+      ElemName('a').attr('href','registration.html').textContent(`Register`),
+      ElemName('a').attr('href','sponsor.html').textContent(`Sponsor`),
+      ElemName('a').textContent(`Submit a Paper`),
     ]).highlightButtons('c-Button--primary')
 
 block prepend mainBody

@@ -86,6 +86,7 @@ class RegistrationPeriod {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($pass, is_body) {
+        return ``
         return new HTMLElement('section').class('c-Pass__Period')
           .addClass((!is_body) ? 'o-Flex__Item' : '')
           .attr({
@@ -115,6 +116,7 @@ class RegistrationPeriod {
        * @returns {string} HTML output
        */
       .addDisplay(function legend() {
+        return ``
         // test equal ISOStrings because the getters return `new Date()` if none is set
         let start_date = (this.startDate.toISOString() !== new Date().toISOString()) ? new HTMLElement('time').attr('datetime',this.startDate.toISOString()).addContent(xjs.Date.format(this.startDate, 'M j')) : null
         let end_date   = (this.endDate  .toISOString() !== new Date().toISOString()) ? new HTMLElement('time').attr('datetime',this.endDate  .toISOString()).addContent(xjs.Date.format(this.endDate  , 'M j')) : null

@@ -17,7 +17,7 @@ html(lang="en")
       link(rel="stylesheet" href="../../node_modules/xmeter/css/xmeter.css")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.15.0/bangs.css")
       link(rel="stylesheet" href="../../css/neo.css")
-      style.
+      //- style.
         body { #{new HTMLElement('body').style(site.colors).style()} }
       if site.name()
         //- if this site is an instance of the 'all' template
@@ -86,7 +86,7 @@ html(lang="en")
             != site.currentConference.view.supporterLevels(site.getQueue('Top Sponsors') || [])
             -
               let highlight_buttons = [
-                new HTMLElement('a').attr('href','sponsor.html').addContent(`All Sponsors`)
+                ElemName('a').attr('href','sponsor.html').textContent(`All Sponsors`)
               ]
             != Util.view(highlight_buttons).highlightButtons()
         +callout()

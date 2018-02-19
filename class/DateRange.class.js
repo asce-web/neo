@@ -93,6 +93,7 @@ class DateRange {
        * @returns {string} HTML output
        */
       .addDisplay(function dateBlock() {
+        return ``
         return new HTMLElement('tr').class('c-DateBlock__Item')
           .attr('data-instanceof','DateRange')
           .attr({
@@ -128,6 +129,7 @@ class DateRange {
        * @returns {string} HTML output
        */
       .addDisplay(function timeBlock(is_last) {
+        return ``
         return new HTMLElement('tr').class('c-TimeBlock__Item')
           .attr('data-instanceof','DateRange')
           .attr({

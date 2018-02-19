@@ -55,6 +55,7 @@ class Supporter extends Organization {
        * @returns {string} HTML output
        */
     return new View(function () {
+        return ``
         return new HTMLElement('a').attr({
           'data-instanceof': 'Supporter',
           href    : this.url,

@@ -268,6 +268,7 @@ class ConfSite extends Page {
        * @returns {string} HTML output
        */
       .addDisplay(function siteTitle() {
+        return ``
         return new HTMLElement('a').class('c-SiteTitle c-LinkCamo h-Block')
           .attr('data-instanceof','ConfSite')
           .attr('href',this.url())
