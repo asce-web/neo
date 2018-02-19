@@ -1,6 +1,7 @@
 const xjs     = require('extrajs')
 const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
+const HTMLDListElement = require('extrajs-dom').HTMLDListElement
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
@@ -551,12 +552,11 @@ class Conference {
          * and a `sessions` property: an array of {@link DateRange} objects,
          * all of which share the same date (excluding time of day).
          * @private
-         * @param   {boolean=} starred if true, only consider sessions that are starred
          * @returns {Array<{dateobj:Date, sessions:Array<DateRange>}>} an array grouping the sessions together
          */
-        function groupSessions(starred = false) {
-          let all_sessions = this.getSessionsAll().filter((s) => (starred) ? s.isStarred() : true)
-          let returned = []
+        function groupSessions() {
+          let all_sessions = this.getSessionsAll()
+          const returned = []
           all_sessions.forEach(function (s) {
             if (!returned.find((sess_group) => xjs.Date.sameDate(sess_group.dateobj, s.start))) {
               returned.push({
@@ -569,9 +569,9 @@ class Conference {
         }
         return new HTMLElement('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
           .addContent([
-            new HTMLElement('legend').class('h-Hidden').addContent(`Footer Tabs`),
-            new HTMLElement('dl').class('o-Flex').id(id).addContent(
-              groupSessions.call(this, starred).map((g, index) => Element.concat([
+            new HTMLElement('legend').class('h-Hidden').addContent(`Program Tabs`),
+            new HTMLDListElement().class('o-Flex').id(id).addContent(
+              groupSessions.call(this).map((g, index) => Element.concat([
                 new HTMLElement('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').addContent(
                   new HTMLElement('label').class('h-Block').addContent([
                     new HTMLElement('input').class('o-Tablist__Check h-Hidden').attr({
@@ -590,7 +590,7 @@ class Conference {
                   ])
                 ),
                 new HTMLElement('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').addContent(
-                  Util.view(g.sessions).timeBlock()
+                  Util.view(g.sessions.filter((s) => (starred) ? s.isStarred() : true)).timeBlock()
                 ),
               ]))
             ),
