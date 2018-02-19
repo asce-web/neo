@@ -14,9 +14,9 @@
 // <pre>
 // -
 //   let dates = [
-//     new DateRange('Optional Final Papers Due'     , new Date('2015-10-12')),
-//     new DateRange('Early-Bird Registration Closes', new Date('2015-12-17')).url('#0'),
-//     new DateRange('Advance Registration Period'   , new Date('2015-12-18'), new Date('2015-12-21')),
+//     new DateRange({ "@type": "Action", "name": "Optional Final Papers Due"      , "startTime": "2015-10-12"                                       }),
+//     new DateRange({ "@type": "Action", "name": "Early-Bird Registration Closes" , "startTime": "2015-12-17"                         , "url": "#0" }),
+//     new DateRange({ "@type": "Action", "name": "Advance Registration Period"    , "startTime": "2015-12-18", "endTime": "2015-12-21"              }),
 //   ]
 // != Util.view(dates).dateBlock()
 // </pre>

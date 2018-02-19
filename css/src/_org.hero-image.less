@@ -16,12 +16,19 @@
 // <pre>
 // -
 //   let conf = new Conference({
-//     name      : 'Geo-Risk 2017',
-//     url       : 'http://2017.georiskconference.org/',
-//     theme     : 'Geotechincal risk from theory to practice.',
-//     start_date: new Date('2017-06-04'),
-//     end_date  : new Date('2017-06-07'),
-//     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
+//     "@context"   : "http://schema.org/",
+//     "@type"      : "Event",
+//     "name"       : "Geo-Risk 2017",
+//     "url"        : "http://2017.georiskconference.org/",
+//     "description": "Geotechincal risk from theory to practice.",
+//     "image"      : "http://2017.georiskconference.org/hero.jpg",
+//     "startDate"  : "2017-06-04",
+//     "endDate"    : "2017-06-07",
+//     "location"   : {
+//       "@type": "PostalAddress",
+//       "addressLocality": "Denver",
+//       "addressRegion"  : "Colorado"
+//     },
 //   })
 //   let hero_content = Util.view([
 //     new HTMLElement('a').attr('href','#0').addContent(`Register`),
@@ -56,8 +63,9 @@
 //     <h1 class="c-PageTitle c-ConfHed__Name" itemprop="name">Geo-Risk 2017</h1>
 //     <meta content="http://2017.georiskconference.org/" itemprop="url"/>
 //     <p class="o-Flex c-ConfHed__Detail">
-//       <span class="o-Flex__Item c-ConfHed__Place h-Block" itemprop="location">
-//         <abbr title="Denver, Colorado">Denver, CO</abbr>
+//       <span class="o-Flex__Item c-ConfHed__Place h-Block" itemprop="location" itemscope="" itemtype="http://schema.org/PostalAddress">
+//         <span itemprop="addressLocality">Denver</span>,
+//         <data itemprop="addressRegion" value="Colorado">Colorado</data>
 //       </span>
 //       <span class="o-Flex__Item c-ConfHed__Dates h-Block">
 //         <time datetime="2017-06-04" itemprop="startDate">Jun 4</time>

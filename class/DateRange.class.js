@@ -10,70 +10,63 @@ const View    = require('extrajs-view')
 class DateRange {
   /**
    * Construct a new DateRange object.
-   * @param {Object=} $actioninfo an object with the following immutable properties:
-   * @param {string} $actioninfo.name the name of the important date
-   * @param {Date} $actioninfo.start_time the start time of the important date
-   * @param {Date=} $actioninfo.end_time the start end of the important date
+   * @param {!Object} jsondata a JSON object that validates against some schema?
+   * @param {string} jsondata.name the name of this date range
+   * @param {string=} jsondata.startDate if this date range is an Event  type, the start date, in ISO string format
+   * @param {string=} jsondata.endDate   if this date range is an Event  type, the end   date, in ISO string format
+   * @param {string=} jsondata.startTime if this date range is an Action type, the start time, in ISO string format
+   * @param {string=} jsondata.endTime   if this date range is an Action type, the end   time, in ISO string format
+   * @param {string=} jsondata.url the url of this date range
+   * @param {boolean=} jsondata.$starred whether this date range is starred
    */
-  constructor(name, start, end) {
-    /** @private @final */ this._NAME  = name
-    /** @private @final */ this._START = start
-    /** @private @final */ this._END   = end
-    /** @private */        this._url          = ''
-    /** @private */        this._is_starred   = false
+  constructor(jsondata) {
+    /**
+     * All the data for this date range.
+     * @private
+     * @final
+     * @type {!Object}
+     */
+    this._DATA = jsondata
   }
 
   /**
-   * @summary Get the name of this date range.
+   * @summary The name of this date range.
    * @type {string}
    */
   get name() {
-    return this._NAME
+    return this._DATA.name
   }
 
   /**
-   * @summary Return the start date value of this date range.
+   * @summary The start date value of this date range.
    * @type {Date}
    */
   get start() {
-    return this._START
+    return new Date(this._DATA.startDate || this._DATA.startTime || null)
   }
 
   /**
-   * @summary Return the end date value of this date range.
+   * @summary The end date value of this date range.
    * @type {?Date}
    */
   get end() {
-    return this._END || null
+    return (this._DATA.endDate || this._DATA.endTime) ? new Date(this._DATA.endDate || this._DATA.endTime) : null
   }
 
   /**
-   * @summary Set or get the url of this date range.
-   * @param   {string=} url the url of this date range
-   * @returns {(DateRange|string)} this date range || the url of this date range
+   * @summary The url of this date range.
+   * @type {string}
    */
-  url(url) {
-    if (arguments.length) {
-      this._url = url
-      return this
-    } else return this._url
+  get url() {
+    return this._DATA.url
   }
 
   /**
-   * @summary Mark this date range as starred.
-   * @param   {boolean=} bool if `true`, mark as starred
-   * @returns {DateRange} this date range
+   * @summary Whether this date range is starred.
+   * @type {boolean}
    */
-  star(bool = true) {
-    this._is_starred = bool
-    return this
-  }
-  /**
-   * @summary Get the starred status of this date range.
-   * @returns {boolean} whether this date range is starred
-   */
-  isStarred() {
-    return this._is_starred
+  get isStarred() {
+    return this._DATA.$starred || false
   }
 
 
@@ -119,8 +112,8 @@ class DateRange {
             ]),
             new HTMLElement('td').class('c-DateBlock__Desc')
               .attr('itemprop','name')
-              .addContent((this.url()) ? new HTMLElement('a').class('c-DateBlock__Link')
-                .attr({ href: this.url(), itemprop: 'url' })
+              .addContent((this.url) ? new HTMLElement('a').class('c-DateBlock__Link')
+                .attr({ href: this.url, itemprop: 'url' })
                 .addContent(this.name) : this.name
               ),
           ])
@@ -154,8 +147,8 @@ class DateRange {
             ]),
             new HTMLElement('td').class('c-TimeBlock__Desc').addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
               .attr('itemprop','name')
-              .addContent((this.url()) ? new HTMLElement('a').class('c-TimeBlock__Link')
-                .attr({ href: this.url(), itemprop: 'url' })
+              .addContent((this.url) ? new HTMLElement('a').class('c-TimeBlock__Link')
+                .attr({ href: this.url, itemprop: 'url' })
                 .addContent(this.name) : this.name
               ),
           ])

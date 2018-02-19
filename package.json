@@ -40,10 +40,12 @@
   },
   "homepage": "https://github.com/asce-web/neo#readme",
   "devDependencies": {
+    "ajv": "^6.0.1",
     "browserify": "^14.5.0",
     "extrajs": "^0.10.0",
     "extrajs-color": "^2.0.0",
     "extrajs-dom": "^3.2.0",
+    "extrajs-geo": "^0.1.0",
     "extrajs-view": "^1.1.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
@@ -53,6 +55,7 @@
     "gulp-pug": "^3.3.0",
     "gulp-sourcemaps": "^2.6.0",
     "kss": "^3.0.0-beta.18",
+    "schemaorg-jsd": "^0.7.0",
     "sitepage": "^1.0.0",
     "xmeter": "^6.2.0"
   },

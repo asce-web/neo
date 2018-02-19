@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://conferences.style.asce.org/neo.jsd",
+  "title": "Neo Theme",
+  "definitions": {
+    "Product": {
+      "$id": "#Product",
+      "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Thing.jsd" }]
+    }
+  },
+  "allOf": [
+    { "$ref": "#Product" },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "@context"    : true,
+        "@type"       : true,
+        "@id"         : true,
+        "url"         : true,
+        "name"        : true,
+        "description" : true,
+        "keywords"    : true,
+        "image"       : true,
+        "additionalType": true,
+        "color"       : true,
+        "brand"       : true,
+        "$conferences": true,
+        "$currentConference": true,
+        "$previousConference": true,
+        "$nextConference": true,
+        "$queues": true
+      }
+    }
+  ]
+}

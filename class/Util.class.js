@@ -1,6 +1,14 @@
 const xjs     = require('extrajs')
+const Element = require('extrajs-dom').Element
 const HTMLElement = require('extrajs-dom').HTMLElement
+const HTMLUListElement = require('extrajs-dom').HTMLUListElement
+const HTMLLIElement = require('extrajs-dom').HTMLLIElement
 const View    = require('extrajs-view')
+const STATE_DATA = require('extrajs-geo')
+STATE_DATA.push(...[
+  { "code": "DC", "name": "District of Columbia" },
+])
+
 
 /**
  * A set of static values and functions used site-wide.
@@ -9,89 +17,35 @@ const View    = require('extrajs-view')
 class Util {
   /** @private */ constructor() {}
 
-  /**
-   * NOTE: TYPE DEFINITION
-   * ```json
-   * {
-   *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "Util.StateObj",
-   *   "type": "object",
-   *   "additionalProperties": false,
-   *   "required": ["index", "name", "pop", "area", "region"],
-   *   "properties": {
-   *     "index" : { "type": "string", "description": "the postal code for the state" },
-   *     "name"  : { "type": "string", "description": "the name of the state" },
-   *     "pop"   : { "type": "number", "description": "population in people" },
-   *     "area"  : { "type": "number", "description": "area in square km" },
-   *     "region": { "type": "Util.Region", "description": "region of US" }
-   *   }
-   * }
-   * ```
-   * @typedef  {Object} Util.StateObj
-   * @property {string} index  - the postal code for the state
-   * @property {string} name   - the name of the state
-   * @property {number} pop    - population in people
-   * @property {number} area   - area in square km
-   * @property {Util.Region} region - region of US
-   */
+  // TEMP TODO delete after extrajs-dom@3.3.0
+  static documentFragment(...contents) {
+    if (xjs.Object.typeOf(contents[0]) === 'array') return Util.documentFragment(...contents[0])
+    return contents.map((c) =>
+      (c instanceof Element) ? c.view.html() : c
+    ).join('')
+  }
 
   /**
-   * @summary List of US State objects.
-   * @type {Array<StateObj>}
+   * @summary Convert a thing into a string.
+   * @description If the argument is an array, it is joined.
+   * Useful for JSON objects when the value could be a single string or an array of strings.
+   * @todo TODO move to `xjs.String`.
+   * @param   {*} thing anything to convert
+   * @param   {boolean=} truthy if `true`, the values `null` and `undefined` are converted to
+   *                            the strings `'null'` and `'undefined'` respectively;
+   *                            else, they are converted to the empty string
+   * @returns {string} a string version of the argument
    */
-  static get STATE_DATA() {
-    return [
-      { index: 'AL',  name: 'Alabama',         pop:  4779736,  area:  52419, region: Util.Region.SOUTH     },
-      { index: 'AK',  name: 'Alaska',          pop:   710231,  area: 663267, region: Util.Region.WEST      },
-      { index: 'AZ',  name: 'Arizona',         pop:  6392017,  area: 113998, region: Util.Region.SOUTHWEST },
-      { index: 'AR',  name: 'Arkansas',        pop:  2915918,  area:  53179, region: Util.Region.SOUTH     },
-      { index: 'CA',  name: 'California',      pop: 37253956,  area: 163696, region: Util.Region.WEST      },
-      { index: 'CO',  name: 'Colorado',        pop:  5029196,  area: 104094, region: Util.Region.WEST      },
-      { index: 'CT',  name: 'Connecticut',     pop:  3574097,  area:   5543, region: Util.Region.NORTHEAST },
-      { index: 'DE',  name: 'Delaware',        pop:   897934,  area:   2489, region: Util.Region.NORTHEAST },
-      { index: 'FL',  name: 'Florida',         pop: 18801310,  area:  65755, region: Util.Region.SOUTH     },
-      { index: 'GA',  name: 'Georgia',         pop:  9687653,  area:  59425, region: Util.Region.SOUTH     },
-      { index: 'HI',  name: 'Hawaii',          pop:  1360301,  area:  10931, region: Util.Region.WEST      },
-      { index: 'ID',  name: 'Idaho',           pop:  1567582,  area:  83570, region: Util.Region.WEST      },
-      { index: 'IL',  name: 'Illinois',        pop: 12830632,  area:  57914, region: Util.Region.MIDWEST   },
-      { index: 'IN',  name: 'Indiana',         pop:  6483802,  area:  36418, region: Util.Region.MIDWEST   },
-      { index: 'IA',  name: 'Iowa',            pop:  3046355,  area:  56272, region: Util.Region.MIDWEST   },
-      { index: 'KS',  name: 'Kansas',          pop:  2853118,  area:  82277, region: Util.Region.MIDWEST   },
-      { index: 'KY',  name: 'Kentucky',        pop:  4339367,  area:  40409, region: Util.Region.SOUTH     },
-      { index: 'LA',  name: 'Louisiana',       pop:  4533372,  area:  51840, region: Util.Region.SOUTH     },
-      { index: 'ME',  name: 'Maine',           pop:  1328361,  area:  35385, region: Util.Region.NORTHEAST },
-      { index: 'MD',  name: 'Maryland',        pop:  5773552,  area:  12407, region: Util.Region.NORTHEAST },
-      { index: 'MA',  name: 'Massachusetts',   pop:  6547629,  area:  10555, region: Util.Region.NORTHEAST },
-      { index: 'MI',  name: 'Michigan',        pop:  9883640,  area:  96716, region: Util.Region.MIDWEST   },
-      { index: 'MN',  name: 'Minnesota',       pop:  5303925,  area:  86939, region: Util.Region.MIDWEST   },
-      { index: 'MS',  name: 'Mississippi',     pop:  2967297,  area:  48430, region: Util.Region.SOUTH     },
-      { index: 'MO',  name: 'Missouri',        pop:  5988927,  area:  69704, region: Util.Region.MIDWEST   },
-      { index: 'MT',  name: 'Montana',         pop:   989415,  area: 147042, region: Util.Region.WEST      },
-      { index: 'NE',  name: 'Nebraska',        pop:  1826341,  area:  77354, region: Util.Region.MIDWEST   },
-      { index: 'NV',  name: 'Nevada',          pop:  2700551,  area: 110561, region: Util.Region.WEST      },
-      { index: 'NH',  name: 'New Hampshire',   pop:  1316470,  area:   9350, region: Util.Region.NORTHEAST },
-      { index: 'NJ',  name: 'New Jersey',      pop:  8791894,  area:   8721, region: Util.Region.NORTHEAST },
-      { index: 'NM',  name: 'New Mexico',      pop:  2059179,  area: 121589, region: Util.Region.SOUTHWEST },
-      { index: 'NY',  name: 'New York',        pop: 19378102,  area:  54556, region: Util.Region.NORTHEAST },
-      { index: 'NC',  name: 'North Carolina',  pop:  9535483,  area:  53819, region: Util.Region.SOUTH     },
-      { index: 'ND',  name: 'North Dakota',    pop:   672591,  area:  70700, region: Util.Region.MIDWEST   },
-      { index: 'OH',  name: 'Ohio',            pop: 11536504,  area:  44825, region: Util.Region.MIDWEST   },
-      { index: 'OK',  name: 'Oklahoma',        pop:  3751351,  area:  69898, region: Util.Region.SOUTHWEST },
-      { index: 'OR',  name: 'Oregon',          pop:  3831074,  area:  98381, region: Util.Region.WEST      },
-      { index: 'PA',  name: 'Pennsylvania',    pop: 12702379,  area:  46055, region: Util.Region.NORTHEAST },
-      { index: 'RI',  name: 'Rhode Island',    pop:  1052567,  area:   1545, region: Util.Region.NORTHEAST },
-      { index: 'SC',  name: 'South Carolina',  pop:  4625364,  area:  32020, region: Util.Region.SOUTH     },
-      { index: 'SD',  name: 'South Dakota',    pop:   814180,  area:  77117, region: Util.Region.MIDWEST   },
-      { index: 'TN',  name: 'Tennessee',       pop:  6346105,  area:  42143, region: Util.Region.SOUTH     },
-      { index: 'TX',  name: 'Texas',           pop: 25145561,  area: 268581, region: Util.Region.SOUTHWEST },
-      { index: 'UT',  name: 'Utah',            pop:  2763885,  area:  84899, region: Util.Region.WEST      },
-      { index: 'VT',  name: 'Vermont',         pop:   625741,  area:   9614, region: Util.Region.NORTHEAST },
-      { index: 'VA',  name: 'Virginia',        pop:  8260405,  area:  42774, region: Util.Region.SOUTH     },
-      { index: 'WA',  name: 'Washington',      pop:  6971406,  area:  71300, region: Util.Region.WEST      },
-      { index: 'WV',  name: 'West Virginia',   pop:  1854304,  area:  24230, region: Util.Region.SOUTH     },
-      { index: 'WI',  name: 'Wisconsin',       pop:  5686986,  area:  65498, region: Util.Region.MIDWEST   },
-      { index: 'WY',  name: 'Wyoming',         pop:   563626,  area:  97814, region: Util.Region.WEST      },
-    ]
+  static stringify(thing, truthy = false) {
+    const returned = {
+      'array'    : function (arg) { return arg.join('') },
+      'object'   : function (arg) { return JSON.stringify(arg) },
+      'string'   : function (arg) { return arg },
+      'null'     : function (arg) { return (truthy) ? 'null'      : '' },
+      'undefined': function (arg) { return (truthy) ? 'undefined' : '' },
+      default(arg) { return arg.toString() },
+    }
+    return (returned[xjs.Object.typeOf(thing)] || returned.default).call(null, thing)
   }
 
   /**
@@ -272,6 +226,27 @@ class Util {
           .html()
       })
       /**
+       * Return a snippet marking up a promoted location.
+       * Parameter `data` should be of type `{@link PostalAddress}`.
+       * @summary Call `Util.view(data).promoLoc()` to render this display.
+       * @todo TODO move this display to `require('extrajs-geo')`
+       * @function Util.VIEW.promoLoc
+       * @param   {boolean=} state_code if `true`, displays region as its code (e.g. “Virginia” as “VA”)
+       * @returns {string} HTML output
+       */
+      .addDisplay(function promoLoc(state_code = false) {
+        const returned = []
+        if (this.addressLocality) returned.push(new HTMLElement('span').attr('itemprop','addressLocality').addContent(this.addressLocality).html(), `, `)
+        if (this.addressRegion) {
+          returned.push(new HTMLElement('data')
+            .attr({ itemprop: 'addressRegion', value: this.addressRegion })
+            .addContent((state_code) ? STATE_DATA.find((state) => state.name===this.addressRegion).code : this.addressRegion)
+            .html())
+        }
+        if (this.addressCountry) returned.push(`, `, new HTMLElement('span').attr('itemprop','addressCountry').addContent(this.addressCountry).html())
+        return returned.join('')
+      })
+      /**
        * Return an unordered list of button links for a highlighted content block.
        * Parameter `data` should be of type `Array<Element>` (TODO: HTMLAnchorElement), i.e., a list of links.
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
@@ -334,12 +309,16 @@ class Util {
        * @summary Call `Util.view(data).pass()` to render this display.
        * @function Util.VIEW.pass
        * @param   {Conference} $conference the conference to which these passes belong
+       * @param   {(Array<string>|!Object)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
        * @returns {string} HTML output
        */
-      .addDisplay(function pass($conference) {
-        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((pass) =>
-          new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference))
-        )).html()
+      .addDisplay(function pass($conference, queue = null) {
+        const pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this
+          .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
+          .map((pass) => new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference)))
+        ).html()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -347,12 +326,48 @@ class Util {
        * Parameter `data` should be of type `Array<Person>`.
        * @summary Call `Util.view(data).speaker()` to render this display.
        * @function Util.VIEW.speaker
+       * @param   {(Array<string>|!Object)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
        * @returns {string} HTML output
        */
-      .addDisplay(function speaker() {
-        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((person) =>
-          new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
+      .addDisplay(function speaker(queue = null) {
+        const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        return new HTMLElement('ul').class('o-List o-Flex o-ListStacked').addContent(this
+          .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
+          .map((person) => new HTMLElement('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
         )).html()
+      })
+      /**
+       * Return a `<ul.c-SocialList>` component, containing
+       * markup for social media profiles.
+       * Parameter `data` should be of type `Array<!Object>`, where each object is of type {@link http://schema.org/URL}.
+       * @summary Call `Util.view(data).socialList()` to render this display.
+       * @function Util.VIEW.socialList
+       * @param   {string=} classes optional classes to add to the `<ul>`
+       * @returns {string} HTML output
+       */
+      .addDisplay(function socialList(classes = '') {
+        return new HTMLUListElement().class('o-List o-Flex c-SocialList')
+          .addClass(classes)
+          .addContent(this.map((url) =>
+            new HTMLLIElement().class('o-List__Item o-Flex__Item c-SocialList__Item')
+              .attr({
+                itemprop : 'sameAs',
+                itemscope: '',
+                itemtype : 'http://schema.org/URL',
+              })
+              .addContent(
+                new HTMLElement('a').class('c-SocialList__Link h-Block')
+                  .addClass(`c-SocialList__Link--${url.name}`)
+                  .attr({ href: url.url, itemprop: 'url' })
+                  .addContent(
+                    new HTMLElement('span').class('h-Hidden')
+                      .attr('itemprop','description')
+                      .addContent(url.description)
+                  )
+              )
+          ))
+          .html()
       })
   }
 
