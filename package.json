@@ -55,7 +55,7 @@
     "gulp-pug": "^3.3.0",
     "gulp-sourcemaps": "^2.6.0",
     "kss": "^3.0.0-beta.18",
-    "schemaorg-jsd": "^0.4.0",
+    "schemaorg-jsd": "^0.7.0",
     "sitepage": "^1.0.0",
     "xmeter": "^6.2.0"
   },

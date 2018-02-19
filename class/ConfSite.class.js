@@ -5,7 +5,7 @@ const HTMLElement  = require('extrajs-dom').HTMLElement
 const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
 
-const { SCHEMATA } = require('schemaorg-jsd')
+const {META_SCHEMATA, SCHEMATA} = require('schemaorg-jsd')
 
 const Conference = require('./Conference.class.js')
 const ConfPage = require('./ConfPage.class.js')
@@ -55,7 +55,7 @@ class ConfSite extends Page {
     super.keywords(jsondata.keywords || [])
 
     let ajv = new Ajv()
-    ajv.addSchema(SCHEMATA)
+    ajv.addMetaSchema(META_SCHEMATA).addSchema(SCHEMATA)
     let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata)
     if (!is_data_valid) {
       let e = new TypeError(ajv.errors[0].message)
