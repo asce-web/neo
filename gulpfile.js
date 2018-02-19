@@ -7,6 +7,8 @@ const autoprefixer = require('gulp-autoprefixer')
 const clean_css    = require('gulp-clean-css')
 const sourcemaps   = require('gulp-sourcemaps')
 
+const requireOther = require('schemaorg-jsd/lib/requireOther.js')
+
 const ConfSite   = require('./class/ConfSite.class.js')
 const ConfPage   = require('./class/ConfPage.class.js')
 
@@ -65,7 +67,7 @@ gulp.task('pug:default', function () {
       locals: {
         HTMLElement   : require('extrajs-dom').HTMLElement,
         Util: require('./class/Util.class.js'),
-        site: new ConfSite(require('./proto/default/data.json')).init(),
+        site: new ConfSite(requireOther('./proto/default/database.jsonld')).init(),
         page: new ConfPage(),
       },
     }))
@@ -80,7 +82,7 @@ gulp.task('pug:sample', function () {
         HTMLElement: require('extrajs-dom').HTMLElement,
         Util   : require('./class/Util.class.js'),
         site: (function () {
-          const returned = new ConfSite(require('./proto/asce-event.org/data.json')).init()
+          const returned = new ConfSite(requireOther('./proto/asce-event.org/database.jsonld')).init()
           function pageTitle() { return this.name() + ' | ' + returned.name() }
           returned.find('registration.html')
             .add(new ConfPage('Why Attend', '#0')
