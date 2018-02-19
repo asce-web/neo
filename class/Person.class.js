@@ -1,7 +1,10 @@
-const xjs = require('extrajs')
-const HTMLElement = require('extrajs-dom').HTMLElement
-const HTMLUListElement = require('extrajs-dom').HTMLUListElement
-const HTMLLIElement = require('extrajs-dom').HTMLLIElement
+const path = require('path')
+
+const xjs = {
+  ...require('extrajs'),
+  ...require('extrajs-dom'),
+}
+
 const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
@@ -44,20 +47,13 @@ class Person {
     this._DATA = jsondata
 
     /**
-     * The string name of this person.
-     * @private
-     * @final
-     * @type {string}
-     */
-    this._NAME = jsondata.name || ''
-    /**
      * The object name of this person.
      * @private
      * @final
      * @type {!Object}
      */
-    this._$NAME = {
-      givenName      : jsondata.givenName       || '',
+    this._NAME = {
+      givenName      : jsondata.givenName       || jsondata.name || '',
       familyName     : jsondata.familyName      || '',
       additionalName : jsondata.additionalName  || '',
       honorificPrefix: jsondata.honorificPrefix || '',
@@ -76,10 +72,10 @@ class Person {
   /**
    * @summary The string name of this person if it exists; else the object name of this person.
    * @todo TODO `get name()` should inherit from `Thing`, and make this `get $name()` a new method
-   * @type {(string|!Object)}
+   * @type {!Object}
    */
   get name() {
-    return this._NAME || this._$NAME
+    return this._NAME
   }
 
   /**
@@ -169,52 +165,14 @@ class Person {
      */
     /**
      * Default display. Takes no arguments.
-     * Return this person’s name in "First Last" format.
+     * Return this person’s name in "Px. First Middle Last, Sx." format.
      * @summary Call `Person#view()` to render this display.
      * @function Person.VIEW.default
      * @returns {string} HTML output
      */
     return new View(function () {
-        return ``
-      return new HTMLElement('span').attr('itemprop','name')
-        .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
-          new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
-          ` `,
-          new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.familyName),
-        ] : this.name)
-        .html()
+      return new xjs.DocumentFragment(Person.TEMPLATES.xPersonFullname.render(this.name)).innerHTML()
     }, this)
-      /**
-       * Return this person’s name in "First Middle Last" format.
-       * @summary Call `Person#view.fullName()` to render this display.
-       * @function Person.VIEW.fullName
-       * @returns {string} HTML output
-       */
-      .addDisplay(function fullName() {
-        return ``
-        return new HTMLElement('span').attr('itemprop','name')
-          .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
-            new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
-            ` `,
-            new HTMLElement('span').attr('itemprop','additionalName').addContent(this.name.additionalName),
-            ` `,
-            new HTMLElement('span').attr('itemprop','familyName').addContent(this.name.familyName),
-          ] : this.name)
-          .html()
-      })
-      /**
-       * Return this person’s name in "Px. First Middle Last, Sx." format.
-       * @summary Call `Person#view.entireName()` to render this display.
-       * @function Person.VIEW.entireName
-       * @returns {string} HTML output
-       */
-      .addDisplay(function entireName() {
-        return ``
-        let returned = this.view.fullName()
-        if (this.name.honorificPrefix) returned = `${new HTMLElement('span').attr('itemprop','honorificPrefix').addContent(this.name.honorificPrefix).html()} ${returned}`
-        if (this.name.honorificSuffix) returned = `${returned}, ${new HTMLElement('span').attr('itemprop','honorificSuffix').addContent(this.name.honorificSuffix).html()}`
-        return returned
-      })
       /**
        * Return this person’s name in "First Middle Last, Affiliation" format.
        * @summary Call `Person#view.affiliation()` to render this display.
@@ -222,9 +180,9 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
-        return ``
+        return this.view()
         return Util.documentFragment([
-          this.view.entireName(),
+          this.view(),
           `, `,
           new HTMLElement('span').class('-fs-t')
             .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
@@ -238,7 +196,7 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function contact() {
-        return ``
+        return this.view()
         let returned = new HTMLElement('a')
           .attr('href',`mailto:${this.email}`)
           .addContent(this.view())
@@ -262,7 +220,7 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker() {
-        return ``
+        return this.view()
         return new HTMLElement('article').class('c-Speaker').attr({
           'data-instanceof': 'Person',
           itemprop : 'performer',
@@ -311,6 +269,17 @@ class Person {
         .html()
       })
   }
+}
+
+Person.TEMPLATES = {
+  /**
+   * @summary A person’s name in "Px. First Middle Last, Sx." format.
+   * @see xPersonFullname
+   * @type {xjs.HTMLTemplateElement}
+   */
+  xPersonFullname: xjs.HTMLTemplateElement
+    .fromFileSync(path.join(__dirname, '../tpl/x-person-fullname.tpl.html'))
+    .setRenderer(require('../tpl/x-person-fullname.tpl.js'))
 }
 
 module.exports = Person

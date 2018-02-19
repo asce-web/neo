@@ -3,7 +3,7 @@ div._text-block
   -
     let cochairs = ElemName('ul').append(...[
       site.currentConference.getOrganizer('thomas-mccollough').view.affiliation(),
-      site.currentConference.getOrganizer('stephen-dickenson').view.entireName(),
+      site.currentConference.getOrganizer('stephen-dickenson').view(),
     ].map((d) =>
       ElemName('li').attr({
         itemprop : 'organizer',
