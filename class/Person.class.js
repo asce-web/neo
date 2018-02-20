@@ -174,43 +174,28 @@ class Person {
       return new xjs.DocumentFragment(Person.TEMPLATES.xPersonFullname.render(this.name)).innerHTML()
     }, this)
       /**
-       * Return this person’s name in "First Middle Last, Affiliation" format.
+       * Return this person’s name in "FullName, Affiliation" format.
        * @summary Call `Person#view.affiliation()` to render this display.
        * @function Person.VIEW.affiliation
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
-        return this.view()
-        return Util.documentFragment([
-          this.view(),
-          `, `,
-          new HTMLElement('span').class('-fs-t')
-            .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
-            .addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation)),
-        ])
+        return `${this.view()},
+<span class="-fs-t" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
+  <slot itemprop="name">${this.affiliation}</slot>
+</span>
+        `
       })
       /**
-       * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
+       * Return this person’s name in "FullName, Director of ... | 555-555-5555" format.
        * @summary Call `Person#view.contact()` to render this display.
        * @function Person.VIEW.contact
        * @returns {string} HTML output
        */
       .addDisplay(function contact() {
-        return this.view()
-        let returned = new HTMLElement('a')
-          .attr('href',`mailto:${this.email}`)
-          .addContent(this.view())
-          .html()
-        if (this.jobTitle) returned = `${returned}, ${new HTMLElement('span').attr('itemprop','jobTitle').addContent(this.jobTitle).html()}`
-        if (this.telephone) {
-          returned = `${returned} | ${
-            new HTMLElement('a')
-              .attr('href',`tel:${Util.toURL(this.telephone)}`)
-              .attr('itemprop','telephone')
-              .addContent(this.telephone)
-              .html()
-          }`
-        }
+        let returned = `<a href="mailto:${this.email}">${this.view()}</a>`
+        if (this.jobTitle ) returned = `${returned}, <slot itemprop="jobTitle">${this.jobTitle}</slot>`
+        if (this.telephone) returned = `${returned} | <a href="tel:${Util.toURL(this.telephone)}" itemprop="telephone">${this.telephone}</a>`
         return returned
       })
       /**
