@@ -1,10 +1,9 @@
-const xjs     = require('extrajs')
-const Element = require('extrajs-dom').Element
-const HTMLElement = require('extrajs-dom').HTMLElement
-const HTMLUListElement = require('extrajs-dom').HTMLUListElement
-const HTMLDListElement = require('extrajs-dom').HTMLDListElement
-const HTMLLIElement = require('extrajs-dom').HTMLLIElement
+const xjs     = {
+  ...require('extrajs'),
+  ...require('extrajs-dom'),
+}
 const View    = require('extrajs-view')
+
 const Util    = require('./Util.class.js')
 const RegistrationPeriod = require('./RegistrationPeriod.class.js')
 const Pass = require('./Pass.class.js')
@@ -14,6 +13,8 @@ const Venue = require('./Venue.class.js')
 const Person = require('./Person.class.js')
 const Supporter = require('./Supporter.class.js')
 const Exhibitor = require('./Exhibitor.class.js')
+
+const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 
 /**
  * A conference event.
@@ -451,7 +452,6 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function program(id, starred = false) {
-        return ``
         /**
          * @summary Categorize all the sessions of this conference by date and return the grouping.
          * @description
@@ -474,35 +474,35 @@ class Conference {
           })
           return returned
         }
-        return new HTMLElement('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
-          .addContent([
-            new HTMLElement('legend').class('h-Hidden').addContent(`Program Tabs`),
-            new HTMLDListElement().class('o-Flex').id(id).addContent(
-              groupSessions.call(this).map((g, index) => Element.concat([
-                new HTMLElement('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').addContent(
-                  new HTMLElement('label').class('h-Block').addContent([
-                    new HTMLElement('input').class('o-Tablist__Check h-Hidden').attr({
+        return ElemName('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
+          .append(...[
+            ElemName('legend').class('h-Hidden').textContent(`Program Tabs`),
+            ElemName('dl').class('o-Flex').id(id).innerHTML(
+              groupSessions.call(this).map((g, index) => xjs.DocumentFragment.concat(...[
+                ElemName('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').append(
+                  ElemName('label').class('h-Block').append(...[
+                    ElemName('input').class('o-Tablist__Check h-Hidden').attr({
                       type   : 'radio',
                       name   : id,
                       value  : g.dateobj.toISOString(),
                       checked: (index===0) ? '' : null,
                     }),
-                    new HTMLElement('time').class('c-ProgramHn h-Block')
+                    ElemName('time').class('c-ProgramHn h-Block')
                       .attr('datetime',g.dateobj.toISOString())
-                      .addContent([
+                      .append(...[
                         `${xjs.Date.DAY_NAMES[g.dateobj.getUTCDay()]},`,
-                        new HTMLElement('br'),
+                        ElemName('br'),
                         xjs.Date.format(g.dateobj, 'M j'),
                       ]),
                   ])
                 ),
-                new HTMLElement('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').addContent(
+                ElemName('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').innerHTML(
                   Util.view(g.sessions.filter((s) => (starred) ? s.isStarred : true)).timeBlock()
                 ),
-              ]))
+              ])).join('')
             ),
           ])
-          .html()
+          .outerHTML()
       })
       /**
        * Return a `<section.c-SupporterBlock>` component containing this conference’s supporters

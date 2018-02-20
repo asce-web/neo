@@ -301,7 +301,7 @@ class Util {
       .addDisplay(function timeBlock(attr = {}) {
         return ElemName('table').attr(attr).append(
           ElemName('tbody').class('c-TimeBlock')
-            .innerHTML(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
+            .innerHTML(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)).join(''))
         ).outerHTML()
         return `
 <table>

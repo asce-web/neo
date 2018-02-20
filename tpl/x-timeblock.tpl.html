@@ -1,0 +1,14 @@
+<template>
+  <tr class="c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
+    <td class="c-TimeBlock__Times">
+      <time datetime="{{ start }}" itemprop="startDate">{{
+        start.format('g:ia')
+      }}</time><span>&ndash;</span><time datetime="{{ end }}" itemprop="endDate">{{
+        end.format('g:ia')
+      }}</time>
+    </td>
+    <td class="c-TimeBlock__Desc {{ is_last }}" itemprop="name">
+      <a class="c-TimeBlock__Link" href="{{ url }}" itemprop="url">{{ name }}</a>
+    </td>
+  </tr>
+</template>

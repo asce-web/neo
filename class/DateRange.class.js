@@ -5,6 +5,7 @@ const xjs = {
 const View    = require('extrajs-view')
 
 const xDateblock = require('../tpl/x-dateblock.tpl.js')
+const xTimeblock = require('../tpl/x-timeblock.tpl.js')
 
 
 /**
@@ -109,32 +110,7 @@ class DateRange {
        * @returns {string} HTML output
        */
       .addDisplay(function timeBlock(is_last) {
-        return ``
-        return new HTMLElement('tr').class('c-TimeBlock__Item')
-          .attr('data-instanceof','DateRange')
-          .attr({
-            itemprop: 'subEvent',
-            itemscope: '',
-            itemtype: 'http://schema.org/Event',
-          })
-          .addContent([
-            new HTMLElement('td').class('c-TimeBlock__Times').addContent([
-              new HTMLElement('time')
-                .attr({ datetime: this.start.toISOString(), itemprop: 'startDate' })
-                .addContent(xjs.Date.format(this.start, 'g:ia')),
-              (this.end) ? `&ndash;` : '',
-              (this.end) ? new HTMLElement('time')
-                .attr({ datetime: this.end.toISOString(), itemprop: 'endDate' })
-                .addContent(xjs.Date.format(this.end, 'g:ia')) : null,
-            ]),
-            new HTMLElement('td').class('c-TimeBlock__Desc').addClass((is_last) ? 'c-TimeBlock__Desc--last' : '')
-              .attr('itemprop','name')
-              .addContent((this.url) ? new HTMLElement('a').class('c-TimeBlock__Link')
-                .attr({ href: this.url, itemprop: 'url' })
-                .addContent(this.name) : this.name
-              ),
-          ])
-          .html()
+        return new xjs.DocumentFragment(xTimeblock.render({...this._DATA, $is_last:is_last})).innerHTML()
       })
   }
 }
