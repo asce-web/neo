@@ -43,15 +43,13 @@ function xSpeaker(frag, data) {
     { prop: 'email'    , icon: 'email'  , url: `mailto:${data.email}`             , text: 'send email'     },
     { prop: 'telephone', icon: 'phone'  , url: `tel:${Util.toURL(data.telephone)}`, text: 'call'           },
   ]
-  container.append(...itemdata.map(function (datum) {
-    return (!data[datum.prop]) ? null :
-      new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (f, d) {
-        f.querySelector('slot').textContent = d.text
-        new xjs.HTMLAnchorElement(f.querySelector('a'))
-          .replaceClassString('{{ icon }}', d.icon)
-          .attr({ href: d.url, itemprop: d.prop })
-      }).render(datum)
-  }))
+  let xSocialListItem = new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (f, d) {
+    f.querySelector('slot').textContent = d.text
+    new xjs.HTMLAnchorElement(f.querySelector('a'))
+      .replaceClassString('{{ icon }}', d.icon)
+      .attr({ href: d.url, itemprop: d.prop })
+  })
+  container.append(...itemdata.map((datum) => (!data[datum.prop]) ? null : xSocialListItem.render(datum)))
 }
 
 module.exports = xjs.HTMLTemplateElement
