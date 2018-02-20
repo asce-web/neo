@@ -2,6 +2,9 @@ const path = require('path')
 
 const xjs = require('extrajs-dom')
 
+const xRegistrationperiod = require('./x-registrationperiod.tpl.js')
+
+
 /**
  * @summary An `<article.c-Pass>` component marking up a pass’s info.
  * @param {DocumentFragment} frag the template content with which to render
@@ -20,15 +23,16 @@ function xPass(frag, data) {
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description
   if (data.$fineprint) frag.querySelector('.c-Pass__Fine').textContent = data.$fineprint
   else                 frag.querySelector('.c-Pass__Fine').remove()
-  frag.querySelector('.c-Pass__Body').innerHTML = current_period.view.pass(new Pass(data), true) // TODO Neo.TEMPLATES.xRegistrationPeriod.render({ $pass: data, is_body: true })
 
-  frag.querySelector('.c-Pass__Foot').innerHTML = data.$conference.getRegistrationPeriodsAll()
-    .filter((registration_period) => registration_period.name !== current_period.name)
-    .map((registration_period) =>
-      // TODO use xRegistrationPeriod template
-      registration_period.view.pass(new Pass(data), false)
-    )
-    .join('')
+  new xjs.HTMLElement(frag.querySelector('.c-Pass__Body')).empty().append(
+    xRegistrationperiod.render({ ...current_period._DATA, $pass: new Pass(data), $is_body: true })
+  )
+
+  new xjs.HTMLElement(frag.querySelector('.c-Pass__Foot')).empty().append(
+    ...data.$conference.getRegistrationPeriodsAll()
+      .filter((registration_period) => registration_period.name !== current_period.name)
+      .map((registration_period) => xRegistrationperiod.render({ ...registration_period._DATA, $pass: new Pass(data) }))
+  )
 }
 
 module.exports = xjs.HTMLTemplateElement

@@ -82,17 +82,6 @@ class RegistrationPeriod {
      */
     return new View(null, this)
       /**
-       * Return a `<section.c-Pass__Period>` subcomponent marking up this period’s info.
-       * @summary Call `RegistrationPeriod#view.pass()` to render this display.
-       * @function RegistrationPeriod.VIEW.pass
-       * @param  {Pass} $pass the Pass component in which this registration period is rendered
-       * @param  {boolean} is_body `true` if this period belongs in the pass body (if it’s current)
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pass($pass, is_body) {
-        return new xjs.DocumentFragment(xRegistrationperiod.render({ ...this._DATA, $pass, $is_body: is_body })).innerHTML()
-      })
-      /**
        * Return a `<li.c-Alert__Item>` component containing icons and dates for this registration period .
        * @summary Call `RegistrationPeriod#view.legend()` to render this display.
        * @function RegistrationPeriod.VIEW.legend
