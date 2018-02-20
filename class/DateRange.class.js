@@ -1,6 +1,11 @@
-const xjs     = require('extrajs')
-const HTMLElement = require('extrajs-dom').HTMLElement
+const xjs = {
+  ...require('extrajs'),
+  ...require('extrajs-dom'),
+}
 const View    = require('extrajs-view')
+
+const xDateblock = require('../tpl/x-dateblock.tpl.js')
+
 
 /**
  * A range of dates.
@@ -93,32 +98,7 @@ class DateRange {
        * @returns {string} HTML output
        */
       .addDisplay(function dateBlock() {
-        return ``
-        return new HTMLElement('tr').class('c-DateBlock__Item')
-          .attr('data-instanceof','DateRange')
-          .attr({
-            itemprop: 'potentialAction',
-            itemscope: '',
-            itemtype: 'http://schema.org/Action',
-          })
-          .addContent([
-            new HTMLElement('td').class('c-DateBlock__Date').addContent([
-              new HTMLElement('time')
-                .attr({ datetime: this.start.toISOString(), itemprop: 'startTime' })
-                .addContent(xjs.Date.format(this.start, 'M j, Y')),
-              (this.end) ? `&ndash;` : '',
-              (this.end) ? new HTMLElement('time')
-                .attr({ datetime: this.end.toISOString(), itemprop: 'endTime' })
-                .addContent(xjs.Date.format(this.end, 'M j, Y')) : null,
-            ]),
-            new HTMLElement('td').class('c-DateBlock__Desc')
-              .attr('itemprop','name')
-              .addContent((this.url) ? new HTMLElement('a').class('c-DateBlock__Link')
-                .attr({ href: this.url, itemprop: 'url' })
-                .addContent(this.name) : this.name
-              ),
-          ])
-          .html()
+        return new xjs.DocumentFragment(xDateblock.render(this._DATA)).innerHTML()
       })
       /**
        * Return a `<tr.c-TimeBlock__Item>` subcomponent containing a pair of `<td>`s,
