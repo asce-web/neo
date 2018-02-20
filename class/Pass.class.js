@@ -92,7 +92,7 @@ class Pass {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference) {
-        return new xjs.DocumentFragment(xPass.render({...this._DATA, $conference})).innerHTML()
+        return new xjs.DocumentFragment(xPass.render({ ...this._DATA, $conference })).innerHTML()
       })
   }
 
@@ -162,7 +162,7 @@ Pass.AttendeeType = class AttendeeType {
        * @returns {string} HTML output
        */
       .addDisplay(function pass(price) {
-        return ``
+        return `AttendeeType#view.pass(${this.name}, ${price})`
         return Element.concat([
           new HTMLElement('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
           new HTMLElement('dd').class('c-Pass__Price')

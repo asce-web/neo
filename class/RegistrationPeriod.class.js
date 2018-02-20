@@ -1,7 +1,11 @@
-const xjs     = require('extrajs')
-const HTMLElement = require('extrajs-dom').HTMLElement
+const xjs     = {
+  ...require('extrajs'),
+  ...require('extrajs-dom'),
+}
 const View    = require('extrajs-view')
+
 const Util    = require('./Util.class.js')
+const xRegistrationperiod = require('../tpl/x-registrationperiod.tpl.js')
 
 /**
  * An interval of dates in which registration prices are set.
@@ -86,28 +90,7 @@ class RegistrationPeriod {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($pass, is_body) {
-        return `RegistrationPeriod#view.pass(${$pass}, ${is_body})`
-        return new HTMLElement('section').class('c-Pass__Period')
-          .addClass((!is_body) ? 'o-Flex__Item' : '')
-          .attr({
-            'data-instanceof': 'RegistrationPeriod',
-            itemprop : 'offers',
-            itemscope: '',
-            itemtype : 'http://schema.org/AggregateOffer',
-          })
-          .addContent([
-            new HTMLElement('h1').class('c-Pass__Period__Hn').attr('itemprop','name').addContent([
-              new HTMLElement('span').class('-d-n').addContent(`${$pass.name}: `), // NOTE: `.-d-n` hides from AT but reveals to Microdata
-              this.name
-            ]),
-            new HTMLElement('meta').attr({ content:$pass.getAttendeeTypesAll().length, itemprop:'offerCount' }),
-            (this.startDate.toISOString() !== new Date().toISOString()) ? new HTMLElement('meta').attr({ content:this.startDate.toISOString(), itemprop:'availabilityStarts' }) : null,
-            (this.  endDate.toISOString() !== new Date().toISOString()) ? new HTMLElement('meta').attr({ content:this.  endDate.toISOString(), itemprop:'availabilityEnds'   }) : null,
-            new HTMLElement('dl').addContent($pass.getAttendeeTypesAll().map((att_type) =>
-              att_type.view.pass(42.87) // TODO price is 42 for now
-            )),
-          ])
-          .html()
+        return new xjs.DocumentFragment(xRegistrationperiod.render({ ...this._DATA, $pass, $is_body: is_body })).innerHTML()
       })
       /**
        * Return a `<li.c-Alert__Item>` component containing icons and dates for this registration period .
