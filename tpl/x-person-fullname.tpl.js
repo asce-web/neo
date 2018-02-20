@@ -1,5 +1,9 @@
+const path = require('path')
+
+const xjs = require('extrajs-dom')
+
 /**
- * @summary xPersonFullname renderer.
+ * @summary A person’s name in "Px. First Middle Last, Sx." format.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {sdo.Person} data a JSON object representing a Person
  * @param {string}  data.givenName the person’s first name
@@ -36,4 +40,6 @@ function xPersonFullname(frag, data) {
   }
 }
 
-module.exports = xPersonFullname
+module.exports = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-person-fullname.tpl.html'))
+  .setRenderer(xPersonFullname)

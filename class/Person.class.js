@@ -6,7 +6,11 @@ const xjs = {
 }
 
 const View    = require('extrajs-view')
+
 const Util    = require('./Util.class.js')
+const xPersonFullname = require('../tpl/x-person-fullname.tpl.js')
+const xSpeaker        = require('../tpl/x-speaker.tpl.js')
+
 
 /**
  * A person (alive, dead, undead, or fictional).
@@ -171,7 +175,7 @@ class Person {
      * @returns {string} HTML output
      */
     return new View(function () {
-      return new xjs.DocumentFragment(Person.TEMPLATES.xPersonFullname.render(this.name)).innerHTML()
+      return new xjs.DocumentFragment(xPersonFullname.render(this.name)).innerHTML()
     }, this)
       /**
        * Return this person’s name in "FullName, Affiliation" format.
@@ -205,28 +209,9 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker() {
-        return new xjs.DocumentFragment(Person.TEMPLATES.xSpeaker.render(this._DATA)).innerHTML()
+        return new xjs.DocumentFragment(xSpeaker.render(this._DATA)).innerHTML()
       })
   }
-}
-
-Person.TEMPLATES = {
-  /**
-   * @summary A person’s name in "Px. First Middle Last, Sx." format.
-   * @see xPersonFullname
-   * @type {xjs.HTMLTemplateElement}
-   */
-  xPersonFullname: xjs.HTMLTemplateElement
-    .fromFileSync(path.join(__dirname, '../tpl/x-person-fullname.tpl.html'))
-    .setRenderer(require('../tpl/x-person-fullname.tpl.js')),
-  /**
-   * @summary An `<article.c-Speaker>` component marking up a person’s speaker information.
-   * @see xSpeaker
-   * @type {xjs.HTMLTemplateElement}
-   */
-  xSpeaker: xjs.HTMLTemplateElement
-    .fromFileSync(path.join(__dirname, '../tpl/x-speaker.tpl.html'))
-    .setRenderer(require('../tpl/x-speaker.tpl.js')),
 }
 
 module.exports = Person

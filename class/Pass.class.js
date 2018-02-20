@@ -1,9 +1,10 @@
-const path = require('path')
-
 const xjs = require('extrajs-dom')
 const View    = require('extrajs-view')
 
 const Util    = require('./Util.class.js')
+
+const xPass = require('../tpl/x-pass.tpl.js')
+
 
 /**
  * A set of prices for registration.
@@ -91,7 +92,7 @@ class Pass {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference) {
-        return new xjs.DocumentFragment(Pass.TEMPLATE.render({...this._DATA, $conference})).innerHTML()
+        return new xjs.DocumentFragment(xPass.render({...this._DATA, $conference})).innerHTML()
       })
   }
 
@@ -184,15 +185,5 @@ Pass.AttendeeType = class AttendeeType {
       })
   }
 }
-
-/**
- * @summary A set of prices for registration.
- * @description An `<article.c-Pass>` element.
- * @see xPass
- * @type {xjs.HTMLTemplateElement}
- */
-Pass.TEMPLATE = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../tpl/x-pass.tpl.html'))
-  .setRenderer(require('../tpl/x-pass.tpl.js'))
 
 module.exports = Pass

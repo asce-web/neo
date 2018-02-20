@@ -3,14 +3,11 @@ const path = require('path')
 const xjs = require('extrajs-dom')
 
 const Util = require('../class/Util.class.js')
-
-const xPersonFullname = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-person-fullname.tpl.html'))
-  .setRenderer(require('./x-person-fullname.tpl.js'))
+const xPersonFullname = require('./x-person-fullname.tpl.js')
 
 
 /**
- * @summary xPersonFullname renderer.
+ * @summary An `<article.c-Speaker>` component marking up a person’s speaker information.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {sdo.Person} data a JSON object representing a Person
  * @param {string} jsondata.identifier a unique identifier of the person
@@ -57,4 +54,6 @@ function xSpeaker(frag, data) {
   }))
 }
 
-module.exports = xSpeaker
+module.exports = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-speaker.tpl.html'))
+  .setRenderer(xSpeaker)

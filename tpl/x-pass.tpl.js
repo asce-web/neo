@@ -1,5 +1,9 @@
+const path = require('path')
+
+const xjs = require('extrajs-dom')
+
 /**
- * @summary xPass renderer.
+ * @summary An `<article.c-Pass>` component marking up a pass’s info.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {!Object} data a JSON object that validates against some schema?
  * @param {string} data.name the name or type of the pass
@@ -27,4 +31,6 @@ function xPass(frag, data) {
     .join('')
 }
 
-module.exports = xPass
+module.exports = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-pass.tpl.html'))
+  .setRenderer(xPass)
