@@ -10,6 +10,8 @@ STATE_DATA.push(...[
 ])
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
+const xDateblock = require('../tpl/x-dateblock.tpl.js')
+const xTimeblock = require('../tpl/x-timeblock.tpl.js')
 
 
 /**
@@ -275,19 +277,12 @@ class Util {
        * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of important dates.
        * @summary Call `Util.view(data).dateBlock()` to render this display.
        * @function Util.VIEW.dateBlock
-       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
        * @returns {string} HTML output
        */
-      .addDisplay(function dateBlock(attr = {}) {
-        return ElemName('table').attr(attr).append(
-          ElemName('tbody').class('c-DateBlock')
-            .innerHTML(this.map(($importantDate) => $importantDate.view.dateBlock()).join(''))
-        ).outerHTML()
-        return `
-<table>
-  <tbody class="c-DateBlock">${ this.map(($importantDate) => $importantDate.view.dateBlock()) }</tbody>
-</table>
-        `
+      .addDisplay(function dateBlock() {
+        return new xjs.DocumentFragment(
+          xDateblock.render(this.map(($dateRange) => $dateRange._DATA))
+        ).innerHTML()
       })
       /**
        * Return a table containing a `<tbody.c-TimeBlock>` component, containing
@@ -295,19 +290,12 @@ class Util {
        * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of sessions.
        * @summary Call `Util.view(data).timeBlock()` to render this display.
        * @function Util.VIEW.timeBlock
-       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
        * @returns {string} HTML output
        */
-      .addDisplay(function timeBlock(attr = {}) {
-        return ElemName('table').attr(attr).append(
-          ElemName('tbody').class('c-TimeBlock')
-            .innerHTML(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)).join(''))
-        ).outerHTML()
-        return `
-<table>
-  <tbody class="c-TimeBlock">${ this.map(($session, index) => $session.view.timeBlock(index===this.length-1)) }</tbody>
-</table>
-        `
+      .addDisplay(function timeBlock() {
+        return new xjs.DocumentFragment(
+          xTimeblock.render(this.map(($dateRange, index) => ({ ...$dateRange._DATA, $is_last: index===data.length-1 })))
+        ).innerHTML()
       })
       /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.

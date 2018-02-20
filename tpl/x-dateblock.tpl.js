@@ -10,13 +10,20 @@ const xjs = {
  * @summary A `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
  * marking up this date range as an important date with date and description.
  * @param {DocumentFragment} frag the template content with which to render
- * @param {sdo.Action} data a JSON object representing an important date
+ * @param {Array<sdo.Action>} data an array of important dates, each with:
  * @param {string}  data.name the name of the date range
  * @param {string}  data.startTime the start time, in ISO string format
  * @param {string=} data.endTime   the end   time, in ISO string format
  * @param {string=} data.url the url of the important date
  */
 function xDateblock(frag, data) {
+  let [fragment, dataset] = [frag, data] // REVIEW variable naming
+
+  let container = fragment.querySelector('.c-DateBlock')
+  container.append(...dataset.map((datum) =>
+    new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (frag, data) {
+      // REVIEW-INDENTATION
+
   let date_start = new Date(data.startTime)
   let date_end   = (data.endTime) ? new Date(data.endTime) : null
 
@@ -35,6 +42,9 @@ function xDateblock(frag, data) {
     href: data.url || null,
     itemprop: (data.url) ? 'url' : null,
   }).textContent(data.name)
+
+    }).render(datum)
+  ))
 }
 
 module.exports = xjs.HTMLTemplateElement

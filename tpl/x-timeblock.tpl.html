@@ -1,4 +1,7 @@
 <template>
+  <table>
+    <tbody class="c-TimeBlock">
+      <template>
   <tr class="c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
     <td class="c-TimeBlock__Times">
       <time datetime="{{ start }}" itemprop="startDate">{{
@@ -11,4 +14,7 @@
       <a class="c-TimeBlock__Link" href="{{ url }}" itemprop="url">{{ name }}</a>
     </td>
   </tr>
+      </template>
+    </tbody>
+  </table>
 </template>

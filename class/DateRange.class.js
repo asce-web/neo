@@ -4,9 +4,6 @@ const xjs = {
 }
 const View    = require('extrajs-view')
 
-const xDateblock = require('../tpl/x-dateblock.tpl.js')
-const xTimeblock = require('../tpl/x-timeblock.tpl.js')
-
 
 /**
  * A range of dates.
@@ -91,27 +88,6 @@ class DateRange {
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return a `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
-       * marking up this date range as an important date with date and description.
-       * @summary Call `DateRange#view.dateBlock()` to render this display.
-       * @function DateRange.VIEW.dateBlock
-       * @returns {string} HTML output
-       */
-      .addDisplay(function dateBlock() {
-        return new xjs.DocumentFragment(xDateblock.render(this._DATA)).innerHTML()
-      })
-      /**
-       * Return a `<tr.c-TimeBlock__Item>` subcomponent containing a pair of `<td>`s,
-       * marking up this date range as a session with time and name.
-       * @summary Call `DateRange#view.timeBlock()` to render this display.
-       * @function DateRange.VIEW.timeBlock
-       * @param  {boolean} is_last `true` if the TimeBlock__Item is the last in its list
-       * @returns {string} HTML output
-       */
-      .addDisplay(function timeBlock(is_last) {
-        return new xjs.DocumentFragment(xTimeblock.render({...this._DATA, $is_last:is_last})).innerHTML()
-      })
   }
 }
 

@@ -10,7 +10,7 @@ const xjs = {
  * @summary A `<tr.c-TimeBlock__Item>` subcomponent containing a pair of `<td>`s,
  * marking up this date range as a session with time and name.
  * @param {DocumentFragment} frag the template content with which to render
- * @param {sdo.Action} data a JSON object representing a session
+ * @param {Array<sdo.Event>} data an arry of sessions, each with:
  * @param {string}  data.name the name of the date range
  * @param {string}  data.startDate the start date, in ISO string format
  * @param {string}  data.endDate   the end   date, in ISO string format
@@ -18,6 +18,13 @@ const xjs = {
  * @param {boolean=} data.$is_last whether this data is last in a set
  */
 function xTimeblock(frag, data) {
+  let [fragment, dataset] = [frag, data] // REVIEW variable naming
+
+  let container = fragment.querySelector('.c-TimeBlock')
+  container.append(...dataset.map((datum) =>
+    new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (frag, data) {
+      // REVIEW-INDENTATION
+
   let date_start = new Date(data.startDate)
   let date_end   = (data.endDate) ? new Date(data.endDate) : null
 
@@ -32,6 +39,9 @@ function xTimeblock(frag, data) {
     href: data.url || null,
     itemprop: (data.url) ? 'url' : null,
   }).textContent(data.name)
+
+    }).render(datum)
+  ))
 }
 
 module.exports = xjs.HTMLTemplateElement
