@@ -205,53 +205,7 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker() {
-        return this.view()
-        return new HTMLElement('article').class('c-Speaker').attr({
-          'data-instanceof': 'Person',
-          itemprop : 'performer',
-          itemscope: '',
-          itemtype : 'http://schema.org/Person',
-        }).addContent([
-          new HTMLElement('img').class('c-Speaker__Img h-Block')
-            .attr('src', this.image)
-            .attr('itemprop','image'),
-          new HTMLElement('header').class('c-Speaker__Head').addContent([
-            new HTMLElement('h1').class('c-Speaker__Name')
-              .id(this.id)
-              .addContent(this.view.entireName()),
-            new HTMLElement('p').class('c-Speaker__JobTitle')
-              .attr('itemprop','jobTitle')
-              .addContent(this.jobTitle),
-            new HTMLElement('p').class('c-Speaker__Affiliation').attr({
-              itemprop : 'affiliation',
-              itemscope: '',
-              itemtype : 'http://schema.org/Organization',
-            }).addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation)),
-          ]),
-          // new HTMLElement('div').class('c-Speaker__Body').attr('itemprop','description'),
-          new HTMLElement('footer').class('c-Speaker__Foot').addContent([
-            Util.view(this.getSocialAll()).socialList('c-SocialList--speaker'),
-            new HTMLUListElement().class('o-List o-Flex c-SocialList').addClass('c-SocialList--speaker')
-              .addContent(['email', 'telephone', 'url'].map(function (prop) {
-                if (!this[prop]) return null
-                let data = ({
-                  url      : { icon: 'explore', url: this.url                           , text: 'visit homepage' },
-                  email    : { icon: 'email'  , url: `mailto:${this.email}`             , text: 'send email' },
-                  telephone: { icon: 'phone'  , url: `tel:${Util.toURL(this.telephone)}`, text: 'call' },
-                })[prop]
-                return new HTMLLIElement().class('o-List__Item o-Flex__Item c-SocialList__Item').addContent(
-                  new HTMLElement('a').class('c-SocialList__Link h-Block')
-                    .addClass(`c-SocialList__Link--${data.icon}`)
-                    .attr({ href: data.url, itemprop: prop })
-                    .addContent([
-                      // new HTMLElement('i').class('material-icons').attr('aria-hidden', true).addContent(data.icon),
-                      new HTMLElement('span').class('h-Hidden').addContent(data.text),
-                    ])
-                )
-              }, this)),
-          ]),
-        ])
-        .html()
+        return new xjs.DocumentFragment(Person.TEMPLATES.xSpeaker.render(this._DATA)).innerHTML()
       })
   }
 }
@@ -264,7 +218,15 @@ Person.TEMPLATES = {
    */
   xPersonFullname: xjs.HTMLTemplateElement
     .fromFileSync(path.join(__dirname, '../tpl/x-person-fullname.tpl.html'))
-    .setRenderer(require('../tpl/x-person-fullname.tpl.js'))
+    .setRenderer(require('../tpl/x-person-fullname.tpl.js')),
+  /**
+   * @summary An `<article.c-Speaker>` component marking up a person’s speaker information.
+   * @see xSpeaker
+   * @type {xjs.HTMLTemplateElement}
+   */
+  xSpeaker: xjs.HTMLTemplateElement
+    .fromFileSync(path.join(__dirname, '../tpl/x-speaker.tpl.html'))
+    .setRenderer(require('../tpl/x-speaker.tpl.js')),
 }
 
 module.exports = Person

@@ -1,5 +1,3 @@
-const xjs = require('extrajs-dom')
-
 /**
  * @summary xPass renderer.
  * @param {DocumentFragment} frag the template content with which to render
