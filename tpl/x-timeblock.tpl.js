@@ -20,11 +20,8 @@ const xjs = {
 function xTimeblock(frag, data) {
   let [fragment, dataset] = [frag, data] // REVIEW variable naming
 
-  let container = fragment.querySelector('.c-TimeBlock')
-  container.append(...dataset.map((datum) =>
-    new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (frag, data) {
-      // REVIEW-INDENTATION
-
+  new xjs.HTMLTableSectionElement(fragment.querySelector('.c-TimeBlock')).populate(dataset, function (frag, data) {
+    // REVIEW-INDENTATION
   let date_start = new Date(data.startDate)
   let date_end   = (data.endDate) ? new Date(data.endDate) : null
 
@@ -39,9 +36,7 @@ function xTimeblock(frag, data) {
     href: data.url || null,
     itemprop: (data.url) ? 'url' : null,
   }).textContent(data.name)
-
-    }).render(datum)
-  ))
+  })
 }
 
 module.exports = xjs.HTMLTemplateElement
