@@ -12,6 +12,7 @@ STATE_DATA.push(...[
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xDateblock = require('../tpl/x-dateblock.tpl.js')
 const xTimeblock = require('../tpl/x-timeblock.tpl.js')
+const xHighlightButtons = require('../tpl/x-highlight-buttons.tpl.js')
 
 
 /**
@@ -259,17 +260,7 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return ElemName('ul').class('o-List o-Flex o-Flex--even').append(...this.map((el) =>
-          ElemName('li').class('o-List__Item o-Flex__Item')
-            .append(el.addClass(`c-Button c-Button--hilite ${buttonclasses}`))
-        )).outerHTML()
-        return `
-<ul class="o-List o-Flex o-Flex--even">${
-  this.map((el) => `
-    <li class="o-List__Item o-Flex__Item">${el.addClass(`c-Button c-Button--hilite ${buttonclasses}`).outerHTML()}</li>
-  `)
-}</ul>
-        `
+        return new xjs.DocumentFragment(xHighlightButtons.render({links: this, buttonclasses})).innerHTML()
       })
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
