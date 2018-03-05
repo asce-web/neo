@@ -1,6 +1,8 @@
-const HTMLElement = require('extrajs-dom').HTMLElement
+const xjs = require('extrajs-dom')
 const View    = require('extrajs-view')
 const Organization = require('./Organization.class.js')
+
+const xSupporter = require('../tpl/x-supporter.tpl.js')
 
 /**
  * An organization supporting a conference or series of conferences.
@@ -55,16 +57,7 @@ class Supporter extends Organization {
        * @returns {string} HTML output
        */
     return new View(function () {
-        return ``
-        return new HTMLElement('a').attr({
-          'data-instanceof': 'Supporter',
-          href    : this.url,
-          rel     : 'external nofollow',
-          itemprop: 'url'
-        }).addContent([
-          new HTMLElement('img').class('c-SupporterBlock__Logo').attr({ src:this.img, alt:this.name, itemprop:'logo' }),
-          new HTMLElement('meta').attr({ content:this.name, itemprop:'name' }),
-        ]).html()
+        return new xjs.DocumentFragment(xSupporter.render({...this._DATA, logo: this._DATA.image})).innerHTML()
     }, this)
   }
 }

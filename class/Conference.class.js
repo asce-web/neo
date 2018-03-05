@@ -515,24 +515,21 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function supporterLevels(queue, small = false) {
-        return ``
         const supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return Util.documentFragment(supporterlevels.map((level, index) =>
-          new HTMLElement('section').class('c-SupporterBlock')
-            .addClass((small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med') // TODO make small the default size
-            .addContent([
-              new HTMLElement('h1').class('c-SupporterBlock__Hn').addContent(level),
-              new HTMLUListElement().class('o-List o-Flex c-SupporterBlock__List').addContent(
-                this.getSupportersAll()
-                  .filter((supporter) => supporter.level===level)
-                  .map((supporter) =>
-                    new HTMLLIElement().class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
-                      .attr({ itemprop:'sponsor', itemscope:'', itemtype:'http://schema.org/Organization' })
-                      .addContent(supporter.view())
-                  )
-              ),
-            ])
-        ))
+        // TODO make small the default size
+        return xjs.DocumentFragment.concat(...supporterlevels.map((level, index) => `
+          <section class="c-SupporterBlock ${(small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med'}">
+            <h1 class="c-SupporterBlock__Hn">${level}</h1>
+            <ul class="o-List o-Flex c-SupporterBlock__List">${
+              this.getSupportersAll()
+                .filter((supporter) => supporter.level===level)
+                .map((supporter) => `
+                  <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item">${supporter.view()}</li>
+                `)
+                .join('')
+            }</ul>
+          </section>
+        `))
       })
   }
 }
