@@ -13,7 +13,7 @@ const xjs = require('extrajs-dom')
  * @param {string=} data.logo the logo url for this place
  * @param {string=} data.telephone the telephone number of this place
  */
-function xVenue(frag, data) {
+function xVenue_renderer(frag, data) {
   frag.querySelector('[itemprop="name"]'     ).textContent = data.name
   frag.querySelector('[itemprop="streetAddress"]'  ).textContent = data.address.streetAddress
   frag.querySelector('[itemprop="addressLocality"]').textContent = data.address.addressLocality
@@ -38,4 +38,4 @@ function xVenue(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-venue.tpl.html'))
-  .setRenderer(xVenue)
+  .setRenderer(xVenue_renderer)

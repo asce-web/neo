@@ -9,7 +9,7 @@ const xjs = require('extrajs-dom')
  * @param {Array<xjs.HTMLElement>} data.links an array of links TODO `sdo.WebPageElement: {url:string, text:string}`
  * @param {string=} data.buttonclasses the classes to add to the buttons
  */
-function xHighlightButtons(frag, data) {
+function xHighlightButtons_renderer(frag, data) {
   new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data.links, function (f, d) {
     new xjs.HTMLAnchorElement(f.querySelector('a'))
       .replaceClassString('{{ buttonclasses }}', data.buttonclasses || '')
@@ -20,4 +20,4 @@ function xHighlightButtons(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-highlight-buttons.tpl.html'))
-  .setRenderer(xHighlightButtons)
+  .setRenderer(xHighlightButtons_renderer)

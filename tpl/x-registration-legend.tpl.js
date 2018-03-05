@@ -14,7 +14,7 @@ const xjs = {
  * @param {string=} data.availabilityEnds the date on which this registration period ends
  * @param {string=} data.$icon the icon keyword of this registration period
  */
-function xRegistrationLegend(frag, data) {
+function xRegistrationLegend_renderer(frag, data) {
   let [fragment, dataset] = [frag, data] // REVIEW variable naming
   new xjs.HTMLUListElement(fragment.querySelector('ul')).populate(dataset, function (frag, data) {
     // REVIEW-INDENTATION
@@ -47,4 +47,4 @@ function xRegistrationLegend(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-registration-legend.tpl.html'))
-  .setRenderer(xRegistrationLegend)
+  .setRenderer(xRegistrationLegend_renderer)

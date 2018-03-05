@@ -17,7 +17,7 @@ const xjs = {
  * @param {string=} data.url the url of the session
  * @param {boolean=} data.$is_last whether this data is last in a set
  */
-function xTimeblock(frag, data) {
+function xTimeblock_renderer(frag, data) {
   let [fragment, dataset] = [frag, data] // REVIEW variable naming
 
   new xjs.HTMLTableSectionElement(fragment.querySelector('.c-TimeBlock')).populate(dataset, function (frag, data) {
@@ -41,4 +41,4 @@ function xTimeblock(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-timeblock.tpl.html'))
-  .setRenderer(xTimeblock)
+  .setRenderer(xTimeblock_renderer)

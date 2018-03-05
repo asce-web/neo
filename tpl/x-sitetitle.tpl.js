@@ -14,7 +14,7 @@ const xjs = {
  * @param {string} data.url the site url
  * @param {string=} data.logo the site logo
  */
-function xSitetitle(frag, data) {
+function xSitetitle_renderer(frag, data) {
   frag.querySelector('[itemprop="name"]'       ).textContent = data.name
   frag.querySelector('[itemprop="description"]').textContent = data.description
   frag.querySelector('[itemprop="logo"]'       ).src = data.logo
@@ -26,4 +26,4 @@ function xSitetitle(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-sitetitle.tpl.html'))
-  .setRenderer(xSitetitle)
+  .setRenderer(xSitetitle_renderer)

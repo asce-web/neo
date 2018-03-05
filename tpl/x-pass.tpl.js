@@ -13,7 +13,7 @@ const xjs = require('extrajs-dom')
  *                                             (usually based on membership)
  * @param {Conference} data.$conference the conference to which this pass belongs
  */
-function xPass(frag, data) {
+function xPass_renderer(frag, data) {
   const Pass = require('../class/Pass.class.js')
   let current_period = data.$conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
@@ -33,4 +33,4 @@ function xPass(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-pass.tpl.html'))
-  .setRenderer(xPass)
+  .setRenderer(xPass_renderer)

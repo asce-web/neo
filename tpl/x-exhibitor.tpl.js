@@ -12,7 +12,7 @@ const xjs = require('extrajs-dom')
  * @param {number} data.$booth the booth number of the exhibitor
  * @param {boolean=} data.$isSponsor whether the exhibitor also happens to be a sponsor
  */
-function xExhibitor(frag, data) {
+function xExhibitor_renderer(frag, data) {
   frag.querySelector('[itemprop="url"]' ).href        = data.url
   frag.querySelector('[itemprop="name"]').textContent = data.name
   frag.querySelector('[name="booth"]'   ).textContent = data.$booth
@@ -24,4 +24,4 @@ function xExhibitor(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-exhibitor.tpl.html'))
-  .setRenderer(xExhibitor)
+  .setRenderer(xExhibitor_renderer)

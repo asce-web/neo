@@ -12,7 +12,7 @@ const xjs = require('extrajs-dom')
  * @param {string=} data.honorificPrefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
  * @param {string=} data.honorificSuffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
  */
-function xPersonFullname(frag, data) {
+function xPersonFullname_renderer(frag, data) {
   ;[
     'familyName',
     'givenName',
@@ -42,4 +42,4 @@ function xPersonFullname(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-person-fullname.tpl.html'))
-  .setRenderer(xPersonFullname)
+  .setRenderer(xPersonFullname_renderer)

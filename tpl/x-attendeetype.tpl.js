@@ -9,7 +9,7 @@ const xjs = require('extrajs-dom')
  * @param {string} data.name the attendee type
  * @param {number} data.price the price for this attendee type given a certain pass and registration period
  */
-function xAttendeetype(frag, data) {
+function xAttendeetype_renderer(frag, data) {
   const Pass = require('../class/Pass.class.js')
   frag.querySelector('.c-Pass__Attendee'         ).textContent = data.name
   frag.querySelector('[itemprop="priceCurrency"]').value       = Pass.PRICE_OPTIONS.resolvedOptions().currency
@@ -22,4 +22,4 @@ function xAttendeetype(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-attendeetype.tpl.html'))
-  .setRenderer(xAttendeetype)
+  .setRenderer(xAttendeetype_renderer)

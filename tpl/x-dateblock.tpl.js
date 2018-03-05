@@ -16,7 +16,7 @@ const xjs = {
  * @param {string=} data.endTime   the end   time, in ISO string format
  * @param {string=} data.url the url of the important date
  */
-function xDateblock(frag, data) {
+function xDateblock_renderer(frag, data) {
   let [fragment, dataset] = [frag, data] // REVIEW variable naming
 
   new xjs.HTMLTableSectionElement(fragment.querySelector('.c-DateBlock')).populate(dataset, function (frag, data) {
@@ -44,4 +44,4 @@ function xDateblock(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-dateblock.tpl.html'))
-  .setRenderer(xDateblock)
+  .setRenderer(xDateblock_renderer)

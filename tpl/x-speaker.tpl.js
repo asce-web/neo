@@ -28,7 +28,7 @@ const xPersonFullname = require('./x-person-fullname.tpl.js')
  * @param {string}            data.sameAs.url the URL of the person’s social media profile or page
  * @param {string=}           data.sameAs.description short alternative text for non-visual media
  */
-function xSpeaker(frag, data) {
+function xSpeaker_renderer(frag, data) {
   frag.querySelector('[itemprop="image"]'   ).src = data.image
   frag.querySelector('[itemprop="name"]'    ).id  = data.identifier
   frag.querySelector('[itemprop="jobTitle"]').textContent = data.jobTitle
@@ -54,4 +54,4 @@ function xSpeaker(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-speaker.tpl.html'))
-  .setRenderer(xSpeaker)
+  .setRenderer(xSpeaker_renderer)

@@ -11,7 +11,7 @@ const xjs = require('extrajs-dom')
  * @param {string} data.logo the logo url of the organization
  * @param {string=} data.$level the level of the supporting organization
  */
-function xSupporter(frag, data) {
+function xSupporter_renderer(frag, data) {
   frag.querySelector('[itemprop="url"]' ).href  = data.url
   frag.querySelector('[itemprop="name"]').value = data.name
   frag.querySelector('[itemprop="logo"]').src   = data.logo
@@ -20,4 +20,4 @@ function xSupporter(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-supporter.tpl.html'))
-  .setRenderer(xSupporter)
+  .setRenderer(xSupporter_renderer)

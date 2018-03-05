@@ -10,7 +10,7 @@ const xjs = require('extrajs-dom')
  * @param {Array<Supporter>} data.supporters all the supporters in this level
  * @param {string=} data.classname any classname to add to the <section>
  */
-function xSupporterLevel(frag, data) {
+function xSupporterLevel_renderer(frag, data) {
   new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass(data.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
   new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(data.supporters, function (f, d) {
@@ -20,4 +20,4 @@ function xSupporterLevel(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-supporter-level.tpl.html'))
-  .setRenderer(xSupporterLevel)
+  .setRenderer(xSupporterLevel_renderer)

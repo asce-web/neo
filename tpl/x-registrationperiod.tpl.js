@@ -12,7 +12,7 @@ const xjs = require('extrajs-dom')
  * @param {Pass} data.$pass any pass in which to place this registration period markup
  * @param {boolean=} data.$is_body `true` if this period is to be placed in the body and not the footer
  */
-function xRegistrationperiod(frag, data) {
+function xRegistrationperiod_renderer(frag, data) {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
@@ -32,4 +32,4 @@ function xRegistrationperiod(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-registrationperiod.tpl.html'))
-  .setRenderer(xRegistrationperiod)
+  .setRenderer(xRegistrationperiod_renderer)
