@@ -6,7 +6,6 @@ const View    = require('extrajs-view')
 
 const Util    = require('./Util.class.js')
 const xRegistrationperiod = require('../tpl/x-registrationperiod.tpl.js')
-const xRegistrationperiodLegend = require('../tpl/x-registrationperiod-legend.tpl.js')
 
 /**
  * An interval of dates in which registration prices are set.
@@ -92,15 +91,6 @@ class RegistrationPeriod {
        */
       .addDisplay(function pass($pass, is_body) {
         return new xjs.DocumentFragment(xRegistrationperiod.render({ ...this._DATA, $pass, $is_body: is_body })).innerHTML()
-      })
-      /**
-       * Return a `<li.c-Alert__Item>` component containing icons and dates for this registration period .
-       * @summary Call `RegistrationPeriod#view.legend()` to render this display.
-       * @function RegistrationPeriod.VIEW.legend
-       * @returns {string} HTML output
-       */
-      .addDisplay(function legend() {
-        return new xjs.DocumentFragment(xRegistrationperiodLegend.render(this._DATA)).innerHTML()
       })
   }
 }
