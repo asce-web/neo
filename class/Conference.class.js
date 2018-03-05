@@ -16,6 +16,8 @@ const Exhibitor = require('./Exhibitor.class.js')
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 
+const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
+
 /**
  * A conference event.
  * It may have a name, theme, dates, (promoted) location,
@@ -516,20 +518,13 @@ class Conference {
        */
       .addDisplay(function supporterLevels(queue, small = false) {
         const supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        // TODO make small the default size
-        return xjs.DocumentFragment.concat(...supporterlevels.map((level, index) => `
-          <section class="c-SupporterBlock ${(small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med'}">
-            <h1 class="c-SupporterBlock__Hn">${level}</h1>
-            <ul class="o-List o-Flex c-SupporterBlock__List">${
-              this.getSupportersAll()
-                .filter((supporter) => supporter.level===level)
-                .map((supporter) => `
-                  <li class="o-List__Item o-Flex__Item c-SupporterBlock__List__Item">${supporter.view()}</li>
-                `)
-                .join('')
-            }</ul>
-          </section>
-        `))
+        return xjs.DocumentFragment.concat(...supporterlevels.map((level, index) =>
+          xSupporterLevel.render({
+            name: level,
+            classname: (small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
+            supporters: this.getSupportersAll().filter((supporter) => supporter.level===level),
+          })
+        ))
       })
   }
 }

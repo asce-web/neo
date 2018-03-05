@@ -3,7 +3,7 @@ const path = require('path')
 const xjs = require('extrajs-dom')
 
 /**
- * @summary An `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
+ * @summary A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {!Object} data a JSON object that validates against some schema?
  * @param {string} data.name the attendee type
