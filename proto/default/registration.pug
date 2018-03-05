@@ -4,11 +4,11 @@ block append vars
   - var page = site.find('registration.html')
 
 block mainHeader
-  header.o-Runner.o-Runner--pageHeader: div.o-Constrain
+  header.o-Runner.o-Runner--pageHeader: div.h-Constrain
     h1.c-PageTitle Registra&shy;tion
 
 block mainReference
-  section.o-Runner.o-Runner--highlight.c-Banner#full-registration: div.o-Constrain
+  section.o-Runner.o-Runner--highlight.c-Banner#full-registration: div.h-Constrain
     h1.h-Hidden Full Registration
     != Util.view(site.currentConference.getPassesAll()).pass(site.currentConference)
     != Util.view(site.currentConference.getRegistrationPeriodsAll()).registrationLegend()

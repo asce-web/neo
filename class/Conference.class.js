@@ -369,7 +369,7 @@ class Conference {
           .attr('data-instanceof','Conference')
           .style((this.heroImage !== '') ? { '--banner-img': `url('${this.heroImage}')` } : null)
           .addContent([
-            new HTMLElement('div').class('o-Constrain')
+            new HTMLElement('div').class('h-Constrain')
               .addContent([
                 new HTMLElement('h1').class('c-PageTitle c-ConfHed__Name')
                   .attr('itemprop','name')
@@ -423,7 +423,7 @@ class Conference {
             itemtype : 'http://schema.org/Event',
           })
           .addContent([
-            new HTMLElement('div').class('o-Constrain').addContent([
+            new HTMLElement('div').class('h-Constrain').addContent([
               new HTMLElement('h1').class('c-ConfHed__Name')
                 .attr('itemprop','name')
                 .addContent(this.name),
