@@ -14,6 +14,7 @@ const xDateblock = require('../tpl/x-dateblock.tpl.js')
 const xTimeblock = require('../tpl/x-timeblock.tpl.js')
 const xHighlightButtons = require('../tpl/x-highlight-buttons.tpl.js')
 const xRegistrationLegend = require('../tpl/x-registration-legend.tpl.js')
+const xDirectory = require('../tpl/x-directory.tpl.js')
 
 
 /**
@@ -156,44 +157,6 @@ class Util {
      */
     return new View(null, data)
       /**
-       * Return a Page object as a link in a document outline.
-       * Parameter `data` should be of type `Page`.
-       * @summary Call `Util.view(data).pageLink()` to render this display.
-       * @todo TODO move this display to `require('sitepage').VIEW`
-       * @function Util.VIEW.pageLink
-       * @param   {!Object=} options options for configuring output
-       * @param   {?Object<string>=} options.classes group set of css class configurations
-       * @param   {string=} options.classes.link css classes to add to the link
-       * @param   {string=} options.classes.icon css classes to add to the icon;
-       *                                         if you want the icon but no additional classes, provide the empty string `''`
-       * @param   {string=} options.classes.expand css classes to add to the expand icon;
-       *                                           if you want the icon but no additional classes, provide the empty string `''`
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pageLink(options = {}) {
-        let classes = options.classes || {}
-        return ElemName('a').class(classes.link || null)
-          .attr({
-            'data-instanceof': 'Page',
-            href: this.url(),
-            // 'aria-current': (page.url()===this.url()) ? 'page' : null,
-          })
-          .append(...[
-            (xjs.Object.typeOf(classes.icon)==='string') ? ElemName('i').class('material-icons')
-              .addClass(classes.icon)
-              .attr('role','none')
-              .textContent(this.getIcon())
-              : null,
-            ElemName('span').textContent(this.name()),
-            (xjs.Object.typeOf(classes.expand)==='string' && this.findAll().length) ? ElemName('i').class('material-icons')
-              .addClass(classes.expand)
-              .attr('role','none')
-              .textContent(`expand_more`)
-              : null,
-          ])
-          .outerHTML()
-      })
-      /**
        * Return a Page object’s document outline as a nested ordered list.
        * Parameter `data` should be of type `Page`.
        * @summary Call `Util.view(data).pageToc()` to render this display.
@@ -214,22 +177,16 @@ class Util {
         let classes = options.classes || {}
         let start = options.start || 0
         let end   = options.end   || Infinity
-        return ElemName('ol').class(classes.list || null)
-          .attr('role', (options.inner) ? null : 'directory')
-          .append(
-            ...this.findAll().slice(start, end).filter((p) => !p.isHidden()).map((p) =>
-              ElemName('li').class(classes.item || null).innerHTML([
-                Util.view(p).pageLink(options.links),
-                (p.findAll().length && options.depth > 0) ?
-                  Util.view(p).pageToc(Object.assign({}, options.options, {
-                    depth: options.depth-1,
-                    inner: true,
-                  }))
-                  : '',
-              ].join(''))
-            )
-          )
-          .outerHTML()
+        return new xjs.DocumentFragment(xDirectory.render({
+          ...this,
+          hasPart: this.findAll().filter((p) => !p.isHidden()),
+          $depth: options.depth,
+          options: {
+            ...{classes, start, end},
+            links: options.links,
+            options: options.options,
+          }
+        })).innerHTML()
       })
       /**
        * Return a snippet marking up a promoted location.
