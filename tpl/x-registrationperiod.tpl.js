@@ -5,11 +5,10 @@ const xjs = require('extrajs-dom')
 /**
  * @summary A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
  * @param {DocumentFragment} frag the template content with which to render
- * @param {AggregateOffer} data a JSON object representing a registration period
+ * @param {sdo.AggregateOffer} data a JSON object representing a registration period
  * @param {string} data.name the name of the registration period (e.g., 'Early Bird')
  * @param {string=} data.availabilityStarts the date on which this registration period starts
  * @param {string=} data.availabilityEnds the date on which this registration period ends
- * @param {string=} data.$icon the icon keyword of this registration period
  * @param {Pass} data.$pass any pass in which to place this registration period markup
  * @param {boolean=} data.$is_body `true` if this period is to be placed in the body and not the footer
  */
