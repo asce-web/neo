@@ -1,7 +1,7 @@
 const Ajv      = require('ajv')
 
+const xjs = require('extrajs-dom')
 const Page     = require('sitepage').Page
-const HTMLElement  = require('extrajs-dom').HTMLElement
 const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
 
@@ -9,6 +9,8 @@ const {META_SCHEMATA, SCHEMATA} = require('schemaorg-jsd')
 
 const Conference = require('./Conference.class.js')
 const ConfPage = require('./ConfPage.class.js')
+
+const xSitetitle = require('../tpl/x-sitetitle.tpl.js')
 
 
 const path = require('path')
@@ -268,16 +270,7 @@ class ConfSite extends Page {
        * @returns {string} HTML output
        */
       .addDisplay(function siteTitle() {
-        return ``
-        return new HTMLElement('a').class('c-SiteTitle c-LinkCamo h-Block')
-          .attr('data-instanceof','ConfSite')
-          .attr('href',this.url())
-          .addContent([
-            new HTMLElement('img').class('c-SiteTitle__Logo').attr('src',this.logo).attr('alt','Home'),
-            new HTMLElement('h1').class('c-SiteTitle__Name').addContent(this.name()),
-            new HTMLElement('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
-          ])
-          .html()
+        return new xjs.DocumentFragment(xSitetitle.render({...this._DATA, logo: this._DATA.image})).innerHTML()
       })
   }
 
