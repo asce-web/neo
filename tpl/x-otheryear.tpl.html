@@ -1,0 +1,11 @@
+<template>
+  <aside class="o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed" style="--banner-img: url('{{ image }}')" itemscope="" itemtype="http://schema.org/Event">
+    <div class="h-Constrain">
+      <h1 class="c-ConfHed__Name" itemprop="name">{{ name }}</h1>
+      <meta content="{{ startDate }}" itemprop="startDate"/>
+      <p class="c-ConfHed__Detail" itemprop="location" itemscope="" itemtype="http://schema.org/PostalAddress">{{ Util.view(location).promoLoc() }}</p>
+      <p class="h-Hidden-nM">{{ blurb }}</p>
+      <slot class="h-Block" name="body">{{ body }}</slot>
+    </div>
+  </aside>
+</template>

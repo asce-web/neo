@@ -17,6 +17,7 @@ const Exhibitor = require('./Exhibitor.class.js')
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 
 const xHero = require('../tpl/x-hero.tpl.js')
+const xOtheryear = require('../tpl/x-otheryear.tpl.js')
 const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
 
 /**
@@ -382,32 +383,12 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function otherYear(blurb = '', block = '') {
-        return ``
-        return new HTMLElement('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
-          .style((this.heroImage !== '') ? { '--banner-img': `url('${this.heroImage}')` } : null)
-          .attr({
-            'data-instanceof': 'Conference',
-            itemscope: '',
-            itemtype : 'http://schema.org/Event',
-          })
-          .addContent([
-            new HTMLElement('div').class('h-Constrain').addContent([
-              new HTMLElement('h1').class('c-ConfHed__Name')
-                .attr('itemprop','name')
-                .addContent(this.name),
-              new HTMLElement('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
-              new HTMLElement('p').class('c-ConfHed__Detail')
-                .attr({
-                  itemprop : 'location',
-                  itemscope: '',
-                  itemtype : 'http://schema.org/PostalAddress',
-                })
-                .addContent(Util.view(this.promoLoc).promoLoc()),
-              new HTMLElement('p').class('h-Hidden-nM').addContent(blurb),
-              block
-            ])
-          ])
-          .html()
+        return new xjs.DocumentFragment(xOtheryear.render({
+          ...this._DATA,
+          location: this._DATA.location[0],
+          $blurb: blurb,
+          $body: block,
+        })).innerHTML()
       })
       /**
        * Return a `<fieldset.o-Tablist>` Object marking up this conference’s program sessions.
