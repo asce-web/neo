@@ -15,7 +15,6 @@ const xjs = {
  * @param {string}  data.startDate the start date, in ISO string format, of the session
  * @param {string}  data.endDate   the end   date, in ISO string format, of the session
  * @param {string=} data.url the url of the session
- * @param {boolean=} data.$is_last whether this data is last in a set // TODO do this with CSS :last-child or :last-of-type
  */
 function xTimeblock_renderer(frag, data) {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(data, function (f, d) {
@@ -35,10 +34,6 @@ function xTimeblock_renderer(frag, data) {
       f.querySelectorAll('.c-TimeBlock__Times')[0].remove()
     }
     new xjs.HTMLElement(f.querySelector('.c-TimeBlock__Times')).trimInner()
-
-    // TODO do this with CSS :last-child or :last-of-type
-    new xjs.Element(f.querySelector('.c-TimeBlock__Desc'))
-      .replaceClassString('{{ is_last }}', (d.$is_last) ? 'c-TimeBlock__Desc--last' : '')
 
     new xjs.HTMLAnchorElement(f.querySelector('a')).attr({
       href    : d.url || null,

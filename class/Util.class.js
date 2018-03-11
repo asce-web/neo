@@ -243,7 +243,7 @@ class Util {
        */
       .addDisplay(function timeBlock() {
         return new xjs.DocumentFragment(
-          xTimeblock.render(this.map(($dateRange, index) => ({ ...$dateRange._DATA, $is_last: index===data.length-1 })))
+          xTimeblock.render(this.map(($dateRange) => ($dateRange._DATA)))
         ).innerHTML()
       })
       /**
