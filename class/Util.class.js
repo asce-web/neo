@@ -199,14 +199,14 @@ class Util {
        */
       .addDisplay(function promoLoc(state_code = false) {
         const returned = []
-        if (this.addressLocality) returned.push(ElemName('span').attr('itemprop','addressLocality').addContent(this.addressLocality).html(), `, `)
+        if (this.addressLocality) returned.push(ElemName('span').attr('itemprop','addressLocality').textContent(this.addressLocality).outerHTML(), `, `)
         if (this.addressRegion) {
           returned.push(ElemName('data')
             .attr({ itemprop: 'addressRegion', value: this.addressRegion })
-            .addContent((state_code) ? STATE_DATA.find((state) => state.name===this.addressRegion).code : this.addressRegion)
-            .html())
+            .textContent((state_code) ? STATE_DATA.find((state) => state.name===this.addressRegion).code : this.addressRegion)
+            .outerHTML())
         }
-        if (this.addressCountry) returned.push(`, `, ElemName('span').attr('itemprop','addressCountry').addContent(this.addressCountry).html())
+        if (this.addressCountry) returned.push(`, `, ElemName('span').attr('itemprop','addressCountry').textContent(this.addressCountry).outerHTML())
         return returned.join('')
       })
       /**

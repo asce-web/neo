@@ -16,6 +16,7 @@ const Exhibitor = require('./Exhibitor.class.js')
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 
+const xHero = require('../tpl/x-hero.tpl.js')
 const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
 
 /**
@@ -366,46 +367,11 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function hero(block = '') {
-        return ``
-        return new HTMLElement('header').class('o-Runner o-Runner--pageHeader c-Banner c-ConfHed')
-          .attr('data-instanceof','Conference')
-          .style((this.heroImage !== '') ? { '--banner-img': `url('${this.heroImage}')` } : null)
-          .addContent([
-            new HTMLElement('div').class('h-Constrain')
-              .addContent([
-                new HTMLElement('h1').class('c-PageTitle c-ConfHed__Name')
-                  .attr('itemprop','name')
-                  .addContent(this.name),
-                new HTMLElement('meta').attr('content',this.url).attr('itemprop','url'),
-                new HTMLElement('p').class('o-Flex c-ConfHed__Detail')
-                  .addContent([
-                    new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Place h-Block')
-                      .attr({
-                        itemprop : 'location',
-                        itemscope: '',
-                        itemtype : 'http://schema.org/PostalAddress',
-                      })
-                      .addContent(Util.view(this.promoLoc).promoLoc()),
-                    new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
-                      .addContent([
-                        new HTMLElement('time')
-                          .attr('datetime',this.startDate.toISOString())
-                          .attr('itemprop','startDate')
-                          .addContent(xjs.Date.format(this.startDate, 'M j')),
-                        `&ndash;`,
-                        new HTMLElement('time')
-                          .attr('datetime',this.endDate.toISOString())
-                          .attr('itemprop','endDate')
-                          .addContent(xjs.Date.format(this.endDate, 'M j')),
-                      ]),
-                  ]),
-                new HTMLElement('p').class('c-ConfHed__Theme h-Hidden-nM')
-                  .attr('itemprop','description')
-                  .addContent(this.theme || `&nbsp;`), // (`\xa0` === `&nbsp;`)
-                block,
-              ])
-          ])
-          .html()
+        return new xjs.DocumentFragment(xHero.render({
+          ...this._DATA,
+          location: this._DATA.location[0],
+          $body: block,
+        })).innerHTML()
       })
       /**
        * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
