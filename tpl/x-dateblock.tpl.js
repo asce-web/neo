@@ -11,34 +11,34 @@ const xjs = {
  * marking up this date range as an important date with date and description.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {Array<sdo.Action>} data an array of important dates, each with:
- * @param {string}  data.name the name of the date range
- * @param {string}  data.startTime the start time, in ISO string format
- * @param {string=} data.endTime   the end   time, in ISO string format
+ * @param {string}  data.name the name of the important date range
+ * @param {string}  data.startTime the start date, in ISO string format, of the date range
+ * @param {string}  data.endTime   the end   date, in ISO string format, of the date range
  * @param {string=} data.url the url of the important date
  */
 function xDateblock_renderer(frag, data) {
-  let [fragment, dataset] = [frag, data] // REVIEW variable naming
+  new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(data, function (f, d) {
+    let date_start = new Date(d.startTime)
+    let date_end   = new Date(d.endTime  || d.startTime) // TODO make this required!
+    f.querySelectorAll('[itemprop~="startTime"]').forEach(function (time) {
+      new xjs.HTMLTimeElement(time)
+        .dateTime(date_start)
+        .textContent(xjs.Date.format(date_start, 'M j, Y'))
+    })
+    new xjs.HTMLTimeElement(f.querySelector('[itemprop="endTime"]'))
+      .dateTime(date_end)
+      .textContent(xjs.Date.format(date_end, 'M j, Y'))
+    if (xjs.Date.sameDate(date_start, date_end)) {
+      f.querySelectorAll('.c-DateBlock__Date')[1].remove()
+    } else {
+      f.querySelectorAll('.c-DateBlock__Date')[0].remove()
+    }
+    new xjs.HTMLElement(f.querySelector('.c-DateBlock__Date')).trimInner()
 
-  new xjs.HTMLTableSectionElement(fragment.querySelector('.c-DateBlock')).populate(dataset, function (frag, data) {
-    // REVIEW-INDENTATION
-  let date_start = new Date(data.startTime)
-  let date_end   = (data.endTime) ? new Date(data.endTime) : null
-
-  frag.querySelector('[itemprop="startTime"]').dateTime    = date_start.toISOString()
-  frag.querySelector('[itemprop="startTime"]').textContent = xjs.Date.format(date_start, 'M j, Y')
-  if (date_end) {
-    frag.querySelector('[itemprop="endTime"]').dateTime    = date_end.toISOString()
-    frag.querySelector('[itemprop="endTime"]').textContent = xjs.Date.format(date_end, 'M j, Y')
-  } else {
-    frag.querySelector('[itemprop="startTime"] + span').remove()
-    frag.querySelector('[itemprop="endTime"]').remove()
-    frag.querySelector('[itemprop="startTime"]').setAttribute('itemprop', 'startTime endTime')
-  }
-
-  new xjs.HTMLAnchorElement(frag.querySelector('a')).attr({
-    href: data.url || null,
-    itemprop: (data.url) ? 'url' : null,
-  }).textContent(data.name)
+    new xjs.HTMLAnchorElement(f.querySelector('a')).attr({
+      href    : d.url || null,
+      itemprop: (d.url) ? 'url' : null,
+    }).textContent(d.name)
   })
 }
 

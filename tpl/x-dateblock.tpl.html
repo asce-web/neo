@@ -2,18 +2,19 @@
   <table>
     <tbody class="c-DateBlock">
       <template>
-  <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/Action">
-    <td class="c-DateBlock__Date">
-      <time datetime="{{ start }}" itemprop="startTime">{{
-        start.format('M j, Y')
-      }}</time><span>&ndash;</span><time datetime="{{ end }}" itemprop="endTime">{{
-        end.format('M j, Y')
-      }}</time>
-    </td>
-    <td class="c-DateBlock__Desc" itemprop="name">
-      <a class="c-DateBlock__Link" href="{{ url }}" itemprop="url">{{ name }}</a>
-    </td>
-  </tr>
+        <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/Action">
+          <td class="c-DateBlock__Date">
+            <time datetime="{{ startTime }}" itemprop="startTime endTime">{{ startTime.format('M j, Y') }}</time>
+          </td>
+          <td class="c-DateBlock__Date">
+            <time datetime="{{ startTime }}" itemprop="startTime">{{ startTime.format('M j, Y') }}</time>
+            <span>&ndash;</span>
+            <time datetime="{{ endTime }}" itemprop="endTime">{{ endTime.format('M j, Y') }}</time>
+          </td>
+          <td class="c-DateBlock__Desc" itemprop="name">
+            <a class="c-DateBlock__Link" href="{{ url }}" itemprop="url">{{ name }}</a>
+          </td>
+        </tr>
       </template>
     </tbody>
   </table>
