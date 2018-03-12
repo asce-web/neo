@@ -3,7 +3,6 @@ const View    = require('extrajs-view')
 
 const Util    = require('./Util.class.js')
 
-const xPass = require('../tpl/x-pass.tpl.js')
 const xAttendeetype = require('../tpl/x-attendeetype.tpl.js')
 
 
@@ -85,16 +84,6 @@ class Pass {
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return an `<article.c-Pass>` component marking up this pass’s info.
-       * @summary Call `Pass#view.pass()` to render this display.
-       * @function Pass.VIEW.pass
-       * @param   {Conference} $conference the conference to which this pass belongs
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pass($conference) {
-        return new xjs.DocumentFragment(xPass.render({ ...this._DATA, $conference })).innerHTML()
-      })
   }
 
 
