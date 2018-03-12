@@ -3,8 +3,6 @@ const View    = require('extrajs-view')
 
 const Util    = require('./Util.class.js')
 
-const xAttendeetype = require('../tpl/x-attendeetype.tpl.js')
-
 
 /**
  * A set of prices for registration.
@@ -144,16 +142,6 @@ Pass.AttendeeType = class AttendeeType {
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return an <article.c-Pass> component marking up this pass’s info.
-       * @summary Call `AttendeeType#view.pass()` to render this display.
-       * @function Pass.AttendeeType.VIEW.pass
-       * @param   {number} price the price for this attendee type given a certain pass and registration period
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pass(price) {
-        return new xjs.DocumentFragment(xAttendeetype.render({name: this._DATA.name, price})).innerHTML()
-      })
   }
 }
 

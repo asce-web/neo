@@ -2,6 +2,9 @@ const path = require('path')
 
 const xjs = require('extrajs-dom')
 
+const xAttendeetype = require('./x-attendeetype.tpl.js')
+
+
 /**
  * @summary A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
  * @param {DocumentFragment} frag the template content with which to render
@@ -20,14 +23,17 @@ function xRegistrationperiod_renderer(frag, data) {
   frag.querySelector('slot[name="offer-name"]'        ).textContent = data.name
   frag.querySelector('slot[name="pass-name"]'         ).textContent = `${data.$pass.name}: `
   frag.querySelector('[itemprop="offerCount"]'        ).content = data.$pass.getAttendeeTypesAll().length
-  frag.querySelector('[itemprop="availabilityStarts"]').content = (date_start || new Date()).toISOString()
-  frag.querySelector('[itemprop="availabilityEnds"]'  ).content = (date_end   || new Date()).toISOString()
-  if (!date_start) frag.querySelector('[itemprop="availabilityStarts"]').remove()
-  if (!date_end  ) frag.querySelector('[itemprop="availabilityEnds"]'  ).remove()
 
-  frag.querySelector('dl').innerHTML = data.$pass.getAttendeeTypesAll().map((att_type) =>
-    att_type.view.pass(42.87) // TODO price is 42 for now
-  ).join('')
+  if (date_start)  frag.querySelector('[itemprop="availabilityStarts"]').content = date_start.toISOString()
+  else             frag.querySelector('[itemprop="availabilityStarts"]').remove()
+  if (date_end  )  frag.querySelector('[itemprop="availabilityEnds"]'  ).content = date_end.toISOString()
+  else             frag.querySelector('[itemprop="availabilityEnds"]'  ).remove()
+
+  new xjs.HTMLDListElement(frag.querySelector('dl')).empty().append(
+    ...data.$pass.getAttendeeTypesAll().map((att_type) =>
+      xAttendeetype.render({ name: att_type._DATA.name, price: 42.87 }) // TODO price is 42 for now
+    )
+  )
 }
 
 module.exports = xjs.HTMLTemplateElement
