@@ -18,6 +18,7 @@ const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 
 const xHero = require('../tpl/x-hero.tpl.js')
 const xOtheryear = require('../tpl/x-otheryear.tpl.js')
+const xProgram = require('../tpl/x-program.tpl.js')
 const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
 
 /**
@@ -401,57 +402,11 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function program(id, starred = false) {
-        /**
-         * @summary Categorize all the sessions of this conference by date and return the grouping.
-         * @description
-         * Returns an array of objects, each with a `dateobj` property: a Date;
-         * and a `sessions` property: an array of {@link DateRange} objects,
-         * all of which share the same date (excluding time of day).
-         * @private
-         * @returns {Array<{dateobj:Date, sessions:Array<DateRange>}>} an array grouping the sessions together
-         */
-        function groupSessions() {
-          let all_sessions = this.getSessionsAll()
-          const returned = []
-          all_sessions.forEach(function (s) {
-            if (!returned.find((sess_group) => xjs.Date.sameDate(sess_group.dateobj, s.start))) {
-              returned.push({
-                dateobj : s.start,
-                sessions: all_sessions.filter((t) => xjs.Date.sameDate(t.start, s.start)),
-              })
-            }
-          })
-          return returned
-        }
-        return ElemName('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
-          .append(...[
-            ElemName('legend').class('h-Hidden').textContent(`Program Tabs`),
-            ElemName('dl').class('o-Flex').id(id).innerHTML(
-              groupSessions.call(this).map((g, index) => xjs.DocumentFragment.concat(...[
-                ElemName('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').append(
-                  ElemName('label').class('h-Block').append(...[
-                    ElemName('input').class('o-Tablist__Check h-Hidden').attr({
-                      type   : 'radio',
-                      name   : id,
-                      value  : g.dateobj.toISOString(),
-                      checked: (index===0) ? '' : null,
-                    }),
-                    ElemName('time').class('c-ProgramHn h-Block')
-                      .attr('datetime',g.dateobj.toISOString())
-                      .append(...[
-                        `${xjs.Date.DAY_NAMES[g.dateobj.getUTCDay()]},`,
-                        ElemName('br'),
-                        xjs.Date.format(g.dateobj, 'M j'),
-                      ]),
-                  ])
-                ),
-                ElemName('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').innerHTML(
-                  Util.view(g.sessions.filter((s) => (starred) ? s.isStarred : true)).timeBlock()
-                ),
-              ])).join('')
-            ),
-          ])
-          .outerHTML()
+        return new xjs.DocumentFragment(xProgram.render({
+          id,
+          sessions: this._DATA.subEvent.filter((s) => (starred) ? s.$starred : true),
+          starred,
+        })).innerHTML()
       })
       /**
        * Return a `<section.c-SupporterBlock>` component containing this conference’s supporters
