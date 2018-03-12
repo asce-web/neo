@@ -1,7 +1,8 @@
-const Element = require('extrajs-dom').Element
-const HTMLElement = require('extrajs-dom').HTMLElement
+const xjs = require('extrajs-dom')
 const View    = require('extrajs-view')
 const Place = require('./Place.class.js')
+
+const xVenue = require('../tpl/x-venue.tpl.js')
 
 /**
  * A building location and address related to the conference.
@@ -51,33 +52,7 @@ class Venue extends Place {
        * @returns {string} HTML output
        */
       .addDisplay(function venue() {
-        return ``
-        let name = new HTMLElement('b').class('h-Clearfix').attr('itemprop','name').addContent(this.name)
-        if (this.url) {
-          name = new HTMLElement('a').attr({
-            href: this.url,
-            itemprop: 'url',
-          }).addContent(name)
-        }
-        return Element.concat([
-          name,
-          new HTMLElement('span')
-            .attr({
-              itemprop : 'address',
-              itemscope: '',
-              itemtype : 'http://schema.org/PostalAddress',
-            })
-            .addContent([
-              new HTMLElement('span').class('h-Clearfix').attrStr('itemprop="streetAddress"').addContent(this.streetAddress),
-              new HTMLElement('span').attrStr('itemprop="addressLocality"').addContent(this.addressLocality),
-              `, `,
-              new HTMLElement('span').attrStr('itemprop="addressRegion"').addContent(this.addressRegion),
-              ` `,
-              new HTMLElement('span').class('h-Clearfix').attrStr('itemprop="postalCode"').addContent(this.postalCode),
-              (this.addressCountry) ? new HTMLElement('span').class('h-Clearfix').attrStr('itemprop="addressCountry"').addContent(this.addressCountry) : null,
-            ]),
-          (this.telephone) ? new HTMLElement('a').attr('href',`tel:${this.telephone}`).attr('itemprop','telephone').addContent(this.telephone) : null,
-        ])
+        return new xjs.DocumentFragment(xVenue.render({...this._DATA, logo: this._DATA.image})).innerHTML()
       })
   }
 }

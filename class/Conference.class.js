@@ -16,6 +16,11 @@ const Exhibitor = require('./Exhibitor.class.js')
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 
+const xHero = require('../tpl/x-hero.tpl.js')
+const xOtheryear = require('../tpl/x-otheryear.tpl.js')
+const xProgram = require('../tpl/x-program.tpl.js')
+const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
+
 /**
  * A conference event.
  * It may have a name, theme, dates, (promoted) location,
@@ -364,46 +369,11 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function hero(block = '') {
-        return ``
-        return new HTMLElement('header').class('o-Runner o-Runner--pageHeader c-Banner c-ConfHed')
-          .attr('data-instanceof','Conference')
-          .style((this.heroImage !== '') ? { '--banner-img': `url('${this.heroImage}')` } : null)
-          .addContent([
-            new HTMLElement('div').class('o-Constrain')
-              .addContent([
-                new HTMLElement('h1').class('c-PageTitle c-ConfHed__Name')
-                  .attr('itemprop','name')
-                  .addContent(this.name),
-                new HTMLElement('meta').attr('content',this.url).attr('itemprop','url'),
-                new HTMLElement('p').class('o-Flex c-ConfHed__Detail')
-                  .addContent([
-                    new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Place h-Block')
-                      .attr({
-                        itemprop : 'location',
-                        itemscope: '',
-                        itemtype : 'http://schema.org/PostalAddress',
-                      })
-                      .addContent(Util.view(this.promoLoc).promoLoc()),
-                    new HTMLElement('span').class('o-Flex__Item c-ConfHed__Detail__Dates h-Block')
-                      .addContent([
-                        new HTMLElement('time')
-                          .attr('datetime',this.startDate.toISOString())
-                          .attr('itemprop','startDate')
-                          .addContent(xjs.Date.format(this.startDate, 'M j')),
-                        `&ndash;`,
-                        new HTMLElement('time')
-                          .attr('datetime',this.endDate.toISOString())
-                          .attr('itemprop','endDate')
-                          .addContent(xjs.Date.format(this.endDate, 'M j')),
-                      ]),
-                  ]),
-                new HTMLElement('p').class('c-ConfHed__Theme h-Hidden-nM')
-                  .attr('itemprop','description')
-                  .addContent(this.theme || `&nbsp;`), // (`\xa0` === `&nbsp;`)
-                block,
-              ])
-          ])
-          .html()
+        return new xjs.DocumentFragment(xHero.render({
+          ...this._DATA,
+          location: this._DATA.location[0],
+          $body: block,
+        })).innerHTML()
       })
       /**
        * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
@@ -414,32 +384,12 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function otherYear(blurb = '', block = '') {
-        return ``
-        return new HTMLElement('aside').class('o-Runner o-Runner--highlight c-Banner c-Banner--blur c-ConfHed')
-          .style((this.heroImage !== '') ? { '--banner-img': `url('${this.heroImage}')` } : null)
-          .attr({
-            'data-instanceof': 'Conference',
-            itemscope: '',
-            itemtype : 'http://schema.org/Event',
-          })
-          .addContent([
-            new HTMLElement('div').class('o-Constrain').addContent([
-              new HTMLElement('h1').class('c-ConfHed__Name')
-                .attr('itemprop','name')
-                .addContent(this.name),
-              new HTMLElement('meta').attr('content',this.startDate.toISOString()).attr('itemprop','startDate'),
-              new HTMLElement('p').class('c-ConfHed__Detail')
-                .attr({
-                  itemprop : 'location',
-                  itemscope: '',
-                  itemtype : 'http://schema.org/PostalAddress',
-                })
-                .addContent(Util.view(this.promoLoc).promoLoc()),
-              new HTMLElement('p').class('h-Hidden-nM').addContent(blurb),
-              block
-            ])
-          ])
-          .html()
+        return new xjs.DocumentFragment(xOtheryear.render({
+          ...this._DATA,
+          location: this._DATA.location[0],
+          $blurb: blurb,
+          $body: block,
+        })).innerHTML()
       })
       /**
        * Return a `<fieldset.o-Tablist>` Object marking up this conference’s program sessions.
@@ -452,57 +402,11 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function program(id, starred = false) {
-        /**
-         * @summary Categorize all the sessions of this conference by date and return the grouping.
-         * @description
-         * Returns an array of objects, each with a `dateobj` property: a Date;
-         * and a `sessions` property: an array of {@link DateRange} objects,
-         * all of which share the same date (excluding time of day).
-         * @private
-         * @returns {Array<{dateobj:Date, sessions:Array<DateRange>}>} an array grouping the sessions together
-         */
-        function groupSessions() {
-          let all_sessions = this.getSessionsAll()
-          const returned = []
-          all_sessions.forEach(function (s) {
-            if (!returned.find((sess_group) => xjs.Date.sameDate(sess_group.dateobj, s.start))) {
-              returned.push({
-                dateobj : s.start,
-                sessions: all_sessions.filter((t) => xjs.Date.sameDate(t.start, s.start)),
-              })
-            }
-          })
-          return returned
-        }
-        return ElemName('fieldset').class('o-Tablist o-Tablist--program').attr('role','tablist')
-          .append(...[
-            ElemName('legend').class('h-Hidden').textContent(`Program Tabs`),
-            ElemName('dl').class('o-Flex').id(id).innerHTML(
-              groupSessions.call(this).map((g, index) => xjs.DocumentFragment.concat(...[
-                ElemName('dt').class('o-Flex__Item o-Tablist__Tab').attr('role','tab').append(
-                  ElemName('label').class('h-Block').append(...[
-                    ElemName('input').class('o-Tablist__Check h-Hidden').attr({
-                      type   : 'radio',
-                      name   : id,
-                      value  : g.dateobj.toISOString(),
-                      checked: (index===0) ? '' : null,
-                    }),
-                    ElemName('time').class('c-ProgramHn h-Block')
-                      .attr('datetime',g.dateobj.toISOString())
-                      .append(...[
-                        `${xjs.Date.DAY_NAMES[g.dateobj.getUTCDay()]},`,
-                        ElemName('br'),
-                        xjs.Date.format(g.dateobj, 'M j'),
-                      ]),
-                  ])
-                ),
-                ElemName('dd').class('o-Flex__Item o-Tablist__Panel').attr('role','tabpanel').innerHTML(
-                  Util.view(g.sessions.filter((s) => (starred) ? s.isStarred : true)).timeBlock()
-                ),
-              ])).join('')
-            ),
-          ])
-          .outerHTML()
+        return new xjs.DocumentFragment(xProgram.render({
+          id,
+          sessions: this._DATA.subEvent.filter((s) => (starred) ? s.$starred : true),
+          starred,
+        })).innerHTML()
       })
       /**
        * Return a `<section.c-SupporterBlock>` component containing this conference’s supporters
@@ -515,23 +419,13 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function supporterLevels(queue, small = false) {
-        return ``
         const supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return Util.documentFragment(supporterlevels.map((level, index) =>
-          new HTMLElement('section').class('c-SupporterBlock')
-            .addClass((small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med') // TODO make small the default size
-            .addContent([
-              new HTMLElement('h1').class('c-SupporterBlock__Hn').addContent(level),
-              new HTMLUListElement().class('o-List o-Flex c-SupporterBlock__List').addContent(
-                this.getSupportersAll()
-                  .filter((supporter) => supporter.level===level)
-                  .map((supporter) =>
-                    new HTMLLIElement().class('o-List__Item o-Flex__Item c-SupporterBlock__List__Item')
-                      .attr({ itemprop:'sponsor', itemscope:'', itemtype:'http://schema.org/Organization' })
-                      .addContent(supporter.view())
-                  )
-              ),
-            ])
+        return xjs.DocumentFragment.concat(...supporterlevels.map((level, index) =>
+          xSupporterLevel.render({
+            name: level,
+            classname: (small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
+            supporters: this.getSupportersAll().filter((supporter) => supporter.level===level),
+          })
         ))
       })
   }

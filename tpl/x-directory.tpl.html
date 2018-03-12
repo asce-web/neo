@@ -1,0 +1,13 @@
+<template>
+  <ol role="directory" class="{{ classes.list }}">
+    <template>
+      <li class="{{ classes.item }}" itemprop="hasPart" itemscope="" itemtype="http://schema.org/WebPage">
+        <a class="{{ classes.link }}" href="{{ url }}" itemprop="url">
+          <i class="material-icons {{ classes.icon }}" aria-hidden="true">{{ icon }}</i>
+          <slot itemprop="name">{{ name }}</slot>
+          <i class="material-icons {{ classes.expand }}" aria-hidden="true">expand_more</i>
+        </a>
+      </li>
+    </template>
+  </ol>
+</template>

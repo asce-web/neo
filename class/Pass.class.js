@@ -4,6 +4,7 @@ const View    = require('extrajs-view')
 const Util    = require('./Util.class.js')
 
 const xPass = require('../tpl/x-pass.tpl.js')
+const xAttendeetype = require('../tpl/x-attendeetype.tpl.js')
 
 
 /**
@@ -162,26 +163,7 @@ Pass.AttendeeType = class AttendeeType {
        * @returns {string} HTML output
        */
       .addDisplay(function pass(price) {
-        return `AttendeeType#view.pass(${this.name}, ${price})`
-        return Element.concat([
-          new HTMLElement('dt').class('c-Pass__Attendee').attr('data-instanceof','Pass.AttendeeType').addContent(this.name),
-          new HTMLElement('dd').class('c-Pass__Price')
-            .attr({
-              'aria-label': `${price} ${Pass.PRICE_OPTIONS.resolvedOptions().currency}`,
-              itemprop : 'priceSpecification',
-              itemscope: '',
-              itemtype : 'http://schema.org/UnitPriceSpecification',
-            })
-            .addContent([
-              new HTMLElement('data')
-                .attr('value',Pass.PRICE_OPTIONS.resolvedOptions().currency)
-                .attr('itemprop','priceCurrency')
-                .addContent(Pass.PRICE_OPTIONS.format(price).slice(0,1)), // first char // .charAt(0) // FIXME for USD only!
-              new HTMLElement('span')
-                .attr('itemprop','price')
-                .addContent(Pass.PRICE_OPTIONS.format(price).slice(1)), // rest
-            ]),
-        ])
+        return new xjs.DocumentFragment(xAttendeetype.render({name: this._DATA.name, price})).innerHTML()
       })
   }
 }

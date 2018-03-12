@@ -12,6 +12,9 @@ STATE_DATA.push(...[
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xDateblock = require('../tpl/x-dateblock.tpl.js')
 const xTimeblock = require('../tpl/x-timeblock.tpl.js')
+const xHighlightButtons = require('../tpl/x-highlight-buttons.tpl.js')
+const xRegistrationLegend = require('../tpl/x-registration-legend.tpl.js')
+const xDirectory = require('../tpl/x-directory.tpl.js')
 
 
 /**
@@ -154,44 +157,6 @@ class Util {
      */
     return new View(null, data)
       /**
-       * Return a Page object as a link in a document outline.
-       * Parameter `data` should be of type `Page`.
-       * @summary Call `Util.view(data).pageLink()` to render this display.
-       * @todo TODO move this display to `require('sitepage').VIEW`
-       * @function Util.VIEW.pageLink
-       * @param   {!Object=} options options for configuring output
-       * @param   {?Object<string>=} options.classes group set of css class configurations
-       * @param   {string=} options.classes.link css classes to add to the link
-       * @param   {string=} options.classes.icon css classes to add to the icon;
-       *                                         if you want the icon but no additional classes, provide the empty string `''`
-       * @param   {string=} options.classes.expand css classes to add to the expand icon;
-       *                                           if you want the icon but no additional classes, provide the empty string `''`
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pageLink(options = {}) {
-        let classes = options.classes || {}
-        return ElemName('a').class(classes.link || null)
-          .attr({
-            'data-instanceof': 'Page',
-            href: this.url(),
-            // 'aria-current': (page.url()===this.url()) ? 'page' : null,
-          })
-          .append(...[
-            (xjs.Object.typeOf(classes.icon)==='string') ? ElemName('i').class('material-icons')
-              .addClass(classes.icon)
-              .attr('role','none')
-              .textContent(this.getIcon())
-              : null,
-            ElemName('span').textContent(this.name()),
-            (xjs.Object.typeOf(classes.expand)==='string' && this.findAll().length) ? ElemName('i').class('material-icons')
-              .addClass(classes.expand)
-              .attr('role','none')
-              .textContent(`expand_more`)
-              : null,
-          ])
-          .outerHTML()
-      })
-      /**
        * Return a Page object’s document outline as a nested ordered list.
        * Parameter `data` should be of type `Page`.
        * @summary Call `Util.view(data).pageToc()` to render this display.
@@ -212,22 +177,16 @@ class Util {
         let classes = options.classes || {}
         let start = options.start || 0
         let end   = options.end   || Infinity
-        return ElemName('ol').class(classes.list || null)
-          .attr('role', (options.inner) ? null : 'directory')
-          .append(
-            ...this.findAll().slice(start, end).filter((p) => !p.isHidden()).map((p) =>
-              ElemName('li').class(classes.item || null).innerHTML([
-                Util.view(p).pageLink(options.links),
-                (p.findAll().length && options.depth > 0) ?
-                  Util.view(p).pageToc(Object.assign({}, options.options, {
-                    depth: options.depth-1,
-                    inner: true,
-                  }))
-                  : '',
-              ].join(''))
-            )
-          )
-          .outerHTML()
+        return new xjs.DocumentFragment(xDirectory.render({
+          ...this,
+          hasPart: this.findAll().filter((p) => !p.isHidden()),
+          $depth: options.depth,
+          options: {
+            ...{classes, start, end},
+            links: options.links,
+            options: options.options,
+          }
+        })).innerHTML()
       })
       /**
        * Return a snippet marking up a promoted location.
@@ -240,14 +199,14 @@ class Util {
        */
       .addDisplay(function promoLoc(state_code = false) {
         const returned = []
-        if (this.addressLocality) returned.push(ElemName('span').attr('itemprop','addressLocality').addContent(this.addressLocality).html(), `, `)
+        if (this.addressLocality) returned.push(ElemName('span').attr('itemprop','addressLocality').textContent(this.addressLocality).outerHTML(), `, `)
         if (this.addressRegion) {
           returned.push(ElemName('data')
             .attr({ itemprop: 'addressRegion', value: this.addressRegion })
-            .addContent((state_code) ? STATE_DATA.find((state) => state.name===this.addressRegion).code : this.addressRegion)
-            .html())
+            .textContent((state_code) ? STATE_DATA.find((state) => state.name===this.addressRegion).code : this.addressRegion)
+            .outerHTML())
         }
-        if (this.addressCountry) returned.push(`, `, ElemName('span').attr('itemprop','addressCountry').addContent(this.addressCountry).html())
+        if (this.addressCountry) returned.push(`, `, ElemName('span').attr('itemprop','addressCountry').textContent(this.addressCountry).outerHTML())
         return returned.join('')
       })
       /**
@@ -259,17 +218,7 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return ElemName('ul').class('o-List o-Flex o-Flex--even').append(...this.map((el) =>
-          ElemName('li').class('o-List__Item o-Flex__Item')
-            .append(el.addClass(`c-Button c-Button--hilite ${buttonclasses}`))
-        )).outerHTML()
-        return `
-<ul class="o-List o-Flex o-Flex--even">${
-  this.map((el) => `
-    <li class="o-List__Item o-Flex__Item">${el.addClass(`c-Button c-Button--hilite ${buttonclasses}`).outerHTML()}</li>
-  `)
-}</ul>
-        `
+        return new xjs.DocumentFragment(xHighlightButtons.render({links: this, buttonclasses})).innerHTML()
       })
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
@@ -287,14 +236,14 @@ class Util {
       /**
        * Return a table containing a `<tbody.c-TimeBlock>` component, containing
        * rows of {@link DateRange.VIEW.timeBlock|DateRange#view.timeBlock()} displays.
-       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of sessions.
+       * Parameter `data` should be of type `Array<sdo.Event>`, e.g., a list of sessions.
        * @summary Call `Util.view(data).timeBlock()` to render this display.
        * @function Util.VIEW.timeBlock
        * @returns {string} HTML output
        */
       .addDisplay(function timeBlock() {
         return new xjs.DocumentFragment(
-          xTimeblock.render(this.map(($dateRange, index) => ({ ...$dateRange._DATA, $is_last: index===data.length-1 })))
+          xTimeblock.render(this.map((evnt, index) => ({ ...evnt, $is_last: index===this.length-1 })))
         ).innerHTML()
       })
       /**
@@ -305,14 +254,9 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function registrationLegend() {
-        return ElemName('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').append(...this.map((period) =>
-          ElemName('li').class('o-List__Item o-Flex__Item c-Alert__Item').innerHTML(period.view.legend())
-        )).outerHTML()
-        return `
-<ul class="o-List o-Flex o-Flex--even c-Alert _regLegend">${
-  this.map((period) => `<li class="o-List__Item o-Flex__Item c-Alert__Item">${period.view.legend()}</li>`)
-}</ul>
-        `
+        return new xjs.DocumentFragment(
+          xRegistrationLegend.render(this.map(($period) => $period._DATA))
+        ).innerHTML()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of

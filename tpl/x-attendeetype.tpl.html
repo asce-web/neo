@@ -1,0 +1,8 @@
+<template>
+  <dt class="c-Pass__Attendee">{{ name }}</dt>
+  <dd class="c-Pass__Price" aria-label="{{ price }} {{ currency }}"
+    itemprop="priceSpecification" itemscope="" itemtype="http://schema.org/UnitPriceSpecification">
+    <data value="{{ currency }}" itemprop="priceCurrency">{{ $ }}</data>
+    <slot itemprop="price">{{ price }}</slot>
+  </dd>
+</template>

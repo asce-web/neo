@@ -1,0 +1,18 @@
+<template>
+  <link rel="stylesheet" href="/node_modules/aria-patterns/css/dist/o-Tablist.css"/>
+  <script src="/node_modules/aria-patterns/js/dist/o-Tablist.js" defer=""></script>
+  <div class="o-Tablist" role="tablist">
+    <template>
+      <details class="o-Tablist__Panel" role="tabpanel" id="{{ id }}">
+        <summary class="o-Tablist__Tab" role="tab">
+          <time class="c-ProgramHn h-Block" datetime="{{ g.dateobj }}">
+            <slot name="day">{{ day }}</slot>,
+            <br/>
+            <slot name="date">{{ date }}</slot>
+          </time>
+        </summary>
+        <slot class="h-Block" name="panel">{{ panel }}</slot>
+      </details>
+    </template>
+  </div>
+</template>

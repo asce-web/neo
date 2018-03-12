@@ -42,9 +42,9 @@
   "devDependencies": {
     "ajv": "^6.0.1",
     "browserify": "^14.5.0",
-    "extrajs": "^0.11.0-beta",
+    "extrajs": "^0.11.0",
     "extrajs-color": "^2.1.0",
-    "extrajs-dom": "^4.0.0-alpha.4",
+    "extrajs-dom": "^4.1.0-beta.1",
     "extrajs-geo": "^0.1.0",
     "extrajs-view": "^1.1.2",
     "gulp": "^3.9.1",
@@ -59,7 +59,7 @@
     "kss": "^3.0.0-beta.18",
     "schemaorg-jsd": "^0.7.0",
     "sitepage": "^1.0.0",
-    "xmeter": "^6.3.0-alpha.2"
+    "xmeter": "^6.3.0"
   },
   "dependencies": {}
 }
