@@ -2,6 +2,9 @@ const path = require('path')
 
 const xjs = require('extrajs-dom')
 
+const xSupporter = require('./x-supporter.tpl.js')
+
+
 /**
  * @summary A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.
  * @param {DocumentFragment} frag the template content with which to render
@@ -14,7 +17,9 @@ function xSupporterLevel_renderer(frag, data) {
   new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass(data.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
   new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(data.supporters, function (f, d) {
-    f.querySelector('li').innerHTML = d.view()
+    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+      xSupporter.render({ ...d._DATA, logo: d._DATA.image }) // TODO use 'logo' in json
+    )
   })
 }
 
