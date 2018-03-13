@@ -1,9 +1,14 @@
-const xjs = require('extrajs')
-const HTMLElement = require('extrajs-dom').HTMLElement
-const HTMLUListElement = require('extrajs-dom').HTMLUListElement
-const HTMLLIElement = require('extrajs-dom').HTMLLIElement
+const path = require('path')
+
+const xjs = {
+  ...require('extrajs'),
+  ...require('extrajs-dom'),
+}
 const View    = require('extrajs-view')
+
 const Util    = require('./Util.class.js')
+const xPersonFullname = require('../tpl/x-person-fullname.tpl.js')
+
 
 /**
  * A person (alive, dead, undead, or fictional).
@@ -44,20 +49,13 @@ class Person {
     this._DATA = jsondata
 
     /**
-     * The string name of this person.
-     * @private
-     * @final
-     * @type {string}
-     */
-    this._NAME = jsondata.name || ''
-    /**
      * The object name of this person.
      * @private
      * @final
      * @type {!Object}
      */
-    this._$NAME = {
-      givenName      : jsondata.givenName       || '',
+    this._NAME = {
+      givenName      : jsondata.givenName       || jsondata.name || '',
       familyName     : jsondata.familyName      || '',
       additionalName : jsondata.additionalName  || '',
       honorificPrefix: jsondata.honorificPrefix || '',
@@ -76,10 +74,10 @@ class Person {
   /**
    * @summary The string name of this person if it exists; else the object name of this person.
    * @todo TODO `get name()` should inherit from `Thing`, and make this `get $name()` a new method
-   * @type {(string|!Object)}
+   * @type {!Object}
    */
   get name() {
-    return this._NAME || this._$NAME
+    return this._NAME
   }
 
   /**
@@ -169,140 +167,38 @@ class Person {
      */
     /**
      * Default display. Takes no arguments.
-     * Return this person’s name in "First Last" format.
+     * Return this person’s name in "Px. First Middle Last, Sx." format.
      * @summary Call `Person#view()` to render this display.
      * @function Person.VIEW.default
      * @returns {string} HTML output
      */
     return new View(function () {
-      return new HTMLElement('span').attr('itemprop','name')
-        .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
-          new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
-          ` `,
-          new HTMLElement('span').attr('itemprop','familiyName').addContent(this.name.familyName),
-        ] : this.name)
-        .html()
+      return new xjs.DocumentFragment(xPersonFullname.render(this.name)).innerHTML()
     }, this)
       /**
-       * Return this person’s name in "First Middle Last" format.
-       * @summary Call `Person#view.fullName()` to render this display.
-       * @function Person.VIEW.fullName
-       * @returns {string} HTML output
-       */
-      .addDisplay(function fullName() {
-        return new HTMLElement('span').attr('itemprop','name')
-          .addContent((xjs.Object.typeOf(this.name) === 'object') ? [
-            new HTMLElement('span').attr('itemprop','givenName').addContent(this.name.givenName),
-            ` `,
-            new HTMLElement('span').attr('itemprop','additionalName').addContent(this.name.additionalName),
-            ` `,
-            new HTMLElement('span').attr('itemprop','familyName').addContent(this.name.familyName),
-          ] : this.name)
-          .html()
-      })
-      /**
-       * Return this person’s name in "Px. First Middle Last, Sx." format.
-       * @summary Call `Person#view.entireName()` to render this display.
-       * @function Person.VIEW.entireName
-       * @returns {string} HTML output
-       */
-      .addDisplay(function entireName() {
-        let returned = this.view.fullName()
-        if (this.name.honorificPrefix) returned = `${new HTMLElement('span').attr('itemprop','honorificPrefix').addContent(this.name.honorificPrefix).html()} ${returned}`
-        if (this.name.honorificSuffix) returned = `${returned}, ${new HTMLElement('span').attr('itemprop','honorificSuffix').addContent(this.name.honorificSuffix).html()}`
-        return returned
-      })
-      /**
-       * Return this person’s name in "First Middle Last, Affiliation" format.
+       * Return this person’s name in "FullName, Affiliation" format.
        * @summary Call `Person#view.affiliation()` to render this display.
        * @function Person.VIEW.affiliation
        * @returns {string} HTML output
        */
       .addDisplay(function affiliation() {
-        return Util.documentFragment([
-          this.view.entireName(),
-          `, `,
-          new HTMLElement('span').class('-fs-t')
-            .attr({ itemprop: 'affiliation', itemscope: '', itemtype: 'http://schema.org/Organization' })
-            .addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation)),
-        ])
+        return `${this.view()},
+<span class="-fs-t" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
+  <slot itemprop="name">${this.affiliation}</slot>
+</span>
+        `
       })
       /**
-       * Return this person’s name in "First Last, Director of ... | 555-555-5555" format.
+       * Return this person’s name in "FullName, Director of ... | 555-555-5555" format.
        * @summary Call `Person#view.contact()` to render this display.
        * @function Person.VIEW.contact
        * @returns {string} HTML output
        */
       .addDisplay(function contact() {
-        let returned = new HTMLElement('a')
-          .attr('href',`mailto:${this.email}`)
-          .addContent(this.view())
-          .html()
-        if (this.jobTitle) returned = `${returned}, ${new HTMLElement('span').attr('itemprop','jobTitle').addContent(this.jobTitle).html()}`
-        if (this.telephone) {
-          returned = `${returned} | ${
-            new HTMLElement('a')
-              .attr('href',`tel:${Util.toURL(this.telephone)}`)
-              .attr('itemprop','telephone')
-              .addContent(this.telephone)
-              .html()
-          }`
-        }
+        let returned = `<a href="mailto:${this.email}">${this.view()}</a>`
+        if (this.jobTitle ) returned = `${returned}, <slot itemprop="jobTitle">${this.jobTitle}</slot>`
+        if (this.telephone) returned = `${returned} | <a href="tel:${Util.toURL(this.telephone)}" itemprop="telephone">${this.telephone}</a>`
         return returned
-      })
-      /**
-       * Return an `<article.c-Speaker>` component marking up this person’s info.
-       * @summary Call `Person#view.speaker()` to render this display.
-       * @function Person.VIEW.speaker
-       * @returns {string} HTML output
-       */
-      .addDisplay(function speaker() {
-        return new HTMLElement('article').class('c-Speaker').attr({
-          'data-instanceof': 'Person',
-          itemprop : 'performer',
-          itemscope: '',
-          itemtype : 'http://schema.org/Person',
-        }).addContent([
-          new HTMLElement('img').class('c-Speaker__Img h-Block')
-            .attr('src', this.image)
-            .attr('itemprop','image'),
-          new HTMLElement('header').class('c-Speaker__Head').addContent([
-            new HTMLElement('h1').class('c-Speaker__Name')
-              .id(this.id)
-              .addContent(this.view.entireName()),
-            new HTMLElement('p').class('c-Speaker__JobTitle')
-              .attr('itemprop','jobTitle')
-              .addContent(this.jobTitle),
-            new HTMLElement('p').class('c-Speaker__Affiliation').attr({
-              itemprop : 'affiliation',
-              itemscope: '',
-              itemtype : 'http://schema.org/Organization',
-            }).addContent(new HTMLElement('span').attr('itemprop','name').addContent(this.affiliation)),
-          ]),
-          // new HTMLElement('div').class('c-Speaker__Body').attr('itemprop','description'),
-          new HTMLElement('footer').class('c-Speaker__Foot').addContent([
-            Util.view(this.getSocialAll()).socialList('c-SocialList--speaker'),
-            new HTMLUListElement().class('o-List o-Flex c-SocialList').addClass('c-SocialList--speaker')
-              .addContent(['email', 'telephone', 'url'].map(function (prop) {
-                if (!this[prop]) return null
-                let data = ({
-                  url      : { icon: 'explore', url: this.url                           , text: 'visit homepage' },
-                  email    : { icon: 'email'  , url: `mailto:${this.email}`             , text: 'send email' },
-                  telephone: { icon: 'phone'  , url: `tel:${Util.toURL(this.telephone)}`, text: 'call' },
-                })[prop]
-                return new HTMLLIElement().class('o-List__Item o-Flex__Item c-SocialList__Item').addContent(
-                  new HTMLElement('a').class('c-SocialList__Link h-Block')
-                    .addClass(`c-SocialList__Link--${data.icon}`)
-                    .attr({ href: data.url, itemprop: prop })
-                    .addContent([
-                      // new HTMLElement('i').class('material-icons').attr('aria-hidden', true).addContent(data.icon),
-                      new HTMLElement('span').class('h-Hidden').addContent(data.text),
-                    ])
-                )
-              }, this)),
-          ]),
-        ])
-        .html()
       })
   }
 }

@@ -1,0 +1,9 @@
+<template>
+  <div itemprop="sponsor" itemscope="" itemtype="http://schema.org/Organization">
+    <a href="{{ url }}" rel="external nofollow" itemprop="url">
+      <slot itemprop="name">{{ name }}</slot>
+      (booth <slot name="booth">{{ booth }}</slot>)
+    </a>
+    <img src="{{ logo }}" alt="" itemprop="logo"/>
+  </div>
+</template>

@@ -1,7 +1,10 @@
-const HTMLElement  = require('extrajs-dom').HTMLElement
+const xjs = require('extrajs-dom')
 const View         = require('extrajs-view')
 const Util         = require('./Util.class.js')
 const Organization = require('./Organization.class.js')
+
+const xExhibitor = require('../tpl/x-exhibitor.tpl.js')
+
 
 /**
  * An organization exhibiting at a conference or series of conferences.
@@ -78,10 +81,7 @@ class Exhibitor extends Organization {
      * @returns {string} HTML output
      */
     return new View(function () {
-      return Util.documentFragment([
-        new HTMLElement('a').class((this.isSponsor) ? '-fw-b' : null).attr('href', this.url).addContent(`${this.name} (booth ${this.booth})`),
-        new HTMLElement('img').attr('src', this.image || '#0').attr('alt', this.name),
-      ])
+      return new xjs.DocumentFragment(xExhibitor.render({...this._DATA, logo: this._DATA.image})).innerHTML()
     }, this)
   }
 }

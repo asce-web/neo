@@ -4,6 +4,6 @@ block append vars
   - var page = site.find('speakers.html')
 
 block mainReference
-  section.o-Runner.o-Runner--highlight.c-Banner#all-speakers: div.o-Constrain
+  section.o-Runner.o-Runner--highlight.c-Banner#all-speakers: div.h-Constrain
     h1.h-Hidden All Speakers
     != Util.view(site.currentConference.getSpeakersAll()).speaker()

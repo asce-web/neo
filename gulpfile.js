@@ -7,6 +7,8 @@ const autoprefixer = require('gulp-autoprefixer')
 const clean_css    = require('gulp-clean-css')
 const sourcemaps   = require('gulp-sourcemaps')
 
+const jsdom = require('jsdom')
+const xjs = require('extrajs-dom')
 const requireOther = require('schemaorg-jsd/lib/requireOther.js')
 
 const ConfSite   = require('./class/ConfSite.class.js')
@@ -60,12 +62,12 @@ gulp.task('pug:index', function () {
     .pipe(gulp.dest('./'))
 })
 gulp.task('pug:default', function () {
-  // const Conference = require('./class/Conference.class.js')
   return gulp.src(__dirname + '/proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
-        HTMLElement   : require('extrajs-dom').HTMLElement,
+        ElemName: require('./lib/ElemName.js'), // TEMP until we remove pug
+        xjs: require('extrajs-dom'),
         Util: require('./class/Util.class.js'),
         site: new ConfSite(requireOther('./proto/default/database.jsonld')).init(),
         page: new ConfPage(),
@@ -78,8 +80,8 @@ gulp.task('pug:sample', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        xjs    : require('extrajs'),
-        HTMLElement: require('extrajs-dom').HTMLElement,
+        ElemName: require('./lib/ElemName.js'), // TEMP until we remove pug
+        xjs    : {...require('extrajs'), ...require('extrajs-dom')},
         Util   : require('./class/Util.class.js'),
         site: (function () {
           const returned = new ConfSite(requireOther('./proto/asce-event.org/database.jsonld')).init()

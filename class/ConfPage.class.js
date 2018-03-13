@@ -1,5 +1,7 @@
 const Page = require('sitepage').Page
+
 const Util = require('./Util.class.js')
+
 
 /**
  * Any page or subpage within a {@link ConfSite}.
