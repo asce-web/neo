@@ -244,7 +244,7 @@ class Util {
       .addDisplay(function pass($conference, queue = null) {
         const pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         return ElemName('ul').class('o-List o-Flex o-ListStacked').append(...this
-          .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
+          .filter((pass) => (queue) ? pass_names.includes(pass._DATA.name) : true)
           .map((pass) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').append(xPass.render({ ...pass._DATA, $conference })))
         ).outerHTML()
         return `

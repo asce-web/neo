@@ -12,8 +12,11 @@ const xAttendeetype = require('./x-attendeetype.tpl.js')
  * @param {string} data.name the name of the registration period (e.g., 'Early Bird')
  * @param {string=} data.availabilityStarts the date on which this registration period starts
  * @param {string=} data.availabilityEnds the date on which this registration period ends
- * @param {Pass} data.$pass any pass in which to place this registration period markup
  * @param {boolean=} data.$is_body `true` if this period is to be placed in the body and not the footer
+ * @param {!Object} data.$pass any pass in which to place this registration period markup
+ * @param {string} data.$pass.name the name or type of the pass
+ * @param {Array<string>=} data.$pass.$attendeeTypes types of attendees that can purchase this pass
+ *                                             (usually based on membership)
  */
 function xRegistrationperiod_renderer(frag, data) {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
@@ -22,7 +25,7 @@ function xRegistrationperiod_renderer(frag, data) {
   new xjs.HTMLElement(frag.querySelector('.c-Pass__Period')).replaceClassString('{{ is_body }}', (!data.$is_body) ? 'o-Flex__Item' : '')
   frag.querySelector('slot[name="offer-name"]'        ).textContent = data.name
   frag.querySelector('slot[name="pass-name"]'         ).textContent = `${data.$pass.name}: `
-  frag.querySelector('[itemprop="offerCount"]'        ).content = data.$pass.getAttendeeTypesAll().length
+  frag.querySelector('[itemprop="offerCount"]'        ).content = data.$pass.$attendeeTypes.length
 
   if (date_start)  frag.querySelector('[itemprop="availabilityStarts"]').content = date_start.toISOString()
   else             frag.querySelector('[itemprop="availabilityStarts"]').remove()
@@ -30,8 +33,8 @@ function xRegistrationperiod_renderer(frag, data) {
   else             frag.querySelector('[itemprop="availabilityEnds"]'  ).remove()
 
   new xjs.HTMLDListElement(frag.querySelector('dl')).empty().append(
-    ...data.$pass.getAttendeeTypesAll().map((att_type) =>
-      xAttendeetype.render({ name: att_type._DATA.name, price: 42.87 }) // TODO price is 42 for now
+    ...data.$pass.$attendeeTypes.map((att_type) =>
+      xAttendeetype.render({ name: att_type, price: 42.87 }) // TODO price is 42 for now
     )
   )
 }
