@@ -12,8 +12,6 @@ STATE_DATA.push(...[
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xHighlightButtons   = require('../tpl/x-highlight-buttons.tpl.js')
-const xDateblock          = require('../tpl/x-dateblock.tpl.js')
-const xTimeblock          = require('../tpl/x-timeblock.tpl.js')
 const xPass               = require('../tpl/x-pass.tpl.js')
 const xRegistrationLegend = require('../tpl/x-registration-legend.tpl.js')
 const xDirectory          = require('../tpl/x-directory.tpl.js')
@@ -191,32 +189,6 @@ class Util {
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
         return new xjs.DocumentFragment(xHighlightButtons.render({ links: this, buttonclasses })).innerHTML()
-      })
-      /**
-       * Return a table containing a `<tbody.c-DateBlock>` component, containing
-       * rows of {@link DateRange.VIEW.dateBlock|DateRange#view.dateBlock()} displays.
-       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of important dates.
-       * @summary Call `Util.view(data).dateBlock()` to render this display.
-       * @function Util.VIEW.dateBlock
-       * @returns {string} HTML output
-       */
-      .addDisplay(function dateBlock() {
-        return new xjs.DocumentFragment(
-          xDateblock.render(this.map(($dateRange) => $dateRange._DATA))
-        ).innerHTML()
-      })
-      /**
-       * Return a table containing a `<tbody.c-TimeBlock>` component, containing
-       * rows of {@link DateRange.VIEW.timeBlock|DateRange#view.timeBlock()} displays.
-       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of sessions.
-       * @summary Call `Util.view(data).timeBlock()` to render this display.
-       * @function Util.VIEW.timeBlock
-       * @returns {string} HTML output
-       */
-      .addDisplay(function timeBlock() {
-        return new xjs.DocumentFragment(
-          xTimeblock.render(this.map(($dateRange) => ($dateRange._DATA)))
-        ).innerHTML()
       })
       /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.

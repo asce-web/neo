@@ -5,6 +5,8 @@ const xjs = {
   ...require('extrajs-dom'),
 }
 
+const xTimeblock = require('../tpl/x-timeblock.tpl.js')
+
 
 /**
  * @summary xProgram renderer.
@@ -16,13 +18,13 @@ const xjs = {
  * @param {boolean=} data.starred whether to filter out unstarred sessions
  */
 function xProgram_renderer(frag, data) {
-  const Util = require('../class/Util.class.js')
   let container = frag.querySelector('[role="tablist"]')
   const xProgramPanel = new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (f, d) {
     f.querySelector('[role="tabpanel"]' ).id          = `${data.id}-panel${d.index}`
     f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
     f.querySelector('slot[name="date"]' ).textContent = xjs.Date.format(d.date, 'M j')
-    f.querySelector('slot[name="panel"]').innerHTML   = Util.view(d.items).timeBlock() // TODO don’t use the view
+    new xjs.HTMLElement(f.querySelector('slot[name="panel"]')).empty()
+      .append(xTimeblock.render(d.items))
     new xjs.HTMLTimeElement(f.querySelector('.c-ProgramHn')).trimInner()
   })
   /**
