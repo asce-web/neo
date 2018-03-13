@@ -81,7 +81,6 @@ gulp.task('pug:sample', function () {
       basedir: './',
       locals: {
         ElemName: require('./lib/ElemName.js'), // TEMP until we remove pug
-        xjs    : {...require('extrajs'), ...require('extrajs-dom')},
         Util   : require('./class/Util.class.js'),
         site: (function () {
           const returned = new ConfSite(requireOther('./proto/asce-event.org/database.jsonld')).init()

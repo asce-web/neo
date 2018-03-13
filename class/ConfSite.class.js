@@ -31,24 +31,24 @@ class ConfSite extends Page {
    * @param {string} jsondata.url url of the landing page for this site
    * @param {string=} jsondata.description the slogan (or tagline) of this site
    * @param {Array<string>=} jsondata.keywords keywords for this site
-   * @param {string=} jsondata.image url of the logo file
-   * @param {Array<string>=} jsondata.color two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
-   * @param {!Object=} jsondata.brand the publisher/brand responsible for this site; type {@link http://schema.org/Organization}
-   * @param {Array<!Object>} jsondata.$conferences an array of conferences; types {@link http://schema.org/Event}
+   * @param {string=} jsondata.logo url of the logo file
+   * @param {Array<string>=} jsondata.color two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`
+   * @param {sdo.Organization=} jsondata.brand the publisher/brand responsible for this site
+   * @param {Array<!Object>=}   jsondata.brand.sameAs a list of social media links for this site; type {@link http://schema.org/URL}
+   * @param {string}            jsondata.brand.sameAs.name the name or identifier of the social media service (used for icons)
+   * @param {string}            jsondata.brand.sameAs.url the URL of the site’s social media profile or page
+   * @param {string=}           jsondata.brand.sameAs.description short alternative text for non-visual media
+   * @param {Array<sdo.Event>} jsondata.$conferences an array of conferences
    * @param {string} jsondata.$currentConference  the url of an existing conference; used as the current  conference in this series
    * @param {string} jsondata.$previousConference the url of an existing conference; used as the previous conference in this series
    * @param {string} jsondata.$nextConference     the url of an existing conference; used as the next     conference in this series
-   * @param {Array<!Object>=} jsondata.$queues a list containing types {@link http://schema.org/ItemList}, which list any number and type of things
+   * @param {Array<sdo.ItemList>=} jsondata.$queues An array of ItemLists, each whose items are number and type of things
    *                                           The following queues are recommended:
    *                                           - Featured Passes
    *                                           - Featured Speakers
    *                                           - Top Sponsors
    *                                           - Non-Sponsors
    *                                           - All Sponsors
-   * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this site; type {@link http://schema.org/URL}
-   * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
-   * @param {string} jsondata.sameAs.url the URL of the site’s social media profile or page
-   * @param {string=} jsondata.sameAs.description short alternative text for non-visual media
    */
   constructor(jsondata) {
     super({ name: jsondata.name, url: jsondata.url })
@@ -74,33 +74,6 @@ class ConfSite extends Page {
     this._DATA = jsondata
   }
 
-  /**
-   * @summary Overwrite superclass description() method.
-   * @description This method only gets the description, it does not set it.
-   * @todo TODO: update this to an ES6 getter once {@link Page#description} is updated.
-   * @override
-   * @param   {*} arg any argument
-   * @returns {string} the description of this site
-   */
-  description(arg) {
-    return super.description()
-  }
-  /**
-   * @summary The slogan of this site.
-   * @description The slogan is very brief, and is fixed for the entire series of conferences.
-   * @type {string}
-   */
-  get slogan() {
-    return this.description()
-  }
-
-  /**
-   * @summary The url of this site’s logo.
-   * @type {string} url of the logo
-   */
-  get logo() {
-    return this._DATA.image || ''
-  }
 
   /**
    * @summary The colors for this site: a CSS object containg custom properties with color string values.
@@ -186,7 +159,7 @@ class ConfSite extends Page {
    * @returns {Array<!Object>} all this site’s social media networks
    */
   getSocialAll() {
-    return (this._DATA.sameAs || []).map((url) => url)
+    return (this._DATA.brand.sameAs || []).map((url) => url)
   }
 
 
@@ -269,7 +242,7 @@ class ConfSite extends Page {
        * @returns {string} HTML output
        */
       .addDisplay(function siteTitle() {
-        return new xjs.DocumentFragment(xSitetitle.render({...this._DATA, logo: this._DATA.image})).innerHTML()
+        return new xjs.DocumentFragment(xSitetitle.render(this._DATA)).innerHTML()
       })
   }
 

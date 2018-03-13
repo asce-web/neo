@@ -1,12 +1,12 @@
 {
   "@context": "http://schema.org/",
   "@type": "Product",
-  "additionalType": "http://schema.org/WebSite",
+  "additionalType": "http://schema.org/WebPage",
   "name"       : "An ASCE Event",
   "url"        : "/sites/asce-event.org/",
   "description": "Optional Brand Slogan",
   "keywords"   : ["ASCE", "civil engineering", "convention"],
-  "image"      : "./files/site-logo-white.png",
+  "logo"       : "./files/site-logo-white.png",
   "color"      : ["#3fae2a", "#00a1e1"],
   "brand"      : {
     "@type": "NGO",
