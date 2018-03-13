@@ -1,5 +1,5 @@
 const xjs = require('extrajs-dom')
-const View    = require('extrajs-view')
+
 const Organization = require('./Organization.class.js')
 
 
@@ -33,23 +33,6 @@ class Supporter extends Organization {
    */
   get level() {
     return this._DATA.$level || ''
-  }
-
-
-  /**
-   * @summary Render this supporter in HTML.
-   * @see Supporter.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `Supporter#view()` - (default) SupporterBlock component
-     * @namespace Supporter.VIEW
-     * @type {View}
-     */
-    return new View(null, this)
   }
 }
 

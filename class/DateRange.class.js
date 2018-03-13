@@ -2,7 +2,6 @@ const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
-const View    = require('extrajs-view')
 
 
 /**
@@ -70,24 +69,6 @@ class DateRange {
    */
   get isStarred() {
     return this._DATA.$starred || false
-  }
-
-
-  /**
-   * @summary Render this date range in HTML.
-   * @see DateRange.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `DateRange#view.dateBlock()` - DateBlock Component, as an important date
-     * - `DateRange#view.timeBlock()` - TimeBlock Component, as a session
-     * @namespace DateRange.VIEW
-     * @type {View}
-     */
-    return new View(null, this)
   }
 }
 

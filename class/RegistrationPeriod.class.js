@@ -2,7 +2,6 @@ const xjs     = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
-const View    = require('extrajs-view')
 
 const Util    = require('./Util.class.js')
 
@@ -63,23 +62,6 @@ class RegistrationPeriod {
     // REVIEW: if icons are the same suite-wide, this can be removed.
     let icon = Util.ICON_DATA.find((item) => item.content===this._DATA.$icon)
     return (icon) ? Util.iconToString(icon, fallback) : ''
-  }
-
-
-  /**
-   * @summary Render this registration period in HTML.
-   * @see RegistrationPeriod.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `RegistrationPeriod#view.pass()` - Pass component - Pass__Period subcomponent
-     * @namespace RegistrationPeriod.VIEW
-     * @type {View}
-     */
-    return new View(null, this)
   }
 }
 

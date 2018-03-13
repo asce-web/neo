@@ -1,5 +1,4 @@
 const xjs = require('extrajs-dom')
-const View    = require('extrajs-view')
 
 const Util    = require('./Util.class.js')
 
@@ -69,23 +68,6 @@ class Pass {
 
 
   /**
-   * @summary Render this pass in HTML.
-   * @see Pass.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `Pass#view.pass()` - Pass component
-     * @namespace Pass.VIEW
-     * @type {View}
-     */
-    return new View(null, this)
-  }
-
-
-  /**
    * @summary Options for formatting pass prices.
    * @type {Intl.NumberFormat}
    */
@@ -124,24 +106,6 @@ Pass.AttendeeType = class AttendeeType {
    */
   get name() {
     return this._DATA.name
-  }
-
-
-  /**
-   * @summary Render this attendee type in HTML.
-   * @see Pass.AttendeeType.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `AttendeeType#view()`      - default display
-     * - `AttendeeType#view.pass()` - Pass__Period subcomponent
-     * @namespace Pass.AttendeeType.VIEW
-     * @type {View}
-     */
-    return new View(null, this)
   }
 }
 
