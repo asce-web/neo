@@ -17,31 +17,31 @@ const xjs = {
 function xRegistrationLegend_renderer(frag, data) {
   let [fragment, dataset] = [frag, data] // REVIEW variable naming
   new xjs.HTMLUListElement(fragment.querySelector('ul')).populate(dataset, function (frag, data) {
-    // REVIEW-INDENTATION
-  let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
-  let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
+    let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
+    let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
-  frag.querySelector('i').textContent = data.$icon
-  frag.querySelector('b').textContent = data.name
-  new xjs.HTMLTimeElement(frag.querySelectorAll('time')[0])
-    .dateTime((date_start || new Date()).toISOString())
-    .textContent(xjs.Date.format(date_start || new Date(), 'M j'))
-  new xjs.HTMLTimeElement(frag.querySelectorAll('time')[1])
-    .dateTime((date_end || new Date()).toISOString())
-    .textContent(xjs.Date.format(date_end || new Date(), 'M j'))
+    frag.querySelector('i').textContent = data.$icon
+    frag.querySelector('b').textContent = data.name
 
-  if (!date_start) {
-    frag.querySelector('slot[name="colon"]').textContent = ' ends '
-    frag.querySelectorAll('time')[0].remove()
-    frag.querySelector('slot[name="dash"]').remove()
-  }
-  if (!date_end) {
-    frag.querySelector('slot[name="colon"]').textContent = ' begins '
-    frag.querySelectorAll('time')[1].remove()
-    frag.querySelector('slot[name="dash"]').remove()
-  }
+    new xjs.HTMLTimeElement(frag.querySelectorAll('time')[0])
+      .dateTime((date_start || new Date()).toISOString())
+      .textContent(xjs.Date.format(date_start || new Date(), 'M j'))
+    new xjs.HTMLTimeElement(frag.querySelectorAll('time')[1])
+      .dateTime((date_end || new Date()).toISOString())
+      .textContent(xjs.Date.format(date_end || new Date(), 'M j'))
 
-  new xjs.HTMLElement(frag.querySelector('small')).trimInner()
+    if (!date_start) {
+      frag.querySelector('slot[name="colon"]').textContent = ' ends '
+      frag.querySelectorAll('time')[0].remove()
+      frag.querySelector('slot[name="dash"]').remove()
+    }
+    if (!date_end) {
+      frag.querySelector('slot[name="colon"]').textContent = ' begins '
+      frag.querySelectorAll('time')[1].remove()
+      frag.querySelector('slot[name="dash"]').remove()
+    }
+
+    new xjs.HTMLElement(frag.querySelector('small')).trimInner()
   })
 }
 
