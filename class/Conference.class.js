@@ -424,12 +424,27 @@ class Conference {
           <template>
             <ol class="o-List">
               <template>
-                <li class="o-List__Item">{{ xSupporterLevel }}</li>
+                <li class="o-List__Item">
+                  <link rel="import" href="../tpl/x-supporter-level.tpl.html"/>
+                </li>
               </template>
             </ol>
           </template>
         `).querySelector('template')
         const xLevelList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
+          ;(function () {
+            let item = frag.querySelector('template').content.querySelector('li')
+            let link = item.querySelector('link[rel="import"]')
+            try {
+              let template = link.import.querySelector('template').cloneNode(true)
+              new xjs.HTMLLIElement(item).empty().append(template)
+            } catch (e) {
+              const fs = require('fs')
+              const path = require('path')
+              let contents = fs.readFileSync(path.resolve(__dirname, link.href), 'utf8')
+              new xjs.HTMLLIElement(item).empty().append(jsdom.JSDOM.fragment(contents))
+            }
+          })()
           new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.map((item, index) => ({ item, index })), function (f, d) {
             new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
               xSupporterLevel.render({
