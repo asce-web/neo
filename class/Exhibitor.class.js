@@ -81,7 +81,7 @@ class Exhibitor extends Organization {
      * @returns {string} HTML output
      */
     return new View(function () {
-      return new xjs.DocumentFragment(xExhibitor.render({...this._DATA, logo: this._DATA.image})).innerHTML()
+      return new xjs.DocumentFragment(xExhibitor.render(this._DATA)).innerHTML()
     }, this)
   }
 }
