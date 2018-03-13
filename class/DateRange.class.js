@@ -30,46 +30,6 @@ class DateRange {
      */
     this._DATA = jsondata
   }
-
-  /**
-   * @summary The name of this date range.
-   * @type {string}
-   */
-  get name() {
-    return this._DATA.name
-  }
-
-  /**
-   * @summary The start date value of this date range.
-   * @type {Date}
-   */
-  get start() {
-    return new Date(this._DATA.startDate || this._DATA.startTime || null)
-  }
-
-  /**
-   * @summary The end date value of this date range.
-   * @type {?Date}
-   */
-  get end() {
-    return (this._DATA.endDate || this._DATA.endTime) ? new Date(this._DATA.endDate || this._DATA.endTime) : null
-  }
-
-  /**
-   * @summary The url of this date range.
-   * @type {string}
-   */
-  get url() {
-    return this._DATA.url
-  }
-
-  /**
-   * @summary Whether this date range is starred.
-   * @type {boolean}
-   */
-  get isStarred() {
-    return this._DATA.$starred || false
-  }
 }
 
 module.exports = DateRange
