@@ -10,7 +10,6 @@ const DateRange          = require('./DateRange.class.js')
 const PostalAddress      = require('./PostalAddress.class.js')
 const Venue              = require('./Venue.class.js')
 const Person             = require('./Person.class.js')
-const Supporter          = require('./Supporter.class.js')
 const Exhibitor          = require('./Exhibitor.class.js')
 
 const xHero           = require('../tpl/x-hero.tpl.js')
@@ -226,25 +225,6 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve a supporter of this conference.
-   * @param   {string} name the name of the supporter
-   * @returns {?Supporter} the specified supporter
-   */
-  getSupporter(name) {
-    let supporter = (this._DATA.sponsor || []).find(($org) => $org.name===name)
-    return (supporter) ? new Supporter(supporter) : null
-    // return this.getSupportersAll().find(($supporter) => $supporter.name === name) || null // TODO use this pattern instead
-  }
-  /**
-   * @summary Retrieve all supporters of this conference.
-   * @todo TODO turn this into a getter
-   * @returns {Array<Supporter>} a shallow array of all supporters of this conference
-   */
-  getSupportersAll() {
-    return (this._DATA.sponsor || []).map(($org) => new Supporter($org))
-  }
-
-  /**
    * @summary Retrieve an exhibitor of this conference.
    * @param   {string} name the name of the exhibitor
    * @returns {?Exhibitor} the specified exhibitor
@@ -396,12 +376,12 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function supporterLevels(queue, small = false) {
-        const supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         return xjs.DocumentFragment.concat(...supporterlevels.map((level, index) =>
           xSupporterLevel.render({
             name: level,
             classname: (small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
-            supporters: this.getSupportersAll().filter((supporter) => supporter.level===level),
+            supporters: (this._DATA.sponsor || []).filter((supporter) => supporter.$level === level),
           })
         ))
       })

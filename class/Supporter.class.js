@@ -1,5 +1,3 @@
-const xjs = require('extrajs-dom')
-
 const Organization = require('./Organization.class.js')
 
 
@@ -25,14 +23,6 @@ class Supporter extends Organization {
      * @type {!Object}
      */
     this._DATA = jsondata
-  }
-
-  /**
-   * @summary The supporter level in which this supporter belongs.
-   * @type {string}
-   */
-  get level() {
-    return this._DATA.$level || ''
   }
 }
 
