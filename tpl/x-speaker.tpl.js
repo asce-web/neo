@@ -10,19 +10,19 @@ const xPersonFullname = require('./x-person-fullname.tpl.js')
  * @summary An `<article.c-Speaker>` component marking up a person’s speaker information.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {sdo.Person} data a JSON object representing a Person
- * @param {string} jsondata.identifier a unique identifier of the person
- * @param {string}  data.givenName the person’s first name
- * @param {string}  data.familyName the person’s last name
- * @param {string=} data.additionalName  the person’s middle name or initial
- * @param {string=} data.honorificPrefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
- * @param {string=} data.honorificSuffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
- * @param {string=} data.image the url to a headshot image of the person
- * @param {string=} data.url the url to the person’s homepage or website
- * @param {string=} data.email the person’s email address
- * @param {string=} data.telephone the person’s telephone number
- * @param {string=} data.jobTitle the person’s job title
- * @param {sdo.Organization} data.affiliation an organization that the person is affiliated with
- * @param {string=}          data.affiliation.name an organization that the person is affiliated with
+ * @param {string}  data.identifier      http://schema.org/identifier
+ * @param {string}  data.givenName       http://schema.org/givenName
+ * @param {string}  data.familyName      http://schema.org/familyName
+ * @param {string=} data.additionalName  http://schema.org/additionalName
+ * @param {string=} data.honorificPrefix http://schema.org/honorificPrefix
+ * @param {string=} data.honorificSuffix http://schema.org/honorificSuffix
+ * @param {string=} data.image           http://schema.org/image
+ * @param {string=} data.url             http://schema.org/url
+ * @param {string=} data.email           http://schema.org/email
+ * @param {string=} data.telephone       http://schema.org/telephone
+ * @param {string=} data.jobTitle        http://schema.org/jobTitle
+ * @param {sdo.Organization} data.affiliation http://schema.org/affiliation
+ * @param {string=}          data.affiliation.name
  * @param {{Array<!Object>}=} data.sameAs a list of social media links for the person
  * @param {string}            data.sameAs.name the name or identifier of the social media service (used for icons)
  * @param {string}            data.sameAs.url the URL of the person’s social media profile or page
