@@ -21,6 +21,7 @@ function xProgram_renderer(frag, data) {
   let container = frag.querySelector('[role="tablist"]')
   const xProgramPanel = new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (f, d) {
     f.querySelector('[role="tabpanel"]' ).id          = `${data.id}-panel${d.index}`
+    f.querySelector('time.c-ProgramHn'  ).dateTime    = d.date.toISOString()
     f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
     f.querySelector('slot[name="date"]' ).textContent = xjs.Date.format(d.date, 'M j')
     new xjs.HTMLElement(f.querySelector('slot[name="panel"]')).empty()
