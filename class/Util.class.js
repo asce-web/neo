@@ -1,5 +1,6 @@
 const jsdom = require('jsdom')
-const xjs     = {
+
+const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
@@ -10,11 +11,12 @@ STATE_DATA.push(...[
 ])
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
-const xDateblock = require('../tpl/x-dateblock.tpl.js')
-const xTimeblock = require('../tpl/x-timeblock.tpl.js')
-const xHighlightButtons = require('../tpl/x-highlight-buttons.tpl.js')
+const xHighlightButtons   = require('../tpl/x-highlight-buttons.tpl.js')
+const xDateblock          = require('../tpl/x-dateblock.tpl.js')
+const xTimeblock          = require('../tpl/x-timeblock.tpl.js')
+const xPass               = require('../tpl/x-pass.tpl.js')
 const xRegistrationLegend = require('../tpl/x-registration-legend.tpl.js')
-const xDirectory = require('../tpl/x-directory.tpl.js')
+const xDirectory          = require('../tpl/x-directory.tpl.js')
 
 
 /**
@@ -273,7 +275,7 @@ class Util {
         const pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         return ElemName('ul').class('o-List o-Flex o-ListStacked').append(...this
           .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
-          .map((pass) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').innerHTML(pass.view.pass($conference)))
+          .map((pass) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').append(xPass.render({ ...pass._DATA, $conference })))
         ).outerHTML()
         return `
 <ul class="o-List o-Flex o-ListStacked">${
@@ -294,10 +296,11 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker(queue = null) {
+        const xSpeaker = require('../tpl/x-speaker.tpl.js')
         const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         return ElemName('ul').class('o-List o-Flex o-ListStacked').append(...this
           .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
-          .map((person) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').innerHTML(person.view.speaker())
+          .map((person) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').append(xSpeaker.render(person._DATA))
         )).outerHTML()
         return `
 <ul class="o-List o-Flex o-ListStacked">${

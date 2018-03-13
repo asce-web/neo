@@ -4,12 +4,10 @@ const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
-
 const View    = require('extrajs-view')
 
 const Util    = require('./Util.class.js')
 const xPersonFullname = require('../tpl/x-person-fullname.tpl.js')
-const xSpeaker        = require('../tpl/x-speaker.tpl.js')
 
 
 /**
@@ -201,15 +199,6 @@ class Person {
         if (this.jobTitle ) returned = `${returned}, <slot itemprop="jobTitle">${this.jobTitle}</slot>`
         if (this.telephone) returned = `${returned} | <a href="tel:${Util.toURL(this.telephone)}" itemprop="telephone">${this.telephone}</a>`
         return returned
-      })
-      /**
-       * Return an `<article.c-Speaker>` component marking up this person’s info.
-       * @summary Call `Person#view.speaker()` to render this display.
-       * @function Person.VIEW.speaker
-       * @returns {string} HTML output
-       */
-      .addDisplay(function speaker() {
-        return new xjs.DocumentFragment(xSpeaker.render(this._DATA)).innerHTML()
       })
   }
 }

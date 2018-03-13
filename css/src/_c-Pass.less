@@ -8,14 +8,14 @@
 //
 // A listing of prices for one Pass Type (e.g. Student, Speaker, Standard, etc.).
 //
-// Pug:
+// DOM:
 // <pre>
-// -
+// const xPass = require('/tpl/x-pass.tpl.js')
 //   let pass = new Pass({
 //     "name": "Speaker Pass",
 //     "description": "Speakers and Presenters",
 //     "$fineprint" : "Side note or fine print goes here. Only plain text is allowed.",
-//     "$attendeeTypes": ["Member", "Non-Member"],
+//     "$attendeeTypes": ["Member", "Non-Member"]
 //   })
 //   let conference = new Conference({
 //     "@context" : "http://schema.org/",
@@ -23,11 +23,11 @@
 //     "offers"   : [
 //       { "@type": "AggregateOffer", "name": "Early Bird" },
 //       { "@type": "AggregateOffer", "name": "Advance" },
-//       { "@type": "AggregateOffer", "name": "Onsite" },
+//       { "@type": "AggregateOffer", "name": "Onsite" }
 //     ],
-//     "$currentRegistrationPeriod": "Advance",
+//     "$currentRegistrationPeriod": "Advance"
 //   })
-// != pass.view.pass(conference)
+// document.append(xPass.render({ ...pass._DATA, $conference: conference }))
 // </pre>
 //
 // <header><dl>

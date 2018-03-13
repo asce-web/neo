@@ -1,10 +1,6 @@
 const xjs = require('extrajs-dom')
-const View    = require('extrajs-view')
 
-const Util    = require('./Util.class.js')
-
-const xPass = require('../tpl/x-pass.tpl.js')
-const xAttendeetype = require('../tpl/x-attendeetype.tpl.js')
+const Util = require('./Util.class.js')
 
 
 /**
@@ -72,33 +68,6 @@ class Pass {
 
 
   /**
-   * @summary Render this pass in HTML.
-   * @see Pass.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `Pass#view.pass()` - Pass component
-     * @namespace Pass.VIEW
-     * @type {View}
-     */
-    return new View(null, this)
-      /**
-       * Return an `<article.c-Pass>` component marking up this pass’s info.
-       * @summary Call `Pass#view.pass()` to render this display.
-       * @function Pass.VIEW.pass
-       * @param   {Conference} $conference the conference to which this pass belongs
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pass($conference) {
-        return new xjs.DocumentFragment(xPass.render({ ...this._DATA, $conference })).innerHTML()
-      })
-  }
-
-
-  /**
    * @summary Options for formatting pass prices.
    * @type {Intl.NumberFormat}
    */
@@ -137,34 +106,6 @@ Pass.AttendeeType = class AttendeeType {
    */
   get name() {
     return this._DATA.name
-  }
-
-
-  /**
-   * @summary Render this attendee type in HTML.
-   * @see Pass.AttendeeType.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `AttendeeType#view()`      - default display
-     * - `AttendeeType#view.pass()` - Pass__Period subcomponent
-     * @namespace Pass.AttendeeType.VIEW
-     * @type {View}
-     */
-    return new View(null, this)
-      /**
-       * Return an <article.c-Pass> component marking up this pass’s info.
-       * @summary Call `AttendeeType#view.pass()` to render this display.
-       * @function Pass.AttendeeType.VIEW.pass
-       * @param   {number} price the price for this attendee type given a certain pass and registration period
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pass(price) {
-        return new xjs.DocumentFragment(xAttendeetype.render({name: this._DATA.name, price})).innerHTML()
-      })
   }
 }
 

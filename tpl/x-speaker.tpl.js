@@ -37,19 +37,20 @@ function xSpeaker_renderer(frag, data) {
 
   new xjs.HTMLElement(frag.querySelector('[itemprop="name"]')).empty().append(xPersonFullname.render(data))
 
-  let container = frag.querySelector('.c-SocialList')
-  let itemdata = [
+  new xjs.HTMLUListElement(frag.querySelector('.c-SocialList')).populate([
     { prop: 'url'      , icon: 'explore', url: data.url                           , text: 'visit homepage' },
     { prop: 'email'    , icon: 'email'  , url: `mailto:${data.email}`             , text: 'send email'     },
     { prop: 'telephone', icon: 'phone'  , url: `tel:${Util.toURL(data.telephone)}`, text: 'call'           },
-  ]
-  let xSocialListItem = new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (f, d) {
+  ], function (f, d) {
+    if (!data[d.prop]) {
+      new xjs.DocumentFragment(f).empty()
+    } else {
     f.querySelector('slot').textContent = d.text
     new xjs.HTMLAnchorElement(f.querySelector('a'))
       .replaceClassString('{{ icon }}', d.icon)
       .attr({ href: d.url, itemprop: d.prop })
+    }
   })
-  container.append(...itemdata.map((datum) => (!data[datum.prop]) ? null : xSocialListItem.render(datum)))
 }
 
 module.exports = xjs.HTMLTemplateElement

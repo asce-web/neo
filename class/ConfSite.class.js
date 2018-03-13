@@ -1,20 +1,19 @@
+const path = require('path')
+
 const Ajv      = require('ajv')
 
-const xjs = require('extrajs-dom')
+const xjs      = require('extrajs-dom')
 const Page     = require('sitepage').Page
 const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
-
 const {META_SCHEMATA, SCHEMATA} = require('schemaorg-jsd')
+const requireOther = require('schemaorg-jsd/lib/requireOther.js')
 
 const Conference = require('./Conference.class.js')
-const ConfPage = require('./ConfPage.class.js')
+const ConfPage   = require('./ConfPage.class.js')
 
 const xSitetitle = require('../tpl/x-sitetitle.tpl.js')
 
-
-const path = require('path')
-const requireOther = require('schemaorg-jsd/lib/requireOther.js')
 const NEO_SCHEMA = requireOther(path.join(__dirname, '../neo.jsd'))
 
 

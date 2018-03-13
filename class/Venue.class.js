@@ -4,6 +4,7 @@ const Place = require('./Place.class.js')
 
 const xVenue = require('../tpl/x-venue.tpl.js')
 
+
 /**
  * A building location and address related to the conference.
  * Mostly used for hotels & conference centers.

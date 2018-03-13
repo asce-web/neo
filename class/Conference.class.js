@@ -1,25 +1,23 @@
-const xjs     = {
+const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
-const View    = require('extrajs-view')
+const View = require('extrajs-view')
 
-const Util    = require('./Util.class.js')
 const RegistrationPeriod = require('./RegistrationPeriod.class.js')
-const Pass = require('./Pass.class.js')
-const DateRange = require('./DateRange.class.js')
-const PostalAddress = require('./PostalAddress.class.js')
-const Venue = require('./Venue.class.js')
-const Person = require('./Person.class.js')
-const Supporter = require('./Supporter.class.js')
-const Exhibitor = require('./Exhibitor.class.js')
+const Pass               = require('./Pass.class.js')
+const DateRange          = require('./DateRange.class.js')
+const PostalAddress      = require('./PostalAddress.class.js')
+const Venue              = require('./Venue.class.js')
+const Person             = require('./Person.class.js')
+const Supporter          = require('./Supporter.class.js')
+const Exhibitor          = require('./Exhibitor.class.js')
 
-const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
-
-const xHero = require('../tpl/x-hero.tpl.js')
-const xOtheryear = require('../tpl/x-otheryear.tpl.js')
-const xProgram = require('../tpl/x-program.tpl.js')
+const xHero           = require('../tpl/x-hero.tpl.js')
+const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
+const xProgram        = require('../tpl/x-program.tpl.js')
 const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
+
 
 /**
  * A conference event.
