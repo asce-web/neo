@@ -208,14 +208,14 @@ class Util {
       /**
        * Return a table containing a `<tbody.c-TimeBlock>` component, containing
        * rows of {@link DateRange.VIEW.timeBlock|DateRange#view.timeBlock()} displays.
-       * Parameter `data` should be of type `Array<sdo.Event>`, e.g., a list of sessions.
+       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of sessions.
        * @summary Call `Util.view(data).timeBlock()` to render this display.
        * @function Util.VIEW.timeBlock
        * @returns {string} HTML output
        */
       .addDisplay(function timeBlock() {
         return new xjs.DocumentFragment(
-          xTimeblock.render(this.map((evnt, index) => ({ ...evnt, $is_last: index===this.length-1 })))
+          xTimeblock.render(this.map(($dateRange) => ($dateRange._DATA)))
         ).innerHTML()
       })
       /**
