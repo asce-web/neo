@@ -2,16 +2,12 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://conferences.style.asce.org/neo.jsd",
   "title": "Neo Theme",
-  "definitions": {
-    "Product": {
-      "$id": "#Product",
-      "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Thing.jsd" }]
-    }
-  },
   "allOf": [
-    { "$ref": "#Product" },
+    { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Product.jsd" },
+    { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/WebPage.jsd" },
     {
       "additionalProperties": false,
+      "$comment": "This schema is for development only. TODO Remove when ready for production.",
       "properties": {
         "@context"    : true,
         "@type"       : true,
