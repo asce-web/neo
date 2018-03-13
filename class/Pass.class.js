@@ -1,4 +1,7 @@
-const xjs = require('extrajs-dom')
+const xjs = {
+  ...require('extrajs'),
+  ...require('extrajs-dom'),
+}
 
 const Util = require('./Util.class.js')
 
@@ -47,7 +50,7 @@ class Pass {
    * @type {string}
    */
   get fineprint() {
-    return Util.stringify(this._DATA.$fineprint)
+    return xjs.String.stringify(this._DATA.$fineprint)
   }
 
   /**

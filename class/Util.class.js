@@ -26,36 +26,6 @@ const xDirectory          = require('../tpl/x-directory.tpl.js')
 class Util {
   /** @private */ constructor() {}
 
-  // TEMP TODO delete after extrajs-dom@3.3.0
-  static documentFragment(...contents) {
-    if (xjs.Object.typeOf(contents[0]) === 'array') return Util.documentFragment(...contents[0])
-    return contents.map((c) =>
-      (c instanceof Element) ? c.view.html() : c
-    ).join('')
-  }
-
-  /**
-   * @summary Convert a thing into a string.
-   * @description If the argument is an array, it is joined.
-   * Useful for JSON objects when the value could be a single string or an array of strings.
-   * @todo TODO move to `xjs.String`.
-   * @param   {*} thing anything to convert
-   * @param   {boolean=} truthy if `true`, the values `null` and `undefined` are converted to
-   *                            the strings `'null'` and `'undefined'` respectively;
-   *                            else, they are converted to the empty string
-   * @returns {string} a string version of the argument
-   */
-  static stringify(thing, truthy = false) {
-    const returned = {
-      'array'    : function (arg) { return arg.join('') },
-      'object'   : function (arg) { return JSON.stringify(arg) },
-      'string'   : function (arg) { return arg },
-      'null'     : function (arg) { return (truthy) ? 'null'      : '' },
-      'undefined': function (arg) { return (truthy) ? 'undefined' : '' },
-      default(arg) { return arg.toString() },
-    }
-    return (returned[xjs.Object.typeOf(thing)] || returned.default).call(null, thing)
-  }
 
   /**
    * NOTE: TYPE DEFINITION
@@ -220,7 +190,7 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return new xjs.DocumentFragment(xHighlightButtons.render({links: this, buttonclasses})).innerHTML()
+        return new xjs.DocumentFragment(xHighlightButtons.render({ links: this, buttonclasses })).innerHTML()
       })
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
@@ -362,17 +332,6 @@ class Util {
    */
   static toURL(str) {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
-  }
-
-  /**
-   * @summary Remove an item from an array.
-   * @description This method is impure: it modifies the given argument.
-   * @param  {Array} arr the array to modify
-   * @param  {unknown} item  the item to remove from the array
-   */
-  static spliceFromArray(arr, item) {
-    var index = arr.indexOf(item)
-    if (index >= 0) arr.splice(index, 1)
   }
 
   /**
