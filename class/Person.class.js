@@ -4,7 +4,6 @@ const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
-
 const View    = require('extrajs-view')
 
 const Util    = require('./Util.class.js')

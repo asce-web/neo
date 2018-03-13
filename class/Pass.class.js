@@ -1,6 +1,6 @@
 const xjs = require('extrajs-dom')
 
-const Util    = require('./Util.class.js')
+const Util = require('./Util.class.js')
 
 
 /**

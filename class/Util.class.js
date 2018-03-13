@@ -1,5 +1,6 @@
 const jsdom = require('jsdom')
-const xjs     = {
+
+const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
@@ -10,12 +11,12 @@ STATE_DATA.push(...[
 ])
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
-const xDateblock = require('../tpl/x-dateblock.tpl.js')
-const xTimeblock = require('../tpl/x-timeblock.tpl.js')
-const xHighlightButtons = require('../tpl/x-highlight-buttons.tpl.js')
-const xPass = require('../tpl/x-pass.tpl.js')
+const xHighlightButtons   = require('../tpl/x-highlight-buttons.tpl.js')
+const xDateblock          = require('../tpl/x-dateblock.tpl.js')
+const xTimeblock          = require('../tpl/x-timeblock.tpl.js')
+const xPass               = require('../tpl/x-pass.tpl.js')
 const xRegistrationLegend = require('../tpl/x-registration-legend.tpl.js')
-const xDirectory = require('../tpl/x-directory.tpl.js')
+const xDirectory          = require('../tpl/x-directory.tpl.js')
 
 
 /**

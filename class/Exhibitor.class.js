@@ -5,6 +5,7 @@ const Organization = require('./Organization.class.js')
 
 const xExhibitor = require('../tpl/x-exhibitor.tpl.js')
 
+
 /**
  * An organization exhibiting at a conference or series of conferences.
  * @extends Organization

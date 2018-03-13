@@ -1,9 +1,10 @@
-const xjs     = {
+const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
 
-const Util    = require('./Util.class.js')
+const Util = require('./Util.class.js')
+
 
 /**
  * An interval of dates in which registration prices are set.
