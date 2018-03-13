@@ -19,7 +19,7 @@ const xjs = {
 function xDateblock_renderer(frag, data) {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(data, function (f, d) {
     let date_start = new Date(d.startTime)
-    let date_end   = new Date(d.endTime  || d.startTime) // TODO make this required!
+    let date_end   = new Date(d.endTime  )
     f.querySelectorAll('[itemprop~="startTime"]').forEach(function (time) {
       new xjs.HTMLTimeElement(time)
         .dateTime(date_start)

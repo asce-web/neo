@@ -16,6 +16,7 @@ const Exhibitor          = require('./Exhibitor.class.js')
 const xHero           = require('../tpl/x-hero.tpl.js')
 const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
 const xProgram        = require('../tpl/x-program.tpl.js')
+const xDateblock      = require('../tpl/x-dateblock.tpl.js')
 const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
 
 
@@ -191,23 +192,6 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve a session of this conference.
-   * @param   {string} name the name of the session
-   * @returns {?DateRange} the specified session
-   */
-  getSession(name) {
-    let session = (this._DATA.subEvent || []).find(($event) => $event.name===name)
-    return (session) ? new DateRange(session) : null
-  }
-  /**
-   * @summary Retrieve all sessions of this conference.
-   * @returns {Array<DateRange>} a shallow array of all sessions of this conference
-   */
-  getSessionsAll() {
-    return (this._DATA.subEvent || []).map(($event) => new DateRange($event))
-  }
-
-  /**
    * @summary Retrieve a venue of this conference.
    * @param   {string} venue_label the label of the venue to access
    * @returns {?Venue} the specified venue
@@ -277,23 +261,6 @@ class Conference {
    */
   getExhibitorsAll() {
     return (this._DATA.$exhibitors || []).map(($org) => new Exhibitor($org))
-  }
-
-  /**
-   * @summary Retrieve an important date of this conference.
-   * @param   {string} name the name of the important date
-   * @returns {?DateRange} the specified important date
-   */
-  getImportantDate(name) {
-    let date = (this._DATA.potentialAction || []).find(($action) => $action.name===name)
-    return (date) ? new DateRange(date) : null
-  }
-  /**
-   * @summary Retrieve all important dates of this conference.
-   * @returns {Array<DateRange>} a shallow array of all important dates of this conference
-   */
-  getImportantDatesAll() {
-    return (this._DATA.potentialAction || []).map(($action) => new DateRange($action))
   }
 
   /**
@@ -390,7 +357,19 @@ class Conference {
         })).innerHTML()
       })
       /**
-       * Return a `<fieldset.o-Tablist>` Object marking up this conference’s program sessions.
+       * Return a `xDateblock` component marking up this conference’s important dates.
+       * @summary Call `Conference#view.importantDates()` to render this display.
+       * @function Conference.VIEW.importantDates
+       * @param   {boolean=} starred `true` if you want only starred dates to display
+       * @returns {string} HTML output
+       */
+      .addDisplay(function importantDates(starred = false) {
+        return new xjs.DocumentFragment(xDateblock.render(
+          (this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
+        )).innerHTML()
+      })
+      /**
+       * Return an `<.o-Tablist[role="tablist"]>` marking up this conference’s program sessions.
        * Each tab contains a Program Heading Component
        * and its panel contains a Time Block Component for that date.
        * @summary Call `Conference#view.program()` to render this display.
@@ -402,7 +381,7 @@ class Conference {
       .addDisplay(function program(id, starred = false) {
         return new xjs.DocumentFragment(xProgram.render({
           id,
-          sessions: this._DATA.subEvent.filter((s) => (starred) ? s.$starred : true),
+          sessions: (this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
           starred,
         })).innerHTML()
       })
