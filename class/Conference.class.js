@@ -10,13 +10,14 @@ const DateRange          = require('./DateRange.class.js')
 const PostalAddress      = require('./PostalAddress.class.js')
 const Venue              = require('./Venue.class.js')
 const Person             = require('./Person.class.js')
-const Exhibitor          = require('./Exhibitor.class.js')
 
+const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xHero           = require('../tpl/x-hero.tpl.js')
 const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
 const xProgram        = require('../tpl/x-program.tpl.js')
 const xDateblock      = require('../tpl/x-dateblock.tpl.js')
 const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
+const xExhibitor      = require('../tpl/x-exhibitor.tpl.js')
 
 
 /**
@@ -225,25 +226,6 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve an exhibitor of this conference.
-   * @param   {string} name the name of the exhibitor
-   * @returns {?Exhibitor} the specified exhibitor
-   */
-  getExhibitor(name) {
-    let exhibitor = (this._DATA.$exhibitors || []).find(($org) => $org.name===name)
-    return (exhibitor) ? new Exhibitor(exhibitor) : null
-    // return this.getExhibitorsAll().find(($exhibitor) => $exhibitor.name===name) || null // TODO use this pattern instead
-  }
-  /**
-   * @summary Retrieve all exhibitors of this conference.
-   * @todo TODO turn this into a getter
-   * @returns {Array<Exhibitor>} a shallow array of all exhibitors of this conference
-   */
-  getExhibitorsAll() {
-    return (this._DATA.$exhibitors || []).map(($org) => new Exhibitor($org))
-  }
-
-  /**
    * @summary Retrieve an organizer of this conference.
    * @param   {string} id the name of the organizer
    * @returns {?Person} the specified organizer
@@ -384,6 +366,17 @@ class Conference {
             supporters: (this._DATA.sponsor || []).filter((supporter) => supporter.$level === level),
           })
         ))
+      })
+      /**
+       * Return a list of `<div>` elements marking up this conference’s exhibitors.
+       * @summary Call `Conference#view.exhibitorList()` to render this display.
+       * @function Conference.VIEW.exhibitorList
+       * @returns {string} HTML output
+       */
+      .addDisplay(function exhibitorList() {
+        return ElemName('ul').append(
+          ...(this._DATA.$exhibitors || []).map((org) => ElemName('li').append(xExhibitor.render(org)))
+        ).outerHTML()
       })
   }
 }

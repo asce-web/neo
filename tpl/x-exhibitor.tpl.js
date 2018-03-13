@@ -5,18 +5,19 @@ const xjs = require('extrajs-dom')
 /**
  * @summary Markup for an exhibitor logo.
  * @param {DocumentFragment} frag the template content with which to render
- * @param {sdo.Organization} data a JSON object representing the exhibiting organization
- * @param {string} data.name the name of the organization
- * @param {string} data.url the url of the organization
- * @param {string} data.logo the logo url of the organization
- * @param {number} data.$booth the booth number of the exhibitor
+ * @param {sdo.Organization} data http://schema.org/Organization
+ * @param {string}  data.name http://schema.org/name
+ * @param {string}  data.url  http://schema.org/url
+ * @param {string}  data.logo http://schema.org/logo
+ * @param {string=} data.description http://schema.org/description
+ * @param {number}  data.$booth the booth number of the exhibitor
  * @param {boolean=} data.$isSponsor whether the exhibitor also happens to be a sponsor
  */
 function xExhibitor_renderer(frag, data) {
-  frag.querySelector('[itemprop="url"]' ).href        = data.url
-  frag.querySelector('[itemprop="name"]').textContent = data.name
-  frag.querySelector('[name="booth"]'   ).textContent = data.$booth
-  frag.querySelector('[itemprop="logo"]').src         = data.logo
+  frag.querySelector('a[itemprop="url"]'   ).href        = data.url
+  frag.querySelector('[itemprop="name"]'   ).textContent = data.name
+  frag.querySelector('slot[name="booth"]'  ).textContent = data.$booth
+  frag.querySelector('img[itemprop="logo"]').src         = data.logo
   new xjs.HTMLAnchorElement(frag.querySelector('a'))
     .addClass((data.$isSponsor) ? '-fw-b' : '')
     .trimInner()
