@@ -295,10 +295,11 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker(queue = null) {
+        const xSpeaker = require('../tpl/x-speaker.tpl.js')
         const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         return ElemName('ul').class('o-List o-Flex o-ListStacked').append(...this
           .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
-          .map((person) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').innerHTML(person.view.speaker())
+          .map((person) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').append(xSpeaker.render(person._DATA))
         )).outerHTML()
         return `
 <ul class="o-List o-Flex o-ListStacked">${
