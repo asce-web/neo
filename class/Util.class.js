@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 const jsdom = require('jsdom')
 
 const xjs = {
@@ -383,6 +386,26 @@ class Util {
    */
   static iconToString(icon, fb = false) {
     return (fb) ? icon.fallback : icon.content
+  }
+
+  /**
+   * @todo TODO move this as an instance method of `xjs.HTMLTemplateElement`, replacing `xtemp` param with `this`
+   * @private
+   */
+  static importLinks(xfrag, relativepath) {
+    xfrag.node.querySelectorAll('link[rel="import"][data-import]').forEach(function (link) {
+      const import_switch = {
+        'document': () => ('import' in link) ? link.import.cloneNode(true)                                   : jsdom.JSDOM.fragment(fs.readFileSync(path.resolve(relativepath, link.href), 'utf8')),
+        'template': () => ('import' in link) ? link.import.querySelector('template').content.cloneNode(true) : xjs.HTMLTemplateElement.fromFileSync(path.resolve(relativepath, link.href)).content(),
+        default() { return null },
+      }
+      let imported = (import_switch[link.getAttribute('data-import')] || import_switch.default).call(null)
+      if (imported && link.parentElement) {
+        link.parentElement.append(imported)
+        link.remove()
+      }
+    })
+    return xfrag
   }
 }
 

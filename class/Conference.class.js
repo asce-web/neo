@@ -418,6 +418,7 @@ class Conference {
        */
       .addDisplay(function supporterLevels(queue, small = false) {
         const jsdom = require('jsdom')
+        const Util = require('./Util.class.js')
         let supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         const self = this
         const template = jsdom.JSDOM.fragment(`
@@ -425,26 +426,14 @@ class Conference {
             <ol class="o-List">
               <template>
                 <li class="o-List__Item">
-                  <link rel="import" href="../tpl/x-supporter-level.tpl.html"/>
+                  <link rel="import" data-import="template" href="../tpl/x-supporter-level.tpl.html"/>
                 </li>
               </template>
             </ol>
           </template>
         `).querySelector('template')
+        Util.importLinks(new xjs.DocumentFragment(template.content.querySelector('ol > template').content), __dirname)
         const xLevelList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
-          ;(function () {
-            let item = frag.querySelector('template').content.querySelector('li')
-            let link = item.querySelector('link[rel="import"]')
-            try {
-              let template = link.import.querySelector('template').cloneNode(true)
-              new xjs.HTMLLIElement(item).empty().append(template)
-            } catch (e) {
-              const fs = require('fs')
-              const path = require('path')
-              let contents = fs.readFileSync(path.resolve(__dirname, link.href), 'utf8')
-              new xjs.HTMLLIElement(item).empty().append(jsdom.JSDOM.fragment(contents))
-            }
-          })()
           new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.map((item, index) => ({ item, index })), function (f, d) {
             new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
               xSupporterLevel.render({
