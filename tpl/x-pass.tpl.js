@@ -38,6 +38,7 @@ function xPass_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-pass.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
   .setRenderer(xPass_renderer)
-
-Util.importLinks(new xjs.DocumentFragment(module.exports.content()), __dirname)

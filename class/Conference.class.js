@@ -420,7 +420,6 @@ class Conference {
         const jsdom = require('jsdom')
         const Util = require('./Util.class.js')
         let supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        const self = this
         const template = jsdom.JSDOM.fragment(`
           <template>
             <ol class="o-List">
@@ -432,19 +431,19 @@ class Conference {
             </ol>
           </template>
         `).querySelector('template')
-        Util.importLinks(new xjs.DocumentFragment(template.content.querySelector('ol > template').content), __dirname)
+        new xjs.DocumentFragment(template.content.querySelector('ol > template').content).importLinks(__dirname)
         const xLevelList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
           new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.map((item, index) => ({ item, index })), function (f, d) {
             new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
               xSupporterLevel.render({
                 name: d.item,
                 classname: (small) ? 'c-SupporterBlock--sml' : (d.index + 1  <  data.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
-                supporters: /*this*/self.getSupportersAll().filter((supporter) => supporter._DATA.$level === d.item),
+                supporters: this.getSupportersAll().filter((supporter) => supporter._DATA.$level === d.item),
               })
             )
-          }/*, this*/)
+          }, this)
         })
-        return new xjs.DocumentFragment(xLevelList.render(supporterlevels/*, this*/)).innerHTML()
+        return new xjs.DocumentFragment(xLevelList.render(supporterlevels, this)).innerHTML()
       })
   }
 }
