@@ -38,4 +38,7 @@ function xRegistrationperiod_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-registrationperiod.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
   .setRenderer(xRegistrationperiod_renderer)

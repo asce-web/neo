@@ -2,6 +2,7 @@ const path = require('path')
 
 const xjs = require('extrajs-dom')
 
+const Util = require('../class/Util.class.js')
 const xRegistrationperiod = require('./x-registrationperiod.tpl.js')
 
 
@@ -24,11 +25,11 @@ function xPass_renderer(frag, data) {
   if (data.$fineprint) frag.querySelector('.c-Pass__Fine').textContent = data.$fineprint
   else                 frag.querySelector('.c-Pass__Fine').remove()
 
-  new xjs.HTMLElement(frag.querySelector('.c-Pass__Body')).empty().append(
+  frag.querySelector('.c-Pass__Body').append(
     xRegistrationperiod.render({ ...current_period._DATA, $pass: new Pass(data), $is_body: true })
   )
 
-  new xjs.HTMLElement(frag.querySelector('.c-Pass__Foot')).empty().append(
+  frag.querySelector('.c-Pass__Foot').append(
     ...data.$conference.getRegistrationPeriodsAll()
       .filter((registration_period) => registration_period.name !== current_period.name)
       .map((registration_period) => xRegistrationperiod.render({ ...registration_period._DATA, $pass: new Pass(data) }))
@@ -37,4 +38,7 @@ function xPass_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-pass.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
   .setRenderer(xPass_renderer)

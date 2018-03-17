@@ -41,10 +41,11 @@
   "homepage": "https://github.com/asce-web/neo#readme",
   "devDependencies": {
     "ajv": "^6.0.1",
+    "aria-patterns": "^0.3.1",
     "browserify": "^14.5.0",
     "extrajs": "^0.11.0",
     "extrajs-color": "^2.1.0",
-    "extrajs-dom": "^4.1.0-beta.1",
+    "extrajs-dom": "^4.2.0-beta.1",
     "extrajs-geo": "^0.1.0",
     "extrajs-view": "^1.1.2",
     "gulp": "^3.9.1",
