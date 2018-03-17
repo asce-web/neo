@@ -7,6 +7,8 @@
     <meta content="{{ offerCount }}" itemprop="offerCount"/>
     <meta content="{{ availabilityStarts }}" itemprop="availabilityStarts"/>
     <meta content="{{   availabilityEnds }}" itemprop="availabilityEnds"  />
-    <dl>{{ ./x-attendeetype.tpl.html }}</dl>
+    <dl>
+      <link rel="import" data-import="document" href="./x-attendeetype.tpl.html"/>
+    </dl>
   </section>
 </template>
