@@ -418,8 +418,6 @@ class Conference {
        */
       .addDisplay(function supporterLevels(queue, small = false) {
         const jsdom = require('jsdom')
-        const Util = require('./Util.class.js')
-        let supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         const template = jsdom.JSDOM.fragment(`
           <template>
             <ol class="o-List">
@@ -431,7 +429,7 @@ class Conference {
             </ol>
           </template>
         `).querySelector('template')
-        new xjs.DocumentFragment(template.content.querySelector('ol > template').content).importLinks(__dirname)
+        new xjs.DocumentFragment(template.content.querySelector('template').content).importLinks(__dirname)
         const xLevelList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
           new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.map((item, index) => ({ item, index })), function (f, d) {
             new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
@@ -443,6 +441,7 @@ class Conference {
             )
           }, this)
         })
+        let supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         return new xjs.DocumentFragment(xLevelList.render(supporterlevels, this)).innerHTML()
       })
   }

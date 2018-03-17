@@ -275,18 +275,29 @@ class Util {
        */
       .addDisplay(function pass($conference, queue = null) {
         const xPass = require('../tpl/x-pass.tpl.js')
+        const template = jsdom.JSDOM.fragment(`
+          <template>
+            <ul class="o-List o-Flex o-ListStacked">
+              <template>
+                <li class="o-List__Item o-Flex__Item o-ListStacked__Item">
+                  <link rel="import" data-import="template" href="../tpl/x-pass.tpl.html"/>
+                </li>
+              </template>
+            </ul>
+          </template>
+        `).querySelector('template')
+        new xjs.DocumentFragment(template.content.querySelector('template').content).importLinks(__dirname)
+        const xPassList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
+          new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
+            new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+              xPass.render({ ...d._DATA, $conference })
+            )
+          })
+        })
         const pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return ElemName('ul').class('o-List o-Flex o-ListStacked').append(...this
+        let passes = this
           .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
-          .map((pass) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').append(xPass.render({ ...pass._DATA, $conference })))
-        ).outerHTML()
-        return `
-<ul class="o-List o-Flex o-ListStacked">${
-  this
-    .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
-    .map((pass) => `<li class="o-List__Item o-Flex__Item o-ListStacked__Item">${pass.view.pass($conference)}</li>`)
-}</ul>
-        `
+        return new xjs.DocumentFragment(xPassList.render(passes)).innerHTML()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -300,18 +311,29 @@ class Util {
        */
       .addDisplay(function speaker(queue = null) {
         const xSpeaker = require('../tpl/x-speaker.tpl.js')
+        const template = jsdom.JSDOM.fragment(`
+          <template>
+            <ul class="o-List o-Flex o-ListStacked">
+              <template>
+                <li class="o-List__Item o-Flex__Item o-ListStacked__Item">
+                  <link rel="import" data-import="template" href="../tpl/x-speaker.tpl.html"/>
+                </li>
+              </template>
+            </ul>
+          </template>
+        `).querySelector('template')
+        new xjs.DocumentFragment(template.content.querySelector('template').content).importLinks(__dirname)
+        const xSpeakerList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
+          new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
+            new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+              xSpeaker.render(d._DATA)
+            )
+          })
+        })
         const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return ElemName('ul').class('o-List o-Flex o-ListStacked').append(...this
+        let speakers = this
           .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
-          .map((person) => ElemName('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').append(xSpeaker.render(person._DATA))
-        )).outerHTML()
-        return `
-<ul class="o-List o-Flex o-ListStacked">${
-  this
-    .filter((person) => (queue) ? speaker_ids.includes(person.name) : true)
-    .map((person) => `<li class="o-List__Item o-Flex__Item o-ListStacked__Item">${pass.view.speaker()}</li>`)
-}</ul>
-        `
+        return new xjs.DocumentFragment(xSpeakerList.render(speakers)).innerHTML()
       })
       /**
        * Return a `<ul.c-SocialList>` component, containing
