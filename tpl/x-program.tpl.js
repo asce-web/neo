@@ -53,4 +53,7 @@ function xProgram_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-program.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+  })
   .setRenderer(xProgram_renderer)
