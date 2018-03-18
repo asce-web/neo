@@ -29,15 +29,16 @@ const xPersonFullname = require('./x-person-fullname.tpl.js')
  * @param {string=}           data.sameAs.description short alternative text for non-visual media
  */
 function xSpeaker_renderer(frag, data) {
-  frag.querySelector('[itemprop="image"]'   ).src = data.image
-  frag.querySelector('[itemprop="name"]'    ).id  = data.identifier
-  frag.querySelector('[itemprop="jobTitle"]').textContent = data.jobTitle
-  frag.querySelector('[itemprop="affiliation"] slot').textContent = data.affiliation
+  frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
+  frag.querySelector('[itemprop="image"]'                        ).src         = data.image
+  frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle
+  frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation
+
+  frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
+
   frag.querySelector('footer').prepend("Util.view(this.getSocialAll()).socialList('c-SocialList--speaker')")
 
-  new xjs.HTMLElement(frag.querySelector('[itemprop="name"]')).empty().append(xPersonFullname.render(data))
-
-  new xjs.HTMLUListElement(frag.querySelector('.c-SocialList')).populate([
+  new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).populate([
     { prop: 'url'      , icon: 'explore', url: data.url                           , text: 'visit homepage' },
     { prop: 'email'    , icon: 'email'  , url: `mailto:${data.email}`             , text: 'send email'     },
     { prop: 'telephone', icon: 'phone'  , url: `tel:${Util.toURL(data.telephone)}`, text: 'call'           },
@@ -55,4 +56,7 @@ function xSpeaker_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-speaker.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
   .setRenderer(xSpeaker_renderer)

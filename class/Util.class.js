@@ -292,30 +292,12 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker(queue = null) {
-        const xSpeaker = require('../tpl/x-speaker.tpl.js')
-        const template = jsdom.JSDOM.fragment(`
-          <template>
-            <ul class="o-List o-Flex o-ListStacked">
-              <template>
-                <li class="o-List__Item o-Flex__Item o-ListStacked__Item">
-                  <link rel="import" data-import="template" href="../tpl/x-speaker.tpl.html"/>
-                </li>
-              </template>
-            </ul>
-          </template>
-        `).querySelector('template')
-        new xjs.DocumentFragment(template.content.querySelector('template').content).importLinks(__dirname)
-        const xSpeakerList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
-          new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
-            new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-              xSpeaker.render(d._DATA)
-            )
-          })
-        })
+        const xListSpeaker = require('../tpl/x-list-speaker.tpl.js')
         const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let speakers = this
           .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
-        return new xjs.DocumentFragment(xSpeakerList.render(speakers)).innerHTML()
+          .map((speaker) => speaker._DATA)
+        return new xjs.DocumentFragment(xListSpeaker.render(speakers)).innerHTML()
       })
       /**
        * Return a `<ul.c-SocialList>` component, containing
