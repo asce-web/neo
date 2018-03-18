@@ -29,7 +29,7 @@ function xRegistrationperiod_renderer(frag, data) {
   if (date_end  )  frag.querySelector('[itemprop="availabilityEnds"]'  ).content = date_end.toISOString()
   else             frag.querySelector('[itemprop="availabilityEnds"]'  ).remove()
 
-  new xjs.HTMLDListElement(frag.querySelector('dl')).empty().append(
+  frag.querySelector('dl').append(
     ...data.$pass.getAttendeeTypesAll().map((att_type) =>
       xAttendeetype.render({ name: att_type._DATA.name, price: 42.87 }) // TODO price is 42 for now
     )
