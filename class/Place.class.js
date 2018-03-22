@@ -2,7 +2,6 @@ const PostalAddress = require('./PostalAddress.class.js')
 
 /**
  * Entities that have a somewhat fixed, physical extension.
- * @todo TODO move this class to `require('extrajs-geo')`
  * @see https://schema.org/Place
  */
 class Place {

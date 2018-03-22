@@ -51,7 +51,6 @@ class Person {
 
   /**
    * @summary The string name of this person if it exists; else the object name of this person.
-   * @todo TODO `get name()` should inherit from `Thing`, and make this `get $name()` a new method
    * @type {!Object}
    */
   get name() {

@@ -34,7 +34,6 @@ class Exhibitor extends Organization {
 
   /**
    * @summary The description of this exhibitor.
-   * @todo TODO move to SchemaObject
    * @type {string}
    */
   get description() {

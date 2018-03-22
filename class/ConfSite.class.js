@@ -97,7 +97,6 @@ class ConfSite extends Page {
   }
   /**
    * @summary Retrieve all conferences added to this site.
-   * @todo TODO make this a getter
    * @returns {Array<Conference>} all conferences of this site
    */
   getConferencesAll() {

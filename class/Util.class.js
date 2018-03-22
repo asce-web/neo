@@ -130,7 +130,6 @@ class Util {
        * Return a Page object’s document outline as a nested ordered list.
        * Parameter `data` should be of type `Page`.
        * @summary Call `Util.view(data).pageToc()` to render this display.
-       * @todo TODO move this display to `require('sitepage').VIEW`
        * @function Util.VIEW.pageToc
        * @param   {!Object=} options options for configuring output
        * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
@@ -162,7 +161,6 @@ class Util {
        * Return a snippet marking up a promoted location.
        * Parameter `data` should be of type `{@link PostalAddress}`.
        * @summary Call `Util.view(data).promoLoc()` to render this display.
-       * @todo TODO move this display to `require('extrajs-geo')`
        * @function Util.VIEW.promoLoc
        * @param   {boolean=} state_code if `true`, displays region as its code (e.g. “Virginia” as “VA”)
        * @returns {string} HTML output
