@@ -302,45 +302,25 @@ class Util {
       /**
        * Return a `<ul.c-SocialList>` component, containing
        * markup for social media profiles.
-       * Parameter `data` should be of type `Array<!Object>`, where each object is of type {@link http://schema.org/URL}.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/WebPageElement|sdo.WebPageElement}>`,
+       * where each array entry has a `name`, `url`, and `text`.
        * @summary Call `Util.view(data).socialList()` to render this display.
        * @function Util.VIEW.socialList
        * @param   {string=} classes optional classes to add to the `<ul>`
        * @returns {string} HTML output
        */
       .addDisplay(function socialList(classes = '') {
-        return ElemName('ul').class('o-List o-Flex c-SocialList')
-          .addClass(classes)
-          .append(...this.map((url) =>
-            ElemName('li').class('o-List__Item o-Flex__Item c-SocialList__Item')
-              .attr({
-                itemprop : 'sameAs',
-                itemscope: '',
-                itemtype : 'http://schema.org/URL',
-              })
-              .append(
-                ElemName('a').class('c-SocialList__Link h-Block')
-                  .addClass(`c-SocialList__Link--${url.name}`)
-                  .attr({ href: url.url, itemprop: 'url' })
-                  .append(
-                    ElemName('span').class('h-Hidden')
-                      .attr('itemprop','description')
-                      .textContent(url.description)
-                  )
-              )
-          ))
-          .outerHTML()
-        return `
-<ul class="o-List o-Flex c-SocialList ${classes}">${
-  this.map((url) => `
-    <li class="o-List__Item o-Flex__Item c-SocialList__Item" itemprop="sameAs" itemscope="" itemtype="http://schema.org/URL">
-      <a class="c-SocialList__Link h-Block c-SocialList__Link--${url.name}">
-        <span class="h-Hidden" itemprop="description">${url.description}</span>
-      </a>
-    </li>
-  `)
-}</ul>
-        `
+        const xListSocial = require('../tpl/x-list-social.tpl.js')
+        return new xjs.DocumentFragment(
+          xListSocial.render({
+            links: this.map((obj) => ({
+              ...obj,
+              "@type": "WebPageElement",
+              text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
+            })),
+            classes,
+          })
+        ).innerHTML()
       })
   }
 
