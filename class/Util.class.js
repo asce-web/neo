@@ -224,9 +224,8 @@ class Util {
         return new xjs.DocumentFragment(xListPass.render({ passes, $conference })).innerHTML()
       })
       /**
-       * Return a `<ul.o-ListStacked>` component, containing items of
-       * {@link Person.VIEW.speaker|Person#view.speaker()} displays.
-       * Parameter `data` should be of type `Array<Person>`.
+       * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
        * @summary Call `Util.view(data).speaker()` to render this display.
        * @function Util.VIEW.speaker
        * @param   {(Array<string>|!Object)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
@@ -235,10 +234,8 @@ class Util {
        */
       .addDisplay(function speaker(queue = null) {
         const xListSpeaker = require('../tpl/x-list-speaker.tpl.js')
-        const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let speakers = this
-          .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
-          .map((speaker) => speaker._DATA)
+        let speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let speakers = this.filter((person) => (queue) ? speaker_ids.includes(person.identifier) : true)
         return new xjs.DocumentFragment(xListSpeaker.render(speakers)).innerHTML()
       })
       /**
