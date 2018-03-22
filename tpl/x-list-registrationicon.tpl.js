@@ -22,22 +22,27 @@ function xListRegistrationicon_renderer(frag, data) {
 
     f.querySelector('i').textContent = d.$icon
     f.querySelector('b').textContent = d.name
-    new xjs.HTMLTimeElement(f.querySelectorAll('time')[0])
-      .dateTime((date_start || new Date()).toISOString())
-      .textContent(xjs.Date.format(date_start || new Date(), 'M j'))
-    new xjs.HTMLTimeElement(f.querySelectorAll('time')[1])
-      .dateTime((date_end || new Date()).toISOString())
-      .textContent(xjs.Date.format(date_end || new Date(), 'M j'))
 
-    if (!date_start) {
-      f.querySelector('slot[name="colon"]').textContent = ' ends '
-      f.querySelectorAll('time')[0].remove()
-      f.querySelector('slot[name="dash"]').remove()
+    let times = Array.from(f.querySelectorAll('time'))
+    let colon = f.querySelector('slot[name="colon"]')
+    let dash = f.querySelector('slot[name="dash"]')
+    if (date_start) {
+      new xjs.HTMLTimeElement(times[0])
+        .dateTime(date_start.toISOString())
+        .textContent(xjs.Date.format(date_start, 'M j'))
+    } else {
+      colon.textContent = ' ends '
+      times[0].remove()
+      dash.remove()
     }
-    if (!date_end) {
+    if (date_end) {
+      new xjs.HTMLTimeElement(times[1])
+        .dateTime(date_end.toISOString())
+        .textContent(xjs.Date.format(date_end, 'M j'))
+    } else {
       f.querySelector('slot[name="colon"]').textContent = ' begins '
-      f.querySelectorAll('time')[1].remove()
-      f.querySelector('slot[name="dash"]').remove()
+      dash.remove()
+      times[1].remove()
     }
 
     new xjs.HTMLElement(f.querySelector('small')).trimInner()
