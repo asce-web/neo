@@ -17,7 +17,7 @@ const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
 const xDateblock          = require('../tpl/x-dateblock.tpl.js')
 const xTimeblock          = require('../tpl/x-timeblock.tpl.js')
-const xRegistrationLegend = require('../tpl/x-registration-legend.tpl.js')
+const xListRegistrationicon = require('../tpl/x-list-registrationicon.tpl.js')
 const xDirectory          = require('../tpl/x-directory.tpl.js')
 
 
@@ -259,7 +259,7 @@ class Util {
        */
       .addDisplay(function registrationLegend() {
         return new xjs.DocumentFragment(
-          xRegistrationLegend.render(this.map(($period) => $period._DATA))
+          xListRegistrationicon.render(this.map((period) => period._DATA))
         ).innerHTML()
       })
       /**
