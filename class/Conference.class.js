@@ -43,7 +43,7 @@ class Conference {
    *                                            First entry: required; the promoted location; type {@link http://schema.org/PostalAddress};
    *                                            provide `image` property for location image.
    *                                            Other entries: optional; other venues; type {@link http://schema.org/Place}.
-   * @param {Array<!Object>=} jsondata.offers a list of registration periods; types {@link http://schema.org/AggregateOffer}
+   * @param {Array<sdo.AggregateOffer>=} jsondata.offers a list of registration periods
    * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
    * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
    * @param {Array<!Object>=} jsondata.subEvent a list of sessions; types {@link http://schema.org/Event}
@@ -143,20 +143,11 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve a registration period of this conference.
-   * @param  {string} name the name of the registration period
-   * @returns {?RegistrationPeriod} the specified registration period
-   */
-  getRegistrationPeriod(name) {
-    let period = (this._DATA.offers || []).find(($offer) => $offer.name===name)
-    return (period) ? new RegistrationPeriod(period) : null
-  }
-  /**
    * @summary Retrieve all registration periods of this conference.
    * @returns {Array<RegistrationPeriod>} a shallow array of all registration periods of this conference.
    */
   getRegistrationPeriodsAll() {
-    return (this._DATA.offers || []).map(($offer) => new RegistrationPeriod($offer))
+    return (this._DATA.offers || []).slice()
   }
 
   /**
@@ -167,7 +158,7 @@ class Conference {
    */
   get currentRegistrationPeriod() {
     return (this._DATA.$currentRegistrationPeriod) ?
-      this.getRegistrationPeriod(this._DATA.$currentRegistrationPeriod) :
+      this.getRegistrationPeriodsAll().find((pd) => pd.name === this._DATA.$currentRegistrationPeriod) || null :
       new RegistrationPeriod((this._DATA.offers && this._DATA.offers[0]) || {
         "@type": "AggregateOffer",
         "name" : "default",

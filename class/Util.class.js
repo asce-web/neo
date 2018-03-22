@@ -193,7 +193,7 @@ class Util {
       })
       /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.
-       * Parameter `data` should be of type `Array<RegistrationPeriod>`.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/AggregateOffer|sdo.AggregateOffer}>`.
        * @summary Call `Util.view(data).registrationLegend()` to render this display.
        * @function Util.VIEW.registrationLegend
        * @returns {string} HTML output
@@ -201,7 +201,7 @@ class Util {
       .addDisplay(function registrationLegend() {
         const xListRegistrationicon = require('../tpl/x-list-registrationicon.tpl.js')
         return new xjs.DocumentFragment(
-          xListRegistrationicon.render(this.map((period) => period._DATA))
+          xListRegistrationicon.render(this)
         ).innerHTML()
       })
       /**
