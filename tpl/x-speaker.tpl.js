@@ -39,7 +39,7 @@ function xSpeaker_renderer(frag, data) {
 
   new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
     this.node.before(xListSocial.render({
-      links: data.sameAs.map((obj) => ({
+      links: (data.sameAs || []).map((obj) => ({
         ...obj,
         "@type": "WebPageElement",
         text   : obj.description, // TODO update database to use type `sdo.WebPageElement`

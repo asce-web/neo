@@ -66,24 +66,6 @@ class Person {
 
 
   /**
-   * @summary Retrieve a social network profile of this person.
-   * @param   {string} name the name of the social network
-   * @returns {?Object} an object representing the social network profile
-   */
-  getSocial(name) {
-    return this.getSocialAll().find((url) => url.name===name) || null
-  }
-  /**
-   * @summary Return all social network profiles of this person.
-   * @todo TODO turn this into a getter
-   * @returns {Array<!Object>} all this person’s social media networks
-   */
-  getSocialAll() {
-    return (this._DATA.sameAs || []).map((url) => url)
-  }
-
-
-  /**
    * @summary Render this person in HTML.
    * @see Person.VIEW
    * @type {View}
