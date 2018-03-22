@@ -59,8 +59,8 @@ class ConfSite extends Page {
     ajv.addMetaSchema(META_SCHEMATA).addSchema(SCHEMATA)
     let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata)
     if (!is_data_valid) {
-      let e = new TypeError(ajv.errors[0].message)
-      e.details = ajv.errors[0]
+      let e = new TypeError(ajv.errors.map((e) => e.message).join('\n'))
+      e.details = ajv.errors
       console.error(e)
       throw e
     }
