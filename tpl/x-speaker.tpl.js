@@ -4,6 +4,7 @@ const xjs = require('extrajs-dom')
 
 const Util = require('../class/Util.class.js')
 const xPersonFullname = require('./x-person-fullname.tpl.js')
+const xListSocial = require('../tpl/x-list-social.tpl.js')
 
 
 /**
@@ -36,9 +37,16 @@ function xSpeaker_renderer(frag, data) {
 
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 
-  frag.querySelector('footer').prepend("Util.view(this.getSocialAll()).socialList('c-SocialList--speaker')")
-
-  new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).populate([
+  new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
+    this.node.before(xListSocial.render({
+      links: data.sameAs.map((obj) => ({
+        ...obj,
+        "@type": "WebPageElement",
+        text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
+      })),
+      classes: 'c-SocialList--speaker',
+    }))
+  }).populate([
     { prop: 'url'      , icon: 'explore', url: data.url                           , text: 'visit homepage' },
     { prop: 'email'    , icon: 'email'  , url: `mailto:${data.email}`             , text: 'send email'     },
     { prop: 'telephone', icon: 'phone'  , url: `tel:${Util.toURL(data.telephone)}`, text: 'call'           },
