@@ -51,7 +51,6 @@ class Person {
 
   /**
    * @summary The string name of this person if it exists; else the object name of this person.
-   * @todo TODO `get name()` should inherit from `Thing`, and make this `get $name()` a new method
    * @type {!Object}
    */
   get name() {
@@ -62,24 +61,6 @@ class Person {
       honorificPrefix: this._DATA.honorificPrefix || '',
       honorificSuffix: this._DATA.honorificSuffix || '',
     }
-  }
-
-
-  /**
-   * @summary Retrieve a social network profile of this person.
-   * @param   {string} name the name of the social network
-   * @returns {?Object} an object representing the social network profile
-   */
-  getSocial(name) {
-    return this.getSocialAll().find((url) => url.name===name) || null
-  }
-  /**
-   * @summary Return all social network profiles of this person.
-   * @todo TODO turn this into a getter
-   * @returns {Array<!Object>} all this person’s social media networks
-   */
-  getSocialAll() {
-    return (this._DATA.sameAs || []).map((url) => url)
   }
 
 

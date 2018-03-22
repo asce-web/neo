@@ -20,11 +20,21 @@
         "logo"        : true,
         "color"       : true,
         "brand"       : true,
-        "$conferences": true,
-        "$currentConference": true,
-        "$previousConference": true,
-        "$nextConference": true,
-        "$queues": true
+        "$conferences": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Event.jsd" }]
+          }
+        },
+        "$currentConference" : { "type": "string", "format": "uri", "description": "Must match the 'url' property of an already-added conference." },
+        "$previousConference": { "type": "string", "format": "uri", "description": "Must match the 'url' property of an already-added conference." },
+        "$nextConference"    : { "type": "string", "format": "uri", "description": "Must match the 'url' property of an already-added conference." },
+        "$queues": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" }]
+          }
+        }
       }
     }
   ]

@@ -1,6 +1,5 @@
 /**
  * The mailing address.
- * @todo TODO move this class to `require('extrajs-geo')`
  * @see https://schema.org/PostalAddress
  */
 class PostalAddress {

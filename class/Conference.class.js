@@ -256,20 +256,11 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve a social network profile of this conference.
-   * @param   {string} name the name of the social network
-   * @returns {?Object} an object representing the social network profile
-   */
-  getSocial(name) {
-    return this.getSocialAll().find((url) => url.name===name) || null
-  }
-  /**
    * @summary Return an object representing all social network profiles of this conference.
-   * @todo TODO turn this into a getter
    * @returns {Array<!Object>} all this conference’s social media networks
    */
   getSocialAll() {
-    return (this._DATA.sameAs || []).map((url) => url)
+    return (this._DATA.sameAs || []).slice()
   }
 
   // setPrice(reg_period, pass, membership, price) {
