@@ -4,7 +4,6 @@ const xjs = {
 }
 const View = require('extrajs-view')
 
-const Pass               = require('./Pass.class.js')
 const PostalAddress      = require('./PostalAddress.class.js')
 const Venue              = require('./Venue.class.js')
 const Person             = require('./Person.class.js')
