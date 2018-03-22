@@ -1,9 +1,4 @@
-const xjs = require('extrajs-dom')
-const View         = require('extrajs-view')
-const Util         = require('./Util.class.js')
 const Organization = require('./Organization.class.js')
-
-const xExhibitor = require('../tpl/x-exhibitor.tpl.js')
 
 
 /**
@@ -30,58 +25,6 @@ class Exhibitor extends Organization {
      * @type {!Object}
      */
     this._DATA = jsondata
-  }
-
-  /**
-   * @summary The description of this exhibitor.
-   * @type {string}
-   */
-  get description() {
-    return this._DATA.description || ''
-  }
-
-  /**
-   * @summary The booth number of this exhibitor.
-   * @description Return `NaN` if this exhibitor has no booth number.
-   * @type {number}
-   */
-  get booth() {
-    return this._DATA.$booth || NaN
-  }
-
-  /**
-   * @summary Whether this exhibitor is also a sponsor.
-   * @see Supporter
-   * @type {boolean}
-   */
-  get isSponsor() {
-    return this._DATA.$isSponsor || false
-  }
-
-
-  /**
-   * @summary Render this exhibitor in HTML.
-   * @see Exhibitor.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `Exhibitor#view()` - default display
-     * @namespace Exhibitor.VIEW
-     * @type {View}
-     */
-    /**
-     * COMBAK Exhibitor view has not been decided yet.
-     * @summary Call `Exhibitor#view()` to render this display.
-     * @todo COMBAK Exhibitor view has not been decided yet.
-     * @function Exhibitor.VIEW.default
-     * @returns {string} HTML output
-     */
-    return new View(function () {
-      return new xjs.DocumentFragment(xExhibitor.render({...this._DATA, logo: this._DATA.image})).innerHTML()
-    }, this)
   }
 }
 

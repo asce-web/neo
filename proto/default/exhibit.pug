@@ -6,7 +6,4 @@ block append vars
 block mainReference
   section.o-Runner.o-Runner--highlight.c-Banner#thank-you-exhibitors: div.h-Constrain
     h1 Thank You to Our Exhibitors
-    ul
-      each $exhibitor in site.currentConference.getExhibitorsAll()
-        li
-          != $exhibitor.view()
+    != site.currentConference.view.exhibitorList()
