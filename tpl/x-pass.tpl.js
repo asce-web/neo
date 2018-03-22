@@ -2,7 +2,6 @@ const path = require('path')
 
 const xjs = require('extrajs-dom')
 
-const Util = require('../class/Util.class.js')
 const xRegistrationperiod = require('./x-registrationperiod.tpl.js')
 
 
@@ -25,13 +24,13 @@ function xPass_renderer(frag, data) {
   else                 frag.querySelector('.c-Pass__Fine').remove()
 
   frag.querySelector('.c-Pass__Body').append(
-    xRegistrationperiod.render({ ...current_period._DATA, $pass: data, $is_body: true })
+    xRegistrationperiod.render({ ...current_period, $pass: data, $is_body: true })
   )
 
   frag.querySelector('.c-Pass__Foot').append(
     ...data.$conference.getRegistrationPeriodsAll()
       .filter((registration_period) => registration_period.name !== current_period.name)
-      .map((registration_period) => xRegistrationperiod.render({ ...registration_period._DATA, $pass: data }))
+      .map((registration_period) => xRegistrationperiod.render({ ...registration_period, $pass: data }))
   )
 }
 

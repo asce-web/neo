@@ -4,7 +4,6 @@ const xjs = {
 }
 const View = require('extrajs-view')
 
-const RegistrationPeriod = require('./RegistrationPeriod.class.js')
 const Pass               = require('./Pass.class.js')
 const PostalAddress      = require('./PostalAddress.class.js')
 const Venue              = require('./Venue.class.js')
@@ -143,7 +142,7 @@ class Conference {
 
   /**
    * @summary Retrieve all registration periods of this conference.
-   * @returns {Array<RegistrationPeriod>} a shallow array of all registration periods of this conference.
+   * @returns {Array<sdo.AggregateOffer>} a shallow array of all registration periods of this conference.
    */
   getRegistrationPeriodsAll() {
     return (this._DATA.offers || []).slice()
@@ -153,15 +152,16 @@ class Conference {
    * @summary The current registration period.
    * @description The current registration period is the registration period that is active at this time.
    * If none has been set, the first registration period is returned.
-   * @type {RegistrationPeriod}
+   * @type {sdo.AggregateOffer}
    */
   get currentRegistrationPeriod() {
+    let default_ = {
+      "@type": "AggregateOffer",
+      "name" : "default",
+    }
     return (this._DATA.$currentRegistrationPeriod) ?
-      this.getRegistrationPeriodsAll().find((pd) => pd.name === this._DATA.$currentRegistrationPeriod) || null :
-      new RegistrationPeriod((this._DATA.offers && this._DATA.offers[0]) || {
-        "@type": "AggregateOffer",
-        "name" : "default",
-      })
+      this.getRegistrationPeriodsAll().find((pd) => pd.name === this._DATA.$currentRegistrationPeriod) || default_ :
+      this._DATA.offers && this._DATA.offers[0] || default_
   }
 
   /**
