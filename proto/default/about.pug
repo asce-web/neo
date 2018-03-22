@@ -5,13 +5,7 @@ block append vars
   -
     var prev_blurb = 'default text for previous conference'
     var next_blurb = 'default text for next conference'
-    var prev_content = Util.view([
-      { "@type": "WebPageElement", "text": "Event Details", "url": site.prevConference.url },//.attr('itemprop','url')
-    ]).highlightButtons('c-Button--ghost c-Button--ghost--dark')
-    var next_content = Util.view([
-      { "@type": "WebPageElement", "text": "Event Details", "url": site.nextConference.url },//.attr('itemprop','url')
-    ]).highlightButtons('c-Button--ghost c-Button--ghost--dark')
 
 block mainReference
-  != site.prevConference.view.otherYear(prev_blurb, prev_content)
-  != site.nextConference.view.otherYear(next_blurb, next_content)
+  != site.prevConference.view.otherYear(prev_blurb)
+  != site.nextConference.view.otherYear(next_blurb)

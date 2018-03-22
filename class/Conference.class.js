@@ -318,15 +318,13 @@ class Conference {
        * @summary Call `Conference#view.otherYear()` to render this display.
        * @function Conference.VIEW.otherYear
        * @param   {string=} blurb custom HTML to advertise the prev/next year
-       * @param   {string=} block custom HTML to insert at the end
        * @returns {string} HTML output
        */
-      .addDisplay(function otherYear(blurb = '', block = '') {
+      .addDisplay(function otherYear(blurb = '') {
         return new xjs.DocumentFragment(xOtheryear.render({
           ...this._DATA,
           location: this._DATA.location[0],
           $blurb: blurb,
-          $body: block,
         })).innerHTML()
       })
       /**
