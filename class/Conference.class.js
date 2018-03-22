@@ -317,14 +317,12 @@ class Conference {
        * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
        * @summary Call `Conference#view.otherYear()` to render this display.
        * @function Conference.VIEW.otherYear
-       * @param   {string=} blurb custom HTML to advertise the prev/next year
        * @returns {string} HTML output
        */
-      .addDisplay(function otherYear(blurb = '') {
+      .addDisplay(function otherYear() {
         return new xjs.DocumentFragment(xOtheryear.render({
           ...this._DATA,
           location: this._DATA.location[0],
-          $blurb: blurb,
         })).innerHTML()
       })
       /**

@@ -2,10 +2,7 @@ extends _sites.tpl.pug
 
 block append vars
   - var page = site.find('about.html')
-  -
-    var prev_blurb = 'default text for previous conference'
-    var next_blurb = 'default text for next conference'
 
 block mainReference
-  != site.prevConference.view.otherYear(prev_blurb)
-  != site.nextConference.view.otherYear(next_blurb)
+  != site.prevConference.view.otherYear()
+  != site.nextConference.view.otherYear()

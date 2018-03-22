@@ -542,6 +542,7 @@
       "image"      : "/proto/asce-event.org/files/new-york.jpg",
       "startDate"  : "2015-10-11T07:30",
       "endDate"    : "2015-10-14T17:00",
+      "disambiguatingDescription": "Access the 2015 program to see which sessions qualify for PDHs and other documentation.",
       "location": [
         {
           "@type": "PostalAddress",
@@ -571,6 +572,7 @@
       "image"      : "/proto/asce-event.org/files/new-orleans.jpg",
       "startDate"  : "2017-10-08T07:30",
       "endDate"    : "2017-10-11T17:00",
+      "disambiguatingDescription": "Plan ahead to attend, sponsor, or exhibit at the annual convention for civil engineering professionals.",
       "location": [
         {
           "@type": "PostalAddress",
