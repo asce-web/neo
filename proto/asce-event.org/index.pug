@@ -1,13 +1,5 @@
 extends ../default/index.pug
 
-block append vars
-  -
-    var hero_content = Util.view([
-      { "@type": "WebPageElement", "text": "Register"      , "url": "registration.html" },
-      { "@type": "WebPageElement", "text": "Sponsor"       , "url": "sponsor.html"      },
-      { "@type": "WebPageElement", "text": "Submit a Paper"                             },
-    ]).highlightButtons('c-Button--primary')
-
 block prepend mainBody
   +callout()
     include _includes/_colorpickers.pug

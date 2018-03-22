@@ -95,6 +95,11 @@
           }
         }
       ],
+      "$heroButtons": [
+        { "@type": "WebPageElement", "text": "Register"      , "url": "registration.html" },
+        { "@type": "WebPageElement", "text": "Sponsor"       , "url": "sponsor.html"      },
+        { "@type": "WebPageElement", "text": "Submit a Paper"                             }
+      ],
     "offers": [
       {
         "@type"             : "AggregateOffer",

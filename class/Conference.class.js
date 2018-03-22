@@ -303,14 +303,12 @@ class Conference {
        * Return a `<header>` element with hero image marking up this conference’s main info.
        * @summary Call `Conference#view.hero()` to render this display.
        * @function Conference.VIEW.hero
-       * @param   {string=} block custom HTML to insert at the end
        * @returns {string} HTML output
        */
-      .addDisplay(function hero(block = '') {
+      .addDisplay(function hero() {
         return new xjs.DocumentFragment(xHero.render({
           ...this._DATA,
           location: this._DATA.location[0],
-          $body: block,
         })).innerHTML()
       })
       /**
