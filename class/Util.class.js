@@ -14,7 +14,7 @@ STATE_DATA.push(...[
 ])
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
-const xHighlightButtons   = require('../tpl/x-highlight-buttons.tpl.js')
+const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
 const xDateblock          = require('../tpl/x-dateblock.tpl.js')
 const xTimeblock          = require('../tpl/x-timeblock.tpl.js')
 const xRegistrationLegend = require('../tpl/x-registration-legend.tpl.js')
@@ -215,14 +215,14 @@ class Util {
       })
       /**
        * Return an unordered list of button links for a highlighted content block.
-       * Parameter `data` should be of type `Array<Element>` (TODO: HTMLAnchorElement), i.e., a list of links.
+       * Parameter `data` should be of type `Array<Element>` (TODO: sdo.WebPageElement), i.e., a list of links.
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
        * @param   {string=} buttonclasses the classes to add to the buttons
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return new xjs.DocumentFragment(xHighlightButtons.render({links: this, buttonclasses})).innerHTML()
+        return new xjs.DocumentFragment(xListHighlightbuttons.render({ links: this.map((el) => ({ url: el.attr('href'), text: el.textContent() })), buttonclasses })).innerHTML()
       })
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
