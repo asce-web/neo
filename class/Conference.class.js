@@ -175,20 +175,11 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve a pass of this conference.
-   * @param   {string} name the name of the pass
-   * @returns {?Pass} the specified pass
-   */
-  getPass(name) {
-    let pass = (this._DATA.$passes || []).find(($pass) => $pass.name===name)
-    return (pass) ? new Pass(pass) : null
-  }
-  /**
    * @summary Retrieve all passes of this conference.
-   * @returns {Array<Pass>} a shallow array of all passes of this conference
+   * @returns {Array<!Object>} a shallow array of all passes of this conference
    */
   getPassesAll() {
-    return (this._DATA.$passes || []).map(($pass) => new Pass($pass))
+    return (this._DATA.$passes || []).slice()
   }
 
   /**

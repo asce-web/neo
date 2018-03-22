@@ -205,9 +205,9 @@ class Util {
         ).innerHTML()
       })
       /**
-       * Return a `<ul.o-ListStacked>` component, containing items of
-       * {@link Pass.VIEW.pass|Pass#view.pass()} displays.
-       * Parameter `data` should be of type `Array<Pass>`.
+       * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
+       * Parameter `data` should be of type `Array<!Object>`,
+       * where each entry is similar to an argument of the `Pass` constructor.
        * @summary Call `Util.view(data).pass()` to render this display.
        * @function Util.VIEW.pass
        * @param   {Conference} $conference the conference to which these passes belong
@@ -217,10 +217,8 @@ class Util {
        */
       .addDisplay(function pass($conference, queue = null) {
         const xListPass = require('../tpl/x-list-pass.tpl.js')
-        const pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let passes = this
-          .filter((pass) => (queue) ? pass_names.includes(pass._DATA.name) : true)
-          .map((pass) => pass._DATA)
+        let pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let passes = this.filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
         return new xjs.DocumentFragment(xListPass.render({ passes, $conference })).innerHTML()
       })
       /**
