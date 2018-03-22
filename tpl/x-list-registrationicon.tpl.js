@@ -16,33 +16,31 @@ const xjs = {
  * @param {string=} data.$icon the icon keyword of this registration period
  */
 function xListRegistrationicon_renderer(frag, data) {
-  let [fragment, dataset] = [frag, data] // REVIEW variable naming
-  new xjs.HTMLUListElement(fragment.querySelector('ul')).populate(dataset, function (frag, data) {
-    // REVIEW-INDENTATION
-  let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
-  let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
+  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
+    let date_start = (d.availabilityStarts) ? new Date(d.availabilityStarts) : null
+    let date_end   = (d.availabilityEnds  ) ? new Date(d.availabilityEnds  ) : null
 
-  frag.querySelector('i').textContent = data.$icon
-  frag.querySelector('b').textContent = data.name
-  new xjs.HTMLTimeElement(frag.querySelectorAll('time')[0])
-    .dateTime((date_start || new Date()).toISOString())
-    .textContent(xjs.Date.format(date_start || new Date(), 'M j'))
-  new xjs.HTMLTimeElement(frag.querySelectorAll('time')[1])
-    .dateTime((date_end || new Date()).toISOString())
-    .textContent(xjs.Date.format(date_end || new Date(), 'M j'))
+    f.querySelector('i').textContent = d.$icon
+    f.querySelector('b').textContent = d.name
+    new xjs.HTMLTimeElement(f.querySelectorAll('time')[0])
+      .dateTime((date_start || new Date()).toISOString())
+      .textContent(xjs.Date.format(date_start || new Date(), 'M j'))
+    new xjs.HTMLTimeElement(f.querySelectorAll('time')[1])
+      .dateTime((date_end || new Date()).toISOString())
+      .textContent(xjs.Date.format(date_end || new Date(), 'M j'))
 
-  if (!date_start) {
-    frag.querySelector('slot[name="colon"]').textContent = ' ends '
-    frag.querySelectorAll('time')[0].remove()
-    frag.querySelector('slot[name="dash"]').remove()
-  }
-  if (!date_end) {
-    frag.querySelector('slot[name="colon"]').textContent = ' begins '
-    frag.querySelectorAll('time')[1].remove()
-    frag.querySelector('slot[name="dash"]').remove()
-  }
+    if (!date_start) {
+      f.querySelector('slot[name="colon"]').textContent = ' ends '
+      f.querySelectorAll('time')[0].remove()
+      f.querySelector('slot[name="dash"]').remove()
+    }
+    if (!date_end) {
+      f.querySelector('slot[name="colon"]').textContent = ' begins '
+      f.querySelectorAll('time')[1].remove()
+      f.querySelector('slot[name="dash"]').remove()
+    }
 
-  new xjs.HTMLElement(frag.querySelector('small')).trimInner()
+    new xjs.HTMLElement(f.querySelector('small')).trimInner()
   })
 }
 
