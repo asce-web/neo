@@ -181,7 +181,7 @@ class Util {
       })
       /**
        * Return an unordered list of button links for a highlighted content block.
-       * Parameter `data` should be of type `Array<Element>` (TODO: sdo.WebPageElement), i.e., a list of links.
+       * Parameter `data` should be of type `Array<sdo.WebPageElement>`, i.e., a list of links.
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
        * @param   {string=} buttonclasses the classes to add to the buttons
@@ -189,7 +189,7 @@ class Util {
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
         const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
-        return new xjs.DocumentFragment(xListHighlightbuttons.render({ links: this.map((el) => ({ url: el.attr('href'), text: el.textContent() })), buttonclasses })).innerHTML()
+        return new xjs.DocumentFragment(xListHighlightbuttons.render({ links: this, buttonclasses })).innerHTML()
       })
       /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.

@@ -1,7 +1,7 @@
 h1#program-highlights Program Highlights
 -
   let highlight_buttons = [
-    ElemName('a').attr('href','program.html').textContent(`Full Program`)
+    { "@type": "WebPageElement", "text": "Full Program", "url": "program.html" },
   ]
 != site.currentConference.view.program('program-highlights-block', true)
 != Util.view(highlight_buttons).highlightButtons()

@@ -86,7 +86,7 @@ html(lang="en")
             != site.currentConference.view.supporterLevels(site.getQueue('Top Sponsors') || [])
             -
               let highlight_buttons = [
-                ElemName('a').attr('href','sponsor.html').textContent(`All Sponsors`)
+                { "@type": "WebPageElement", "text": "All Sponsors", "url": "sponsor.html" },
               ]
             != Util.view(highlight_buttons).highlightButtons()
         +callout()

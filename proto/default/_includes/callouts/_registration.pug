@@ -2,6 +2,6 @@ h1#registration Registra&shy;tion
 != Util.view(site.currentConference.getPassesAll()).pass(site.currentConference, site.getQueue('Featured Passes'))
 -
   let highlight_buttons = [
-    ElemName('a').attr('href','registration.html').textContent(`Registration Details`)
+    { "@type": "WebPageElement", "text": "Registration Details", "url": "registration.html" },
   ]
 != Util.view(highlight_buttons).highlightButtons()
