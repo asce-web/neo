@@ -25,4 +25,7 @@ function xSupporterLevel_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-supporter-level.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+  })
   .setRenderer(xSupporterLevel_renderer)

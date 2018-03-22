@@ -3,21 +3,21 @@ const path = require('path')
 const xjs = require('extrajs-dom')
 
 /**
- * @summary A list of highlight buttons.
+ * @summary xListHighlightbuttons renderer.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {{links:Array, buttonclasses:string=}} data the data to mark up
- * @param {Array<xjs.HTMLElement>} data.links an array of links TODO `sdo.WebPageElement: {url:string, text:string}`
+ * @param {Array<sdo.WebPageElement>} data.links an array of `{url:string, text:string}` objects
  * @param {string=} data.buttonclasses the classes to add to the buttons
  */
-function xHighlightButtons_renderer(frag, data) {
+function xListHighlightbuttons_renderer(frag, data) {
   new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data.links, function (f, d) {
     new xjs.HTMLAnchorElement(f.querySelector('a'))
       .replaceClassString('{{ buttonclasses }}', data.buttonclasses || '')
-      .href(d.attr('href') || '#1') // TODO d.url
-      .textContent(d.textContent() || '') // TODO d.text
+      .href       (d.url  || '#1')
+      .textContent(d.text || ''  )
   })
 }
 
 module.exports = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-highlight-buttons.tpl.html'))
-  .setRenderer(xHighlightButtons_renderer)
+  .fromFileSync(path.join(__dirname, './x-list-highlightbuttons.tpl.html'))
+  .setRenderer(xListHighlightbuttons_renderer)

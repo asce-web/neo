@@ -32,7 +32,7 @@ function xRegistrationperiod_renderer(frag, data) {
   if (date_end  )  frag.querySelector('[itemprop="availabilityEnds"]'  ).content = date_end.toISOString()
   else             frag.querySelector('[itemprop="availabilityEnds"]'  ).remove()
 
-  new xjs.HTMLDListElement(frag.querySelector('dl')).empty().append(
+  frag.querySelector('dl').append(
     ...data.$pass.$attendeeTypes.map((att_type) =>
       xAttendeetype.render({ name: att_type, price: 42.87 }) // TODO price is 42 for now
     )
@@ -41,4 +41,7 @@ function xRegistrationperiod_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-registrationperiod.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
   .setRenderer(xRegistrationperiod_renderer)

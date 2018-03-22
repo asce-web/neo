@@ -6,7 +6,8 @@ const xjs = {
 }
 
 /**
- * @summary A `<ul>` element listing the registration periods in a legend.
+ * @summary xListRegistrationicon renderer.
+ * @description A `<ul>` element listing the registration periods in a legend.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {Array<sdo.AggregateOffer>} data array of registration periods, each with:
  * @param {string} data.name the name of the registration period (e.g., 'Early Bird')
@@ -14,7 +15,7 @@ const xjs = {
  * @param {string=} data.availabilityEnds the date on which this registration period ends
  * @param {string=} data.$icon the icon keyword of this registration period
  */
-function xRegistrationLegend_renderer(frag, data) {
+function xListRegistrationicon_renderer(frag, data) {
   let [fragment, dataset] = [frag, data] // REVIEW variable naming
   new xjs.HTMLUListElement(fragment.querySelector('ul')).populate(dataset, function (frag, data) {
     let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
@@ -46,5 +47,5 @@ function xRegistrationLegend_renderer(frag, data) {
 }
 
 module.exports = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-registration-legend.tpl.html'))
-  .setRenderer(xRegistrationLegend_renderer)
+  .fromFileSync(path.join(__dirname, './x-list-registrationicon.tpl.html'))
+  .setRenderer(xListRegistrationicon_renderer)

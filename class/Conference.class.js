@@ -386,24 +386,42 @@ class Conference {
         })).innerHTML()
       })
       /**
-       * Return a `<section.c-SupporterBlock>` component containing this conference’s supporters
-       * that have the specified level.
+       * Return a list of `<section.c-SupporterBlock>` components containing this conference’s supporters
+       * that have the specified levels.
        * @summary Call `Conference#view.supporterLevels()` to render this display.
        * @function Conference.VIEW.supporterLevels
-       * @param   {(Array<string>|!Object)} queue the list of supporter levels to display, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {(Array<string>|sdo.ItemList)} queue the list of supporter levels to display, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
        * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the supporter levels
        * @param   {boolean=} small if `true`, overrides logo sizing to small
        * @returns {string} HTML output
        */
       .addDisplay(function supporterLevels(queue, small = false) {
-        const supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return xjs.DocumentFragment.concat(...supporterlevels.map((level, index) =>
-          xSupporterLevel.render({
-            name: level,
-            classname: (small) ? 'c-SupporterBlock--sml' : (index+1 < supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
-            supporters: this.getSupportersAll().filter((supporter) => supporter.level===level),
-          })
-        ))
+        const jsdom = require('jsdom')
+        const template = jsdom.JSDOM.fragment(`
+          <template>
+            <ol class="o-List">
+              <template>
+                <li class="o-List__Item">
+                  <link rel="import" data-import="template" href="../tpl/x-supporter-level.tpl.html"/>
+                </li>
+              </template>
+            </ol>
+          </template>
+        `).querySelector('template')
+        new xjs.DocumentFragment(template.content.querySelector('template').content).importLinks(__dirname)
+        const xLevelList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
+          new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.map((item, index) => ({ item, index })), function (f, d) {
+            new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+              xSupporterLevel.render({
+                name: d.item,
+                classname: (small) ? 'c-SupporterBlock--sml' : (d.index + 1  <  data.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
+                supporters: this.getSupportersAll().filter((supporter) => supporter._DATA.$level === d.item),
+              })
+            )
+          }, this)
+        })
+        let supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        return new xjs.DocumentFragment(xLevelList.render(supporterlevels, this)).innerHTML()
       })
   }
 }
