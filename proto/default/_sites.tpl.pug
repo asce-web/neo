@@ -88,7 +88,7 @@ html(lang="en")
               let highlight_buttons = [
                 { "@type": "WebPageElement", "text": "All Sponsors", "url": "sponsor.html" },
               ]
-            != Util.view(highlight_buttons).highlightButtons()
+            footer!= Util.view(highlight_buttons).highlightButtons()
         +callout()
           != site.currentConference.view.supporterLevels(site.getQueue('Non-Sponsors') || [], true)
     footer.o-Runner.c-Mast.c-Mast--sitemap#sitemap: nav.h-Constrain
