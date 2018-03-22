@@ -4,8 +4,14 @@
       <h1 class="c-ConfHed__Name" itemprop="name">{{ name }}</h1>
       <meta content="{{ startDate }}" itemprop="startDate"/>
       <p class="c-ConfHed__Detail" itemprop="location" itemscope="" itemtype="http://schema.org/PostalAddress">{{ Util.view(location).promoLoc() }}</p>
-      <p class="h-Hidden-nM">{{ blurb }}</p>
-      <slot class="h-Block" name="body">{{ body }}</slot>
+      <p class="h-Hidden-nM" itemprop="disambiguatingDescription">{{ blurb }}</p>
+      <footer>
+        <ul class="o-List o-Flex o-Flex--even">
+          <li class="o-List__Item o-Flex__Item">
+            <a class="c-Button c-Button--hilite c-Button--ghost c-Button--ghost--dark" href="{{ url }}" itemprop="url">Event Details</a>
+          </li>
+        </ul>
+      </footer>
     </div>
   </aside>
 </template>

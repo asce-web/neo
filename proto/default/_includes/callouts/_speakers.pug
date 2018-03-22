@@ -2,6 +2,6 @@ h1#speakers Speakers
 != Util.view(site.currentConference.getSpeakersAll()).speaker(site.getQueue('Featured Speakers'))
 -
   let highlight_buttons = [
-    ElemName('a').attr('href','speakers.html').textContent(`All Speakers`)
+    { "@type": "WebPageElement", "text": "All Speakers", "url": "speakers.html" },
   ]
-!= Util.view(highlight_buttons).highlightButtons()
+footer!= Util.view(highlight_buttons).highlightButtons()
