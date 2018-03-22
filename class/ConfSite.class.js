@@ -186,7 +186,7 @@ class ConfSite extends Page {
    * @returns {Array<!Object>} all this site’s social media networks
    */
   getSocialAll() {
-    return (this._DATA.sameAs || []).map((url) => url)
+    return (this._DATA.brand.sameAs || []).map((url) => url)
   }
 
 

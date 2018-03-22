@@ -14,10 +14,8 @@ STATE_DATA.push(...[
 ])
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
-const xHighlightButtons   = require('../tpl/x-highlight-buttons.tpl.js')
 const xDateblock          = require('../tpl/x-dateblock.tpl.js')
 const xTimeblock          = require('../tpl/x-timeblock.tpl.js')
-const xRegistrationLegend = require('../tpl/x-registration-legend.tpl.js')
 const xDirectory          = require('../tpl/x-directory.tpl.js')
 
 
@@ -215,14 +213,15 @@ class Util {
       })
       /**
        * Return an unordered list of button links for a highlighted content block.
-       * Parameter `data` should be of type `Array<Element>` (TODO: HTMLAnchorElement), i.e., a list of links.
+       * Parameter `data` should be of type `Array<Element>` (TODO: sdo.WebPageElement), i.e., a list of links.
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
        * @param   {string=} buttonclasses the classes to add to the buttons
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return new xjs.DocumentFragment(xHighlightButtons.render({links: this, buttonclasses})).innerHTML()
+        const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
+        return new xjs.DocumentFragment(xListHighlightbuttons.render({ links: this.map((el) => ({ url: el.attr('href'), text: el.textContent() })), buttonclasses })).innerHTML()
       })
       /**
        * Return a table containing a `<tbody.c-DateBlock>` component, containing
@@ -258,8 +257,9 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function registrationLegend() {
+        const xListRegistrationicon = require('../tpl/x-list-registrationicon.tpl.js')
         return new xjs.DocumentFragment(
-          xRegistrationLegend.render(this.map(($period) => $period._DATA))
+          xListRegistrationicon.render(this.map((period) => period._DATA))
         ).innerHTML()
       })
       /**
@@ -274,30 +274,12 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference, queue = null) {
-        const xPass = require('../tpl/x-pass.tpl.js')
-        const template = jsdom.JSDOM.fragment(`
-          <template>
-            <ul class="o-List o-Flex o-ListStacked">
-              <template>
-                <li class="o-List__Item o-Flex__Item o-ListStacked__Item">
-                  <link rel="import" data-import="template" href="../tpl/x-pass.tpl.html"/>
-                </li>
-              </template>
-            </ul>
-          </template>
-        `).querySelector('template')
-        new xjs.DocumentFragment(template.content.querySelector('template').content).importLinks(__dirname)
-        const xPassList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
-          new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
-            new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-              xPass.render({ ...d._DATA, $conference })
-            )
-          })
-        })
+        const xListPass = require('../tpl/x-list-pass.tpl.js')
         const pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let passes = this
           .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
-        return new xjs.DocumentFragment(xPassList.render(passes)).innerHTML()
+          .map((pass) => pass._DATA)
+        return new xjs.DocumentFragment(xListPass.render({ passes, $conference })).innerHTML()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing items of
@@ -310,73 +292,35 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker(queue = null) {
-        const xSpeaker = require('../tpl/x-speaker.tpl.js')
-        const template = jsdom.JSDOM.fragment(`
-          <template>
-            <ul class="o-List o-Flex o-ListStacked">
-              <template>
-                <li class="o-List__Item o-Flex__Item o-ListStacked__Item">
-                  <link rel="import" data-import="template" href="../tpl/x-speaker.tpl.html"/>
-                </li>
-              </template>
-            </ul>
-          </template>
-        `).querySelector('template')
-        new xjs.DocumentFragment(template.content.querySelector('template').content).importLinks(__dirname)
-        const xSpeakerList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
-          new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
-            new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-              xSpeaker.render(d._DATA)
-            )
-          })
-        })
+        const xListSpeaker = require('../tpl/x-list-speaker.tpl.js')
         const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let speakers = this
           .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
-        return new xjs.DocumentFragment(xSpeakerList.render(speakers)).innerHTML()
+          .map((speaker) => speaker._DATA)
+        return new xjs.DocumentFragment(xListSpeaker.render(speakers)).innerHTML()
       })
       /**
        * Return a `<ul.c-SocialList>` component, containing
        * markup for social media profiles.
-       * Parameter `data` should be of type `Array<!Object>`, where each object is of type {@link http://schema.org/URL}.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/WebPageElement|sdo.WebPageElement}>`,
+       * where each array entry has a `name`, `url`, and `text`.
        * @summary Call `Util.view(data).socialList()` to render this display.
        * @function Util.VIEW.socialList
        * @param   {string=} classes optional classes to add to the `<ul>`
        * @returns {string} HTML output
        */
       .addDisplay(function socialList(classes = '') {
-        return ElemName('ul').class('o-List o-Flex c-SocialList')
-          .addClass(classes)
-          .append(...this.map((url) =>
-            ElemName('li').class('o-List__Item o-Flex__Item c-SocialList__Item')
-              .attr({
-                itemprop : 'sameAs',
-                itemscope: '',
-                itemtype : 'http://schema.org/URL',
-              })
-              .append(
-                ElemName('a').class('c-SocialList__Link h-Block')
-                  .addClass(`c-SocialList__Link--${url.name}`)
-                  .attr({ href: url.url, itemprop: 'url' })
-                  .append(
-                    ElemName('span').class('h-Hidden')
-                      .attr('itemprop','description')
-                      .textContent(url.description)
-                  )
-              )
-          ))
-          .outerHTML()
-        return `
-<ul class="o-List o-Flex c-SocialList ${classes}">${
-  this.map((url) => `
-    <li class="o-List__Item o-Flex__Item c-SocialList__Item" itemprop="sameAs" itemscope="" itemtype="http://schema.org/URL">
-      <a class="c-SocialList__Link h-Block c-SocialList__Link--${url.name}">
-        <span class="h-Hidden" itemprop="description">${url.description}</span>
-      </a>
-    </li>
-  `)
-}</ul>
-        `
+        const xListSocial = require('../tpl/x-list-social.tpl.js')
+        return new xjs.DocumentFragment(
+          xListSocial.render({
+            links: this.map((obj) => ({
+              ...obj,
+              "@type": "WebPageElement",
+              text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
+            })),
+            classes,
+          })
+        ).innerHTML()
       })
   }
 
