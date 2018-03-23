@@ -4,7 +4,6 @@ const xjs = {
 }
 const View = require('extrajs-view')
 
-const PostalAddress      = require('./PostalAddress.class.js')
 const Person             = require('./Person.class.js')
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
@@ -38,7 +37,7 @@ class Conference {
    * @param {Array<!Object>=} jsondata.location a list of locations of this conference: at least 1 entry.
    *                                            First entry: required; the promoted location; type {@link http://schema.org/PostalAddress};
    *                                            provide `image` property for location image.
-   *                                            Other entries: optional; other venues; type {@link http://schema.org/Place}.
+   *                                            Other entries: optional; other venues; type {@link http://schema.org/Accommodation}.
    * @param {Array<sdo.AggregateOffer>=} jsondata.offers a list of registration periods
    * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
    * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
@@ -124,10 +123,10 @@ class Conference {
    * @description The promoted location is not necessarily the actual postal address of the conference,
    * but rather a major city nearest to the conference used for
    * promotional and advertising purposes.
-   * @type {PostalAddress}
+   * @type {sdo.PostalAddress}
    */
   get promoLoc() {
-    return new PostalAddress(this._DATA.location && this._DATA.location[0] || {})
+    return this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" }
   }
 
   /**
@@ -249,7 +248,7 @@ class Conference {
       .addDisplay(function hero() {
         return new xjs.DocumentFragment(xHero.render({
           ...this._DATA,
-          location: this._DATA.location[0],
+          location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
         })).innerHTML()
       })
       /**
@@ -261,7 +260,7 @@ class Conference {
       .addDisplay(function otherYear() {
         return new xjs.DocumentFragment(xOtheryear.render({
           ...this._DATA,
-          location: this._DATA.location[0],
+          location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
         })).innerHTML()
       })
       /**

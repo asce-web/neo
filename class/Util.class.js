@@ -159,13 +159,14 @@ class Util {
       })
       /**
        * Return a snippet marking up a promoted location.
-       * Parameter `data` should be of type `{@link PostalAddress}`.
+       * Parameter `data` should be of type `{@link http://schema.org/PostalAddress|sdo.PostalAddress}`.
        * @summary Call `Util.view(data).promoLoc()` to render this display.
        * @function Util.VIEW.promoLoc
        * @param   {boolean=} state_code if `true`, displays region as its code (e.g. “Virginia” as “VA”)
        * @returns {string} HTML output
        */
-      .addDisplay(function promoLoc(state_code = false) {
+      .addDisplay(function promoLoc(state_code = false, flattened = false) {
+        // TODO import template from `require('aria-patterns')` v0.4.0+
         const returned = []
         if (this.addressLocality) returned.push(ElemName('span').attr('itemprop','addressLocality').textContent(this.addressLocality).outerHTML(), `, `)
         if (this.addressRegion) {
@@ -175,7 +176,7 @@ class Util {
             .outerHTML())
         }
         if (this.addressCountry) returned.push(`, `, ElemName('span').attr('itemprop','addressCountry').textContent(this.addressCountry).outerHTML())
-        return returned.join('')
+        return (!flattened) ? returned.join('') : jsdom.JSDOM.fragment(returned.join('')).textContent
       })
       /**
        * Return an unordered list of button links for a highlighted content block.

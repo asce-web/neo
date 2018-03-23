@@ -28,7 +28,7 @@ function xOtheryear_renderer(frag, data) {
   frag.querySelector('[itemprop="name"]'         ).textContent  = data.name
   frag.querySelector('a[itemprop="url"]'         ).href = data.url
   frag.querySelector('meta[itemprop="startDate"]').content      = data.startDate
-  frag.querySelector('[itemprop="location"]'     ).innerHTML    = Util.view(data.location).promoLoc()
+  frag.querySelector('[itemprop="location"]'     ).innerHTML    = Util.view(data.location).promoLoc() // TODO use template from `require('aria-patterns')`
 
   if (data.disambiguatingDescription) {
     frag.querySelector('[itemprop="disambiguatingDescription"]').textContent = data.disambiguatingDescription

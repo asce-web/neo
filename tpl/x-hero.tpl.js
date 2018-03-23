@@ -31,7 +31,7 @@ function xHero_renderer(frag, data) {
 
   frag.querySelector('[itemprop="name"]'    ).textContent  = data.name
   frag.querySelector('meta[itemprop="url"]' ).content      = data.url
-  frag.querySelector('[itemprop="location"]').innerHTML    = Util.view(data.location).promoLoc()
+  frag.querySelector('[itemprop="location"]').innerHTML    = Util.view(data.location).promoLoc() // TODO use template from `require('aria-patterns')`
 
   let date_start = new Date(data.startDate)
   let date_end   = new Date(data.endDate  )
