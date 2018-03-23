@@ -53,9 +53,10 @@
       "location"   : [
         {
           "@type": "PostalAddress",
-          "image"          : "/proto/asce-event.org/files/portland.jpg",
           "addressLocality": "Portland",
-          "addressRegion"  : "Oregon"
+          "addressRegion"  : "Oregon",
+          "image"          : "/proto/asce-event.org/files/portland.jpg",
+          "description"    : "With sweeping views of the surrounding mountains and a bustling downtown full of shopping, locally sourced dining, and entertainment, Portland is a wonderful destination for business and leisure."
         },
         {
           "@type": "Accommodation",
