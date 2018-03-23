@@ -12,6 +12,9 @@ const xjs = require('extrajs-dom')
  * @param {string=} data.url the url of this place
  * @param {string=} data.logo the logo url for this place
  * @param {string=} data.telephone the telephone number of this place
+ * @param {!Object=} data.$cta a call-to-action link with a url and text
+ * @param {string=}  data.$cta.url the url of the call-to-action
+ * @param {string=}  data.$cta.text the text of the call-to-action
  */
 function xVenue_renderer(frag, data) {
   frag.querySelector('[itemprop="name"]'     ).textContent = data.name

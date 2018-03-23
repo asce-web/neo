@@ -5,7 +5,6 @@ const xjs = {
 const View = require('extrajs-view')
 
 const PostalAddress      = require('./PostalAddress.class.js')
-const Venue              = require('./Venue.class.js')
 const Person             = require('./Person.class.js')
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
@@ -172,20 +171,11 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve a venue of this conference.
-   * @param   {string} venue_label the label of the venue to access
-   * @returns {?Venue} the specified venue
-   */
-  getVenue(venue_label) {
-    let venue = (this._DATA.location || []).find(($place) => $place.description===venue_label)
-    return (venue) ? new Venue(venue) : null
-  }
-  /**
    * @summary Retrieve all venues of this conference.
-   * @returns {Array<Venue>} a shallow copy of the venues object of this conference
+   * @returns {Array<sdo.Accommodation>} a shallow copy of the venues object of this conference
    */
   getVenuesAll() {
-    return (this._DATA.location || []).slice(1).map(($place) => new Venue($place))
+    return (this._DATA.location || []).slice(1)
   }
 
   /**

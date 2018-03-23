@@ -12,7 +12,7 @@ block mainReference
     h1.h-Hidden Important Locations
     ul.o-List.o-Flex.o-Flex--even.c-Alert
       each $venue in site.currentConference.getVenuesAll()
-        li.o-List__Item.o-Flex__Item.c-Alert__Item: section
-          h1.-fz-el-mega= $venue.label
-          p(itemprop="location" itemscope="" itemtype="http://schema.org/Place")
-            != $venue.view.venue()
+        li.o-List__Item.o-Flex__Item.c-Alert__Item: section(itemprop="location" itemscope="" itemtype="http://schema.org/Accommodation")
+          img(alt="" src="" itemprop="image")
+          h1.-fz-el-mega(itemprop="description")= $venue.description
+          p!= Util.view([$venue]).venue()

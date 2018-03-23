@@ -58,7 +58,7 @@
           "addressRegion"  : "Oregon"
         },
         {
-          "@type": "Place",
+          "@type": "Accommodation",
           "description": "Conference Venue",
           "name"       : "Orego Convention Center",
           "url"        : "https://www.oregoncc.org/",
@@ -71,7 +71,7 @@
           }
         },
         {
-          "@type": "Place",
+          "@type": "Accommodation",
           "description": "Official Hotel",
           "name"       : "DoubleTree by Hilton Portland",
           "address"    : {
@@ -83,7 +83,7 @@
           }
         },
         {
-          "@type": "Place",
+          "@type": "Accommodation",
           "description": "Overflows",
           "name"       : "Courtyard Portland City Center",
           "address"    : {
@@ -555,7 +555,7 @@
           "addressRegion"  : "New York"
         },
         {
-          "@type": "Place",
+          "@type": "Accommodation",
           "description": "Conference Venue",
           "name"       : "New York Marriott Marquis",
           "url"        : "http://www.marriott.com/hotels/travel/nycmq-new-york-marriott-marquis/",
@@ -585,7 +585,7 @@
           "addressRegion"  : "Louisiana"
         },
         {
-          "@type": "Place",
+          "@type": "Accommodation",
           "description": "Conference Venue",
           "name"       : "New Orleans Mariott",
           "address"    : {
