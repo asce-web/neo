@@ -210,7 +210,7 @@ class Util {
        * @summary Call `Util.view(data).pass()` to render this display.
        * @function Util.VIEW.pass
        * @param   {Conference} $conference the conference to which these passes belong
-       * @param   {(Array<string>|!Object)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
        * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
        * @returns {string} HTML output
        */
@@ -225,26 +225,22 @@ class Util {
        * Parameter `data` should be of type `Array<{@link http://schema.org/Accommodation|sdo.Accommodation}>`.
        * @summary Call `Util.view(data).venue()` to render this display.
        * @function Util.VIEW.venue
-       * @param   {(Array<string>|!Object)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
        * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
        * @returns {string} HTML output
        */
       .addDisplay(function venue(queue = null) {
-        const xVenue = require('../tpl/x-venue.tpl.js')
-        return new xjs.DocumentFragment(xVenue.render(this[0])).innerHTML()
-        /*
         const xListVenue = require('../tpl/x-list-venue.tpl.js')
         let venue_titles = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let venues = this.filter((place) => (queue) ? venue_titles.includes(place.description) : true)
         return new xjs.DocumentFragment(xListVenue.render(venues)).innerHTML()
-         */
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
        * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
        * @summary Call `Util.view(data).speaker()` to render this display.
        * @function Util.VIEW.speaker
-       * @param   {(Array<string>|!Object)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
        * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
        * @returns {string} HTML output
        */

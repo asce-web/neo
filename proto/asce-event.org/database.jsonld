@@ -61,7 +61,7 @@
         {
           "@type": "Accommodation",
           "description": "Conference Venue",
-          "name"       : "Orego Convention Center",
+          "name"       : "Oregon Convention Center",
           "url"        : "https://www.oregoncc.org/",
           "address"    : {
             "@type": "PostalAddress",
@@ -611,6 +611,14 @@
         "Standard Pass",
         "Younger Member",
         "Student Pass"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name" : "Featured Venues",
+      "itemListElement": [
+        "Conference Venue",
+        "Official Hotel"
       ]
     },
     {

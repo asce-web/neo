@@ -1,4 +1,8 @@
 <template>
+  <section itemprop="location" itemscope="" itemtype="http://schema.org/Accommodation">
+    <h1 class="-fz-el-mega" itemprop="description">{{ description }}</h1>
+    <img alt="" src="" itemprop="image"/>
+    <p>
   <a class="h-Clearfix" href="{{ url }}" itemprop="url"><b itemprop="name">{{ name }}</b></a>
   <span class="h-Clearfix" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
     <slot class="h-Clearfix" itemprop="streetAddress">{{ streetAddress }}</slot>
@@ -8,4 +12,6 @@
     <slot itemprop="addressCountry">{{ addressCountry }}</slot>
   </span>
   <a href="tel:{{ telephone }}" itemprop="telephone">{{ telephone }}</a>
+    </p>
+  </section>
 </template>
