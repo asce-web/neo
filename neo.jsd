@@ -2,33 +2,39 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://conferences.style.asce.org/neo.jsd",
   "title": "Neo Theme",
-  "definitions": {
-    "Product": {
-      "$id": "#Product",
-      "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Thing.jsd" }]
-    }
-  },
   "allOf": [
-    { "$ref": "#Product" },
+    { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Product.jsd" },
+    { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/WebPage.jsd" },
     {
       "additionalProperties": false,
+      "$comment": "This schema is for development only. TODO Remove when ready for production.",
       "properties": {
         "@context"    : true,
         "@type"       : true,
         "@id"         : true,
+        "additionalType": true,
         "url"         : true,
         "name"        : true,
         "description" : true,
         "keywords"    : true,
-        "image"       : true,
-        "additionalType": true,
+        "logo"        : true,
         "color"       : true,
         "brand"       : true,
-        "$conferences": true,
-        "$currentConference": true,
-        "$previousConference": true,
-        "$nextConference": true,
-        "$queues": true
+        "$conferences": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Event.jsd" }]
+          }
+        },
+        "$currentConference" : { "type": "string", "format": "uri", "description": "Must match the 'url' property of an already-added conference." },
+        "$previousConference": { "type": "string", "format": "uri", "description": "Must match the 'url' property of an already-added conference." },
+        "$nextConference"    : { "type": "string", "format": "uri", "description": "Must match the 'url' property of an already-added conference." },
+        "$queues": {
+          "type": "array",
+          "items": {
+            "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" }]
+          }
+        }
       }
     }
   ]

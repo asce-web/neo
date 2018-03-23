@@ -14,8 +14,6 @@ STATE_DATA.push(...[
 ])
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
-const xDateblock          = require('../tpl/x-dateblock.tpl.js')
-const xTimeblock          = require('../tpl/x-timeblock.tpl.js')
 const xDirectory          = require('../tpl/x-directory.tpl.js')
 
 
@@ -26,36 +24,6 @@ const xDirectory          = require('../tpl/x-directory.tpl.js')
 class Util {
   /** @private */ constructor() {}
 
-  // TEMP TODO delete after extrajs-dom@3.3.0
-  static documentFragment(...contents) {
-    if (xjs.Object.typeOf(contents[0]) === 'array') return Util.documentFragment(...contents[0])
-    return contents.map((c) =>
-      (c instanceof Element) ? c.view.html() : c
-    ).join('')
-  }
-
-  /**
-   * @summary Convert a thing into a string.
-   * @description If the argument is an array, it is joined.
-   * Useful for JSON objects when the value could be a single string or an array of strings.
-   * @todo TODO move to `xjs.String`.
-   * @param   {*} thing anything to convert
-   * @param   {boolean=} truthy if `true`, the values `null` and `undefined` are converted to
-   *                            the strings `'null'` and `'undefined'` respectively;
-   *                            else, they are converted to the empty string
-   * @returns {string} a string version of the argument
-   */
-  static stringify(thing, truthy = false) {
-    const returned = {
-      'array'    : function (arg) { return arg.join('') },
-      'object'   : function (arg) { return JSON.stringify(arg) },
-      'string'   : function (arg) { return arg },
-      'null'     : function (arg) { return (truthy) ? 'null'      : '' },
-      'undefined': function (arg) { return (truthy) ? 'undefined' : '' },
-      default(arg) { return arg.toString() },
-    }
-    return (returned[xjs.Object.typeOf(thing)] || returned.default).call(null, thing)
-  }
 
   /**
    * NOTE: TYPE DEFINITION
@@ -162,7 +130,6 @@ class Util {
        * Return a Page object’s document outline as a nested ordered list.
        * Parameter `data` should be of type `Page`.
        * @summary Call `Util.view(data).pageToc()` to render this display.
-       * @todo TODO move this display to `require('sitepage').VIEW`
        * @function Util.VIEW.pageToc
        * @param   {!Object=} options options for configuring output
        * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
@@ -192,14 +159,14 @@ class Util {
       })
       /**
        * Return a snippet marking up a promoted location.
-       * Parameter `data` should be of type `{@link PostalAddress}`.
+       * Parameter `data` should be of type `{@link http://schema.org/PostalAddress|sdo.PostalAddress}`.
        * @summary Call `Util.view(data).promoLoc()` to render this display.
-       * @todo TODO move this display to `require('extrajs-geo')`
        * @function Util.VIEW.promoLoc
        * @param   {boolean=} state_code if `true`, displays region as its code (e.g. “Virginia” as “VA”)
        * @returns {string} HTML output
        */
-      .addDisplay(function promoLoc(state_code = false) {
+      .addDisplay(function promoLoc(state_code = false, flattened = false) {
+        // TODO import template from `require('aria-patterns')` v0.4.0+
         const returned = []
         if (this.addressLocality) returned.push(ElemName('span').attr('itemprop','addressLocality').textContent(this.addressLocality).outerHTML(), `, `)
         if (this.addressRegion) {
@@ -209,11 +176,11 @@ class Util {
             .outerHTML())
         }
         if (this.addressCountry) returned.push(`, `, ElemName('span').attr('itemprop','addressCountry').textContent(this.addressCountry).outerHTML())
-        return returned.join('')
+        return (!flattened) ? returned.join('') : jsdom.JSDOM.fragment(returned.join('')).textContent
       })
       /**
        * Return an unordered list of button links for a highlighted content block.
-       * Parameter `data` should be of type `Array<Element>` (TODO: sdo.WebPageElement), i.e., a list of links.
+       * Parameter `data` should be of type `Array<sdo.WebPageElement>`, i.e., a list of links.
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
        * @param   {string=} buttonclasses the classes to add to the buttons
@@ -221,37 +188,11 @@ class Util {
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
         const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
-        return new xjs.DocumentFragment(xListHighlightbuttons.render({ links: this.map((el) => ({ url: el.attr('href'), text: el.textContent() })), buttonclasses })).innerHTML()
-      })
-      /**
-       * Return a table containing a `<tbody.c-DateBlock>` component, containing
-       * rows of {@link DateRange.VIEW.dateBlock|DateRange#view.dateBlock()} displays.
-       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of important dates.
-       * @summary Call `Util.view(data).dateBlock()` to render this display.
-       * @function Util.VIEW.dateBlock
-       * @returns {string} HTML output
-       */
-      .addDisplay(function dateBlock() {
-        return new xjs.DocumentFragment(
-          xDateblock.render(this.map(($dateRange) => $dateRange._DATA))
-        ).innerHTML()
-      })
-      /**
-       * Return a table containing a `<tbody.c-TimeBlock>` component, containing
-       * rows of {@link DateRange.VIEW.timeBlock|DateRange#view.timeBlock()} displays.
-       * Parameter `data` should be of type `Array<sdo.Event>`, e.g., a list of sessions.
-       * @summary Call `Util.view(data).timeBlock()` to render this display.
-       * @function Util.VIEW.timeBlock
-       * @returns {string} HTML output
-       */
-      .addDisplay(function timeBlock() {
-        return new xjs.DocumentFragment(
-          xTimeblock.render(this.map((evnt, index) => ({ ...evnt, $is_last: index===this.length-1 })))
-        ).innerHTML()
+        return new xjs.DocumentFragment(xListHighlightbuttons.render({ links: this, buttonclasses })).innerHTML()
       })
       /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.
-       * Parameter `data` should be of type `Array<RegistrationPeriod>`.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/AggregateOffer|sdo.AggregateOffer}>`.
        * @summary Call `Util.view(data).registrationLegend()` to render this display.
        * @function Util.VIEW.registrationLegend
        * @returns {string} HTML output
@@ -259,13 +200,13 @@ class Util {
       .addDisplay(function registrationLegend() {
         const xListRegistrationicon = require('../tpl/x-list-registrationicon.tpl.js')
         return new xjs.DocumentFragment(
-          xListRegistrationicon.render(this.map((period) => period._DATA))
+          xListRegistrationicon.render(this)
         ).innerHTML()
       })
       /**
-       * Return a `<ul.o-ListStacked>` component, containing items of
-       * {@link Pass.VIEW.pass|Pass#view.pass()} displays.
-       * Parameter `data` should be of type `Array<Pass>`.
+       * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
+       * Parameter `data` should be of type `Array<!Object>`,
+       * where each entry is similar to an argument of the `Pass` constructor.
        * @summary Call `Util.view(data).pass()` to render this display.
        * @function Util.VIEW.pass
        * @param   {Conference} $conference the conference to which these passes belong
@@ -275,16 +216,32 @@ class Util {
        */
       .addDisplay(function pass($conference, queue = null) {
         const xListPass = require('../tpl/x-list-pass.tpl.js')
-        const pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let passes = this
-          .filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
-          .map((pass) => pass._DATA)
+        let pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let passes = this.filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
         return new xjs.DocumentFragment(xListPass.render({ passes, $conference })).innerHTML()
       })
       /**
-       * Return a `<ul.o-ListStacked>` component, containing items of
-       * {@link Person.VIEW.speaker|Person#view.speaker()} displays.
-       * Parameter `data` should be of type `Array<Person>`.
+       * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/Accommodation|sdo.Accommodation}>`.
+       * @summary Call `Util.view(data).venue()` to render this display.
+       * @function Util.VIEW.venue
+       * @param   {(Array<string>|!Object)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
+       * @returns {string} HTML output
+       */
+      .addDisplay(function venue(queue = null) {
+        const xVenue = require('../tpl/x-venue.tpl.js')
+        return new xjs.DocumentFragment(xVenue.render(this[0])).innerHTML()
+        /*
+        const xListVenue = require('../tpl/x-list-venue.tpl.js')
+        let venue_titles = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let venues = this.filter((place) => (queue) ? venue_titles.includes(place.description) : true)
+        return new xjs.DocumentFragment(xListVenue.render(venues)).innerHTML()
+         */
+      })
+      /**
+       * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
        * @summary Call `Util.view(data).speaker()` to render this display.
        * @function Util.VIEW.speaker
        * @param   {(Array<string>|!Object)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
@@ -293,10 +250,8 @@ class Util {
        */
       .addDisplay(function speaker(queue = null) {
         const xListSpeaker = require('../tpl/x-list-speaker.tpl.js')
-        const speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let speakers = this
-          .filter((person) => (queue) ? speaker_ids.includes(person.id) : true)
-          .map((speaker) => speaker._DATA)
+        let speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let speakers = this.filter((person) => (queue) ? speaker_ids.includes(person.identifier) : true)
         return new xjs.DocumentFragment(xListSpeaker.render(speakers)).innerHTML()
       })
       /**
@@ -331,17 +286,6 @@ class Util {
    */
   static toURL(str) {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
-  }
-
-  /**
-   * @summary Remove an item from an array.
-   * @description This method is impure: it modifies the given argument.
-   * @param  {Array} arr the array to modify
-   * @param  {unknown} item  the item to remove from the array
-   */
-  static spliceFromArray(arr, item) {
-    var index = arr.indexOf(item)
-    if (index >= 0) arr.splice(index, 1)
   }
 
   /**

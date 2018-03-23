@@ -10,13 +10,23 @@ const xjs = require('extrajs-dom')
  * @param {number} data.price the price for this attendee type given a certain pass and registration period
  */
 function xAttendeetype_renderer(frag, data) {
-  const Pass = require('../class/Pass.class.js')
+  /**
+   * @summary Options for formatting pass prices.
+   * @private
+   * @const {Intl.NumberFormat}
+   */
+  const PRICE_OPTIONS = new Intl.NumberFormat('en', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
+    maximumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
+  })
   frag.querySelector('.c-Pass__Attendee'         ).textContent = data.name
-  frag.querySelector('[itemprop="priceCurrency"]').value       = Pass.PRICE_OPTIONS.resolvedOptions().currency
-  frag.querySelector('[itemprop="priceCurrency"]').textContent = Pass.PRICE_OPTIONS.format(data.price)[0] // .charAt(0) // FIXME for USD only!
-  frag.querySelector('[itemprop="price"]'        ).textContent = Pass.PRICE_OPTIONS.format(data.price).slice(1)
+  frag.querySelector('[itemprop="priceCurrency"]').value       = PRICE_OPTIONS.resolvedOptions().currency
+  frag.querySelector('[itemprop="priceCurrency"]').textContent = PRICE_OPTIONS.format(data.price)[0] // .charAt(0) // FIXME for USD only!
+  frag.querySelector('[itemprop="price"]'        ).textContent = PRICE_OPTIONS.format(data.price).slice(1)
   new xjs.HTMLElement(frag.querySelector('[itemprop="priceSpecification"]'))
-    .attr('aria-label', `${data.price} ${Pass.PRICE_OPTIONS.resolvedOptions().currency}`)
+    .attr('aria-label', `${data.price} ${PRICE_OPTIONS.resolvedOptions().currency}`)
     .trimInner()
 }
 

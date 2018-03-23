@@ -5,6 +5,9 @@ const xjs = {
   ...require('extrajs-dom'),
 }
 
+const xListHighlightbuttons = require('./x-list-highlightbuttons.tpl.js')
+
+
 /**
  * @summary xHero renderer.
  * @param {DocumentFragment} frag the template content with which to render
@@ -17,7 +20,7 @@ const xjs = {
  * @param {string=} data.endDate   the ending date of the conference, in ISO string format
  * @param {sdo.PostalAddress=} data.location the promoted location of the conference
  * @param {string=} data.location.image the promoted location of the conference
- * @param {string=} data.$body body rich text // TEMP this should be buttons
+ * @param {Array<sdo.WebPageElement>=} data.$heroButtons a list of links serving as action buttons
  */
 function xHero_renderer(frag, data) {
   const Util = require('../class/Util.class.js')
@@ -28,7 +31,7 @@ function xHero_renderer(frag, data) {
 
   frag.querySelector('[itemprop="name"]'    ).textContent  = data.name
   frag.querySelector('meta[itemprop="url"]' ).content      = data.url
-  frag.querySelector('[itemprop="location"]').innerHTML    = Util.view(data.location).promoLoc()
+  frag.querySelector('[itemprop="location"]').innerHTML    = Util.view(data.location).promoLoc() // TODO use template from `require('aria-patterns')`
 
   let date_start = new Date(data.startDate)
   let date_end   = new Date(data.endDate  )
@@ -40,7 +43,12 @@ function xHero_renderer(frag, data) {
     .textContent(xjs.Date.format(date_end, 'M j'))
 
   frag.querySelector('[itemprop="description"]').textContent = data.description || ' ' // `&nbsp;` // cannot remove node due to SEO
-  frag.querySelector('slot[name="body"]'       ).innerHTML   = data.$body || ''
+
+  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(data.$heroButtons, function (f, d) {
+    new xjs.HTMLAnchorElement(f.querySelector('[itemprop="significantLink"]'))
+      .href       (d.url  || '#1')
+      .textContent(d.text || ''  )
+  })
 
   new xjs.HTMLElement(frag.querySelector('.c-ConfHed__Detail__Dates')).trimInner()
 }

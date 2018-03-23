@@ -12,7 +12,13 @@
         </span>
       </p>
       <p class="c-ConfHed__Theme h-Hidden-nM" itemprop="description">{{ description || '&nbsp;' }}</p>
-      <slot class="h-Block" name="body">{{ body }}</slot>
+      <ul class="o-List o-Flex o-Flex--even">
+        <template>
+          <li class="o-List__Item o-Flex__Item">
+            <a class="c-Button c-Button--hilite c-Button--primary" href="{{ url }}" itemprop="significantLink">{{ text }}</a>
+          </li>
+        </template>
+      </ul>
     </div>
   </header>
 </template>

@@ -15,8 +15,7 @@ const xjs = {
  * @param {string=} data.startDate the starting date of the conference, in ISO string format
  * @param {sdo.PostalAddress=} data.location the promoted location of the conference
  * @param {string=} data.location.image the promoted location of the conference
- * @param {string=} data.$blurb blurb promoting the prev/next conference
- * @param {string=} data.$body body rich text // TEMP this should be buttons
+ * @param {string=} data.disambiguatingDescription blurb promoting the prev/next conference
  */
 function xOtheryear_renderer(frag, data) {
   const Util = require('../class/Util.class.js')
@@ -27,16 +26,15 @@ function xOtheryear_renderer(frag, data) {
 
 
   frag.querySelector('[itemprop="name"]'         ).textContent  = data.name
+  frag.querySelector('a[itemprop="url"]'         ).href = data.url
   frag.querySelector('meta[itemprop="startDate"]').content      = data.startDate
-  frag.querySelector('[itemprop="location"]'     ).innerHTML    = Util.view(data.location).promoLoc()
+  frag.querySelector('[itemprop="location"]'     ).innerHTML    = Util.view(data.location).promoLoc() // TODO use template from `require('aria-patterns')`
 
-  if (data.$blurb) {
-    frag.querySelector('p.h-Hidden-nM').textContent = data.$blurb
+  if (data.disambiguatingDescription) {
+    frag.querySelector('[itemprop="disambiguatingDescription"]').textContent = data.disambiguatingDescription
   } else {
-    frag.querySelector('p.h-Hidden-nM').remove()
+    frag.querySelector('[itemprop="disambiguatingDescription"]').remove()
   }
-  frag.querySelector('slot[name="body"]').innerHTML = data.$body || ''
-  // frag.querySelector('meta[itemprop="url"]').content = data.url
 }
 
 module.exports = xjs.HTMLTemplateElement

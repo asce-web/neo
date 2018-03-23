@@ -47,103 +47,20 @@ class Person {
      * @type {!Object}
      */
     this._DATA = jsondata
-
-    /**
-     * The object name of this person.
-     * @private
-     * @final
-     * @type {!Object}
-     */
-    this._NAME = {
-      givenName      : jsondata.givenName       || jsondata.name || '',
-      familyName     : jsondata.familyName      || '',
-      additionalName : jsondata.additionalName  || '',
-      honorificPrefix: jsondata.honorificPrefix || '',
-      honorificSuffix: jsondata.honorificSuffix || '',
-    }
-  }
-
-  /**
-   * @summary The id of this person.
-   * @type {string}
-   */
-  get id() {
-    return this._DATA.identifier
   }
 
   /**
    * @summary The string name of this person if it exists; else the object name of this person.
-   * @todo TODO `get name()` should inherit from `Thing`, and make this `get $name()` a new method
    * @type {!Object}
    */
   get name() {
-    return this._NAME
-  }
-
-  /**
-   * @summary This person’s headshot image.
-   * @type {string}
-   */
-  get image() {
-    return this._DATA.image || ''
-  }
-
-  /**
-   * @summary This person’s homepage or website.
-   * @type {string}
-   */
-  get url() {
-    return this._DATA.url || ''
-  }
-
-  /**
-   * @summary This person’s email address.
-   * @type {string}
-   */
-  get email() {
-    return this._DATA.email || ''
-  }
-
-  /**
-   * @summary This person’s telephone number.
-   * @type {string}
-   */
-  get telephone() {
-    return this._DATA.telephone || ''
-  }
-
-
-  /**
-   * @summary This person’s job title.
-   * @type {string}
-   */
-  get jobTitle() {
-    return this._DATA.jobTitle || ''
-  }
-
-  /**
-   * @summary The name of this person’s affiliation.
-   * @type {string}
-   */
-  get affiliation() {
-    return this._DATA.affiliation && this._DATA.affiliation.name || ''
-  }
-
-  /**
-   * @summary Retrieve a social network profile of this person.
-   * @param   {string} name the name of the social network
-   * @returns {?Object} an object representing the social network profile
-   */
-  getSocial(name) {
-    return this.getSocialAll().find((url) => url.name===name) || null
-  }
-  /**
-   * @summary Return all social network profiles of this person.
-   * @todo TODO turn this into a getter
-   * @returns {Array<!Object>} all this person’s social media networks
-   */
-  getSocialAll() {
-    return (this._DATA.sameAs || []).map((url) => url)
+    return {
+      givenName      : this._DATA.givenName       || this._DATA.name || '',
+      familyName     : this._DATA.familyName      || '',
+      additionalName : this._DATA.additionalName  || '',
+      honorificPrefix: this._DATA.honorificPrefix || '',
+      honorificSuffix: this._DATA.honorificSuffix || '',
+    }
   }
 
 
@@ -184,7 +101,7 @@ class Person {
       .addDisplay(function affiliation() {
         return `${this.view()},
 <span class="-fs-t" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
-  <slot itemprop="name">${this.affiliation}</slot>
+  <slot itemprop="name">${this._DATA.affiliation && this._DATA.affiliation.name || ''}</slot>
 </span>
         `
       })
@@ -195,9 +112,9 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function contact() {
-        let returned = `<a href="mailto:${this.email}">${this.view()}</a>`
-        if (this.jobTitle ) returned = `${returned}, <slot itemprop="jobTitle">${this.jobTitle}</slot>`
-        if (this.telephone) returned = `${returned} | <a href="tel:${Util.toURL(this.telephone)}" itemprop="telephone">${this.telephone}</a>`
+        let returned = `<a href="mailto:${this._DATA.email || ''}">${this.view()}</a>`
+        if (this.jobTitle ) returned = `${returned}, <slot itemprop="jobTitle">${this._DATA.jobTitle || ''}</slot>`
+        if (this.telephone) returned = `${returned} | <a href="tel:${Util.toURL(this._DATA.telephone || '')}" itemprop="telephone">${this.telephone}</a>`
         return returned
       })
   }

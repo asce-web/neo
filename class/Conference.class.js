@@ -4,19 +4,15 @@ const xjs = {
 }
 const View = require('extrajs-view')
 
-const RegistrationPeriod = require('./RegistrationPeriod.class.js')
-const Pass               = require('./Pass.class.js')
-const DateRange          = require('./DateRange.class.js')
-const PostalAddress      = require('./PostalAddress.class.js')
-const Venue              = require('./Venue.class.js')
 const Person             = require('./Person.class.js')
-const Supporter          = require('./Supporter.class.js')
-const Exhibitor          = require('./Exhibitor.class.js')
 
+const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xHero           = require('../tpl/x-hero.tpl.js')
 const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
 const xProgram        = require('../tpl/x-program.tpl.js')
+const xDateblock      = require('../tpl/x-dateblock.tpl.js')
 const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
+const xExhibitor      = require('../tpl/x-exhibitor.tpl.js')
 
 
 /**
@@ -41,13 +37,13 @@ class Conference {
    * @param {Array<!Object>=} jsondata.location a list of locations of this conference: at least 1 entry.
    *                                            First entry: required; the promoted location; type {@link http://schema.org/PostalAddress};
    *                                            provide `image` property for location image.
-   *                                            Other entries: optional; other venues; type {@link http://schema.org/Place}.
-   * @param {Array<!Object>=} jsondata.offers a list of registration periods; types {@link http://schema.org/AggregateOffer}
+   *                                            Other entries: optional; other venues; type {@link http://schema.org/Accommodation}.
+   * @param {Array<sdo.AggregateOffer>=} jsondata.offers a list of registration periods
    * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
    * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
    * @param {Array<!Object>=} jsondata.subEvent a list of sessions; types {@link http://schema.org/Event}
    * @param {Array<!Object>=} jsondata.potentialAction a list of sessions; types {@link http://schema.org/Action}
-   * @param {Array<!Object>=} jsondata.performer a list of speakers at the conference; type {@link http://schema.org/Person}
+   * @param {Array<sdo.Person>=} jsondata.performer a list of speakers at the conference
    * @param {Array<!Object>=} jsondata.sponsor a list of supporters including non-sponsoring organizations; type {@link http://schema.org/Organization}
    * @param {Array<!Object>=} jsondata.$exhibitors a list of exhibitors; type {@link http://schema.org/Organization}
    * @param {Array<!Object>=} jsondata.organizer a list of organizers; type {@link http://schema.org/Person}
@@ -127,10 +123,10 @@ class Conference {
    * @description The promoted location is not necessarily the actual postal address of the conference,
    * but rather a major city nearest to the conference used for
    * promotional and advertising purposes.
-   * @type {PostalAddress}
+   * @type {sdo.PostalAddress}
    */
   get promoLoc() {
-    return new PostalAddress(this._DATA.location && this._DATA.location[0] || {})
+    return this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" }
   }
 
   /**
@@ -142,158 +138,51 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve a registration period of this conference.
-   * @param  {string} name the name of the registration period
-   * @returns {?RegistrationPeriod} the specified registration period
-   */
-  getRegistrationPeriod(name) {
-    let period = (this._DATA.offers || []).find(($offer) => $offer.name===name)
-    return (period) ? new RegistrationPeriod(period) : null
-  }
-  /**
    * @summary Retrieve all registration periods of this conference.
-   * @returns {Array<RegistrationPeriod>} a shallow array of all registration periods of this conference.
+   * @returns {Array<sdo.AggregateOffer>} a shallow array of all registration periods of this conference.
    */
   getRegistrationPeriodsAll() {
-    return (this._DATA.offers || []).map(($offer) => new RegistrationPeriod($offer))
+    return (this._DATA.offers || []).slice()
   }
 
   /**
    * @summary The current registration period.
    * @description The current registration period is the registration period that is active at this time.
    * If none has been set, the first registration period is returned.
-   * @type {RegistrationPeriod}
+   * @type {sdo.AggregateOffer}
    */
   get currentRegistrationPeriod() {
+    let default_ = {
+      "@type": "AggregateOffer",
+      "name" : "default",
+    }
     return (this._DATA.$currentRegistrationPeriod) ?
-      this.getRegistrationPeriod(this._DATA.$currentRegistrationPeriod) :
-      new RegistrationPeriod((this._DATA.offers && this._DATA.offers[0]) || {
-        "@type": "AggregateOffer",
-        "name" : "default",
-      })
+      this.getRegistrationPeriodsAll().find((pd) => pd.name === this._DATA.$currentRegistrationPeriod) || default_ :
+      this._DATA.offers && this._DATA.offers[0] || default_
   }
 
-  /**
-   * @summary Retrieve a pass of this conference.
-   * @param   {string} name the name of the pass
-   * @returns {?Pass} the specified pass
-   */
-  getPass(name) {
-    let pass = (this._DATA.$passes || []).find(($pass) => $pass.name===name)
-    return (pass) ? new Pass(pass) : null
-  }
   /**
    * @summary Retrieve all passes of this conference.
-   * @returns {Array<Pass>} a shallow array of all passes of this conference
+   * @returns {Array<!Object>} a shallow array of all passes of this conference
    */
   getPassesAll() {
-    return (this._DATA.$passes || []).map(($pass) => new Pass($pass))
+    return (this._DATA.$passes || []).slice()
   }
 
-  /**
-   * @summary Retrieve a session of this conference.
-   * @param   {string} name the name of the session
-   * @returns {?DateRange} the specified session
-   */
-  getSession(name) {
-    let session = (this._DATA.subEvent || []).find(($event) => $event.name===name)
-    return (session) ? new DateRange(session) : null
-  }
-  /**
-   * @summary Retrieve all sessions of this conference.
-   * @returns {Array<DateRange>} a shallow array of all sessions of this conference
-   */
-  getSessionsAll() {
-    return (this._DATA.subEvent || []).map(($event) => new DateRange($event))
-  }
-
-  /**
-   * @summary Retrieve a venue of this conference.
-   * @param   {string} venue_label the label of the venue to access
-   * @returns {?Venue} the specified venue
-   */
-  getVenue(venue_label) {
-    let venue = (this._DATA.location || []).find(($place) => $place.description===venue_label)
-    return (venue) ? new Venue(venue) : null
-  }
   /**
    * @summary Retrieve all venues of this conference.
-   * @returns {Array<Venue>} a shallow copy of the venues object of this conference
+   * @returns {Array<sdo.Accommodation>} a shallow copy of the venues object of this conference
    */
   getVenuesAll() {
-    return (this._DATA.location || []).slice(1).map(($place) => new Venue($place))
+    return (this._DATA.location || []).slice(1)
   }
 
-  /**
-   * @summary Retrieve a speaker of this conference.
-   * @param   {string} id the id of the speaker
-   * @returns {?Person} the specified speaker
-   */
-  getSpeaker(id) {
-    return this.getSpeakersAll().find((person) => person.id===id) || null
-  }
   /**
    * @summary Retrieve all speakers of this conference.
-   * @todo TODO turn this into a getter
-   * @returns {Array<Person>} a shallow array of all speakers of this conference
+   * @returns {Array<sdo.Person>} a shallow array of all speakers of this conference
    */
   getSpeakersAll() {
-    return (this._DATA.performer || []).map((person) => new Person(person))
-  }
-
-  /**
-   * @summary Retrieve a supporter of this conference.
-   * @param   {string} name the name of the supporter
-   * @returns {?Supporter} the specified supporter
-   */
-  getSupporter(name) {
-    let supporter = (this._DATA.sponsor || []).find(($org) => $org.name===name)
-    return (supporter) ? new Supporter(supporter) : null
-    // return this.getSupportersAll().find(($supporter) => $supporter.name === name) || null // TODO use this pattern instead
-  }
-  /**
-   * @summary Retrieve all supporters of this conference.
-   * @todo TODO turn this into a getter
-   * @returns {Array<Supporter>} a shallow array of all supporters of this conference
-   */
-  getSupportersAll() {
-    return (this._DATA.sponsor || []).map(($org) => new Supporter($org))
-  }
-
-  /**
-   * @summary Retrieve an exhibitor of this conference.
-   * @param   {string} name the name of the exhibitor
-   * @returns {?Exhibitor} the specified exhibitor
-   */
-  getExhibitor(name) {
-    let exhibitor = (this._DATA.$exhibitors || []).find(($org) => $org.name===name)
-    return (exhibitor) ? new Exhibitor(exhibitor) : null
-    // return this.getExhibitorsAll().find(($exhibitor) => $exhibitor.name===name) || null // TODO use this pattern instead
-  }
-  /**
-   * @summary Retrieve all exhibitors of this conference.
-   * @todo TODO turn this into a getter
-   * @returns {Array<Exhibitor>} a shallow array of all exhibitors of this conference
-   */
-  getExhibitorsAll() {
-    return (this._DATA.$exhibitors || []).map(($org) => new Exhibitor($org))
-  }
-
-  /**
-   * @summary Retrieve an important date of this conference.
-   * @param   {string} name the name of the important date
-   * @returns {?DateRange} the specified important date
-   */
-  getImportantDate(name) {
-    let date = (this._DATA.potentialAction || []).find(($action) => $action.name===name)
-    return (date) ? new DateRange(date) : null
-  }
-  /**
-   * @summary Retrieve all important dates of this conference.
-   * @returns {Array<DateRange>} a shallow array of all important dates of this conference
-   */
-  getImportantDatesAll() {
-    return (this._DATA.potentialAction || []).map(($action) => new DateRange($action))
+    return (this._DATA.performer || []).slice()
   }
 
   /**
@@ -316,20 +205,11 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve a social network profile of this conference.
-   * @param   {string} name the name of the social network
-   * @returns {?Object} an object representing the social network profile
-   */
-  getSocial(name) {
-    return this.getSocialAll().find((url) => url.name===name) || null
-  }
-  /**
    * @summary Return an object representing all social network profiles of this conference.
-   * @todo TODO turn this into a getter
    * @returns {Array<!Object>} all this conference’s social media networks
    */
   getSocialAll() {
-    return (this._DATA.sameAs || []).map((url) => url)
+    return (this._DATA.sameAs || []).slice()
   }
 
   // setPrice(reg_period, pass, membership, price) {
@@ -363,34 +243,40 @@ class Conference {
        * Return a `<header>` element with hero image marking up this conference’s main info.
        * @summary Call `Conference#view.hero()` to render this display.
        * @function Conference.VIEW.hero
-       * @param   {string=} block custom HTML to insert at the end
        * @returns {string} HTML output
        */
-      .addDisplay(function hero(block = '') {
+      .addDisplay(function hero() {
         return new xjs.DocumentFragment(xHero.render({
           ...this._DATA,
-          location: this._DATA.location[0],
-          $body: block,
+          location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
         })).innerHTML()
       })
       /**
        * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
        * @summary Call `Conference#view.otherYear()` to render this display.
        * @function Conference.VIEW.otherYear
-       * @param   {string=} blurb custom HTML to advertise the prev/next year
-       * @param   {string=} block custom HTML to insert at the end
        * @returns {string} HTML output
        */
-      .addDisplay(function otherYear(blurb = '', block = '') {
+      .addDisplay(function otherYear() {
         return new xjs.DocumentFragment(xOtheryear.render({
           ...this._DATA,
-          location: this._DATA.location[0],
-          $blurb: blurb,
-          $body: block,
+          location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
         })).innerHTML()
       })
       /**
-       * Return a `<fieldset.o-Tablist>` Object marking up this conference’s program sessions.
+       * Return a `xDateblock` component marking up this conference’s important dates.
+       * @summary Call `Conference#view.importantDates()` to render this display.
+       * @function Conference.VIEW.importantDates
+       * @param   {boolean=} starred `true` if you want only starred dates to display
+       * @returns {string} HTML output
+       */
+      .addDisplay(function importantDates(starred = false) {
+        return new xjs.DocumentFragment(xDateblock.render(
+          (this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
+        )).innerHTML()
+      })
+      /**
+       * Return an `<.o-Tablist[role="tablist"]>` marking up this conference’s program sessions.
        * Each tab contains a Program Heading Component
        * and its panel contains a Time Block Component for that date.
        * @summary Call `Conference#view.program()` to render this display.
@@ -402,7 +288,7 @@ class Conference {
       .addDisplay(function program(id, starred = false) {
         return new xjs.DocumentFragment(xProgram.render({
           id,
-          sessions: this._DATA.subEvent.filter((s) => (starred) ? s.$starred : true),
+          sessions: (this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
           starred,
         })).innerHTML()
       })
@@ -436,13 +322,24 @@ class Conference {
               xSupporterLevel.render({
                 name: d.item,
                 classname: (small) ? 'c-SupporterBlock--sml' : (d.index + 1  <  data.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
-                supporters: this.getSupportersAll().filter((supporter) => supporter._DATA.$level === d.item),
+                supporters: (this._DATA.sponsor || []).filter((supporter) => supporter.$level === d.item),
               })
             )
           }, this)
         })
         let supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         return new xjs.DocumentFragment(xLevelList.render(supporterlevels, this)).innerHTML()
+      })
+      /**
+       * Return a list of `<div>` elements marking up this conference’s exhibitors.
+       * @summary Call `Conference#view.exhibitorList()` to render this display.
+       * @function Conference.VIEW.exhibitorList
+       * @returns {string} HTML output
+       */
+      .addDisplay(function exhibitorList() {
+        return ElemName('ul').append(
+          ...(this._DATA.$exhibitors || []).map((org) => ElemName('li').append(xExhibitor.render(org)))
+        ).outerHTML()
       })
   }
 }

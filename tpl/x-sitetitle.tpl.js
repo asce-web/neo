@@ -6,13 +6,13 @@ const xjs = {
 }
 
 /**
- * @summary A `<ul>` element listing the registration periods in a legend.
+ * @summary A `<a.c-SiteTitle>` element containing the site logo and title, linking to the home page.
  * @param {DocumentFragment} frag the template content with which to render
- * @param {Array<sdo.AggregateOffer>} data array of registration periods, each with:
- * @param {string} data.name the site title (name of the website)
- * @param {string=} data.description the site slogan
- * @param {string} data.url the site url
- * @param {string=} data.logo the site logo
+ * @param {(sdo.Product&sdo.WebPage)} data http://schema.org/Product & http://schema.org/WebPage
+ * @param {string}  data.name        http://schema.org/name
+ * @param {string}  data.url         http://schema.org/url
+ * @param {string=} data.description http://schema.org/description
+ * @param {string=} data.logo        http://schema.org/logo
  */
 function xSitetitle_renderer(frag, data) {
   frag.querySelector('[itemprop="name"]'       ).textContent = data.name

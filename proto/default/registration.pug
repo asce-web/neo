@@ -14,6 +14,6 @@ block mainReference
     != Util.view(site.currentConference.getRegistrationPeriodsAll()).registrationLegend()
     -
       let highlight_buttons = [
-        ElemName('a').attr('href','#0').textContent(`Register Today!`)
+        { "@type": "WebPageElement", "text": "Register Today!", "url": "#0" },
       ]
     != Util.view(highlight_buttons).highlightButtons('c-Button--secondary')
