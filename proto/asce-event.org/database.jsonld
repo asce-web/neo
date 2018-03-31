@@ -12,7 +12,7 @@
     "@type": "NGO",
     "name": "American Society of Civil Engineers",
     "url" : "http://www.asce.org",
-    "sameAs": [
+    "$social": [
       { "@type": "URL", "name": "twitter" , "url": "//twitter.com/ASCE"    , "description": "Follow ASCE on Twitter" },
       { "@type": "URL", "name": "google"  , "url": "//plus.google.com/ASCE", "description": "Follow ASCE on Google+" },
       { "@type": "URL", "name": "facebook", "url": "//facebook.com/ASCE"   , "description": "Like ASCE on Facebook" },
@@ -228,7 +228,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Administrator of Interior Engineering",
           "affiliation": "German Chamber of Architects",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -248,7 +248,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Director of Water Engineering and Technical Services (WETS)",
           "affiliation": "Los Angeles Department of Water and Power",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -267,7 +267,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Director of Modernization and Development",
           "affiliation": "Planning & Development Group (PDG), Los Angeles World Airports",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -286,7 +286,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Director",
           "affiliation": "Oklahoma Geological Survey",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -305,7 +305,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Geotechnical Engineering Professor, Kimmell-Bernard Chair in Engineering, David Ross Boyd and Presidential Professor",
           "affiliation": "University of Oklahoma",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -534,7 +534,7 @@
           "affiliation": "HNTB Corporation"
         }
       ],
-      "sameAs": [
+      "$social": [
         { "@type": "URL", "name": "twitter" , "url": "https://twitter.com/hashtag/#asce2016", "description": "Follow #ASCE2016 on Twitter" },
         { "@type": "URL", "name": "google"  , "url": "#0"                                   , "description": "Follow #ASCE2016 on Google+" },
         { "@type": "URL", "name": "facebook", "url": "#0"                                   , "description": "Follow #ASCE2016 on Facebook" }
