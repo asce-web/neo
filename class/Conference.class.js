@@ -186,22 +186,11 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve an organizer of this conference.
-   * @param   {string} id the name of the organizer
-   * @returns {?Person} the specified organizer
-   */
-  getOrganizer(id) {
-    let organizer = (this._DATA.organizer || []).find(($person) => $person.identifier===id)
-    return (organizer) ? new Person(organizer) : null
-    // return this.getOrganizersAll().find(($organizer) => $organizer.id===id) || null // TODO use this pattern instead
-  }
-  /**
    * @summary Retrieve all organizers of this conference.
-   * @todo TODO turn this into a getter
-   * @returns {Array<Person>} a shallow array of all organizers of this conference
+   * @returns {Array<sdo.Person>} a shallow array of all organizers of this conference
    */
   getOrganizersAll() {
-    return (this._DATA.organizer || []).map(($person) => new Person($person))
+    return (this._DATA.organizer || []).slice()
   }
 
   /**

@@ -238,6 +238,41 @@ class Util {
         return new xjs.DocumentFragment(xListSpeaker.render(items)).innerHTML()
       })
       /**
+       * Return a `<ul>` element, containing conference chairs and/or co-chairs.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
+       * @summary Call `Util.view(data).chairs()` to render this display.
+       * @function Util.VIEW.chairs
+       * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
+       * @returns {string} HTML output
+       */
+      .addDisplay(function chairs(queue = null) {
+        const jsdom = require('jsdom')
+        const {xPersonFullname} = require('aria-patterns')
+        const xListChair = new xjs.HTMLTemplateElement(jsdom.JSDOM.fragment(`
+          <template>
+            <ul>
+              <template>
+                <li itemprop="organizer" itemscope="" itemtype="http://schema.org/Person">
+                  <link rel="import" data-import="document" href="../node_modules/aria-patterns/x-person-fullname/tpl/x-person-fullname.tpl.html"/>
+                </li>
+              </template>
+            </ul>
+          </template>
+        `).querySelector('template'))
+          .exe(function () {
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xPersonFullname.render(d)) // TODO: use xPersonAffiliation
+            })
+          })
+        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
+        return new xjs.DocumentFragment(xListChair.render(items)).innerHTML()
+      })
+      /**
        * Return a `<ul.c-SocialList>` component, containing
        * markup for social media profiles.
        * Parameter `data` should be of type `Array<{@link http://schema.org/WebPageElement|sdo.WebPageElement}>`,

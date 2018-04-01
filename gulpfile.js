@@ -66,7 +66,6 @@ gulp.task('pug:default', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        ElemName: require('./lib/ElemName.js'), // TEMP until we remove pug
         xjs: require('extrajs-dom'),
         Util: require('./class/Util.class.js'),
         site: new ConfSite(requireOther('./proto/default/database.jsonld')).init(),
@@ -80,7 +79,6 @@ gulp.task('pug:sample', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        ElemName: require('./lib/ElemName.js'), // TEMP until we remove pug
         Util   : require('./class/Util.class.js'),
         site: (function () {
           const returned = new ConfSite(requireOther('./proto/asce-event.org/database.jsonld')).init()
