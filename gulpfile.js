@@ -79,6 +79,7 @@ gulp.task('pug:sample', function () {
       basedir: './',
       locals: {
         Util   : require('./class/Util.class.js'),
+        Person  : require('./class/Person.class.js'),
         site: (function () {
           const returned = new ConfSite(requireOther('./proto/asce-event.org/database.jsonld')).init()
           function pageTitle() { return this.name() + ' | ' + returned.name() }
