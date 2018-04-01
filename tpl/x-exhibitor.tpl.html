@@ -1,6 +1,7 @@
 <template>
   <div itemscope="" itemtype="http://schema.org/Organization">
-    <a href="{{ url }}" rel="external nofollow" itemprop="url">
+    <strong class="h-Hidden">sponsor:</strong>
+    <a class="-fw-b" href="{{ url }}" rel="external nofollow" itemprop="url">
       <slot itemprop="name">{{ name }}</slot>
       (booth <slot name="booth">{{ booth }}</slot>)
     </a>
