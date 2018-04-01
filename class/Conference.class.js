@@ -6,7 +6,6 @@ const View = require('extrajs-view')
 
 const Person             = require('./Person.class.js')
 
-const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xHero           = require('../tpl/x-hero.tpl.js')
 const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
 const xProgram        = require('../tpl/x-program.tpl.js')
@@ -326,9 +325,28 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function exhibitorList() {
-        return ElemName('ul').append(
-          ...(this._DATA.$exhibitors || []).map((org) => ElemName('li').append(xExhibitor.render(org)))
-        ).outerHTML()
+        const jsdom = require('jsdom')
+        const {xPersonFullname} = require('aria-patterns')
+        const xListExhibitor = new xjs.HTMLTemplateElement(jsdom.JSDOM.fragment(`
+          <template>
+            <ul>
+              <template>
+                <li>
+                  <link rel="import" data-import="document" href="../tpl/x-exhibitor.tpl.html"/>
+                </li>
+              </template>
+            </ul>
+          </template>
+        `).querySelector('template'))
+          .exe(function () {
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xExhibitor.render(d))
+            })
+          })
+        return new xjs.DocumentFragment(xListExhibitor.render(this._DATA.$exhibitors || [])).innerHTML()
       })
   }
 }
