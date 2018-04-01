@@ -2,8 +2,9 @@ const path = require('path')
 
 const xjs = require('extrajs-dom')
 
+const {xPersonFullname} = require('aria-patterns')
+
 const Util = require('../class/Util.class.js')
-const xPersonFullname = require('./x-person-fullname.tpl.js')
 const xListSocial = require('../tpl/x-list-social.tpl.js')
 
 

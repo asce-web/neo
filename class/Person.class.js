@@ -5,9 +5,9 @@ const xjs = {
   ...require('extrajs-dom'),
 }
 const View    = require('extrajs-view')
+const {xPersonFullname} = require('aria-patterns')
 
 const Util    = require('./Util.class.js')
-const xPersonFullname = require('../tpl/x-person-fullname.tpl.js')
 
 
 /**
