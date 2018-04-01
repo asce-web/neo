@@ -34,7 +34,7 @@ function xHero_renderer(frag, data) {
   frag.querySelector('slot[name="location"]').append(xAddress.render({
     ...data.location,
     $itemprop: 'location',
-    $regionName: false,
+    $regionName: true,
   }))
 
   let date_start = new Date(data.startDate)

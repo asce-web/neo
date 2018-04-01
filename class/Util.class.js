@@ -1,17 +1,11 @@
 const fs = require('fs')
 const path = require('path')
 
-const jsdom = require('jsdom')
-
 const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
 const View    = require('extrajs-view')
-const STATE_DATA = require('extrajs-geo')
-STATE_DATA.push(...[
-  { "code": "DC", "name": "District of Columbia" },
-])
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xDirectory          = require('../tpl/x-directory.tpl.js')
@@ -168,7 +162,7 @@ class Util {
         const {xAddress} = require('aria-patterns')
         return new xjs.DocumentFragment(xAddress.render({
           ...this,
-          $regionName: false,
+          $regionName: true,
         })).trimInner().textContent()
       })
       /**

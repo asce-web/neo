@@ -32,7 +32,7 @@ function xOtheryear_renderer(frag, data) {
   frag.querySelector('slot[name="location"]'     ).append(xAddress.render({
     ...data.location,
     $itemprop: 'location',
-    $regionName: false,
+    $regionName: true,
   }))
 
   if (data.disambiguatingDescription) {

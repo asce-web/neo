@@ -54,7 +54,7 @@
         {
           "@type": "PostalAddress",
           "addressLocality": "Portland",
-          "addressRegion"  : "Oregon",
+          "addressRegion"  : "OR",
           "image"          : "/proto/asce-event.org/files/portland.jpg",
           "description"    : "With sweeping views of the surrounding mountains and a bustling downtown full of shopping, locally sourced dining, and entertainment, Portland is a wonderful destination for business and leisure."
         },
@@ -553,7 +553,7 @@
         {
           "@type": "PostalAddress",
           "addressLocality": "New York",
-          "addressRegion"  : "New York"
+          "addressRegion"  : "NY"
         },
         {
           "@type": "Accommodation",
@@ -583,7 +583,7 @@
         {
           "@type": "PostalAddress",
           "addressLocality": "New Orleans",
-          "addressRegion"  : "Louisiana"
+          "addressRegion"  : "LA"
         },
         {
           "@type": "Accommodation",
