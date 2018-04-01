@@ -203,9 +203,9 @@ class Util {
        */
       .addDisplay(function pass($conference, queue = null) {
         const xListPass = require('../tpl/x-list-pass.tpl.js')
-        let pass_names = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let passes = this.filter((pass) => (queue) ? pass_names.includes(pass.name) : true)
-        return new xjs.DocumentFragment(xListPass.render({ passes, $conference })).innerHTML()
+        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let items = this.filter((item) => (queue) ? item_keys.includes(item.name) : true)
+        return new xjs.DocumentFragment(xListPass.render({ passes: items, $conference })).innerHTML()
       })
       /**
        * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
@@ -218,9 +218,9 @@ class Util {
        */
       .addDisplay(function venue(queue = null) {
         const xListVenue = require('../tpl/x-list-venue.tpl.js')
-        let venue_titles = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let venues = this.filter((place) => (queue) ? venue_titles.includes(place.description) : true)
-        return new xjs.DocumentFragment(xListVenue.render(venues)).innerHTML()
+        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let items = this.filter((item) => (queue) ? item_keys.includes(item.description) : true)
+        return new xjs.DocumentFragment(xListVenue.render(items)).innerHTML()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
@@ -233,9 +233,9 @@ class Util {
        */
       .addDisplay(function speaker(queue = null) {
         const xListSpeaker = require('../tpl/x-list-speaker.tpl.js')
-        let speaker_ids = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let speakers = this.filter((person) => (queue) ? speaker_ids.includes(person.identifier) : true)
-        return new xjs.DocumentFragment(xListSpeaker.render(speakers)).innerHTML()
+        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
+        return new xjs.DocumentFragment(xListSpeaker.render(items)).innerHTML()
       })
       /**
        * Return a `<ul.c-SocialList>` component, containing
