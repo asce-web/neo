@@ -32,9 +32,9 @@ const xListSocial = require('../tpl/x-list-social.tpl.js')
  */
 function xSpeaker_renderer(frag, data) {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
-  frag.querySelector('[itemprop="image"]'                        ).src         = data.image
-  frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle
-  frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation
+  frag.querySelector('[itemprop="image"]'                        ).src         = data.image || ''
+  frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle || ''
+  frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation && data.affiliation.name || ''
 
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 

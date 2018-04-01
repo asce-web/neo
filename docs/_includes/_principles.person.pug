@@ -23,21 +23,6 @@ p.
     "affiliation": "HDR Engineering, Inc."
   })
 figure.docs-figure
-  figcaption This is a person with #[em.-fw-b affiliation]: entire name along with any affiliation.
-  ul: li(itemscope="" itemtype="http://schema.org/Person")!= drew.view.affiliation()
-  +microdataCheckbox('person-affiliation')
-    pre.docs-pre.
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificPrefix"]&gt;Dr.&lt;/span&gt;
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="givenName"]&gt;Drew&lt;/span&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="additionalName"]&gt;P.&lt;/span&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="familiyName"]&gt;Caracciolo&lt;/span&gt;
-      &lt;/span&gt;,
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificSuffix"]&gt;Ph.D., M.ASCE&lt;/span&gt;,
-      &lt;span class="-fs-t"#[mark.docs-c-Togglable__Text  itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization"]&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;HDR Engineering, Inc.&lt;/span&gt;
-      &lt;/span&gt;
-figure.docs-figure
   figcaption This is a person with #[em.-fw-b contact information]: full name along with email (linked) and phone number.
   ul: li(itemscope="" itemtype="http://schema.org/Person")!= drew.view.contact()
   +microdataCheckbox('person-contact')

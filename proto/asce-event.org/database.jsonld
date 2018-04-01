@@ -227,7 +227,10 @@
           "email"      : "example@asce.org",
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Administrator of Interior Engineering",
-          "affiliation": "German Chamber of Architects",
+          "affiliation": {
+            "@type": "Organization",
+            "name": "German Chamber of Architects"
+          },
           "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
@@ -247,7 +250,10 @@
           "email"      : "example@asce.org",
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Director of Water Engineering and Technical Services (WETS)",
-          "affiliation": "Los Angeles Department of Water and Power",
+          "affiliation": {
+            "@type": "Organization",
+            "name": "Los Angeles Department of Water and Power"
+          },
           "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
@@ -266,7 +272,10 @@
           "email"      : "example@asce.org",
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Director of Modernization and Development",
-          "affiliation": "Planning & Development Group (PDG), Los Angeles World Airports",
+          "affiliation": {
+            "@type": "Organization",
+            "name": "Planning & Development Group (PDG), Los Angeles World Airports"
+          },
           "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
@@ -285,7 +294,10 @@
           "email"      : "example@asce.org",
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Director",
-          "affiliation": "Oklahoma Geological Survey",
+          "affiliation": {
+            "@type": "Organization",
+            "name": "Oklahoma Geological Survey"
+          },
           "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
@@ -304,7 +316,10 @@
           "email"      : "example@asce.org",
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Geotechnical Engineering Professor, Kimmell-Bernard Chair in Engineering, David Ross Boyd and Presidential Professor",
-          "affiliation": "University of Oklahoma",
+          "affiliation": {
+            "@type": "Organization",
+            "name": "University of Oklahoma"
+          },
           "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
@@ -521,7 +536,10 @@
           "additionalName" : "Joseph",
           "familyName"     : "McCollough",
           "honorificSuffix": "P.E., M.ASCE",
-          "affiliation": "HDR Engineering, Inc."
+          "affiliation"    : {
+            "@type": "Organization",
+            "name": "HDR Engineering, Inc."
+          }
         },
         {
           "@type": "Person",
@@ -531,7 +549,10 @@
           "additionalName" : "Eric",
           "familyName"     : "Dickenson",
           "honorificSuffix": "Ph.D., P.E., D.PE, M.ASCE",
-          "affiliation": "HNTB Corporation"
+          "affiliation"    : {
+            "@type": "Organization",
+            "name": "HNTB Corporation"
+          }
         }
       ],
       "$social": [

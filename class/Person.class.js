@@ -93,19 +93,6 @@ class Person {
       return new xjs.DocumentFragment(xPersonFullname.render(this.name)).innerHTML()
     }, this)
       /**
-       * Return this person’s name in "FullName, Affiliation" format.
-       * @summary Call `Person#view.affiliation()` to render this display.
-       * @function Person.VIEW.affiliation
-       * @returns {string} HTML output
-       */
-      .addDisplay(function affiliation() {
-        return `${this.view()},
-<span class="-fs-t" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
-  <slot itemprop="name">${this._DATA.affiliation && this._DATA.affiliation.name || ''}</slot>
-</span>
-        `
-      })
-      /**
        * Return this person’s name in "FullName, Director of ... | 555-555-5555" format.
        * @summary Call `Person#view.contact()` to render this display.
        * @function Person.VIEW.contact

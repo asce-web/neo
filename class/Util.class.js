@@ -247,13 +247,13 @@ class Util {
        */
       .addDisplay(function chairs(queue = null) {
         const jsdom = require('jsdom')
-        const {xPersonFullname} = require('aria-patterns')
+        const xPersonAffiliation = require('../tpl/x-person-affiliation.tpl.js')
         const xListChair = new xjs.HTMLTemplateElement(jsdom.JSDOM.fragment(`
           <template>
             <ul>
               <template>
                 <li itemprop="organizer" itemscope="" itemtype="http://schema.org/Person">
-                  <link rel="import" data-import="document" href="../node_modules/aria-patterns/x-person-fullname/tpl/x-person-fullname.tpl.html"/>
+                  <link rel="import" data-import="document" href="../tpl/x-person-affiliation.tpl.html"/>
                 </li>
               </template>
             </ul>
@@ -264,7 +264,7 @@ class Util {
           })
           .setRenderer(function (frag, data) {
             new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xPersonFullname.render(d)) // TODO: use xPersonAffiliation
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xPersonAffiliation.render(d))
             })
           })
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
