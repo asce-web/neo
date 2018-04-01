@@ -1,18 +1,19 @@
+const path = require('path')
+
 const Ajv      = require('ajv')
 
+const xjs      = require('extrajs-dom')
 const Page     = require('sitepage').Page
-const HTMLElement  = require('extrajs-dom').HTMLElement
 const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
-
 const {META_SCHEMATA, SCHEMATA} = require('schemaorg-jsd')
+const requireOther = require('schemaorg-jsd/lib/requireOther.js')
 
 const Conference = require('./Conference.class.js')
-const ConfPage = require('./ConfPage.class.js')
+const ConfPage   = require('./ConfPage.class.js')
 
+const xSitetitle = require('../tpl/x-sitetitle.tpl.js')
 
-const path = require('path')
-const requireOther = require('schemaorg-jsd/lib/requireOther.js')
 const NEO_SCHEMA = requireOther(path.join(__dirname, '../neo.jsd'))
 
 
@@ -30,24 +31,24 @@ class ConfSite extends Page {
    * @param {string} jsondata.url url of the landing page for this site
    * @param {string=} jsondata.description the slogan (or tagline) of this site
    * @param {Array<string>=} jsondata.keywords keywords for this site
-   * @param {string=} jsondata.image url of the logo file
-   * @param {Array<string>=} jsondata.color two color strings: `[primary, secondary]`, in formats supported by `extrajs-color`
-   * @param {!Object=} jsondata.brand the publisher/brand responsible for this site; type {@link http://schema.org/Organization}
-   * @param {Array<!Object>} jsondata.$conferences an array of conferences; types {@link http://schema.org/Event}
+   * @param {string=} jsondata.logo url of the logo file
+   * @param {Array<string>=} jsondata.color two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`
+   * @param {sdo.Organization=} jsondata.brand the publisher/brand responsible for this site
+   * @param {Array<!Object>=}   jsondata.brand.$social a list of social media links for this site; type {@link http://schema.org/URL}
+   * @param {string}            jsondata.brand.$social.name the name or identifier of the social media service (used for icons)
+   * @param {string}            jsondata.brand.$social.url the URL of the site’s social media profile or page
+   * @param {string=}           jsondata.brand.$social.description short alternative text for non-visual media
+   * @param {Array<sdo.Event>} jsondata.$conferences an array of conferences
    * @param {string} jsondata.$currentConference  the url of an existing conference; used as the current  conference in this series
    * @param {string} jsondata.$previousConference the url of an existing conference; used as the previous conference in this series
    * @param {string} jsondata.$nextConference     the url of an existing conference; used as the next     conference in this series
-   * @param {Array<!Object>=} jsondata.$queues a list containing types {@link http://schema.org/ItemList}, which list any number and type of things
+   * @param {Array<sdo.ItemList>=} jsondata.$queues An array of ItemLists, each whose items are number and type of things
    *                                           The following queues are recommended:
    *                                           - Featured Passes
    *                                           - Featured Speakers
    *                                           - Top Sponsors
    *                                           - Non-Sponsors
    *                                           - All Sponsors
-   * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this site; type {@link http://schema.org/URL}
-   * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
-   * @param {string} jsondata.sameAs.url the URL of the site’s social media profile or page
-   * @param {string=} jsondata.sameAs.description short alternative text for non-visual media
    */
   constructor(jsondata) {
     super({ name: jsondata.name, url: jsondata.url })
@@ -58,8 +59,8 @@ class ConfSite extends Page {
     ajv.addMetaSchema(META_SCHEMATA).addSchema(SCHEMATA)
     let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata)
     if (!is_data_valid) {
-      let e = new TypeError(ajv.errors[0].message)
-      e.details = ajv.errors[0]
+      let e = new TypeError(ajv.errors.map((e) => e.message).join('\n'))
+      e.details = ajv.errors
       console.error(e)
       throw e
     }
@@ -73,33 +74,6 @@ class ConfSite extends Page {
     this._DATA = jsondata
   }
 
-  /**
-   * @summary Overwrite superclass description() method.
-   * @description This method only gets the description, it does not set it.
-   * @todo TODO: update this to an ES6 getter once {@link Page#description} is updated.
-   * @override
-   * @param   {*} arg any argument
-   * @returns {string} the description of this site
-   */
-  description(arg) {
-    return super.description()
-  }
-  /**
-   * @summary The slogan of this site.
-   * @description The slogan is very brief, and is fixed for the entire series of conferences.
-   * @type {string}
-   */
-  get slogan() {
-    return this.description()
-  }
-
-  /**
-   * @summary The url of this site’s logo.
-   * @type {string} url of the logo
-   */
-  get logo() {
-    return this._DATA.image || ''
-  }
 
   /**
    * @summary The colors for this site: a CSS object containg custom properties with color string values.
@@ -123,7 +97,6 @@ class ConfSite extends Page {
   }
   /**
    * @summary Retrieve all conferences added to this site.
-   * @todo TODO make this a getter
    * @returns {Array<Conference>} all conferences of this site
    */
   getConferencesAll() {
@@ -172,20 +145,11 @@ class ConfSite extends Page {
   }
 
   /**
-   * @summary Retrieve a social network profile of this site.
-   * @param   {string} name the name of the social network
-   * @returns {?Object} an object representing the social network profile
-   */
-  getSocial(name) {
-    return this.getSocialAll().find((url) => url.name===name) || null
-  }
-  /**
    * @summary Return all social network profiles of this site.
-   * @todo TODO turn this into a getter
    * @returns {Array<!Object>} all this site’s social media networks
    */
   getSocialAll() {
-    return (this._DATA.sameAs || []).map((url) => url)
+    return (this._DATA.brand.$social || []).slice()
   }
 
 
@@ -268,15 +232,7 @@ class ConfSite extends Page {
        * @returns {string} HTML output
        */
       .addDisplay(function siteTitle() {
-        return new HTMLElement('a').class('c-SiteTitle c-LinkCamo h-Block')
-          .attr('data-instanceof','ConfSite')
-          .attr('href',this.url())
-          .addContent([
-            new HTMLElement('img').class('c-SiteTitle__Logo').attr('src',this.logo).attr('alt','Home'),
-            new HTMLElement('h1').class('c-SiteTitle__Name').addContent(this.name()),
-            new HTMLElement('p').class('c-SiteTitle__Slogan').addContent(this.slogan),
-          ])
-          .html()
+        return new xjs.DocumentFragment(xSitetitle.render(this._DATA)).innerHTML()
       })
   }
 

@@ -10,9 +10,9 @@
 // The first column is the headshot photo,
 // the second column is the description.
 //
-// Pug:
+// DOM:
 // <pre>
-// -
+// const xSpeaker = require('/tpl/x-speaker.tpl.js')
 //   let person = new Person({
 //     "@type": "Person",
 //     "identifier": "donna-fulman",
@@ -34,7 +34,7 @@
 //     .addSocial('facebook', '#0', 'Donna’s Facebook Profile')
 //     .addSocial('google'  , '#0', 'Donna’s Google+ Profile')
 //     .addSocial('youtube' , '#0', 'Donna’s YouTube Channel')
-// != person.view.speaker()
+// document.append(xSpeaker.render(person._DATA))
 // </pre>
 //
 // <header><dl>

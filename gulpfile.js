@@ -7,6 +7,8 @@ const autoprefixer = require('gulp-autoprefixer')
 const clean_css    = require('gulp-clean-css')
 const sourcemaps   = require('gulp-sourcemaps')
 
+const jsdom = require('jsdom')
+const xjs = require('extrajs-dom')
 const requireOther = require('schemaorg-jsd/lib/requireOther.js')
 
 const ConfSite   = require('./class/ConfSite.class.js')
@@ -32,7 +34,6 @@ gulp.task('pug:docs', function () {
         ConfSite: require('./class/ConfSite.class.js'),
         ConfPage: require('./class/ConfPage.class.js'),
         Person  : require('./class/Person.class.js'),
-        Venue   : require('./class/Venue.class.js'),
         Docs    : require('./docs/_models/Docs.class.js'),
       },
     }))
@@ -60,12 +61,11 @@ gulp.task('pug:index', function () {
     .pipe(gulp.dest('./'))
 })
 gulp.task('pug:default', function () {
-  // const Conference = require('./class/Conference.class.js')
   return gulp.src(__dirname + '/proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
-        HTMLElement   : require('extrajs-dom').HTMLElement,
+        xjs: require('extrajs-dom'),
         Util: require('./class/Util.class.js'),
         site: new ConfSite(requireOther('./proto/default/database.jsonld')).init(),
         page: new ConfPage(),
@@ -78,9 +78,8 @@ gulp.task('pug:sample', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        xjs    : require('extrajs'),
-        HTMLElement: require('extrajs-dom').HTMLElement,
         Util   : require('./class/Util.class.js'),
+        Person  : require('./class/Person.class.js'),
         site: (function () {
           const returned = new ConfSite(requireOther('./proto/asce-event.org/database.jsonld')).init()
           function pageTitle() { return this.name() + ' | ' + returned.name() }

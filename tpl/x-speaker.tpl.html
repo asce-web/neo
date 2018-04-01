@@ -1,0 +1,27 @@
+<template>
+  <article class="c-Speaker" id="{{ id }}" itemprop="performer" itemscope="" itemtype="http://schema.org/Person">
+    <img class="c-Speaker__Img h-Block" src="{{ image }}" itemprop="image"/>
+    <header class="c-Speaker__Head">
+      <h1 class="c-Speaker__Name" itemprop="name">
+        <link rel="import" data-import="document" href="../node_modules/aria-patterns/x-person-fullname/tpl/x-person-fullname.tpl.html"/>
+      </h1>
+      <p class="c-Speaker__JobTitle" itemprop="jobTitle">{{ jobTitle }}</p>
+      <p class="c-Speaker__Affiliation" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
+        <slot itemprop="name">{{ affiliation }}</slot>
+      </p>
+    </header>
+    <!-- <div class="c-Speaker__Body" itemprop="description"></div> -->
+    <footer class="c-Speaker__Foot">
+      <link rel="import" data-import="document" href="./x-list-social.tpl.html">
+      <ul class="o-List o-Flex c-SocialList c-SocialList--speaker">
+        <template>
+          <li class="o-List__Item o-Flex__Item c-SocialList__Item">
+            <a class="c-SocialList__Link h-Block c-SocialList__Link--{{ icon }}" href="{{ url }}" itemprop="{{ prop }}">
+              <slot class="h-Hidden">{{ text }}</slot>
+            </a>
+          </li>
+        </template>
+      </ul>
+    </footer>
+  </article>
+</template>

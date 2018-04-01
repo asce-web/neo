@@ -37,8 +37,8 @@
   @media screen and (min-width: 45em) {
     .font-size-el(1.25);
   }
-  // selected look
-  input:checked + & {
+  [aria-selected="true"] & {
+    transform: scale(1.2);
     color: var(--color-primary, @g-color-primary);
   }
 }

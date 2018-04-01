@@ -7,14 +7,7 @@
 //- ///////////////////////////////////////////////////////////////////////////////
 
 
-//- mixin promotedLocation(promoloc)
-  - promoloc = promoloc || {} // NOTE parameter validation
-  if promoloc.title && promoloc.text
-    abbr(title=promoloc.title)= promoloc.text
-  else
-    = (promoloc.text || promoloc)
-
 mixin callout()
   aside.o-Runner.o-Runner--highlight&attributes(attributes)
-    div.o-Constrain
+    div.h-Constrain
       block

@@ -4,7 +4,25 @@ block append vars
   - var page = site.find('contact.html')
 
 block mainReference
-  section.o-Runner.o-Runner--highlight#contact-us: div.o-Constrain
+  -
+    let drew = new Person({
+      "@type": "Person",
+      "identifier": "drew-caracciolo-1",
+        "honorificPrefix": "Dr.",
+        "givenName"      : "Drew",
+        "additionalName" : "P.",
+        "familyName"     : "Caracciolo",
+        "honorificSuffix": "Ph.D., M.ASCE",
+      "image"      : "files/headshot1.jpg",
+      "url"        : "#0",
+      "email"      : "example@asce.org",
+      "telephone"  : "(703)293-5555",
+      "jobTitle"   : "Senior Coordinator, Conferences & Meetings",
+      "affiliation": "HDR Engineering, Inc."
+    })
+  figure.docs-figure
+    ul: li(itemscope="" itemtype="http://schema.org/Person")!= drew.view.contact()
+  section.o-Runner.o-Runner--highlight#contact-us: div.h-Constrain
     h1.h-Hidden Contact Us
     form
       label

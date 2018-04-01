@@ -45,7 +45,7 @@
     //-   .setPrice('Onsite'    , 'Daily Pass'    , 'Non-Member',  745)
 
     site.currentConference
-      .getSpeaker('donna-fulman')
+      .getSpeakersAll().find((person) => person.identifier==='donna-fulman')
         // .setBio(`<p>Donna Fulman is an award-winning, German designer raised in Austria
         //   and currently living in New York City.</p>
         //   <p>Former Lead Product Designer and Art Director at Spotify, she recently founded
@@ -53,7 +53,7 @@
         //   <abbr title="American Institute of Graphic Arts">AIGA</abbr>
         //   Board of Directors in New York.</p>`)
     site.currentConference
-      .getSpeaker('rachel-falsetti')
+      .getSpeakersAll().find((person) => person.identifier==='rachel-falsetti')
         // .setBio(`<p>Susan R. Rowghani is the Director of Water Engineering and
         //   Technical Services (WETS) at the Los Angeles Department of Water and Power (LADWP),
         //   the largest municipally owned utility in the US. In this role, she is responsible
@@ -62,7 +62,7 @@
         //   program is approximately $1 billion annually; about 50% of that amount
         //   is managed under WETS.</p>`)
     site.currentConference
-      .getSpeaker('diego-alvarez')
+      .getSpeakersAll().find((person) => person.identifier==='diego-alvarez')
         // .setBio(`<p>Diego currently serves Los Angeles World Airports (LAWA)
         //   in the Planning & Development Group (PDG) as the Director of Modernization
         //   and Development. In this charge, Diego works on major elements of Los Angeles
@@ -78,7 +78,7 @@
         //   and modified airfield, terminal, and ground access facilities at LAX,
         //   the busiest origin and destination airport in the world.</p>`)
     site.currentConference
-      .getSpeaker('jeremy-boak')
+      .getSpeakersAll().find((person) => person.identifier==='jeremy-boak')
         // .setBio(`<p>Jeremy Boak started as Director of the Oklahoma Geological Survey
         //   in July 2015. He was Director of the Center for Oil Shale Technology and Research
         //   at the Colorado School of Mines from 2008-2015. Before that, he was a project
@@ -91,7 +91,7 @@
         //   Dr. Boak is married to Anna Stafford, a petroleum geologist and oil finder,
         //   and has a stepson Chris.</p>`)
     site.currentConference
-      .getSpeaker('muralee-muraleetharan')
+      .getSpeakersAll().find((person) => person.identifier==='muralee-muraleetharan')
         // .setBio(`<p>Prof. K.K. “Muralee” Muraleetharan is an Associate Director of OU’s
         //   National Institute for Risk and Resilience. He joined OU in 1994 after working
         //   as a consulting engineer in California for 6 years. He is a registered

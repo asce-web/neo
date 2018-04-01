@@ -1,13 +1,5 @@
 extends ../default/index.pug
 
-block append vars
-  -
-    var hero_content = Util.view([
-      new HTMLElement('a').attr('href','registration.html').addContent(`Register`),
-      new HTMLElement('a').attr('href','sponsor.html').addContent(`Sponsor`),
-      new HTMLElement('a').addContent(`Submit a Paper`),
-    ]).highlightButtons('c-Button--primary')
-
 block prepend mainBody
   +callout()
     include _includes/_colorpickers.pug
@@ -24,7 +16,7 @@ block callouts
   +callout().c-Banner
     include ../default/_includes/callouts/_program.pug
   +callout().c-Banner.c-Banner--blur(style=`--banner-img: url('${site.currentConference.promoLocImage}');`)
-    include _includes/callouts/_location.pug
+    include ../default/_includes/callouts/_location.pug
   +callout()
     include ../default/_includes/callouts/_speakers.pug
   +callout().c-Banner

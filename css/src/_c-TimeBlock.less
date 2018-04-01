@@ -45,7 +45,7 @@
 //       &ndash;
 //       <time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
 //     </td>
-//     <td class="c-TimeBlock__Desc c-TimeBlock__Desc--last" itemprop="name">
+//     <td class="c-TimeBlock__Desc" itemprop="name">
 //       <a class="c-TimeBlock__Link" href="#0" itemprop="url">Technical Tours</a>
 //     </td>
 //   </tr>
@@ -119,17 +119,13 @@
   .c-TimeBlock__Times,
   .c-TimeBlock__Desc {
     position: relative; // for psuedo-elements in viz
-  }
-  .c-TimeBlock__Times::before,
-  .c-TimeBlock__Desc:not(.c-TimeBlock__Desc--last)::before {
+    &::before {
     content: '';
-  }
-  .c-TimeBlock__Times::before,
-  .c-TimeBlock__Desc::before {
     display: block;
     position: absolute;
     box-shadow: 0 0 0 1em currentColor inset, 0 0 1em 0 currentColor;
     color: var(--color-primary, @g-color-primary);
+    }
   }
   .c-TimeBlock__Times::before {
     // This is the disc on the viz
@@ -152,6 +148,7 @@
     top:    calc(~'-0.5 * var(--vru)');
     bottom: calc(~'-0.5 * var(--vru)');
     border-left: 1px solid;
+    .c-TimeBlock__Item:last-of-type & { content: none; } // omit on last item
     @media (min-width: 30em) {
       top: calc(~'0.5 * var(--vru)');
     }
