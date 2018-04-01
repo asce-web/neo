@@ -4,13 +4,9 @@
     <img alt="" src="" itemprop="image"/>
     <p>
   <a class="h-Clearfix" href="{{ url }}" itemprop="url"><b itemprop="name">{{ name }}</b></a>
-  <span class="h-Clearfix" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
-    <slot class="h-Clearfix" itemprop="streetAddress">{{ streetAddress }}</slot>
-    <slot itemprop="addressLocality">{{ addressLocality }}</slot>,
-    <slot itemprop="addressRegion">{{ addressRegion }}</slot>
-    <slot class="h-Clearfix" itemprop="postalCode">{{ postalCode }}</slot>
-    <slot itemprop="addressCountry">{{ addressCountry }}</slot>
-  </span>
+  <slot class="h-Clearfix" name="address">
+    <link rel="import" data-import="document" href="../node_modules/aria-patterns/x-address/tpl/x-address.tpl.html"/>
+  </slot>
   <a href="tel:{{ telephone }}" itemprop="telephone">{{ telephone }}</a>
     </p>
   </section>
