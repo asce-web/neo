@@ -99,10 +99,8 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function contact() {
-        let returned = `<a href="mailto:${this._DATA.email || ''}">${this.view()}</a>`
-        if (this.jobTitle ) returned = `${returned}, <slot itemprop="jobTitle">${this._DATA.jobTitle || ''}</slot>`
-        if (this.telephone) returned = `${returned} | <a href="tel:${Util.toURL(this._DATA.telephone || '')}" itemprop="telephone">${this.telephone}</a>`
-        return returned
+        const xPersonContact = require('../tpl/x-person-contact.tpl.js')
+        return new xjs.DocumentFragment(xPersonContact.render(this._DATA)).innerHTML()
       })
   }
 }

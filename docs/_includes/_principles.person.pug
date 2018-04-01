@@ -1,11 +1,3 @@
-p.
-  The Person content type can be rendered using different formats,
-  many of which aren&rsquo;t design Components.
-  #[a The Speaker Component]
-  is a design Component that can also be used to mark up Person data.
-p.
-  Each of these snippets should be wrapped with an element with the attributes
-  #[code.docs-code= '[itemscope="" itemtype="http://schema.org/Person"]'].
 -
   let drew = new Person({
     "@type": "Person",
@@ -25,13 +17,3 @@ p.
 figure.docs-figure
   figcaption This is a person with #[em.-fw-b contact information]: full name along with email (linked) and phone number.
   ul: li(itemscope="" itemtype="http://schema.org/Person")!= drew.view.contact()
-  +microdataCheckbox('person-contact')
-    pre.docs-pre.
-      &lt;a href="example@asce.org"#[mark.docs-c-Togglable__Text  itemprop="email"]&gt;example@asce.org&lt;/a&gt;
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="givenName"]&gt;Drew&lt;/span&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="additionalName"]&gt;P.&lt;/span&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="familiyName"]&gt;Caracciolo&lt;/span&gt;
-      &lt;/span&gt;,
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="jobTitle"]&gt;Senior Coordinator, Conferences &amp; Meetings&lt;/span&gt; |
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="telephone"]&gt;(703) 293-5555&lt;/span&gt;

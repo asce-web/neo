@@ -64,7 +64,7 @@ function xSpeaker_renderer(frag, data) {
 }
 
 module.exports = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-speaker.tpl.html'))
+  .fromFileSync(path.resolve(__dirname, './x-speaker.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
