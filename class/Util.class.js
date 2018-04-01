@@ -7,7 +7,6 @@ const xjs = {
 }
 const View    = require('extrajs-view')
 
-const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xDirectory          = require('../tpl/x-directory.tpl.js')
 
 
