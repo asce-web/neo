@@ -2,6 +2,9 @@ const path = require('path')
 
 const xjs = require('extrajs-dom')
 
+const {xAddress} = require('aria-patterns')
+
+
 /**
  * @summary Markup for a venue.
  * @param {DocumentFragment} frag the template content with which to render
@@ -22,13 +25,12 @@ function xVenue_renderer(frag, data) {
   if (data.image) frag.querySelector('img[itemprop="image"]').src = data.image
   else            frag.querySelector('img[itemprop="image"]').remove()
 
-  frag.querySelector('[itemprop="name"]'     ).textContent = data.name
-  frag.querySelector('[itemprop="streetAddress"]'  ).textContent = data.address.streetAddress
-  frag.querySelector('[itemprop="addressLocality"]').textContent = data.address.addressLocality
-  frag.querySelector('[itemprop="addressRegion"]'  ).textContent = data.address.addressRegion
-  frag.querySelector('[itemprop="postalCode"]'     ).textContent = data.address.postalCode
-  if (data.address && data.address.addressCountry) frag.querySelector('[itemprop="addressCountry"]').textContent = data.address.addressCountry
-  else                                             frag.querySelector('[itemprop="addressCountry"]').remove()
+  frag.querySelector('[itemprop="name"]').textContent = data.name
+
+  frag.querySelector('slot[name="address"]').append(xAddress.render({
+    ...data.address,
+    $itemprop: 'address',
+  }))
 
   if (data.telephone) frag.querySelector('[itemprop="telephone"]').textContent = data.telephone
   else                frag.querySelector('[itemprop="telephone"]').remove()
@@ -45,4 +47,7 @@ function xVenue_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-venue.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
   .setRenderer(xVenue_renderer)
