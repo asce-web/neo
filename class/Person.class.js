@@ -5,9 +5,9 @@ const xjs = {
   ...require('extrajs-dom'),
 }
 const View    = require('extrajs-view')
+const {xPersonFullname} = require('aria-patterns')
 
 const Util    = require('./Util.class.js')
-const xPersonFullname = require('../tpl/x-person-fullname.tpl.js')
 
 
 /**
@@ -34,10 +34,10 @@ class Person {
    * @param {string=} jsondata.jobTitle this person’s job title
    * @param {!Object=} jsondata.affiliation an organization that this person is affiliated with; type {@link http://schema.org/Organization}
    * @param {string=} jsondata.affiliation.name an organization that this person is affiliated with
-   * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this person; type {@link http://schema.org/URL}
-   * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
-   * @param {string} jsondata.sameAs.url the URL of the person’s social media profile or page
-   * @param {string=} jsondata.sameAs.description short alternative text for non-visual media
+   * @param {Array<!Object>=} jsondata.$social a list of social media links for this person; type {@link http://schema.org/URL}
+   * @param {string}          jsondata.$social.name the name or identifier of the social media service (used for icons)
+   * @param {string}          jsondata.$social.url the URL of the person’s social media profile or page
+   * @param {string=}         jsondata.$social.description short alternative text for non-visual media
    */
   constructor(jsondata) {
     /**

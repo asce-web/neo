@@ -1,17 +1,11 @@
 const fs = require('fs')
 const path = require('path')
 
-const jsdom = require('jsdom')
-
 const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
 const View    = require('extrajs-view')
-const STATE_DATA = require('extrajs-geo')
-STATE_DATA.push(...[
-  { "code": "DC", "name": "District of Columbia" },
-])
 
 const ElemName = require('../lib/ElemName.js') // TEMP until we remove pug
 const xDirectory          = require('../tpl/x-directory.tpl.js')
@@ -162,21 +156,14 @@ class Util {
        * Parameter `data` should be of type `{@link http://schema.org/PostalAddress|sdo.PostalAddress}`.
        * @summary Call `Util.view(data).promoLoc()` to render this display.
        * @function Util.VIEW.promoLoc
-       * @param   {boolean=} state_code if `true`, displays region as its code (e.g. “Virginia” as “VA”)
        * @returns {string} HTML output
        */
-      .addDisplay(function promoLoc(state_code = false, flattened = false) {
-        // TODO import template from `require('aria-patterns')` v0.4.0+
-        const returned = []
-        if (this.addressLocality) returned.push(ElemName('span').attr('itemprop','addressLocality').textContent(this.addressLocality).outerHTML(), `, `)
-        if (this.addressRegion) {
-          returned.push(ElemName('data')
-            .attr({ itemprop: 'addressRegion', value: this.addressRegion })
-            .textContent((state_code) ? STATE_DATA.find((state) => state.name===this.addressRegion).code : this.addressRegion)
-            .outerHTML())
-        }
-        if (this.addressCountry) returned.push(`, `, ElemName('span').attr('itemprop','addressCountry').textContent(this.addressCountry).outerHTML())
-        return (!flattened) ? returned.join('') : jsdom.JSDOM.fragment(returned.join('')).textContent
+      .addDisplay(function promoLoc() {
+        const {xAddress} = require('aria-patterns')
+        return new xjs.DocumentFragment(xAddress.render({
+          ...this,
+          $regionName: true,
+        })).trimInner().textContent()
       })
       /**
        * Return an unordered list of button links for a highlighted content block.

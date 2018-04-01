@@ -5,6 +5,9 @@ const xjs = {
   ...require('extrajs-dom'),
 }
 
+const {xAddress} = require('aria-patterns')
+
+
 /**
  * @summary xOtheryear renderer.
  * @param {DocumentFragment} frag the template content with which to render
@@ -18,8 +21,6 @@ const xjs = {
  * @param {string=} data.disambiguatingDescription blurb promoting the prev/next conference
  */
 function xOtheryear_renderer(frag, data) {
-  const Util = require('../class/Util.class.js')
-
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
@@ -28,7 +29,11 @@ function xOtheryear_renderer(frag, data) {
   frag.querySelector('[itemprop="name"]'         ).textContent  = data.name
   frag.querySelector('a[itemprop="url"]'         ).href = data.url
   frag.querySelector('meta[itemprop="startDate"]').content      = data.startDate
-  frag.querySelector('[itemprop="location"]'     ).innerHTML    = Util.view(data.location).promoLoc() // TODO use template from `require('aria-patterns')`
+  frag.querySelector('slot[name="location"]'     ).append(xAddress.render({
+    ...data.location,
+    $itemprop: 'location',
+    $regionName: true,
+  }))
 
   if (data.disambiguatingDescription) {
     frag.querySelector('[itemprop="disambiguatingDescription"]').textContent = data.disambiguatingDescription
@@ -39,4 +44,7 @@ function xOtheryear_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-otheryear.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
   .setRenderer(xOtheryear_renderer)

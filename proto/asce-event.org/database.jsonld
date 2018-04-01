@@ -12,7 +12,7 @@
     "@type": "NGO",
     "name": "American Society of Civil Engineers",
     "url" : "http://www.asce.org",
-    "sameAs": [
+    "$social": [
       { "@type": "URL", "name": "twitter" , "url": "//twitter.com/ASCE"    , "description": "Follow ASCE on Twitter" },
       { "@type": "URL", "name": "google"  , "url": "//plus.google.com/ASCE", "description": "Follow ASCE on Google+" },
       { "@type": "URL", "name": "facebook", "url": "//facebook.com/ASCE"   , "description": "Like ASCE on Facebook" },
@@ -54,7 +54,7 @@
         {
           "@type": "PostalAddress",
           "addressLocality": "Portland",
-          "addressRegion"  : "Oregon",
+          "addressRegion"  : "OR",
           "image"          : "/proto/asce-event.org/files/portland.jpg",
           "description"    : "With sweeping views of the surrounding mountains and a bustling downtown full of shopping, locally sourced dining, and entertainment, Portland is a wonderful destination for business and leisure."
         },
@@ -219,7 +219,7 @@
           "@type": "Person",
           "identifier": "donna-fulman",
           "givenName"      : "Donna",
-          "additionalName" : "A.",
+          "additionalName" : "Ann",
           "familyName"     : "Fulman",
           "honorificSuffix": "P.ASCE",
           "image"      : "files/headshot1.jpg",
@@ -228,7 +228,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Administrator of Interior Engineering",
           "affiliation": "German Chamber of Architects",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -240,7 +240,7 @@
           "@type": "Person",
           "identifier": "rachel-falsetti",
           "givenName"     : "Susan",
-          "additionalName": "R.",
+          "additionalName": "Rachel",
           "familyName"    : "Rowghani",
           "image"      : "http://www.cisummit.org/sites/cisummit.org/files/susan-rowghani.jpg",
           "url"        : "#0",
@@ -248,7 +248,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Director of Water Engineering and Technical Services (WETS)",
           "affiliation": "Los Angeles Department of Water and Power",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -267,7 +267,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Director of Modernization and Development",
           "affiliation": "Planning & Development Group (PDG), Los Angeles World Airports",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -286,7 +286,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Director",
           "affiliation": "Oklahoma Geological Survey",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -305,7 +305,7 @@
           "telephone"  : "+1(703)555-5555",
           "jobTitle"   : "Geotechnical Engineering Professor, Kimmell-Bernard Chair in Engineering, David Ross Boyd and Presidential Professor",
           "affiliation": "University of Oklahoma",
-          "sameAs"     : [
+          "$social"    : [
             { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
             { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
             { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
@@ -518,7 +518,7 @@
           "@type": "Person",
           "identifier": "thomas-mccollough",
           "givenName"      : "Thomas",
-          "additionalName" : "J.",
+          "additionalName" : "Joseph",
           "familyName"     : "McCollough",
           "honorificSuffix": "P.E., M.ASCE",
           "affiliation": "HDR Engineering, Inc."
@@ -528,13 +528,13 @@
           "identifier": "stephen-dickenson",
           "honorificPrefix": "Dr.",
           "givenName"      : "Stephen",
-          "additionalName" : "E.",
+          "additionalName" : "Eric",
           "familyName"     : "Dickenson",
           "honorificSuffix": "Ph.D., P.E., D.PE, M.ASCE",
           "affiliation": "HNTB Corporation"
         }
       ],
-      "sameAs": [
+      "$social": [
         { "@type": "URL", "name": "twitter" , "url": "https://twitter.com/hashtag/#asce2016", "description": "Follow #ASCE2016 on Twitter" },
         { "@type": "URL", "name": "google"  , "url": "#0"                                   , "description": "Follow #ASCE2016 on Google+" },
         { "@type": "URL", "name": "facebook", "url": "#0"                                   , "description": "Follow #ASCE2016 on Facebook" }
@@ -553,7 +553,7 @@
         {
           "@type": "PostalAddress",
           "addressLocality": "New York",
-          "addressRegion"  : "New York"
+          "addressRegion"  : "NY"
         },
         {
           "@type": "Accommodation",
@@ -583,7 +583,7 @@
         {
           "@type": "PostalAddress",
           "addressLocality": "New Orleans",
-          "addressRegion"  : "Louisiana"
+          "addressRegion"  : "LA"
         },
         {
           "@type": "Accommodation",

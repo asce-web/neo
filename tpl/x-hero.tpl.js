@@ -5,6 +5,8 @@ const xjs = {
   ...require('extrajs-dom'),
 }
 
+const {xAddress} = require('aria-patterns')
+
 const xListHighlightbuttons = require('./x-list-highlightbuttons.tpl.js')
 
 
@@ -23,15 +25,17 @@ const xListHighlightbuttons = require('./x-list-highlightbuttons.tpl.js')
  * @param {Array<sdo.WebPageElement>=} data.$heroButtons a list of links serving as action buttons
  */
 function xHero_renderer(frag, data) {
-  const Util = require('../class/Util.class.js')
-
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
 
   frag.querySelector('[itemprop="name"]'    ).textContent  = data.name
   frag.querySelector('meta[itemprop="url"]' ).content      = data.url
-  frag.querySelector('[itemprop="location"]').innerHTML    = Util.view(data.location).promoLoc() // TODO use template from `require('aria-patterns')`
+  frag.querySelector('slot[name="location"]').append(xAddress.render({
+    ...data.location,
+    $itemprop: 'location',
+    $regionName: true,
+  }))
 
   let date_start = new Date(data.startDate)
   let date_end   = new Date(data.endDate  )
@@ -55,4 +59,7 @@ function xHero_renderer(frag, data) {
 
 module.exports = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-hero.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
   .setRenderer(xHero_renderer)

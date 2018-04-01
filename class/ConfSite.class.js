@@ -34,10 +34,10 @@ class ConfSite extends Page {
    * @param {string=} jsondata.logo url of the logo file
    * @param {Array<string>=} jsondata.color two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`
    * @param {sdo.Organization=} jsondata.brand the publisher/brand responsible for this site
-   * @param {Array<!Object>=}   jsondata.brand.sameAs a list of social media links for this site; type {@link http://schema.org/URL}
-   * @param {string}            jsondata.brand.sameAs.name the name or identifier of the social media service (used for icons)
-   * @param {string}            jsondata.brand.sameAs.url the URL of the site’s social media profile or page
-   * @param {string=}           jsondata.brand.sameAs.description short alternative text for non-visual media
+   * @param {Array<!Object>=}   jsondata.brand.$social a list of social media links for this site; type {@link http://schema.org/URL}
+   * @param {string}            jsondata.brand.$social.name the name or identifier of the social media service (used for icons)
+   * @param {string}            jsondata.brand.$social.url the URL of the site’s social media profile or page
+   * @param {string=}           jsondata.brand.$social.description short alternative text for non-visual media
    * @param {Array<sdo.Event>} jsondata.$conferences an array of conferences
    * @param {string} jsondata.$currentConference  the url of an existing conference; used as the current  conference in this series
    * @param {string} jsondata.$previousConference the url of an existing conference; used as the previous conference in this series
@@ -149,7 +149,7 @@ class ConfSite extends Page {
    * @returns {Array<!Object>} all this site’s social media networks
    */
   getSocialAll() {
-    return (this._DATA.brand.sameAs || []).slice()
+    return (this._DATA.brand.$social || []).slice()
   }
 
 

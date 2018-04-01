@@ -49,10 +49,10 @@ class Conference {
    * @param {Array<!Object>=} jsondata.organizer a list of organizers; type {@link http://schema.org/Person}
    *                                             An organizer is a chairperson, steering committee member,
    *                                             or other person who is responsible for organizing the conference.
-   * @param {Array<!Object>=} jsondata.sameAs a list of social media links for this conference; type {@link http://schema.org/URL}
-   * @param {string} jsondata.sameAs.name the name or identifier of the social media service (used for icons)
-   * @param {string} jsondata.sameAs.url the URL of the conference’s social media profile or page
-   * @param {string=} jsondata.sameAs.description short alternative text for non-visual media
+   * @param {Array<!Object>=} jsondata.$social a list of social media links for this conference; type {@link http://schema.org/URL}
+   * @param {string}          jsondata.$social.name the name or identifier of the social media service (used for icons)
+   * @param {string}          jsondata.$social.url the URL of the conference’s social media profile or page
+   * @param {string=}         jsondata.$social.description short alternative text for non-visual media
    */
   constructor(jsondata) {
     /**
@@ -209,7 +209,7 @@ class Conference {
    * @returns {Array<!Object>} all this conference’s social media networks
    */
   getSocialAll() {
-    return (this._DATA.sameAs || []).slice()
+    return (this._DATA.$social || []).slice()
   }
 
   // setPrice(reg_period, pass, membership, price) {

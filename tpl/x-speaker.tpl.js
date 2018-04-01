@@ -2,8 +2,9 @@ const path = require('path')
 
 const xjs = require('extrajs-dom')
 
+const {xPersonFullname} = require('aria-patterns')
+
 const Util = require('../class/Util.class.js')
-const xPersonFullname = require('./x-person-fullname.tpl.js')
 const xListSocial = require('../tpl/x-list-social.tpl.js')
 
 
@@ -24,10 +25,10 @@ const xListSocial = require('../tpl/x-list-social.tpl.js')
  * @param {string=} data.jobTitle        http://schema.org/jobTitle
  * @param {sdo.Organization} data.affiliation http://schema.org/affiliation
  * @param {string=}          data.affiliation.name
- * @param {{Array<!Object>}=} data.sameAs a list of social media links for the person
- * @param {string}            data.sameAs.name the name or identifier of the social media service (used for icons)
- * @param {string}            data.sameAs.url the URL of the person’s social media profile or page
- * @param {string=}           data.sameAs.description short alternative text for non-visual media
+ * @param {{Array<!Object>}=} data.$social a list of social media links for the person
+ * @param {string}            data.$social.name the name or identifier of the social media service (used for icons)
+ * @param {string}            data.$social.url the URL of the person’s social media profile or page
+ * @param {string=}           data.$social.description short alternative text for non-visual media
  */
 function xSpeaker_renderer(frag, data) {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
@@ -39,7 +40,7 @@ function xSpeaker_renderer(frag, data) {
 
   new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
     this.node.before(xListSocial.render({
-      links: (data.sameAs || []).map((obj) => ({
+      links: (data.$social || []).map((obj) => ({
         ...obj,
         "@type": "WebPageElement",
         text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
