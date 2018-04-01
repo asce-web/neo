@@ -10,13 +10,11 @@ p.
   let drew = new Person({
     "@type": "Person",
     "identifier": "drew-caracciolo-1",
-    "$name": {
       "honorificPrefix": "Dr.",
       "givenName"      : "Drew",
       "additionalName" : "P.",
       "familyName"     : "Caracciolo",
-      "honorificSuffix": "Ph.D., M.ASCE"
-    },
+      "honorificSuffix": "Ph.D., M.ASCE",
     "image"      : "files/headshot1.jpg",
     "url"        : "#0",
     "email"      : "example@asce.org",
@@ -24,28 +22,6 @@ p.
     "jobTitle"   : "Senior Coordinator, Conferences & Meetings",
     "affiliation": "HDR Engineering, Inc."
   })
-figure.docs-figure
-  figcaption This is a person&rsquo;s #[em.-fw-b full name]: first, middle (if applicable), and last.
-  ul: li(itemscope="" itemtype="http://schema.org/Person")!= drew.view.fullName()
-  +microdataCheckbox('person-full')
-    pre.docs-pre.
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="givenName"]&gt;Drew&lt;/span&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="additionalName"]&gt;P.&lt;/span&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="familiyName"]&gt;Caracciolo&lt;/span&gt;
-      &lt;/span&gt;
-figure.docs-figure
-  figcaption This is a person&rsquo;s #[em.-fw-b entire name]: full name along with any honorific prefices or suffices.
-  ul: li(itemscope="" itemtype="http://schema.org/Person")!= drew.view.entireName()
-  +microdataCheckbox('person-entire')
-    pre.docs-pre.
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificPrefix"]&gt;Dr.&lt;/span&gt;
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="name"]&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="givenName"]&gt;Drew&lt;/span&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="additionalName"]&gt;P.&lt;/span&gt;
-        &lt;span#[mark.docs-c-Togglable__Text  itemprop="familiyName"]&gt;Caracciolo&lt;/span&gt;
-      &lt;/span&gt;,
-      &lt;span#[mark.docs-c-Togglable__Text  itemprop="honorificSuffix"]&gt;Ph.D., M.ASCE&lt;/span&gt;
 figure.docs-figure
   figcaption This is a person with #[em.-fw-b affiliation]: entire name along with any affiliation.
   ul: li(itemscope="" itemtype="http://schema.org/Person")!= drew.view.affiliation()

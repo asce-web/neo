@@ -34,7 +34,6 @@ gulp.task('pug:docs', function () {
         ConfSite: require('./class/ConfSite.class.js'),
         ConfPage: require('./class/ConfPage.class.js'),
         Person  : require('./class/Person.class.js'),
-        Venue   : require('./class/Venue.class.js'),
         Docs    : require('./docs/_models/Docs.class.js'),
       },
     }))

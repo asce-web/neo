@@ -20,7 +20,6 @@ const DOCS = new Page({ name: 'ASCE Conferences Pattern Library', url: '/docs/' 
       )
       .add(new Page({ name: 'Formats', url: '/docs/principles.html#formats' })
         .add(new Page({ name: 'Person', url: '/docs/principles.html#person' }))
-        .add(new Page({ name: 'Place' , url: '/docs/principles.html#place' }))
       )
     )
     .add(new Page({ name: 'Base Typography', url: '/docs/base.html' })
