@@ -246,27 +246,7 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function chairs(queue = null) {
-        const jsdom = require('jsdom')
-        const xPersonAffiliation = require('../tpl/x-person-affiliation.tpl.js')
-        const xListChair = new xjs.HTMLTemplateElement(jsdom.JSDOM.fragment(`
-          <template>
-            <ul>
-              <template>
-                <li itemprop="organizer" itemscope="" itemtype="http://schema.org/Person">
-                  <link rel="import" data-import="document" href="../tpl/x-person-affiliation.tpl.html"/>
-                </li>
-              </template>
-            </ul>
-          </template>
-        `).querySelector('template'))
-          .exe(function () {
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-          .setRenderer(function (frag, data) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xPersonAffiliation.render(d))
-            })
-          })
+        const xListChair = require('../tpl/x-list-chair.tpl.js')
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
         return new xjs.DocumentFragment(xListChair.render(items)).innerHTML()
