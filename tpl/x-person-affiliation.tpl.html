@@ -1,8 +1,8 @@
 <template>
-  <slot class="h-Block" itemprop="name">
+  <slot class="c-Chair__Name h-Block h-FontSize" itemprop="name">
     <link rel="import" data-import="document" href="../node_modules/aria-patterns/x-person-fullname/tpl/x-person-fullname.tpl.html"/>
   </slot>
-  <span class="h-Block" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
+  <span class="c-Chair__Affiliation h-Block h-FontSize" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
     <slot itemprop="name">{{ name }}</slot>
   </span>
 </template>

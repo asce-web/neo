@@ -1,0 +1,66 @@
+
+/*################################*\
+    neo  |  _c-Chair.less
+\*################################*/
+@import (reference) url('../../node_modules/xmeter/src/__settings.less');
+
+
+// The Chair Component
+//
+// A block containing a conference chair, co-chair, or other organizer.
+//
+// DOM:
+// <pre>
+// const xPersonAffiliation = require('/tpl/x-person-affiliation.tpl.js')
+//   let person = {
+//     "@type": "Person",
+//     "identifier": "donna-fulman",
+//     "givenName"      : "Donna",
+//     "additionalName" : "A.",
+//     "familyName"     : "Fulman",
+//     "honorificSuffix": "P.ASCE",
+//     "image"      : "files/headshot1.jpg",
+//     "url"        : "#0",
+//     "email"      : "example@asce.org",
+//     "telephone"  : "+1(703)555-5555",
+//     "jobTitle"   : "Administrator of Interior Engineering",
+//     "affiliation": "German Chamber of Architects"
+//   }
+// document.append(xPersonAffiliation.render(person._DATA))
+// </pre>
+//
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2018-04-01</time></dd>
+// </dl></header>
+//
+// Markup:
+// <p class="c-Chair">
+//   <slot class="c-Chair__Name h-Block h-FontSize" itemprop="name">
+//     <slot name="honorificPrefix" itemprop="honorificPrefix">Dr.</slot>
+//     <slot name="givenName" itemprop="givenName">Stephen</slot>
+//     <abbr title="Eric" itemprop="additionalName">
+//       <slot name="additionalName">E.</slot>
+//     </abbr>
+//     <slot name="familyName" itemprop="familyName">Dickenson</slot><span>,</span>
+//     <slot name="honorificSuffix" itemprop="honorificSuffix">Ph.D., P.E., D.PE, M.ASCE</slot>
+//   </slot>
+//   <span class="c-Chair__Affiliation h-Block h-FontSize" itemprop="affiliation" itemscope="" itemtype="http://schema.org/Organization">
+//     <slot itemprop="name">HNTB Corporation</slot>
+//   </span>
+// </p>
+//
+// Weight: 15.1
+//
+// Styleguide Components.Chair
+.c-Chair {
+}
+
+.c-Chair__Name {
+  --font-scale: @g-font-size-kilo;
+}
+
+.c-Chair__Affiliation {
+  --font-scale: @g-font-size-mill;
+  font-style: italic;
+}
