@@ -11,7 +11,7 @@ const xSupporter = require('./x-supporter.tpl.js')
  * @param {!Object} data a JSON object representing the supporter level
  * @param {string} data.name the name of the level
  * @param {Array<sdo.Organization>} data.supporters all the supporters in this level
- * @param {string=} data.classname any classname to add to the <section>
+ * @param {string=} data.classname any classname to add to the `<section>`
  */
 function xSupporterLevel_renderer(frag, data) {
   new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass(data.classname || '')

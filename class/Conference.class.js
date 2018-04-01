@@ -6,11 +6,12 @@ const View = require('extrajs-view')
 
 const Person             = require('./Person.class.js')
 
+const xListSupporterLevel = require('../tpl/x-list-supporter-level.tpl.js')
+
 const xHero           = require('../tpl/x-hero.tpl.js')
 const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
 const xProgram        = require('../tpl/x-program.tpl.js')
 const xDateblock      = require('../tpl/x-dateblock.tpl.js')
-const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
 const xExhibitor      = require('../tpl/x-exhibitor.tpl.js')
 
 
@@ -287,36 +288,12 @@ class Conference {
        * @function Conference.VIEW.supporterLevels
        * @param   {(Array<string>|sdo.ItemList)} queue the list of supporter levels to display, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
        * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the supporter levels
-       * @param   {boolean=} small if `true`, overrides logo sizing to small
+       * @param   {boolean=} small should logo sizing be overridden to small?
        * @returns {string} HTML output
        */
       .addDisplay(function supporterLevels(queue, small = false) {
-        const jsdom = require('jsdom')
-        const template = jsdom.JSDOM.fragment(`
-          <template>
-            <ol class="o-List">
-              <template>
-                <li class="o-List__Item">
-                  <link rel="import" data-import="template" href="../tpl/x-supporter-level.tpl.html"/>
-                </li>
-              </template>
-            </ol>
-          </template>
-        `).querySelector('template')
-        new xjs.DocumentFragment(template.content.querySelector('template').content).importLinks(__dirname)
-        const xLevelList = new xjs.HTMLTemplateElement(template).setRenderer(function (frag, data) {
-          new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.map((item, index) => ({ item, index })), function (f, d) {
-            new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-              xSupporterLevel.render({
-                name: d.item,
-                classname: (small) ? 'c-SupporterBlock--sml' : (d.index + 1  <  data.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
-                supporters: (this._DATA.sponsor || []).filter((supporter) => supporter.$level === d.item),
-              })
-            )
-          }, this)
-        })
-        let supporterlevels = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return new xjs.DocumentFragment(xLevelList.render(supporterlevels, this)).innerHTML()
+        let items = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        return new xjs.DocumentFragment(xListSupporterLevel.render({ supporterlevels: items, small }, this)).innerHTML()
       })
       /**
        * Return a list of `<div>` elements marking up this conference’s exhibitors.
