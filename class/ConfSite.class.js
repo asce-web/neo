@@ -130,7 +130,7 @@ class ConfSite extends Page {
   /**
    * @summary Retrieve a queue added to this site.
    * @param   {string} name the name of the queue
-   * @returns {?Object} an {@link http://schema.org/ItemList} type
+   * @returns {?sdo.ItemList} the queue, or `null` if not found
    */
   getQueue(name) {
     return this.getQueuesAll().find((list) => list.name===name) || null
@@ -138,10 +138,10 @@ class ConfSite extends Page {
   /**
    * @summary Return all queues on this site.
    * @todo TODO turn this into a getter
-   * @returns {Array<!Object>} all this site’s queues
+   * @returns {Array<sdo.ItemList>} all this site’s queues
    */
   getQueuesAll() {
-    return (this._DATA.$queues || []).map((list) => list)
+    return (this._DATA.$queues || []).slice()
   }
 
   /**
