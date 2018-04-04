@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{{ page.name }}</title>
+    <meta charset="utf-8"/>
+    <meta name="description" content="{{ page.description }}"/>
+    <meta name="keywords" content="{{ page.keywords.join() }}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,400italic,700"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" href="/node_modules/xmeter/css/xmeter.css"/>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.15.0/bangs.css"/>
+    <link rel="stylesheet" href="/css/neo.css"/>
+    <link rel="stylesheet" href="css/site.css"/>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous" defer=""/></script>
+    <script src="../../js/o-Drawer.js" defer=""/></script>
+    <style>
+      body {
+        /* site.colors */
+      }
+    </style>
+    <noscript>
+      <!-- remove Toggle menu when JS is disabled -->
+      <style>
+        @media not all and (min-width: 45em) {
+          .o-Drawer__Button { display: none; }
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <a class="h-Hidden" href="#main">skip to main content</a>
+    <header class="o-Runner c-Mast c-Mast--head">
+      <div class="h-Constrain">
+        <link rel="import" data-import="document" href="./x-sitetitle.tpl.html"/>
+      </div>
+    </header>
+    <header class="o-Runner c-Mast c-Mast--menu" id="main-menu">
+      <nav class="h-Constrain o-Drawer">
+        <h1 class="h-Hidden">Main Menu</h1>
+          <button class="o-Drawer__Button h-Inline" type="button" aria-controls="main-menu-drawer" aria-label="toggle main menu">
+            <svg class="c-MobileMenuToggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36">
+              <path d="M0,0 H24 V24 H0 z" fill="transparent"/>
+              <g transform="translate(3,11)">
+                <rect class="c-MobileMenuToggle__Rect" width="18" height="2"/>
+                <rect class="c-MobileMenuToggle__Rect" width="18" height="2"/>
+                <rect class="c-MobileMenuToggle__Rect" width="18" height="2"/>
+              </g>
+            </svg>
+          </button>
+          <noscript><a class="c-Button" href="#sitemap">Site Map</a></noscript>
+          <div class="o-Drawer__Bar" id="main-menu-drawer">
+            != Util.view(site).pageToc(mainmenu_options)
+          </div>
+      </nav>
+    </header>
+    <main id="main">
+      <article itemscope="" itemtype="http://schema.org/Event">
+        <slot class="h-Block" name="mainHeader">
+          <link rel="import" data-import="document" href="./x-hero.tpl.html"/>
+          <header class="o-Runner o-Runner--pageHeader">
+            <div class="h-Constrain">
+              <h1 class="c-PageTitle">{{ page.name }}</h1>
+            </div>
+          </header>
+        </slot>
+        <slot class="h-Block" name="mainBody">
+          <slot class="h-Block" name="mainMinimal"></slot>
+          <slot class="h-Block" name="mainReference"></slot>
+          <slot class="h-Block" name="mainRich"></slot>
+        </slot>
+        <slot class="h-Block" name="callouts">
+        </slot>
+        <slot class="h-Block" name="sponsors">
+          <aside class="o-Runner o-Runner--highlight" id="sponsors">
+            <div class="h-Constrain">
+              <h1>Sponsors</h1>
+              <p class="-ta-c"><i>(see external demo of
+                <a href="http://go.asce.org/static/sponsors/">sponsors carousel</a>
+                by rank)</i></p>
+              <link rel="import" data-import="document" href="./x-list-supporter-level.tpl.html"/>
+              <footer>
+                <script type="application/ld+json">
+                  [
+                    { "@type": "WebPageElement", "text": "All Sponsors", "url": "sponsor.html" }
+                  ]
+                </script>
+                <link rel="import" data-import="document" href="./x-list-highlightbuttons.tpl.html"/>
+              </footer>
+            </div>
+          </aside>
+        </slot>
+        <aside class="o-Runner o-Runner--highlight">
+          <div class="h-Constrain">
+            <link rel="import" data-import="document" href="./x-list-supporter-level.tpl.html"/>
+          </div>
+        </aside>
+      </article>
+    </main>
+    <footer class="o-Runner c-Mast c-Mast--sitemap" id="sitemap">
+      <nav class="h-Constrain">
+        <h1 class="h-Hidden">Sitemap</h1>
+        != Util.view(site).pageToc(sitemap_options)
+      </nav>
+    </footer>
+    <footer class="o-Runner c-Mast c-Mast--foot" id="connect-with-asce">
+      <div class="h-Constrain">
+        <h1 class="h-Hidden">Connect With <abbr title="American Society of Civil Engineers">ASCE</abbr></h1>
+        <address itemscope="" itemtype="http://schema.org/NGO">
+          <p class="c-ASCELogo">
+            <a class="h-Block -h-1o1" href="http://www.asce.org" itemprop="url">
+              <span class="h-Hidden">American Society of Civil Engineers</span>
+            </a>
+          </p>
+          <p itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+            <link rel="import" data-import="document" href="../node_modules/aria-patterns/x-address/tpl/x-address.tpl.html"/>
+          </p>
+          <p class="-fz-el-kilo" itemprop="contactPoint" itemscope="" itemtype="http://schema.org/ContactPoint">
+            a(href="tel:+1-800-548-2723") +1 (800) 548-2723
+            meta(content="+1-800-548-2723" itemprop="telephone")
+            meta(content="customer support" itemprop="contactType")
+          </p>
+          <p class="-fz-el-kilo" itemprop="contactPoint" itemscope="" itemtype="http://schema.org/ContactPoint">
+            a(href="tel:+1-703-295-6300") +1 (703) 295-6300
+            meta(content="+1-703-295-6300" itemprop="telephone")
+            meta(content="United States of America" itemprop="areaServed")
+            meta(content="customer support" itemprop="contactType")
+          </p>
+          != Util.view(site.getSocialAll()).socialList('c-SocialList--footer')
+          <p><small>&copy; <time>1996</time>&ndash;<time>2016</time>,
+            <span itemprop="name">American Society of Civil Engineers</span></small></p>
+        </address>
+      </div>
+    </footer>
+    <a class="c-Button" href="#top" title="go to top" aria-label="go to top"
+      style="position: fixed; bottom: 1.5rem; right: 2rem;">
+      <i class="material-icons" aria-hidden="true">arrow_upward</i>
+    </a>
+    <script>
+      /*
+      $('.c-Speaker__Body').addClass('-h-z')
+      $('.c-Speaker__Img').height(function () { return $(this).width() })
+        .click(function () { $(this).siblings('.c-Speaker__Body').removeClass('-h-z') })
+      $(window).resize(function () {
+        $('.c-Speaker__Img').height(function () { return $(this).width() })
+      })
+       */
+    </script>
+  </body>
+</html>

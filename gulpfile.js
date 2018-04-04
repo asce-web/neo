@@ -73,6 +73,13 @@ gulp.task('pug:default', function () {
     }))
     .pipe(gulp.dest('./proto/default/'))
 })
+
+gulp.task('site:render', async function () {
+  const Neo = require('./class/Neo.class.js')
+  const data = requireOther('./proto/asce-event.org/database.jsonld')
+  return await new Neo(data).render()
+})
+
 gulp.task('pug:sample', function () {
   return gulp.src(__dirname + '/proto/asce-event.org/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
