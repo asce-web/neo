@@ -19,5 +19,5 @@ function xListHighlightbuttons_renderer(frag, data) {
 }
 
 module.exports = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-list-highlightbuttons.tpl.html'))
+  .fromFileSync(path.resolve(__dirname, './x-list-highlightbuttons.tpl.html'))
   .setRenderer(xListHighlightbuttons_renderer)

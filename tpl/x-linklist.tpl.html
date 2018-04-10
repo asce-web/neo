@@ -1,0 +1,12 @@
+<template>
+  <ul class="o-List c-LinkList">
+    <template>
+      <li class="o-List__Item c-LinkList__Item">
+        <a class="c-LinkList__Link" href="{{ url }}">
+          <i class="halflings halflings-circle-arrow-right" aria-hidden="true"></i>
+          <slot>{{ text }}</slot>
+        </a>
+      </li>
+    </template>
+  </ul>
+</template>

@@ -5,10 +5,10 @@ div.o-Runner.o-Runner--highlight._text-block: div.h-Constrain
     expand your knowledge base.
   -
     let testlinks = [
-      new Element('a',false).attr('href','#0').addContent(`Manage My Membership`),
-      new Element('a',false).attr('href','#0').addContent(`Join ASCE`),
-      new Element('a',false).attr('href','#0').addContent(`Renew my membership`),
-      new Element('a',false).attr('href','#0').addContent(`View member benefits`),
+      { "@type": "WebPageElement", "url": "#0", "name": "Manage My Membership" },
+      { "@type": "WebPageElement", "url": "#0", "name": "Join ASCE"            },
+      { "@type": "WebPageElement", "url": "#0", "name": "Renew my membership"  },
+      { "@type": "WebPageElement", "url": "#0", "name": "View member benefits" }
     ]
   != Util.view(testlinks).linkList()
 
