@@ -1,14 +1,3 @@
 h1#conference-co-chairs Conference Co-Chairs
 div._text-block
-  -
-    let cochairs = new Element('ul').addContent([
-      site.currentConference().getOrganizer('thomas-mccollough').view.affiliation(),
-      site.currentConference().getOrganizer('stephen-dickenson').view.entireName(),
-    ].map((d) =>
-      new Element('li').attr({
-        itemprop : 'organizer',
-        itemscope: '',
-        itemtype : 'http://schema.org/Person',
-      }).addContent(d))
-    )
-  != cochairs.html()
+  != Util.view(site.currentConference.getOrganizersAll()).chairs(site.getQueue('Conference Co-Chairs'))

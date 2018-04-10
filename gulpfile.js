@@ -7,6 +7,12 @@ const autoprefixer = require('gulp-autoprefixer')
 const clean_css    = require('gulp-clean-css')
 const sourcemaps   = require('gulp-sourcemaps')
 
+const jsdom = require('jsdom')
+const xjs = require('extrajs-dom')
+const requireOther = require('schemaorg-jsd/lib/requireOther.js')
+
+const ConfSite   = require('./class/ConfSite.class.js')
+const ConfPage   = require('./class/ConfPage.class.js')
 
 
 // HOW-TO: https://github.com/mlucool/gulp-jsdoc3#usage
@@ -28,7 +34,6 @@ gulp.task('pug:docs', function () {
         ConfSite: require('./class/ConfSite.class.js'),
         ConfPage: require('./class/ConfPage.class.js'),
         Person  : require('./class/Person.class.js'),
-        Place   : require('./class/Place.class.js'),
         Docs    : require('./docs/_models/Docs.class.js'),
       },
     }))
@@ -56,29 +61,13 @@ gulp.task('pug:index', function () {
     .pipe(gulp.dest('./'))
 })
 gulp.task('pug:default', function () {
-  const Color      = require('extrajs-color')
-  const ConfSite   = require('./class/ConfSite.class.js')
-  const ConfPage   = require('./class/ConfPage.class.js')
-  const Conference = require('./class/Conference.class.js')
   return gulp.src(__dirname + '/proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
-        Element   : require('extrajs-dom').Element,
-        Util      : require('./class/Util.class.js'),
-        site      : new ConfSite('Civil Engineering Congress', '/sites/default/', 'ConferenceSuite')
-          .colors(Color.fromString('#660000'), Color.fromString('#ff6600')) // default Hokie colors
-          .init()
-          .addConference('default', new Conference({
-            name      : 'Civil Engineering Congress 2016',
-            url       : 'http://2016.cecongress.org/',
-            start_date: new Date(),
-            end_date  : new Date(),
-            promo_loc : { text : 'Reston, VA' },
-          }))
-          .currentConference('default')
-          .prevConference('default')
-          .nextConference('default'),
+        xjs: require('extrajs-dom'),
+        Util: require('./class/Util.class.js'),
+        site: new ConfSite(requireOther('./proto/default/database.jsonld')).init(),
         page: new ConfPage(),
       },
     }))
@@ -89,10 +78,54 @@ gulp.task('pug:sample', function () {
     .pipe(pug({
       basedir: './',
       locals: {
-        xjs    : require('extrajs'),
-        Element: require('extrajs-dom').Element,
         Util   : require('./class/Util.class.js'),
-        site   : require('./proto/asce-event.org/data.js'),
+        Person  : require('./class/Person.class.js'),
+        site: (function () {
+          const returned = new ConfSite(requireOther('./proto/asce-event.org/database.jsonld')).init()
+          function pageTitle() { return this.name() + ' | ' + returned.name() }
+          returned.find('registration.html')
+            .add(new ConfPage('Why Attend', '#0')
+              .title(pageTitle)
+              .description(`Why you should attend ${returned.currentConference.name}.`)
+            )
+            .add(new ConfPage('Volunteer', '#0')
+              .title(pageTitle)
+              .description(`Volunteer at ${returned.currentConference.name}.`)
+            )
+          returned.find('program.html')
+            .add(new ConfPage('Short Courses', '#0')
+              .title(pageTitle)
+              .description(`Short Courses for ${returned.currentConference.name}.`)
+            )
+            .add(new ConfPage('Technical Tours', '#0')
+              .title(pageTitle)
+              .description(`Technical Tours for ${returned.currentConference.name}.`)
+            )
+            .add(new ConfPage('Optional Tours', '#0')
+              .title(pageTitle)
+              .description(`Optional Tours for ${returned.currentConference.name}.`)
+            )
+          returned.find('speakers.html')
+            .add(new ConfPage('Distinguished Lecturers', '#0')
+              .title(pageTitle)
+              .description(`Distinguished lecturers at ${returned.currentConference.name}.`)
+            )
+          returned.find('sponsor.html')
+            .add(new ConfPage('Partnering Orgs', '#0')
+              .title(pageTitle)
+              .description(`Partnering Organizations at ${returned.currentConference.name}.`)
+            )
+            .add(new ConfPage('Cooperating Orgs', '#0')
+              .title(pageTitle)
+              .description(`Cooperating Organizations at ${returned.currentConference.name}.`)
+            )
+          returned.find('exhibit.html')
+            .add(new ConfPage('Exhibitor List', '#0')
+              .title(pageTitle)
+              .description(`Listing of all Exhibitors at ${returned.currentConference.name}.`)
+            )
+          return returned
+        })()
       },
     }))
     .pipe(gulp.dest('./proto/asce-event.org/'))

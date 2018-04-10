@@ -44,10 +44,10 @@
     // initial values
     text-decoration: initial;
     background:      initial;
-    border:          initial;
-    opacity: initial !important; // specificity HACK override a:not([href]) from xmeter
+    border:          0 solid; // override initial border-width (as in xmeter base)
 
     // inherited values
     color: inherit;
+    --link-color: currentColor; // a[href]
   }
 }

@@ -12,16 +12,16 @@
 // shouldn’t be used on its own; there are three “flavors” of Social List shown below.
 // 1. site mast footer
 //
-// Use in Pug:
+// Pug:
 // <pre>
-//   include /_views/_c-SocialList.view.pug
-//   +socialList({
-//     twitter : { url: '#0', text: 'example Twitter link (alt text)' },
-//     google  : { url: '#0', text: 'example Google+ link (alt text)' },
-//     facebook: { url: '#0', text: 'example Facebook link (alt text)' },
-//     linkedin: { url: '#0', text: 'example LinkedIn link (alt text)' },
-//     youtube : { url: '#0', text: 'example YouTube link (alt text)' },
-//   })
+// socialdata = [
+//   { "@type": "URL", "name": "twitter" , "url": "//twitter.com/ASCE"    , "description": "example Twitter link (alt text)" },
+//   { "@type": "URL", "name": "google"  , "url": "//plus.google.com/ASCE", "description": "example Google+ link (alt text)" },
+//   { "@type": "URL", "name": "facebook", "url": "//facebook.com/ASCE"   , "description": "example Facebook link (alt text)" },
+//   { "@type": "URL", "name": "linkedin", "url": "//linkedin.com/ASCE"   , "description": "example LinkedIn link (alt text)" },
+//   { "@type": "URL", "name": "youtube" , "url": "//youtube.com/ASCE"    , "description": "example YouTube link (alt text)" },
+// ]
+// != Util.view(socialdata).socialList()
 // </pre>
 //
 // <header><dl>
@@ -32,14 +32,14 @@
 // Markup:
 // <div class="c-Banner">
 //   <ul class="o-List o-Flex c-SocialList {{ modifier_class }}">
-//     <li class="o-List__Item o-Flex__Item c-SocialList__Item">
-//       <a class="c-SocialList__Link c-SocialList__Link--twitter h-Block" href="#0">
-//         <span class="h-Hidden">alt text</span>
+//     <li class="o-List__Item o-Flex__Item c-SocialList__Item" itemprop="sameAs" itemscope="" itemtype="http://schema.org/URL">
+//       <a class="c-SocialList__Link c-SocialList__Link--twitter h-Block" href="//twitter.com/ASCE" itemprop="url">
+//         <span class="h-Hidden" itemprop="description">Follow ASCE on Twitter</span>
 //       </a>
 //     </li>
-//     <li class="o-List__Item o-Flex__Item c-SocialList__Item">
-//       <a class="c-SocialList__Link c-SocialList__Link--facebook h-Block" href="#0">
-//         <span class="h-Hidden">alt text</span>
+//     <li class="o-List__Item o-Flex__Item c-SocialList__Item" itemprop="sameAs" itemscope="" itemtype="http://schema.org/URL">
+//       <a class="c-SocialList__Link c-SocialList__Link--facebook h-Block" href="//facebook.com/ASCE" itemprop="url">
+//         <span class="h-Hidden" itemprop="description">Follow ASCE on Facebook</span>
 //       </a>
 //     </li>
 //   </ul>
@@ -82,10 +82,10 @@
 .c-SocialList--highlight {
   width: 50%;
   --iconsize: 10vw;
-  --icon-color: var(--color-gray_dk);
-  --icon-color-hover: var(--color-secondary);
+  --icon-color: var(--color-gray_dk, @g-color-gray_dk);
+  --icon-color-hover: var(--color-secondary, @g-color-secondary);
   .c-Banner & {
-    --icon-color: var(--color-gray_dk-tint2);
+    --icon-color: var(--color-gray_dk-tint2, @g-color-gray_dk-tint2);
   }
 }
 

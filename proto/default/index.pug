@@ -2,7 +2,6 @@ extends _sites.tpl.pug
 
 block append vars
   - var page = site.find('index.html')
-  - var hero_content = 'default action buttons'
 
 block mainHeader
-  != site.currentConference().view.hero(hero_content)
+  != site.currentConference.view.hero()

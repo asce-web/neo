@@ -8,16 +8,18 @@
 //
 // A list of sessions for a single day.
 //
-// Use in Pug:
+// Pug:
 // <pre>
-// != Util.view([
-//   new DateRange('Registration'             , new Date('2016-09-28 10:00'), new Date('2016-09-28 19:00')),
-//   new DateRange('Technical Tours'          , new Date('2016-09-28 10:30'), new Date('2016-09-28 16:30')).url('#0'),
-//   new DateRange('Short Courses'            , new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')).url('#0'),
-//   new DateRange('Optional Tours'           , new Date('2016-09-28 12:00'), new Date('2016-09-28 17:00')).url('#0'),
-//   new DateRange('Opening Welcome Reception', new Date('2016-09-28 17:30'), new Date('2016-09-28 19:30')),
-//   new DateRange('Community Service Project', new Date('2016-09-28 13:00'), new Date('2016-09-28 17:00')),
-// ]).timeBlock()
+// -
+//   let sessions = [
+//     new DateRange({ "@type": "Event", "name": "Registration"              , "startDate": "2016-09-28 10:00", "endDate": "2016-09-28 19:00"              }),
+//     new DateRange({ "@type": "Event", "name": "Technical Tours"           , "startDate": "2016-09-28 10:30", "endDate": "2016-09-28 16:30", "url": "#0" }),
+//     new DateRange({ "@type": "Event", "name": "Short Courses"             , "startDate": "2016-09-28 13:00", "endDate": "2016-09-28 17:00", "url": "#0" }),
+//     new DateRange({ "@type": "Event", "name": "Optional Tours"            , "startDate": "2016-09-28 12:00", "endDate": "2016-09-28 17:00", "url": "#0" }),
+//     new DateRange({ "@type": "Event", "name": "Opening Welcome Reception" , "startDate": "2016-09-28 17:30", "endDate": "2016-09-28 19:30"              }),
+//     new DateRange({ "@type": "Event", "name": "Community Service Project" , "startDate": "2016-09-28 13:00", "endDate": "2016-09-28 17:00"              }),
+//   ]
+// != Util.view(sessions).timeBlock()
 // </pre>
 //
 // <header><dl>
@@ -43,7 +45,7 @@
 //       &ndash;
 //       <time datetime="2016-09-28 19:00" itemprop="endDate">7pm</time>
 //     </td>
-//     <td class="c-TimeBlock__Desc c-TimeBlock__Desc--last" itemprop="name">
+//     <td class="c-TimeBlock__Desc" itemprop="name">
 //       <a class="c-TimeBlock__Link" href="#0" itemprop="url">Technical Tours</a>
 //     </td>
 //   </tr>
@@ -117,17 +119,13 @@
   .c-TimeBlock__Times,
   .c-TimeBlock__Desc {
     position: relative; // for psuedo-elements in viz
-  }
-  .c-TimeBlock__Times::before,
-  .c-TimeBlock__Desc:not(.c-TimeBlock__Desc--last)::before {
+    &::before {
     content: '';
-  }
-  .c-TimeBlock__Times::before,
-  .c-TimeBlock__Desc::before {
     display: block;
     position: absolute;
     box-shadow: 0 0 0 1em currentColor inset, 0 0 1em 0 currentColor;
     color: var(--color-primary, @g-color-primary);
+    }
   }
   .c-TimeBlock__Times::before {
     // This is the disc on the viz
@@ -150,6 +148,7 @@
     top:    calc(~'-0.5 * var(--vru)');
     bottom: calc(~'-0.5 * var(--vru)');
     border-left: 1px solid;
+    .c-TimeBlock__Item:last-of-type & { content: none; } // omit on last item
     @media (min-width: 30em) {
       top: calc(~'0.5 * var(--vru)');
     }

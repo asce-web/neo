@@ -10,13 +10,15 @@
 // The first column is the date,
 // the second column is the description.
 //
-// Use in Pug:
+// Pug:
 // <pre>
-// != Util.view([
-//   new DateRange('Optional Final Papers Due'     , new Date('2015-10-12')),
-//   new DateRange('Early-Bird Registration Closes', new Date('2015-12-17')).url('#0'),
-//   new DateRange('Advance Registration Period'   , new Date('2015-12-18'), new Date('2015-12-21')),
-// ]).dateBlock()
+// -
+//   let dates = [
+//     new DateRange({ "@type": "Action", "name": "Optional Final Papers Due"      , "startTime": "2015-10-12"                                       }),
+//     new DateRange({ "@type": "Action", "name": "Early-Bird Registration Closes" , "startTime": "2015-12-17"                         , "url": "#0" }),
+//     new DateRange({ "@type": "Action", "name": "Advance Registration Period"    , "startTime": "2015-12-18", "endTime": "2015-12-21"              }),
+//   ]
+// != Util.view(dates).dateBlock()
 // </pre>
 //
 // <header><dl>
@@ -26,7 +28,7 @@
 //
 // Markup:
 // <table><tbody class="c-DateBlock">
-//   <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
+//   <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/Action">
 //     <td class="c-DateBlock__Date">
 //       <time datetime="2015-10-12" itemprop="startTime">Oct 12, 2015</time>
 //     </td>
@@ -34,7 +36,7 @@
 //       Optional Final Papers Due
 //     </td>
 //   </tr>
-//   <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
+//   <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/Action">
 //     <td class="c-DateBlock__Date">
 //       <time datetime="2015-12-17" itemprop="startTime">Dec 17, 2015</time>
 //     </td>
@@ -42,7 +44,7 @@
 //       <a class="c-DateBlock__Link" href="#0" itemprop="url">Early-Bird Registration Closes</a>
 //     </td>
 //   </tr>
-//   <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/Action">
+//   <tr class="c-DateBlock__Item" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/Action">
 //     <td class="c-DateBlock__Date">
 //       <time datetime="2015-12-18" itemprop="startTime">Dec 18, 2015</time>
 //       &ndash;

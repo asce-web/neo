@@ -12,16 +12,16 @@
 // Typically, the heading is given an <code>id</code> to be used as
 // a fragment identifier (internal page anchors).
 //
-// Use in Pug:
+// Pug:
 // <pre>
-//   +callout()
-//     h1#volunteer Volunteer
-//     p We will need volunteers to act as greeters, ...
-//     != Util.VIEW.highlightButtons([new Element('a').attr('href','#0').addContent(`Sign Up`)])
-//   +callout().c-Banner
-//     h1#volunteer-banner Volunteer Banner
-//     p We will need volunteers to act as greeters, ...
-//     != Util.VIEW.highlightButtons([new Element('a').attr('href','#0').addContent(`Sign Up`)])
+// +callout()
+//   h1#volunteer Volunteer
+//   p We will need volunteers to act as greeters, ...
+//   != Util.VIEW.highlightButtons([new HTMLElement('a').attr('href','#0').addContent(`Sign Up`)])
+// +callout().c-Banner
+//   h1#volunteer-banner Volunteer Banner
+//   p We will need volunteers to act as greeters, ...
+//   != Util.VIEW.highlightButtons([new HTMLElement('a').attr('href','#0').addContent(`Sign Up`)])
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
@@ -43,7 +43,7 @@
 //
 // Markup:
 // <aside class="o-Runner o-Runner--highlight {{ modifier_class }}">
-//   <div class="o-Constrain">
+//   <div class="h-Constrain">
 //     <h1>Volunteer</h1>
 //     <p>We will need volunteers to act as greeters, direct people to various venues within the hotel, collect tickets, travel with tour buses, provide head counts, and serve as a point of contact with ASCE staff.</p>
 //     <ul class="o-List o-Flex o-Flex--even">

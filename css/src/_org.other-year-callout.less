@@ -18,21 +18,29 @@
 //
 // (Use `.c-Banner--prev` or `.c-Banner--next` accordingly.)
 //
-// Use in Pug:
+// Pug:
 // <pre>
 // -
 //   let conf = new Conference({
-//     name      : 'Geo-Risk 2020',
-//     url       : 'http://2020.georiskconference.org/',
-//     theme     : 'Geotechincal risk from theory to practice.',
-//     start_date: new Date('2020-06-04'),
-//     promo_loc : { text: 'Denver, CO', alt: 'Denver, Colorado'},
+//     "@context"   : "http://schema.org/",
+//     "@type"      : "Event",
+//     "name"       : "Geo-Risk 2020",
+//     "url"        : "http://2020.georiskconference.org/",
+//     "description": "Geotechincal risk from theory to practice.",
+//     "image"      : "http://2020.georiskconference.org/hero.jpg",
+//     "startDate"  : "2020-06-04",
+//     "endDate"    : "2020-06-07",
+//     "location"   : {
+//       "@type": "PostalAddress",
+//       "addressLocality": "Denver",
+//       "addressRegion"  : "Colorado"
+//     },
 //   })
 //   let prev_blurb = 'Plan ahead to attend Geo-Risk next year!'
 //   let prev_content = Util.VIEW.highlightButtons([
-//     new Element('a').attr('href','http://2020.georiskconference.org/').attr('itemprop','url'),
+//     new HTMLElement('a').attr('href','http://2020.georiskconference.org/').attr('itemprop','url'),
 //   ], 'c-Button--ghost c-Button--ghost--dark')
-// != conf.view(Conference.Display.OTHER_YEAR, 'prev', prev_blurb, prev_content)
+// != conf.view.otherYear(prev_blurb, prev_content)
 // </pre>
 // <header><dl>
 //   <dt>author</dt>  <dd>Chris Harvey</dd>
@@ -55,11 +63,12 @@
 //
 // Markup:
 // <aside class="o-Runner o-Runner--highlight c-Banner c-Banner--blur c-Banner--prev c-ConfHed" data-instanceof="Conference">
-//   <div class="o-Constrain">
+//   <div class="h-Constrain">
 //     <h1 class="c-ConfHed__Name" itemprop="name">Geo-Risk 2020</h1>
 //     <meta content="2020-06-04" itemprop="startDate"/>
-//     <p class="c-ConfHed__Detail" itemprop="location">
-//       <abbr title="Denver, Colorado">Denver, CO</abbr>
+//     <p class="c-ConfHed__Detail" itemprop="location" itemscope="" itemtype="http://schema.org/PostalAddress">
+//       <span itemprop="addressLocality">Denver</span>,
+//       <data itemprop="addressRegion" value="Colorado">Colorado</data>
 //     </p>
 //     <p class="h-Hidden-nM">Plan ahead to attend Geo-Risk next year!</p>
 //     <ul class="o-List o-Flex o-Flex--even">

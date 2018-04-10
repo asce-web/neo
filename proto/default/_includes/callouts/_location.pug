@@ -1,7 +1,7 @@
-h1#hotel-travel= site.currentConference().promoLoc.text
-block promoLocationBlurb
+h1#hotel-travel= Util.view(site.currentConference.promoLoc).promoLoc()
+p._text-plain.-ta-c= site.currentConference.promoLoc.description
 -
   let highlight_buttons = [
-    new Element('a').attr('href','location.html').addContent(`Hotel & Travel`)
+    { "@type": "WebPageElement", "text": "Hotel & Travel", "url": "location.html" },
   ]
-!= Util.view(highlight_buttons).highlightButtons('c-Button--ghost c-Button--ghost--dark')
+footer!= Util.view(highlight_buttons).highlightButtons('c-Button--ghost c-Button--ghost--dark')

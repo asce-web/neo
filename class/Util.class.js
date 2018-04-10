@@ -1,6 +1,14 @@
-const xjs     = require('extrajs')
-const Element = require('extrajs-dom').Element
+const fs = require('fs')
+const path = require('path')
+
+const xjs = {
+  ...require('extrajs'),
+  ...require('extrajs-dom'),
+}
 const View    = require('extrajs-view')
+
+const xDirectory          = require('../tpl/x-directory.tpl.js')
+
 
 /**
  * A set of static values and functions used site-wide.
@@ -9,90 +17,6 @@ const View    = require('extrajs-view')
 class Util {
   /** @private */ constructor() {}
 
-  /**
-   * NOTE: TYPE DEFINITION
-   * ```json
-   * {
-   *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "Util.StateObj",
-   *   "type": "object",
-   *   "additionalProperties": false,
-   *   "required": ["index", "name", "pop", "area", "region"],
-   *   "properties": {
-   *     "index" : { "type": "string", "description": "the postal code for the state" },
-   *     "name"  : { "type": "string", "description": "the name of the state" },
-   *     "pop"   : { "type": "number", "description": "population in people" },
-   *     "area"  : { "type": "number", "description": "area in square km" },
-   *     "region": { "type": "Util.Region", "description": "region of US" }
-   *   }
-   * }
-   * ```
-   * @typedef  {Object} Util.StateObj
-   * @property {string} index  - the postal code for the state
-   * @property {string} name   - the name of the state
-   * @property {number} pop    - population in people
-   * @property {number} area   - area in square km
-   * @property {Util.Region} region - region of US
-   */
-
-  /**
-   * @summary List of US State objects.
-   * @type {Array<StateObj>}
-   */
-  static get STATE_DATA() {
-    return [
-      { index: 'AL',  name: 'Alabama',         pop:  4779736,  area:  52419, region: Util.Region.SOUTH     },
-      { index: 'AK',  name: 'Alaska',          pop:   710231,  area: 663267, region: Util.Region.WEST      },
-      { index: 'AZ',  name: 'Arizona',         pop:  6392017,  area: 113998, region: Util.Region.SOUTHWEST },
-      { index: 'AR',  name: 'Arkansas',        pop:  2915918,  area:  53179, region: Util.Region.SOUTH     },
-      { index: 'CA',  name: 'California',      pop: 37253956,  area: 163696, region: Util.Region.WEST      },
-      { index: 'CO',  name: 'Colorado',        pop:  5029196,  area: 104094, region: Util.Region.WEST      },
-      { index: 'CT',  name: 'Connecticut',     pop:  3574097,  area:   5543, region: Util.Region.NORTHEAST },
-      { index: 'DE',  name: 'Delaware',        pop:   897934,  area:   2489, region: Util.Region.NORTHEAST },
-      { index: 'FL',  name: 'Florida',         pop: 18801310,  area:  65755, region: Util.Region.SOUTH     },
-      { index: 'GA',  name: 'Georgia',         pop:  9687653,  area:  59425, region: Util.Region.SOUTH     },
-      { index: 'HI',  name: 'Hawaii',          pop:  1360301,  area:  10931, region: Util.Region.WEST      },
-      { index: 'ID',  name: 'Idaho',           pop:  1567582,  area:  83570, region: Util.Region.WEST      },
-      { index: 'IL',  name: 'Illinois',        pop: 12830632,  area:  57914, region: Util.Region.MIDWEST   },
-      { index: 'IN',  name: 'Indiana',         pop:  6483802,  area:  36418, region: Util.Region.MIDWEST   },
-      { index: 'IA',  name: 'Iowa',            pop:  3046355,  area:  56272, region: Util.Region.MIDWEST   },
-      { index: 'KS',  name: 'Kansas',          pop:  2853118,  area:  82277, region: Util.Region.MIDWEST   },
-      { index: 'KY',  name: 'Kentucky',        pop:  4339367,  area:  40409, region: Util.Region.SOUTH     },
-      { index: 'LA',  name: 'Louisiana',       pop:  4533372,  area:  51840, region: Util.Region.SOUTH     },
-      { index: 'ME',  name: 'Maine',           pop:  1328361,  area:  35385, region: Util.Region.NORTHEAST },
-      { index: 'MD',  name: 'Maryland',        pop:  5773552,  area:  12407, region: Util.Region.NORTHEAST },
-      { index: 'MA',  name: 'Massachusetts',   pop:  6547629,  area:  10555, region: Util.Region.NORTHEAST },
-      { index: 'MI',  name: 'Michigan',        pop:  9883640,  area:  96716, region: Util.Region.MIDWEST   },
-      { index: 'MN',  name: 'Minnesota',       pop:  5303925,  area:  86939, region: Util.Region.MIDWEST   },
-      { index: 'MS',  name: 'Mississippi',     pop:  2967297,  area:  48430, region: Util.Region.SOUTH     },
-      { index: 'MO',  name: 'Missouri',        pop:  5988927,  area:  69704, region: Util.Region.MIDWEST   },
-      { index: 'MT',  name: 'Montana',         pop:   989415,  area: 147042, region: Util.Region.WEST      },
-      { index: 'NE',  name: 'Nebraska',        pop:  1826341,  area:  77354, region: Util.Region.MIDWEST   },
-      { index: 'NV',  name: 'Nevada',          pop:  2700551,  area: 110561, region: Util.Region.WEST      },
-      { index: 'NH',  name: 'New Hampshire',   pop:  1316470,  area:   9350, region: Util.Region.NORTHEAST },
-      { index: 'NJ',  name: 'New Jersey',      pop:  8791894,  area:   8721, region: Util.Region.NORTHEAST },
-      { index: 'NM',  name: 'New Mexico',      pop:  2059179,  area: 121589, region: Util.Region.SOUTHWEST },
-      { index: 'NY',  name: 'New York',        pop: 19378102,  area:  54556, region: Util.Region.NORTHEAST },
-      { index: 'NC',  name: 'North Carolina',  pop:  9535483,  area:  53819, region: Util.Region.SOUTH     },
-      { index: 'ND',  name: 'North Dakota',    pop:   672591,  area:  70700, region: Util.Region.MIDWEST   },
-      { index: 'OH',  name: 'Ohio',            pop: 11536504,  area:  44825, region: Util.Region.MIDWEST   },
-      { index: 'OK',  name: 'Oklahoma',        pop:  3751351,  area:  69898, region: Util.Region.SOUTHWEST },
-      { index: 'OR',  name: 'Oregon',          pop:  3831074,  area:  98381, region: Util.Region.WEST      },
-      { index: 'PA',  name: 'Pennsylvania',    pop: 12702379,  area:  46055, region: Util.Region.NORTHEAST },
-      { index: 'RI',  name: 'Rhode Island',    pop:  1052567,  area:   1545, region: Util.Region.NORTHEAST },
-      { index: 'SC',  name: 'South Carolina',  pop:  4625364,  area:  32020, region: Util.Region.SOUTH     },
-      { index: 'SD',  name: 'South Dakota',    pop:   814180,  area:  77117, region: Util.Region.MIDWEST   },
-      { index: 'TN',  name: 'Tennessee',       pop:  6346105,  area:  42143, region: Util.Region.SOUTH     },
-      { index: 'TX',  name: 'Texas',           pop: 25145561,  area: 268581, region: Util.Region.SOUTHWEST },
-      { index: 'UT',  name: 'Utah',            pop:  2763885,  area:  84899, region: Util.Region.WEST      },
-      { index: 'VT',  name: 'Vermont',         pop:   625741,  area:   9614, region: Util.Region.NORTHEAST },
-      { index: 'VA',  name: 'Virginia',        pop:  8260405,  area:  42774, region: Util.Region.SOUTH     },
-      { index: 'WA',  name: 'Washington',      pop:  6971406,  area:  71300, region: Util.Region.WEST      },
-      { index: 'WV',  name: 'West Virginia',   pop:  1854304,  area:  24230, region: Util.Region.SOUTH     },
-      { index: 'WI',  name: 'Wisconsin',       pop:  5686986,  area:  65498, region: Util.Region.MIDWEST   },
-      { index: 'WY',  name: 'Wyoming',         pop:   563626,  area:  97814, region: Util.Region.WEST      },
-    ]
-  }
 
   /**
    * NOTE: TYPE DEFINITION
@@ -196,48 +120,9 @@ class Util {
      */
     return new View(null, data)
       /**
-       * Return a Page object as a link in a document outline.
-       * Parameter `data` should be of type `Page`.
-       * @summary Call `Util.view(data).pageLink()` to render this display.
-       * @todo TODO move this display to `require('sitepage').VIEW`
-       * @function Util.VIEW.pageLink
-       * @param   {!Object=} options options for configuring output
-       * @param   {?Object<string>=} options.classes group set of css class configurations
-       * @param   {string=} options.classes.link css classes to add to the link
-       * @param   {string=} options.classes.icon css classes to add to the icon;
-       *                                         if you want the icon but no additional classes, provide the empty string `''`
-       * @param   {string=} options.classes.expand css classes to add to the expand icon;
-       *                                           if you want the icon but no additional classes, provide the empty string `''`
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pageLink(options = {}) {
-        let classes = options.classes || {}
-        return new Element('a').class(classes.link || null)
-          .attr({
-            'data-instanceof': 'Page',
-            href: this.url(),
-            // 'aria-current': (page.url()===this.url()) ? 'page' : null,
-          })
-          .addContent([
-            (xjs.Object.typeOf(classes.icon)==='string') ? new Element('i').class('material-icons')
-              .addClass(classes.icon)
-              .attr('role','none')
-              .addContent(this.getIcon())
-              : null,
-            new Element('span').addContent(this.name()),
-            (xjs.Object.typeOf(classes.expand)==='string' && this.findAll().length) ? new Element('i').class('material-icons')
-              .addClass(classes.expand)
-              .attr('role','none')
-              .addContent(`expand_more`)
-              : null,
-          ])
-          .html()
-      })
-      /**
        * Return a Page object’s document outline as a nested ordered list.
        * Parameter `data` should be of type `Page`.
        * @summary Call `Util.view(data).pageToc()` to render this display.
-       * @todo TODO move this display to `require('sitepage').VIEW`
        * @function Util.VIEW.pageToc
        * @param   {!Object=} options options for configuring output
        * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
@@ -254,36 +139,42 @@ class Util {
         let classes = options.classes || {}
         let start = options.start || 0
         let end   = options.end   || Infinity
-        return new Element('ol').class(classes.list || null)
-          .attr('role', (options.inner) ? null : 'directory')
-          .addContent(
-            this.findAll().slice(start, end).filter((p) => !p.isHidden()).map((p) =>
-              new Element('li').class(classes.item || null).addContent([
-                Util.view(p).pageLink(options.links),
-                (p.findAll().length && options.depth > 0) ?
-                  Util.view(p).pageToc(Object.assign({}, options.options, {
-                    depth: options.depth-1,
-                    inner: true,
-                  }))
-                  : '',
-              ])
-            )
-          )
-          .html()
+        return new xjs.DocumentFragment(xDirectory.render({
+          ...this,
+          hasPart: this.findAll().filter((p) => !p.isHidden()),
+          $depth: options.depth,
+          options: {
+            ...{classes, start, end},
+            links: options.links,
+            options: options.options,
+          }
+        })).innerHTML()
+      })
+      /**
+       * Return a snippet marking up a promoted location.
+       * Parameter `data` should be of type `{@link http://schema.org/PostalAddress|sdo.PostalAddress}`.
+       * @summary Call `Util.view(data).promoLoc()` to render this display.
+       * @function Util.VIEW.promoLoc
+       * @returns {string} HTML output
+       */
+      .addDisplay(function promoLoc() {
+        const {xAddress} = require('aria-patterns')
+        return new xjs.DocumentFragment(xAddress.render({
+          ...this,
+          $regionName: true,
+        })).trimInner().textContent()
       })
       /**
        * Return an unordered list of button links for a highlighted content block.
-       * Parameter `data` should be of type `Array<Element>` (TODO: HTMLAnchorElement), i.e., a list of links.
+       * Parameter `data` should be of type `Array<sdo.WebPageElement>`, i.e., a list of links.
        * @summary Call `Util.view(data).highlightButtons()` to render this display.
        * @function Util.VIEW.highlightButtons
        * @param   {string=} buttonclasses the classes to add to the buttons
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        return new Element('ul').class('o-List o-Flex o-Flex--even').addContent(this.map((el) =>
-          new Element('li').class('o-List__Item o-Flex__Item')
-            .addContent(el.addClass(`c-Button c-Button--hilite ${buttonclasses}`))
-        )).html()
+        const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
+        return new xjs.DocumentFragment(xListHighlightbuttons.render({ links: this, buttonclasses })).innerHTML()
       })
       /**
        * Return an unordered list of links, with style.
@@ -305,73 +196,102 @@ class Util {
         )).html()
       })
       /**
-       * Return a table containing a `<tbody.c-DateBlock>` component, containing
-       * rows of {@link DateRange.VIEW.dateBlock|DateRange#view.dateBlock()} displays.
-       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of important dates.
-       * @summary Call `Util.view(data).dateBlock()` to render this display.
-       * @function Util.VIEW.dateBlock
-       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
-       * @returns {string} HTML output
-       */
-      .addDisplay(function dateBlock(attr = {}) {
-        return new Element('table').attr(attr).addContent(
-          new Element('tbody').class('c-DateBlock')
-            .addContent(this.map(($importantDate) => $importantDate.view.dateBlock()))
-        ).html()
-      })
-      /**
-       * Return a table containing a `<tbody.c-TimeBlock>` component, containing
-       * rows of {@link DateRange.VIEW.timeBlock|DateRange#view.timeBlock()} displays.
-       * Parameter `data` should be of type `Array<DateRange>`, e.g., a list of sessions.
-       * @summary Call `Util.view(data).timeBlock()` to render this display.
-       * @function Util.VIEW.timeBlock
-       * @param   {Object<ValueArg>=} attr optional attributes to add to the `table` element
-       * @returns {string} HTML output
-       */
-      .addDisplay(function timeBlock(attr = {}) {
-        return new Element('table').attr(attr).addContent(
-          new Element('tbody').class('c-TimeBlock')
-            .addContent(this.map(($session, index) => $session.view.timeBlock(index===data.length-1)))
-        ).html()
-      })
-      /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.
-       * Parameter `data` should be of type `Array<RegistrationPeriod>`.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/AggregateOffer|sdo.AggregateOffer}>`.
        * @summary Call `Util.view(data).registrationLegend()` to render this display.
        * @function Util.VIEW.registrationLegend
        * @returns {string} HTML output
        */
       .addDisplay(function registrationLegend() {
-        return new Element('ul').class('o-List o-Flex o-Flex--even c-Alert _regLegend').addContent(this.map((period) =>
-          new Element('li').class('o-List__Item o-Flex__Item c-Alert__Item').addContent(period.view.legend())
-        )).html()
+        const xListRegistrationicon = require('../tpl/x-list-registrationicon.tpl.js')
+        return new xjs.DocumentFragment(
+          xListRegistrationicon.render(this)
+        ).innerHTML()
       })
       /**
-       * Return a `<ul.o-ListStacked>` component, containing items of
-       * {@link Pass.VIEW.pass|Pass#view.pass()} displays.
-       * Parameter `data` should be of type `Array<Pass>`.
+       * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
+       * Parameter `data` should be of type `Array<!Object>`,
+       * where each entry is similar to an argument of the `Pass` constructor.
        * @summary Call `Util.view(data).pass()` to render this display.
        * @function Util.VIEW.pass
        * @param   {Conference} $conference the conference to which these passes belong
+       * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
        * @returns {string} HTML output
        */
-      .addDisplay(function pass($conference) {
-        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((pass) =>
-          new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(pass.view.pass($conference))
-        )).html()
+      .addDisplay(function pass($conference, queue = null) {
+        const xListPass = require('../tpl/x-list-pass.tpl.js')
+        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let items = this.filter((item) => (queue) ? item_keys.includes(item.name) : true)
+        return new xjs.DocumentFragment(xListPass.render({ passes: items, $conference })).innerHTML()
       })
       /**
-       * Return a `<ul.o-ListStacked>` component, containing items of
-       * {@link Person.VIEW.speaker|Person#view.speaker()} displays.
-       * Parameter `data` should be of type `Array<Person>`.
-       * @summary Call `Util.view(data).speaker()` to render this display.
-       * @function Util.VIEW.speaker
+       * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/Accommodation|sdo.Accommodation}>`.
+       * @summary Call `Util.view(data).venue()` to render this display.
+       * @function Util.VIEW.venue
+       * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
        * @returns {string} HTML output
        */
-      .addDisplay(function speaker() {
-        return new Element('ul').class('o-List o-Flex o-ListStacked').addContent(this.map((person) =>
-          new Element('li').class('o-List__Item o-Flex__Item o-ListStacked__Item').addContent(person.view.speaker())
-        )).html()
+      .addDisplay(function venue(queue = null) {
+        const xListVenue = require('../tpl/x-list-venue.tpl.js')
+        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let items = this.filter((item) => (queue) ? item_keys.includes(item.description) : true)
+        return new xjs.DocumentFragment(xListVenue.render(items)).innerHTML()
+      })
+      /**
+       * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
+       * @summary Call `Util.view(data).speaker()` to render this display.
+       * @function Util.VIEW.speaker
+       * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
+       * @returns {string} HTML output
+       */
+      .addDisplay(function speaker(queue = null) {
+        const xListSpeaker = require('../tpl/x-list-speaker.tpl.js')
+        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
+        return new xjs.DocumentFragment(xListSpeaker.render(items)).innerHTML()
+      })
+      /**
+       * Return a `<ul>` element, containing conference chairs and/or co-chairs.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
+       * @summary Call `Util.view(data).chairs()` to render this display.
+       * @function Util.VIEW.chairs
+       * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
+       * @returns {string} HTML output
+       */
+      .addDisplay(function chairs(queue = null) {
+        const xListChair = require('../tpl/x-list-chair.tpl.js')
+        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
+        return new xjs.DocumentFragment(xListChair.render(items)).innerHTML()
+      })
+      /**
+       * Return a `<ul.c-SocialList>` component, containing
+       * markup for social media profiles.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/WebPageElement|sdo.WebPageElement}>`,
+       * where each array entry has a `name`, `url`, and `text`.
+       * @summary Call `Util.view(data).socialList()` to render this display.
+       * @function Util.VIEW.socialList
+       * @param   {string=} classes optional classes to add to the `<ul>`
+       * @returns {string} HTML output
+       */
+      .addDisplay(function socialList(classes = '') {
+        const xListSocial = require('../tpl/x-list-social.tpl.js')
+        return new xjs.DocumentFragment(
+          xListSocial.render({
+            links: this.map((obj) => ({
+              ...obj,
+              "@type": "WebPageElement",
+              text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
+            })),
+            classes,
+          })
+        ).innerHTML()
       })
   }
 
@@ -382,17 +302,6 @@ class Util {
    */
   static toURL(str) {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
-  }
-
-  /**
-   * @summary Remove an item from an array.
-   * @description This method is impure: it modifies the given argument.
-   * @param  {Array} arr the array to modify
-   * @param  {unknown} item  the item to remove from the array
-   */
-  static spliceFromArray(arr, item) {
-    var index = arr.indexOf(item)
-    if (index >= 0) arr.splice(index, 1)
   }
 
   /**
