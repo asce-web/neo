@@ -1,6 +1,6 @@
 {
   "name": "neo",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "private": true,
   "description": "Neo theme and style guide for conference sites.",
   "main": "css/neo.css",
