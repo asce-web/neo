@@ -1,0 +1,21 @@
+<template>
+  <table>
+    <tbody class="c-TimeBlock">
+      <template>
+        <tr class="c-TimeBlock__Item" itemprop="subEvent" itemscope="" itemtype="http://schema.org/Event">
+          <td class="c-TimeBlock__Times">
+            <time datetime="{{ startDate }}" itemprop="startDate endDate">{{ startDate.format('g:ia') }}</time>
+          </td>
+          <td class="c-TimeBlock__Times">
+            <time datetime="{{ startDate }}" itemprop="startDate">{{ startDate.format('g:ia') }}</time>
+            <span>&ndash;</span>
+            <time datetime="{{ endDate }}" itemprop="endDate">{{ endDate.format('g:ia') }}</time>
+          </td>
+          <td class="c-TimeBlock__Desc" itemprop="name">
+            <a class="c-TimeBlock__Link" href="{{ url }}" itemprop="url">{{ name }}</a>
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+</template>

@@ -4,10 +4,6 @@ block append vars
   - var page = site.find('exhibit.html')
 
 block mainReference
-  section.o-Runner.o-Runner--highlight.c-Banner#thank-you-exhibitors: div.o-Constrain
+  section.o-Runner.o-Runner--highlight.c-Banner#thank-you-exhibitors: div.h-Constrain
     h1 Thank You to Our Exhibitors
-    ul
-      each $exhibitor in site.currentConference().getExhibitorsAll()
-        li
-          a(href=$exhibitor.url() class={'-fw-b':$exhibitor.isSponsor()})= `${$exhibitor.name} (booth ${$exhibitor.booth()})`
-          img(src=$exhibitor.img() alt=`${$exhibitor.name}`)
+    != site.currentConference.view.exhibitorList()

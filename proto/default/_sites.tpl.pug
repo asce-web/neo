@@ -17,12 +17,8 @@ html(lang="en")
       link(rel="stylesheet" href="../../node_modules/xmeter/css/xmeter.css")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.15.0/bangs.css")
       link(rel="stylesheet" href="../../css/neo.css")
-      style.
-        body { #{new HTMLElement('body').style(site.colors()).style()} }
-        .c-Banner--hero { --banner-img: url('#{site.images().hero}'); }
-        .c-Banner--city { --banner-img: url('#{site.images().city}'); }
-        .c-Banner--prev { --banner-img: url('#{site.images().prev}'); }
-        .c-Banner--next { --banner-img: url('#{site.images().next}'); }
+      //- style.
+        body { #{new HTMLElement('body').style(site.colors).style()} }
       if site.name()
         //- if this site is an instance of the 'all' template
         link(rel="stylesheet" href="css/site.css")
@@ -34,11 +30,11 @@ html(lang="en")
         }
   body
     a.h-Hidden(href="#main") skip to main content
-    header.o-Runner.c-Mast.c-Mast--head: div.o-Constrain
+    header.o-Runner.c-Mast.c-Mast--head: div.h-Constrain
       != site.view.siteTitle()
-    header.o-Runner.c-Mast.c-Mast--menu#main-menu: nav.o-Constrain.o-Drawer
+    header.o-Runner.c-Mast.c-Mast--menu#main-menu: nav.h-Constrain.o-Drawer
       h1.h-Hidden Main Menu
-      button.o-Drawer__Button.h-Inline(type="button" aria-controls="main-menu-drawer" aria-label="toggle main menu")
+      button.o-Drawer__Button.h-Inline(type="button" aria-controls="main-menu-drawer" aria-expanded="false" aria-label="toggle main menu")
         svg.c-MobileMenuToggle(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36")
           path(d="M0,0 H24 V24 H0 z" fill="transparent")
           g(transform="translate(3,11)")
@@ -73,7 +69,7 @@ html(lang="en")
     main#main
       article(itemscope="" itemtype="http://schema.org/Event")
         block mainHeader
-          header.o-Runner.o-Runner--pageHeader: div.o-Constrain
+          header.o-Runner.o-Runner--pageHeader: div.h-Constrain
             h1.c-PageTitle= page.name()
         block mainBody
           block mainMinimal
@@ -81,20 +77,21 @@ html(lang="en")
           block mainRich
         block callouts
         block sponsors
-          +callout()
-            h1#sponsors Sponsors
+          +callout()#sponsors
+            h1 Sponsors
             p.-ta-c: i.
               (see external demo of
               #[a(href="http://go.asce.org/static/sponsors/") sponsors carousel]
               by rank)
-            each $supporterLevel,index in site.currentConference().getSupporterLevelQueue('home-page')
-              != $supporterLevel.view.supporterBlock(site.currentConference())
+            != site.currentConference.view.supporterLevels(site.getQueue('Top Sponsors') || [])
             -
               let highlight_buttons = [
-                new HTMLElement('a').attr('href','sponsor.html').addContent(`All Sponsors`)
+                { "@type": "WebPageElement", "text": "All Sponsors", "url": "sponsor.html" },
               ]
-            != Util.view(highlight_buttons).highlightButtons()
-    footer.o-Runner.c-Mast.c-Mast--sitemap#sitemap: nav.o-Constrain
+            footer!= Util.view(highlight_buttons).highlightButtons()
+        +callout()
+          != site.currentConference.view.supporterLevels(site.getQueue('Non-Sponsors') || [], true)
+    footer.o-Runner.c-Mast.c-Mast--sitemap#sitemap: nav.h-Constrain
       h1.h-Hidden Sitemap
       -
         let sitemap_options = {
@@ -112,10 +109,10 @@ html(lang="en")
           },
         }
       != Util.view(site).pageToc(sitemap_options)
-    footer.o-Runner.c-Mast.c-Mast--foot#connect-with-asce: div.o-Constrain
+    footer.o-Runner.c-Mast.c-Mast--foot#connect-with-asce: div.h-Constrain
       h1.h-Hidden Connect With #[abbr(title="American Society of Civil Engineers") ASCE]
       address(itemscope="" itemtype="http://schema.org/NGO")
-        p.c-ASCELogo(itemprop="name")
+        p.c-ASCELogo
           a.h-Block.-h-1o1(href="http://www.asce.org" itemprop="url")
             span.h-Hidden American Society of Civil Engineers
         p(itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress")
@@ -135,14 +132,7 @@ html(lang="en")
           meta(content="+1-703-295-6300" itemprop="telephone")
           meta(content="United States of America" itemprop="areaServed")
           meta(content="customer support" itemprop="contactType")
-        include ../../_views/_c-SocialList.view.pug
-        +socialList({
-          twitter : { url: '//twitter.com/ASCE'    , text: 'Follow ASCE on Twitter' }
-        , google  : { url: '//plus.google.com/ASCE', text: 'Follow ASCE on Google+' }
-        , facebook: { url: '//facebook.com/ASCE'   , text: 'Like ASCE on Facebook' }
-        , linkedin: { url: '//linkedin.com/ASCE'   , text: 'Connect with ASCE on LinkedIn' }
-        , youtube : { url: '//youtube.com/ASCE'    , text: 'Watch ASCE on YouTube' }
-        }).c-SocialList--footer
+        != Util.view(site.getSocialAll()).socialList('c-SocialList--footer')
         p: small
           | &copy; #[time 1996]&ndash;#[time 2016],#{' '}
           span(itemprop="name") American Society of Civil Engineers
@@ -153,7 +143,6 @@ html(lang="en")
     }): i.material-icons(role="none") arrow_upward
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous")
-      script(src="../../node_modules/xmeter/js/o-Tablist.js")
       script(src="../../js/o-Drawer.js")
       //- script.
         $('.c-Speaker__Body').addClass('-h-z')

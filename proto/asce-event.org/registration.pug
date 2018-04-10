@@ -11,9 +11,9 @@ block callouts
     h1 Additional Events and Pricing
     -
       let buttons = [
-        new HTMLElement('a').attr('href','#0').addContent(`Short Courses`),
-        new HTMLElement('a').attr('href','#0').addContent(`Technical Tours`),
-        new HTMLElement('a').attr('href','#0').addContent(`Optional Tours`),
+        { "@type": "WebPageElement", "text": "Short Courses"  , "url": "#0" },
+        { "@type": "WebPageElement", "text": "Technical Tours", "url": "#0" },
+        { "@type": "WebPageElement", "text": "Optional Tours" , "url": "#0" },
       ]
     != Util.view(buttons).highlightButtons('c-Button--dark')
   +callout().c-Banner
