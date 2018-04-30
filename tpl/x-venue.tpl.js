@@ -27,9 +27,8 @@ function xVenue_renderer(frag, data) {
 
   frag.querySelector('[itemprop="name"]').textContent = data.name
 
-  frag.querySelector('slot[name="address"]').append(xAddress.render({
+  frag.querySelector('[itemprop="address"]').append(xAddress.render({
     ...data.address,
-    $itemprop: 'address',
   }))
 
   if (data.telephone) frag.querySelector('[itemprop="telephone"]').textContent = data.telephone

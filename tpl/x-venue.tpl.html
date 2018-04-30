@@ -4,7 +4,7 @@
     <img alt="" src="" itemprop="image"/>
     <p>
   <a class="h-Clearfix" href="{{ url }}" itemprop="url"><b itemprop="name">{{ name }}</b></a>
-  <slot class="h-Clearfix" name="address">
+  <slot class="h-Clearfix" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
     <link rel="import" data-import="document" href="../node_modules/aria-patterns/x-address/tpl/x-address.tpl.html"/>
   </slot>
   <a href="tel:{{ telephone }}" itemprop="telephone">{{ telephone }}</a>

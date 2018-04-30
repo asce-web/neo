@@ -4,7 +4,7 @@
       <h1 class="c-PageTitle c-ConfHed__Name" itemprop="name">{{ name }}</h1>
       <meta content="{{ url }}" itemprop="url"/>
       <p class="o-Flex c-ConfHed__Detail">
-        <slot class="o-Flex__Item c-ConfHed__Detail__Place h-Block" name="location">
+        <slot class="o-Flex__Item c-ConfHed__Detail__Place h-Block" itemprop="location" itemscope="" itemtype="http://schema.org/PostalAddress">
           <link rel="import" data-import="document" href="../node_modules/aria-patterns/x-address/tpl/x-address.tpl.html"/>
         </slot>
         <span class="o-Flex__Item c-ConfHed__Detail__Dates h-Block">

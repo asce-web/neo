@@ -31,9 +31,8 @@ function xHero_renderer(frag, data) {
 
   frag.querySelector('[itemprop="name"]'    ).textContent  = data.name
   frag.querySelector('meta[itemprop="url"]' ).content      = data.url
-  frag.querySelector('slot[name="location"]').append(xAddress.render({
+  frag.querySelector('[itemprop="location"]').append(xAddress.render({
     ...data.location,
-    $itemprop: 'location',
     $regionName: true,
   }))
 

@@ -29,9 +29,8 @@ function xOtheryear_renderer(frag, data) {
   frag.querySelector('[itemprop="name"]'         ).textContent  = data.name
   frag.querySelector('a[itemprop="url"]'         ).href = data.url
   frag.querySelector('meta[itemprop="startDate"]').content      = data.startDate
-  frag.querySelector('slot[name="location"]'     ).append(xAddress.render({
+  frag.querySelector('[itemprop="location"]'     ).append(xAddress.render({
     ...data.location,
-    $itemprop: 'location',
     $regionName: true,
   }))
 
