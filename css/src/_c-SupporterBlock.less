@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-SupporterBlock.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Supporter Block
@@ -83,7 +85,8 @@
 }
 
 .c-SupporterBlock__Hn {
-  .font-size-el(@g-font-size-kilo);
+  .h-FontSize;
+  --font-scale: @g-font-size-kilo;
   font-family: inherit;
   font-weight: 900;
   text-align: center;

@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-TimeBlock.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Time Block
@@ -72,7 +74,6 @@
 
 
 /*tbody*/.c-TimeBlock {
-  .font-size-mod(14/16);
 }
 
 /*tr*/.c-TimeBlock__Item {
@@ -102,7 +103,8 @@
 /*td*/.c-TimeBlock__Desc {
   @media not all and (min-width: 30em) {
     // same as .c-DateBlock__Desc
-    .font-size-el(1.25);
+    .h-FontSize;
+    --font-scale: @g-font-size-kilo;
     font-weight: 600;
   }
   @media screen and (min-width: 30em) {

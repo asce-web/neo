@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-PageTitle.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Page Title
@@ -19,7 +21,9 @@
 //
 // Styleguide Components.PageTitle
 .c-PageTitle {
-  .font-size-el(@g-font-size-tera; 3);
+  .h-FontSize;
+  --font-scale: @g-font-size-tera;
+  --tracks: 2;
 }
 
 // A full-width heading that rests just above the bottom of the hero image.
@@ -36,9 +40,7 @@
 //   bottom: 0.5em; // so not completely flush
 //   margin-bottom: 0; // override h1
 //   padding: var(--vru) 0;
-//   .font-size-el(3; 2);
 //   @media screen and (min-width: 340px) { // HACK specific to 'Hotel & Travel'
-//     .font-size-el(3);
 //   }
 //   background-color: rgba(0,0,0,0.5);
 // }

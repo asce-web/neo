@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-Speaker.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Speaker Component
@@ -106,9 +108,11 @@
 }
 
 .c-Speaker__Name {
-  .font-size-el(@g-font-size-h2);
   font-family: inherit; // override h1
   color: inherit; // override h1
+  .h-FontSize;
+  --font-scale: @g-font-size-giga;
+  --tracks: 2;
 }
 
 .c-Speaker__JobTitle,

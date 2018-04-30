@@ -2,6 +2,7 @@
 /*################################*\
     neo  |  __tool.ticket.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
 
 
 // Structural styles used for Pass and Speaker components.
@@ -12,7 +13,7 @@
 // 2016-09-22
 
 .ticket() {
-  .font-size-mod(0.75);
+  .font-size-mod(@g-font-size-mill);
   box-shadow: 0 0 0 1px var(--color-gray_dk, @g-color-gray_dk); // border hack
   background-color: var(--color-gray_dk, @g-color-gray_dk);
   color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);

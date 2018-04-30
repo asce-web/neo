@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-Pass.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Pass Component
@@ -114,8 +116,9 @@
 }
 
 .c-Pass__Hn {
-  padding-top: 0; // override base h1
-  .font-size-el(@g-font-size-h2);
+  .h-FontSize;
+  --font-scale: @g-font-size-giga;
+  --tracks: 2;
 }
 
 .c-Pass__Desc {
@@ -125,7 +128,8 @@
 .c-Pass__Fine {
   font-weight: 300;
   font-style: italic;
-  .font-size-el(14/16);
+  .h-FontSize;
+  --font-scale: @g-font-size-mill;
   white-space: initial;
 }
 
@@ -188,9 +192,11 @@
   margin-bottom: 0; // override base h1
   padding-top: 0;   // override base h1
   font-weight: 700; // override base 900
-  .font-size-el(@g-font-size-h4);
+  .h-FontSize;
+  --font-scale: @g-font-size-h4;
   .c-Pass__Body & {
-    .font-size-el(@g-font-size-h3);
+    --font-scale: @g-font-size-h3;
+    --tracks: 2;
   }
 }
 
@@ -204,7 +210,9 @@
 
 .c-Pass__Price {
   .c-Pass__Body &:first-of-type {
-  .font-size-el(2; 2);
+    .h-FontSize;
+    --font-scale: @g-font-size-h3;
+    --tracks: 2;
   font-weight: 600;
   color: var(--color-primary, @g-color-primary);
   }

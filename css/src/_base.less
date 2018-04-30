@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _base.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // Table of Contents
@@ -96,13 +98,15 @@ h1 {
   figcaption {
     font-style: italic;
     font-weight: 300;
-    .font-size-el(@g-font-size-mill);
+    .h-FontSize;
+    --font-scale: @g-font-size-mill;
   }
   blockquote {
     padding: calc(~'var(--vru) / 2') 0;
     padding-left: 1.5rem;
     border-left: 0.5rem solid rgba(0,0,0,0.25);
-    .font-size-el(@g-font-size-kilo);
+    .h-FontSize;
+    --font-scale: @g-font-size-kilo;
   }
   //---- end ## Paragraphs ----//
 
@@ -122,13 +126,11 @@ h1 {
   //--------------------------------//
   table {
     width: 100%;
-    .font-size-mod(0.75);
   }
   thead,
   tfoot {
     background-color: @g-color-table-bg;
     font-weight: 600;
-    .font-size-el(14/12);
   }
   th,
   td {

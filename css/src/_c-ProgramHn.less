@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-ProgramHn.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Program Heading
@@ -35,7 +37,8 @@
   text-align: center;
   color: var(--heading-color-unselected);
   @media screen and (min-width: 45em) {
-    .font-size-el(1.25);
+    .h-FontSize;
+    --font-scale: @g-font-size-kilo;
   }
   [aria-selected="true"] & {
     transform: scale(1.2);

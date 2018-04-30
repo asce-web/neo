@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-DateBlock.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Date Block
@@ -78,7 +80,6 @@
   inline-size: 75%;
   margin-left:  auto;
   margin-right: auto;
-  .font-size-mod(1); // undo _base.less:table
   color: var(--color-gray_dk-shade2, @g-color-gray_dk-shade2); // override if inside Banner
   text-shadow: initial; // override `.c-Banner`
 }
@@ -97,7 +98,8 @@
 }
 
 /*td*/.c-DateBlock__Desc {
-  .font-size-el(1.25);
+  .h-FontSize;
+  --font-scale: @g-font-size-kilo;
   font-weight: 600;
 }
 
