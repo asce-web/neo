@@ -74,7 +74,7 @@ gulp.task('pug:default', function () {
     .pipe(gulp.dest('./proto/default/'))
 })
 
-gulp.task('site:render', async function () {
+gulp.task('render:sample', async function () {
   const Neo = require('./class/Neo.class.js')
   const data = requireOther('./proto/asce-event.org/database.jsonld')
   return await new Neo(data).render()

@@ -43,7 +43,7 @@ class Neo {
     const dom = new jsdom.JSDOM(await util.promisify(fs.readFile)(path.resolve(__dirname, '../tpl/master.tpl.html'), 'utf8'))
     const {document} = dom.window
 
-    async function importLinks() {
+    await (async function importLinks() {
       let test = jsdom.JSDOM.fragment('<link rel="import" href="https://example.com/"/>').querySelector('link')
       if (!('import' in test)) { // if `HTMLLinkElement#import` is not yet supported
         console.warn('`HTMLLinkElement#import` is not yet supported. Replacing `<link>`s with their imported contents.')
@@ -60,15 +60,16 @@ class Neo {
           }
         }))
       } else return;
-    }
-
-    async function metadata() {
+    })()
+  await Promise.all([
+    // head metadata
+    (async function () {
       document.title = DATA.name
       document.head.querySelector('meta[name="description"]').content = DATA.description
       document.head.querySelector('meta[name="keywords"]'   ).content = DATA.keywords.join()
-    }
-
-    async function headersFooters() {
+    })(),
+    // site headers and footers
+    (async function () {
       document.querySelector('header.c-Mast--head > .h-Constrain template').after(xSitetitle.render(DATA))
       document.querySelector('#connect-with-asce address [itemprop="address"]').append(xAddress.render(DATA.brand.address))
       document.querySelector('#main-menu-drawer').innerHTML = Util.view(site).pageToc({
@@ -107,9 +108,9 @@ class Neo {
           },
         },
       })
-    }
-
-    async function main() {
+    })(),
+    // page main
+    (async function () {
       let conference = DATA.$conferences[0]
       function itemsInQueue(queue_name) {
         let queue = (DATA.$queues || []).find((list) => list.name===queue_name)
@@ -132,15 +133,8 @@ class Neo {
       document.querySelector('main > article > aside:last-child template').after(
         xListSupporterLevel.render({ supporterlevels: itemsInQueue('Non-Sponsors'), small: true }, conference)
       )
-    }
-
-    await importLinks();
-    await Promise.all([
-      metadata(),
-      headersFooters(),
-      main(),
-    ])
-
+    })(),
+  ])
     let contents = dom.serialize()
     await util.promisify(fs.writeFile)(path.resolve(__dirname, '../proto/asce-event.org/index.html'), contents + 'abcdef', 'utf8')
   }
