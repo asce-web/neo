@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-ConfHed.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Conference Header
@@ -40,13 +42,15 @@
   @media not all and (min-width: 45em) {
     flex-direction: column;
   }
+  .h-FontSize;
   .o-Runner--pageHeader & {
     // when inside hero
-    .font-size-el(@g-font-size-mega; 2); // copied from xmeter atom `.-fz-el-mega`
+    --font-scale: @g-font-size-mega;
+    --tracks: 2;
   }
   .o-Runner--highlight & {
     // when inside other-year
-    .font-size-el(@g-font-size-kilo); // copied from xmeter atom `.-fz-el-kilo`
+    --font-scale: @g-font-size-kilo;
   }
 }
 
@@ -63,6 +67,7 @@
 }
 
 .c-ConfHed__Theme {
-  .font-size-el(1.5; 2);
   font-style: italic;
+  .h-FontSize;
+  --font-scale: @g-font-size-kilo;
 }
