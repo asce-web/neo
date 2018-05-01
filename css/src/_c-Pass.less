@@ -6,6 +6,7 @@
 @import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 @import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
 @import (reference) url('../../node_modules/xmeter/css/src/_-pt.less');
+@import (reference) url('./__mx.box.less');
 
 
 // The Pass Component
@@ -97,9 +98,7 @@
 }
 
 .c-Pass__Head {
-  & > *:last-child {
-    margin-bottom: 0; // override base typog
-  }
+  .mx-box();
 }
 
 .c-Pass__Body {
@@ -166,9 +165,7 @@
 //
 // Styleguide Components.Pass.Period
 .c-Pass__Period {
-  & > *:last-child {
-    margin-bottom: 0; // override base typog
-  }
+  .mx-box();
   .c-Pass__Foot & {
     flex: 1; // override Flex__Item (auto)
     &:not(:last-child) {
