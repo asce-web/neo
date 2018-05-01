@@ -4,6 +4,7 @@
 \*################################*/
 @import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
 @import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
 
 
 // The Date Block
@@ -85,7 +86,7 @@
 }
 
 /*tr*/.c-DateBlock__Item {
-  margin-bottom: var(--vru);
+  .-mb-1;
   background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   box-shadow: 0 0 0 1px var(--color-gray_dk, @g-color-gray_dk); // border hack
   @media screen                       { padding: @g-boxpadd_micr; }

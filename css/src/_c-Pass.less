@@ -4,6 +4,8 @@
 \*################################*/
 @import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
 @import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-pt.less');
 
 
 // The Pass Component
@@ -116,8 +118,9 @@
 }
 
 .c-Pass__Hn {
+  .-pt-0; // override base `h1`
   .h-FontSize;
-  --font-scale: @g-font-size-giga;
+  --font-scale: @g-font-size-h2;
   --tracks: 2;
 }
 
@@ -189,9 +192,10 @@
 }
 
 .c-Pass__Period__Hn {
-  margin-bottom: 0; // override base h1
-  padding-top: 0;   // override base h1
-  font-weight: 700; // override base 900
+  // override base `h1`
+  .-mb-0;
+  .-pt-0;
+  font-weight: 700;
   .h-FontSize;
   --font-scale: @g-font-size-h4;
   .c-Pass__Body & {
