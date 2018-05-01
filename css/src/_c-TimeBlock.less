@@ -82,7 +82,7 @@
 .c-TimeBlock__Times,
 .c-TimeBlock__Desc {
   width: 50%;
-  padding-bottom: calc(~'2 * var(--lh)');
+  padding-bottom: calc(2 * var(--lh)); // TODO set a height on the .c-TimeBlock__Item instead
   @media not all and (min-width: 30em) {
     padding-left: @g-boxpadd_norm_h;
   }
@@ -131,9 +131,9 @@
   }
   .c-TimeBlock__Times::before {
     // This is the disc on the viz
-    @_width: calc(~'var(--lh) / var(--line-height)'); // module em (like root em if the module were the root)
-    @_side : calc(~'-0.5 * var(--lh) / var(--line-height)');
-    @_top  : calc(~'-0.5 * var(--lh) / var(--line-height) + 0.5 * var(--lh)');
+    @_width: calc(var(--lh) / var(--line-height)); // module em (like root em if the module were the root)
+    @_side : calc(-0.5 * var(--lh) / var(--line-height));
+    @_top  : calc(-0.5 * var(--lh) / var(--line-height) + 0.5 * var(--lh));
     left: @_side;
     top: @_top;
     width: @_width;
@@ -147,12 +147,12 @@
   .c-TimeBlock__Desc::before {
     // This is the line on the viz
     left: 0;
-    top:    calc(~'-0.5 * var(--lh)');
-    bottom: calc(~'-0.5 * var(--lh)');
+    top:    calc(-0.5 * var(--lh));
+    bottom: calc(-0.5 * var(--lh));
     border-left: 1px solid;
     .c-TimeBlock__Item:last-of-type & { content: none; } // omit on last item
     @media (min-width: 30em) {
-      top: calc(~'0.5 * var(--lh)');
+      top: calc(0.5 * var(--lh));
     }
   }
 }
