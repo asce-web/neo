@@ -2,6 +2,7 @@
 /*################################*\
     neo  |  _c-Mast.less
 \*################################*/
+@import (reference) url('./__tool.logo.less');
 
 
 // The Mast Component
@@ -89,11 +90,11 @@
 // ^updated
 // 2017-03-04
 .c-ASCELogo {
-  margin-top: var(--vru);
-  margin-left:  auto;
-  margin-right: auto;
-  width: 233px; // 73px;
-  height: 30px; // 23px;
+  margin: 1.5rem auto;    // COMBAK:FALLBACK
+  margin: var(--lh) auto; // COMBAK:FALLBACK
+  margin: 1lh auto;
+  width: 233px; // 73px; // REVIEW:MAGICNUMBER
+  height: 30px; // 23px; // REVIEW:MAGICNUMBER
   .logo();
   background-image: url('../images/asce-logo-footer.png'); // url('../images/asce-logo-footer-small.png');
   transition: opacity 125ms;

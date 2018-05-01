@@ -2,6 +2,7 @@
 /*################################*\
     neo  |  _o-ListStacked.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
 
 
 // The Stacked List
@@ -40,7 +41,7 @@
 }
 .o-ListStacked__Item {
   flex: 0 1 100%;
-  margin-bottom: var(--vru);
+  .-mb-1;
   @media screen and (min-width: 30em) {
     flex-basis: calc(100%/2~' - 0.5rem');
   }
