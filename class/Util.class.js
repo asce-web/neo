@@ -202,7 +202,7 @@ class Util {
         const xListPass = require('../tpl/x-list-pass.tpl.js')
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = this.filter((item) => (queue) ? item_keys.includes(item.name) : true)
-        return new xjs.DocumentFragment(xListPass.render({ passes: items, $conference })).innerHTML()
+        return new xjs.DocumentFragment(xListPass.render(items, null, { conference: $conference })).innerHTML()
       })
       /**
        * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.

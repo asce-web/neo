@@ -14,24 +14,24 @@ const xRegistrationperiod = require('./x-registrationperiod.tpl.js')
  * @param {string=} data.$fineprint further details of this pass
  * @param {Array<string>=} data.$attendeeTypes types of attendees that can purchase this pass
  *                                             (usually based on membership)
- * @param {Conference} data.$conference the conference to which this pass belongs
  * @param   {!Object=} opts additional rendering options
+ * @param   {Conference} opts.conference the conference to which this pass belongs
  */
 function xPass_renderer(frag, data, opts = {}) {
-  let current_period = data.$conference.currentRegistrationPeriod
+  let current_period = opts.conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''
   if (data.$fineprint) frag.querySelector('.c-Pass__Fine').textContent = data.$fineprint || ''
   else                 frag.querySelector('.c-Pass__Fine').remove()
 
   frag.querySelector('.c-Pass__Body').append(
-    xRegistrationperiod.render({ ...current_period, $pass: data, $is_body: true })
+    xRegistrationperiod.render(current_period, null, { pass: data, is_body: true })
   )
 
   frag.querySelector('.c-Pass__Foot').append(
-    ...data.$conference.getRegistrationPeriodsAll()
+    ...opts.conference.getRegistrationPeriodsAll()
       .filter((registration_period) => registration_period.name !== current_period.name)
-      .map((registration_period) => xRegistrationperiod.render({ ...registration_period, $pass: data }))
+      .map((registration_period) => xRegistrationperiod.render(registration_period, null, { pass: data }))
   )
 }
 
