@@ -293,7 +293,7 @@ class Conference {
        */
       .addDisplay(function supporterLevels(queue, small = false) {
         let items = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return new xjs.DocumentFragment(xListSupporterLevel.render({ supporterlevels: items, small }, this._DATA)).innerHTML()
+        return new xjs.DocumentFragment(xListSupporterLevel.render(items, this._DATA, { small })).innerHTML()
       })
       /**
        * Return a list of `<div>` elements marking up this conference’s exhibitors.
