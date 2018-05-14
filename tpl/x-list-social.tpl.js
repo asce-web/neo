@@ -16,7 +16,7 @@ const xjs = {
 function xListSocial_renderer(frag, data, opts = {}) {
   new xjs.HTMLUListElement(frag.querySelector('ul'))
     .replaceClassString('{{ listclasses }}', data.classes)
-    .populate(data.links, function (f, d) {
+    .populate(data.links, function (f, d, o) {
       new xjs.HTMLAnchorElement(f.querySelector('a'))
         .replaceClassString('{{ name }}', d.name)
         .href(d.url  || '#1')

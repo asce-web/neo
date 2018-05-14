@@ -48,7 +48,7 @@ function xHero_renderer(frag, data, opts = {}) {
 
   frag.querySelector('[itemprop="description"]').textContent = data.description || ' ' // `&nbsp;` // cannot remove node due to SEO
 
-  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(data.$heroButtons, function (f, d) {
+  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(data.$heroButtons, function (f, d, o) {
     new xjs.HTMLAnchorElement(f.querySelector('[itemprop="significantLink"]'))
       .href       (d.url  || '#1')
       .textContent(d.text || ''  )

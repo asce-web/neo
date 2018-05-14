@@ -14,7 +14,7 @@ const xPass = require('./x-pass.tpl.js')
  * @param   {!Object=} opts additional rendering options
  */
 function xListPass_renderer(frag, data, opts = {}) {
-  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data.passes, function (f, d) {
+  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data.passes, function (f, d, o) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
       xPass.render({ ...d, $conference: data.$conference })
     )

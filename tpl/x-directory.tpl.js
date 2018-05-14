@@ -20,7 +20,7 @@ function xMainmenu_renderer(frag, data, opts = {}) {
   let depth    = (xjs.Object.typeOf(data.$depth)  === 'number') ? data.$depth  : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))
     .replaceClassString('{{ classes.list }}', classes.list || '')
-    .populate(subpages, function (f, d) {
+    .populate(subpages, function (f, d, o) {
       const linkclasses = (links && links.classes) || {}
       new xjs.HTMLLIElement(f.querySelector('[itemprop="hasPart"]')).replaceClassString('{{ classes.item }}', classes.item || '')
       new xjs.HTMLAnchorElement(f.querySelector('[itemprop="url"]'))

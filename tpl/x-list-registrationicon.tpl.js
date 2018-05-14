@@ -17,7 +17,7 @@ const xjs = {
  * @param   {!Object=} opts additional rendering options
  */
 function xListRegistrationicon_renderer(frag, data, opts = {}) {
-  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
+  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
     let date_start = (d.availabilityStarts) ? new Date(d.availabilityStarts) : null
     let date_end   = (d.availabilityEnds  ) ? new Date(d.availabilityEnds  ) : null
 

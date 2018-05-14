@@ -11,7 +11,7 @@ const xjs = require('extrajs-dom')
  * @param   {!Object=} opts additional rendering options
  */
 function xListHighlightbuttons_renderer(frag, data, opts = {}) {
-  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data.links, function (f, d) {
+  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data.links, function (f, d, o) {
     new xjs.HTMLAnchorElement(f.querySelector('a'))
       .replaceClassString('{{ buttonclasses }}', data.buttonclasses || '')
       .href       (d.url  || '#1')
