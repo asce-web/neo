@@ -40,12 +40,11 @@ function xSpeaker_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 
   new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
-    this.node.before(xListSocial.render({
-      links: (data.$social || []).map((obj) => ({
-        ...obj,
-        "@type": "WebPageElement",
-        text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
-      })),
+    this.node.before(xListSocial.render((data.$social || []).map((obj) => ({
+      ...obj,
+      "@type": "WebPageElement",
+      text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
+    })), null, {
       classes: 'c-SocialList--speaker',
     }))
   }).populate([
