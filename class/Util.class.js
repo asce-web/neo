@@ -172,7 +172,7 @@ class Util {
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
         const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
-        return new xjs.DocumentFragment(xListHighlightbuttons.render({ links: this, buttonclasses })).innerHTML()
+        return new xjs.DocumentFragment(xListHighlightbuttons.render(this, null, { buttonclasses })).innerHTML()
       })
       /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.
