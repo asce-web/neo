@@ -12,8 +12,9 @@ const xSupporter = require('./x-supporter.tpl.js')
  * @param {string} data.name the name of the level
  * @param {Array<sdo.Organization>} data.supporters all the supporters in this level
  * @param {string=} data.classname any classname to add to the `<section>`
+ * @param   {!Object=} opts additional rendering options
  */
-function xSupporterLevel_renderer(frag, data) {
+function xSupporterLevel_renderer(frag, data, opts = {}) {
   new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass(data.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
   new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(data.supporters, function (f, d) {

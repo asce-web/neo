@@ -11,8 +11,9 @@ const xSupporterLevel = require('./x-supporter-level.tpl.js')
  * @param {!Object} data JSON object
  * @param {Array<string>} data.supporterlevels the list of supporter levels to display
  * @param {boolean=} data.small should logo sizing be overridden to small?
+ * @param   {!Object=} opts additional rendering options
  */
-function xListSupporterLevel_renderer(frag, data) {
+function xListSupporterLevel_renderer(frag, data, opts = {}) {
   new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.supporterlevels.map((name, index) => ({ name, index })), function (f, d) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
       xSupporterLevel.render({

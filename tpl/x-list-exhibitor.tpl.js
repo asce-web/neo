@@ -9,8 +9,9 @@ const xExhibitor = require('./x-exhibitor.tpl.js')
  * @summary xListExhibitor renderer.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {Array<sdo.Organizations>} data list of exhibitors to display
+ * @param   {!Object=} opts additional rendering options
  */
-function xListExhibitor_renderer(frag, data) {
+function xListExhibitor_renderer(frag, data, opts = {}) {
   new xjs.HTMLOListElement(frag.querySelector('ul')).populate(data, function (f, d) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xExhibitor.render(d))
   })

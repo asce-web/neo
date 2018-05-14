@@ -23,8 +23,9 @@ const xListHighlightbuttons = require('./x-list-highlightbuttons.tpl.js')
  * @param {sdo.PostalAddress=} data.location the promoted location of the conference
  * @param {string=} data.location.image the promoted location of the conference
  * @param {Array<sdo.WebPageElement>=} data.$heroButtons a list of links serving as action buttons
+ * @param   {!Object=} opts additional rendering options
  */
-function xHero_renderer(frag, data) {
+function xHero_renderer(frag, data, opts = {}) {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)

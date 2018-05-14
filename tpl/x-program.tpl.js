@@ -16,8 +16,9 @@ const xTimeblock = require('../tpl/x-timeblock.tpl.js')
  * @param {string} data.id unique id of the program block
  * @param {Array<sdo.Event>} data.sessions an array of sessions to mark up
  * @param {boolean=} data.starred whether to filter out unstarred sessions
+ * @param   {!Object=} opts additional rendering options
  */
-function xProgram_renderer(frag, data) {
+function xProgram_renderer(frag, data, opts = {}) {
   let container = frag.querySelector('[role="tablist"]')
   const xProgramPanel = new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (f, d) {
     f.querySelector('[role="tabpanel"]' ).id          = `${data.id}-panel${d.index}`

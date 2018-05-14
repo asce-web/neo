@@ -19,8 +19,9 @@ const {xAddress} = require('aria-patterns')
  * @param {sdo.PostalAddress=} data.location the promoted location of the conference
  * @param {string=} data.location.image the promoted location of the conference
  * @param {string=} data.disambiguatingDescription blurb promoting the prev/next conference
+ * @param   {!Object=} opts additional rendering options
  */
-function xOtheryear_renderer(frag, data) {
+function xOtheryear_renderer(frag, data, opts = {}) {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)

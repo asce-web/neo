@@ -15,8 +15,9 @@ const xRegistrationperiod = require('./x-registrationperiod.tpl.js')
  * @param {Array<string>=} data.$attendeeTypes types of attendees that can purchase this pass
  *                                             (usually based on membership)
  * @param {Conference} data.$conference the conference to which this pass belongs
+ * @param   {!Object=} opts additional rendering options
  */
-function xPass_renderer(frag, data) {
+function xPass_renderer(frag, data, opts = {}) {
   let current_period = data.$conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''

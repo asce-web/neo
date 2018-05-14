@@ -17,8 +17,9 @@ const {xPersonFullname} = require('aria-patterns')
  * @param {string=} data.honorificSuffix http://schema.org/honorificSuffix
  * @param {sdo.Organization} data.affiliation      http://schema.org/affiliation
  * @param {string=}          data.affiliation.name http://schema.org/name
+ * @param   {!Object=} opts additional rendering options
  */
-function xPersonAffiliation_renderer(frag, data) {
+function xPersonAffiliation_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation && data.affiliation.name || ''
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 }

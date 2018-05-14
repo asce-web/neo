@@ -29,8 +29,9 @@ const xListSocial = require('../tpl/x-list-social.tpl.js')
  * @param {string}            data.$social.name the name or identifier of the social media service (used for icons)
  * @param {string}            data.$social.url the URL of the person’s social media profile or page
  * @param {string=}           data.$social.description short alternative text for non-visual media
+ * @param   {!Object=} opts additional rendering options
  */
-function xSpeaker_renderer(frag, data) {
+function xSpeaker_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
   frag.querySelector('[itemprop="image"]'                        ).src         = data.image || ''
   frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle || ''

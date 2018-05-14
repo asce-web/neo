@@ -18,8 +18,9 @@ const {xPersonFullname} = require('aria-patterns')
  * @param {string}  data.jobTitle        http://schema.org/jobTitle
  * @param {string=} data.email           http://schema.org/email
  * @param {string=} data.telephone       http://schema.org/telephone
+ * @param   {!Object=} opts additional rendering options
  */
-function xPersonContact_renderer(frag, data) {
+function xPersonContact_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
   frag.querySelector('[itemprop="jobTitle"]' ).textContent = data.jobTitle
 

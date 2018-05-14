@@ -11,8 +11,9 @@ const xjs = {
  * @param   {sdo.WebPage} data a http://schema.org/WebPage object
  * @param   {(sdo.WebPage|Array<sdo.WebPage>)} data.hasPart a subpage or an array of subpages (each a http://schema.org/WebPage object)
  * @param   {integer=} [data.$depth=Infinity] number of nested directory levels
+ * @param   {!Object=} opts additional rendering options
  */
-function xMainmenu_renderer(frag, data) {
+function xMainmenu_renderer(frag, data, opts = {}) {
   const Util = require('../class/Util.class.js')
   const {classes, links} = data.options
   let subpages = (xjs.Object.typeOf(data.hasPart) === 'array' ) ? data.hasPart : [data.hasPart]

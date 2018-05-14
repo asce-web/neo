@@ -18,8 +18,9 @@ const {xAddress} = require('aria-patterns')
  * @param {{url:string, text:string}=} data.$cta a call-to-action link with a url and text
  * @param {string}  data.$cta.url the url of the call-to-action
  * @param {string}  data.$cta.text the text of the call-to-action
+ * @param   {!Object=} opts additional rendering options
  */
-function xVenue_renderer(frag, data) {
+function xVenue_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="description"]').textContent = data.description
 
   if (data.image) frag.querySelector('img[itemprop="image"]').src = data.image

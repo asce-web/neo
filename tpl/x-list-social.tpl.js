@@ -11,8 +11,9 @@ const xjs = {
  * @param {!Object} data data to fill in the template
  * @param {Array<sdo.WebPageElement>} data.links array of `{url:string, text:string}` objects
  * @param {string=} data.classes classes to add to the list
+ * @param   {!Object=} opts additional rendering options
  */
-function xListSocial_renderer(frag, data) {
+function xListSocial_renderer(frag, data, opts = {}) {
   new xjs.HTMLUListElement(frag.querySelector('ul'))
     .replaceClassString('{{ listclasses }}', data.classes)
     .populate(data.links, function (f, d) {

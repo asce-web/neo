@@ -8,8 +8,9 @@ const xjs = require('extrajs-dom')
  * @param {{links:Array, buttonclasses:string=}} data the data to mark up
  * @param {Array<sdo.WebPageElement>} data.links an array of `{url:string, text:string}` objects
  * @param {string=} data.buttonclasses the classes to add to the buttons
+ * @param   {!Object=} opts additional rendering options
  */
-function xListHighlightbuttons_renderer(frag, data) {
+function xListHighlightbuttons_renderer(frag, data, opts = {}) {
   new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data.links, function (f, d) {
     new xjs.HTMLAnchorElement(f.querySelector('a'))
       .replaceClassString('{{ buttonclasses }}', data.buttonclasses || '')

@@ -14,8 +14,9 @@ const xjs = {
  * @param {string=} data.availabilityStarts the date on which this registration period starts
  * @param {string=} data.availabilityEnds the date on which this registration period ends
  * @param {string=} data.$icon the icon keyword of this registration period
+ * @param   {!Object=} opts additional rendering options
  */
-function xListRegistrationicon_renderer(frag, data) {
+function xListRegistrationicon_renderer(frag, data, opts = {}) {
   new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
     let date_start = (d.availabilityStarts) ? new Date(d.availabilityStarts) : null
     let date_end   = (d.availabilityEnds  ) ? new Date(d.availabilityEnds  ) : null

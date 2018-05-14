@@ -17,8 +17,9 @@ const xAttendeetype = require('./x-attendeetype.tpl.js')
  * @param {string} data.$pass.name the name or type of the pass
  * @param {Array<string>=} data.$pass.$attendeeTypes types of attendees that can purchase this pass
  *                                             (usually based on membership)
+ * @param   {!Object=} opts additional rendering options
  */
-function xRegistrationperiod_renderer(frag, data) {
+function xRegistrationperiod_renderer(frag, data, opts = {}) {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 

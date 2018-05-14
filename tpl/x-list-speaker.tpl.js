@@ -9,8 +9,9 @@ const xSpeaker = require('./x-speaker.tpl.js')
  * @summary xListSpeaker renderer.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {Array<sdo.Person>} data an array of speakers to list
+ * @param   {!Object=} opts additional rendering options
  */
-function xListSpeaker_renderer(frag, data) {
+function xListSpeaker_renderer(frag, data, opts = {}) {
   new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xSpeaker.render(d))
   })

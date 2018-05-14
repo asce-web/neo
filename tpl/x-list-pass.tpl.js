@@ -11,8 +11,9 @@ const xPass = require('./x-pass.tpl.js')
  * @param {!Object} data the data to fill the template
  * @param {Array<!Object>} data.passes an array of passes to list
  * @param {Conference} data.$conference the conference to which the passes belong
+ * @param   {!Object=} opts additional rendering options
  */
-function xListPass_renderer(frag, data) {
+function xListPass_renderer(frag, data, opts = {}) {
   new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data.passes, function (f, d) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
       xPass.render({ ...d, $conference: data.$conference })
