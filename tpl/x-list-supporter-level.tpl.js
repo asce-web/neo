@@ -14,7 +14,7 @@ const xSupporterLevel = require('./x-supporter-level.tpl.js')
  * @param   {!Object=} opts additional rendering options
  */
 function xListSupporterLevel_renderer(frag, data, opts = {}) {
-  new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.supporterlevels.map((name, index) => ({ name, index })), function (f, d) {
+  new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.supporterlevels.map((name, index) => ({ name, index })), function (f, d, o) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
       xSupporterLevel.render({
         name: d.name,

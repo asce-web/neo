@@ -29,7 +29,7 @@ function xDirectory_renderer(frag, data, opts = {}) {
   let suboptions = opts.options || {}
   new xjs.HTMLOListElement(frag.querySelector('ol'))
     .replaceClassString('{{ classes.list }}', classes.list || '')
-    .populate(subpages, function (f, d) {
+    .populate(subpages, function (f, d, o) {
       let linkclasses = links.classes || {}
       new xjs.HTMLLIElement(f.querySelector('[itemprop="hasPart"]')).replaceClassString('{{ classes.item }}', classes.item || '')
       new xjs.HTMLAnchorElement(f.querySelector('[itemprop="url"]'))

@@ -51,7 +51,7 @@ function xSpeaker_renderer(frag, data, opts = {}) {
     { prop: 'url'      , icon: 'explore', url: data.url                           , text: 'visit homepage' },
     { prop: 'email'    , icon: 'email'  , url: `mailto:${data.email}`             , text: 'send email'     },
     { prop: 'telephone', icon: 'phone'  , url: `tel:${Util.toURL(data.telephone)}`, text: 'call'           },
-  ], function (f, d) {
+  ], function (f, d, o) {
     if (!data[d.prop]) {
       new xjs.DocumentFragment(f).empty()
     } else {

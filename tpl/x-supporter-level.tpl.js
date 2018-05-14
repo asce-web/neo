@@ -17,7 +17,7 @@ const xSupporter = require('./x-supporter.tpl.js')
 function xSupporterLevel_renderer(frag, data, opts = {}) {
   new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass(data.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
-  new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(data.supporters, function (f, d) {
+  new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(data.supporters, function (f, d, o) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xSupporter.render(d))
   })
 }

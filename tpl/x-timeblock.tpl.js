@@ -18,7 +18,7 @@ const xjs = {
  * @param   {!Object=} opts additional rendering options
  */
 function xTimeblock_renderer(frag, data, opts = {}) {
-  new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(data, function (f, d) {
+  new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(data, function (f, d, o) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )
     f.querySelectorAll('[itemprop~="startDate"]').forEach(function (time) {
