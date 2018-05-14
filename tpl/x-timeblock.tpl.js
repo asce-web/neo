@@ -15,9 +15,10 @@ const xjs = {
  * @param {string}  data.startDate the start date, in ISO string format, of the session
  * @param {string}  data.endDate   the end   date, in ISO string format, of the session
  * @param {string=} data.url the url of the session
+ * @param   {!Object=} opts additional rendering options
  */
-function xTimeblock_renderer(frag, data) {
-  new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(data, function (f, d) {
+function xTimeblock_renderer(frag, data, opts = {}) {
+  new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(data, function (f, d, o) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )
     f.querySelectorAll('[itemprop~="startDate"]').forEach(function (time) {

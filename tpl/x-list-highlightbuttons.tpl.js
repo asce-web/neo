@@ -5,14 +5,14 @@ const xjs = require('extrajs-dom')
 /**
  * @summary xListHighlightbuttons renderer.
  * @param {DocumentFragment} frag the template content with which to render
- * @param {{links:Array, buttonclasses:string=}} data the data to mark up
- * @param {Array<sdo.WebPageElement>} data.links an array of `{url:string, text:string}` objects
- * @param {string=} data.buttonclasses the classes to add to the buttons
+ * @param {Array<sdo.WebPageElement>} data an array of `{url:string, text:string}` objects
+ * @param   {!Object=} opts additional rendering options
+ * @param   {string=} opts.buttonclasses the classes to add to the buttons
  */
-function xListHighlightbuttons_renderer(frag, data) {
-  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data.links, function (f, d) {
+function xListHighlightbuttons_renderer(frag, data, opts = {}) {
+  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
     new xjs.HTMLAnchorElement(f.querySelector('a'))
-      .replaceClassString('{{ buttonclasses }}', data.buttonclasses || '')
+      .replaceClassString('{{ buttonclasses }}', opts.buttonclasses || '')
       .href       (d.url  || '#1')
       .textContent(d.text || ''  )
   })

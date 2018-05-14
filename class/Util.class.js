@@ -126,8 +126,8 @@ class Util {
        * @function Util.VIEW.pageToc
        * @param   {!Object=} options options for configuring output
        * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
-       * @param   {number=} options.start group set of css class configurations
-       * @param   {number=} options.end group set of css class configurations
+       * @param   {integer=} options.start which subpage to start at
+       * @param   {integer=} options.end which subpage to end at
        * @param   {?Object<string>=} options.classes group set of css class configurations
        * @param   {string=} options.classes.list list classes (`<ol>`)
        * @param   {string=} options.classes.item item classes (`<li>`)
@@ -136,18 +136,16 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function pageToc(options = {}) {
-        let classes = options.classes || {}
-        let start = options.start || 0
-        let end   = options.end   || Infinity
         return new xjs.DocumentFragment(xDirectory.render({
           ...this,
           hasPart: this.findAll().filter((p) => !p.isHidden()),
-          $depth: options.depth,
-          options: {
-            ...{classes, start, end},
-            links: options.links,
-            options: options.options,
-          }
+        }, null, {
+          depth  : options.depth || Infinity,
+          start  : options.start || 0,
+          end    : options.end   || Infinity,
+          classes: options.classes || {},
+          links  : options.links,
+          options: options.options,
         })).innerHTML()
       })
       /**
@@ -174,7 +172,7 @@ class Util {
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
         const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
-        return new xjs.DocumentFragment(xListHighlightbuttons.render({ links: this, buttonclasses })).innerHTML()
+        return new xjs.DocumentFragment(xListHighlightbuttons.render(this, null, { buttonclasses })).innerHTML()
       })
       /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.
@@ -204,7 +202,7 @@ class Util {
         const xListPass = require('../tpl/x-list-pass.tpl.js')
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = this.filter((item) => (queue) ? item_keys.includes(item.name) : true)
-        return new xjs.DocumentFragment(xListPass.render({ passes: items, $conference })).innerHTML()
+        return new xjs.DocumentFragment(xListPass.render(items, null, { conference: $conference })).innerHTML()
       })
       /**
        * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
@@ -264,14 +262,11 @@ class Util {
       .addDisplay(function socialList(classes = '') {
         const xListSocial = require('../tpl/x-list-social.tpl.js')
         return new xjs.DocumentFragment(
-          xListSocial.render({
-            links: this.map((obj) => ({
-              ...obj,
-              "@type": "WebPageElement",
-              text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
-            })),
-            classes,
-          })
+          xListSocial.render(this.map((obj) => ({
+            ...obj,
+            "@type": "WebPageElement",
+            text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
+          })), null, { classes })
         ).innerHTML()
       })
   }

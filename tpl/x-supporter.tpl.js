@@ -10,8 +10,9 @@ const xjs = require('extrajs-dom')
  * @param {string} data.url  http://schema.org/url
  * @param {string} data.logo http://schema.org/logo
  * @param {string=} data.$level the level of the supporting organization
+ * @param   {!Object=} opts additional rendering options
  */
-function xSupporter_renderer(frag, data) {
+function xSupporter_renderer(frag, data, opts = {}) {
   frag.querySelector('a[itemprop="url"]'    ).href  = data.url
   frag.querySelector('data[itemprop="name"]').value = data.name
   frag.querySelector('img[itemprop="logo"]' ).src   = data.logo

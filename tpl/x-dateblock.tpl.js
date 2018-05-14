@@ -15,9 +15,10 @@ const xjs = {
  * @param {string}  data.startTime the start date, in ISO string format, of the date range
  * @param {string}  data.endTime   the end   date, in ISO string format, of the date range
  * @param {string=} data.url the url of the important date
+ * @param   {!Object=} opts additional rendering options
  */
-function xDateblock_renderer(frag, data) {
-  new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(data, function (f, d) {
+function xDateblock_renderer(frag, data, opts = {}) {
+  new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(data, function (f, d, o) {
     let date_start = new Date(d.startTime)
     let date_end   = new Date(d.endTime  )
     f.querySelectorAll('[itemprop~="startTime"]').forEach(function (time) {

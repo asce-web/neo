@@ -29,8 +29,9 @@ const xListSocial = require('../tpl/x-list-social.tpl.js')
  * @param {string}            data.$social.name the name or identifier of the social media service (used for icons)
  * @param {string}            data.$social.url the URL of the person’s social media profile or page
  * @param {string=}           data.$social.description short alternative text for non-visual media
+ * @param   {!Object=} opts additional rendering options
  */
-function xSpeaker_renderer(frag, data) {
+function xSpeaker_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
   frag.querySelector('[itemprop="image"]'                        ).src         = data.image || ''
   frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle || ''
@@ -39,19 +40,18 @@ function xSpeaker_renderer(frag, data) {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 
   new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
-    this.node.before(xListSocial.render({
-      links: (data.$social || []).map((obj) => ({
-        ...obj,
-        "@type": "WebPageElement",
-        text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
-      })),
+    this.node.before(xListSocial.render((data.$social || []).map((obj) => ({
+      ...obj,
+      "@type": "WebPageElement",
+      text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
+    })), null, {
       classes: 'c-SocialList--speaker',
     }))
   }).populate([
     { prop: 'url'      , icon: 'explore', url: data.url                           , text: 'visit homepage' },
     { prop: 'email'    , icon: 'email'  , url: `mailto:${data.email}`             , text: 'send email'     },
     { prop: 'telephone', icon: 'phone'  , url: `tel:${Util.toURL(data.telephone)}`, text: 'call'           },
-  ], function (f, d) {
+  ], function (f, d, o) {
     if (!data[d.prop]) {
       new xjs.DocumentFragment(f).empty()
     } else {
