@@ -1,10 +1,12 @@
 {
   "@context": "http://schema.org/",
   "@type": "WebSite",
-  "name"       : "Civil Engineering Congress",
-  "url"        : "/sites/default/",
-  "description": "ConferenceSuite Slogan",
-  "$conferences": [
+  "@id": "https://www.asce-default.org/",
+  "additionalType": "http://schema.org/Product",
+  "name"          : "Civil Engineering Congress",
+  "url"           : "/sites/default/",
+  "description"   : "ConferenceSuite Slogan",
+  "$conferences"  : [
     {
       "@type": "Event",
       "name" : "Civil Engineering Congress 2016",
