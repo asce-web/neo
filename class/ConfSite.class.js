@@ -1,20 +1,13 @@
-const path = require('path')
-
-const Ajv      = require('ajv')
-
 const xjs      = require('extrajs-dom')
 const Page     = require('sitepage').Page
 const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
-const {META_SCHEMATA, SCHEMATA} = require('schemaorg-jsd')
-const requireOther = require('schemaorg-jsd/lib/requireOther.js')
 
 const Conference = require('./Conference.class.js')
 const ConfPage   = require('./ConfPage.class.js')
 
 const xSitetitle = require('../tpl/x-sitetitle.tpl.js')
 
-const NEO_SCHEMA = requireOther(path.join(__dirname, '../neo.jsd'))
 
 
 /**
@@ -54,16 +47,6 @@ class ConfSite extends Page {
     super({ name: jsondata.name, url: jsondata.url })
     super.description(jsondata.description || '')
     super.keywords(jsondata.keywords || [])
-
-    let ajv = new Ajv()
-    ajv.addMetaSchema(META_SCHEMATA).addSchema(SCHEMATA)
-    let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata)
-    if (!is_data_valid) {
-      let e = new TypeError(ajv.errors.map((e) => e.message).join('\n'))
-      e.details = ajv.errors
-      console.error(e)
-      throw e
-    }
 
     /**
      * All the data for this site.
@@ -159,6 +142,7 @@ class ConfSite extends Page {
    * @returns {ConfSite} this site
    */
   init() {
+    // TODO move all this data inside the database
     var self = this
     function pageTitle() { return this.name() + ' | ' + self.name() }
     return this
