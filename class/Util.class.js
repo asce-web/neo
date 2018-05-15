@@ -262,11 +262,7 @@ class Util {
       .addDisplay(function socialList(classes = '') {
         const xListSocial = require('../tpl/x-list-social.tpl.js')
         return new xjs.DocumentFragment(
-          xListSocial.render(this.map((obj) => ({
-            ...obj,
-            "@type": "WebPageElement",
-            text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
-          })), null, { classes })
+          xListSocial.render(this, null, { classes })
         ).innerHTML()
       })
   }

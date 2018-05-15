@@ -14,11 +14,11 @@
     "name": "American Society of Civil Engineers",
     "url" : "http://www.asce.org",
     "$social": [
-      { "@type": "URL", "name": "twitter" , "url": "//twitter.com/ASCE"    , "description": "Follow ASCE on Twitter" },
-      { "@type": "URL", "name": "google"  , "url": "//plus.google.com/ASCE", "description": "Follow ASCE on Google+" },
-      { "@type": "URL", "name": "facebook", "url": "//facebook.com/ASCE"   , "description": "Like ASCE on Facebook" },
-      { "@type": "URL", "name": "linkedin", "url": "//linkedin.com/ASCE"   , "description": "Connect with ASCE on LinkedIn" },
-      { "@type": "URL", "name": "youtube" , "url": "//youtube.com/ASCE"    , "description": "Watch ASCE on YouTube" }
+      { "@type": "WebPageElement", "name": "twitter" , "url": "//twitter.com/ASCE"    , "text": "Follow ASCE on Twitter"        },
+      { "@type": "WebPageElement", "name": "google"  , "url": "//plus.google.com/ASCE", "text": "Follow ASCE on Google+"        },
+      { "@type": "WebPageElement", "name": "facebook", "url": "//facebook.com/ASCE"   , "text": "Like ASCE on Facebook"         },
+      { "@type": "WebPageElement", "name": "linkedin", "url": "//linkedin.com/ASCE"   , "text": "Connect with ASCE on LinkedIn" },
+      { "@type": "WebPageElement", "name": "youtube" , "url": "//youtube.com/ASCE"    , "text": "Watch ASCE on YouTube"         }
     ],
     "address": {
       "@type": "PostalAddress",
@@ -98,9 +98,14 @@
         }
       ],
       "$heroButtons": [
-        { "@type": "WebPageElement", "text": "Register"      , "url": "registration.html" },
-        { "@type": "WebPageElement", "text": "Sponsor"       , "url": "sponsor.html"      },
-        { "@type": "WebPageElement", "text": "Submit a Paper"                             }
+        { "@type": "WebPageElement", "text": "Register"      , "url": "registration.html"     },
+        { "@type": "WebPageElement", "text": "Sponsor"       , "url": "sponsor.html"          },
+        { "@type": "WebPageElement", "text": "Submit a Paper", "url": "call-submissions.html" }
+      ],
+      "$social": [
+        { "@type": "WebPageElement", "name": "twitter" , "url": "https://twitter.com/hashtag/#asce2016", "text": "Follow #ASCE2016 on Twitter" },
+        { "@type": "WebPageElement", "name": "google"  , "url": "#0"                                   , "text": "Follow #ASCE2016 on Google+" },
+        { "@type": "WebPageElement", "name": "facebook", "url": "#0"                                   , "text": "Follow #ASCE2016 on Facebook" }
       ],
       "offers": [
         {
@@ -233,11 +238,11 @@
             "name": "German Chamber of Architects"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         },
         {
@@ -256,11 +261,11 @@
             "name": "Los Angeles Department of Water and Power"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         },
         {
@@ -278,11 +283,11 @@
             "name": "Planning & Development Group (PDG), Los Angeles World Airports"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         },
         {
@@ -300,11 +305,11 @@
             "name": "Oklahoma Geological Survey"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         },
         {
@@ -322,11 +327,11 @@
             "name": "University of Oklahoma"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         }
       ],
@@ -555,11 +560,6 @@
             "name": "HNTB Corporation"
           }
         }
-      ],
-      "$social": [
-        { "@type": "URL", "name": "twitter" , "url": "https://twitter.com/hashtag/#asce2016", "description": "Follow #ASCE2016 on Twitter" },
-        { "@type": "URL", "name": "google"  , "url": "#0"                                   , "description": "Follow #ASCE2016 on Google+" },
-        { "@type": "URL", "name": "facebook", "url": "#0"                                   , "description": "Follow #ASCE2016 on Facebook" }
       ]
     },
     {

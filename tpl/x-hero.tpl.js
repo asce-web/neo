@@ -22,6 +22,8 @@ const xListHighlightbuttons = require('./x-list-highlightbuttons.tpl.js')
  * @param   {string}            data.endDate     http://schema.org/endDate
  * @param   {sdo.PostalAddress} data.location    http://schema.org/location
  * @param   {Array<sdo.WebPageElement>=} data.$heroButtons
+ * @param   {string}                     data.$heroButtons.url  http://schema.org/url
+ * @param   {string}                     data.$heroButtons.text http://schema.org/text
  * @param   {!Object=} opts additional rendering options
  */
 function xHero_renderer(frag, data, opts = {}) {
@@ -49,8 +51,8 @@ function xHero_renderer(frag, data, opts = {}) {
 
   new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(data.$heroButtons, function (f, d, o) {
     new xjs.HTMLAnchorElement(f.querySelector('[itemprop="significantLink"]'))
-      .href       (d.url  || '#1')
-      .textContent(d.text || ''  )
+      .href(d.url)
+      .textContent(d.text)
   })
 
   new xjs.HTMLElement(frag.querySelector('.c-ConfHed__Detail__Dates')).trimInner()

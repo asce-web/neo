@@ -3,8 +3,24 @@
   "$id": "https://conferences.style.asce.org/neo.jsd",
   "title": "Neo Theme",
   "definitions": {
+    "Link": {
+      "allOf": [
+        {
+          "$comment": "TODO: https://chharvey.github.io/schemaorg-jsd/schema/WebPageElement.jsd",
+          "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/CreativeWork.jsd"
+        },
+        {
+          "required": ["text", "url"],
+          "properties": {
+            "text": { "description": "The textual content of the link." },
+            "url" : { "description": "The href of the link." },
+            "name": { "description": "The name or identifier of the social media service (used for icons)." }
+          }
+        }
+      ]
+    },
     "Conference": {
-      "description": "A single conference on a website."
+      "description": "A single conference on a website.",
       "allOf": [
         { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Event.jsd" },
         {
@@ -20,10 +36,22 @@
             "offers"                   : { "description": "A list of registration periods." },
             "subEvent"                 : { "description": "A list of program sessions." },
             "potentialAction"          : { "description": "A list of important dates." },
-            "performer"                : { "description": "A list of speakers at the conference." },
             "sponsor"                  : { "description": "A list of supporters including non-sponsoring organizations." },
             "organizer"                : { "description": "A list of organizers: chairpersons, steering committee members, or other persons who are responsible for organizing the conference." },
-            "location"                 : {
+            "performer" : {
+              "description": "A list of speakers at the conference.",
+              "type": "array",
+              "items": {
+                "properties": {
+                  "$social": {
+                    "description": "A list of social media contact links for this person.",
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/Link" }
+                  }
+                }
+              }
+            },
+            "location" : {
               "description": "A list of locations of this conference. The first entry is the promoted location; subsequent entries are other venues.",
               "type": "array",
               "items": [
@@ -38,19 +66,18 @@
               }
             },
             "$social": {
-              "description": "A list of social media links for this conference."
+              "description": "A list of social media links for this conference.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/Link" }
             },
             "$heroButtons": {
-              "description": "A list of links serving as action buttons in the Hero section."
+              "description": "A list of links serving as action buttons in the Hero section.",
               "type": "array",
-              "items": {
-                "$comment": "TODO: https://chharvey.github.io/schemaorg-jsd/schema/WebPageElement.jsd",
-                "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/CreativeWork.jsd",
-              }
-            }
+              "items": { "$ref": "#/definitions/Link" }
+            },
             "$passes": {
               "type": "array",
-              "description": "The passes belonging to this conference."
+              "description": "The passes belonging to this conference.",
               "items": { "$ref": "#/definitions/Pass" }
             },
             "$currentRegistrationPeriod": {
@@ -58,7 +85,7 @@
               "description": "The name of an existing offer active at this time."
             },
             "$exhibitors": {
-              "description": "A list of exhibitors."
+              "description": "A list of exhibitors.",
               "type": "array",
               "items": { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Organization.jsd" }
             }
@@ -91,10 +118,19 @@
         "keywords"      : { "description": "Keywords for this website." },
         "logo"          : { "description": "The website logo." },
         "color"         : { "description": "Two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`.", "maxItems": 2 },
-        "brand"         : { "description": "The publisher/brand responsible for this website." },
-        "$conferences"  : {
+        "brand": {
+          "description": "The publisher/brand responsible for this website.",
+          "properties": {
+            "$social": {
+              "description": "A list of social media contact links for this brand.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/Link" }
+            }
+          }
+        },
+        "$conferences": {
+          "description": "All conferences present on this website.",
           "type": "array",
-          "description": "All conferences present on this website."
           "items": { "$ref": "#/definitions/Conference" }
         },
         "$currentConference" : { "type": "string", "format": "uri", "description": "The current  conference in this series. Must match the 'url' property of an already-added conference." },

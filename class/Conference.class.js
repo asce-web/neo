@@ -44,10 +44,7 @@ class Conference {
    * @param {Array<sdo.Organization>=} jsondata.sponsor   http://schema.org/sponsor
    * @param {Array<sdo.Person>=} jsondata.organizer       http://schema.org/organizer
    * @param {Array<sdo.Organization>=} jsondata.$exhibitors
-   * @param {Array<!Object>=} jsondata.$social
-   * @param {string}          jsondata.$social.name the name or identifier of the social media service (used for icons)
-   * @param {string}          jsondata.$social.url the URL of the conference’s social media profile or page
-   * @param {string=}         jsondata.$social.description short alternative text for non-visual media
+   * @param {Array<sdo.WebPageElement>=} jsondata.$social
    */
   constructor(jsondata) {
     /**
