@@ -18,22 +18,23 @@
         "additionalType": { "const": "http://schema.org/Product" },
         "@id"           : { "description": "The unique, absolute URL of the website." },
         "name"          : { "description": "The website name." },
-        "url"           : { "description": "An absolute or root-relative URL for the website." },
-        "description"   : { "description": "The website slogan." },
-        "keywords"      : true,
-        "logo"          : true,
-        "color"         : true,
-        "brand"         : true,
+        "description"   : { "description": "The website slogan (or tagline)." },
+        "url"           : { "description": "An absolute or root-relative URL for the landing page of this website." },
+        "keywords"      : { "description": "Keywords for this site." },
+        "logo"          : { "description": "The website logo." },
+        "color"         : { "description": "Two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`.", "maxItems": 2 },
+        "brand"         : { "description": "The publisher/brand responsible for this site." },
         "$conferences"  : {
           "type": "array",
           "items": {
             "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Event.jsd" }]
           }
         },
-        "$currentConference" : { "type": "string", "format": "uri", "description": "Must match the 'url' property of an already-added conference." },
-        "$previousConference": { "type": "string", "format": "uri", "description": "Must match the 'url' property of an already-added conference." },
-        "$nextConference"    : { "type": "string", "format": "uri", "description": "Must match the 'url' property of an already-added conference." },
+        "$currentConference" : { "type": "string", "format": "uri", "description": "The current  conference in this series. Must match the 'url' property of an already-added conference." },
+        "$previousConference": { "type": "string", "format": "uri", "description": "The previous conference in this series. Must match the 'url' property of an already-added conference." },
+        "$nextConference"    : { "type": "string", "format": "uri", "description": "The next     conference in this series. Must match the 'url' property of an already-added conference." },
         "$queues": {
+          "description": "An array of lists, each whose items are number and type of things.",
           "type": "array",
           "items": {
             "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" }]
