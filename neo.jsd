@@ -2,9 +2,77 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://conferences.style.asce.org/neo.jsd",
   "title": "Neo Theme",
+  "definitions": {
+    "Conference": {
+      "description": "A single conference on a website."
+      "allOf": [
+        { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Event.jsd" },
+        {
+          "required": ["name", "url", "startDate", "endDate"],
+          "properties": {
+            "name"                     : { "description": "The conference name." },
+            "description"              : { "description": "The conference theme." },
+            "disambiguatingDescription": { "description": "A blurb promoting the previous/next conference." },
+            "url"                      : { "description": "An absolute URL for the conference homepage." },
+            "image"                    : { "description": "The hero image." },
+            "startDate"                : { "description": "The starting date of this conference, in ISO string format." },
+            "endDate"                  : { "description": "The ending date of this conference, in ISO string format." },
+            "offers"                   : { "description": "A list of registration periods." },
+            "subEvent"                 : { "description": "A list of program sessions." },
+            "potentialAction"          : { "description": "A list of important dates." },
+            "performer"                : { "description": "A list of speakers at the conference." },
+            "sponsor"                  : { "description": "A list of supporters including non-sponsoring organizations." },
+            "organizer"                : { "description": "A list of organizers: chairpersons, steering committee members, or other persons who are responsible for organizing the conference." },
+            "location"                 : {
+              "description": "A list of locations of this conference. The first entry is the promoted location; subsequent entries are other venues.",
+              "type": "array",
+              "items": [
+                {
+                  "description": "The promoted location (requires `image` property for location image).",
+                  "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/PostalAddress.jsd"
+                }
+              ],
+              "additionalItems": {
+                "description": "Other venues.",
+                "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Accommodation.jsd"
+              }
+            },
+            "$social": {
+              "description": "A list of social media links for this conference."
+            },
+            "$heroButtons": {
+              "description": "A list of links serving as action buttons in the Hero section."
+              "type": "array",
+              "items": {
+                "$comment": "TODO: https://chharvey.github.io/schemaorg-jsd/schema/WebPageElement.jsd",
+                "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/CreativeWork.jsd",
+              }
+            }
+            "$passes": {
+              "type": "array",
+              "description": "The passes belonging to this conference."
+              "items": { "$ref": "#/definitions/Pass" }
+            },
+            "$currentRegistrationPeriod": {
+              "type": "string",
+              "description": "The name of an existing offer active at this time."
+            },
+            "$exhibitors": {
+              "description": "A list of exhibitors."
+              "type": "array",
+              "items": { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Organization.jsd" }
+            }
+          }
+        }
+      ]
+    },
+    "Pass": {
+      "description": "A pass with conference registration information."
+    }
+  },
   "allOf": [
     {
-      "$comment": "https://chharvey.github.io/schemaorg-jsd/schema/WebSite.jsd",
+      "$comment": "TODO: https://chharvey.github.io/schemaorg-jsd/schema/WebSite.jsd",
       "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/CreativeWork.jsd"
     },
     { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Product.jsd" },
@@ -20,15 +88,14 @@
         "name"          : { "description": "The website name." },
         "description"   : { "description": "The website slogan (or tagline)." },
         "url"           : { "description": "An absolute or root-relative URL for the landing page of this website." },
-        "keywords"      : { "description": "Keywords for this site." },
+        "keywords"      : { "description": "Keywords for this website." },
         "logo"          : { "description": "The website logo." },
         "color"         : { "description": "Two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`.", "maxItems": 2 },
-        "brand"         : { "description": "The publisher/brand responsible for this site." },
+        "brand"         : { "description": "The publisher/brand responsible for this website." },
         "$conferences"  : {
           "type": "array",
-          "items": {
-            "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Event.jsd" }]
-          }
+          "description": "All conferences present on this website."
+          "items": { "$ref": "#/definitions/Conference" }
         },
         "$currentConference" : { "type": "string", "format": "uri", "description": "The current  conference in this series. Must match the 'url' property of an already-added conference." },
         "$previousConference": { "type": "string", "format": "uri", "description": "The previous conference in this series. Must match the 'url' property of an already-added conference." },

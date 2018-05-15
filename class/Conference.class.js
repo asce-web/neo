@@ -27,29 +27,24 @@ class Conference {
    * @summary Construct a Conference object.
    * @description The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
-   * @param {!Object} jsondata a JSON object that validates against some schema?
-   * @param {string} jsondata.name the name of this conference
-   * @param {string} jsondata.url the url of this conference
-   * @param {string=} jsondata.description the theme of this conference
-   * @param {string=} jsondata.image the hero image for this conference
-   * @param {string=} jsondata.startDate the starting date of this conference, in ISO string format
-   * @param {string=} jsondata.endDate the ending date of this conference, in ISO string format
-   * @param {Array<!Object>=} jsondata.location a list of locations of this conference: at least 1 entry.
-   *                                            First entry: required; the promoted location; type {@link http://schema.org/PostalAddress};
-   *                                            provide `image` property for location image.
-   *                                            Other entries: optional; other venues; type {@link http://schema.org/Accommodation}.
-   * @param {Array<sdo.AggregateOffer>=} jsondata.offers a list of registration periods
-   * @param {string=} jsondata.$currentRegistrationPeriod the name of an existing offer active at this time
-   * @param {Array<!Object>=} jsondata.$passes a list of Pass-like JSON objects
-   * @param {Array<!Object>=} jsondata.subEvent a list of sessions; types {@link http://schema.org/Event}
-   * @param {Array<!Object>=} jsondata.potentialAction a list of sessions; types {@link http://schema.org/Action}
-   * @param {Array<sdo.Person>=} jsondata.performer a list of speakers at the conference
-   * @param {Array<!Object>=} jsondata.sponsor a list of supporters including non-sponsoring organizations; type {@link http://schema.org/Organization}
-   * @param {Array<!Object>=} jsondata.$exhibitors a list of exhibitors; type {@link http://schema.org/Organization}
-   * @param {Array<!Object>=} jsondata.organizer a list of organizers; type {@link http://schema.org/Person}
-   *                                             An organizer is a chairperson, steering committee member,
-   *                                             or other person who is responsible for organizing the conference.
-   * @param {Array<!Object>=} jsondata.$social a list of social media links for this conference; type {@link http://schema.org/URL}
+   * @param {sdo.Event} jsondata a JSON object that validates against http://schema.org/Event and `/neo.jsd#/definitions/Conference`
+   * @param {string} jsondata.name                       http://schema.org/name
+   * @param {string} jsondata.url                        http://schema.org/url
+   * @param {string=} jsondata.description               http://schema.org/description
+   * @param {string=} jsondata.image                     http://schema.org/image
+   * @param {string=} jsondata.startDate                 http://schema.org/startDate
+   * @param {string=} jsondata.endDate                   http://schema.org/endDate
+   * @param {Array<!Object>=} jsondata.location          http://schema.org/location
+   * @param {Array<sdo.AggregateOffer>=} jsondata.offers http://schema.org/offers
+   * @param {string=} jsondata.$currentRegistrationPeriod
+   * @param {Array<!Object>=} jsondata.$passes
+   * @param {Array<sdo.Event>=} jsondata.subEvent         http://schema.org/subEvent
+   * @param {Array<sdo.Action>=} jsondata.potentialAction http://schema.org/potentialAction
+   * @param {Array<sdo.Person>=} jsondata.performer       http://schema.org/performer
+   * @param {Array<sdo.Organization>=} jsondata.sponsor   http://schema.org/sponsor
+   * @param {Array<sdo.Person>=} jsondata.organizer       http://schema.org/organizer
+   * @param {Array<sdo.Organization>=} jsondata.$exhibitors
+   * @param {Array<!Object>=} jsondata.$social
    * @param {string}          jsondata.$social.name the name or identifier of the social media service (used for icons)
    * @param {string}          jsondata.$social.url the URL of the conference’s social media profile or page
    * @param {string=}         jsondata.$social.description short alternative text for non-visual media
