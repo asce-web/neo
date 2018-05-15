@@ -57,7 +57,7 @@
     "harp": "^0.25.0",
     "jsdom": "^11.10.0",
     "kss": "3.0.0-beta.18",
-    "schemaorg-jsd": "^0.10.0",
+    "schemaorg-jsd": "^0.11.0",
     "sitepage": "^1.0.0",
     "xmeter": "^6.5.0"
   },
