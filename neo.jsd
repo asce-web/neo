@@ -94,7 +94,29 @@
       ]
     },
     "Pass": {
-      "description": "A pass with conference registration information."
+      "description": "A pass with conference registration information.",
+      "allOf": [
+        {
+          "properties": {
+            "$attendeeTypes": {
+              "description": "Types of attendees that can purchase this pass (usually based on membership).",
+              "type": "array",
+              "items": {
+                "allOf": [
+                  { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Offer.jsd" },
+                  {
+                    "required": ["name"],
+                    "properties": {
+                      "name" : { "description": "The name of the attendee type." },
+                      "price": { "description": "The price for the attendee type given a certain pass and registration period." }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "allOf": [

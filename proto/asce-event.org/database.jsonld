@@ -133,38 +133,50 @@
         {
           "name": "Standard Pass",
           "description": "Members & Non-Members",
-          "$attendeeTypes": ["Member", "Non-Member"]
+          "$attendeeTypes": [
+            { "@type": "Offer", "name": "Member" },
+            { "@type": "Offer", "name": "Non-Member" }
+          ]
         },
         {
           "name": "Speaker Pass",
           "description": "Speakers and Presenters",
-          "$attendeeTypes": ["Member", "Non-Member"]
+          "$attendeeTypes": [
+            { "@type": "Offer", "name": "Member" },
+            { "@type": "Offer", "name": "Non-Member" }
+          ]
         },
         {
           "name": "Moderator Pass",
           "description": "Moderators",
-          "$attendeeTypes": ["Member", "Non-Member"]
+          "$attendeeTypes": [
+            { "@type": "Offer", "name": "Member" },
+            { "@type": "Offer", "name": "Non-Member" }
+          ]
         },
         {
           "name": "Younger Member",
           "description": "Members 18–35",
-          "$attendeeTypes": ["Member/Non-Member"]
+          "$attendeeTypes": [{ "@type": "Offer", "name": "Member/Non-Member" }]
         },
         {
           "name": "Student Pass",
           "description": "Undergraduates 18–24",
           "$fineprint" : "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
-          "$attendeeTypes": ["Member/Non-Member"]
+          "$attendeeTypes": [{ "@type": "Offer", "name": "Member/Non-Member" }]
         },
         {
           "name": "Guest Pass",
           "description": "Speaker and Moderator Guests",
-          "$attendeeTypes": ["Member/Non-Member"]
+          "$attendeeTypes": [{ "@type": "Offer", "name": "Member/Non-Member" }]
         },
         {
           "name": "Daily Pass",
           "description": "For One Day Only",
-          "$attendeeTypes": ["Member", "Non-Member"]
+          "$attendeeTypes": [
+            { "@type": "Offer", "name": "Member" },
+            { "@type": "Offer", "name": "Non-Member" }
+          ]
         }
       ],
       "subEvent": [

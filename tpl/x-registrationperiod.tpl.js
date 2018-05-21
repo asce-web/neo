@@ -35,7 +35,7 @@ function xRegistrationperiod_renderer(frag, data, opts = {}) {
 
   frag.querySelector('dl').append(
     ...opts.pass.$attendeeTypes.map((att_type) =>
-      xAttendeetype.render({ name: att_type, price: 42.87 }) // TODO price is 42 for now
+      xAttendeetype.render({ "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
     )
   )
 }
