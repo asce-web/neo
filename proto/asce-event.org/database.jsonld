@@ -131,49 +131,56 @@
       "$currentRegistrationPeriod": "Early Bird",
       "$passes": [
         {
+          "@type": "AggregateOffer",
           "name": "Standard Pass",
           "description": "Members & Non-Members",
-          "$attendeeTypes": [
+          "offers": [
             { "@type": "Offer", "name": "Member" },
             { "@type": "Offer", "name": "Non-Member" }
           ]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Speaker Pass",
           "description": "Speakers and Presenters",
-          "$attendeeTypes": [
+          "offers": [
             { "@type": "Offer", "name": "Member" },
             { "@type": "Offer", "name": "Non-Member" }
           ]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Moderator Pass",
           "description": "Moderators",
-          "$attendeeTypes": [
+          "offers": [
             { "@type": "Offer", "name": "Member" },
             { "@type": "Offer", "name": "Non-Member" }
           ]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Younger Member",
           "description": "Members 18–35",
-          "$attendeeTypes": [{ "@type": "Offer", "name": "Member/Non-Member" }]
+          "offers": [{ "@type": "Offer", "name": "Member/Non-Member" }]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Student Pass",
           "description": "Undergraduates 18–24",
-          "$fineprint" : "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
-          "$attendeeTypes": [{ "@type": "Offer", "name": "Member/Non-Member" }]
+          "disambiguatingDescription": "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
+          "offers": [{ "@type": "Offer", "name": "Member/Non-Member" }]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Guest Pass",
           "description": "Speaker and Moderator Guests",
-          "$attendeeTypes": [{ "@type": "Offer", "name": "Member/Non-Member" }]
+          "offers": [{ "@type": "Offer", "name": "Member/Non-Member" }]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Daily Pass",
           "description": "For One Day Only",
-          "$attendeeTypes": [
+          "offers": [
             { "@type": "Offer", "name": "Member" },
             { "@type": "Offer", "name": "Non-Member" }
           ]

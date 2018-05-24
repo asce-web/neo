@@ -96,9 +96,14 @@
     "Pass": {
       "description": "A pass with conference registration information.",
       "allOf": [
+        { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/AggregateOffer.jsd" },
         {
+          "required": ["name", "offers"],
           "properties": {
-            "$attendeeTypes": {
+            "name"                     : { "description": "The name or type of the pass." },
+            "description"              : { "description": "A short description of the pass." },
+            "disambiguatingDescription": { "description": "Further details of the pass." },
+            "offers": {
               "description": "Types of attendees that can purchase this pass (usually based on membership).",
               "type": "array",
               "items": {
