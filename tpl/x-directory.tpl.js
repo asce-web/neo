@@ -8,8 +8,8 @@ const xjs = {
 /**
  * @summary xDirectory renderer.
  * @param   {DocumentFragment} frag the template content with which to render
- * @param   {sdo.WebPage} data a http://schema.org/WebPage object
- * @param   {(sdo.WebPage|Array<sdo.WebPage>)} data.hasPart a subpage or an array of subpages (each a http://schema.org/WebPage object)
+ * @param   {sdo.WebPage}                      data         http://schema.org/WebPage
+ * @param   {(sdo.WebPage|Array<sdo.WebPage>)} data.hasPart http://schema.org/hasPart
  * @param   {!Object=} opts additional rendering options
  * @param   {integer=} [opts.depth=Infinity] number of nested directory levels
  * @param   {integer=} options.start which subpage to start at
@@ -58,8 +58,8 @@ function xDirectory_renderer(frag, data, opts = {}) {
             ...d,
             hasPart: d.findAll().filter((p) => !p.isHidden()),
           }, null, {
-            $depth: depth - 1,
-            options: suboptions,
+            ...suboptions,
+            depth: depth - 1,
           })
         )
       }
