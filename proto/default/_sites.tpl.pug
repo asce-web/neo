@@ -50,20 +50,16 @@ html(lang="en")
             classes: {
               list: 'o-List o-Flex c-MainMenu',
               item: 'o-List__Item o-Flex__Item c-MainMenu__Item',
-            },
-            links: {
-              classes: {
-                link  : 'c-MainMenu__Link h-Block',
-                icon  : 'c-MainMenu__Icon',
-                expand: 'c-MainMenu__Exp',
-              },
+              link: 'c-MainMenu__Link h-Block',
+              icon: 'c-MainMenu__Icon',
+              expand: 'c-MainMenu__Exp',
             },
             options: {
               classes: {
                 list: 'o-List c-MainMenu__Sub',
                 item: 'o-List__Item c-MainMenu__Sub__Item',
+                link: 'c-MainMenu__Sub__Link h-Block',
               },
-              links: { classes: { link: 'c-MainMenu__Sub__Link h-Block' } },
             },
           }
         != Util.view(site).pageToc(mainmenu_options)
