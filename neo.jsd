@@ -77,8 +77,8 @@
               "items": { "$ref": "#/definitions/Link" }
             },
             "$passes": {
-              "type": "array",
               "description": "The passes belonging to this conference.",
+              "type": "array",
               "items": { "$ref": "#/definitions/Pass" }
             },
             "$currentRegistrationPeriod": {

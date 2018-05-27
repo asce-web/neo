@@ -66,7 +66,31 @@ gulp.task('proto-index', async function () {
     .pipe(gulp.dest('./'))
 })
 
-gulp.task('proto-default', async function () {
+async function proto_validate(jsondata) {
+  // TODO in production, you only have to call:
+  // sdo_jsd.sdoValidate(jsondata, 'WebSite')
+  // sdo_jsd.sdoValidate(jsondata, 'Product')
+  const [META_SCHEMATA, SCHEMATA, NEO_SCHEMA] = await Promise.all([
+    sdo_jsd.getMetaSchemata(),
+    sdo_jsd.getSchemata(),
+    requireOtherAsync('./neo.jsd') // This schema is for development only. TODO Remove when ready for production.
+  ])
+  let ajv = new Ajv().addMetaSchema(META_SCHEMATA).addSchema(SCHEMATA)
+  let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata)
+  if (!is_data_valid) {
+    let e = new TypeError(ajv.errors.map((e) => e.message).join('\n'))
+    e.details = ajv.errors
+    console.error(e)
+    throw e
+  }
+  return true
+}
+
+gulp.task('proto-default-validate', async function () {
+  return proto_validate(await requireOtherAsync('./proto/default/database.jsonld'))
+})
+
+gulp.task('proto-default', ['proto-default-validate'], async function () {
   return gulp.src('./proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
@@ -80,38 +104,20 @@ gulp.task('proto-default', async function () {
     .pipe(gulp.dest('./proto/default/'))
 })
 
-async function proto_sample_validate(jsondata) {
-  // TODO in production, you only have to call:
-  // sdo_jsd.sdoValidate(jsondata, 'WebSite')
-  // sdo_jsd.sdoValidate(jsondata, 'Product')
-  const [META_SCHEMATA, SCHEMATA, NEO_SCHEMA] = await Promise.all([
-    sdo_jsd.getMetaSchemata(),
-    sdo_jsd.getSchemata(),
-    requireOtherAsync('./neo.jsd')
-  ])
-  let ajv = new Ajv().addMetaSchema(META_SCHEMATA).addSchema(SCHEMATA)
-  let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata) // This schema is for development only. TODO Remove when ready for production.
-  if (!is_data_valid) {
-    let e = new TypeError(ajv.errors.map((e) => e.message).join('\n'))
-    e.details = ajv.errors
-    console.error(e)
-    throw e
-  }
-  return true
-}
+gulp.task('proto-sample-validate', async function () {
+  return proto_validate(await requireOtherAsync('./proto/asce-event.org/database.jsonld'))
+})
 
-gulp.task('proto-sample-markup', async function () {
-  let database = await requireOtherAsync('./proto/asce-event.org/database.jsonld')
-  await proto_sample_validate(database);
+gulp.task('proto-sample-markup', ['proto-sample-validate'], async function () {
   return gulp.src('./proto/asce-event.org/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
         Util: require('./class/Util.class.js'),
         Person: require('./class/Person.class.js'),
-        site: (function () {
+        site: await (async function () {
           // TODO move all this data inside the database
-          const returned = new ConfSite(database).init()
+          const returned = new ConfSite(await requireOtherAsync('./proto/asce-event.org/database.jsonld')).init()
           function pageTitle() { return this.name() + ' | ' + returned.name() }
           returned.find('registration.html')
             .add(new ConfPage('Why Attend', '#0')
