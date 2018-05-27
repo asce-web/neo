@@ -354,6 +354,73 @@
           ]
         }
       ],
+      "$supporterLevels": [
+        {
+          "@type": "ItemList",
+          "name": "Platinum",
+          "itemListElement": [
+            "ASCE Foundation",
+            "Bentley"
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "name": "Silver",
+          "itemListElement": [
+            "Pennoni",
+            "Innovyze"
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "name": "Bronze",
+          "itemListElement": [
+            "Fasten Group",
+            "David Evans and Associates, Inc",
+            "KCI Technologies",
+            "McCormick & Taylor"
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "name": "Copper",
+          "itemListElement": [
+            "Rutgers Center for Advanced Infrastructure and Transportation",
+            "Kimley-Horn",
+            "Christopher B. Burke Engineering, Ltd"
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "name": "Corporate",
+          "itemListElement": [
+            "Bank of America",
+            "Geico",
+            "Pearl Insurance",
+            "UPS",
+            "Keller North America"
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "name": "Charter Members",
+          "itemListElement": [
+            "American Cast Iron Pipe Company",
+            "Cardno",
+            "Innovyze",
+            "Plastics Pipe Institute",
+            "Pure Technologies",
+            "Structural Technologies"
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "name": "Cooperating Organizations",
+          "itemListElement": [
+            "GIEES"
+          ]
+        }
+      ],
       "sponsor": [
         {
           "@type" : "Organization",

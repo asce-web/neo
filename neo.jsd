@@ -82,8 +82,13 @@
               "items": { "$ref": "#/definitions/Pass" }
             },
             "$currentRegistrationPeriod": {
-              "type": "string",
-              "description": "The name of an existing offer active at this time."
+              "description": "The name of an existing offer active at this time.",
+              "type": "string"
+            },
+            "$supporterLevels": {
+              "description": "A list of supporter levels.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/SupporterLevel" }
             },
             "$exhibitors": {
               "description": "A list of exhibitors.",
@@ -119,6 +124,22 @@
                   }
                 ]
               }
+            }
+          }
+        }
+      ]
+    },
+    "SupporterLevel": {
+      "description": "A classification of supporting organizations to a conference. Organizations might or might not be financial sponsors.",
+      "allOf": [
+        { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" },
+        {
+          "required": ["name", "itemListElement"],
+          "properties": {
+            "itemListElement": {
+              "description": "A list of string references to objects in a conference’s `sponsor` property.",
+              "type": "array",
+              "items": { "type": "string" }
             }
           }
         }
@@ -165,7 +186,7 @@
         "$previousConference": { "type": "string", "format": "uri", "description": "The previous conference in this series. Must match the 'url' property of an already-added conference." },
         "$nextConference"    : { "type": "string", "format": "uri", "description": "The next     conference in this series. Must match the 'url' property of an already-added conference." },
         "$queues": {
-          "description": "An array of lists, each whose items are string references to other objects.",
+          "description": "An array of lists, each whose items are string references to SupporterLevel objects.",
           "type": "array",
           "items": {
             "allOf": [
