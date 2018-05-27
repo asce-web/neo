@@ -359,6 +359,7 @@
           "@type": "ItemList",
           "name": "Platinum",
           "$logoSize": "Large",
+          "$isSponsor" : true,
           "itemListElement": [
             "ASCE Foundation",
             "Bentley"
@@ -368,6 +369,7 @@
           "@type": "ItemList",
           "name": "Silver",
           "$logoSize": "Medium",
+          "$isSponsor" : true,
           "itemListElement": [
             "Pennoni",
             "Innovyze"
@@ -377,6 +379,7 @@
           "@type": "ItemList",
           "name": "Bronze",
           "$logoSize": "Medium",
+          "$isSponsor" : true,
           "itemListElement": [
             "Fasten Group",
             "David Evans and Associates, Inc",
@@ -388,6 +391,7 @@
           "@type": "ItemList",
           "name": "Copper",
           "$logoSize": "Small",
+          "$isSponsor" : true,
           "itemListElement": [
             "Rutgers Center for Advanced Infrastructure and Transportation",
             "Kimley-Horn",
@@ -398,6 +402,7 @@
           "@type": "ItemList",
           "name": "Corporate",
           "$logoSize": "Small",
+          "$isSponsor" : true,
           "itemListElement": [
             "Bank of America",
             "Geico",

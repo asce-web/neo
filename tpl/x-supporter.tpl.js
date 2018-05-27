@@ -10,12 +10,14 @@ const xjs = require('extrajs-dom')
  * @param {string} data.url  http://schema.org/url
  * @param {string} data.logo http://schema.org/logo
  * @param   {!Object=} opts additional rendering options
+ * @param   {boolean=} opts.is_sponsor is the supporter a financial sponsor?
  */
 function xSupporter_renderer(frag, data, opts = {}) {
   frag.querySelector('a[itemprop="url"]'    ).href  = data.url
   frag.querySelector('data[itemprop="name"]').value = data.name
   frag.querySelector('img[itemprop="logo"]' ).src   = data.logo
   frag.querySelector('img[itemprop="logo"]' ).alt   = data.name
+  if (opts.is_sponsor) frag.querySelector('[itemprop="sponsor"]').setAttribute('itemprop', 'funder')
 }
 
 module.exports = xjs.HTMLTemplateElement

@@ -37,7 +37,7 @@
             "offers"                   : { "description": "A list of registration periods." },
             "subEvent"                 : { "description": "A list of program sessions." },
             "potentialAction"          : { "description": "A list of important dates." },
-            "sponsor"                  : { "description": "A list of supporters including non-sponsoring organizations." },
+            "sponsor"                  : { "description": "A list of supporters including non-sponsoring organizations.", "$comment": "Itemprop `funder` is used instead for financially sponsoring organizations." },
             "organizer"                : { "description": "A list of organizers: chairpersons, steering committee members, or other persons who are responsible for organizing the conference." },
             "performer" : {
               "description": "A list of speakers at the conference.",
@@ -144,6 +144,10 @@
             "$logoSize": {
               "description": "The sizing of this level’s logos on the page.",
               "enum": ["Small", "Medium", "Large"]
+            },
+            "$isSponsor": {
+              "description": "Whether the level is awarded to financial contributors.",
+              "type": "boolean"
             }
           }
         }
