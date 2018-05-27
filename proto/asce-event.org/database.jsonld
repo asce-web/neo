@@ -674,6 +674,7 @@
     {
       "@type": "ItemList",
       "name" : "Top Sponsors",
+      "description": "Top few supporter levels to display in a carousel.",
       "itemListElement": [
         "Platinum",
         "Silver",
@@ -683,6 +684,7 @@
     {
       "@type": "ItemList",
       "name" : "Non-Sponsors",
+      "description": "Non-sponsoring suppporter levels to display on each page.",
       "itemListElement": [
         "Cooperating Organizations",
         "Charter Members"
@@ -691,6 +693,7 @@
     {
       "@type": "ItemList",
       "name" : "All Sponsors",
+      "description": "All suppporter levels to display on the Sponsors page.",
       "itemListElement": [
         "Platinum",
         "Corporate",

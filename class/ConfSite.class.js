@@ -32,7 +32,7 @@ class ConfSite extends Page {
    * @param {string}                    jsondata.$currentConference
    * @param {string}                    jsondata.$previousConference
    * @param {string}                    jsondata.$nextConference
-   * @param {Array<sdo.ItemList>=}      jsondata.$queues An array of ItemLists, each whose items are number and type of things
+   * @param {Array<sdo.ItemList>=}      jsondata.$queues
    *                                                     The following queues are recommended:
    *                                                     - Featured Passes
    *                                                     - Featured Speakers

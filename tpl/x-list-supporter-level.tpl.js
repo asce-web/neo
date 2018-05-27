@@ -8,7 +8,7 @@ const xSupporterLevel = require('./x-supporter-level.tpl.js')
 /**
  * @summary xListSupporterLevel renderer.
  * @param {DocumentFragment} frag the template content with which to render
- * @param {Array<string>} data the list of supporter levels to display
+ * @param   {Array<string>} data the list of supporter levels to display, in the correct order
  * @param   {!Object=} opts additional rendering options
  * @param   {boolean=} opts.small should logo sizing be overridden to small?
  */

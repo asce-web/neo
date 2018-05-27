@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://conferences.style.asce.org/neo.jsd",
   "title": "Neo Theme",
+  "description": "A single website hosting a series of conferences.",
   "definitions": {
     "Link": {
       "allOf": [
@@ -164,10 +165,21 @@
         "$previousConference": { "type": "string", "format": "uri", "description": "The previous conference in this series. Must match the 'url' property of an already-added conference." },
         "$nextConference"    : { "type": "string", "format": "uri", "description": "The next     conference in this series. Must match the 'url' property of an already-added conference." },
         "$queues": {
-          "description": "An array of lists, each whose items are number and type of things.",
+          "description": "An array of lists, each whose items are string references to other objects.",
           "type": "array",
           "items": {
-            "allOf": [{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" }]
+            "allOf": [
+              { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" },
+              {
+                "required": ["name", "itemListElement"],
+                "properties": {
+                  "itemListElement": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            ]
           }
         }
       }
