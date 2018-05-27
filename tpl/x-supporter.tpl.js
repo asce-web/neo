@@ -9,7 +9,6 @@ const xjs = require('extrajs-dom')
  * @param {string} data.name http://schema.org/name
  * @param {string} data.url  http://schema.org/url
  * @param {string} data.logo http://schema.org/logo
- * @param {string=} data.$level the level of the supporting organization
  * @param   {!Object=} opts additional rendering options
  */
 function xSupporter_renderer(frag, data, opts = {}) {

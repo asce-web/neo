@@ -140,6 +140,10 @@
               "description": "A list of string references to objects in a conference’s `sponsor` property.",
               "type": "array",
               "items": { "type": "string" }
+            },
+            "$logoSize": {
+              "description": "The sizing of this level’s logos on the page.",
+              "enum": ["Small", "Medium", "Large"]
             }
           }
         }
