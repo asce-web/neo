@@ -59,7 +59,7 @@
     "kss": "3.0.0-beta.18",
     "schemaorg-jsd": "^0.10.0",
     "sitepage": "^1.0.0",
-    "xmeter": "^6.5.0"
+    "xmeter": "^7.0.0-alpha.2"
   },
   "dependencies": {}
 }
