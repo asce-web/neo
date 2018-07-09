@@ -8,8 +8,9 @@ const xjs = require('extrajs-dom')
  * @param {!Object} data a JSON object that validates against some schema?
  * @param {string} data.name the attendee type
  * @param {number} data.price the price for this attendee type given a certain pass and registration period
+ * @param   {!Object=} opts additional rendering options
  */
-function xAttendeetype_renderer(frag, data) {
+function xAttendeetype_renderer(frag, data, opts = {}) {
   /**
    * @summary Options for formatting pass prices.
    * @private

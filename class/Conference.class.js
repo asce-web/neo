@@ -275,11 +275,11 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function program(id, starred = false) {
-        return new xjs.DocumentFragment(xProgram.render({
-          id,
-          sessions: (this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
-          starred,
-        })).innerHTML()
+        return new xjs.DocumentFragment(xProgram.render(
+          (this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
+          null,
+          { id, starred }
+        )).innerHTML()
       })
       /**
        * Return a list of `<section.c-SupporterBlock>` components containing this conference’s supporters
@@ -293,7 +293,7 @@ class Conference {
        */
       .addDisplay(function supporterLevels(queue, small = false) {
         let items = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        return new xjs.DocumentFragment(xListSupporterLevel.render({ supporterlevels: items, small }, this._DATA)).innerHTML()
+        return new xjs.DocumentFragment(xListSupporterLevel.render(items, this._DATA, { small })).innerHTML()
       })
       /**
        * Return a list of `<div>` elements marking up this conference’s exhibitors.

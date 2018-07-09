@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-TimeBlock.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Time Block
@@ -72,7 +74,6 @@
 
 
 /*tbody*/.c-TimeBlock {
-  .font-size-mod(14/16);
 }
 
 /*tr*/.c-TimeBlock__Item {
@@ -81,7 +82,7 @@
 .c-TimeBlock__Times,
 .c-TimeBlock__Desc {
   width: 50%;
-  padding-bottom: calc(~'2 * var(--vru)');
+  padding-bottom: calc(2 * var(--lh)); // TODO set a height on the .c-TimeBlock__Item instead
   @media not all and (min-width: 30em) {
     padding-left: @g-boxpadd_norm_h;
   }
@@ -102,7 +103,8 @@
 /*td*/.c-TimeBlock__Desc {
   @media not all and (min-width: 30em) {
     // same as .c-DateBlock__Desc
-    .font-size-el(1.25);
+    .h-FontSize;
+    --font-scale: @g-font-size-kilo;
     font-weight: 600;
   }
   @media screen and (min-width: 30em) {
@@ -129,9 +131,9 @@
   }
   .c-TimeBlock__Times::before {
     // This is the disc on the viz
-    @_width: calc(~'var(--vru) / var(--line-height)'); // module em (like root em if the module were the root)
-    @_side : calc(~'-0.5 * var(--vru) / var(--line-height)');
-    @_top  : calc(~'-0.5 * var(--vru) / var(--line-height) + 0.5 * var(--vru)');
+    @_width: calc(var(--lh) / var(--line-height)); // module em (like root em if the module were the root)
+    @_side : calc(-0.5 * var(--lh) / var(--line-height));
+    @_top  : calc(-0.5 * var(--lh) / var(--line-height) + 0.5 * var(--lh));
     left: @_side;
     top: @_top;
     width: @_width;
@@ -145,12 +147,12 @@
   .c-TimeBlock__Desc::before {
     // This is the line on the viz
     left: 0;
-    top:    calc(~'-0.5 * var(--vru)');
-    bottom: calc(~'-0.5 * var(--vru)');
+    top:    calc(-0.5 * var(--lh));
+    bottom: calc(-0.5 * var(--lh));
     border-left: 1px solid;
     .c-TimeBlock__Item:last-of-type & { content: none; } // omit on last item
     @media (min-width: 30em) {
-      top: calc(~'0.5 * var(--vru)');
+      top: calc(0.5 * var(--lh));
     }
   }
 }

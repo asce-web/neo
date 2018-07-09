@@ -8,20 +8,20 @@ const xSupporterLevel = require('./x-supporter-level.tpl.js')
 /**
  * @summary xListSupporterLevel renderer.
  * @param {DocumentFragment} frag the template content with which to render
- * @param {!Object} data JSON object
- * @param {Array<string>} data.supporterlevels the list of supporter levels to display
- * @param {boolean=} data.small should logo sizing be overridden to small?
+ * @param {Array<string>} data the list of supporter levels to display
+ * @param   {!Object=} opts additional rendering options
+ * @param   {boolean=} opts.small should logo sizing be overridden to small?
  */
-function xListSupporterLevel_renderer(frag, data) {
-  new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.supporterlevels.map((name, index) => ({ name, index })), function (f, d) {
+function xListSupporterLevel_renderer(frag, data, opts = {}) {
+  new xjs.HTMLOListElement(frag.querySelector('ol')).populate(data.map((name, index) => ({ name, index })), function (f, d, o) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
       xSupporterLevel.render({
         name: d.name,
-        classname: (data.small) ? 'c-SupporterBlock--sml' : (d.index + 1  <  data.supporterlevels.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
+        classname: (o.small) ? 'c-SupporterBlock--sml' : (d.index + 1  <  data.length / 2) ? 'c-SupporterBlock--lrg' : 'c-SupporterBlock--med', // TODO make small the default size
         supporters: (this.sponsor || []).filter((supporter) => supporter.$level === d.name),
       })
     )
-  }, this)
+  }, this, { small: opts.small })
 }
 
 module.exports = xjs.HTMLTemplateElement

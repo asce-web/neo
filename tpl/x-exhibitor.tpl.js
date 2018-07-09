@@ -12,8 +12,9 @@ const xjs = require('extrajs-dom')
  * @param {string=} data.description http://schema.org/description
  * @param {number}  data.$booth the booth number of the exhibitor
  * @param {boolean=} data.$isSponsor does the exhibitor also happen to be a sponsor?
+ * @param   {!Object=} opts additional rendering options
  */
-function xExhibitor_renderer(frag, data) {
+function xExhibitor_renderer(frag, data, opts = {}) {
   frag.querySelector('a[itemprop="url"]'   ).href        = data.url
   frag.querySelector('[itemprop="name"]'   ).textContent = data.name
   frag.querySelector('slot[name="booth"]'  ).textContent = data.$booth

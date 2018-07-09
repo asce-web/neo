@@ -2,6 +2,9 @@
 /*################################*\
     neo  |  _c-SupporterBlock.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
 
 
 // The Supporter Block
@@ -68,8 +71,8 @@
   // TODO make small the default size
   --supporter-logo-width : var(--supporter-logo-lrg-width );
   --supporter-logo-height: var(--supporter-logo-lrg-height);
+  .-mb-2;
   text-align: center;
-  margin-bottom: calc(~'2 * var(--vru)');
 }
 .c-SupporterBlock--lrg {
 }
@@ -83,7 +86,8 @@
 }
 
 .c-SupporterBlock__Hn {
-  .font-size-el(@g-font-size-kilo);
+  .h-FontSize;
+  --font-scale: @g-font-size-kilo;
   font-family: inherit;
   font-weight: 900;
   text-align: center;
@@ -110,7 +114,8 @@
 
 .c-SupporterBlock__List__Item {
   flex: 0 1 var(--supporter-logo-width);
-  margin: 0 1rem var(--vru);
+  margin: 0 1rem;
+  .-mb-1;
 }
 
 .c-SupporterBlock__Logo {

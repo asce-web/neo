@@ -13,8 +13,9 @@ const xjs = {
  * @param {string}  data.url         http://schema.org/url
  * @param {string=} data.description http://schema.org/description
  * @param {string=} data.logo        http://schema.org/logo
+ * @param   {!Object=} opts additional rendering options
  */
-function xSitetitle_renderer(frag, data) {
+function xSitetitle_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]'       ).textContent = data.name
   frag.querySelector('[itemprop="description"]').textContent = data.description
   frag.querySelector('[itemprop="logo"]'       ).src = data.logo
