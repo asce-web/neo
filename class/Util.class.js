@@ -172,7 +172,21 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
+        const xListHighlightbuttons = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item o-Flex__Item')
+              .innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLAnchorElement(f.querySelector('a'))
+                .replaceClassString('{{ buttonclasses }}', o.buttonclasses)
+                .href       (d.url  || '#1')
+                .textContent(d.text || ''  )
+            }, null, { buttonclasses: opts.buttonclasses })
+          })
         return new xjs.DocumentFragment(xListHighlightbuttons.render(this, null, { buttonclasses })).innerHTML()
       })
       /**
