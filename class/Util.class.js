@@ -10,6 +10,7 @@ const View    = require('extrajs-view')
 const xDirectory          = require('../tpl/x-directory.tpl.js')
 const xPass = require('../tpl/x-pass.tpl.js')
 const xRegistrationicon = require('../tpl/x-registrationicon.tpl.js')
+const xVenue = require('../tpl/x-venue.tpl.js')
 
 
 /**
@@ -256,7 +257,21 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function venue(queue = null) {
-        const xListVenue = require('../tpl/x-list-venue.tpl.js')
+        const xListVenue = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item o-Flex__Item c-Alert__Item')
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-venue.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xVenue.render(d)
+              )
+            })
+          })
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = this.filter((item) => (queue) ? item_keys.includes(item.description) : true)
         return new xjs.DocumentFragment(xListVenue.render(items)).innerHTML()
