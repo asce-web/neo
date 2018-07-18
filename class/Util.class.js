@@ -286,7 +286,22 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker(queue = null) {
-        const xListSpeaker = require('../tpl/x-list-speaker.tpl.js')
+        const xSpeaker = require('../tpl/x-speaker.tpl.js')
+        const xListSpeaker = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-ListStacked')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item o-Flex__Item o-ListStacked__Item')
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-speaker.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xSpeaker.render(d)
+              )
+            })
+          })
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
         return new xjs.DocumentFragment(xListSpeaker.render(items)).innerHTML()
