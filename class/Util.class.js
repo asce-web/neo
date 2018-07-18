@@ -316,7 +316,27 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function chairs(queue = null) {
-        const xListChair = require('../tpl/x-list-chair.tpl.js')
+        const xPersonAffiliation = require('../tpl/x-person-affiliation.tpl.js')
+        const xListChair = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item c-Chair -mb-h')
+              .attr({
+                itemprop  : 'organizer',
+                itemscope : '',
+                itemtype  : 'http://schema.org/Person',
+              })
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-person-affiliation.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xPersonAffiliation.render(d)
+              )
+            })
+          })
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
         return new xjs.DocumentFragment(xListChair.render(items)).innerHTML()
