@@ -755,14 +755,6 @@
         "Bronze",
         "Copper"
       ]
-    },
-    {
-      "@type": "ItemList",
-      "name" : "Conference Co-Chairs",
-      "itemListElement": [
-        "thomas-mccollough",
-        "stephen-dickenson"
-      ]
     }
   ]
 }

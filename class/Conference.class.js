@@ -178,14 +178,6 @@ class Conference {
   }
 
   /**
-   * @summary Retrieve all organizers of this conference.
-   * @returns {Array<sdo.Person>} a shallow array of all organizers of this conference
-   */
-  getOrganizersAll() {
-    return (this._DATA.organizer || []).slice()
-  }
-
-  /**
    * @summary Return an object representing all social network profiles of this conference.
    * @returns {Array<!Object>} all this conference’s social media networks
    */
@@ -254,6 +246,19 @@ class Conference {
       .addDisplay(function importantDates(starred = false) {
         return new xjs.DocumentFragment(xDateblock.render(
           (this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
+        )).innerHTML()
+      })
+      /**
+       * Return a `<ul>` element, containing conference chairs and/or co-chairs.
+       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
+       * @summary Call `Util.view(data).chairs()` to render this display.
+       * @function Util.VIEW.chairs
+       * @returns {string} HTML output
+       */
+      .addDisplay(function chairs() {
+        const xListChair = require('../tpl/x-list-chair.tpl.js')
+        return new xjs.DocumentFragment(xListChair.render(
+          (this._DATA.organizer || [])
         )).innerHTML()
       })
       /**

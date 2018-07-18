@@ -194,7 +194,7 @@
         "$previousConference": { "type": "string", "format": "uri", "description": "The previous conference in this series. Must match the 'url' property of an already-added conference." },
         "$nextConference"    : { "type": "string", "format": "uri", "description": "The next     conference in this series. Must match the 'url' property of an already-added conference." },
         "$queues": {
-          "description": "An array of lists, each whose items are string references to SupporterLevel objects.",
+          "description": "An array of lists, each whose items are string references to some objects that have been added to the site.",
           "type": "array",
           "items": {
             "allOf": [
