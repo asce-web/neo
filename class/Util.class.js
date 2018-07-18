@@ -9,6 +9,7 @@ const View    = require('extrajs-view')
 
 const xDirectory          = require('../tpl/x-directory.tpl.js')
 const xPass = require('../tpl/x-pass.tpl.js')
+const xRegistrationicon = require('../tpl/x-registrationicon.tpl.js')
 
 
 /**
@@ -197,10 +198,22 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function registrationLegend() {
-        const xListRegistrationicon = require('../tpl/x-list-registrationicon.tpl.js')
-        return new xjs.DocumentFragment(
-          xListRegistrationicon.render(this)
-        ).innerHTML()
+        const xListRegistrationicon = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item o-Flex__Item c-Alert__Item')
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-registrationicon.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xRegistrationicon.render(d)
+              )
+            })
+          })
+        return new xjs.DocumentFragment(xListRegistrationicon.render(this)).innerHTML()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
