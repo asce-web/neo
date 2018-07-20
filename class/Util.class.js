@@ -8,6 +8,9 @@ const xjs = {
 const View    = require('extrajs-view')
 
 const xDirectory          = require('../tpl/x-directory.tpl.js')
+const xPass = require('../tpl/x-pass.tpl.js')
+const xRegistrationicon = require('../tpl/x-registrationicon.tpl.js')
+const xVenue = require('../tpl/x-venue.tpl.js')
 
 
 /**
@@ -171,7 +174,21 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function highlightButtons(buttonclasses = '') {
-        const xListHighlightbuttons = require('../tpl/x-list-highlightbuttons.tpl.js')
+        const xListHighlightbuttons = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item o-Flex__Item')
+              .innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLAnchorElement(f.querySelector('a'))
+                .replaceClassString('{{ buttonclasses }}', o.buttonclasses)
+                .href       (d.url  || '#1')
+                .textContent(d.text || ''  )
+            }, null, { buttonclasses: opts.buttonclasses })
+          })
         return new xjs.DocumentFragment(xListHighlightbuttons.render(this, null, { buttonclasses })).innerHTML()
       })
       /**
@@ -182,10 +199,22 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function registrationLegend() {
-        const xListRegistrationicon = require('../tpl/x-list-registrationicon.tpl.js')
-        return new xjs.DocumentFragment(
-          xListRegistrationicon.render(this)
-        ).innerHTML()
+        const xListRegistrationicon = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item o-Flex__Item c-Alert__Item')
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-registrationicon.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xRegistrationicon.render(d)
+              )
+            })
+          })
+        return new xjs.DocumentFragment(xListRegistrationicon.render(this)).innerHTML()
       })
       /**
        * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
@@ -199,7 +228,21 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference, queue = null) {
-        const xListPass = require('../tpl/x-list-pass.tpl.js')
+        const xListPass = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-ListStacked')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item o-Flex__Item o-ListStacked__Item')
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-pass.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xPass.render(d, null, { conference: o.conference })
+              )
+            }, null, { conference: opts.conference })
+          })
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = this.filter((item) => (queue) ? item_keys.includes(item.name) : true)
         return new xjs.DocumentFragment(xListPass.render(items, null, { conference: $conference })).innerHTML()
@@ -214,7 +257,21 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function venue(queue = null) {
-        const xListVenue = require('../tpl/x-list-venue.tpl.js')
+        const xListVenue = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item o-Flex__Item c-Alert__Item')
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-venue.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xVenue.render(d)
+              )
+            })
+          })
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = this.filter((item) => (queue) ? item_keys.includes(item.description) : true)
         return new xjs.DocumentFragment(xListVenue.render(items)).innerHTML()
@@ -229,7 +286,22 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function speaker(queue = null) {
-        const xListSpeaker = require('../tpl/x-list-speaker.tpl.js')
+        const xSpeaker = require('../tpl/x-speaker.tpl.js')
+        const xListSpeaker = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-ListStacked')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item o-Flex__Item o-ListStacked__Item')
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-speaker.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xSpeaker.render(d)
+              )
+            })
+          })
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
         return new xjs.DocumentFragment(xListSpeaker.render(items)).innerHTML()

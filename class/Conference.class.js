@@ -6,13 +6,13 @@ const View = require('extrajs-view')
 
 const Person             = require('./Person.class.js')
 
-const xListSupporterLevel = require('../tpl/x-list-supporter-level.tpl.js')
-const xListExhibitor      = require('../tpl/x-list-exhibitor.tpl.js')
-
 const xHero           = require('../tpl/x-hero.tpl.js')
 const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
 const xProgram        = require('../tpl/x-program.tpl.js')
 const xDateblock      = require('../tpl/x-dateblock.tpl.js')
+const xExhibitor = require('../tpl/x-exhibitor.tpl.js')
+const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
+const xPersonAffiliation = require('../tpl/x-person-affiliation.tpl.js')
 
 
 /**
@@ -256,7 +256,26 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function chairs() {
-        const xListChair = require('../tpl/x-list-chair.tpl.js')
+        const xListChair = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item c-Chair -mb-h')
+              .attr({
+                itemprop  : 'organizer',
+                itemscope : '',
+                itemtype  : 'http://schema.org/Person',
+              })
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-person-affiliation.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xPersonAffiliation.render(d)
+              )
+            })
+          })
         return new xjs.DocumentFragment(xListChair.render(
           (this._DATA.organizer || [])
         )).innerHTML()
@@ -288,6 +307,21 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function supporterLevels(queue = null, small = false) {
+        const xListSupporterLevel = xjs.HTMLOListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLUListElement(this.content().querySelector('ol')).addClass('o-List')
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .addClass('o-List__Item')
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-supporter-level.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ol')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xSupporterLevel.render(d, this, { small: o.small })
+              )
+            }, this, opts)
+          })
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
         return new xjs.DocumentFragment(xListSupporterLevel.render(items, this._DATA, { small })).innerHTML()
@@ -299,6 +333,19 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function exhibitorList() {
+        const xListExhibitor = xjs.HTMLUListElement.templateSync()
+          .exe(function () {
+            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-exhibitor.tpl.html"/>`)
+            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+          })
+          .setRenderer(function (frag, data, opts) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xExhibitor.render(d)
+              )
+            })
+          })
         return new xjs.DocumentFragment(xListExhibitor.render(this._DATA.$exhibitors || [])).innerHTML()
       })
   }

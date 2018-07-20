@@ -7,8 +7,6 @@ const xjs = {
 
 const {xAddress} = require('aria-patterns')
 
-const xListHighlightbuttons = require('./x-list-highlightbuttons.tpl.js')
-
 
 /**
  * @summary xHero renderer.
