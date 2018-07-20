@@ -283,12 +283,14 @@ class Conference {
        * that have the specified levels.
        * @summary Call `Conference#view.supporterLevels()` to render this display.
        * @function Conference.VIEW.supporterLevels
-       * @param   {sdo.ItemList} queue http://schema.org/ItemList
+       * @param   {?(sdo.ItemList|Array<string>)=} queue a list of supporter level names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
        * @param   {boolean=} small should logo sizing be overridden to small?
        * @returns {string} HTML output
        */
-      .addDisplay(function supporterLevels(queue, small = false) {
-        return new xjs.DocumentFragment(xListSupporterLevel.render(queue, this._DATA, { small })).innerHTML()
+      .addDisplay(function supporterLevels(queue = null, small = false) {
+        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+        let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
+        return new xjs.DocumentFragment(xListSupporterLevel.render(items, this._DATA, { small })).innerHTML()
       })
       /**
        * Return a list of `<div>` elements marking up this conference’s exhibitors.

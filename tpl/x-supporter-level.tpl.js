@@ -8,22 +8,25 @@ const xSupporter = require('./x-supporter.tpl.js')
 /**
  * @summary A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.
  * @param {DocumentFragment} frag the template content with which to render
- * @param   {sdo.ItemList}            data                 http://schema.org/ItemList
- * @param   {string}                  data.name            http://schema.org/name
- * @param   {Array<sdo.Organization>} data.itemListElement http://schema.org/itemListElement
- * @param   {boolean=}                data.$isSponsor      is the level awarded to financial contributors?
+ * @param   {sdo.Offer} data            http://schema.org/Offer
+ * @param   {string}    data.name       http://schema.org/name
+ * @param   {string=}   data.$logoSize  if given, either `Small`, `Medium`, or `Large`; the logo size to render
+ * @param   {boolean=}  data.$isSponsor is the level awarded to financial contributors?
  * @param   {!Object=} opts additional rendering options
- * @param   {string=}  opts.classname any classname(s) to add to the `<section>`
+ * @param   {boolean=} opts.small should logo sizing be overridden to `Small`?
+ * @param   {string=}  opts.classname any other classname(s) to add to the `<section>`
  */
 function xSupporterLevel_renderer(frag, data, opts = {}) {
   /**
    * Array of supporters in the level.
    * @type {Array<sdo.Organization>}
    */
-  let supporters = data.itemListElement.map((supportername) =>
-    (this.sponsor || []).find((org) => org.name === supportername)
-  )
-  new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass(opts.classname || '')
+  let supporters = (this.sponsor || []).filter((org) => org.$level === data.name)
+  new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass(({
+    'Small' : 'c-SupporterBlock--sml',
+    'Medium': 'c-SupporterBlock--med',
+    'Large' : 'c-SupporterBlock--lrg',
+  })[(opts.small) ? 'Small' : (data.$logoSize || 'Small')], opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
   new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(supporters, function (f, d, o) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xSupporter.render(d, null, { is_sponsor: data.$isSponsor }))
