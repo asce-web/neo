@@ -235,21 +235,6 @@ class Util {
         return new xjs.DocumentFragment(xListSpeaker.render(items)).innerHTML()
       })
       /**
-       * Return a `<ul>` element, containing conference chairs and/or co-chairs.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
-       * @summary Call `Util.view(data).chairs()` to render this display.
-       * @function Util.VIEW.chairs
-       * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
-       * @returns {string} HTML output
-       */
-      .addDisplay(function chairs(queue = null) {
-        const xListChair = require('../tpl/x-list-chair.tpl.js')
-        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
-        return new xjs.DocumentFragment(xListChair.render(items)).innerHTML()
-      })
-      /**
        * Return a `<ul.c-SocialList>` component, containing
        * markup for social media profiles.
        * Parameter `data` should be of type `Array<{@link http://schema.org/WebPageElement|sdo.WebPageElement}>`,
@@ -262,11 +247,7 @@ class Util {
       .addDisplay(function socialList(classes = '') {
         const xListSocial = require('../tpl/x-list-social.tpl.js')
         return new xjs.DocumentFragment(
-          xListSocial.render(this.map((obj) => ({
-            ...obj,
-            "@type": "WebPageElement",
-            text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
-          })), null, { classes })
+          xListSocial.render(this, null, { classes })
         ).innerHTML()
       })
   }

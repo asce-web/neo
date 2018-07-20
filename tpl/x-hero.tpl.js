@@ -12,17 +12,18 @@ const xListHighlightbuttons = require('./x-list-highlightbuttons.tpl.js')
 
 /**
  * @summary xHero renderer.
- * @param {DocumentFragment} frag the template content with which to render
- * @param {sdo.Event} data a JSON object representing a single conference event
- * @param {string}  data.name the name of the conference
- * @param {string}  data.url the url of the conference
- * @param {string=} data.description the “conference theme”
- * @param {string=} data.image the hero image for the conference
- * @param {string=} data.startDate the starting date of the conference, in ISO string format
- * @param {string=} data.endDate   the ending date of the conference, in ISO string format
- * @param {sdo.PostalAddress=} data.location the promoted location of the conference
- * @param {string=} data.location.image the promoted location of the conference
- * @param {Array<sdo.WebPageElement>=} data.$heroButtons a list of links serving as action buttons
+ * @param   {DocumentFragment} frag the template content with which to render
+ * @param   {sdo.Event}         data a JSON object representing a single conference event
+ * @param   {string}            data.name        http://schema.org/name
+ * @param   {string}            data.url         http://schema.org/url
+ * @param   {string=}           data.description http://schema.org/description
+ * @param   {string=}           data.image       http://schema.org/image
+ * @param   {string}            data.startDate   http://schema.org/startDate
+ * @param   {string}            data.endDate     http://schema.org/endDate
+ * @param   {sdo.PostalAddress} data.location    http://schema.org/location
+ * @param   {Array<sdo.WebPageElement>=} data.$heroButtons
+ * @param   {string}                     data.$heroButtons.url  http://schema.org/url
+ * @param   {string}                     data.$heroButtons.text http://schema.org/text
  * @param   {!Object=} opts additional rendering options
  */
 function xHero_renderer(frag, data, opts = {}) {
@@ -50,8 +51,8 @@ function xHero_renderer(frag, data, opts = {}) {
 
   new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(data.$heroButtons, function (f, d, o) {
     new xjs.HTMLAnchorElement(f.querySelector('[itemprop="significantLink"]'))
-      .href       (d.url  || '#1')
-      .textContent(d.text || ''  )
+      .href(d.url)
+      .textContent(d.text)
   })
 
   new xjs.HTMLElement(frag.querySelector('.c-ConfHed__Detail__Dates')).trimInner()

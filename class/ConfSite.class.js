@@ -1,20 +1,13 @@
-const path = require('path')
-
-const Ajv      = require('ajv')
-
 const xjs      = require('extrajs-dom')
 const Page     = require('sitepage').Page
 const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
-const {META_SCHEMATA, SCHEMATA} = require('schemaorg-jsd')
-const requireOther = require('schemaorg-jsd/lib/requireOther.js')
 
 const Conference = require('./Conference.class.js')
 const ConfPage   = require('./ConfPage.class.js')
 
 const xSitetitle = require('../tpl/x-sitetitle.tpl.js')
 
-const NEO_SCHEMA = requireOther(path.join(__dirname, '../neo.jsd'))
 
 
 /**
@@ -25,45 +18,32 @@ const NEO_SCHEMA = requireOther(path.join(__dirname, '../neo.jsd'))
  */
 class ConfSite extends Page {
   /**
-   * Construct a new ConfSite object.
-   * @param {!Object} jsondata a JSON object that validates against some schema?
-   * @param {string} jsondata.name name of this site
-   * @param {string} jsondata.url url of the landing page for this site
-   * @param {string=} jsondata.description the slogan (or tagline) of this site
-   * @param {Array<string>=} jsondata.keywords keywords for this site
-   * @param {string=} jsondata.logo url of the logo file
-   * @param {Array<string>=} jsondata.color two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`
-   * @param {sdo.Organization=} jsondata.brand the publisher/brand responsible for this site
-   * @param {Array<!Object>=}   jsondata.brand.$social a list of social media links for this site; type {@link http://schema.org/URL}
-   * @param {string}            jsondata.brand.$social.name the name or identifier of the social media service (used for icons)
-   * @param {string}            jsondata.brand.$social.url the URL of the site’s social media profile or page
-   * @param {string=}           jsondata.brand.$social.description short alternative text for non-visual media
-   * @param {Array<sdo.Event>} jsondata.$conferences an array of conferences
-   * @param {string} jsondata.$currentConference  the url of an existing conference; used as the current  conference in this series
-   * @param {string} jsondata.$previousConference the url of an existing conference; used as the previous conference in this series
-   * @param {string} jsondata.$nextConference     the url of an existing conference; used as the next     conference in this series
-   * @param {Array<sdo.ItemList>=} jsondata.$queues An array of ItemLists, each whose items are number and type of things
-   *                                           The following queues are recommended:
-   *                                           - Featured Passes
-   *                                           - Featured Speakers
-   *                                           - Top Sponsors
-   *                                           - Non-Sponsors
-   *                                           - All Sponsors
+   * @summary Construct a new ConfSite object.
+   * @param {(sdo.WebSite&sdo.Product)} jsondata a JSON object that validates against http://schema.org/WebSite, http://schema.org/Product, and `/neo.jsd`
+   * @param {string}                    jsondata.name        http://schema.org/name
+   * @param {string}                    jsondata.url         http://schema.org/url
+   * @param {string=}                   jsondata.description http://schema.org/description
+   * @param {Array<string>=}            jsondata.keywords    http://schema.org/keywords
+   * @param {string=}                   jsondata.logo        http://schema.org/logo
+   * @param {Array<string>=}            jsondata.color       http://schema.org/color
+   * @param {sdo.Organization=}         jsondata.brand       http://schema.org/brand
+   * @param {Array<!Object>=}           jsondata.brand.$social
+   * @param {Array<sdo.Event>}          jsondata.$conferences
+   * @param {string}                    jsondata.$currentConference
+   * @param {string}                    jsondata.$previousConference
+   * @param {string}                    jsondata.$nextConference
+   * @param {Array<sdo.ItemList>=}      jsondata.$queues
+   *                                                     The following queues are recommended:
+   *                                                     - Featured Passes
+   *                                                     - Featured Speakers
+   *                                                     - Top Sponsors
+   *                                                     - Non-Sponsors
+   *                                                     - All Sponsors
    */
   constructor(jsondata) {
     super({ name: jsondata.name, url: jsondata.url })
     super.description(jsondata.description || '')
     super.keywords(jsondata.keywords || [])
-
-    let ajv = new Ajv()
-    ajv.addMetaSchema(META_SCHEMATA).addSchema(SCHEMATA)
-    let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata)
-    if (!is_data_valid) {
-      let e = new TypeError(ajv.errors.map((e) => e.message).join('\n'))
-      e.details = ajv.errors
-      console.error(e)
-      throw e
-    }
 
     /**
      * All the data for this site.
@@ -159,6 +139,7 @@ class ConfSite extends Page {
    * @returns {ConfSite} this site
    */
   init() {
+    // TODO move all this data inside the database
     var self = this
     function pageTitle() { return this.name() + ' | ' + self.name() }
     return this

@@ -8,7 +8,10 @@ const xjs = {
 /**
  * @summary xListSocial renderer.
  * @param {DocumentFragment} frag the template content with which to render
- * @param {Array<sdo.WebPageElement>} data array of `{url:string, text:string}` objects
+ * @param {Array<sdo.WebPageElement>} data array of link objects
+ * @param   {string}                  data.text http://schema.org/text
+ * @param   {string}                  data.url  http://schema.org/url
+ * @param   {string}                  data.name http://schema.org/name
  * @param   {!Object=} opts additional rendering options
  * @param   {string=} opts.classes classes to add to the list
  */
@@ -18,8 +21,8 @@ function xListSocial_renderer(frag, data, opts = {}) {
     .populate(data, function (f, d, o) {
       new xjs.HTMLAnchorElement(f.querySelector('a'))
         .replaceClassString('{{ name }}', d.name)
-        .href(d.url  || '#1')
-      f.querySelector('slot').textContent = d.text || ''
+        .href(d.url)
+      f.querySelector('slot').textContent = d.text
     })
 }
 

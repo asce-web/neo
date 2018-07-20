@@ -4,10 +4,10 @@ const xjs = require('extrajs-dom')
 
 /**
  * @summary A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
- * @param {DocumentFragment} frag the template content with which to render
- * @param {!Object} data a JSON object that validates against some schema?
- * @param {string} data.name the attendee type
- * @param {number} data.price the price for this attendee type given a certain pass and registration period
+ * @param   {DocumentFragment} frag the template content with which to render
+ * @param   {sdo.Offer} data http://schema.org/Offer
+ * @param   {string}    data.name  http://schema.org/name
+ * @param   {number=}   data.price http://schema.org/price
  * @param   {!Object=} opts additional rendering options
  */
 function xAttendeetype_renderer(frag, data, opts = {}) {

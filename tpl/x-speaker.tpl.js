@@ -25,10 +25,7 @@ const xListSocial = require('../tpl/x-list-social.tpl.js')
  * @param {string=} data.jobTitle        http://schema.org/jobTitle
  * @param {sdo.Organization} data.affiliation http://schema.org/affiliation
  * @param {string=}          data.affiliation.name
- * @param {{Array<!Object>}=} data.$social a list of social media links for the person
- * @param {string}            data.$social.name the name or identifier of the social media service (used for icons)
- * @param {string}            data.$social.url the URL of the person’s social media profile or page
- * @param {string=}           data.$social.description short alternative text for non-visual media
+ * @param   {{Array<sdo.WebPageElement>}=} data.$social
  * @param   {!Object=} opts additional rendering options
  */
 function xSpeaker_renderer(frag, data, opts = {}) {
@@ -40,11 +37,7 @@ function xSpeaker_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 
   new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
-    this.node.before(xListSocial.render((data.$social || []).map((obj) => ({
-      ...obj,
-      "@type": "WebPageElement",
-      text   : obj.description, // TODO update database to use type `sdo.WebPageElement`
-    })), null, {
+    this.node.before(xListSocial.render((data.$social || []), null, {
       classes: 'c-SocialList--speaker',
     }))
   }).populate([

@@ -10,15 +10,14 @@ const {xAddress} = require('aria-patterns')
 
 /**
  * @summary xOtheryear renderer.
- * @param {DocumentFragment} frag the template content with which to render
- * @param {sdo.Event} data a JSON object representing a single conference event
- * @param {string}  data.name the name of the conference
- * @param {string}  data.url the url of the conference
- * @param {string=} data.image the hero image for the conference
- * @param {string=} data.startDate the starting date of the conference, in ISO string format
- * @param {sdo.PostalAddress=} data.location the promoted location of the conference
- * @param {string=} data.location.image the promoted location of the conference
- * @param {string=} data.disambiguatingDescription blurb promoting the prev/next conference
+ * @param   {DocumentFragment} frag the template content with which to render
+ * @param   {sdo.Event}         data a JSON object representing a single conference event
+ * @param   {string}            data.name                      http://schema.org/name
+ * @param   {string}            data.url                       http://schema.org/url
+ * @param   {string}            data.startDate                 http://schema.org/startDate
+ * @param   {string=}           data.image                     http://schema.org/image
+ * @param   {sdo.PostalAddress} data.location                  http://schema.org/location
+ * @param   {string=}           data.disambiguatingDescription http://schema.org/disambiguatingDescription
  * @param   {!Object=} opts additional rendering options
  */
 function xOtheryear_renderer(frag, data, opts = {}) {
@@ -27,9 +26,9 @@ function xOtheryear_renderer(frag, data, opts = {}) {
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
 
 
-  frag.querySelector('[itemprop="name"]'         ).textContent  = data.name
-  frag.querySelector('a[itemprop="url"]'         ).href = data.url
-  frag.querySelector('meta[itemprop="startDate"]').content      = data.startDate
+  frag.querySelector('[itemprop="name"]'         ).textContent = data.name
+  frag.querySelector('a[itemprop="url"]'         ).href        = data.url
+  frag.querySelector('meta[itemprop="startDate"]').content     = data.startDate
   frag.querySelector('[itemprop="location"]'     ).append(xAddress.render({
     ...data.location,
     $regionName: true,

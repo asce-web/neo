@@ -7,13 +7,11 @@ const xRegistrationperiod = require('./x-registrationperiod.tpl.js')
 
 /**
  * @summary An `<article.c-Pass>` component marking up a pass’s info.
- * @param {DocumentFragment} frag the template content with which to render
- * @param {!Object} data a JSON object that validates against some schema?
- * @param {string} data.name the name or type of the pass
- * @param {string=} data.description a short description of this pass
- * @param {string=} data.$fineprint further details of this pass
- * @param {Array<string>=} data.$attendeeTypes types of attendees that can purchase this pass
- *                                             (usually based on membership)
+ * @param   {DocumentFragment} frag the template content with which to render
+ * @param   {sdo.AggregateOffer} data                           http://schema.org/AggregateOffer
+ * @param   {string}             data.name                      http://schema.org/name
+ * @param   {string=}            data.description               http://schema.org/description
+ * @param   {string=}            data.disambiguatingDescription http://schema.org/disambiguatingDescription
  * @param   {!Object=} opts additional rendering options
  * @param   {Conference} opts.conference the conference to which this pass belongs
  */
@@ -21,8 +19,9 @@ function xPass_renderer(frag, data, opts = {}) {
   let current_period = opts.conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''
-  if (data.$fineprint) frag.querySelector('.c-Pass__Fine').textContent = data.$fineprint || ''
-  else                 frag.querySelector('.c-Pass__Fine').remove()
+  if (data.disambiguatingDescription) {
+    frag.querySelector('.c-Pass__Fine').textContent = data.disambiguatingDescription || ''
+  } else frag.querySelector('.c-Pass__Fine').remove()
 
   frag.querySelector('.c-Pass__Body').append(
     xRegistrationperiod.render(current_period, null, { pass: data, is_body: true })
