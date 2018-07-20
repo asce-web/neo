@@ -28,7 +28,7 @@ function xDirectory_renderer(frag, data, opts = {}) {
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
-    .populate(subpages, function (f, d, o) {
+    .populate(subpages, function (f, d, o = {}) {
       new xjs.HTMLLIElement(f.querySelector('[itemprop="hasPart"]')).replaceClassString('{{ classes.item }}', opts.classes && opts.classes.item || '')
       new xjs.HTMLAnchorElement(f.querySelector('[itemprop="url"]'))
         .replaceClassString('{{ classes.link }}', opts.classes && opts.classes.link || '')

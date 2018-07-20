@@ -28,7 +28,7 @@ function xSupporterLevel_renderer(frag, data, opts = {}) {
     'Large' : 'c-SupporterBlock--lrg',
   })[(opts.small) ? 'Small' : (data.$logoSize || 'Small')], opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
-  new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(supporters, function (f, d, o) {
+  new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(supporters, function (f, d, o = {}) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xSupporter.render(d, null, { is_sponsor: data.$isSponsor }))
   })
 }

@@ -181,8 +181,8 @@ class Util {
               .addClass('o-List__Item o-Flex__Item')
               .innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
           })
-          .setRenderer(function (frag, data, opts) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+          .setRenderer(function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o = {}) {
               new xjs.HTMLAnchorElement(f.querySelector('a'))
                 .replaceClassString('{{ buttonclasses }}', o.buttonclasses)
                 .href       (d.url  || '#1')
@@ -207,8 +207,8 @@ class Util {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-registrationicon.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+          .setRenderer(function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o = {}) {
               new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
                 xRegistrationicon.render(d)
               )
@@ -236,8 +236,8 @@ class Util {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-pass.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+          .setRenderer(function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o = {}) {
               new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
                 xPass.render(d, null, { conference: o.conference })
               )
@@ -265,8 +265,8 @@ class Util {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-venue.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+          .setRenderer(function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o = {}) {
               new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
                 xVenue.render(d)
               )
@@ -295,8 +295,8 @@ class Util {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-speaker.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+          .setRenderer(function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o = {}) {
               new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
                 xSpeaker.render(d)
               )

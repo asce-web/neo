@@ -269,8 +269,8 @@ class Conference {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-person-affiliation.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+          .setRenderer(function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o = {}) {
               new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
                 xPersonAffiliation.render(d)
               )
@@ -315,8 +315,8 @@ class Conference {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-supporter-level.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts) {
-            new xjs.HTMLUListElement(frag.querySelector('ol')).populate(data, function (f, d, o) {
+          .setRenderer(function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ol')).populate(data, function (f, d, o = {}) {
               new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
                 xSupporterLevel.render(d, this, { small: o.small })
               )
@@ -339,8 +339,8 @@ class Conference {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-exhibitor.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o) {
+          .setRenderer(function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o = {}) {
               new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
                 xExhibitor.render(d)
               )

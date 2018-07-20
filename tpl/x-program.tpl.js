@@ -19,7 +19,7 @@ const xTimeblock = require('../tpl/x-timeblock.tpl.js')
  */
 function xProgram_renderer(frag, data, opts = {}) {
   let container = frag.querySelector('[role="tablist"]')
-  const xProgramPanel = new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (f, d, o) {
+  const xProgramPanel = new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (f, d, o = {}) {
     f.querySelector('[role="tabpanel"]' ).id          = `${opts.id}-panel${o.index}`
     f.querySelector('time.c-ProgramHn'  ).dateTime    = d.date.toISOString()
     f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
