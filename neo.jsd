@@ -132,15 +132,10 @@
     "SupporterLevel": {
       "description": "A classification of supporting organizations to a conference. Organizations might or might not be financial sponsors.",
       "allOf": [
-        { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" },
+        { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Offer.jsd" },
         {
-          "required": ["name", "itemListElement"],
+          "required": ["name"],
           "properties": {
-            "itemListElement": {
-              "description": "A list of string references to objects in a conference’s `sponsor` property.",
-              "type": "array",
-              "items": { "type": "string" }
-            },
             "$logoSize": {
               "description": "The sizing of this level’s logos on the page.",
               "enum": ["Small", "Medium", "Large"]
