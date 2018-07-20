@@ -5,6 +5,7 @@ const xjs = {
   ...require('extrajs-dom'),
 }
 
+
 /**
  * @summary xDirectory renderer.
  * @param   {DocumentFragment} frag the template content with which to render
@@ -23,7 +24,6 @@ const xjs = {
  * @param   {!Object=} opts.options configurations for nested outlines; specs identical to `opts`
 */
 function xDirectory_renderer(frag, data, opts = {}) {
-  const Util = require('../class/Util.class.js')
   let subpages = (xjs.Object.typeOf(data.hasPart) === 'array' ) ? data.hasPart : [data.hasPart]
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))

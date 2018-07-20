@@ -1,7 +1,7 @@
 const path = require('path')
 
 const xjs = {
-  Date: require('extrajs').Date,
+  ...require('extrajs'),
   ...require('extrajs-dom'),
 }
 

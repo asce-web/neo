@@ -7,7 +7,7 @@ const xjs = {
 const View    = require('extrajs-view')
 const {xPersonFullname} = require('aria-patterns')
 
-const Util    = require('./Util.class.js')
+const xPersonContact = require('../tpl/x-person-contact.tpl.js')
 
 
 /**
@@ -99,7 +99,6 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function contact() {
-        const xPersonContact = require('../tpl/x-person-contact.tpl.js')
         return new xjs.DocumentFragment(xPersonContact.render(this._DATA)).innerHTML()
       })
   }

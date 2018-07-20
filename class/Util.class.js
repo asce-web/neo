@@ -1,16 +1,14 @@
 const fs = require('fs')
 const path = require('path')
 
+const {xAddress} = require('aria-patterns')
+
 const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
 const View    = require('extrajs-view')
 
-const xDirectory          = require('../tpl/x-directory.tpl.js')
-const xPass = require('../tpl/x-pass.tpl.js')
-const xRegistrationicon = require('../tpl/x-registrationicon.tpl.js')
-const xVenue = require('../tpl/x-venue.tpl.js')
 
 
 /**
@@ -139,6 +137,7 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function pageToc(options = {}) {
+        const xDirectory = require('../tpl/x-directory.tpl.js')
         return new xjs.DocumentFragment(xDirectory.render({
           ...this,
           hasPart: this.findAll().filter((p) => !p.isHidden()),
@@ -159,7 +158,6 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function promoLoc() {
-        const {xAddress} = require('aria-patterns')
         return new xjs.DocumentFragment(xAddress.render({
           ...this,
           $regionName: true,
@@ -199,6 +197,7 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function registrationLegend() {
+        const xRegistrationicon = require('../tpl/x-registrationicon.tpl.js')
         const xListRegistrationicon = xjs.HTMLUListElement.templateSync()
           .exe(function () {
             new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
@@ -228,6 +227,7 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function pass($conference, queue = null) {
+        const xPass = require('../tpl/x-pass.tpl.js')
         const xListPass = xjs.HTMLUListElement.templateSync()
           .exe(function () {
             new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-ListStacked')
@@ -257,6 +257,7 @@ class Util {
        * @returns {string} HTML output
        */
       .addDisplay(function venue(queue = null) {
+        const xVenue = require('../tpl/x-venue.tpl.js')
         const xListVenue = xjs.HTMLUListElement.templateSync()
           .exe(function () {
             new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
