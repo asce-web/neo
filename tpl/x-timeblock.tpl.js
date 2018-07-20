@@ -21,7 +21,16 @@ function xTimeblock_renderer(frag, data, opts = {}) {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(data, function (f, d, o = {}) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )
-    f.querySelectorAll('[itemprop~="startDate"]').forEach(function (time) {
+    /**
+     * @summary References to formatting elements.
+     * @description We want to create these references before removing any elements from the DOM.
+     * @private
+     * @constant {!Object}
+     */
+    const formatting = {
+      /** Start and end times. */ times: [...f.querySelectorAll('.c-TimeBlock__Times')],
+    }
+    f.querySelectorAll('[itemprop~="startDate"]').forEach((time) => {
       new xjs.HTMLTimeElement(time)
         .dateTime(time_start)
         .textContent(xjs.Date.format(time_start, 'g:ia'))
@@ -30,9 +39,9 @@ function xTimeblock_renderer(frag, data, opts = {}) {
       .dateTime(time_end)
       .textContent(xjs.Date.format(time_end, 'g:ia'))
     if (time_start.toISOString() === time_end.toISOString()) {
-      f.querySelectorAll('.c-TimeBlock__Times')[1].remove()
+      formatting.times[1].remove()
     } else {
-      f.querySelectorAll('.c-TimeBlock__Times')[0].remove()
+      formatting.times[0].remove()
     }
     new xjs.HTMLElement(f.querySelector('.c-TimeBlock__Times')).trimInner()
 

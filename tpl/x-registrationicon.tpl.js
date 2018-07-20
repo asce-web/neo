@@ -23,27 +23,35 @@ function xListRegistrationicon_renderer(frag, data, opts = {}) {
   frag.querySelector('i').textContent = data.$icon
   frag.querySelector('b').textContent = data.name
 
-  let times = [...frag.querySelectorAll('time')]
-  let colon = frag.querySelector('slot[name="colon"]')
-  let dash  = frag.querySelector('slot[name="dash"]')
-    if (date_start) {
-      new xjs.HTMLTimeElement(times[0])
-        .dateTime(date_start.toISOString())
-        .textContent(xjs.Date.format(date_start, 'M j'))
-    } else {
-      colon.textContent = ' ends '
-      times[0].remove()
-      dash.remove()
-    }
-    if (date_end) {
-      new xjs.HTMLTimeElement(times[1])
-        .dateTime(date_end.toISOString())
-        .textContent(xjs.Date.format(date_end, 'M j'))
-    } else {
-      colon.textContent = ' begins '
-      dash.remove()
-      times[1].remove()
-    }
+  /**
+   * @summary References to formatting elements.
+   * @description We want to create these references before removing any elements from the DOM.
+   * @private
+   * @constant {!Object}
+   */
+  const formatting = {
+    /** Colon after period name. */ colon: frag.querySelector('slot[name="colon"]'),
+    /** Start and end dates. */     times: [...frag.querySelectorAll('time')],
+    /** Dash between times. */      dash : frag.querySelector('slot[name="dash"]'),
+  }
+  if (date_start) {
+    new xjs.HTMLTimeElement(formatting.times[0])
+      .dateTime(date_start.toISOString())
+      .textContent(xjs.Date.format(date_start, 'M j'))
+  } else {
+    formatting.colon.textContent = ' ends '
+    formatting.times[0].remove()
+    formatting.dash.remove()
+  }
+  if (date_end) {
+    new xjs.HTMLTimeElement(formatting.times[1])
+      .dateTime(date_end.toISOString())
+      .textContent(xjs.Date.format(date_end, 'M j'))
+  } else {
+    formatting.colon.textContent = ' begins '
+    formatting.times[1].remove()
+    formatting.dash.remove()
+  }
 
   new xjs.HTMLElement(frag.querySelector('small')).trimInner()
 }

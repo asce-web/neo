@@ -39,7 +39,7 @@ function xProgram_renderer(frag, data, opts = {}) {
    */
   const grouped_sessions = (function () {
     const returned = []
-    data.forEach(function (datum) {
+    data.forEach((datum) => {
       let time_start = new Date(datum.startDate)
       let time_end   = new Date(datum.endDate  )
       if (!returned.find((group) => xjs.Date.sameDate(group.date, time_start))) {

@@ -35,19 +35,27 @@ function xDirectory_renderer(frag, data, opts = {}) {
         .href(d.url()) // TODO don’t use Page#url()
       f.querySelector('slot[itemprop="name"]').textContent = d.name() // TODO don’t use Page#name()
 
-      let icons = [...f.querySelectorAll('i.material-icons')]
+      /**
+       * @summary References to formatting elements.
+       * @description We want to create these references before removing any elements from the DOM.
+       * @private
+       * @constant {!Object}
+       */
+      const formatting = {
+        /** Icons for links. */ icons: [...f.querySelectorAll('i.material-icons')],
+      }
       if (xjs.Object.typeOf(opts.classes && opts.classes.icon) === 'string') {
-        new xjs.HTMLElement(icons[0])
+        new xjs.HTMLElement(formatting.icons[0])
           .replaceClassString('{{ classes.icon }}', opts.classes && opts.classes.icon || '')
           .textContent(d.getIcon()) // TODO don’t use ConfPage#getIcon()
       } else {
-        icons[0].remove()
+        formatting.icons[0].remove()
       }
       if (xjs.Object.typeOf(opts.classes && opts.classes.expand) === 'string' && d.findAll().length) { // TODO don’t use Page#findAll
-        new xjs.HTMLElement(icons[1])
+        new xjs.HTMLElement(formatting.icons[1])
           .replaceClassString('{{ classes.expand }}', opts.classes && opts.classes.expand || '')
       } else {
-        icons[1].remove()
+        formatting.icons[1].remove()
       }
 
       if (d.findAll().length && depth > 0) { // TODO don’t use Page#findAll
