@@ -108,8 +108,6 @@ class Util {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
-     * - `Util.view(data).pageLink()` - link to a page in a document outline / t.o.c.
-     * - `Util.view(data).pageToc()` - a document outline / t.o.c. of a page
      * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
      * - `Util.view(data).dateblock()` - .c-DateBlock component
      * - `Util.view(data).timeblock()` - .c-TimeBlock component
@@ -120,36 +118,6 @@ class Util {
      * @type {View}
      */
     return new View(null, data)
-      /**
-       * Return a Page object’s document outline as a nested ordered list.
-       * Parameter `data` should be of type `Page`.
-       * @summary Call `Util.view(data).pageToc()` to render this display.
-       * @function Util.VIEW.pageToc
-       * @param   {!Object=} options options for configuring output
-       * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
-       * @param   {integer=} options.start which subpage to start at
-       * @param   {integer=} options.end which subpage to end at
-       * @param   {?Object<string>=} options.classes group set of css class configurations
-       * @param   {string=} options.classes.list list classes (`<ol>`)
-       * @param   {string=} options.classes.item item classes (`<li>`)
-       * @param   {!Object=} options.links configuration param to send into {@link Util.VIEW.pageLink|Util#view.pageLink()}
-       * @param   {!Object=} options.options configurations for nested outlines; specs identical to `options`
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pageToc(options = {}) {
-        const xDirectory = require('../tpl/x-directory.tpl.js')
-        return new xjs.DocumentFragment(xDirectory.template.render(xDirectory.renderer, {
-          ...this,
-          hasPart: this.findAll().filter((p) => !p.isHidden()),
-        }, {
-          depth  : options.depth || Infinity,
-          start  : options.start || 0,
-          end    : options.end   || Infinity,
-          classes: options.classes || {},
-          links  : options.links,
-          options: options.options,
-        })).innerHTML()
-      })
       /**
        * Return a snippet marking up a promoted location.
        * Parameter `data` should be of type `{@link http://schema.org/PostalAddress|sdo.PostalAddress}`.

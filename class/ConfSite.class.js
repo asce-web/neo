@@ -7,6 +7,7 @@ const Conference = require('./Conference.class.js')
 const ConfPage   = require('./ConfPage.class.js')
 
 const xSitetitle = require('../tpl/x-sitetitle.tpl.js')
+const xDirectory = require('../tpl/x-directory.tpl.js')
 
 
 
@@ -17,6 +18,33 @@ const xSitetitle = require('../tpl/x-sitetitle.tpl.js')
  * @extends Page
  */
 class ConfSite extends Page {
+			/**
+			 * Return a Page object’s document outline as a nested ordered list.
+			 * Parameter `data` should be of type `Page`.
+			 * @param   {!Object=} options options for configuring output
+			 * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
+			 * @param   {integer=} options.start which subpage to start at
+			 * @param   {integer=} options.end which subpage to end at
+			 * @param   {?Object<string>=} options.classes group set of css class configurations
+			 * @param   {string=} options.classes.list list classes (`<ol>`)
+			 * @param   {string=} options.classes.item item classes (`<li>`)
+			 * @param   {!Object=} options.links configuration param to send into {@link Util.VIEW.pageLink|Util#view.pageLink()}
+			 * @param   {!Object=} options.options configurations for nested outlines; specs identical to `options`
+			 * @returns {string} HTML output
+			 */
+			view_pageToc(options = {}) {
+				return new xjs.DocumentFragment(xDirectory.template.render(xDirectory.renderer, {
+					...this._DATA,
+					hasPart: this.findAll().filter((p) => !p.isHidden()),
+				}, {
+					depth  : options.depth || Infinity,
+					start  : options.start || 0,
+					end    : options.end   || Infinity,
+					classes: options.classes || {},
+					links  : options.links,
+					options: options.options,
+				})).innerHTML()
+			}
   /**
    * @summary Construct a new ConfSite object.
    * @param {(sdo.WebSite&sdo.Product)} jsondata a JSON object that validates against http://schema.org/WebSite, http://schema.org/Product, and `/neo.jsd`

@@ -75,7 +75,7 @@ html(lang="en")
               },
             },
           }
-        != Util.view(site).pageToc(mainmenu_options)
+        != site.view_pageToc(mainmenu_options)
     main#main
       article(itemscope="" itemtype="http://schema.org/Event")
         block mainHeader
@@ -118,7 +118,7 @@ html(lang="en")
             },
           },
         }
-      != Util.view(site).pageToc(sitemap_options)
+      != site.view_pageToc(sitemap_options)
     footer.o-Runner.c-Mast.c-Mast--foot#connect-with-asce: div.h-Constrain
       h1.h-Hidden Connect With #[abbr(title="American Society of Civil Engineers") ASCE]
       address(itemscope="" itemtype="http://schema.org/NGO")
