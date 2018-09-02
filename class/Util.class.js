@@ -98,6 +98,17 @@ class Util {
     }
   }
 
+			/**
+			 * Return a snippet marking up a promoted location.
+			 * @param   {sdo.PostalAddress} postal_address a postal address
+			 * @returns {string} HTML output
+			 */
+			static view_promoLoc(postal_address) {
+				return new xjs.DocumentFragment(xAddress.render({
+					...postal_address,
+					$regionName: true,
+				})).trimInner().textContent()
+			}
   /**
    * @summary Render any data in HTML.
    * @see Util.VIEW
@@ -118,19 +129,6 @@ class Util {
      * @type {View}
      */
     return new View(null, data)
-      /**
-       * Return a snippet marking up a promoted location.
-       * Parameter `data` should be of type `{@link http://schema.org/PostalAddress|sdo.PostalAddress}`.
-       * @summary Call `Util.view(data).promoLoc()` to render this display.
-       * @function Util.VIEW.promoLoc
-       * @returns {string} HTML output
-       */
-      .addDisplay(function promoLoc() {
-        return new xjs.DocumentFragment(xAddress.render({
-          ...this,
-          $regionName: true,
-        })).trimInner().textContent()
-      })
       /**
        * Return an unordered list of button links for a highlighted content block.
        * Parameter `data` should be of type `Array<sdo.WebPageElement>`, i.e., a list of links.
