@@ -119,6 +119,15 @@ class Util {
 				const xListHighlightbuttons = require('../src/tpl/x-list-highlightbuttons.tpl.js')
 				return new xjs.DocumentFragment(xListHighlightbuttons.template.render(xListHighlightbuttons.renderer, buttons, { buttonclasses })).innerHTML()
 			}
+			/**
+			 * Return a `<ul.c-Alert>` component containing the legend of registration periods.
+			 * @param   {Array<sdo.AggregateOffer>} periods list of registration periods
+			 * @returns {string} HTML output
+			 */
+			static view_registrationLegend(periods) {
+				const xListRegistrationicon = require('../src/tpl/x-list-registrationicon.tpl.js')
+				return new xjs.DocumentFragment(xListRegistrationicon.template.render(xListRegistrationicon.renderer, periods)).innerHTML()
+			}
   /**
    * @summary Render any data in HTML.
    * @see Util.VIEW
@@ -131,38 +140,12 @@ class Util {
      * @description Available displays:
      * - `Util.view(data).dateblock()` - .c-DateBlock component
      * - `Util.view(data).timeblock()` - .c-TimeBlock component
-     * - `Util.view(data).registrationLegend()` - Legend (list) of registration periods
      * - `Util.view(data).pass()` - .c-Pass component
      * - `Util.view(data).speaker()` - .c-Speaker component
      * @namespace Util.VIEW
      * @type {View}
      */
     return new View(null, data)
-      /**
-       * Return a `<ul.c-Alert>` component containing the legend of registration periods.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/AggregateOffer|sdo.AggregateOffer}>`.
-       * @summary Call `Util.view(data).registrationLegend()` to render this display.
-       * @function Util.VIEW.registrationLegend
-       * @returns {string} HTML output
-       */
-      .addDisplay(function registrationLegend() {
-        const xRegistrationicon = require('../tpl/x-registrationicon.tpl.js')
-        const xListRegistrationicon = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item c-Alert__Item')
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-registrationicon.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        return new xjs.DocumentFragment(xListRegistrationicon.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xRegistrationicon.template.render(xRegistrationicon.renderer, d)
-              )
-            }, data)
-        }, this)).innerHTML()
-      })
       /**
        * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
        * Parameter `data` should be of type `Array<!Object>`,

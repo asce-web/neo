@@ -11,7 +11,7 @@ block mainReference
   section.o-Runner.o-Runner--highlight.c-Banner#full-registration: div.h-Constrain
     h1.h-Hidden Full Registration
     != Util.view(site.currentConference.getPassesAll()).pass(site.currentConference)
-    != Util.view(site.currentConference.getRegistrationPeriodsAll()).registrationLegend()
+    != Util.view_registrationLegend(site.currentConference.getRegistrationPeriodsAll())
     -
       let highlight_buttons = [
         { "@type": "WebPageElement", "text": "Register Today!", "url": "#0" },
