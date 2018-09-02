@@ -1,0 +1,12 @@
+# Output of 'npm pack'
+*.tgz
+
+# Generated build files
+proto/*/*.html
+
+# Generated documentation & style guides
+docs/styleguide/
+docs/api/
+
+# Site files and assets
+proto/*/files/

@@ -6,19 +6,57 @@ const jsdoc        = require('gulp-jsdoc3')
 const less         = require('gulp-less')
 const pug          = require('gulp-pug')
 const sourcemaps   = require('gulp-sourcemaps')
+const typedoc      = require('gulp-typedoc')
+const typescript   = require('gulp-typescript')
 const jsdom        = require('jsdom')
 const kss          = require('kss')
+// require('typedoc')    // DO NOT REMOVE … peerDependency of `gulp-typedoc`
+// require('typescript') // DO NOT REMOVE … peerDependency of `gulp-typescript`
 
 const xjs = require('extrajs-dom')
 const sdo_jsd = require('schemaorg-jsd')
 const {requireOtherAsync} = require('schemaorg-jsd/lib/requireOther.js')
 
+const tsconfig      = require('./tsconfig.json')
+const typedocconfig = require('./config/typedoc.json')
+
 const ConfSite   = require('./class/ConfSite.class.js')
 const ConfPage   = require('./class/ConfPage.class.js')
 
 
+gulp.task('dist-ts', async function () {
+	// return gulp.src('./src/class/*.class.ts')
+	// 	.pipe(typescript(tsconfig.compilerOptions))
+	// 	.pipe(gulp.dest('./dist/class/'))
+})
+
+gulp.task('dist-css', async function () {
+	return gulp.src('./css/src/neo.less')
+		.pipe(sourcemaps.init())
+		.pipe(less())
+		.pipe(autoprefixer({
+			grid: true,
+		}))
+		.pipe(clean_css({
+			level: {
+				2: {
+					overrideProperties: false, // need fallbacks for `initial` and `unset`
+					restructureRules: true, // combines selectors having the same rule (akin to `&:extend()`)
+				},
+			},
+		}))
+		.pipe(sourcemaps.write('./')) // write to an external .map file
+		.pipe(gulp.dest('./css'))
+})
+
+gulp.task('dist', ['dist-css'])
+
+gulp.task('test', async function () {})
+
 // HOW-TO: https://github.com/mlucool/gulp-jsdoc3#usage
 gulp.task('docs-api', async function () {
+	// return gulp.src('./src/**/*.ts')
+	// 	.pipe(typedoc(typedocconfig))
   return gulp.src(['README.md', 'class/*.js'], {read:false})
     .pipe(jsdoc(require('./config-jsdoc.json')))
 })
@@ -181,23 +219,4 @@ gulp.task('proto-sample', ['proto-sample-markup', 'proto-sample-style'])
 
 gulp.task('proto', ['proto-index', 'proto-default', 'proto-sample'])
 
-gulp.task('dist', async function () {
-  return gulp.src('./css/src/neo.less')
-    .pipe(sourcemaps.init())
-    .pipe(less())
-    .pipe(autoprefixer({
-      grid: true,
-    }))
-    .pipe(clean_css({
-      level: {
-        2: {
-          overrideProperties: false, // need fallbacks for `initial` and `unset`
-          restructureRules: true, // combines selectors having the same rule (akin to `&:extend()`)
-        },
-      },
-    }))
-    .pipe(sourcemaps.write('./')) // write to an external .map file
-    .pipe(gulp.dest('./css'))
-})
-
-gulp.task('build', ['docs', 'proto', 'dist'])
+gulp.task('build', ['dist', 'test', 'docs', 'proto'])
