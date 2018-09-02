@@ -19,14 +19,13 @@ const {xPersonFullname} = require('aria-patterns')
  * @param {string=}          data.affiliation.name http://schema.org/name
  * @param   {!Object=} opts additional rendering options
  */
-function xPersonAffiliation_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xPersonAffiliation_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation && data.affiliation.name || ''
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.resolve(__dirname, './x-person-affiliation.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
-  .setRenderer(xPersonAffiliation_renderer)

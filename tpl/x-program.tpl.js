@@ -17,17 +17,9 @@ const xTimeblock = require('../tpl/x-timeblock.tpl.js')
  * @param   {string} opts.id unique id of the program block
  * @param   {boolean=} opts.starred whether to filter out unstarred sessions
  */
-function xProgram_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xProgram_renderer(frag, data, opts = {}) {
   let container = frag.querySelector('[role="tablist"]')
-  const xProgramPanel = new xjs.HTMLTemplateElement(container.querySelector('template')).setRenderer(function (f, d, o = {}) {
-    f.querySelector('[role="tabpanel"]' ).id          = `${opts.id}-panel${o.index}`
-    f.querySelector('time.c-ProgramHn'  ).dateTime    = d.date.toISOString()
-    f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
-    f.querySelector('slot[name="date"]' ).textContent = xjs.Date.format(d.date, 'M j')
-    new xjs.HTMLElement(f.querySelector('slot[name="panel"]')).empty()
-      .append(xTimeblock.render(d.items))
-    new xjs.HTMLTimeElement(f.querySelector('.c-ProgramHn')).trimInner()
-  })
+  const xProgramPanel = new xjs.HTMLTemplateElement(container.querySelector('template'))
   /**
    * @summary Categorize all the sessions of the conference by date.
    * @description
@@ -51,12 +43,19 @@ function xProgram_renderer(frag, data, opts = {}) {
     })
     return returned
   })()
-  container.append(...grouped_sessions.map((group, index) => xProgramPanel.render(group, null, { index })))
+  container.append(...grouped_sessions.map((group, index) => xProgramPanel.render(function (f, d, o = {}) {
+    f.querySelector('[role="tabpanel"]' ).id          = `${opts.id}-panel${o.index}`
+    f.querySelector('time.c-ProgramHn'  ).dateTime    = d.date.toISOString()
+    f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
+    f.querySelector('slot[name="date"]' ).textContent = xjs.Date.format(d.date, 'M j')
+    new xjs.HTMLElement(f.querySelector('slot[name="panel"]')).empty()
+      .append(xTimeblock.template.render(xTimeblock.renderer, d.items))
+    new xjs.HTMLTimeElement(f.querySelector('.c-ProgramHn')).trimInner()
+  }, group, { index })))
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-program.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
   })
-  .setRenderer(xProgram_renderer)

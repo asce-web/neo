@@ -20,7 +20,7 @@ const {xAddress} = require('aria-patterns')
  * @param   {string=}           data.disambiguatingDescription http://schema.org/disambiguatingDescription
  * @param   {!Object=} opts additional rendering options
  */
-function xOtheryear_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xOtheryear_renderer(frag, data, opts = {}) {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
@@ -41,9 +41,8 @@ function xOtheryear_renderer(frag, data, opts = {}) {
   }
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-otheryear.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
-  .setRenderer(xOtheryear_renderer)

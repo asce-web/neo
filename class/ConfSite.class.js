@@ -213,7 +213,7 @@ class ConfSite extends Page {
        * @returns {string} HTML output
        */
       .addDisplay(function siteTitle() {
-        return new xjs.DocumentFragment(xSitetitle.render(this._DATA)).innerHTML()
+        return new xjs.DocumentFragment(xSitetitle.template.render(xSitetitle.renderer, this._DATA)).innerHTML()
       })
   }
 

@@ -20,7 +20,7 @@ const {xPersonFullname} = require('aria-patterns')
  * @param {string=} data.telephone       http://schema.org/telephone
  * @param   {!Object=} opts additional rendering options
  */
-function xPersonContact_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xPersonContact_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
   frag.querySelector('[itemprop="jobTitle"]' ).textContent = data.jobTitle
 
@@ -39,9 +39,8 @@ function xPersonContact_renderer(frag, data, opts = {}) {
   }
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.resolve(__dirname, './x-person-contact.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
-  .setRenderer(xPersonContact_renderer)

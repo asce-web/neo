@@ -10,7 +10,7 @@ const xjs = require('extrajs-dom')
  * @param   {number=}   data.price http://schema.org/price
  * @param   {!Object=} opts additional rendering options
  */
-function xAttendeetype_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xAttendeetype_renderer(frag, data, opts = {}) {
   /**
    * @summary Options for formatting pass prices.
    * @private
@@ -31,6 +31,5 @@ function xAttendeetype_renderer(frag, data, opts = {}) {
     .trimInner()
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-attendeetype.tpl.html'))
-  .setRenderer(xAttendeetype_renderer)

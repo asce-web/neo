@@ -20,7 +20,7 @@ const {xAddress} = require('aria-patterns')
  * @param {string}  data.$cta.text the text of the call-to-action
  * @param   {!Object=} opts additional rendering options
  */
-function xVenue_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xVenue_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="description"]').textContent = data.description
 
   if (data.image) frag.querySelector('img[itemprop="image"]').src = data.image
@@ -45,9 +45,8 @@ function xVenue_renderer(frag, data, opts = {}) {
   }
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-venue.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
-  .setRenderer(xVenue_renderer)

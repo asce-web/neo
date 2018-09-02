@@ -23,12 +23,12 @@ const xjs = {
  * @param   {string=}          opts.classes.expand classes for `expand_more` icon
  * @param   {!Object=} opts.options configurations for nested outlines; specs identical to `opts`
 */
-function xDirectory_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xDirectory_renderer(frag, data, opts = {}) {
   let subpages = (xjs.Object.typeOf(data.hasPart) === 'array' ) ? data.hasPart : [data.hasPart]
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
-    .populate(subpages, function (f, d, o = {}) {
+    .populate(function (f, d, o = {}) {
       new xjs.HTMLLIElement(f.querySelector('[itemprop="hasPart"]')).replaceClassString('{{ classes.item }}', opts.classes && opts.classes.item || '')
       new xjs.HTMLAnchorElement(f.querySelector('[itemprop="url"]'))
         .replaceClassString('{{ classes.link }}', opts.classes && opts.classes.link || '')
@@ -60,18 +60,17 @@ function xDirectory_renderer(frag, data, opts = {}) {
 
       if (d.findAll().length && depth > 0) { // TODO don’t use Page#findAll
         f.querySelector('[itemprop="hasPart"]').append(
-          require(__filename).render({
+          require(__filename).template.render(xDirectory_renderer, {
             ...d,
             hasPart: d.findAll().filter((p) => !p.isHidden()),
-          }, null, {
+          }, {
             ...(opts.options || {}),
             depth: depth - 1,
           })
         )
       }
-    })
+    }, subpages)
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-directory.tpl.html'))
-  .setRenderer(xDirectory_renderer)

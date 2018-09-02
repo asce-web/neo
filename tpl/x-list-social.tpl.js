@@ -15,17 +15,16 @@ const xjs = {
  * @param   {!Object=} opts additional rendering options
  * @param   {string=} opts.classes classes to add to the list
  */
-function xListSocial_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xListSocial_renderer(frag, data, opts = {}) {
   new xjs.HTMLUListElement(frag.querySelector('ul'))
     .replaceClassString('{{ listclasses }}', opts.classes)
-    .populate(data, function (f, d, o) {
+    .populate(function (f, d, o) {
       new xjs.HTMLAnchorElement(f.querySelector('a'))
         .replaceClassString('{{ name }}', d.name)
         .href(d.url)
       f.querySelector('slot').textContent = d.text
-    })
+    }, data)
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-list-social.tpl.html'))
-  .setRenderer(xListSocial_renderer)

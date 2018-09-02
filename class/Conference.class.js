@@ -219,7 +219,7 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function hero() {
-        return new xjs.DocumentFragment(xHero.render({
+        return new xjs.DocumentFragment(xHero.template.render(xHero.renderer, {
           ...this._DATA,
           location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
         })).innerHTML()
@@ -231,7 +231,7 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function otherYear() {
-        return new xjs.DocumentFragment(xOtheryear.render({
+        return new xjs.DocumentFragment(xOtheryear.template.render(xOtheryear.renderer, {
           ...this._DATA,
           location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
         })).innerHTML()
@@ -244,7 +244,8 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function importantDates(starred = false) {
-        return new xjs.DocumentFragment(xDateblock.render(
+        return new xjs.DocumentFragment(xDateblock.template.render(
+          xDateblock.renderer,
           (this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
         )).innerHTML()
       })
@@ -269,14 +270,14 @@ class Conference {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-person-affiliation.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xPersonAffiliation.render(d)
-              )
-            })
-          })
         return new xjs.DocumentFragment(xListChair.render(
+          function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xPersonAffiliation.template.render(xPersonAffiliation.renderer, d)
+              )
+            }, data)
+          },
           (this._DATA.organizer || [])
         )).innerHTML()
       })
@@ -291,9 +292,9 @@ class Conference {
        * @returns {string} HTML output
        */
       .addDisplay(function program(id, starred = false) {
-        return new xjs.DocumentFragment(xProgram.render(
+        return new xjs.DocumentFragment(xProgram.template.render(
+          xProgram.renderer,
           (this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
-          null,
           { id, starred }
         )).innerHTML()
       })
@@ -315,16 +316,15 @@ class Conference {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-supporter-level.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ol')).populate(data, function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xSupporterLevel.render(d, this, { small: o.small })
-              )
-            }, this, opts)
-          })
         let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
         let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
-        return new xjs.DocumentFragment(xListSupporterLevel.render(items, this._DATA, { small })).innerHTML()
+        return new xjs.DocumentFragment(xListSupporterLevel.render(function (frag, data, opts = {}) {
+            new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f, d, o = {}) {
+              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+                xSupporterLevel.template.render(xSupporterLevel.renderer, d, { small: o.small }, this)
+              )
+            }, data, opts, this)
+        }, items, { small }, this._DATA)).innerHTML()
       })
       /**
        * Return a list of `<div>` elements marking up this conference’s exhibitors.
@@ -339,14 +339,13 @@ class Conference {
               .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-exhibitor.tpl.html"/>`)
             new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
           })
-          .setRenderer(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xExhibitor.render(d)
-              )
-            })
-          })
-        return new xjs.DocumentFragment(xListExhibitor.render(this._DATA.$exhibitors || [])).innerHTML()
+        return new xjs.DocumentFragment(xListExhibitor.render(function (frag, data, opts = {}) {
+          new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
+            new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+              xExhibitor.template.render(xExhibitor.renderer, d)
+            )
+          }, data)
+        }, this._DATA.$exhibitors || [])).innerHTML()
       })
   }
 }

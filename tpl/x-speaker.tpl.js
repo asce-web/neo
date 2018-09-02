@@ -28,7 +28,7 @@ const xListSocial = require('../tpl/x-list-social.tpl.js')
  * @param   {{Array<sdo.WebPageElement>}=} data.$social
  * @param   {!Object=} opts additional rendering options
  */
-function xSpeaker_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xSpeaker_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
   frag.querySelector('[itemprop="image"]'                        ).src         = data.image || ''
   frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle || ''
@@ -37,14 +37,10 @@ function xSpeaker_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 
   new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
-    this.node.before(xListSocial.render((data.$social || []), null, {
+    this.node.before(xListSocial.template.render(xListSocial.renderer, (data.$social || []), {
       classes: 'c-SocialList--speaker',
     }))
-  }).populate([
-    { prop: 'url'      , icon: 'explore', url: data.url                           , text: 'visit homepage' },
-    { prop: 'email'    , icon: 'email'  , url: `mailto:${data.email}`             , text: 'send email'     },
-    { prop: 'telephone', icon: 'phone'  , url: `tel:${Util.toURL(data.telephone)}`, text: 'call'           },
-  ], function (f, d, o = {}) {
+  }).populate(function (f, d, o = {}) {
     if (!data[d.prop]) {
       new xjs.DocumentFragment(f).empty()
     } else {
@@ -53,12 +49,15 @@ function xSpeaker_renderer(frag, data, opts = {}) {
       .replaceClassString('{{ icon }}', d.icon)
       .attr({ href: d.url, itemprop: d.prop })
     }
-  })
+  }, [
+    { prop: 'url'      , icon: 'explore', url: data.url                           , text: 'visit homepage' },
+    { prop: 'email'    , icon: 'email'  , url: `mailto:${data.email}`             , text: 'send email'     },
+    { prop: 'telephone', icon: 'phone'  , url: `tel:${Util.toURL(data.telephone)}`, text: 'call'           },
+  ])
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.resolve(__dirname, './x-speaker.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
-  .setRenderer(xSpeaker_renderer)

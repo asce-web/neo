@@ -18,7 +18,7 @@ const xAttendeetype = require('./x-attendeetype.tpl.js')
  * @param   {string}             opts.pass.name                      http://schema.org/name
  * @param   {Array<sdo.Offer>}   opts.pass.offers                    http://schema.org/offers
  */
-function xRegistrationperiod_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xRegistrationperiod_renderer(frag, data, opts = {}) {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
@@ -34,14 +34,13 @@ function xRegistrationperiod_renderer(frag, data, opts = {}) {
 
   frag.querySelector('dl').append(
     ...opts.pass.offers.map((att_type) =>
-      xAttendeetype.render({ "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
+      xAttendeetype.template.render(xAttendeetype.renderer, { "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
     )
   )
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-registrationperiod.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
-  .setRenderer(xRegistrationperiod_renderer)

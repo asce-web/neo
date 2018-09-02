@@ -15,7 +15,7 @@ const xRegistrationperiod = require('./x-registrationperiod.tpl.js')
  * @param   {!Object=} opts additional rendering options
  * @param   {Conference} opts.conference the conference to which this pass belongs
  */
-function xPass_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xPass_renderer(frag, data, opts = {}) {
   let current_period = opts.conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''
@@ -24,19 +24,18 @@ function xPass_renderer(frag, data, opts = {}) {
   } else frag.querySelector('.c-Pass__Fine').remove()
 
   frag.querySelector('.c-Pass__Body').append(
-    xRegistrationperiod.render(current_period, null, { pass: data, is_body: true })
+    xRegistrationperiod.template.render(xRegistrationperiod.renderer, current_period, { pass: data, is_body: true })
   )
 
   frag.querySelector('.c-Pass__Foot').append(
     ...opts.conference.getRegistrationPeriodsAll()
       .filter((registration_period) => registration_period.name !== current_period.name)
-      .map((registration_period) => xRegistrationperiod.render(registration_period, null, { pass: data }))
+      .map((registration_period) => xRegistrationperiod.template.render(xRegistrationperiod.renderer, registration_period, { pass: data }))
   )
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-pass.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
-  .setRenderer(xPass_renderer)

@@ -15,7 +15,7 @@ const xjs = {
  * @param {string=} data.logo        http://schema.org/logo
  * @param   {!Object=} opts additional rendering options
  */
-function xSitetitle_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xSitetitle_renderer(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]'       ).textContent = data.name
   frag.querySelector('[itemprop="description"]').textContent = data.description
   frag.querySelector('[itemprop="logo"]'       ).src = data.logo
@@ -25,6 +25,5 @@ function xSitetitle_renderer(frag, data, opts = {}) {
   if (!data.logo       ) frag.querySelector('[itemprop="logo"]'       ).remove()
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-sitetitle.tpl.html'))
-  .setRenderer(xSitetitle_renderer)

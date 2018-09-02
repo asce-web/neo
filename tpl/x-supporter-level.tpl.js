@@ -16,7 +16,7 @@ const xSupporter = require('./x-supporter.tpl.js')
  * @param   {boolean=} opts.small should logo sizing be overridden to `Small`?
  * @param   {string=}  opts.classname any other classname(s) to add to the `<section>`
  */
-function xSupporterLevel_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xSupporterLevel_renderer(frag, data, opts = {}) {
   /**
    * Array of supporters in the level.
    * @type {Array<sdo.Organization>}
@@ -28,14 +28,13 @@ function xSupporterLevel_renderer(frag, data, opts = {}) {
     'Large' : 'c-SupporterBlock--lrg',
   })[(opts.small) ? 'Small' : (data.$logoSize || 'Small')], opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
-  new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(supporters, function (f, d, o = {}) {
-    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xSupporter.render(d, null, { is_sponsor: data.$isSponsor }))
-  })
+  new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(function (f, d, o = {}) {
+    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xSupporter.template.render(xSupporter.renderer, d, { is_sponsor: data.$isSponsor }))
+  }, supporters)
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-supporter-level.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
   })
-  .setRenderer(xSupporterLevel_renderer)

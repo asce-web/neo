@@ -24,7 +24,7 @@ const {xAddress} = require('aria-patterns')
  * @param   {string}                     data.$heroButtons.text http://schema.org/text
  * @param   {!Object=} opts additional rendering options
  */
-function xHero_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xHero_renderer(frag, data, opts = {}) {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
@@ -47,18 +47,17 @@ function xHero_renderer(frag, data, opts = {}) {
 
   frag.querySelector('[itemprop="description"]').textContent = data.description || ' ' // `&nbsp;` // cannot remove node due to SEO
 
-  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(data.$heroButtons, function (f, d, o = {}) {
+  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(function (f, d, o = {}) {
     new xjs.HTMLAnchorElement(f.querySelector('[itemprop="significantLink"]'))
       .href(d.url)
       .textContent(d.text)
-  })
+  }, data.$heroButtons)
 
   new xjs.HTMLElement(frag.querySelector('.c-ConfHed__Detail__Dates')).trimInner()
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-hero.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
-  .setRenderer(xHero_renderer)

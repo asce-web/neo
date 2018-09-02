@@ -14,7 +14,7 @@ const xjs = require('extrajs-dom')
  * @param {boolean=} data.$isSponsor does the exhibitor also happen to be a sponsor?
  * @param   {!Object=} opts additional rendering options
  */
-function xExhibitor_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xExhibitor_renderer(frag, data, opts = {}) {
   frag.querySelector('a[itemprop="url"]'   ).href        = data.url
   frag.querySelector('[itemprop="name"]'   ).textContent = data.name
   frag.querySelector('slot[name="booth"]'  ).textContent = data.$booth
@@ -26,6 +26,5 @@ function xExhibitor_renderer(frag, data, opts = {}) {
   }
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-exhibitor.tpl.html'))
-  .setRenderer(xExhibitor_renderer)

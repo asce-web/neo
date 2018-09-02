@@ -17,8 +17,8 @@ const xjs = {
  * @param {string=} data.url the url of the session
  * @param   {!Object=} opts additional rendering options
  */
-function xTimeblock_renderer(frag, data, opts = {}) {
-  new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(data, function (f, d, o = {}) {
+module.exports.renderer = function xTimeblock_renderer(frag, data, opts = {}) {
+  new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(function (f, d, o = {}) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )
     /**
@@ -49,9 +49,8 @@ function xTimeblock_renderer(frag, data, opts = {}) {
       href    : d.url || null,
       itemprop: (d.url) ? 'url' : null,
     }).textContent(d.name)
-  })
+  }, data)
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-timeblock.tpl.html'))
-  .setRenderer(xTimeblock_renderer)

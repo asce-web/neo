@@ -99,7 +99,7 @@ class Person {
        * @returns {string} HTML output
        */
       .addDisplay(function contact() {
-        return new xjs.DocumentFragment(xPersonContact.render(this._DATA)).innerHTML()
+        return new xjs.DocumentFragment(xPersonContact.template.render(xPersonContact.renderer, this._DATA)).innerHTML()
       })
   }
 }

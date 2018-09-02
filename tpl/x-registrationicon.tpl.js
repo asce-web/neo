@@ -16,7 +16,7 @@ const xjs = {
  * @param {string=} data.$icon the icon keyword of this registration period
  * @param   {!Object=} opts additional rendering options
  */
-function xListRegistrationicon_renderer(frag, data, opts = {}) {
+module.exports.renderer = function xListRegistrationicon_renderer(frag, data, opts = {}) {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
@@ -56,6 +56,5 @@ function xListRegistrationicon_renderer(frag, data, opts = {}) {
   new xjs.HTMLElement(frag.querySelector('small')).trimInner()
 }
 
-module.exports = xjs.HTMLTemplateElement
+module.exports.template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, './x-registrationicon.tpl.html'))
-  .setRenderer(xListRegistrationicon_renderer)
