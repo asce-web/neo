@@ -109,6 +109,16 @@ class Util {
 					$regionName: true,
 				})).trimInner().textContent()
 			}
+			/**
+			 * Return an unordered list of button links for a highlighted content block.
+			 * @param   {Array<sdo.WebPageElement>} buttons a list of links
+			 * @param   {string=} buttonclasses the classes to add to the buttons
+			 * @returns {string} HTML output
+			 */
+			static view_highlightButtons(buttons, buttonclasses = '') {
+				const xListHighlightbuttons = require('../src/tpl/x-list-highlightbuttons.tpl.js')
+				return new xjs.DocumentFragment(xListHighlightbuttons.template.render(xListHighlightbuttons.renderer, buttons, { buttonclasses })).innerHTML()
+			}
   /**
    * @summary Render any data in HTML.
    * @see Util.VIEW
@@ -119,7 +129,6 @@ class Util {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
-     * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
      * - `Util.view(data).dateblock()` - .c-DateBlock component
      * - `Util.view(data).timeblock()` - .c-TimeBlock component
      * - `Util.view(data).registrationLegend()` - Legend (list) of registration periods
@@ -129,31 +138,6 @@ class Util {
      * @type {View}
      */
     return new View(null, data)
-      /**
-       * Return an unordered list of button links for a highlighted content block.
-       * Parameter `data` should be of type `Array<sdo.WebPageElement>`, i.e., a list of links.
-       * @summary Call `Util.view(data).highlightButtons()` to render this display.
-       * @function Util.VIEW.highlightButtons
-       * @param   {string=} buttonclasses the classes to add to the buttons
-       * @returns {string} HTML output
-       */
-      .addDisplay(function highlightButtons(buttonclasses = '') {
-        const xListHighlightbuttons = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item')
-              .innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
-          })
-        return new xjs.DocumentFragment(xListHighlightbuttons.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLAnchorElement(f.querySelector('a'))
-                .replaceClassString('{{ buttonclasses }}', o.buttonclasses)
-                .href       (d.url  || '#1')
-                .textContent(d.text || ''  )
-            }, data, { buttonclasses: opts.buttonclasses })
-        }, this, { buttonclasses })).innerHTML()
-      })
       /**
        * Return a `<ul.c-Alert>` component containing the legend of registration periods.
        * Parameter `data` should be of type `Array<{@link http://schema.org/AggregateOffer|sdo.AggregateOffer}>`.

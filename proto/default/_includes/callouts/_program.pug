@@ -4,4 +4,4 @@ h1#program-highlights Program Highlights
     { "@type": "WebPageElement", "text": "Full Program", "url": "program.html" },
   ]
 != site.currentConference.view.program('program-highlights-block', true)
-footer!= Util.view(highlight_buttons).highlightButtons()
+footer!= Util.view_highlightButtons(highlight_buttons)
