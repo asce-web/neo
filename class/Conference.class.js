@@ -196,6 +196,16 @@ class Conference {
 
 
 	/**
+	 * Return a `<header>` element with hero image marking up this conference’s main info.
+	 * @returns {string} HTML output
+	 */
+	view_hero() {
+		return new xjs.DocumentFragment(xHero.template.render(xHero.renderer, {
+			...this._DATA,
+			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
+		})).innerHTML()
+	}
+	/**
 	 * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
 	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
 	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
@@ -240,7 +250,6 @@ class Conference {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
-     * - `Conference#view.hero()`      - Hero Organism
      * - `Conference#view.otherYear()` - Other Year Organism
      * - `Conference#view.program()`   - Program Tabs Organism
      * - `Conference#view.supporterLevels()` - multiple SupporterBlock Components
@@ -248,18 +257,6 @@ class Conference {
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return a `<header>` element with hero image marking up this conference’s main info.
-       * @summary Call `Conference#view.hero()` to render this display.
-       * @function Conference.VIEW.hero
-       * @returns {string} HTML output
-       */
-      .addDisplay(function hero() {
-        return new xjs.DocumentFragment(xHero.template.render(xHero.renderer, {
-          ...this._DATA,
-          location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
-        })).innerHTML()
-      })
       /**
        * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
        * @summary Call `Conference#view.otherYear()` to render this display.
