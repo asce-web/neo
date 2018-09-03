@@ -128,6 +128,20 @@ class Util {
 				const xListRegistrationicon = require('../src/tpl/x-list-registrationicon.tpl.js')
 				return new xjs.DocumentFragment(xListRegistrationicon.template.render(xListRegistrationicon.renderer, periods)).innerHTML()
 			}
+	/**
+	 * Return a `<ul.c-SocialList>` component, containing
+	 * markup for social media profiles.
+	 * @param   {Array<sdo.WebPageElement>} data array of social media links
+	 * @param   {string=} data.name http://schema.org/name
+	 * @param   {string=} data.url  http://schema.org/url
+	 * @param   {string=} data.text http://schema.org/text
+	 * @param   {string=} classes optional classes to add to the `<ul>`
+	 * @returns {string} HTML output
+	 */
+	static view_socialList(data, classes = '') {
+		const xListSocial = require('../tpl/x-list-social.tpl.js')
+		return new xjs.DocumentFragment(xListSocial.template.render(xListSocial.renderer, data, { classes })).innerHTML()
+	}
   /**
    * @summary Render any data in HTML.
    * @see Util.VIEW
@@ -145,22 +159,6 @@ class Util {
      * @type {View}
      */
     return new View(null, data)
-      /**
-       * Return a `<ul.c-SocialList>` component, containing
-       * markup for social media profiles.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/WebPageElement|sdo.WebPageElement}>`,
-       * where each array entry has a `name`, `url`, and `text`.
-       * @summary Call `Util.view(data).socialList()` to render this display.
-       * @function Util.VIEW.socialList
-       * @param   {string=} classes optional classes to add to the `<ul>`
-       * @returns {string} HTML output
-       */
-      .addDisplay(function socialList(classes = '') {
-        const xListSocial = require('../tpl/x-list-social.tpl.js')
-        return new xjs.DocumentFragment(
-          xListSocial.template.render(xListSocial.renderer, this, { classes })
-        ).innerHTML()
-      })
   }
 
   /**
