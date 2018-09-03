@@ -18,6 +18,13 @@ const xDirectory = require('../tpl/x-directory.tpl.js')
  * @extends Page
  */
 class ConfSite extends Page {
+	/**
+	 * Return an `<a.c-SiteTitle>` component marking up this conference site’s info.
+	 * @returns {string} HTML output
+	 */
+	view_siteTitle() {
+	  return new xjs.DocumentFragment(xSitetitle.template.render(xSitetitle.renderer, this._DATA)).innerHTML()
+	}
 			/**
 			 * Return a Page object’s document outline as a nested ordered list.
 			 * Parameter `data` should be of type `Page`.
@@ -229,20 +236,10 @@ class ConfSite extends Page {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
-     * - `ConfSite#view.siteTitle()` - SiteTitle component
      * @namespace ConfSite.VIEW
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return an `<a.c-SiteTitle>` component marking up this conference site’s info.
-       * @summary Call `ConfSite#view.siteTitle()` to render this display.
-       * @function ConfSite.VIEW.siteTitle
-       * @returns {string} HTML output
-       */
-      .addDisplay(function siteTitle() {
-        return new xjs.DocumentFragment(xSitetitle.template.render(xSitetitle.renderer, this._DATA)).innerHTML()
-      })
   }
 
 
