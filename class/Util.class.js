@@ -146,35 +146,6 @@ class Util {
      */
     return new View(null, data)
       /**
-       * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
-       * @summary Call `Util.view(data).speaker()` to render this display.
-       * @function Util.VIEW.speaker
-       * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
-       * @returns {string} HTML output
-       */
-      .addDisplay(function speaker(queue = null) {
-        const xSpeaker = require('../tpl/x-speaker.tpl.js')
-        const xListSpeaker = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-ListStacked')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item o-ListStacked__Item')
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-speaker.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
-        return new xjs.DocumentFragment(xListSpeaker.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xSpeaker.template.render(xSpeaker.renderer, d)
-              )
-            }, data)
-        }, items)).innerHTML()
-      })
-      /**
        * Return a `<ul.c-SocialList>` component, containing
        * markup for social media profiles.
        * Parameter `data` should be of type `Array<{@link http://schema.org/WebPageElement|sdo.WebPageElement}>`,
