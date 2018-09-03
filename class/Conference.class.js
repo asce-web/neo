@@ -270,6 +270,21 @@ class Conference {
 		const xListChair = require('../src/tpl/x-list-chair.tpl.js')
 		return new xjs.DocumentFragment(xListChair.template.render(xListChair.renderer, (this._DATA.organizer || []))).innerHTML()
 	}
+	/**
+	 * Return an `<.o-Tablist[role="tablist"]>` marking up this conference’s program sessions.
+	 * Each tab contains a Program Heading Component
+	 * and its panel contains a Time Block Component for that date.
+	 * @param   {string} id unique id for form elements
+	 * @param   {boolean=} starred `true` if you want only starred sessions to display
+	 * @returns {string} HTML output
+	 */
+	view_program(id, starred = false) {
+		return new xjs.DocumentFragment(xProgram.template.render(
+			xProgram.renderer,
+			(this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
+			{ id, starred }
+		)).innerHTML()
+	}
   /**
    * @summary Render this conference in HTML.
    * @see Conference.VIEW
@@ -279,29 +294,11 @@ class Conference {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
-     * - `Conference#view.program()`   - Program Tabs Organism
      * - `Conference#view.supporterLevels()` - multiple SupporterBlock Components
      * @namespace Conference.VIEW
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return an `<.o-Tablist[role="tablist"]>` marking up this conference’s program sessions.
-       * Each tab contains a Program Heading Component
-       * and its panel contains a Time Block Component for that date.
-       * @summary Call `Conference#view.program()` to render this display.
-       * @function Conference.VIEW.program
-       * @param   {string} id unique id for form elements
-       * @param   {boolean=} starred `true` if you want only starred sessions to display
-       * @returns {string} HTML output
-       */
-      .addDisplay(function program(id, starred = false) {
-        return new xjs.DocumentFragment(xProgram.template.render(
-          xProgram.renderer,
-          (this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
-          { id, starred }
-        )).innerHTML()
-      })
       /**
        * Return a list of `<section.c-SupporterBlock>` components containing this conference’s supporters
        * that have the specified levels.
