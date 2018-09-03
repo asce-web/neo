@@ -20,9 +20,8 @@ module.exports.renderer = function xListRegistrationicon_renderer(frag, data, op
 module.exports.template = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
-		let innertemplatefrag = this.content().querySelector('template').content
-		new xjs.HTMLLIElement(innertemplatefrag.querySelector('li'))
+		new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
 			.addClass('o-List__Item o-Flex__Item c-Alert__Item')
 			.innerHTML(`<link rel="import" data-import="template" href="../../tpl/x-registrationicon.tpl.html"/>`)
-		new xjs.DocumentFragment(innertemplatefrag).importLinks(__dirname)
+		new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
 	})

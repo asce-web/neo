@@ -12,7 +12,6 @@ const xProgram        = require('../tpl/x-program.tpl.js')
 const xDateblock      = require('../tpl/x-dateblock.tpl.js')
 const xExhibitor = require('../tpl/x-exhibitor.tpl.js')
 const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
-const xPersonAffiliation = require('../tpl/x-person-affiliation.tpl.js')
 
 
 /**
@@ -262,6 +261,15 @@ class Conference {
 		let items = this.getSpeakersAll().filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
 		return new xjs.DocumentFragment(xListSpeaker.template.render(xListSpeaker.renderer, items)).innerHTML()
 	}
+	/**
+	 * Return a `<ul>` element, containing conference chairs and/or co-chairs.
+	 * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
+	 * @returns {string} HTML output
+	 */
+	view_chair() {
+		const xListChair = require('../src/tpl/x-list-chair.tpl.js')
+		return new xjs.DocumentFragment(xListChair.template.render(xListChair.renderer, (this._DATA.organizer || []))).innerHTML()
+	}
   /**
    * @summary Render this conference in HTML.
    * @see Conference.VIEW
@@ -277,38 +285,6 @@ class Conference {
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return a `<ul>` element, containing conference chairs and/or co-chairs.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
-       * @summary Call `Util.view(data).chairs()` to render this display.
-       * @function Util.VIEW.chairs
-       * @returns {string} HTML output
-       */
-      .addDisplay(function chairs() {
-        const xListChair = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item c-Chair -mb-h')
-              .attr({
-                itemprop  : 'organizer',
-                itemscope : '',
-                itemtype  : 'http://schema.org/Person',
-              })
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-person-affiliation.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        return new xjs.DocumentFragment(xListChair.render(
-          function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xPersonAffiliation.template.render(xPersonAffiliation.renderer, d)
-              )
-            }, data)
-          },
-          (this._DATA.organizer || [])
-        )).innerHTML()
-      })
       /**
        * Return an `<.o-Tablist[role="tablist"]>` marking up this conference’s program sessions.
        * Each tab contains a Program Heading Component
