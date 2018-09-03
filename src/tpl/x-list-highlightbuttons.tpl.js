@@ -1,8 +1,4 @@
-const path = require('path')
-
-const xjs = {
-  ...require('extrajs-dom'),
-}
+const xjs = require('extrajs-dom')
 
 /**
  * @summary xListHighlightbuttons renderer.
@@ -13,7 +9,7 @@ const xjs = {
  * @param   {!Object=} opts additional rendering options
  * @param   {string=} opts.buttonclasses classes to add to each link
  */
-module.exports.renderer = function (frag, data, opts = {}) {
+module.exports.renderer = function xListHighlightbuttons_renderer(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLAnchorElement(f.querySelector('a'))
 			.replaceClassString('{{ buttonclasses }}', o.buttonclasses)

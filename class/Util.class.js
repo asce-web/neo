@@ -140,43 +140,11 @@ class Util {
      * @description Available displays:
      * - `Util.view(data).dateblock()` - .c-DateBlock component
      * - `Util.view(data).timeblock()` - .c-TimeBlock component
-     * - `Util.view(data).pass()` - .c-Pass component
      * - `Util.view(data).speaker()` - .c-Speaker component
      * @namespace Util.VIEW
      * @type {View}
      */
     return new View(null, data)
-      /**
-       * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
-       * Parameter `data` should be of type `Array<!Object>`,
-       * where each entry is similar to an argument of the `Pass` constructor.
-       * @summary Call `Util.view(data).pass()` to render this display.
-       * @function Util.VIEW.pass
-       * @param   {Conference} $conference the conference to which these passes belong
-       * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pass($conference, queue = null) {
-        const xPass = require('../tpl/x-pass.tpl.js')
-        const xListPass = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-ListStacked')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item o-ListStacked__Item')
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-pass.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let items = this.filter((item) => (queue) ? item_keys.includes(item.name) : true)
-        return new xjs.DocumentFragment(xListPass.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xPass.template.render(xPass.renderer, d, { conference: o.conference })
-              )
-            }, data, { conference: opts.conference })
-        }, items, { conference: $conference })).innerHTML()
-      })
       /**
        * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
        * Parameter `data` should be of type `Array<{@link http://schema.org/Accommodation|sdo.Accommodation}>`.

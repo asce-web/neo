@@ -195,6 +195,18 @@ class Conference {
   // }
 
 
+	/**
+	 * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
+	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
+	 * @returns {string} HTML output
+	 */
+	view_pass(queue = null) {
+		const xListPass = require('../src/tpl/x-list-pass.tpl.js')
+		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+		let items = this.getPassesAll().filter((item) => (queue) ? item_keys.includes(item.name) : true)
+		return new xjs.DocumentFragment(xListPass.template.render(xListPass.renderer, items, {}, this)).innerHTML()
+	}
   /**
    * @summary Render this conference in HTML.
    * @see Conference.VIEW

@@ -1,8 +1,4 @@
-const path = require('path')
-
-const xjs = {
-  ...require('extrajs-dom'),
-}
+const xjs = require('extrajs-dom')
 
 const xRegistrationicon = require('../../tpl/x-registrationicon.tpl.js')
 
@@ -13,7 +9,7 @@ const xRegistrationicon = require('../../tpl/x-registrationicon.tpl.js')
  * @param   {Array<sdo.AggregateOffer>} data array of registration periods
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function (frag, data, opts = {}) {
+module.exports.renderer = function xListRegistrationicon_renderer(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			xRegistrationicon.template.render(xRegistrationicon.renderer, d)
