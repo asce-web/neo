@@ -207,6 +207,18 @@ class Conference {
 		let items = this.getPassesAll().filter((item) => (queue) ? item_keys.includes(item.name) : true)
 		return new xjs.DocumentFragment(xListPass.template.render(xListPass.renderer, items, {}, this)).innerHTML()
 	}
+	/**
+	 * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
+	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
+	 * @returns {string} HTML output
+	 */
+	view_venue(queue = null) {
+		const xListVenue = require('../src/tpl/x-list-venue.tpl.js')
+		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+		let items = this.getVenuesAll().filter((item) => (queue) ? item_keys.includes(item.description) : true)
+		return new xjs.DocumentFragment(xListVenue.template.render(xListVenue.renderer, items)).innerHTML()
+	}
   /**
    * @summary Render this conference in HTML.
    * @see Conference.VIEW

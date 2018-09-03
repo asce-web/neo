@@ -146,35 +146,6 @@ class Util {
      */
     return new View(null, data)
       /**
-       * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/Accommodation|sdo.Accommodation}>`.
-       * @summary Call `Util.view(data).venue()` to render this display.
-       * @function Util.VIEW.venue
-       * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
-       * @returns {string} HTML output
-       */
-      .addDisplay(function venue(queue = null) {
-        const xVenue = require('../tpl/x-venue.tpl.js')
-        const xListVenue = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item c-Alert__Item')
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-venue.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let items = this.filter((item) => (queue) ? item_keys.includes(item.description) : true)
-        return new xjs.DocumentFragment(xListVenue.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xVenue.template.render(xVenue.renderer, d)
-              )
-            }, data)
-        }, items)).innerHTML()
-      })
-      /**
        * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
        * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
        * @summary Call `Util.view(data).speaker()` to render this display.
