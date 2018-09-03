@@ -206,6 +206,16 @@ class Conference {
 		})).innerHTML()
 	}
 	/**
+	 * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
+	 * @returns {string} HTML output
+	 */
+	view_otherYear() {
+		return new xjs.DocumentFragment(xOtheryear.template.render(xOtheryear.renderer, {
+			...this._DATA,
+			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
+		})).innerHTML()
+	}
+	/**
 	 * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
 	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
 	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
@@ -250,25 +260,12 @@ class Conference {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
-     * - `Conference#view.otherYear()` - Other Year Organism
      * - `Conference#view.program()`   - Program Tabs Organism
      * - `Conference#view.supporterLevels()` - multiple SupporterBlock Components
      * @namespace Conference.VIEW
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
-       * @summary Call `Conference#view.otherYear()` to render this display.
-       * @function Conference.VIEW.otherYear
-       * @returns {string} HTML output
-       */
-      .addDisplay(function otherYear() {
-        return new xjs.DocumentFragment(xOtheryear.template.render(xOtheryear.renderer, {
-          ...this._DATA,
-          location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
-        })).innerHTML()
-      })
       /**
        * Return a `xDateblock` component marking up this conference’s important dates.
        * @summary Call `Conference#view.importantDates()` to render this display.
