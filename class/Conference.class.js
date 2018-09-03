@@ -216,6 +216,17 @@ class Conference {
 		})).innerHTML()
 	}
 	/**
+	 * Return a `xDateblock` component marking up this conference’s important dates.
+	 * @param   {boolean=} starred `true` if you want only starred dates to display
+	 * @returns {string} HTML output
+	 */
+	view_importantDates(starred = false) {
+		return new xjs.DocumentFragment(xDateblock.template.render(
+			xDateblock.renderer,
+			(this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
+		)).innerHTML()
+	}
+	/**
 	 * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
 	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
 	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
@@ -266,19 +277,6 @@ class Conference {
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return a `xDateblock` component marking up this conference’s important dates.
-       * @summary Call `Conference#view.importantDates()` to render this display.
-       * @function Conference.VIEW.importantDates
-       * @param   {boolean=} starred `true` if you want only starred dates to display
-       * @returns {string} HTML output
-       */
-      .addDisplay(function importantDates(starred = false) {
-        return new xjs.DocumentFragment(xDateblock.template.render(
-          xDateblock.renderer,
-          (this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
-        )).innerHTML()
-      })
       /**
        * Return a `<ul>` element, containing conference chairs and/or co-chairs.
        * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
