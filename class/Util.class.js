@@ -118,15 +118,6 @@ class Util {
 				const xListHighlightbuttons = require('../src/tpl/x-list-highlightbuttons.tpl.js')
 				return new xjs.DocumentFragment(xListHighlightbuttons.template.render(xListHighlightbuttons.renderer, buttons, { buttonclasses })).innerHTML()
 			}
-			/**
-			 * Return a `<ul.c-Alert>` component containing the legend of registration periods.
-			 * @param   {Array<sdo.AggregateOffer>} periods list of registration periods
-			 * @returns {string} HTML output
-			 */
-			static view_registrationLegend(periods) {
-				const xListRegistrationicon = require('../src/tpl/x-list-registrationicon.tpl.js')
-				return new xjs.DocumentFragment(xListRegistrationicon.template.render(xListRegistrationicon.renderer, periods)).innerHTML()
-			}
 	/**
 	 * Return a `<ul.c-SocialList>` component, containing
 	 * markup for social media profiles.

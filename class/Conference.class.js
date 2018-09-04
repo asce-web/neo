@@ -235,6 +235,14 @@ class Conference {
 		return new xjs.DocumentFragment(xListPass.template.render(xListPass.renderer, items, { conference: this })).innerHTML()
 	}
 	/**
+	 * Return a `<ul.c-Alert>` component containing the legend of registration periods.
+	 * @returns {string} HTML output
+	 */
+	view_registrationLegend() {
+		const xListRegistrationicon = require('../src/tpl/x-list-registrationicon.tpl.js')
+		return new xjs.DocumentFragment(xListRegistrationicon.template.render(xListRegistrationicon.renderer, this.getRegistrationPeriodsAll())).innerHTML()
+	}
+	/**
 	 * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
 	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
 	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
