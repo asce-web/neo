@@ -1,6 +1,5 @@
 const xjs      = require('extrajs-dom')
 const Page     = require('sitepage').Page
-const View     = require('extrajs-view')
 const Color    = require('extrajs-color')
 
 const Conference = require('./Conference.class.js')
@@ -225,23 +224,6 @@ class ConfSite extends Page {
         .setIcon('email')
       )
   }
-
-
-  /**
-   * @summary Render this conference site in HTML.
-   * @see ConfSite.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * @namespace ConfSite.VIEW
-     * @type {View}
-     */
-    return new View(null, this)
-  }
-
 
 
   /**

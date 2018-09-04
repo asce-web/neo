@@ -7,7 +7,6 @@ const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
-const View    = require('extrajs-view')
 
 
 
@@ -142,24 +141,6 @@ class Util {
 		const xListSocial = require('../tpl/x-list-social.tpl.js')
 		return new xjs.DocumentFragment(xListSocial.template.render(xListSocial.renderer, data, { classes })).innerHTML()
 	}
-  /**
-   * @summary Render any data in HTML.
-   * @see Util.VIEW
-   * @param   {*} data any data to render
-   * @returns {View}
-   */
-  static view(data) {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `Util.view(data).dateblock()` - .c-DateBlock component
-     * - `Util.view(data).timeblock()` - .c-TimeBlock component
-     * - `Util.view(data).speaker()` - .c-Speaker component
-     * @namespace Util.VIEW
-     * @type {View}
-     */
-    return new View(null, data)
-  }
 
   /**
    * @summary Return a URL-friendly string.

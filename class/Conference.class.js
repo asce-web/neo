@@ -2,7 +2,6 @@ const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
-const View = require('extrajs-view')
 
 const Person             = require('./Person.class.js')
 
@@ -304,20 +303,6 @@ class Conference {
 		const xListExhibitor = require('../src/tpl/x-list-exhibitor.tpl.js')
 		return new xjs.DocumentFragment(xListExhibitor.template.render(xListExhibitor.renderer, this._DATA.$exhibitors || [])).innerHTML()
 	}
-  /**
-   * @summary Render this conference in HTML.
-   * @see Conference.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * @namespace Conference.VIEW
-     * @type {View}
-     */
-    return new View(null, this)
-  }
 }
 
 module.exports = Conference

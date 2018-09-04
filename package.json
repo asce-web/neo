@@ -46,7 +46,6 @@
     "extrajs": "^0.13.0",
     "extrajs-color": "^2.1.0",
     "extrajs-dom": "^5.0.0-alpha.1",
-    "extrajs-view": "^1.1.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-clean-css": "^3.9.0",
