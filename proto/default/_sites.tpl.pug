@@ -93,14 +93,14 @@ html(lang="en")
               (see external demo of
               #[a(href="http://go.asce.org/static/sponsors/") sponsors carousel]
               by rank)
-            != site.currentConference.view.supporterLevels(site.getQueue('Top Sponsors') || [])
+            != site.currentConference.view_supporterLevel(site.getQueue('Top Sponsors'))
             -
               let highlight_buttons = [
                 { "@type": "WebPageElement", "text": "All Sponsors", "url": "sponsor.html" },
               ]
             footer!= Util.view_highlightButtons(highlight_buttons)
         +callout()
-          != site.currentConference.view.supporterLevels(site.getQueue('Non-Sponsors') || [], true)
+          != site.currentConference.view_supporterLevel(site.getQueue('Non-Sponsors'), true)
     footer.o-Runner.c-Mast.c-Mast--sitemap#sitemap: nav.h-Constrain
       h1.h-Hidden Sitemap
       -

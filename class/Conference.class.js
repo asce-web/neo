@@ -11,7 +11,6 @@ const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
 const xProgram        = require('../tpl/x-program.tpl.js')
 const xDateblock      = require('../tpl/x-dateblock.tpl.js')
 const xExhibitor = require('../tpl/x-exhibitor.tpl.js')
-const xSupporterLevel = require('../tpl/x-supporter-level.tpl.js')
 
 
 /**
@@ -285,6 +284,19 @@ class Conference {
 			{ id, starred }
 		)).innerHTML()
 	}
+	/**
+	 * Return a list of `<section.c-SupporterBlock>` components containing this conference’s supporters
+	 * that have the specified levels.
+	 * @param   {?(sdo.ItemList|Array<string>)=} queue a list of supporter level names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+	 * @param   {boolean=} small should logo sizing be overridden to small?
+	 * @returns {string} HTML output
+	 */
+	view_supporterLevel(queue = null, small = false) {
+		const xListSupporterLevel = require('../src/tpl/x-list-supporterlevel.tpl.js')
+		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+		let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
+		return new xjs.DocumentFragment(xListSupporterLevel.template.render(xListSupporterLevel.renderer, items, { small, conference: this })).innerHTML()
+	}
   /**
    * @summary Render this conference in HTML.
    * @see Conference.VIEW
@@ -294,39 +306,10 @@ class Conference {
     /**
      * @summary This view object is a set of functions returning HTML output.
      * @description Available displays:
-     * - `Conference#view.supporterLevels()` - multiple SupporterBlock Components
      * @namespace Conference.VIEW
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return a list of `<section.c-SupporterBlock>` components containing this conference’s supporters
-       * that have the specified levels.
-       * @summary Call `Conference#view.supporterLevels()` to render this display.
-       * @function Conference.VIEW.supporterLevels
-       * @param   {?(sdo.ItemList|Array<string>)=} queue a list of supporter level names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-       * @param   {boolean=} small should logo sizing be overridden to small?
-       * @returns {string} HTML output
-       */
-      .addDisplay(function supporterLevels(queue = null, small = false) {
-        const xListSupporterLevel = xjs.HTMLOListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ol')).addClass('o-List')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item')
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-supporter-level.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
-        return new xjs.DocumentFragment(xListSupporterLevel.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xSupporterLevel.template.render(xSupporterLevel.renderer, d, { small: o.small }, this)
-              )
-            }, data, opts, this)
-        }, items, { small }, this._DATA)).innerHTML()
-      })
       /**
        * Return a list of `<div>` elements marking up this conference’s exhibitors.
        * @summary Call `Conference#view.exhibitorList()` to render this display.

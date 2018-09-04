@@ -15,13 +15,14 @@ const xSupporter = require('./x-supporter.tpl.js')
  * @param   {!Object=} opts additional rendering options
  * @param   {boolean=} opts.small should logo sizing be overridden to `Small`?
  * @param   {string=}  opts.classname any other classname(s) to add to the `<section>`
+ * @param   {Conference} opts.conference the conference to which this supporter level belongs
  */
 module.exports.renderer = function xSupporterLevel_renderer(frag, data, opts = {}) {
   /**
    * Array of supporters in the level.
    * @type {Array<sdo.Organization>}
    */
-  let supporters = (this.sponsor || []).filter((org) => org.$level === data.name)
+  let supporters = (opts.conference._DATA.sponsor || []).filter((org) => org.$level === data.name)
   new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass(({
     'Small' : 'c-SupporterBlock--sml',
     'Medium': 'c-SupporterBlock--med',
