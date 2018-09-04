@@ -7,7 +7,6 @@ const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
-const View    = require('extrajs-view')
 
 
 
@@ -98,227 +97,41 @@ class Util {
     }
   }
 
-  /**
-   * @summary Render any data in HTML.
-   * @see Util.VIEW
-   * @param   {*} data any data to render
-   * @returns {View}
-   */
-  static view(data) {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `Util.view(data).pageLink()` - link to a page in a document outline / t.o.c.
-     * - `Util.view(data).pageToc()` - a document outline / t.o.c. of a page
-     * - `Util.view(data).highlightButtons()` - list of buttons for a HCB
-     * - `Util.view(data).dateblock()` - .c-DateBlock component
-     * - `Util.view(data).timeblock()` - .c-TimeBlock component
-     * - `Util.view(data).registrationLegend()` - Legend (list) of registration periods
-     * - `Util.view(data).pass()` - .c-Pass component
-     * - `Util.view(data).speaker()` - .c-Speaker component
-     * @namespace Util.VIEW
-     * @type {View}
-     */
-    return new View(null, data)
-      /**
-       * Return a Page object’s document outline as a nested ordered list.
-       * Parameter `data` should be of type `Page`.
-       * @summary Call `Util.view(data).pageToc()` to render this display.
-       * @function Util.VIEW.pageToc
-       * @param   {!Object=} options options for configuring output
-       * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
-       * @param   {integer=} options.start which subpage to start at
-       * @param   {integer=} options.end which subpage to end at
-       * @param   {?Object<string>=} options.classes group set of css class configurations
-       * @param   {string=} options.classes.list list classes (`<ol>`)
-       * @param   {string=} options.classes.item item classes (`<li>`)
-       * @param   {!Object=} options.links configuration param to send into {@link Util.VIEW.pageLink|Util#view.pageLink()}
-       * @param   {!Object=} options.options configurations for nested outlines; specs identical to `options`
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pageToc(options = {}) {
-        const xDirectory = require('../tpl/x-directory.tpl.js')
-        return new xjs.DocumentFragment(xDirectory.template.render(xDirectory.renderer, {
-          ...this,
-          hasPart: this.findAll().filter((p) => !p.isHidden()),
-        }, {
-          depth  : options.depth || Infinity,
-          start  : options.start || 0,
-          end    : options.end   || Infinity,
-          classes: options.classes || {},
-          links  : options.links,
-          options: options.options,
-        })).innerHTML()
-      })
-      /**
-       * Return a snippet marking up a promoted location.
-       * Parameter `data` should be of type `{@link http://schema.org/PostalAddress|sdo.PostalAddress}`.
-       * @summary Call `Util.view(data).promoLoc()` to render this display.
-       * @function Util.VIEW.promoLoc
-       * @returns {string} HTML output
-       */
-      .addDisplay(function promoLoc() {
-        return new xjs.DocumentFragment(xAddress.render({
-          ...this,
-          $regionName: true,
-        })).trimInner().textContent()
-      })
-      /**
-       * Return an unordered list of button links for a highlighted content block.
-       * Parameter `data` should be of type `Array<sdo.WebPageElement>`, i.e., a list of links.
-       * @summary Call `Util.view(data).highlightButtons()` to render this display.
-       * @function Util.VIEW.highlightButtons
-       * @param   {string=} buttonclasses the classes to add to the buttons
-       * @returns {string} HTML output
-       */
-      .addDisplay(function highlightButtons(buttonclasses = '') {
-        const xListHighlightbuttons = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item')
-              .innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
-          })
-        return new xjs.DocumentFragment(xListHighlightbuttons.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLAnchorElement(f.querySelector('a'))
-                .replaceClassString('{{ buttonclasses }}', o.buttonclasses)
-                .href       (d.url  || '#1')
-                .textContent(d.text || ''  )
-            }, data, { buttonclasses: opts.buttonclasses })
-        }, this, { buttonclasses })).innerHTML()
-      })
-      /**
-       * Return a `<ul.c-Alert>` component containing the legend of registration periods.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/AggregateOffer|sdo.AggregateOffer}>`.
-       * @summary Call `Util.view(data).registrationLegend()` to render this display.
-       * @function Util.VIEW.registrationLegend
-       * @returns {string} HTML output
-       */
-      .addDisplay(function registrationLegend() {
-        const xRegistrationicon = require('../tpl/x-registrationicon.tpl.js')
-        const xListRegistrationicon = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item c-Alert__Item')
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-registrationicon.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        return new xjs.DocumentFragment(xListRegistrationicon.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xRegistrationicon.template.render(xRegistrationicon.renderer, d)
-              )
-            }, data)
-        }, this)).innerHTML()
-      })
-      /**
-       * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
-       * Parameter `data` should be of type `Array<!Object>`,
-       * where each entry is similar to an argument of the `Pass` constructor.
-       * @summary Call `Util.view(data).pass()` to render this display.
-       * @function Util.VIEW.pass
-       * @param   {Conference} $conference the conference to which these passes belong
-       * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
-       * @returns {string} HTML output
-       */
-      .addDisplay(function pass($conference, queue = null) {
-        const xPass = require('../tpl/x-pass.tpl.js')
-        const xListPass = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-ListStacked')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item o-ListStacked__Item')
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-pass.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let items = this.filter((item) => (queue) ? item_keys.includes(item.name) : true)
-        return new xjs.DocumentFragment(xListPass.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xPass.template.render(xPass.renderer, d, { conference: o.conference })
-              )
-            }, data, { conference: opts.conference })
-        }, items, { conference: $conference })).innerHTML()
-      })
-      /**
-       * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/Accommodation|sdo.Accommodation}>`.
-       * @summary Call `Util.view(data).venue()` to render this display.
-       * @function Util.VIEW.venue
-       * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
-       * @returns {string} HTML output
-       */
-      .addDisplay(function venue(queue = null) {
-        const xVenue = require('../tpl/x-venue.tpl.js')
-        const xListVenue = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even c-Alert')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item c-Alert__Item')
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-venue.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let items = this.filter((item) => (queue) ? item_keys.includes(item.description) : true)
-        return new xjs.DocumentFragment(xListVenue.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xVenue.template.render(xVenue.renderer, d)
-              )
-            }, data)
-        }, items)).innerHTML()
-      })
-      /**
-       * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
-       * @summary Call `Util.view(data).speaker()` to render this display.
-       * @function Util.VIEW.speaker
-       * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-       * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
-       * @returns {string} HTML output
-       */
-      .addDisplay(function speaker(queue = null) {
-        const xSpeaker = require('../tpl/x-speaker.tpl.js')
-        const xListSpeaker = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-ListStacked')
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .addClass('o-List__Item o-Flex__Item o-ListStacked__Item')
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-speaker.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-        let items = this.filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
-        return new xjs.DocumentFragment(xListSpeaker.render(function (frag, data, opts = {}) {
-            new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-              new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-                xSpeaker.template.render(xSpeaker.renderer, d)
-              )
-            }, data)
-        }, items)).innerHTML()
-      })
-      /**
-       * Return a `<ul.c-SocialList>` component, containing
-       * markup for social media profiles.
-       * Parameter `data` should be of type `Array<{@link http://schema.org/WebPageElement|sdo.WebPageElement}>`,
-       * where each array entry has a `name`, `url`, and `text`.
-       * @summary Call `Util.view(data).socialList()` to render this display.
-       * @function Util.VIEW.socialList
-       * @param   {string=} classes optional classes to add to the `<ul>`
-       * @returns {string} HTML output
-       */
-      .addDisplay(function socialList(classes = '') {
-        const xListSocial = require('../tpl/x-list-social.tpl.js')
-        return new xjs.DocumentFragment(
-          xListSocial.template.render(xListSocial.renderer, this, { classes })
-        ).innerHTML()
-      })
-  }
+			/**
+			 * Return a snippet marking up a promoted location.
+			 * @param   {sdo.PostalAddress} postal_address a postal address
+			 * @returns {string} HTML output
+			 */
+			static view_promoLoc(postal_address) {
+				return new xjs.DocumentFragment(xAddress.render({
+					...postal_address,
+					$regionName: true,
+				})).trimInner().textContent()
+			}
+			/**
+			 * Return an unordered list of button links for a highlighted content block.
+			 * @param   {Array<sdo.WebPageElement>} buttons a list of links
+			 * @param   {string=} buttonclasses the classes to add to the buttons
+			 * @returns {string} HTML output
+			 */
+			static view_highlightButtons(buttons, buttonclasses = '') {
+				const xListHighlightbuttons = require('../src/tpl/x-list-highlightbuttons.tpl.js')
+				return new xjs.DocumentFragment(xListHighlightbuttons.template.render(xListHighlightbuttons.renderer, buttons, { buttonclasses })).innerHTML()
+			}
+	/**
+	 * Return a `<ul.c-SocialList>` component, containing
+	 * markup for social media profiles.
+	 * @param   {Array<sdo.WebPageElement>} data array of social media links
+	 * @param   {string=} data.name http://schema.org/name
+	 * @param   {string=} data.url  http://schema.org/url
+	 * @param   {string=} data.text http://schema.org/text
+	 * @param   {string=} classes optional classes to add to the `<ul>`
+	 * @returns {string} HTML output
+	 */
+	static view_socialList(data, classes = '') {
+		const xListSocial = require('../tpl/x-list-social.tpl.js')
+		return new xjs.DocumentFragment(xListSocial.template.render(xListSocial.renderer, data, { classes })).innerHTML()
+	}
 
   /**
    * @summary Return a URL-friendly string.

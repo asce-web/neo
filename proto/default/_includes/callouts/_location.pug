@@ -1,7 +1,7 @@
-h1#hotel-travel= Util.view(site.currentConference.promoLoc).promoLoc()
+h1#hotel-travel= Util.view_promoLoc(site.currentConference.promoLoc)
 p._text-plain.-ta-c= site.currentConference.promoLoc.description
 -
   let highlight_buttons = [
     { "@type": "WebPageElement", "text": "Hotel & Travel", "url": "location.html" },
   ]
-footer!= Util.view(highlight_buttons).highlightButtons('c-Button--ghost c-Button--ghost--dark')
+footer!= Util.view_highlightButtons(highlight_buttons, 'c-Button--ghost c-Button--ghost--dark')

@@ -4,7 +4,6 @@ const xjs = {
   ...require('extrajs'),
   ...require('extrajs-dom'),
 }
-const View    = require('extrajs-view')
 const {xPersonFullname} = require('aria-patterns')
 
 const xPersonContact = require('../tpl/x-person-contact.tpl.js')
@@ -64,44 +63,13 @@ class Person {
   }
 
 
-  /**
-   * @summary Render this person in HTML.
-   * @see Person.VIEW
-   * @type {View}
-   */
-  get view() {
-    /**
-     * @summary This view object is a set of functions returning HTML output.
-     * @description Available displays:
-     * - `Person#view()`             - default display - “First Last”
-     * - `Person#view.fullName()`    - “First Middle Last”
-     * - `Person#view.entireName()`  - “Px. First Middle Last, Sx.”
-     * - `Person#view.affiliation()` - “First Middle Last, Affiliation”
-     * - `Person#view.contact()`     - “First Last, Director of ... | 555-555-5555”
-     * - `Person#view.speaker()`     - Speaker Component
-     * @namespace Person.VIEW
-     * @type {View}
-     */
-    /**
-     * Default display. Takes no arguments.
-     * Return this person’s name in "Px. First Middle Last, Sx." format.
-     * @summary Call `Person#view()` to render this display.
-     * @function Person.VIEW.default
-     * @returns {string} HTML output
-     */
-    return new View(function () {
-      return new xjs.DocumentFragment(xPersonFullname.render(this.name)).innerHTML()
-    }, this)
-      /**
-       * Return this person’s name in "FullName, Director of ... | 555-555-5555" format.
-       * @summary Call `Person#view.contact()` to render this display.
-       * @function Person.VIEW.contact
-       * @returns {string} HTML output
-       */
-      .addDisplay(function contact() {
-        return new xjs.DocumentFragment(xPersonContact.template.render(xPersonContact.renderer, this._DATA)).innerHTML()
-      })
-  }
+	/**
+	 * Return this person’s name in "FullName, Director of ... | 555-555-5555" format.
+	 * @returns {string} HTML output
+	 */
+	view_contact() {
+		return new xjs.DocumentFragment(xPersonContact.template.render(xPersonContact.renderer, this._DATA)).innerHTML()
+	}
 }
 
 module.exports = Person
