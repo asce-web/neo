@@ -6,10 +6,10 @@ const xSpeaker = require('../../tpl/x-speaker.tpl.js')
 /**
  * @summary xListSpeaker renderer.
  * @param   {DocumentFragment} frag the template content with which to render
- * @param   {Array<sdo.Accommodation>} data array of venues
+ * @param   {Array<sdo.Person>} data array of speakers
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xListSpeaker_renderer(/*this: Conference, */frag, data, opts = {}) {
+module.exports.renderer = function xListSpeaker_renderer(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			xSpeaker.template.render(xSpeaker.renderer, d)

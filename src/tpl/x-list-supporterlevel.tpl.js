@@ -6,12 +6,12 @@ const xSupporterLevel = require('../../tpl/x-supporter-level.tpl.js')
 /**
  * @summary xListSupporterLevel renderer.
  * @param   {DocumentFragment} frag the template content with which to render
- * @param   {Array<sdo.Accommodation>} data array of venues
+ * @param   {Array<sdo.Offer>} data array of supporter levels
  * @param   {!Object=} opts additional rendering options
  * @param   {boolean=} opts.small should logo sizing be overridden to `Small`?
  * @param   {Conference} opts.conference the conference containing this list
  */
-module.exports.renderer = function xListSupporterLevel_renderer(/*this: Conference, */frag, data, opts = {}) {
+module.exports.renderer = function xListSupporterLevel_renderer(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			xSupporterLevel.template.render(xSupporterLevel.renderer, d, o)

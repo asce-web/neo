@@ -233,7 +233,7 @@ class Conference {
 		const xListPass = require('../src/tpl/x-list-pass.tpl.js')
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = this.getPassesAll().filter((item) => (queue) ? item_keys.includes(item.name) : true)
-		return new xjs.DocumentFragment(xListPass.template.render(xListPass.renderer, items, {}, this)).innerHTML()
+		return new xjs.DocumentFragment(xListPass.template.render(xListPass.renderer, items, { conference: this })).innerHTML()
 	}
 	/**
 	 * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.

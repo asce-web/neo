@@ -9,7 +9,7 @@ const xPersonAffiliation = require('../../tpl/x-person-affiliation.tpl.js')
  * @param   {Array<sdo.Accommodation>} data array of venues
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xListChair_renderer(/*this: Conference, */frag, data, opts = {}) {
+module.exports.renderer = function xListChair_renderer(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			xPersonAffiliation.template.render(xPersonAffiliation.renderer, d)

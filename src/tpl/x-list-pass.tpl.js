@@ -8,13 +8,14 @@ const xPass = require('../../tpl/x-pass.tpl.js')
  * @param   {DocumentFragment} frag the template content with which to render
  * @param   {Array<!Object>} data array of passes
  * @param   {!Object=} opts additional rendering options
+ * @param   {Conference} opts.conference the conference containing this pass
  */
-module.exports.renderer = function xListPass_renderer(/*this: Conference, */frag, data, opts = {}) {
+module.exports.renderer = function xListPass_renderer(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			xPass.template.render(xPass.renderer, d, { conference: this })
+			xPass.template.render(xPass.renderer, d, o)
 		)
-	}, data, {}, this)
+	}, data, opts, this)
 }
 
 module.exports.template = xjs.HTMLUListElement.templateSync()
