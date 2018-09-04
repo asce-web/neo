@@ -10,7 +10,6 @@ const xHero           = require('../tpl/x-hero.tpl.js')
 const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
 const xProgram        = require('../tpl/x-program.tpl.js')
 const xDateblock      = require('../tpl/x-dateblock.tpl.js')
-const xExhibitor = require('../tpl/x-exhibitor.tpl.js')
 
 
 /**
@@ -297,6 +296,14 @@ class Conference {
 		let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
 		return new xjs.DocumentFragment(xListSupporterLevel.template.render(xListSupporterLevel.renderer, items, { small, conference: this })).innerHTML()
 	}
+	/**
+	 * Return a list of `<div>` elements marking up this conference’s exhibitors.
+	 * @returns {string} HTML output
+	 */
+	view_exhibitorList() {
+		const xListExhibitor = require('../src/tpl/x-list-exhibitor.tpl.js')
+		return new xjs.DocumentFragment(xListExhibitor.template.render(xListExhibitor.renderer, this._DATA.$exhibitors || [])).innerHTML()
+	}
   /**
    * @summary Render this conference in HTML.
    * @see Conference.VIEW
@@ -310,27 +317,6 @@ class Conference {
      * @type {View}
      */
     return new View(null, this)
-      /**
-       * Return a list of `<div>` elements marking up this conference’s exhibitors.
-       * @summary Call `Conference#view.exhibitorList()` to render this display.
-       * @function Conference.VIEW.exhibitorList
-       * @returns {string} HTML output
-       */
-      .addDisplay(function exhibitorList() {
-        const xListExhibitor = xjs.HTMLUListElement.templateSync()
-          .exe(function () {
-            new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-              .innerHTML(`<link rel="import" data-import="template" href="../tpl/x-exhibitor.tpl.html"/>`)
-            new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-          })
-        return new xjs.DocumentFragment(xListExhibitor.render(function (frag, data, opts = {}) {
-          new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-            new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-              xExhibitor.template.render(xExhibitor.renderer, d)
-            )
-          }, data)
-        }, this._DATA.$exhibitors || [])).innerHTML()
-      })
   }
 }
 
