@@ -64,6 +64,13 @@ class Person {
   }
 
 
+	/**
+	 * Return this person’s name in "FullName, Director of ... | 555-555-5555" format.
+	 * @returns {string} HTML output
+	 */
+	view_contact() {
+		return new xjs.DocumentFragment(xPersonContact.template.render(xPersonContact.renderer, this._DATA)).innerHTML()
+	}
   /**
    * @summary Render this person in HTML.
    * @see Person.VIEW
@@ -92,15 +99,6 @@ class Person {
     return new View(function () {
       return new xjs.DocumentFragment(xPersonFullname.render(this.name)).innerHTML()
     }, this)
-      /**
-       * Return this person’s name in "FullName, Director of ... | 555-555-5555" format.
-       * @summary Call `Person#view.contact()` to render this display.
-       * @function Person.VIEW.contact
-       * @returns {string} HTML output
-       */
-      .addDisplay(function contact() {
-        return new xjs.DocumentFragment(xPersonContact.template.render(xPersonContact.renderer, this._DATA)).innerHTML()
-      })
   }
 }
 
