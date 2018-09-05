@@ -60,6 +60,7 @@
     "kss": "3.0.0-beta.18",
     "schemaorg-jsd": "^0.12.0",
     "sitepage": "^1.0.0",
+    "template-processor": "^1.0.1",
     "typedoc": "^0.12.0",
     "typescript": "^3.0.3",
     "xmeter": "^7.0.0"

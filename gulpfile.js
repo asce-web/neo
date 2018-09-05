@@ -13,7 +13,6 @@ const kss          = require('kss')
 // require('typedoc')    // DO NOT REMOVE … peerDependency of `gulp-typedoc`
 // require('typescript') // DO NOT REMOVE … peerDependency of `gulp-typescript`
 
-const xjs = require('extrajs-dom')
 const sdo_jsd = require('schemaorg-jsd')
 const {requireOtherAsync} = require('schemaorg-jsd/lib/requireOther.js')
 
@@ -25,9 +24,9 @@ const ConfPage   = require('./class/ConfPage.class.js')
 
 
 gulp.task('dist-ts', async function () {
-	// return gulp.src('./src/class/*.class.ts')
-	// 	.pipe(typescript(tsconfig.compilerOptions))
-	// 	.pipe(gulp.dest('./dist/class/'))
+	return gulp.src('./src/**/*.ts')
+		.pipe(typescript(tsconfig.compilerOptions))
+		.pipe(gulp.dest('./dist/'))
 })
 
 gulp.task('dist-css', async function () {
@@ -73,8 +72,8 @@ gulp.task('docs-my-markup', async function () {
       locals: {
         Xmeter  : require('xmeter'),
         Color   : require('extrajs-color'),
-        ConfSite: require('./class/ConfSite.class.js'),
-        ConfPage: require('./class/ConfPage.class.js'),
+        ConfSite,
+        ConfPage,
         Person  : require('./class/Person.class.js'),
         Docs    : require('./docs/_models/Docs.class.js'),
       },
