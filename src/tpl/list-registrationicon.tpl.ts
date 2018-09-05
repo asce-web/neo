@@ -15,12 +15,12 @@ const template = xjs.HTMLUListElement.templateSync()
 	.node
 
 /**
- * @summary xListRegistrationicon renderer.
+ * A `<ul.c-Alert>` component listing the registration periods in a legend.
  * @param   {DocumentFragment} frag the template content with which to render
  * @param   {Array<sdo.AggregateOffer>} data array of registration periods
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			Registrationicon.process(d)

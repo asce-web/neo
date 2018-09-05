@@ -13,12 +13,12 @@ const template = xjs.HTMLUListElement.templateSync()
 	.node
 
 /**
- * @summary xListExhibitor renderer.
+ * A `<ul>` list of exhibitors.
  * @param   {DocumentFragment} frag the template content with which to render
  * @param   {Array<sdo.Organization>} data array of exhibitors
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			Exhibitor.process(d)

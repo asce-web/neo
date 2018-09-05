@@ -12,7 +12,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary A `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
+ * A `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
  * marking up this date range as an important date with date and description.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {Array<sdo.Action>} data an array of important dates, each with:
@@ -22,7 +22,7 @@ const template = xjs.HTMLTemplateElement
  * @param {string=} data.url the url of the important date
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(function (f, d, o = {}) {
     let date_start = new Date(d.startTime)
     let date_end   = new Date(d.endTime  )

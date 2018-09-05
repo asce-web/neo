@@ -12,7 +12,7 @@ const template = xjs.HTMLUListElement.templateSync()
 	.node
 
 /**
- * @summary xListHighlightbuttons renderer.
+ * A `<ul>` list of highlighted buttons.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {Array<sdo.WebPageElement>} data a list of links
  * @param   {string}                  data.text http://schema.org/text
@@ -20,7 +20,7 @@ const template = xjs.HTMLUListElement.templateSync()
  * @param   {!Object=} opts additional rendering options
  * @param   {string=} opts.buttonclasses classes to add to each link
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLAnchorElement(f.querySelector('a'))
 			.replaceClassString('{{ buttonclasses }}', o.buttonclasses)

@@ -14,7 +14,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary xOtheryear renderer.
+ * An about page `<aside>` containing other conferences’ most important info.
  * @param   {DocumentFragment} frag the template content with which to render
  * @param   {sdo.Event}         data a JSON object representing a single conference event
  * @param   {string}            data.name                      http://schema.org/name
@@ -25,7 +25,7 @@ const template = xjs.HTMLTemplateElement
  * @param   {string=}           data.disambiguatingDescription http://schema.org/disambiguatingDescription
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)

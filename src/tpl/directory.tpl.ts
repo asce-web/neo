@@ -12,7 +12,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary xDirectory renderer.
+ * A nested `<ol>` marking up a site directory.
  * @param   {DocumentFragment} frag the template content with which to render
  * @param   {sdo.WebPage}                      data         http://schema.org/WebPage
  * @param   {(sdo.WebPage|Array<sdo.WebPage>)} data.hasPart http://schema.org/hasPart
@@ -28,7 +28,7 @@ const template = xjs.HTMLTemplateElement
  * @param   {string=}          opts.classes.expand classes for `expand_more` icon
  * @param   {!Object=} opts.options configurations for nested outlines; specs identical to `opts`
 */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   let subpages = (xjs.Object.typeOf(data.hasPart) === 'array' ) ? data.hasPart : [data.hasPart]
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))

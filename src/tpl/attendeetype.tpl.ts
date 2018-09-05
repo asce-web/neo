@@ -9,14 +9,14 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
+ * A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
  * @param   {DocumentFragment} frag the template content with which to render
  * @param   {sdo.Offer} data http://schema.org/Offer
  * @param   {string}    data.name  http://schema.org/name
  * @param   {number=}   data.price http://schema.org/price
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   /**
    * @summary Options for formatting pass prices.
    * @private

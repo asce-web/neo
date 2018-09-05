@@ -14,7 +14,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary xPersonContact renderer.
+ * Markup for a person and contact information.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {sdo.Person} data a JSON object representing a Person
  * @param {string}  data.identifier      http://schema.org/identifier
@@ -28,7 +28,7 @@ const template = xjs.HTMLTemplateElement
  * @param {string=} data.telephone       http://schema.org/telephone
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
   frag.querySelector('[itemprop="jobTitle"]' ).textContent = data.jobTitle
 

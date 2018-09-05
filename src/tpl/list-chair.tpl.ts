@@ -20,12 +20,12 @@ const template = xjs.HTMLUListElement.templateSync()
 	.node
 
 /**
- * @summary xListChair renderer.
+ * A `<ul>` list of conference chairs.
  * @param   {DocumentFragment} frag the template content with which to render
  * @param   {Array<sdo.Accommodation>} data array of venues
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			PersonAffiliation.process(d)

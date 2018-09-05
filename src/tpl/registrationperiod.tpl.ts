@@ -14,7 +14,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
+ * A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {sdo.AggregateOffer} data a JSON object representing a registration period
  * @param {string} data.name the name of the registration period (e.g., 'Early Bird')
@@ -26,7 +26,7 @@ const template = xjs.HTMLTemplateElement
  * @param   {string}             opts.pass.name                      http://schema.org/name
  * @param   {Array<sdo.Offer>}   opts.pass.offers                    http://schema.org/offers
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 

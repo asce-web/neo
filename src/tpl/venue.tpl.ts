@@ -14,7 +14,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary Markup for a venue.
+ * A `<section>` element marking up a venue.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {sdo.Accommodation} data a JSON object representing the venue
  * @param {string} data.description the label or title for the venue
@@ -28,7 +28,7 @@ const template = xjs.HTMLTemplateElement
  * @param {string}  data.$cta.text the text of the call-to-action
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   frag.querySelector('[itemprop="description"]').textContent = data.description
 
   if (data.image) frag.querySelector('img[itemprop="image"]').src = data.image

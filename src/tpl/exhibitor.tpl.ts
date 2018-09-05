@@ -9,7 +9,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary Markup for an exhibitor logo.
+ * Markup for an exhibitor logo.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {sdo.Organization} data http://schema.org/Organization
  * @param {string}  data.name        http://schema.org/name
@@ -20,7 +20,7 @@ const template = xjs.HTMLTemplateElement
  * @param {boolean=} data.$isSponsor does the exhibitor also happen to be a sponsor?
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   frag.querySelector('a[itemprop="url"]'   ).href        = data.url
   frag.querySelector('[itemprop="name"]'   ).textContent = data.name
   frag.querySelector('slot[name="booth"]'  ).textContent = data.$booth

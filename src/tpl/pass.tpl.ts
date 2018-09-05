@@ -14,7 +14,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary An `<article.c-Pass>` component marking up a pass’s info.
+ * An `<article.c-Pass>` component marking up a pass’s info.
  * @param   {DocumentFragment} frag the template content with which to render
  * @param   {sdo.AggregateOffer} data                           http://schema.org/AggregateOffer
  * @param   {string}             data.name                      http://schema.org/name
@@ -23,7 +23,7 @@ const template = xjs.HTMLTemplateElement
  * @param   {!Object=} opts additional rendering options
  * @param   {Conference} opts.conference the conference to which this pass belongs
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   let current_period = opts.conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''

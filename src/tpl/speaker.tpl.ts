@@ -18,7 +18,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary An `<article.c-Speaker>` component marking up a person’s speaker information.
+ * An `<article.c-Speaker>` component marking up a person’s speaker information.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {sdo.Person} data a JSON object representing a Person
  * @param {string}  data.identifier      http://schema.org/identifier
@@ -37,7 +37,7 @@ const template = xjs.HTMLTemplateElement
  * @param   {{Array<sdo.WebPageElement>}=} data.$social
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
   frag.querySelector('[itemprop="image"]'                        ).src         = data.image || ''
   frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle || ''

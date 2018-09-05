@@ -15,13 +15,13 @@ const template = xjs.HTMLUListElement.templateSync()
 	.node
 
 /**
- * @summary xListPass renderer.
+ * A `<ul>` list of {@link Pass|passes}.
  * @param   {DocumentFragment} frag the template content with which to render
  * @param   {Array<!Object>} data array of passes
  * @param   {!Object=} opts additional rendering options
  * @param   {Conference} opts.conference the conference containing this pass
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			Pass.process(d, o)

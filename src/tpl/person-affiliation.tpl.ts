@@ -14,7 +14,7 @@ const template = xjs.HTMLTemplateElement
   .node
 
 /**
- * @summary xPersonAffiliation renderer.
+ * Markup for a person and affiliated organization.
  * @param {DocumentFragment} frag the template content with which to render
  * @param {sdo.Person} data a JSON object representing a Person
  * @param {string}  data.identifier      http://schema.org/identifier
@@ -27,7 +27,7 @@ const template = xjs.HTMLTemplateElement
  * @param {string=}          data.affiliation.name http://schema.org/name
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}): void {
   frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation && data.affiliation.name || ''
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 }
