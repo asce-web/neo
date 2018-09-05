@@ -5,7 +5,7 @@ import {Processor} from 'template-processor'
 
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-list-social.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../x-list-social.tpl.html')) // TODO use `xjs.HTMLUListElement.templateSync()`
   .node
 
 /**

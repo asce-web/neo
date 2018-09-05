@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xSpeaker from './speaker.tpl'
+import Speaker from './speaker.tpl'
 
 
 const template = xjs.HTMLUListElement.templateSync()
@@ -23,7 +23,7 @@ const template = xjs.HTMLUListElement.templateSync()
 function instructions(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			xSpeaker.template.render(xSpeaker.renderer, d)
+			Speaker.process(d)
 		)
 	}, data)
 }

@@ -3,11 +3,11 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xRegistrationperiod from './registrationperiod.tpl'
+import Registrationperiod from './registrationperiod.tpl'
 
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-pass.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../tpl/x-pass.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
@@ -32,13 +32,13 @@ function instructions(frag, data, opts = {}) {
   } else frag.querySelector('.c-Pass__Fine').remove()
 
   frag.querySelector('.c-Pass__Body').append(
-    xRegistrationperiod.template.render(xRegistrationperiod.renderer, current_period, { pass: data, is_body: true })
+    Registrationperiod.process(current_period, { pass: data, is_body: true })
   )
 
   frag.querySelector('.c-Pass__Foot').append(
     ...opts.conference.getRegistrationPeriodsAll()
-      .filter((registration_period) => registration_period.name !== current_period.name)
-      .map((registration_period) => xRegistrationperiod.template.render(xRegistrationperiod.renderer, registration_period, { pass: data }))
+      .filter((period) => period.name !== current_period.name)
+      .map((period) => Registrationperiod.process(period, { pass: data }))
   )
 }
 

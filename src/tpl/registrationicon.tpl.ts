@@ -8,7 +8,7 @@ const xjs = { ...xjs1, ...xjs2 }
 
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-registrationicon.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../tpl/x-registrationicon.tpl.html'))
   .node
 
 /**

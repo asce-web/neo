@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xPass from './pass.tpl'
+import Pass from './pass.tpl'
 
 
 const template = xjs.HTMLUListElement.templateSync()
@@ -24,7 +24,7 @@ const template = xjs.HTMLUListElement.templateSync()
 function instructions(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			xPass.template.render(xPass.renderer, d, o)
+			Pass.process(d, o)
 		)
 	}, data, opts, this)
 }

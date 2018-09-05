@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xExhibitor from './exhibitor.tpl'
+import Exhibitor from './exhibitor.tpl'
 
 
 const template = xjs.HTMLUListElement.templateSync()
@@ -21,7 +21,7 @@ const template = xjs.HTMLUListElement.templateSync()
 function instructions(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			xExhibitor.template.render(xExhibitor.renderer, d)
+			Exhibitor.process(d)
 		)
 	}, data)
 }

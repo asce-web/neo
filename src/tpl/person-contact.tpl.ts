@@ -7,7 +7,7 @@ const {xPersonFullname} = require('aria-patterns')
 
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, './x-person-contact.tpl.html'))
+  .fromFileSync(path.resolve(__dirname, '../../tpl/x-person-contact.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })

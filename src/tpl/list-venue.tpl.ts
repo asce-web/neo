@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xVenue from './venue.tpl'
+import Venue from './venue.tpl'
 
 
 const template = xjs.HTMLUListElement.templateSync()
@@ -23,7 +23,7 @@ const template = xjs.HTMLUListElement.templateSync()
 function instructions(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			xVenue.template.render(xVenue.renderer, d)
+			Venue.process(d)
 		)
 	}, data)
 }

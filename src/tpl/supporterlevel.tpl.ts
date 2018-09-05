@@ -3,11 +3,11 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xSupporter from './supporter.tpl'
+import Supporter from './supporter.tpl'
 
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-supporter-level.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../tpl/x-supporter-level.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
   })
@@ -38,7 +38,7 @@ function instructions(frag, data, opts = {}) {
   })[(opts.small) ? 'Small' : (data.$logoSize || 'Small')], opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
   new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(function (f, d, o = {}) {
-    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(xSupporter.template.render(xSupporter.renderer, d, { is_sponsor: data.$isSponsor }))
+    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(Supporter.process(d, { is_sponsor: data.$isSponsor }))
   }, supporters)
 }
 

@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xPersonAffiliation from './person-affiliation.tpl'
+import PersonAffiliation from './person-affiliation.tpl'
 
 
 const template = xjs.HTMLUListElement.templateSync()
@@ -28,7 +28,7 @@ const template = xjs.HTMLUListElement.templateSync()
 function instructions(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			xPersonAffiliation.template.render(xPersonAffiliation.renderer, d)
+			PersonAffiliation.process(d)
 		)
 	}, data)
 }

@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xListSocial from './list-social.tpl'
+import ListSocial from './list-social.tpl'
 
 const {xPersonFullname} = require('aria-patterns')
 
@@ -11,7 +11,7 @@ const Util = require('../../class/Util.class.js')
 
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, './x-speaker.tpl.html'))
+  .fromFileSync(path.resolve(__dirname, '../../tpl/x-speaker.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
@@ -46,7 +46,7 @@ function instructions(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 
   new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
-    this.node.before(xListSocial.template.render(xListSocial.renderer, (data.$social || []), {
+    this.node.before(ListSocial.process((data.$social || []), {
       classes: 'c-SocialList--speaker',
     }))
   }).populate(function (f, d, o = {}) {

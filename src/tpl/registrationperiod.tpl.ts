@@ -3,11 +3,11 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xAttendeetype from './attendeetype.tpl'
+import Attendeetype from './attendeetype.tpl'
 
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-registrationperiod.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../tpl/x-registrationperiod.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
@@ -42,7 +42,7 @@ function instructions(frag, data, opts = {}) {
 
   frag.querySelector('dl').append(
     ...opts.pass.offers.map((att_type) =>
-      xAttendeetype.template.render(xAttendeetype.renderer, { "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
+      Attendeetype.process({ "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
     )
   )
 }

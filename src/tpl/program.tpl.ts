@@ -4,13 +4,13 @@ import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-const xjs = { ...xjs1, ...xjs2 }
+import Timeblock from './timeblock.tpl'
 
-import xTimeblock from './timeblock.tpl'
+const xjs = { ...xjs1, ...xjs2 }
 
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-program.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../tpl/x-program.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
   })
@@ -27,7 +27,15 @@ const template = xjs.HTMLTemplateElement
  */
 function instructions(frag, data, opts = {}) {
   let container = frag.querySelector('[role="tablist"]')
-  const xProgramPanel = new xjs.HTMLTemplateElement(container.querySelector('template'))
+	const ProgramPanel = new Processor(container.querySelector('template') !, function (f, d, o = {}) {
+		f.querySelector('[role="tabpanel"]' ).id          = `${opts.id}-panel${o.index}`
+		f.querySelector('time.c-ProgramHn'  ).dateTime    = d.date.toISOString()
+		f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
+		f.querySelector('slot[name="date"]' ).textContent = xjs.Date.format(d.date, 'M j')
+		new xjs.HTMLElement(f.querySelector('slot[name="panel"]')).empty()
+			.append(Timeblock.process(d.items))
+		new xjs.HTMLTimeElement(f.querySelector('.c-ProgramHn')).trimInner()
+	})
   /**
    * @summary Categorize all the sessions of the conference by date.
    * @description
@@ -51,15 +59,7 @@ function instructions(frag, data, opts = {}) {
     })
     return returned
   })()
-  container.append(...grouped_sessions.map((group, index) => xProgramPanel.render(function (f, d, o = {}) {
-    f.querySelector('[role="tabpanel"]' ).id          = `${opts.id}-panel${o.index}`
-    f.querySelector('time.c-ProgramHn'  ).dateTime    = d.date.toISOString()
-    f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
-    f.querySelector('slot[name="date"]' ).textContent = xjs.Date.format(d.date, 'M j')
-    new xjs.HTMLElement(f.querySelector('slot[name="panel"]')).empty()
-      .append(xTimeblock.template.render(xTimeblock.renderer, d.items))
-    new xjs.HTMLTimeElement(f.querySelector('.c-ProgramHn')).trimInner()
-  }, group, { index })))
+  container.append(...grouped_sessions.map((group, index) => ProgramPanel.process(group, { index })))
 }
 
 export default new Processor(template, instructions)

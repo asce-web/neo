@@ -10,7 +10,7 @@ const {xAddress} = require('aria-patterns')
 
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-hero.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../tpl/x-hero.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })

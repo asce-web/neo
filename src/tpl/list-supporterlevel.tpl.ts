@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import xSupporterlevel from './supporterlevel.tpl'
+import Supporterlevel from './supporterlevel.tpl'
 
 
 const template = xjs.HTMLOListElement.templateSync()
@@ -25,7 +25,7 @@ const template = xjs.HTMLOListElement.templateSync()
 function instructions(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			xSupporterLevel.template.render(xSupporterLevel.renderer, d, o)
+			Supporterlevel.process(d, o)
 		)
 	}, data, opts, this)
 }

@@ -4,7 +4,7 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 const template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-sitetitle.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../tpl/x-sitetitle.tpl.html'))
   .node
 
 /**
