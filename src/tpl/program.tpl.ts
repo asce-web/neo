@@ -18,13 +18,13 @@ const template = xjs.HTMLTemplateElement
 
 /**
  * A `<div.o-Tablist[role="tablist"]>` component containing panels of `.c-Timeblock` components.
- * @param {DocumentFragment} frag the template content with which to render
+ * @param   frag the template content to process
  * @param {Array<sdo.Event>} data an array of sessions to mark up
  * @param   {!Object=} opts additional rendering options
  * @param   {string} opts.id unique id of the program block
  * @param   {boolean=} opts.starred whether to filter out unstarred sessions
  */
-function instructions(frag, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data, opts = {}): void {
   let container = frag.querySelector('[role="tablist"]')
 	const ProgramPanel = new Processor(container.querySelector('template') !, function (f, d, o = {}) {
 		f.querySelector('[role="tabpanel"]' ).id          = `${opts.id}-panel${o.index}`

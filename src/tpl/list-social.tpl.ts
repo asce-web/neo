@@ -10,7 +10,7 @@ const template = xjs.HTMLTemplateElement
 
 /**
  * A `<ul>` list of social media links.
- * @param {DocumentFragment} frag the template content with which to render
+ * @param   frag the template content to process
  * @param {Array<sdo.WebPageElement>} data array of link objects
  * @param   {string}                  data.text http://schema.org/text
  * @param   {string}                  data.url  http://schema.org/url
@@ -18,7 +18,7 @@ const template = xjs.HTMLTemplateElement
  * @param   {!Object=} opts additional rendering options
  * @param   {string=} opts.classes classes to add to the list
  */
-function instructions(frag, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data, opts = {}): void {
   new xjs.HTMLUListElement(frag.querySelector('ul'))
     .replaceClassString('{{ listclasses }}', opts.classes)
     .populate(function (f, d, o) {

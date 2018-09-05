@@ -15,7 +15,7 @@ const template = xjs.HTMLTemplateElement
 
 /**
  * A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.
- * @param {DocumentFragment} frag the template content with which to render
+ * @param   frag the template content to process
  * @param   {sdo.Offer} data            http://schema.org/Offer
  * @param   {string}    data.name       http://schema.org/name
  * @param   {string=}   data.$logoSize  if given, either `Small`, `Medium`, or `Large`; the logo size to render
@@ -25,7 +25,7 @@ const template = xjs.HTMLTemplateElement
  * @param   {string=}  opts.classname any other classname(s) to add to the `<section>`
  * @param   {Conference} opts.conference the conference to which this supporter level belongs
  */
-function instructions(frag, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data, opts = {}): void {
   /**
    * Array of supporters in the level.
    * @type {Array<sdo.Organization>}

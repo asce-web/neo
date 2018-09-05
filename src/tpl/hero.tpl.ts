@@ -18,7 +18,7 @@ const template = xjs.HTMLTemplateElement
 
 /**
  * A homepage `<header>` containing the site’s most important info.
- * @param   {DocumentFragment} frag the template content with which to render
+ * @param   frag the template content to process
  * @param   {sdo.Event}         data a JSON object representing a single conference event
  * @param   {string}            data.name        http://schema.org/name
  * @param   {string}            data.url         http://schema.org/url
@@ -32,7 +32,7 @@ const template = xjs.HTMLTemplateElement
  * @param   {string}                     data.$heroButtons.text http://schema.org/text
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data, opts = {}): void {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)

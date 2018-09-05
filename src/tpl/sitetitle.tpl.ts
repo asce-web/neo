@@ -9,7 +9,7 @@ const template = xjs.HTMLTemplateElement
 
 /**
  * A `<a.c-SiteTitle>` element containing the site logo and title, linking to the home page.
- * @param {DocumentFragment} frag the template content with which to render
+ * @param   frag the template content to process
  * @param {(sdo.Product&sdo.WebPage)} data http://schema.org/Product & http://schema.org/WebPage
  * @param {string}  data.name        http://schema.org/name
  * @param {string}  data.url         http://schema.org/url
@@ -17,7 +17,7 @@ const template = xjs.HTMLTemplateElement
  * @param {string=} data.logo        http://schema.org/logo
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data, opts = {}): void {
   frag.querySelector('[itemprop="name"]'       ).textContent = data.name
   frag.querySelector('[itemprop="description"]').textContent = data.description
   frag.querySelector('[itemprop="logo"]'       ).src = data.logo

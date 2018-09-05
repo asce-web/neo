@@ -13,14 +13,14 @@ const template = xjs.HTMLUListElement.templateSync()
 
 /**
  * A `<ul>` list of highlighted buttons.
- * @param {DocumentFragment} frag the template content with which to render
+ * @param   frag the template content to process
  * @param {Array<sdo.WebPageElement>} data a list of links
  * @param   {string}                  data.text http://schema.org/text
  * @param   {string}                  data.url  http://schema.org/url
  * @param   {!Object=} opts additional rendering options
  * @param   {string=} opts.buttonclasses classes to add to each link
  */
-function instructions(frag, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data, opts = {}): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLAnchorElement(f.querySelector('a'))
 			.replaceClassString('{{ buttonclasses }}', o.buttonclasses)

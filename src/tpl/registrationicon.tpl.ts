@@ -13,7 +13,7 @@ const template = xjs.HTMLTemplateElement
 
 /**
  * A single `<p.c-RegPdIcon>` component indicating a registration period.
- * @param {DocumentFragment} frag the template content with which to render
+ * @param   frag the template content to process
  * @param {sdo.AggregateOffer} data a registration period, with:
  * @param {string} data.name the name of the registration period (e.g., 'Early Bird')
  * @param {string=} data.availabilityStarts the date on which this registration period starts
@@ -21,7 +21,7 @@ const template = xjs.HTMLTemplateElement
  * @param {string=} data.$icon the icon keyword of this registration period
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data, opts = {}): void {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 

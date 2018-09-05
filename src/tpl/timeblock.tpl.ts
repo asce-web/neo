@@ -14,7 +14,7 @@ const template = xjs.HTMLTemplateElement
 /**
  * A `<tr.c-TimeBlock__Item>` subcomponent containing a pair of `<td>`s,
  * marking up this date range as a session with time and name.
- * @param {DocumentFragment} frag the template content with which to render
+ * @param   frag the template content to process
  * @param {Array<sdo.Event>} data an arry of sessions, each with:
  * @param {string}  data.name the name of the session
  * @param {string}  data.startDate the start date, in ISO string format, of the session
@@ -22,7 +22,7 @@ const template = xjs.HTMLTemplateElement
  * @param {string=} data.url the url of the session
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data, opts = {}): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(function (f, d, o = {}) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )
