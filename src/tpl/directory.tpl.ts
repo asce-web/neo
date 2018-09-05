@@ -2,9 +2,14 @@ import * as path from 'path'
 
 import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const xjs = { ...xjs1, ...xjs2 }
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-directory.tpl.html'))
+  .node
 
 /**
  * @summary xDirectory renderer.
@@ -23,7 +28,7 @@ const xjs = { ...xjs1, ...xjs2 }
  * @param   {string=}          opts.classes.expand classes for `expand_more` icon
  * @param   {!Object=} opts.options configurations for nested outlines; specs identical to `opts`
 */
-module.exports.renderer = function xDirectory_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   let subpages = (xjs.Object.typeOf(data.hasPart) === 'array' ) ? data.hasPart : [data.hasPart]
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))
@@ -60,7 +65,7 @@ module.exports.renderer = function xDirectory_renderer(frag, data, opts = {}) {
 
       if (d.findAll().length && depth > 0) { // TODO don’t use Page#findAll
         f.querySelector('[itemprop="hasPart"]').append(
-          require(__filename).template.render(xDirectory_renderer, {
+          require(__filename).template.render(instructions, {
             ...d,
             hasPart: d.findAll().filter((p) => !p.isHidden()),
           }, {
@@ -72,5 +77,4 @@ module.exports.renderer = function xDirectory_renderer(frag, data, opts = {}) {
     }, subpages)
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-directory.tpl.html'))
+export default new Processor(template, instructions)

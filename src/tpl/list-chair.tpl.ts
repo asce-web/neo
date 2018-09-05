@@ -1,23 +1,10 @@
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 import xPersonAffiliation from './person-affiliation.tpl'
 
 
-/**
- * @summary xListChair renderer.
- * @param   {DocumentFragment} frag the template content with which to render
- * @param   {Array<sdo.Accommodation>} data array of venues
- * @param   {!Object=} opts additional rendering options
- */
-module.exports.renderer = function xListChair_renderer(frag, data, opts = {}) {
-	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
-		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			xPersonAffiliation.template.render(xPersonAffiliation.renderer, d)
-		)
-	}, data)
-}
-
-module.exports.template = xjs.HTMLUListElement.templateSync()
+const template = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List')
 		new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
@@ -30,3 +17,20 @@ module.exports.template = xjs.HTMLUListElement.templateSync()
 			.innerHTML(`<link rel="import" data-import="template" href="../../tpl/x-person-affiliation.tpl.html"/>`)
 		new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
 	})
+	.node
+
+/**
+ * @summary xListChair renderer.
+ * @param   {DocumentFragment} frag the template content with which to render
+ * @param   {Array<sdo.Accommodation>} data array of venues
+ * @param   {!Object=} opts additional rendering options
+ */
+function instructions(frag, data, opts = {}) {
+	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
+		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+			xPersonAffiliation.template.render(xPersonAffiliation.renderer, d)
+		)
+	}, data)
+}
+
+export default new Processor(template, instructions)

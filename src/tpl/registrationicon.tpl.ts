@@ -2,9 +2,14 @@ import * as path from 'path'
 
 import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const xjs = { ...xjs1, ...xjs2 }
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-registrationicon.tpl.html'))
+  .node
 
 /**
  * @summary xListRegistrationicon renderer.
@@ -17,7 +22,7 @@ const xjs = { ...xjs1, ...xjs2 }
  * @param {string=} data.$icon the icon keyword of this registration period
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xListRegistrationicon_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
@@ -57,5 +62,4 @@ module.exports.renderer = function xListRegistrationicon_renderer(frag, data, op
   new xjs.HTMLElement(frag.querySelector('small')).trimInner()
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-registrationicon.tpl.html'))
+export default new Processor(template, instructions)

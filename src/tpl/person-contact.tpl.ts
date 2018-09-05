@@ -1,9 +1,17 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const {xPersonFullname} = require('aria-patterns')
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.resolve(__dirname, './x-person-contact.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary xPersonContact renderer.
@@ -20,7 +28,7 @@ const {xPersonFullname} = require('aria-patterns')
  * @param {string=} data.telephone       http://schema.org/telephone
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xPersonContact_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
   frag.querySelector('[itemprop="jobTitle"]' ).textContent = data.jobTitle
 
@@ -39,8 +47,4 @@ module.exports.renderer = function xPersonContact_renderer(frag, data, opts = {}
   }
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, './x-person-contact.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)

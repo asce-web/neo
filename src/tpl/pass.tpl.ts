@@ -1,9 +1,17 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 import xRegistrationperiod from './registrationperiod.tpl'
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-pass.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary An `<article.c-Pass>` component marking up a pass’s info.
@@ -15,7 +23,7 @@ import xRegistrationperiod from './registrationperiod.tpl'
  * @param   {!Object=} opts additional rendering options
  * @param   {Conference} opts.conference the conference to which this pass belongs
  */
-module.exports.renderer = function xPass_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   let current_period = opts.conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''
@@ -34,8 +42,4 @@ module.exports.renderer = function xPass_renderer(frag, data, opts = {}) {
   )
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-pass.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)

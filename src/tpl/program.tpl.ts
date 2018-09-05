@@ -2,11 +2,19 @@ import * as path from 'path'
 
 import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const xjs = { ...xjs1, ...xjs2 }
 
 import xTimeblock from './timeblock.tpl'
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-program.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary xProgram renderer.
@@ -17,7 +25,7 @@ import xTimeblock from './timeblock.tpl'
  * @param   {string} opts.id unique id of the program block
  * @param   {boolean=} opts.starred whether to filter out unstarred sessions
  */
-module.exports.renderer = function xProgram_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   let container = frag.querySelector('[role="tablist"]')
   const xProgramPanel = new xjs.HTMLTemplateElement(container.querySelector('template'))
   /**
@@ -54,8 +62,4 @@ module.exports.renderer = function xProgram_renderer(frag, data, opts = {}) {
   }, group, { index })))
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-program.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)

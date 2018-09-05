@@ -1,9 +1,17 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const {xPersonFullname} = require('aria-patterns')
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.resolve(__dirname, './x-person-affiliation.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary xPersonAffiliation renderer.
@@ -19,13 +27,9 @@ const {xPersonFullname} = require('aria-patterns')
  * @param {string=}          data.affiliation.name http://schema.org/name
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xPersonAffiliation_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation && data.affiliation.name || ''
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, './x-person-affiliation.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)

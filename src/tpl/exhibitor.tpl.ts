@@ -1,7 +1,12 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-exhibitor.tpl.html'))
+  .node
 
 /**
  * @summary Markup for an exhibitor logo.
@@ -15,7 +20,7 @@ import * as xjs from 'extrajs-dom'
  * @param {boolean=} data.$isSponsor does the exhibitor also happen to be a sponsor?
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xExhibitor_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   frag.querySelector('a[itemprop="url"]'   ).href        = data.url
   frag.querySelector('[itemprop="name"]'   ).textContent = data.name
   frag.querySelector('slot[name="booth"]'  ).textContent = data.$booth
@@ -27,5 +32,4 @@ module.exports.renderer = function xExhibitor_renderer(frag, data, opts = {}) {
   }
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-exhibitor.tpl.html'))
+export default new Processor(template, instructions)

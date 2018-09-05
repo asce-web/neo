@@ -2,9 +2,14 @@ import * as path from 'path'
 
 import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const xjs = { ...xjs1, ...xjs2 }
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-timeblock.tpl.html'))
+  .node
 
 /**
  * @summary A `<tr.c-TimeBlock__Item>` subcomponent containing a pair of `<td>`s,
@@ -17,7 +22,7 @@ const xjs = { ...xjs1, ...xjs2 }
  * @param {string=} data.url the url of the session
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xTimeblock_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(function (f, d, o = {}) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )
@@ -52,5 +57,4 @@ module.exports.renderer = function xTimeblock_renderer(frag, data, opts = {}) {
   }, data)
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-timeblock.tpl.html'))
+export default new Processor(template, instructions)

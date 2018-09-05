@@ -1,5 +1,15 @@
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
+
+const template = xjs.HTMLUListElement.templateSync()
+	.exe(function () {
+		new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even')
+		new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+			.addClass('o-List__Item o-Flex__Item')
+			.innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
+	})
+	.node
 
 /**
  * @summary xListHighlightbuttons renderer.
@@ -10,7 +20,7 @@ import * as xjs from 'extrajs-dom'
  * @param   {!Object=} opts additional rendering options
  * @param   {string=} opts.buttonclasses classes to add to each link
  */
-module.exports.renderer = function xListHighlightbuttons_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLAnchorElement(f.querySelector('a'))
 			.replaceClassString('{{ buttonclasses }}', o.buttonclasses)
@@ -19,10 +29,4 @@ module.exports.renderer = function xListHighlightbuttons_renderer(frag, data, op
 	}, data, { buttonclasses: opts.buttonclasses })
 }
 
-module.exports.template = xjs.HTMLUListElement.templateSync()
-	.exe(function () {
-		new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even')
-		new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
-			.addClass('o-List__Item o-Flex__Item')
-			.innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
-	})
+export default new Processor(template, instructions)

@@ -1,7 +1,12 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-list-social.tpl.html'))
+  .node
 
 /**
  * @summary xListSocial renderer.
@@ -13,7 +18,7 @@ import * as xjs from 'extrajs-dom'
  * @param   {!Object=} opts additional rendering options
  * @param   {string=} opts.classes classes to add to the list
  */
-module.exports.renderer = function xListSocial_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   new xjs.HTMLUListElement(frag.querySelector('ul'))
     .replaceClassString('{{ listclasses }}', opts.classes)
     .populate(function (f, d, o) {
@@ -24,5 +29,4 @@ module.exports.renderer = function xListSocial_renderer(frag, data, opts = {}) {
     }, data)
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-list-social.tpl.html'))
+export default new Processor(template, instructions)

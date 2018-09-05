@@ -1,9 +1,17 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const {xAddress} = require('aria-patterns')
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-otheryear.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary xOtheryear renderer.
@@ -17,7 +25,7 @@ const {xAddress} = require('aria-patterns')
  * @param   {string=}           data.disambiguatingDescription http://schema.org/disambiguatingDescription
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xOtheryear_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
@@ -38,8 +46,4 @@ module.exports.renderer = function xOtheryear_renderer(frag, data, opts = {}) {
   }
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-otheryear.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)

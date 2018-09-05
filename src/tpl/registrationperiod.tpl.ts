@@ -1,9 +1,17 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 import xAttendeetype from './attendeetype.tpl'
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-registrationperiod.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
@@ -18,7 +26,7 @@ import xAttendeetype from './attendeetype.tpl'
  * @param   {string}             opts.pass.name                      http://schema.org/name
  * @param   {Array<sdo.Offer>}   opts.pass.offers                    http://schema.org/offers
  */
-module.exports.renderer = function xRegistrationperiod_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
@@ -39,8 +47,4 @@ module.exports.renderer = function xRegistrationperiod_renderer(frag, data, opts
   )
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-registrationperiod.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)

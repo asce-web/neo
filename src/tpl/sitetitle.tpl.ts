@@ -1,6 +1,11 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-sitetitle.tpl.html'))
+  .node
 
 /**
  * @summary A `<a.c-SiteTitle>` element containing the site logo and title, linking to the home page.
@@ -12,7 +17,7 @@ import * as xjs from 'extrajs-dom'
  * @param {string=} data.logo        http://schema.org/logo
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xSitetitle_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   frag.querySelector('[itemprop="name"]'       ).textContent = data.name
   frag.querySelector('[itemprop="description"]').textContent = data.description
   frag.querySelector('[itemprop="logo"]'       ).src = data.logo
@@ -22,5 +27,4 @@ module.exports.renderer = function xSitetitle_renderer(frag, data, opts = {}) {
   if (!data.logo       ) frag.querySelector('[itemprop="logo"]'       ).remove()
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-sitetitle.tpl.html'))
+export default new Processor(template, instructions)

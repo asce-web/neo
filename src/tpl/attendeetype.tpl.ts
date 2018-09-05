@@ -1,7 +1,12 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-attendeetype.tpl.html'))
+  .node
 
 /**
  * @summary A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
@@ -11,7 +16,7 @@ import * as xjs from 'extrajs-dom'
  * @param   {number=}   data.price http://schema.org/price
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xAttendeetype_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   /**
    * @summary Options for formatting pass prices.
    * @private
@@ -32,5 +37,4 @@ module.exports.renderer = function xAttendeetype_renderer(frag, data, opts = {})
     .trimInner()
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-attendeetype.tpl.html'))
+export default new Processor(template, instructions)

@@ -2,9 +2,14 @@ import * as path from 'path'
 
 import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const xjs = { ...xjs1, ...xjs2 }
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-dateblock.tpl.html'))
+  .node
 
 /**
  * @summary A `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
@@ -17,7 +22,7 @@ const xjs = { ...xjs1, ...xjs2 }
  * @param {string=} data.url the url of the important date
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xDateblock_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(function (f, d, o = {}) {
     let date_start = new Date(d.startTime)
     let date_end   = new Date(d.endTime  )
@@ -52,5 +57,4 @@ module.exports.renderer = function xDateblock_renderer(frag, data, opts = {}) {
   }, data)
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-dateblock.tpl.html'))
+export default new Processor(template, instructions)

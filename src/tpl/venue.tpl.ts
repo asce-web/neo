@@ -1,9 +1,17 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const {xAddress} = require('aria-patterns')
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-venue.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary Markup for a venue.
@@ -20,7 +28,7 @@ const {xAddress} = require('aria-patterns')
  * @param {string}  data.$cta.text the text of the call-to-action
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xVenue_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   frag.querySelector('[itemprop="description"]').textContent = data.description
 
   if (data.image) frag.querySelector('img[itemprop="image"]').src = data.image
@@ -45,8 +53,4 @@ module.exports.renderer = function xVenue_renderer(frag, data, opts = {}) {
   }
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-venue.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)

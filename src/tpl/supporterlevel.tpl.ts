@@ -1,9 +1,17 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 import xSupporter from './supporter.tpl'
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-supporter-level.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.
@@ -17,7 +25,7 @@ import xSupporter from './supporter.tpl'
  * @param   {string=}  opts.classname any other classname(s) to add to the `<section>`
  * @param   {Conference} opts.conference the conference to which this supporter level belongs
  */
-module.exports.renderer = function xSupporterLevel_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   /**
    * Array of supporters in the level.
    * @type {Array<sdo.Organization>}
@@ -34,8 +42,4 @@ module.exports.renderer = function xSupporterLevel_renderer(frag, data, opts = {
   }, supporters)
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-supporter-level.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)

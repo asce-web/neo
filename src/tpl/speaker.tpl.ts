@@ -1,6 +1,7 @@
 import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 import xListSocial from './list-social.tpl'
 
@@ -8,6 +9,13 @@ const {xPersonFullname} = require('aria-patterns')
 
 const Util = require('../../class/Util.class.js')
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.resolve(__dirname, './x-speaker.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary An `<article.c-Speaker>` component marking up a person’s speaker information.
@@ -29,7 +37,7 @@ const Util = require('../../class/Util.class.js')
  * @param   {{Array<sdo.WebPageElement>}=} data.$social
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xSpeaker_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
   frag.querySelector('[itemprop="image"]'                        ).src         = data.image || ''
   frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle || ''
@@ -57,8 +65,4 @@ module.exports.renderer = function xSpeaker_renderer(frag, data, opts = {}) {
   ])
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, './x-speaker.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)

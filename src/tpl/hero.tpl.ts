@@ -2,11 +2,19 @@ import * as path from 'path'
 
 import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
 const xjs = { ...xjs1, ...xjs2 }
 
 const {xAddress} = require('aria-patterns')
 
+
+const template = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, './x-hero.tpl.html'))
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
+  .node
 
 /**
  * @summary xHero renderer.
@@ -24,7 +32,7 @@ const {xAddress} = require('aria-patterns')
  * @param   {string}                     data.$heroButtons.text http://schema.org/text
  * @param   {!Object=} opts additional rendering options
  */
-module.exports.renderer = function xHero_renderer(frag, data, opts = {}) {
+function instructions(frag, data, opts = {}) {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
@@ -56,8 +64,4 @@ module.exports.renderer = function xHero_renderer(frag, data, opts = {}) {
   new xjs.HTMLElement(frag.querySelector('.c-ConfHed__Detail__Dates')).trimInner()
 }
 
-module.exports.template = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, './x-hero.tpl.html'))
-  .exe(function () {
-    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
-  })
+export default new Processor(template, instructions)
