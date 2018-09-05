@@ -1,11 +1,12 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
+
+import xListSocial from './list-social.tpl'
 
 const {xPersonFullname} = require('aria-patterns')
 
-const Util = require('../class/Util.class.js')
-const xListSocial = require('../tpl/x-list-social.tpl.js')
+const Util = require('../../class/Util.class.js')
 
 
 /**

@@ -1,6 +1,6 @@
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xSpeaker = require('../../tpl/x-speaker.tpl.js')
+import xSpeaker from './speaker.tpl'
 
 
 /**

@@ -1,6 +1,6 @@
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xRegistrationicon = require('../../tpl/x-registrationicon.tpl.js')
+import xRegistrationicon from './registrationicon.tpl'
 
 
 /**

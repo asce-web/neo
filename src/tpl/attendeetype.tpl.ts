@@ -1,6 +1,7 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
+
 
 /**
  * @summary A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.

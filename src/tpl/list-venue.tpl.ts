@@ -1,6 +1,6 @@
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xVenue = require('../../tpl/x-venue.tpl.js')
+import xVenue from './venue.tpl'
 
 
 /**

@@ -1,6 +1,7 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
+
 
 /**
  * @summary Markup for an exhibitor logo.

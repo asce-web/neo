@@ -1,6 +1,6 @@
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xPass = require('../../tpl/x-pass.tpl.js')
+import xPass from './pass.tpl'
 
 
 /**

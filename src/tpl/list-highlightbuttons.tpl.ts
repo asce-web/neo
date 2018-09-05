@@ -1,4 +1,5 @@
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
+
 
 /**
  * @summary xListHighlightbuttons renderer.

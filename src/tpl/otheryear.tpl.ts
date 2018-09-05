@@ -1,9 +1,6 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = {
-  ...require('extrajs'),
-  ...require('extrajs-dom'),
-}
+import * as xjs from 'extrajs-dom'
 
 const {xAddress} = require('aria-patterns')
 

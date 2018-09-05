@@ -1,9 +1,10 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = {
-  ...require('extrajs'),
-  ...require('extrajs-dom'),
-}
+import * as xjs1 from 'extrajs'
+import * as xjs2 from 'extrajs-dom'
+
+const xjs = { ...xjs1, ...xjs2 }
+
 
 /**
  * @summary xListRegistrationicon renderer.

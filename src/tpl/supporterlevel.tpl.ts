@@ -1,8 +1,8 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xSupporter = require('./x-supporter.tpl.js')
+import xSupporter from './supporter.tpl'
 
 
 /**

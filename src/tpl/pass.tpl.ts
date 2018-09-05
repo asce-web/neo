@@ -1,8 +1,8 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xRegistrationperiod = require('./x-registrationperiod.tpl.js')
+import xRegistrationperiod from './registrationperiod.tpl'
 
 
 /**

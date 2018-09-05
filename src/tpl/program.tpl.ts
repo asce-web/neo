@@ -1,11 +1,11 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = {
-  ...require('extrajs'),
-  ...require('extrajs-dom'),
-}
+import * as xjs1 from 'extrajs'
+import * as xjs2 from 'extrajs-dom'
 
-const xTimeblock = require('../tpl/x-timeblock.tpl.js')
+const xjs = { ...xjs1, ...xjs2 }
+
+import xTimeblock from './timeblock.tpl'
 
 
 /**

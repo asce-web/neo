@@ -1,6 +1,6 @@
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xPersonAffiliation = require('../../tpl/x-person-affiliation.tpl.js')
+import xPersonAffiliation from './person-affiliation.tpl'
 
 
 /**

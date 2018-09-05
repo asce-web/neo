@@ -1,8 +1,8 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xAttendeetype = require('./x-attendeetype.tpl.js')
+import xAttendeetype from './attendeetype.tpl'
 
 
 /**

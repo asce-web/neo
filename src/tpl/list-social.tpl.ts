@@ -1,9 +1,7 @@
-const path = require('path')
+import * as path from 'path'
 
-const xjs = {
-  Date: require('extrajs').Date,
-  ...require('extrajs-dom'),
-}
+import * as xjs from 'extrajs-dom'
+
 
 /**
  * @summary xListSocial renderer.

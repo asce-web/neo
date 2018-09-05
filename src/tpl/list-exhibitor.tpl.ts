@@ -1,6 +1,6 @@
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xExhibitor = require('../../tpl/x-exhibitor.tpl.js')
+import xExhibitor from './exhibitor.tpl'
 
 
 /**

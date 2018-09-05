@@ -1,6 +1,6 @@
-const xjs = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
 
-const xSupporterLevel = require('../../tpl/x-supporter-level.tpl.js')
+import xSupporterlevel from './supporterlevel.tpl'
 
 
 /**
