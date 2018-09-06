@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Venue from './venue.tpl'
+import venue_processor from './venue.tpl'
 
 
 const template = xjs.HTMLUListElement.templateSync()
@@ -22,7 +22,7 @@ const template = xjs.HTMLUListElement.templateSync()
 function instructions(frag: DocumentFragment, data: sdo.Accommodation[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			Venue.process(d)
+			venue_processor.process(d)
 		)
 	}, data)
 }

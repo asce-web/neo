@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Attendeetype from './attendeetype.tpl'
+import attendeetype_processor from './attendeetype.tpl'
 
 
 const template = xjs.HTMLTemplateElement
@@ -53,7 +53,7 @@ function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): v
 
   frag.querySelector('dl').append(
     ...opts.pass.offers.map((att_type) =>
-      Attendeetype.process({ "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
+      attendeetype_processor.process({ "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
     )
   )
 }

@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Pass from './pass.tpl'
+import pass_processor from './pass.tpl'
 
 
 const template = xjs.HTMLUListElement.templateSync()
@@ -28,7 +28,7 @@ interface OptsType {
 function instructions(frag: DocumentFragment, data: sdo.AggregateOffer[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			Pass.process(d, o)
+			pass_processor.process(d, o)
 		)
 	}, data, opts, this)
 }

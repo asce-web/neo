@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Registrationicon from './registrationicon.tpl'
+import registrationicon_processor from './registrationicon.tpl'
 
 
 const template = xjs.HTMLUListElement.templateSync()
@@ -22,7 +22,7 @@ const template = xjs.HTMLUListElement.templateSync()
 function instructions(frag: DocumentFragment, data: sdo.AggregateOffer[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			Registrationicon.process(d)
+			registrationicon_processor.process(d)
 		)
 	}, data)
 }

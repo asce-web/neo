@@ -4,7 +4,7 @@ import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Timeblock from './timeblock.tpl'
+import timeblock_processor from './timeblock.tpl'
 
 const xjs = { ...xjs1, ...xjs2 }
 
@@ -43,7 +43,7 @@ function instructions(frag: DocumentFragment, data: DataType[], opts: OptsType):
 		f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
 		f.querySelector('slot[name="date"]' ).textContent = xjs.Date.format(d.date, 'M j')
 		new xjs.HTMLElement(f.querySelector('slot[name="panel"]')).empty()
-			.append(Timeblock.process(d.items))
+			.append(timeblock_processor.process(d.items))
 		new xjs.HTMLTimeElement(f.querySelector('.c-ProgramHn')).trimInner()
 	})
   /**

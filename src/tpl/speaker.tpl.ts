@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import ListSocial from './list-social.tpl'
+import list_social_processor from './list-social.tpl'
 
 const {xPersonFullname} = require('aria-patterns')
 
@@ -41,7 +41,7 @@ function instructions(frag: DocumentFragment, data: DataType): void {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 
   new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
-    this.node.before(ListSocial.process((data.$social || []), {
+    this.node.before(list_social_processor.process((data.$social || []), {
       classes: 'c-SocialList--speaker',
     }))
   }).populate(function (f, d, o = {}) {

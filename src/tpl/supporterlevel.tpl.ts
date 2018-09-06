@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Supporter from './supporter.tpl'
+import supporter_processor from './supporter.tpl'
 
 
 const template = xjs.HTMLTemplateElement
@@ -49,7 +49,7 @@ function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): v
   })[(opts.small) ? 'Small' : (data.$logoSize || 'Small')], opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
   new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(function (f, d, o = {}) {
-    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(Supporter.process(d, { is_sponsor: data.$isSponsor }))
+    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(supporter_processor.process(d, { is_sponsor: data.$isSponsor }))
   }, supporters)
 }
 
