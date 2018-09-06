@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import {HyperlinkNamed} from '../interfaces'
+import {Hyperlink} from '../interfaces'
 
 
 const template = xjs.HTMLTemplateElement
@@ -21,7 +21,7 @@ interface OptsType {
  * @param   data an array of links
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: HyperlinkNamed[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType): void {
   new xjs.HTMLUListElement(frag.querySelector('ul'))
     .replaceClassString('{{ listclasses }}', opts.classes)
     .populate(function (f, d, o) {

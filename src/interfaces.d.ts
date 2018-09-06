@@ -36,13 +36,14 @@ export interface Exhibitor extends sdo.Organization {
 	$isSponsor?: boolean;
 }
 
+/** A hyperlink HTML element. */
 export interface Hyperlink extends sdo.WebPageElement {
+	/** The textual content of the link. */
 	text: string;
-	url : string;
-}
-
-export interface HyperlinkNamed extends Hyperlink {
-	name: string;
+	/** The href of the link. */
+	url: string;
+	/** The name or identifier of the social media service (used for icons). */
+	name?: string
 }
 
 export interface ImportantDate extends sdo.Action {
@@ -84,7 +85,7 @@ export interface Speaker extends sdo.Person {
 	familyName  : string;
 	affiliation : sdo.Organization;
 	/** the person’s social media links */
-	$social?: HyperlinkNamed[];
+	$social?: Hyperlink[];
 	jobTitle?: string; // TODO schemaorg-jsd:`Person#jobTitle`
 }
 
