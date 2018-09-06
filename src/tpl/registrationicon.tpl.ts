@@ -26,10 +26,8 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod): void {
   frag.querySelector('b').textContent = data.name
 
   /**
-   * @summary References to formatting elements.
-   * @description We want to create these references before removing any elements from the DOM.
-   * @private
-   * @constant {!Object}
+   * References to formatting elements.
+   * We want to create these references before removing any elements from the DOM.
    */
   const formatting = {
     /** Colon after period name. */ colon: frag.querySelector('slot[name="colon"]'),

@@ -17,9 +17,7 @@ const template = xjs.HTMLTemplateElement
  */
 function instructions(frag: DocumentFragment, data: AttendeeType): void {
   /**
-   * @summary Options for formatting pass prices.
-   * @private
-   * @const {Intl.NumberFormat}
+   * Options for formatting pass prices.
    */
   const PRICE_OPTIONS = new Intl.NumberFormat('en', {
     style: 'currency',

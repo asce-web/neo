@@ -67,7 +67,12 @@ export interface Conference extends sdo.Organization {
 }
 
 export interface ConfPage extends sdo.WebPage {
-	hasPart?: sdo.WebPage|sdo.WebPage[];
+	/** The page name. */
+	name: string;
+	/** The root-relative URL of this page. */
+	url: string;
+	/** Subpage(s) of this page. */
+	hasPart?: ConfPage|ConfPage[];
 }
 
 /** Any person entered into the system. */

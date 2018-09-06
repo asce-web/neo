@@ -24,10 +24,8 @@ function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
     let date_start = new Date(d.startTime)
     let date_end   = new Date(d.endTime  )
     /**
-     * @summary References to formatting elements.
-     * @description We want to create these references before removing any elements from the DOM.
-     * @private
-     * @constant {!Object}
+     * References to formatting elements.
+     * We want to create these references before removing any elements from the DOM.
      */
     const formatting = {
       /** Start and end dates. */ dates: [...f.querySelectorAll('.c-DateBlock__Date')],

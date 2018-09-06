@@ -46,7 +46,11 @@ interface OptsType {
  * @param   opts additional processing options
 */
 function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): void {
-  let subpages = (xjs.Object.typeOf(data.hasPart) === 'array' ) ? data.hasPart : [data.hasPart]
+  let subpages: ConfPage[] = xjs.Object.switch<ConfPage[]>(xjs.Object.typeOf(data.hasPart), {
+    'array'    : () =>  data.hasPart as ConfPage[],
+    'object'   : () => [data.hasPart as ConfPage],
+    'undefined': () => [],
+  })()
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
@@ -54,14 +58,12 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
       new xjs.HTMLLIElement(f.querySelector('[itemprop="hasPart"]')).replaceClassString('{{ classes.item }}', opts.classes && opts.classes.item || '')
       new xjs.HTMLAnchorElement(f.querySelector('[itemprop="url"]'))
         .replaceClassString('{{ classes.link }}', opts.classes && opts.classes.link || '')
-        .href(d.url()) // TODO don’t use Page#url()
-      f.querySelector('slot[itemprop="name"]').textContent = d.name() // TODO don’t use Page#name()
+        .href(d.url)
+      f.querySelector('slot[itemprop="name"]').textContent = d.name
 
       /**
-       * @summary References to formatting elements.
-       * @description We want to create these references before removing any elements from the DOM.
-       * @private
-       * @constant {!Object}
+       * References to formatting elements.
+       * We want to create these references before removing any elements from the DOM.
        */
       const formatting = {
         /** Icons for links. */ icons: [...f.querySelectorAll('i.material-icons')],

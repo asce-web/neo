@@ -10,6 +10,14 @@ import timeblock_processor from './timeblock.tpl'
 const xjs = { ...xjs1, ...xjs2 }
 
 
+/** A group of sessions, sharing the same day, on a program. */
+interface DateGroup {
+	/** The shared day. */
+	date: Date;
+	/** The sessions that share the same day. */
+	sessions: Session[];
+}
+
 const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-program.tpl.html'))
   .exe(function () {
@@ -32,7 +40,7 @@ interface OptsType {
  */
 function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): void {
   let container = frag.querySelector('[role="tablist"]')
-	const ProgramPanel = new Processor(container.querySelector('template') !, function (f, d, o = {}) {
+	const ProgramPanel = new Processor(container.querySelector('template') !, function (f: DocumentFragment, d: DateGroup, o: { index: number }) {
 		f.querySelector('[role="tabpanel"]' ).id          = `${opts.id}-panel${o.index}`
 		f.querySelector('time.c-ProgramHn'  ).dateTime    = d.date.toISOString()
 		f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
@@ -42,28 +50,22 @@ function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): 
 		new xjs.HTMLTimeElement(f.querySelector('.c-ProgramHn')).trimInner()
 	})
   /**
-   * @summary Categorize all the sessions of the conference by date.
-   * @description
-   * An array of objects, each with a `dateobj` property: a Date;
-   * and a `sessions` property: an array of {@link http://schema.org/Event|sdo.Event} objects,
-   * all of which share the same date (excluding time of day).
-   * @private
-   * @type {Array<{dateobj:Date, sessions:Array<sdo.Event>}>} an array grouping the sessions together
+   * An array, categorizing all the sessions of the conference by date.
    */
-  const grouped_sessions = (function () {
-    const returned = []
-    data.forEach((datum) => {
-      let time_start = new Date(datum.startDate)
-      let time_end   = new Date(datum.endDate  )
+  const grouped_sessions: DateGroup[] = ((all_sessions) => {
+    const returned: DateGroup[] = []
+    all_sessions.forEach((session) => {
+      let time_start = new Date(session.startDate)
+      let time_end   = new Date(session.endDate  )
       if (!returned.find((group) => xjs.Date.sameDate(group.date, time_start))) {
         returned.push({
-          date : time_start,
-          items: data.filter((s) => xjs.Date.sameDate(new Date(s.startDate), time_start)),
+          date    : time_start,
+          sessions: all_sessions.filter((s) => xjs.Date.sameDate(new Date(s.startDate), time_start)),
         })
       }
     })
     return returned
-  })()
+  })(data)
   container.append(...grouped_sessions.map((group, index) => ProgramPanel.process(group, { index })))
 }
 

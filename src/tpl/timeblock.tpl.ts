@@ -24,10 +24,8 @@ function instructions(frag: DocumentFragment, data: Session[]): void {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )
     /**
-     * @summary References to formatting elements.
-     * @description We want to create these references before removing any elements from the DOM.
-     * @private
-     * @constant {!Object}
+     * References to formatting elements.
+     * We want to create these references before removing any elements from the DOM.
      */
     const formatting = {
       /** Start and end times. */ times: [...f.querySelectorAll('.c-TimeBlock__Times')],

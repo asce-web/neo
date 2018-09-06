@@ -1,10 +1,13 @@
 import * as path from 'path'
 
-import * as xjs from 'extrajs-dom'
+import * as xjs1 from 'extrajs'
+import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Conference, Supporter, SupporterLevel} from '../interfaces'
 import supporter_processor from './supporter.tpl'
+
+const xjs = { ...xjs1, ...xjs2 }
 
 
 const template = xjs.HTMLTemplateElement
@@ -32,14 +35,14 @@ interface OptsType {
 function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsType): void {
   /**
    * Array of supporters in the level.
-   * @type {Array<sdo.Organization>}
    */
-  let supporters = (opts.conference._DATA.sponsor || []).filter((org) => org.$level === data.name)
-  new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass(({
-    'Small' : 'c-SupporterBlock--sml',
-    'Medium': 'c-SupporterBlock--med',
-    'Large' : 'c-SupporterBlock--lrg',
-  })[(opts.small) ? 'Small' : (data.$logoSize || 'Small')], opts.classname || '')
+  let supporters: Supporter[] = (opts.conference._DATA.sponsor || []).filter((org) => org.$level === data.name)
+  new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass((xjs.Object.switch<string>((opts.small) ? 'Small' : (data.$logosize || 'default'), {
+    'Small' : () => 'c-SupporterBlock--sml',
+    'Medium': () => 'c-SupporterBlock--med',
+    'Large' : () => 'c-SupporterBlock--lrg',
+    default : () => 'c-SupporterBlock--sml',
+  })()), opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
   new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(function (f: DocumentFragment, d: Supporter) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(supporter_processor.process(d, { is_sponsor: data.$isSponsor }))
