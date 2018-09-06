@@ -16,9 +16,8 @@ type DataType = sdo.Product & sdo.WebPage & {
  * A `<a.c-SiteTitle>` element containing the site logo and title, linking to the home page.
  * @param   frag the template content to process
  * @param   data the webpage with possible description and logo
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType): void {
   frag.querySelector('[itemprop="name"]'       ).textContent = data.name
   frag.querySelector('[itemprop="description"]').textContent = data.description
   frag.querySelector('[itemprop="logo"]'       ).src = data.logo

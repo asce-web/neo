@@ -23,9 +23,8 @@ type DataType = sdo.AggregateOffer & {
  * A single `<p.c-RegPdIcon>` component indicating a registration period.
  * @param   frag the template content to process
  * @param   data a single registration period
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType): void {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 

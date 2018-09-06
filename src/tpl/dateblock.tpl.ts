@@ -22,9 +22,8 @@ type DataType = sdo.Action & {
  * marking up this date range as an important date with date and description.
  * @param   frag the template content to process
  * @param   data an array of important dates
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType[], opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType[]): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(function (f, d, o = {}) {
     let date_start = new Date(d.startTime)
     let date_end   = new Date(d.endTime  )

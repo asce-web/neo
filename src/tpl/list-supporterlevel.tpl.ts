@@ -14,15 +14,20 @@ const template = xjs.HTMLOListElement.templateSync()
 	})
 	.node
 
+interface OptsType {
+	/** should logo sizing be overridden to `Small`? */
+	small?: boolean;
+	/** the conference to which these supporter levels belong */
+	conference: Conference; // FIXME this should not be required
+}
+
 /**
  * An `<ol>` list of {@link Supporterlevel|supporter levels}.
  * @param   frag the template content to process
  * @param   data an array of supporter levels
- * @param   {!Object=} opts additional rendering options
- * @param   {boolean=} opts.small should logo sizing be overridden to `Small`?
- * @param   {Conference} opts.conference the conference containing this list
+ * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: sdo.Offer[], opts = {}): void {
+function instructions(frag: DocumentFragment, data: sdo.Offer[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			Supporterlevel.process(d, o)

@@ -29,9 +29,8 @@ type DataType = sdo.Accommodation & {
  * A `<section>` element marking up a venue.
  * @param   frag the template content to process
  * @param   data a venue for a conference
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType): void {
   frag.querySelector('[itemprop="description"]').textContent = data.description
 
   if (data.image) frag.querySelector('img[itemprop="image"]').src = data.image

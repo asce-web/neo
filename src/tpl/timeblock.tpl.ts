@@ -22,9 +22,8 @@ type DataType = sdo.Event & {
  * marking up this date range as a session with time and name.
  * @param   frag the template content to process
  * @param   data an array of sessions
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType[], opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType[]): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(function (f, d, o = {}) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )

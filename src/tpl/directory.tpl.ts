@@ -15,23 +15,39 @@ type DataType = sdo.WebPage & {
 	hasPart?: sdo.WebPage|sdo.WebPage[];
 }
 
+interface OptsType {
+	/** A non-negative integer, or `Infinity`: how many levels deep the outline should be; default is `Infinity` */
+	depth?: number;
+	/** which subpage to start at, non-negative integer; default is `0` */
+	start?: number;
+	/** which subpage to end at, non-negative integer or `Infinity`; default is `Infinity` */
+	end?: number;
+	/** group set of css class configurations */
+	classes?: null|{
+		/** list classes (`<ol>`) */
+		list?: string;
+		/** item classes (`<li>`) */
+		item?: string;
+		/** link classes (`<a>`) */
+		link?: string;
+		/** classes for page icon */
+		icon?: string;
+		/** classes for `expand_more` icon */
+		expand?: string;
+	};
+	/** unknown docs */
+	links?: object;
+	/** configurations for nested outlines */
+	options?: OptsType;
+}
+
 /**
  * A nested `<ol>` marking up a site directory.
  * @param   frag the template content to process
  * @param   data a webpage with possible subpages
- * @param   {!Object=} opts additional rendering options
- * @param   {integer=} [opts.depth=Infinity] number of nested directory levels
- * @param   {integer=} options.start which subpage to start at
- * @param   {integer=} options.end which subpage to end at
- * @param   {?Object<string>=} opts.classes group set of css class configurations
- * @param   {string=}          opts.classes.list list classes (`<ol>`)
- * @param   {string=}          opts.classes.item item classes (`<li>`)
- * @param   {string=}          opts.classes.link link classes (`<a>`)
- * @param   {string=}          opts.classes.icon classes for page icon
- * @param   {string=}          opts.classes.expand classes for `expand_more` icon
- * @param   {!Object=} opts.options configurations for nested outlines; specs identical to `opts`
+ * @param   opts additional processing options
 */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
   let subpages = (xjs.Object.typeOf(data.hasPart) === 'array' ) ? data.hasPart : [data.hasPart]
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))

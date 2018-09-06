@@ -16,14 +16,18 @@ type DataType = sdo.WebPageElement & {
 	url : string;
 }
 
+interface OptsType {
+	/** additional class(es) to add to each link */
+	buttonclasses?: string;
+}
+
 /**
  * A `<ul>` list of highlighted buttons.
  * @param   frag the template content to process
  * @param   data an array of links
- * @param   {!Object=} opts additional rendering options
- * @param   {string=} opts.buttonclasses classes to add to each link
+ * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType[], opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLAnchorElement(f.querySelector('a'))
 			.replaceClassString('{{ buttonclasses }}', o.buttonclasses)

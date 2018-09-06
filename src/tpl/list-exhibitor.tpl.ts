@@ -16,9 +16,8 @@ const template = xjs.HTMLUListElement.templateSync()
  * A `<ul>` list of exhibitors.
  * @param   frag the template content to process
  * @param   data an array of exhibitors
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: sdo.Organization[], opts = {}): void {
+function instructions(frag: DocumentFragment, data: sdo.Organization[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			Exhibitor.process(d)

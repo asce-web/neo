@@ -19,17 +19,25 @@ type DataType = sdo.AggregateOffer & {
 	availabilityEnds  ?: string; // TODO `Offer#availabilityEnds`
 }
 
+interface OptsType {
+	/** should this period be placed in the body, and not the footer, of the pass? */
+	is_body?: boolean;
+	/** the pass this registration period belongs to */
+	pass: sdo.AggregateOffer & {
+		/** the name of the pass */
+		name: string;
+		/** attendee types of the pass */
+		offers: sdo.Offer[];
+	};
+}
+
 /**
  * A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
  * @param   frag the template content to process
  * @param   data a single registration period
- * @param   {!Object=} opts additional rendering options
- * @param   {boolean=} opts.is_body `true` if this period is to be placed in the body and not the footer
- * @param   {sdo.AggregateOffer} opts.pass                           http://schema.org/AggregateOffer
- * @param   {string}             opts.pass.name                      http://schema.org/name
- * @param   {Array<sdo.Offer>}   opts.pass.offers                    http://schema.org/offers
+ * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 

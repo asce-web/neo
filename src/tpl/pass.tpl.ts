@@ -17,14 +17,18 @@ type DataType = sdo.AggregateOffer & {
 	name: string;
 }
 
+interface OptsType {
+	/** the conference to which this pass belongs */
+	conference: Conference; // FIXME this should not be required
+}
+
 /**
  * An `<article.c-Pass>` component marking up a pass’s info.
  * @param   frag the template content to process
  * @param   data a single pass
- * @param   {!Object=} opts additional rendering options
- * @param   {Conference} opts.conference the conference to which this pass belongs
+ * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
   let current_period = opts.conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''

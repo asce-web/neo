@@ -17,9 +17,8 @@ type DataType = sdo.Offer & {
  * A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
  * @param   frag the template content to process
  * @param   data the attendee type
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType): void {
   /**
    * @summary Options for formatting pass prices.
    * @private

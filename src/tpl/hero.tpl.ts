@@ -33,9 +33,8 @@ type DataType = sdo.Organization & {
  * A homepage `<header>` containing the site’s most important info.
  * @param   frag the template content to process
  * @param   data a single conference event
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType): void {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)

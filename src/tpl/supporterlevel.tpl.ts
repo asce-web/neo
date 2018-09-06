@@ -21,16 +21,22 @@ type DataType = sdo.Offer & {
 	$isSponsor?: boolean;
 }
 
+interface OptsType {
+	/** should logo sizing be overridden to `Small`? */
+	small?: boolean;
+  /** any other class(es) to add to the `<section>` */
+	classname?: string;
+	/** the conference to which this supporter level belongs */
+	conference: Conference; // FIXME this should not be required
+}
+
 /**
  * A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.
  * @param   frag the template content to process
  * @param   data the supporter level
- * @param   {!Object=} opts additional rendering options
- * @param   {boolean=} opts.small should logo sizing be overridden to `Small`?
- * @param   {string=}  opts.classname any other classname(s) to add to the `<section>`
- * @param   {Conference} opts.conference the conference to which this supporter level belongs
+ * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
   /**
    * Array of supporters in the level.
    * @type {Array<sdo.Organization>}

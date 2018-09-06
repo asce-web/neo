@@ -14,14 +14,18 @@ type DataType = sdo.WebPageElement & {
 	text: string;
 }
 
+interface OptsType {
+  /** any other class(es) to add to the `<ul>` */
+	classes?: string;
+}
+
 /**
  * A `<ul>` list of social media links.
  * @param   frag the template content to process
  * @param   data an array of links
- * @param   {!Object=} opts additional rendering options
- * @param   {string=} opts.classes classes to add to the list
+ * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType[], opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType[], opts: OptsType): void {
   new xjs.HTMLUListElement(frag.querySelector('ul'))
     .replaceClassString('{{ listclasses }}', opts.classes)
     .populate(function (f, d, o) {

@@ -14,14 +14,18 @@ const template = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
+interface OptsType {
+	/** the conference to which this pass belongs */
+	conference: Conference; // FIXME this should not be required
+}
+
 /**
  * A `<ul>` list of {@link Pass|passes}.
  * @param   frag the template content to process
  * @param   data an array of passes
- * @param   {!Object=} opts additional rendering options
- * @param   {Conference} opts.conference the conference containing this pass
+ * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: sdo.AggregateOffer[], opts = {}): void {
+function instructions(frag: DocumentFragment, data: sdo.AggregateOffer[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			Pass.process(d, o)

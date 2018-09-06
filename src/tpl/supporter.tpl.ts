@@ -14,14 +14,18 @@ type DataType = sdo.Organization & {
 	logo: string;
 }
 
+interface OptsType {
+	/** is the supporter a financial sponsor? */
+	is_sponsor?: boolean;
+}
+
 /**
  * Markup for a supporter logo.
  * @param   frag the template content to process
  * @param   data the supporting organization
- * @param   {!Object=} opts additional rendering options
- * @param   {boolean=} opts.is_sponsor is the supporter a financial sponsor?
+ * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
   frag.querySelector('a[itemprop="url"]'    ).href  = data.url
   frag.querySelector('data[itemprop="name"]').value = data.name
   frag.querySelector('img[itemprop="logo"]' ).src   = data.logo

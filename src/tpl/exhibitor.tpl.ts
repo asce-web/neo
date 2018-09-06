@@ -22,9 +22,8 @@ type DataType = sdo.Organization & {
  * Markup for an exhibitor logo.
  * @param   frag the template content to process
  * @param   data the exhibiting organization
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType): void {
   frag.querySelector('a[itemprop="url"]'   ).href        = data.url
   frag.querySelector('[itemprop="name"]'   ).textContent = data.name
   frag.querySelector('slot[name="booth"]'  ).textContent = data.$booth

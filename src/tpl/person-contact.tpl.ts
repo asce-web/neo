@@ -24,9 +24,8 @@ type DataType = sdo.Person & {
  * Markup for a person and contact information.
  * @param   frag the template content to process
  * @param   data a person that has a job title
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType): void {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
   frag.querySelector('[itemprop="jobTitle"]' ).textContent = data.jobTitle
 

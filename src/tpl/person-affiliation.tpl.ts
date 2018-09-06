@@ -24,9 +24,8 @@ type DataType = sdo.Person & {
  * Markup for a person and affiliated organization.
  * @param   frag the template content to process
  * @param   data a person that has an affiliation
- * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType): void {
   frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation && data.affiliation.name || ''
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 }
