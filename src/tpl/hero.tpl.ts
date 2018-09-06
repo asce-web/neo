@@ -4,7 +4,8 @@ import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import {Conference} from '../interfaces'
+import {Conference, Hyperlink} from '../interfaces'
+// import list_highlightbuttons_processor from './list-highlightbuttons.tpl'
 
 const xjs = { ...xjs1, ...xjs2 }
 
@@ -46,7 +47,8 @@ function instructions(frag: DocumentFragment, data: Conference): void {
 
   frag.querySelector('[itemprop="description"]').textContent = data.description || ' ' // `&nbsp;` // cannot remove node due to SEO
 
-  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(function (f, d, o = {}) {
+  // TODO use `list-highlightbuttons.tpl.ts`
+  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(function (f: DocumentFragment, d: Hyperlink) {
     new xjs.HTMLAnchorElement(f.querySelector('[itemprop="significantLink"]'))
       .href(d.url)
       .textContent(d.text)

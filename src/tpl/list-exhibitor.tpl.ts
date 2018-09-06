@@ -19,7 +19,7 @@ const template = xjs.HTMLUListElement.templateSync()
  * @param   data an array of exhibitors
  */
 function instructions(frag: DocumentFragment, data: Exhibitor[]): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
+	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f: DocumentFragment, d: Exhibitor) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			exhibitor_processor.process(d)
 		)

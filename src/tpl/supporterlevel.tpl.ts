@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import {Conference, SupporterLevel} from '../interfaces'
+import {Conference, Supporter, SupporterLevel} from '../interfaces'
 import supporter_processor from './supporter.tpl'
 
 
@@ -41,7 +41,7 @@ function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsTy
     'Large' : 'c-SupporterBlock--lrg',
   })[(opts.small) ? 'Small' : (data.$logoSize || 'Small')], opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
-  new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(function (f, d, o = {}) {
+  new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(function (f: DocumentFragment, d: Supporter) {
     new xjs.HTMLLIElement(f.querySelector('li')).empty().append(supporter_processor.process(d, { is_sponsor: data.$isSponsor }))
   }, supporters)
 }

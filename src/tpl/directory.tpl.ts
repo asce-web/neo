@@ -50,7 +50,7 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
-    .populate(function (f, d, o = {}) {
+    .populate(function (f: DocumentFragment, d: ConfPage) {
       new xjs.HTMLLIElement(f.querySelector('[itemprop="hasPart"]')).replaceClassString('{{ classes.item }}', opts.classes && opts.classes.item || '')
       new xjs.HTMLAnchorElement(f.querySelector('[itemprop="url"]'))
         .replaceClassString('{{ classes.link }}', opts.classes && opts.classes.link || '')
@@ -82,7 +82,7 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
 
       if (d.findAll().length && depth > 0) { // TODO don’t use Page#findAll
         f.querySelector('[itemprop="hasPart"]').append(
-          require(__filename).template.render(instructions, {
+          require(__filename).process({
             ...d,
             hasPart: d.findAll().filter((p) => !p.isHidden()),
           }, {

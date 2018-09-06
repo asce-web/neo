@@ -35,7 +35,7 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
     this.node.before(list_social_processor.process((data.$social || []), {
       classes: 'c-SocialList--speaker',
     }))
-  }).populate(function (f, d, o = {}) {
+  }).populate(function (f: DocumentFragment, d: { prop: 'url'|'email'|'telephone'; icon: string; url: string; text: string }) {
     if (!data[d.prop]) {
       new xjs.DocumentFragment(f).empty()
     } else {

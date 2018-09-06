@@ -20,7 +20,7 @@ const template = xjs.HTMLTemplateElement
  * @param   data an array of sessions
  */
 function instructions(frag: DocumentFragment, data: Session[]): void {
-  new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(function (f, d, o = {}) {
+  new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(function (f: DocumentFragment, d: Session) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )
     /**

@@ -20,7 +20,7 @@ const template = xjs.HTMLTemplateElement
  * @param   data an array of important dates
  */
 function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
-  new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(function (f, d, o = {}) {
+  new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(function (f: DocumentFragment, d: ImportantDate) {
     let date_start = new Date(d.startTime)
     let date_end   = new Date(d.endTime  )
     /**

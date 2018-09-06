@@ -29,11 +29,11 @@ interface OptsType {
  * @param   opts additional processing options
  */
 function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: OptsType): void {
-	new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f, d, o = {}) {
+	new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f: DocumentFragment, d: SupporterLevel) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			supporterlevel_processor.process(d, o)
+			supporterlevel_processor.process(d, opts)
 		)
-	}, data, opts, this)
+	}, data, opts)
 }
 
 export default new Processor(template, instructions)
