@@ -24,14 +24,15 @@ const template = xjs.HTMLTemplateElement
  * @param   data a person that has a possible job title, an affiliated organization, and social media contact links
  */
 function instructions(frag: DocumentFragment, data: ConfPerson): void {
-  frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
-  frag.querySelector('[itemprop="image"]'                        ).src         = data.image || ''
-  frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle || ''
-  frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation && data.affiliation.name || ''
+  frag.querySelector('[itemtype="http://schema.org/Person"]'     ) !.id          = data.identifier
+  frag.querySelector('[itemprop="jobTitle"]'                     ) !.textContent = data.jobTitle || ''
+  frag.querySelector('[itemprop="affiliation"] [itemprop="name"]') !.textContent = data.affiliation && data.affiliation.name || ''
+  ;(frag.querySelector('img[itemprop="image"]') as HTMLImageElement).src = data.image || ''
 
-  frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
+  new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.render(data))
 
-  new xjs.HTMLUListElement(frag.querySelectorAll('.c-SocialList')[0]).exe(function () {
+  // TODO use list-social.tpl
+  new xjs.HTMLUListElement(frag.querySelectorAll('ul.c-SocialList')[0] as HTMLUListElement).exe(function () {
     this.node.before(list_social_processor.process((data.$social || []), {
       classes: 'c-SocialList--speaker',
     }))
@@ -39,8 +40,8 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
     if (!data[d.prop]) {
       new xjs.DocumentFragment(f).empty()
     } else {
-    f.querySelector('slot').textContent = d.text
-    new xjs.HTMLAnchorElement(f.querySelector('a'))
+    f.querySelector('slot') !.textContent = d.text
+    new xjs.HTMLAnchorElement(f.querySelector('a') !)
       .replaceClassString('{{ icon }}', d.icon)
       .attr({ href: d.url, itemprop: d.prop })
     }

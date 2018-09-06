@@ -20,7 +20,7 @@ const template = xjs.HTMLTemplateElement
  * @param   data an array of sessions
  */
 function instructions(frag: DocumentFragment, data: Session[]): void {
-  new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(function (f: DocumentFragment, d: Session) {
+  new xjs.HTMLTableSectionElement(frag.querySelector('tbody') !).populate(function (f: DocumentFragment, d: Session) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )
     /**
@@ -30,24 +30,26 @@ function instructions(frag: DocumentFragment, data: Session[]): void {
     const formatting = {
       /** Start and end times. */ times: [...f.querySelectorAll('.c-TimeBlock__Times')],
     }
-    f.querySelectorAll('[itemprop~="startDate"]').forEach((time) => {
-      new xjs.HTMLTimeElement(time)
+    f.querySelectorAll('time[itemprop~="startDate"]').forEach((time) => {
+      new xjs.HTMLTimeElement(time as HTMLTimeElement)
         .dateTime(time_start)
         .textContent(xjs.Date.format(time_start, 'g:ia'))
     })
-    new xjs.HTMLTimeElement(f.querySelector('[itemprop="endDate"]'))
+    new xjs.HTMLTimeElement(f.querySelectorAll('time[itemprop~="endDate"]')[1] as HTMLTimeElement)
       .dateTime(time_end)
       .textContent(xjs.Date.format(time_end, 'g:ia'))
+    formatting.times.forEach((cell) => {
+      new xjs.Element(cell).trimInner()
+    })
     if (time_start.toISOString() === time_end.toISOString()) {
       formatting.times[1].remove()
     } else {
       formatting.times[0].remove()
     }
-    new xjs.HTMLElement(f.querySelector('.c-TimeBlock__Times')).trimInner()
 
-    new xjs.HTMLAnchorElement(f.querySelector('a')).attr({
+    new xjs.Element(f.querySelector('[itemprop="url"]') !).attr({
       href    : d.url || null,
-      itemprop: (d.url) ? 'url' : null,
+      itemprop: (d.url) ? 'url' : null, // TODO turn this into an `if`
     }).textContent(d.name)
   }, data)
 }

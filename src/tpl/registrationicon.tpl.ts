@@ -22,17 +22,17 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod): void {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
-  frag.querySelector('i').textContent = data.$icon
-  frag.querySelector('b').textContent = data.name
+	frag.querySelector('i') !.textContent = data.$icon || ''
+	frag.querySelector('b') !.textContent = data.name
 
   /**
    * References to formatting elements.
    * We want to create these references before removing any elements from the DOM.
    */
   const formatting = {
-    /** Colon after period name. */ colon: frag.querySelector('slot[name="colon"]'),
+    /** Colon after period name. */ colon: frag.querySelector('slot[name="colon"]') !, // TODO `frag.querySelectorAll('small span')[0]`
     /** Start and end dates. */     times: [...frag.querySelectorAll('time')],
-    /** Dash between times. */      dash : frag.querySelector('slot[name="dash"]'),
+    /** Dash between times. */      dash : frag.querySelector('slot[name="dash"]') !, // TODO `frag.querySelectorAll('small span')[1]`
   }
   if (date_start) {
     new xjs.HTMLTimeElement(formatting.times[0])
@@ -53,7 +53,7 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod): void {
     formatting.dash.remove()
   }
 
-  new xjs.HTMLElement(frag.querySelector('small')).trimInner()
+  new xjs.HTMLElement(frag.querySelector('small') !).trimInner()
 }
 
 export default new Processor(template, instructions)

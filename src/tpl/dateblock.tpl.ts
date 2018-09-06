@@ -20,7 +20,7 @@ const template = xjs.HTMLTemplateElement
  * @param   data an array of important dates
  */
 function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
-  new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(function (f: DocumentFragment, d: ImportantDate) {
+  new xjs.HTMLTableSectionElement(frag.querySelector('tbody') !).populate(function (f: DocumentFragment, d: ImportantDate) {
     let date_start = new Date(d.startTime)
     let date_end   = new Date(d.endTime  )
     /**
@@ -30,24 +30,26 @@ function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
     const formatting = {
       /** Start and end dates. */ dates: [...f.querySelectorAll('.c-DateBlock__Date')],
     }
-    f.querySelectorAll('[itemprop~="startTime"]').forEach((time) => {
-      new xjs.HTMLTimeElement(time)
+    f.querySelectorAll('time[itemprop~="startTime"]').forEach((time) => {
+      new xjs.HTMLTimeElement(time as HTMLTimeElement)
         .dateTime(date_start)
         .textContent(xjs.Date.format(date_start, 'M j, Y'))
     })
-    new xjs.HTMLTimeElement(f.querySelector('[itemprop="endTime"]'))
+    new xjs.HTMLTimeElement(f.querySelectorAll('time[itemprop~="endTime"]')[1] as HTMLTimeElement)
       .dateTime(date_end)
       .textContent(xjs.Date.format(date_end, 'M j, Y'))
+    formatting.dates.forEach((cell) => {
+      new xjs.Element(cell).trimInner()
+    })
     if (xjs.Date.sameDate(date_start, date_end)) {
       formatting.dates[1].remove()
     } else {
       formatting.dates[0].remove()
     }
-    new xjs.HTMLElement(f.querySelector('.c-DateBlock__Date')).trimInner()
 
-    new xjs.HTMLAnchorElement(f.querySelector('a')).attr({
+    new xjs.Element(f.querySelector('[itemprop="url"]') !).attr({
       href    : d.url || null,
-      itemprop: (d.url) ? 'url' : null,
+      itemprop: (d.url) ? 'url' : null, // TODO turn this into an `if`
     }).textContent(d.name)
   }, data)
 }

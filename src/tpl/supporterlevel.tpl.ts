@@ -37,15 +37,15 @@ function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsTy
    * Array of supporters in the level.
    */
   let supporters: Supporter[] = (opts.conference._DATA.sponsor || []).filter((org) => org.$level === data.name)
-  new xjs.HTMLElement(frag.querySelector('.c-SupporterBlock')).addClass((xjs.Object.switch<string>((opts.small) ? 'Small' : (data.$logosize || 'default'), {
+  new xjs.Element(frag.querySelector('.c-SupporterBlock') !).addClass((xjs.Object.switch<string>((opts.small) ? 'Small' : (data.$logosize || 'default'), {
     'Small' : () => 'c-SupporterBlock--sml',
     'Medium': () => 'c-SupporterBlock--med',
     'Large' : () => 'c-SupporterBlock--lrg',
     default : () => 'c-SupporterBlock--sml',
   })()), opts.classname || '')
-  frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
-  new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(function (f: DocumentFragment, d: Supporter) {
-    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(supporter_processor.process(d, { is_sponsor: data.$isSponsor }))
+  frag.querySelector('.c-SupporterBlock__Hn') !.textContent = data.name
+  new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Supporter) {
+    new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(supporter_processor.process(d, { is_sponsor: data.$isSponsor }))
   }, supporters)
 }
 

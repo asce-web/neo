@@ -52,14 +52,14 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
     'undefined': () => [],
   })()
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
-  new xjs.HTMLOListElement(frag.querySelector('ol'))
+  new xjs.HTMLOListElement(frag.querySelector('ol') !)
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
     .populate(function (f: DocumentFragment, d: ConfPage) {
-      new xjs.HTMLLIElement(f.querySelector('[itemprop="hasPart"]')).replaceClassString('{{ classes.item }}', opts.classes && opts.classes.item || '')
-      new xjs.HTMLAnchorElement(f.querySelector('[itemprop="url"]'))
+      new xjs.HTMLElement(f.querySelector('li') !).replaceClassString('{{ classes.item }}', opts.classes && opts.classes.item || '')
+      new xjs.HTMLAnchorElement(f.querySelector('a[itemprop="url"]') as HTMLAnchorElement)
         .replaceClassString('{{ classes.link }}', opts.classes && opts.classes.link || '')
         .href(d.url)
-      f.querySelector('slot[itemprop="name"]').textContent = d.name
+      f.querySelector('[itemprop="name"]') !.textContent = d.name
 
       /**
        * References to formatting elements.
@@ -69,21 +69,21 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
         /** Icons for links. */ icons: [...f.querySelectorAll('i.material-icons')],
       }
       if (xjs.Object.typeOf(opts.classes && opts.classes.icon) === 'string') {
-        new xjs.HTMLElement(formatting.icons[0])
+        new xjs.Element(formatting.icons[0])
           .replaceClassString('{{ classes.icon }}', opts.classes && opts.classes.icon || '')
           .textContent(d.getIcon()) // TODO don’t use ConfPage#getIcon()
       } else {
         formatting.icons[0].remove()
       }
       if (xjs.Object.typeOf(opts.classes && opts.classes.expand) === 'string' && d.findAll().length) { // TODO don’t use Page#findAll
-        new xjs.HTMLElement(formatting.icons[1])
+        new xjs.Element(formatting.icons[1])
           .replaceClassString('{{ classes.expand }}', opts.classes && opts.classes.expand || '')
       } else {
         formatting.icons[1].remove()
       }
 
       if (d.findAll().length && depth > 0) { // TODO don’t use Page#findAll
-        f.querySelector('[itemprop="hasPart"]').append(
+        new xjs.Element(f.querySelector('[itemprop="hasPart"]') !).append(
           require(__filename).process({
             ...d,
             hasPart: d.findAll().filter((p) => !p.isHidden()),

@@ -25,11 +25,11 @@ function instructions(frag: DocumentFragment, data: AttendeeType): void {
     minimumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
     maximumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
   })
-  frag.querySelector('.c-Pass__Attendee'         ).textContent = data.name
-  frag.querySelector('[itemprop="priceCurrency"]').value       = PRICE_OPTIONS.resolvedOptions().currency
-  frag.querySelector('[itemprop="priceCurrency"]').textContent = PRICE_OPTIONS.format(data.price)[0] // .charAt(0) // FIXME for USD only!
-  frag.querySelector('[itemprop="price"]'        ).textContent = PRICE_OPTIONS.format(data.price).slice(1)
-  new xjs.HTMLElement(frag.querySelector('[itemprop="priceSpecification"]'))
+  frag.querySelector('.c-Pass__Attendee'         ) !.textContent = data.name
+  frag.querySelector('[itemprop="priceCurrency"]') !.textContent = PRICE_OPTIONS.format(data.price)[0] // .charAt(0) // FIXME for USD only!
+  frag.querySelector('[itemprop="price"]'        ) !.textContent = PRICE_OPTIONS.format(data.price).slice(1)
+  ;(frag.querySelector('data[itemprop="priceCurrency"]') as HTMLDataElement).value = PRICE_OPTIONS.resolvedOptions().currency
+  new xjs.Element(frag.querySelector('[itemprop="priceSpecification"]') !)
     .attr('aria-label', `${data.price} ${PRICE_OPTIONS.resolvedOptions().currency}`)
     .trimInner()
 }

@@ -21,24 +21,31 @@ const template = xjs.HTMLTemplateElement
  * @param   data a venue for a conference
  */
 function instructions(frag: DocumentFragment, data: Venue): void {
-  frag.querySelector('[itemprop="description"]').textContent = data.description
+  frag.querySelector('[itemprop="description"]') !.textContent = data.description
+  frag.querySelector('[itemprop="name"]')        !.textContent = data.name
 
-  if (data.image) frag.querySelector('img[itemprop="image"]').src = data.image
-  else            frag.querySelector('img[itemprop="image"]').remove()
+	// FIXME control flow
+	if (data.image) (frag.querySelector('img[itemprop="image"]') as HTMLImageElement ).src = data.image
+	else            (frag.querySelector('img[itemprop="image"]') as HTMLImageElement ).remove()
 
-  frag.querySelector('[itemprop="name"]').textContent = data.name
-
-  frag.querySelector('[itemprop="address"]').append(xAddress.render({
+  new xjs.Element(frag.querySelector('[itemprop="address"]') !).append(xAddress.render({
     ...data.address,
   }))
 
-  if (data.telephone) frag.querySelector('[itemprop="telephone"]').textContent = data.telephone
-  else                frag.querySelector('[itemprop="telephone"]').remove()
+	if (data.telephone) {
+		new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="telephone"]') as HTMLAnchorElement)
+			.href(`tel:${data.telephone}`)
+			.textContent(data.telephone)
+	} else {
+		(frag.querySelector('[itemprop="telephone"]') !).remove()
+	}
 
+  // FIXME control flow
   if (data.url) {
-    frag.querySelector('a[itemprop="url"]').href = data.url
+    new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="url"]') as HTMLAnchorElement)
+      .href(data.url)
   } else {
-    new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="url"]')).attr({
+    new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="url"]') as HTMLAnchorElement).attr({
       href: null,
       itemprop: null,
     })

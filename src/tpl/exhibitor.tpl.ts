@@ -16,14 +16,14 @@ const template = xjs.HTMLTemplateElement
  * @param   data the exhibiting organization
  */
 function instructions(frag: DocumentFragment, data: Exhibitor): void {
-  frag.querySelector('a[itemprop="url"]'   ).href        = data.url
-  frag.querySelector('[itemprop="name"]'   ).textContent = data.name
-  frag.querySelector('slot[name="booth"]'  ).textContent = data.$booth
-  frag.querySelector('img[itemprop="logo"]').src         = data.logo
+  frag.querySelector('[itemprop="name"]') !.textContent = data.name
+  frag.querySelector('[name="booth"]'   ) !.textContent = data.$booth
+  ;(frag.querySelector('a[itemprop="url"]'   ) as HTMLAnchorElement).href = data.url
+  ;(frag.querySelector('img[itemprop="logo"]') as HTMLImageElement ).src  = data.logo
 
   if (!data.$isSponsor) {
-    frag.querySelector('strong').remove()
-    new xjs.HTMLAnchorElement(frag.querySelector('a')).removeClass('-fw-b')
+    frag.querySelector('strong') !.remove()
+    new xjs.Element(frag.querySelector('.-fw-b') !).removeClass('-fw-b')
   }
 }
 

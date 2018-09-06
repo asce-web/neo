@@ -31,19 +31,20 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: Op
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
-  new xjs.HTMLElement(frag.querySelector('.c-Pass__Period')).replaceClassString('{{ is_body }}', (!opts.is_body) ? 'o-Flex__Item' : '')
-  frag.querySelector('slot[name="offer-name"]').textContent = data.name
-  frag.querySelector('slot[name="pass-name"]' ).textContent = `${opts.pass.name}: `
-  frag.querySelector('[itemprop="offerCount"]').content = opts.pass.offers.length
+	new xjs.Element(frag.querySelector('.c-Pass__Period') !).replaceClassString('{{ is_body }}', (!opts.is_body) ? 'o-Flex__Item' : '')
+	frag.querySelector('[name="offer-name"]') !.textContent = data.name
+	frag.querySelector('[name="pass-name"]' ) !.textContent = `${opts.pass.name}: `
+	;(frag.querySelector('meta[itemprop="offerCount"]') as HTMLMetaElement).content = opts.pass.offers.length
 
-  if (date_start)  frag.querySelector('[itemprop="availabilityStarts"]').content = date_start.toISOString()
-  else             frag.querySelector('[itemprop="availabilityStarts"]').remove()
-  if (date_end  )  frag.querySelector('[itemprop="availabilityEnds"]'  ).content = date_end.toISOString()
-  else             frag.querySelector('[itemprop="availabilityEnds"]'  ).remove()
+	// FIXME control flow
+	if (date_start) (frag.querySelector('meta[itemprop="availabilityStarts"]') as HTMLMetaElement).content = date_start.toISOString()
+	else            (frag.querySelector('meta[itemprop="availabilityStarts"]') as HTMLMetaElement).remove()
+	if (date_end  ) (frag.querySelector('meta[itemprop="availabilityEnds"]'  ) as HTMLMetaElement).content = date_end.toISOString()
+	else            (frag.querySelector('meta[itemprop="availabilityEnds"]'  ) as HTMLMetaElement).remove()
 
-  frag.querySelector('dl').append(
+  new xjs.HTMLElement(frag.querySelector('dl') !).append(
     ...opts.pass.offers.map((att_type) =>
-      attendeetype_processor.process({ "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
+      attendeetype_processor.process({ ...att_type, price: 42.87 }) // TODO price is 42 for now
     )
   )
 }

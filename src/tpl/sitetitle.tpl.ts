@@ -15,13 +15,13 @@ const template = xjs.HTMLTemplateElement
  * @param   data the webpage with possible description and logo
  */
 function instructions(frag: DocumentFragment, data: ConfSite): void {
-  frag.querySelector('[itemprop="name"]'       ).textContent = data.name
-  frag.querySelector('[itemprop="description"]').textContent = data.description
-  frag.querySelector('[itemprop="logo"]'       ).src = data.logo
-  frag.querySelector('[itemprop="url"]'        ).href = data.url
+  frag.querySelector('[itemprop="name"]'       ) !.textContent = data.name
+  frag.querySelector('[itemprop="description"]') !.textContent = data.description
+  ;(frag.querySelector('a[itemprop="url"]'   ) as HTMLAnchorElement).href = data.url
+  ;(frag.querySelector('img[itemprop="logo"]') as HTMLImageElement ).src  = data.logo
 
-  if (!data.description) frag.querySelector('[itemprop="description"]').remove()
-  if (!data.logo       ) frag.querySelector('[itemprop="logo"]'       ).remove()
+  if (!data.description) frag.querySelector('[itemprop="description"]') !.remove()
+  if (!data.logo       ) frag.querySelector('[itemprop="logo"]'       ) !.remove()
 }
 
 export default new Processor(template, instructions)

@@ -27,17 +27,17 @@ interface OptsType {
  */
 function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void {
   let current_period = opts.conference.currentRegistrationPeriod
-  frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
-  frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''
+  frag.querySelector('.c-Pass__Hn'       ) !.textContent = data.name              // TODO use `[itemprop="name"]` and add to markup
+  frag.querySelector('.c-Pass__Desc slot') !.textContent = data.description || '' // TODO use `[itemprop="description"]` and add to markup
   if (data.disambiguatingDescription) {
-    frag.querySelector('.c-Pass__Fine').textContent = data.disambiguatingDescription || ''
-  } else frag.querySelector('.c-Pass__Fine').remove()
+    frag.querySelector('.c-Pass__Fine') !.textContent = data.disambiguatingDescription || '' // TODO use `[itemprop="disambiguatingDescription"]` and add to markup
+  } else frag.querySelector('.c-Pass__Fine') !.remove()
 
-  frag.querySelector('.c-Pass__Body').append(
+  new xjs.Element(frag.querySelector('.c-Pass__Body') !).append(
     registrationperiod_processor.process(current_period, { pass: data, is_body: true })
   )
 
-  frag.querySelector('.c-Pass__Foot').append(
+  new xjs.Element(frag.querySelector('.c-Pass__Foot') !).append(
     ...opts.conference.getRegistrationPeriodsAll()
       .filter((period) => period.name !== current_period.name)
       .map((period) => registrationperiod_processor.process(period, { pass: data }))

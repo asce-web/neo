@@ -22,13 +22,13 @@ interface OptsType {
  * @param   opts additional processing options
  */
 function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType): void {
-  new xjs.HTMLUListElement(frag.querySelector('ul'))
+  new xjs.HTMLUListElement(frag.querySelector('ul') !)
     .replaceClassString('{{ listclasses }}', opts.classes)
     .populate(function (f: DocumentFragment, d: Hyperlink) {
-      new xjs.HTMLAnchorElement(f.querySelector('a'))
+      new xjs.HTMLAnchorElement(f.querySelector('a') !)
         .replaceClassString('{{ name }}', d.name)
         .href(d.url)
-      f.querySelector('slot').textContent = d.text
+      f.querySelector('slot') !.textContent = d.text
     }, data)
 }
 

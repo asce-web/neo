@@ -21,8 +21,8 @@ const template = xjs.HTMLTemplateElement
  * @param   data a person that has an affiliation
  */
 function instructions(frag: DocumentFragment, data: ConfPerson): void {
-  frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation && data.affiliation.name || ''
-  frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
+  frag.querySelector('[itemprop="affiliation"] [itemprop="name"]') !.textContent = data.affiliation && data.affiliation.name || ''
+  new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.render(data))
 }
 
 export default new Processor(template, instructions)

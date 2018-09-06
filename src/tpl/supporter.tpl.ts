@@ -22,11 +22,11 @@ interface OptsType {
  * @param   opts additional processing options
  */
 function instructions(frag: DocumentFragment, data: Supporter, opts: OptsType): void {
-  frag.querySelector('a[itemprop="url"]'    ).href  = data.url
-  frag.querySelector('data[itemprop="name"]').value = data.name
-  frag.querySelector('img[itemprop="logo"]' ).src   = data.logo
-  frag.querySelector('img[itemprop="logo"]' ).alt   = data.name
-  if (opts.is_sponsor) frag.querySelector('[itemprop="sponsor"]').setAttribute('itemprop', 'funder')
+  ;(frag.querySelector('a[itemprop="url"]'    ) as HTMLAnchorElement).href  = data.url
+  ;(frag.querySelector('data[itemprop="name"]') as HTMLDataElement  ).value = data.name
+  ;(frag.querySelector('img[itemprop="logo"]' ) as HTMLImageElement ).src   = data.logo
+  ;(frag.querySelector('img[itemprop="logo"]' ) as HTMLImageElement ).alt   = data.name
+  if (opts.is_sponsor) frag.querySelector('[itemprop="sponsor"]') !.setAttribute('itemprop', 'funder')
 }
 
 export default new Processor(template, instructions)

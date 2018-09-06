@@ -27,34 +27,34 @@ const template = xjs.HTMLTemplateElement
 function instructions(frag: DocumentFragment, data: Conference): void {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
-   */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
+   */ frag.querySelector('.c-Banner') !.setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
 
-  frag.querySelector('[itemprop="name"]'    ).textContent  = data.name
-  frag.querySelector('meta[itemprop="url"]' ).content      = data.url
-  frag.querySelector('[itemprop="location"]').append(xAddress.render({
+  frag.querySelector('[itemprop="name"]') !.textContent = data.name
+  ;(frag.querySelector('meta[itemprop="url"]' ) as HTMLMetaElement).content = data.url
+  new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.render({
     ...data.location,
     $regionName: true,
   }))
 
   let date_start = new Date(data.startDate)
   let date_end   = new Date(data.endDate  )
-  new xjs.HTMLTimeElement(frag.querySelector('[itemprop="startDate"]'))
+  new xjs.HTMLTimeElement(frag.querySelector('time[itemprop="startDate"]') as HTMLTimeElement)
     .dateTime(date_start)
     .textContent(xjs.Date.format(date_start, 'M j'))
-  new xjs.HTMLTimeElement(frag.querySelector('[itemprop="endDate"]'))
+  new xjs.HTMLTimeElement(frag.querySelector('time[itemprop="endDate"]') as HTMLTimeElement)
     .dateTime(date_end)
     .textContent(xjs.Date.format(date_end, 'M j'))
 
-  frag.querySelector('[itemprop="description"]').textContent = data.description || ' ' // `&nbsp;` // cannot remove node due to SEO
+  frag.querySelector('[itemprop="description"]') !.textContent = data.description || ' ' // `&nbsp;` // cannot remove node due to SEO
 
   // TODO use `list-highlightbuttons.tpl.ts`
-  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex')).populate(function (f: DocumentFragment, d: Hyperlink) {
-    new xjs.HTMLAnchorElement(f.querySelector('[itemprop="significantLink"]'))
+  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex') as HTMLUListElement).populate(function (f: DocumentFragment, d: Hyperlink) {
+    new xjs.HTMLAnchorElement(f.querySelector('a[itemprop="significantLink"]') as HTMLAnchorElement)
       .href(d.url)
       .textContent(d.text)
   }, data.$heroButtons)
 
-  new xjs.HTMLElement(frag.querySelector('.c-ConfHed__Detail__Dates')).trimInner()
+  new xjs.Element(frag.querySelector('.c-ConfHed__Detail__Dates') !).trimInner()
 }
 
 export default new Processor(template, instructions)

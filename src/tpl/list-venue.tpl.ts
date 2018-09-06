@@ -21,8 +21,8 @@ const template = xjs.HTMLUListElement.templateSync()
  * @param   data an array of venues
  */
 function instructions(frag: DocumentFragment, data: Venue[]): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f: DocumentFragment, d: Venue) {
-		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Venue) {
+		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
 			venue_processor.process(d)
 		)
 	}, data)

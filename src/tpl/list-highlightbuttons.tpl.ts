@@ -25,8 +25,8 @@ interface OptsType {
  * @param   opts additional processing options
  */
 function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f: DocumentFragment, d: Hyperlink) {
-		new xjs.HTMLAnchorElement(f.querySelector('a'))
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Hyperlink) {
+		new xjs.HTMLAnchorElement(f.querySelector('a') !)
 			.replaceClassString('{{ buttonclasses }}', opts.buttonclasses)
 			.href       (d.url  || '#1')
 			.textContent(d.text || ''  )

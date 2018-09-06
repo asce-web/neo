@@ -26,8 +26,8 @@ const template = xjs.HTMLUListElement.templateSync()
  * @param   data an array of conference chairs
  */
 function instructions(frag: DocumentFragment, data: ConfPerson[]): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f: DocumentFragment, d: ConfPerson) {
-		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: ConfPerson) {
+		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
 			person_affiliation_processor.process(d)
 		)
 	}, data)

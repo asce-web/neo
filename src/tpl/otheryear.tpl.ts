@@ -23,21 +23,21 @@ const template = xjs.HTMLTemplateElement
 function instructions(frag: DocumentFragment, data: Conference): void {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
-   */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
+   */ frag.querySelector('.c-Banner') !.setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
 
 
-  frag.querySelector('[itemprop="name"]'         ).textContent = data.name
-  frag.querySelector('a[itemprop="url"]'         ).href        = data.url
-  frag.querySelector('meta[itemprop="startDate"]').content     = data.startDate
-  frag.querySelector('[itemprop="location"]'     ).append(xAddress.render({
+	  frag.querySelector('[itemprop="name"]'         ) !                    .textContent = data.name
+	;(frag.querySelector('a[itemprop="url"]'         ) as HTMLAnchorElement).href        = data.url
+	;(frag.querySelector('meta[itemprop="startDate"]') as HTMLMetaElement)  .content     = data.startDate
+  new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.render({
     ...data.location,
     $regionName: true,
   }))
 
   if (data.disambiguatingDescription) {
-    frag.querySelector('[itemprop="disambiguatingDescription"]').textContent = data.disambiguatingDescription
+    frag.querySelector('[itemprop~="disambiguatingDescription"]') !.textContent = data.disambiguatingDescription
   } else {
-    frag.querySelector('[itemprop="disambiguatingDescription"]').remove()
+    frag.querySelector('[itemprop~="disambiguatingDescription"]') !.remove()
   }
 }
 

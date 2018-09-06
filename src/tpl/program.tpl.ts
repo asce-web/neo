@@ -39,15 +39,15 @@ interface OptsType {
  * @param   opts additional processing options
  */
 function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): void {
-  let container = frag.querySelector('[role="tablist"]')
-	const ProgramPanel = new Processor(container.querySelector('template') !, function (f: DocumentFragment, d: DateGroup, o: { index: number }) {
-		f.querySelector('[role="tabpanel"]' ).id          = `${opts.id}-panel${o.index}`
-		f.querySelector('time.c-ProgramHn'  ).dateTime    = d.date.toISOString()
-		f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
-		f.querySelector('slot[name="date"]' ).textContent = xjs.Date.format(d.date, 'M j')
-		new xjs.HTMLElement(f.querySelector('slot[name="panel"]')).empty()
+  let container = new xjs.Element(frag.querySelector('[role="tablist"]') !)
+	const ProgramPanel = new Processor(container.node.querySelector('template') !, function (f: DocumentFragment, d: DateGroup, o: { index: number }) {
+		f.querySelector('[role="tabpanel"]') !.id          = `${opts.id}-panel${o.index}`
+		f.querySelector('[name="day"]'     ) !.textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
+		f.querySelector('[name="date"]'    ) !.textContent = xjs.Date.format(d.date, 'M j')
+		f.querySelector('time'             ) !.dateTime    = d.date.toISOString()
+		new xjs.Element(f.querySelector('[name="panel"]') !).empty()
 			.append(timeblock_processor.process(d.items))
-		new xjs.HTMLTimeElement(f.querySelector('.c-ProgramHn')).trimInner()
+		new xjs.Element(f.querySelector('.c-ProgramHn') !).trimInner()
 	})
   /**
    * An array, categorizing all the sessions of the conference by date.

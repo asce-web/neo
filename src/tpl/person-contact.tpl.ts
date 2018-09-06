@@ -21,21 +21,29 @@ const template = xjs.HTMLTemplateElement
  * @param   data a person that has a job title
  */
 function instructions(frag: DocumentFragment, data: ConfPerson): void {
-  frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
-  frag.querySelector('[itemprop="jobTitle"]' ).textContent = data.jobTitle
+	/**
+	 * References to formatting elements.
+	 * We want to create these references before removing any elements from the DOM.
+	 */
+	const formatting = {
+		/** Comma after name. */     comma: frag.querySelector('[itemprop="name"] + span') !,
+		/** Pipe after job title. */ pipe : frag.querySelector('[itemprop="jobTitle"] + span') !,
+	}
+  new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.render(data))
+  frag.querySelector('[itemprop="jobTitle"]') !.textContent = data.jobTitle
 
-  new xjs.HTMLAnchorElement(frag.querySelector('[itemprop="email"]'))
+  // if (data.email) {}
+  new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="email"]') as HTMLAnchorElement)
     .href(data.email ? `mailto:${data.email}` : null)
-    .attr('itemprop', data.email ? 'email' : null)
+    .attr('itemprop', data.email ? 'email' : null) // TODO turn this into an `if`
 
   if (data.telephone) {
-    new xjs.HTMLAnchorElement(frag.querySelector('[itemprop="telephone"]'))
+    new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="telephone"]') as HTMLAnchorElement)
       .href(data.telephone)
-      .attr('itemprop', data.telephone)
       .textContent(data.telephone)
   } else {
-    frag.querySelector('[itemprop="jobTitle"] + span').remove()
-    frag.querySelector('[itemprop="telephone"]').remove()
+    formatting.pipe.remove()
+    frag.querySelector('[itemprop="telephone"]') !.remove()
   }
 }
 
