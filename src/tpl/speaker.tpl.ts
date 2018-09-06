@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import {Speaker} from '../interfaces'
+import {ConfPerson} from '../interfaces'
 import list_social_processor from './list-social.tpl'
 
 const {xPersonFullname} = require('aria-patterns')
@@ -23,7 +23,7 @@ const template = xjs.HTMLTemplateElement
  * @param   frag the template content to process
  * @param   data a person that has a possible job title, an affiliated organization, and social media contact links
  */
-function instructions(frag: DocumentFragment, data: Speaker): void {
+function instructions(frag: DocumentFragment, data: ConfPerson): void {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
   frag.querySelector('[itemprop="image"]'                        ).src         = data.image || ''
   frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle || ''

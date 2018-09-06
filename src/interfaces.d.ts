@@ -58,35 +58,27 @@ export interface Pass extends sdo.AggregateOffer {
 	offers: AttendeeType[];
 }
 
-// TODO: combine all person types into one `ConfPerson` type.
-export interface PersonAffiliation extends sdo.Person {
+export interface ConfPerson extends sdo.Person {
+	/** the string name of this person */
+	name?: string;
+	/** a unique identifier of this person */
 	identifier  : string;
+	/** the person’s first name */
 	givenName   : string;
+	/** the person’s last name */
 	familyName  : string;
-	affiliation : sdo.Organization;
-}
-
-export interface PersonJobtitle extends sdo.Person {
-	identifier  : string;
-	givenName   : string;
-	familyName  : string;
-	jobTitle    : string;
+	/** an organization that this person is affiliated with */
+	affiliation?: sdo.Organization;
+	/** this person’s job title */
+	jobTitle?: string; // TODO schemaorg-jsd:`Person#jobTitle`
+	/** the person’s social media links */
+	$social?: Hyperlink[];
 }
 
 export interface Session extends sdo.Event {
 	name     : string;
 	startDate: string;
 	endDate  : string;
-}
-
-export interface Speaker extends sdo.Person {
-	identifier  : string;
-	givenName   : string;
-	familyName  : string;
-	affiliation : sdo.Organization;
-	/** the person’s social media links */
-	$social?: Hyperlink[];
-	jobTitle?: string; // TODO schemaorg-jsd:`Person#jobTitle`
 }
 
 export interface Supporter extends sdo.Organization {
