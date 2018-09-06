@@ -3,6 +3,7 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Conference, Pass} from '../interfaces'
 import registrationperiod_processor from './registrationperiod.tpl'
 
 
@@ -12,10 +13,6 @@ const template = xjs.HTMLTemplateElement
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
   .node
-
-type DataType = sdo.AggregateOffer & {
-	name: string;
-}
 
 interface OptsType {
 	/** the conference to which this pass belongs */
@@ -28,7 +25,7 @@ interface OptsType {
  * @param   data a single pass
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void {
   let current_period = opts.conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''

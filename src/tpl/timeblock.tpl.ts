@@ -4,6 +4,8 @@ import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Session} from '../interfaces'
+
 const xjs = { ...xjs1, ...xjs2 }
 
 
@@ -11,19 +13,13 @@ const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-timeblock.tpl.html'))
   .node
 
-type DataType = sdo.Event & {
-	name     : string;
-	startDate: string;
-	endDate  : string;
-}
-
 /**
  * A `<tr.c-TimeBlock__Item>` subcomponent containing a pair of `<td>`s,
  * marking up this date range as a session with time and name.
  * @param   frag the template content to process
  * @param   data an array of sessions
  */
-function instructions(frag: DocumentFragment, data: DataType[]): void {
+function instructions(frag: DocumentFragment, data: Session[]): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-TimeBlock')).populate(function (f, d, o = {}) {
     let time_start = new Date(d.startDate)
     let time_end   = new Date(d.endDate  )

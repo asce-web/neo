@@ -1,6 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Speaker} from '../interfaces'
 import speaker_processor from './speaker.tpl'
 
 
@@ -19,7 +20,7 @@ const template = xjs.HTMLUListElement.templateSync()
  * @param   frag the template content to process
  * @param   data an array of speakers
  */
-function instructions(frag: DocumentFragment, data: sdo.Person[]): void {
+function instructions(frag: DocumentFragment, data: Speaker[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			speaker_processor.process(d)

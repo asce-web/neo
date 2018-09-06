@@ -1,6 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {SupporterLevel} from '../interfaces'
 import supporterlevel_processor from './supporterlevel.tpl'
 
 
@@ -27,7 +28,7 @@ interface OptsType {
  * @param   data an array of supporter levels
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: sdo.Offer[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			supporterlevel_processor.process(d, o)

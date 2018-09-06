@@ -3,6 +3,8 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Venue} from '../interfaces'
+
 const {xAddress} = require('aria-patterns')
 
 
@@ -13,24 +15,12 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
-type DataType = sdo.Accommodation & {
-	name: string;
-	/** the label or title of the venue */
-	description: string;
-	address?: sdo.PostalAddress;
-	/** a call-to-action link with a url and text */
-	$cta?: sdo.WebPageElement & {
-		url: string;
-		text: string;
-	};
-}
-
 /**
  * A `<section>` element marking up a venue.
  * @param   frag the template content to process
  * @param   data a venue for a conference
  */
-function instructions(frag: DocumentFragment, data: DataType): void {
+function instructions(frag: DocumentFragment, data: Venue): void {
   frag.querySelector('[itemprop="description"]').textContent = data.description
 
   if (data.image) frag.querySelector('img[itemprop="image"]').src = data.image

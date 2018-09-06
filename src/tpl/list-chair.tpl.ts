@@ -1,6 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {PersonAffiliation} from '../interfaces'
 import person_affiliation_processor from './person-affiliation.tpl'
 
 
@@ -24,7 +25,7 @@ const template = xjs.HTMLUListElement.templateSync()
  * @param   frag the template content to process
  * @param   data an array of conference chairs
  */
-function instructions(frag: DocumentFragment, data: sdo.Person[]): void {
+function instructions(frag: DocumentFragment, data: PersonAffiliation[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			person_affiliation_processor.process(d)

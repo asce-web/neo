@@ -3,6 +3,7 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Conference, SupporterLevel} from '../interfaces'
 import supporter_processor from './supporter.tpl'
 
 
@@ -12,14 +13,6 @@ const template = xjs.HTMLTemplateElement
     new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
   })
   .node
-
-type DataType = sdo.Offer & {
-	name: string;
-	/** if given, either `Small`, `Medium`, or `Large`; the logo size to render */
-	$logosize? : string;
-	/** is the level awarded to financial contributors? */
-	$isSponsor?: boolean;
-}
 
 interface OptsType {
 	/** should logo sizing be overridden to `Small`? */
@@ -36,7 +29,7 @@ interface OptsType {
  * @param   data the supporter level
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsType): void {
   /**
    * Array of supporters in the level.
    * @type {Array<sdo.Organization>}

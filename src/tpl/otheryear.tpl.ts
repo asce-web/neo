@@ -3,6 +3,8 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Conference} from '../interfaces'
+
 const {xAddress} = require('aria-patterns')
 
 
@@ -13,19 +15,12 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
-type DataType = sdo.Organization & {
-	name     : string;
-	url      : string;
-	startDate: string;
-	location : sdo.PostalAddress;
-}
-
 /**
  * An about page `<aside>` containing other conferences’ most important info.
  * @param   frag the template content to process
  * @param   data a single conference event
  */
-function instructions(frag: DocumentFragment, data: DataType): void {
+function instructions(frag: DocumentFragment, data: Conference): void {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)

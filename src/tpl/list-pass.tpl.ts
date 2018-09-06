@@ -1,6 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Conference, Pass} from '../interfaces'
 import pass_processor from './pass.tpl'
 
 
@@ -25,7 +26,7 @@ interface OptsType {
  * @param   data an array of passes
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: sdo.AggregateOffer[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Pass[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			pass_processor.process(d, o)

@@ -1,6 +1,8 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Hyperlink} from '../interfaces'
+
 
 const template = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
@@ -10,11 +12,6 @@ const template = xjs.HTMLUListElement.templateSync()
 			.innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
 	})
 	.node
-
-type DataType = sdo.WebPageElement & {
-	text: string;
-	url : string;
-}
 
 interface OptsType {
 	/** additional class(es) to add to each link */
@@ -27,7 +24,7 @@ interface OptsType {
  * @param   data an array of links
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLAnchorElement(f.querySelector('a'))
 			.replaceClassString('{{ buttonclasses }}', o.buttonclasses)

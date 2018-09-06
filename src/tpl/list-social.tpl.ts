@@ -3,16 +3,12 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {HyperlinkNamed} from '../interfaces'
+
 
 const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../x-list-social.tpl.html')) // TODO use `xjs.HTMLUListElement.templateSync()`
   .node
-
-type DataType = sdo.WebPageElement & {
-	name: string;
-	url : string;
-	text: string;
-}
 
 interface OptsType {
   /** any other class(es) to add to the `<ul>` */
@@ -25,7 +21,7 @@ interface OptsType {
  * @param   data an array of links
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: HyperlinkNamed[], opts: OptsType): void {
   new xjs.HTMLUListElement(frag.querySelector('ul'))
     .replaceClassString('{{ listclasses }}', opts.classes)
     .populate(function (f, d, o) {

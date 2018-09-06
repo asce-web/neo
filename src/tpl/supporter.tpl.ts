@@ -3,16 +3,12 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Supporter} from '../interfaces'
+
 
 const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-supporter.tpl.html'))
   .node
-
-type DataType = sdo.Organization & {
-	name: string;
-	url : string;
-	logo: string;
-}
 
 interface OptsType {
 	/** is the supporter a financial sponsor? */
@@ -25,7 +21,7 @@ interface OptsType {
  * @param   data the supporting organization
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Supporter, opts: OptsType): void {
   frag.querySelector('a[itemprop="url"]'    ).href  = data.url
   frag.querySelector('data[itemprop="name"]').value = data.name
   frag.querySelector('img[itemprop="logo"]' ).src   = data.logo

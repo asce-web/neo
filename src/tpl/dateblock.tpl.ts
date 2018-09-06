@@ -4,6 +4,8 @@ import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {ImportantDate} from '../interfaces'
+
 const xjs = { ...xjs1, ...xjs2 }
 
 
@@ -11,19 +13,13 @@ const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-dateblock.tpl.html'))
   .node
 
-type DataType = sdo.Action & {
-	name     : string;
-	startTime: string;
-	endTime  : string;
-}
-
 /**
  * A `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
  * marking up this date range as an important date with date and description.
  * @param   frag the template content to process
  * @param   data an array of important dates
  */
-function instructions(frag: DocumentFragment, data: DataType[]): void {
+function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(function (f, d, o = {}) {
     let date_start = new Date(d.startTime)
     let date_end   = new Date(d.endTime  )
