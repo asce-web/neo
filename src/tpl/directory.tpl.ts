@@ -11,11 +11,14 @@ const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-directory.tpl.html'))
   .node
 
+type DataType = sdo.WebPage & {
+	hasPart?: sdo.WebPage|sdo.WebPage[];
+}
+
 /**
  * A nested `<ol>` marking up a site directory.
  * @param   frag the template content to process
- * @param   {sdo.WebPage}                      data         http://schema.org/WebPage
- * @param   {(sdo.WebPage|Array<sdo.WebPage>)} data.hasPart http://schema.org/hasPart
+ * @param   data a webpage with possible subpages
  * @param   {!Object=} opts additional rendering options
  * @param   {integer=} [opts.depth=Infinity] number of nested directory levels
  * @param   {integer=} options.start which subpage to start at
@@ -28,7 +31,7 @@ const template = xjs.HTMLTemplateElement
  * @param   {string=}          opts.classes.expand classes for `expand_more` icon
  * @param   {!Object=} opts.options configurations for nested outlines; specs identical to `opts`
 */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   let subpages = (xjs.Object.typeOf(data.hasPart) === 'array' ) ? data.hasPart : [data.hasPart]
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))

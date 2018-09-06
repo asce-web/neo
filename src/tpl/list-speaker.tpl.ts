@@ -17,10 +17,10 @@ const template = xjs.HTMLUListElement.templateSync()
 /**
  * A `<ul>` list of {@link Speaker|speakers}.
  * @param   frag the template content to process
- * @param   {Array<sdo.Person>} data array of speakers
+ * @param   data an array of speakers
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: sdo.Person[], opts = {}): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			Speaker.process(d)

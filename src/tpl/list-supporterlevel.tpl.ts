@@ -17,12 +17,12 @@ const template = xjs.HTMLOListElement.templateSync()
 /**
  * An `<ol>` list of {@link Supporterlevel|supporter levels}.
  * @param   frag the template content to process
- * @param   {Array<sdo.Offer>} data array of supporter levels
+ * @param   data an array of supporter levels
  * @param   {!Object=} opts additional rendering options
  * @param   {boolean=} opts.small should logo sizing be overridden to `Small`?
  * @param   {Conference} opts.conference the conference containing this list
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: sdo.Offer[], opts = {}): void {
 	new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			Supporterlevel.process(d, o)

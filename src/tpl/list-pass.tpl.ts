@@ -17,11 +17,11 @@ const template = xjs.HTMLUListElement.templateSync()
 /**
  * A `<ul>` list of {@link Pass|passes}.
  * @param   frag the template content to process
- * @param   {Array<!Object>} data array of passes
+ * @param   data an array of passes
  * @param   {!Object=} opts additional rendering options
  * @param   {Conference} opts.conference the conference containing this pass
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: sdo.AggregateOffer[], opts = {}): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
 			Pass.process(d, o)

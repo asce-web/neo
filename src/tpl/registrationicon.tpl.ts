@@ -11,17 +11,21 @@ const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-registrationicon.tpl.html'))
   .node
 
+type DataType = sdo.AggregateOffer & {
+	name: string;
+	/** the icon keyword of this registration period */
+	$icon?: string;
+	availabilityStarts?: string; // TODO `Offer#availabilityStarts`
+	availabilityEnds  ?: string; // TODO `Offer#availabilityEnds`
+}
+
 /**
  * A single `<p.c-RegPdIcon>` component indicating a registration period.
  * @param   frag the template content to process
- * @param {sdo.AggregateOffer} data a registration period, with:
- * @param {string} data.name the name of the registration period (e.g., 'Early Bird')
- * @param {string=} data.availabilityStarts the date on which this registration period starts
- * @param {string=} data.availabilityEnds the date on which this registration period ends
- * @param {string=} data.$icon the icon keyword of this registration period
+ * @param   data a single registration period
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 

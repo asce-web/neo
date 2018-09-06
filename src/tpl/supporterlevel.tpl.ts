@@ -13,19 +13,24 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
+type DataType = sdo.Offer & {
+	name: string;
+	/** if given, either `Small`, `Medium`, or `Large`; the logo size to render */
+	$logosize? : string;
+	/** is the level awarded to financial contributors? */
+	$isSponsor?: boolean;
+}
+
 /**
  * A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.
  * @param   frag the template content to process
- * @param   {sdo.Offer} data            http://schema.org/Offer
- * @param   {string}    data.name       http://schema.org/name
- * @param   {string=}   data.$logoSize  if given, either `Small`, `Medium`, or `Large`; the logo size to render
- * @param   {boolean=}  data.$isSponsor is the level awarded to financial contributors?
+ * @param   data the supporter level
  * @param   {!Object=} opts additional rendering options
  * @param   {boolean=} opts.small should logo sizing be overridden to `Small`?
  * @param   {string=}  opts.classname any other classname(s) to add to the `<section>`
  * @param   {Conference} opts.conference the conference to which this supporter level belongs
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   /**
    * Array of supporters in the level.
    * @type {Array<sdo.Organization>}

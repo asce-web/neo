@@ -13,19 +13,20 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
+type DataType = sdo.Organization & {
+	name     : string;
+	url      : string;
+	startDate: string;
+	location : sdo.PostalAddress;
+}
+
 /**
  * An about page `<aside>` containing other conferences’ most important info.
  * @param   frag the template content to process
- * @param   {sdo.Event}         data a JSON object representing a single conference event
- * @param   {string}            data.name                      http://schema.org/name
- * @param   {string}            data.url                       http://schema.org/url
- * @param   {string}            data.startDate                 http://schema.org/startDate
- * @param   {string=}           data.image                     http://schema.org/image
- * @param   {sdo.PostalAddress} data.location                  http://schema.org/location
- * @param   {string=}           data.disambiguatingDescription http://schema.org/disambiguatingDescription
+ * @param   data a single conference event
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner').setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)

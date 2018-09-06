@@ -13,17 +13,18 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
+type DataType = sdo.AggregateOffer & {
+	name: string;
+}
+
 /**
  * An `<article.c-Pass>` component marking up a pass’s info.
  * @param   frag the template content to process
- * @param   {sdo.AggregateOffer} data                           http://schema.org/AggregateOffer
- * @param   {string}             data.name                      http://schema.org/name
- * @param   {string=}            data.description               http://schema.org/description
- * @param   {string=}            data.disambiguatingDescription http://schema.org/disambiguatingDescription
+ * @param   data a single pass
  * @param   {!Object=} opts additional rendering options
  * @param   {Conference} opts.conference the conference to which this pass belongs
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   let current_period = opts.conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''

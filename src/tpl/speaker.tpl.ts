@@ -17,27 +17,23 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
+type DataType = sdo.Person & {
+	identifier  : string;
+	givenName   : string;
+	familyName  : string;
+	affiliation : sdo.Organization;
+	/** social media data for the person */
+	$social?: sdo.WebPageElement[];
+	jobTitle?: string; // TODO Person#jobTitle
+}
+
 /**
  * An `<article.c-Speaker>` component marking up a person’s speaker information.
  * @param   frag the template content to process
- * @param {sdo.Person} data a JSON object representing a Person
- * @param {string}  data.identifier      http://schema.org/identifier
- * @param {string}  data.givenName       http://schema.org/givenName
- * @param {string}  data.familyName      http://schema.org/familyName
- * @param {string=} data.additionalName  http://schema.org/additionalName
- * @param {string=} data.honorificPrefix http://schema.org/honorificPrefix
- * @param {string=} data.honorificSuffix http://schema.org/honorificSuffix
- * @param {string=} data.image           http://schema.org/image
- * @param {string=} data.url             http://schema.org/url
- * @param {string=} data.email           http://schema.org/email
- * @param {string=} data.telephone       http://schema.org/telephone
- * @param {string=} data.jobTitle        http://schema.org/jobTitle
- * @param {sdo.Organization} data.affiliation http://schema.org/affiliation
- * @param {string=}          data.affiliation.name
- * @param   {{Array<sdo.WebPageElement>}=} data.$social
+ * @param   data a person that has a possible job title, an affiliated organization, and social media contact links
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ).id          = data.identifier
   frag.querySelector('[itemprop="image"]'                        ).src         = data.image || ''
   frag.querySelector('[itemprop="jobTitle"]'                     ).textContent = data.jobTitle || ''

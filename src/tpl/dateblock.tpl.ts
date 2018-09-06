@@ -11,18 +11,20 @@ const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-dateblock.tpl.html'))
   .node
 
+type DataType = sdo.Action & {
+	name     : string;
+	startTime: string;
+	endTime  : string;
+}
+
 /**
  * A `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
  * marking up this date range as an important date with date and description.
  * @param   frag the template content to process
- * @param {Array<sdo.Action>} data an array of important dates, each with:
- * @param {string}  data.name the name of the important date range
- * @param {string}  data.startTime the start date, in ISO string format, of the date range
- * @param {string}  data.endTime   the end   date, in ISO string format, of the date range
- * @param {string=} data.url the url of the important date
+ * @param   data an array of important dates
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType[], opts = {}): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('.c-DateBlock')).populate(function (f, d, o = {}) {
     let date_start = new Date(d.startTime)
     let date_end   = new Date(d.endTime  )

@@ -7,17 +7,18 @@ const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-sitetitle.tpl.html'))
   .node
 
+type DataType = sdo.Product & sdo.WebPage & {
+	name: string;
+	url : string;
+}
+
 /**
  * A `<a.c-SiteTitle>` element containing the site logo and title, linking to the home page.
  * @param   frag the template content to process
- * @param {(sdo.Product&sdo.WebPage)} data http://schema.org/Product & http://schema.org/WebPage
- * @param {string}  data.name        http://schema.org/name
- * @param {string}  data.url         http://schema.org/url
- * @param {string=} data.description http://schema.org/description
- * @param {string=} data.logo        http://schema.org/logo
+ * @param   data the webpage with possible description and logo
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   frag.querySelector('[itemprop="name"]'       ).textContent = data.name
   frag.querySelector('[itemprop="description"]').textContent = data.description
   frag.querySelector('[itemprop="logo"]'       ).src = data.logo

@@ -13,21 +13,20 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
+type DataType = sdo.Person & {
+	identifier  : string;
+	givenName   : string;
+	familyName  : string;
+	affiliation : sdo.Organization;
+}
+
 /**
  * Markup for a person and affiliated organization.
  * @param   frag the template content to process
- * @param {sdo.Person} data a JSON object representing a Person
- * @param {string}  data.identifier      http://schema.org/identifier
- * @param {string}  data.givenName       http://schema.org/givenName
- * @param {string}  data.familyName      http://schema.org/familyName
- * @param {string=} data.additionalName  http://schema.org/additionalName
- * @param {string=} data.honorificPrefix http://schema.org/honorificPrefix
- * @param {string=} data.honorificSuffix http://schema.org/honorificSuffix
- * @param {sdo.Organization} data.affiliation      http://schema.org/affiliation
- * @param {string=}          data.affiliation.name http://schema.org/name
+ * @param   data a person that has an affiliation
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   frag.querySelector('[itemprop="affiliation"] [itemprop="name"]').textContent = data.affiliation && data.affiliation.name || ''
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
 }

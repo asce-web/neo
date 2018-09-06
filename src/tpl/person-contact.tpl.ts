@@ -13,22 +13,20 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
+type DataType = sdo.Person & {
+	identifier  : string;
+	givenName   : string;
+	familyName  : string;
+	jobTitle    : string;
+}
+
 /**
  * Markup for a person and contact information.
  * @param   frag the template content to process
- * @param {sdo.Person} data a JSON object representing a Person
- * @param {string}  data.identifier      http://schema.org/identifier
- * @param {string}  data.givenName       http://schema.org/givenName
- * @param {string}  data.familyName      http://schema.org/familyName
- * @param {string=} data.additionalName  http://schema.org/additionalName
- * @param {string=} data.honorificPrefix http://schema.org/honorificPrefix
- * @param {string=} data.honorificSuffix http://schema.org/honorificSuffix
- * @param {string}  data.jobTitle        http://schema.org/jobTitle
- * @param {string=} data.email           http://schema.org/email
- * @param {string=} data.telephone       http://schema.org/telephone
+ * @param   data a person that has a job title
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
   frag.querySelector('[itemprop="jobTitle"]' ).textContent = data.jobTitle
 

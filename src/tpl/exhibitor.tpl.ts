@@ -8,19 +8,23 @@ const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-exhibitor.tpl.html'))
   .node
 
+type DataType = sdo.Organization & {
+	name: string;
+	url : string;
+	logo: string;
+	/** the booth number of the exhibitor */
+	$booth: number;
+	/** does the exhibitor also happen to be a sponsor? */
+	$isSponsor?: boolean;
+}
+
 /**
  * Markup for an exhibitor logo.
  * @param   frag the template content to process
- * @param {sdo.Organization} data http://schema.org/Organization
- * @param {string}  data.name        http://schema.org/name
- * @param {string}  data.url         http://schema.org/url
- * @param {string}  data.logo        http://schema.org/logo
- * @param {string=} data.description http://schema.org/description
- * @param {number}  data.$booth the booth number of the exhibitor
- * @param {boolean=} data.$isSponsor does the exhibitor also happen to be a sponsor?
+ * @param   data the exhibiting organization
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   frag.querySelector('a[itemprop="url"]'   ).href        = data.url
   frag.querySelector('[itemprop="name"]'   ).textContent = data.name
   frag.querySelector('slot[name="booth"]'  ).textContent = data.$booth

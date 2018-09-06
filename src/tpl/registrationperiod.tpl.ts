@@ -13,20 +13,23 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
+type DataType = sdo.AggregateOffer & {
+	name: string;
+	availabilityStarts?: string; // TODO `Offer#availabilityStarts`
+	availabilityEnds  ?: string; // TODO `Offer#availabilityEnds`
+}
+
 /**
  * A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
  * @param   frag the template content to process
- * @param {sdo.AggregateOffer} data a JSON object representing a registration period
- * @param {string} data.name the name of the registration period (e.g., 'Early Bird')
- * @param {string=} data.availabilityStarts the date on which this registration period starts
- * @param {string=} data.availabilityEnds the date on which this registration period ends
+ * @param   data a single registration period
  * @param   {!Object=} opts additional rendering options
  * @param   {boolean=} opts.is_body `true` if this period is to be placed in the body and not the footer
  * @param   {sdo.AggregateOffer} opts.pass                           http://schema.org/AggregateOffer
  * @param   {string}             opts.pass.name                      http://schema.org/name
  * @param   {Array<sdo.Offer>}   opts.pass.offers                    http://schema.org/offers
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 

@@ -8,17 +8,20 @@ const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../x-list-social.tpl.html')) // TODO use `xjs.HTMLUListElement.templateSync()`
   .node
 
+type DataType = sdo.WebPageElement & {
+	name: string;
+	url : string;
+	text: string;
+}
+
 /**
  * A `<ul>` list of social media links.
  * @param   frag the template content to process
- * @param {Array<sdo.WebPageElement>} data array of link objects
- * @param   {string}                  data.text http://schema.org/text
- * @param   {string}                  data.url  http://schema.org/url
- * @param   {string}                  data.name http://schema.org/name
+ * @param   data an array of links
  * @param   {!Object=} opts additional rendering options
  * @param   {string=} opts.classes classes to add to the list
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType[], opts = {}): void {
   new xjs.HTMLUListElement(frag.querySelector('ul'))
     .replaceClassString('{{ listclasses }}', opts.classes)
     .populate(function (f, d, o) {

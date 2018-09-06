@@ -13,22 +13,25 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
+type DataType = sdo.Accommodation & {
+	name: string;
+	/** the label or title of the venue */
+	description: string;
+	address?: sdo.PostalAddress;
+	/** a call-to-action link with a url and text */
+	$cta?: sdo.WebPageElement & {
+		url: string;
+		text: string;
+	};
+}
+
 /**
  * A `<section>` element marking up a venue.
  * @param   frag the template content to process
- * @param {sdo.Accommodation} data a JSON object representing the venue
- * @param {string} data.description the label or title for the venue
- * @param {string=} data.url the url of this place
- * @param {string=} data.image the photo url for this place
- * @param {string=} data.name the name of this place
- * @param {sdo.PostalAddress=} data.address the physical address of this place
- * @param {string=} data.telephone the telephone number of this place
- * @param {{url:string, text:string}=} data.$cta a call-to-action link with a url and text
- * @param {string}  data.$cta.url the url of the call-to-action
- * @param {string}  data.$cta.text the text of the call-to-action
+ * @param   data a venue for a conference
  * @param   {!Object=} opts additional rendering options
  */
-function instructions(frag: DocumentFragment, data, opts = {}): void {
+function instructions(frag: DocumentFragment, data: DataType, opts = {}): void {
   frag.querySelector('[itemprop="description"]').textContent = data.description
 
   if (data.image) frag.querySelector('img[itemprop="image"]').src = data.image
