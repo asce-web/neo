@@ -3,22 +3,19 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {AttendeeType} from '../interfaces'
+
 
 const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-attendeetype.tpl.html'))
   .node
-
-type DataType = sdo.Offer & {
-	name  : string;
-	price?: number;
-}
 
 /**
  * A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
  * @param   frag the template content to process
  * @param   data the attendee type
  */
-function instructions(frag: DocumentFragment, data: DataType): void {
+function instructions(frag: DocumentFragment, data: AttendeeType): void {
   /**
    * @summary Options for formatting pass prices.
    * @private

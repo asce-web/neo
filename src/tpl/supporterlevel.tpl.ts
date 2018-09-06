@@ -3,7 +3,8 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Supporter from './supporter.tpl'
+import {Conference, SupporterLevel} from '../interfaces'
+import supporter_processor from './supporter.tpl'
 
 
 const template = xjs.HTMLTemplateElement
@@ -12,14 +13,6 @@ const template = xjs.HTMLTemplateElement
     new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
   })
   .node
-
-type DataType = sdo.Offer & {
-	name: string;
-	/** if given, either `Small`, `Medium`, or `Large`; the logo size to render */
-	$logosize? : string;
-	/** is the level awarded to financial contributors? */
-	$isSponsor?: boolean;
-}
 
 interface OptsType {
 	/** should logo sizing be overridden to `Small`? */
@@ -36,7 +29,7 @@ interface OptsType {
  * @param   data the supporter level
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsType): void {
   /**
    * Array of supporters in the level.
    * @type {Array<sdo.Organization>}
@@ -49,7 +42,7 @@ function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): v
   })[(opts.small) ? 'Small' : (data.$logoSize || 'Small')], opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn').textContent = data.name
   new xjs.HTMLUListElement(frag.querySelector('.c-SupporterBlock__List')).populate(function (f, d, o = {}) {
-    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(Supporter.process(d, { is_sponsor: data.$isSponsor }))
+    new xjs.HTMLLIElement(f.querySelector('li')).empty().append(supporter_processor.process(d, { is_sponsor: data.$isSponsor }))
   }, supporters)
 }
 

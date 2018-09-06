@@ -4,7 +4,8 @@ import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Timeblock from './timeblock.tpl'
+import {Session} from '../interfaces'
+import timeblock_processor from './timeblock.tpl'
 
 const xjs = { ...xjs1, ...xjs2 }
 
@@ -15,12 +16,6 @@ const template = xjs.HTMLTemplateElement
     new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
   })
   .node
-
-type DataType = sdo.Event & {
-	name     : string;
-	startDate: string;
-	endDate  : string;
-}
 
 interface OptsType {
 	/** provide a unique id for the program block */
@@ -35,7 +30,7 @@ interface OptsType {
  * @param   data an array of sessions
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): void {
   let container = frag.querySelector('[role="tablist"]')
 	const ProgramPanel = new Processor(container.querySelector('template') !, function (f, d, o = {}) {
 		f.querySelector('[role="tabpanel"]' ).id          = `${opts.id}-panel${o.index}`
@@ -43,7 +38,7 @@ function instructions(frag: DocumentFragment, data: DataType[], opts: OptsType):
 		f.querySelector('slot[name="day"]'  ).textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
 		f.querySelector('slot[name="date"]' ).textContent = xjs.Date.format(d.date, 'M j')
 		new xjs.HTMLElement(f.querySelector('slot[name="panel"]')).empty()
-			.append(Timeblock.process(d.items))
+			.append(timeblock_processor.process(d.items))
 		new xjs.HTMLTimeElement(f.querySelector('.c-ProgramHn')).trimInner()
 	})
   /**

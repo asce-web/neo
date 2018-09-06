@@ -1,7 +1,8 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Exhibitor from './exhibitor.tpl'
+import {Exhibitor} from '../interfaces'
+import exhibitor_processor from './exhibitor.tpl'
 
 
 const template = xjs.HTMLUListElement.templateSync()
@@ -17,10 +18,10 @@ const template = xjs.HTMLUListElement.templateSync()
  * @param   frag the template content to process
  * @param   data an array of exhibitors
  */
-function instructions(frag: DocumentFragment, data: sdo.Organization[]): void {
+function instructions(frag: DocumentFragment, data: Exhibitor[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			Exhibitor.process(d)
+			exhibitor_processor.process(d)
 		)
 	}, data)
 }

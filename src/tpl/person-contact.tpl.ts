@@ -3,6 +3,8 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {ConfPerson} from '../interfaces'
+
 const {xPersonFullname} = require('aria-patterns')
 
 
@@ -13,19 +15,12 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
-type DataType = sdo.Person & {
-	identifier  : string;
-	givenName   : string;
-	familyName  : string;
-	jobTitle    : string;
-}
-
 /**
  * Markup for a person and contact information.
  * @param   frag the template content to process
  * @param   data a person that has a job title
  */
-function instructions(frag: DocumentFragment, data: DataType): void {
+function instructions(frag: DocumentFragment, data: ConfPerson): void {
   frag.querySelector('[itemprop="name"]').append(xPersonFullname.render(data))
   frag.querySelector('[itemprop="jobTitle"]' ).textContent = data.jobTitle
 

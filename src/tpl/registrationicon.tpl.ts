@@ -4,6 +4,8 @@ import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {RegistrationPeriod} from '../interfaces'
+
 const xjs = { ...xjs1, ...xjs2 }
 
 
@@ -11,20 +13,12 @@ const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-registrationicon.tpl.html'))
   .node
 
-type DataType = sdo.AggregateOffer & {
-	name: string;
-	/** the icon keyword of this registration period */
-	$icon?: string;
-	availabilityStarts?: string; // TODO `Offer#availabilityStarts`
-	availabilityEnds  ?: string; // TODO `Offer#availabilityEnds`
-}
-
 /**
  * A single `<p.c-RegPdIcon>` component indicating a registration period.
  * @param   frag the template content to process
  * @param   data a single registration period
  */
-function instructions(frag: DocumentFragment, data: DataType): void {
+function instructions(frag: DocumentFragment, data: RegistrationPeriod): void {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 

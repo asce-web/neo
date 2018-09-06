@@ -1,7 +1,8 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Supporterlevel from './supporterlevel.tpl'
+import {SupporterLevel} from '../interfaces'
+import supporterlevel_processor from './supporterlevel.tpl'
 
 
 const template = xjs.HTMLOListElement.templateSync()
@@ -27,10 +28,10 @@ interface OptsType {
  * @param   data an array of supporter levels
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: sdo.Offer[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ol')).populate(function (f, d, o = {}) {
 		new xjs.HTMLLIElement(f.querySelector('li')).empty().append(
-			Supporterlevel.process(d, o)
+			supporterlevel_processor.process(d, o)
 		)
 	}, data, opts, this)
 }

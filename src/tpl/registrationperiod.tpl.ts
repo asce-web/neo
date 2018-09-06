@@ -3,7 +3,8 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Attendeetype from './attendeetype.tpl'
+import {Pass, RegistrationPeriod} from '../interfaces'
+import attendeetype_processor from './attendeetype.tpl'
 
 
 const template = xjs.HTMLTemplateElement
@@ -13,22 +14,11 @@ const template = xjs.HTMLTemplateElement
   })
   .node
 
-type DataType = sdo.AggregateOffer & {
-	name: string;
-	availabilityStarts?: string; // TODO `Offer#availabilityStarts`
-	availabilityEnds  ?: string; // TODO `Offer#availabilityEnds`
-}
-
 interface OptsType {
 	/** should this period be placed in the body, and not the footer, of the pass? */
 	is_body?: boolean;
-	/** the pass this registration period belongs to */
-	pass: sdo.AggregateOffer & {
-		/** the name of the pass */
-		name: string;
-		/** attendee types of the pass */
-		offers: sdo.Offer[];
-	};
+	/** the pass of which this markup is a part */
+	pass: Pass;
 }
 
 /**
@@ -37,7 +27,7 @@ interface OptsType {
  * @param   data a single registration period
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: OptsType): void {
   let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
@@ -53,7 +43,7 @@ function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): v
 
   frag.querySelector('dl').append(
     ...opts.pass.offers.map((att_type) =>
-      Attendeetype.process({ "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
+      attendeetype_processor.process({ "@type": "Offer", name: att_type.name, price: 42.87 }) // TODO price is 42 for now
     )
   )
 }

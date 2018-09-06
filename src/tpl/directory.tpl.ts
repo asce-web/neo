@@ -4,16 +4,14 @@ import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {ConfPage} from '../interfaces'
+
 const xjs = { ...xjs1, ...xjs2 }
 
 
 const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-directory.tpl.html'))
   .node
-
-type DataType = sdo.WebPage & {
-	hasPart?: sdo.WebPage|sdo.WebPage[];
-}
 
 interface OptsType {
 	/** A non-negative integer, or `Infinity`: how many levels deep the outline should be; default is `Infinity` */
@@ -47,7 +45,7 @@ interface OptsType {
  * @param   data a webpage with possible subpages
  * @param   opts additional processing options
 */
-function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): void {
   let subpages = (xjs.Object.typeOf(data.hasPart) === 'array' ) ? data.hasPart : [data.hasPart]
   let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol'))

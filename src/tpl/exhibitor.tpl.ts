@@ -3,27 +3,19 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
+import {Exhibitor} from '../interfaces'
+
 
 const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-exhibitor.tpl.html'))
   .node
-
-type DataType = sdo.Organization & {
-	name: string;
-	url : string;
-	logo: string;
-	/** the booth number of the exhibitor */
-	$booth: number;
-	/** does the exhibitor also happen to be a sponsor? */
-	$isSponsor?: boolean;
-}
 
 /**
  * Markup for an exhibitor logo.
  * @param   frag the template content to process
  * @param   data the exhibiting organization
  */
-function instructions(frag: DocumentFragment, data: DataType): void {
+function instructions(frag: DocumentFragment, data: Exhibitor): void {
   frag.querySelector('a[itemprop="url"]'   ).href        = data.url
   frag.querySelector('[itemprop="name"]'   ).textContent = data.name
   frag.querySelector('slot[name="booth"]'  ).textContent = data.$booth

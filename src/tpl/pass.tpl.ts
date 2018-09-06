@@ -3,7 +3,8 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import Registrationperiod from './registrationperiod.tpl'
+import {Conference, Pass} from '../interfaces'
+import registrationperiod_processor from './registrationperiod.tpl'
 
 
 const template = xjs.HTMLTemplateElement
@@ -12,10 +13,6 @@ const template = xjs.HTMLTemplateElement
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
   .node
-
-type DataType = sdo.AggregateOffer & {
-	name: string;
-}
 
 interface OptsType {
 	/** the conference to which this pass belongs */
@@ -28,7 +25,7 @@ interface OptsType {
  * @param   data a single pass
  * @param   opts additional processing options
  */
-function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void {
   let current_period = opts.conference.currentRegistrationPeriod
   frag.querySelector('.c-Pass__Hn'       ).textContent = data.name
   frag.querySelector('.c-Pass__Desc slot').textContent = data.description || ''
@@ -37,13 +34,13 @@ function instructions(frag: DocumentFragment, data: DataType, opts: OptsType): v
   } else frag.querySelector('.c-Pass__Fine').remove()
 
   frag.querySelector('.c-Pass__Body').append(
-    Registrationperiod.process(current_period, { pass: data, is_body: true })
+    registrationperiod_processor.process(current_period, { pass: data, is_body: true })
   )
 
   frag.querySelector('.c-Pass__Foot').append(
     ...opts.conference.getRegistrationPeriodsAll()
       .filter((period) => period.name !== current_period.name)
-      .map((period) => Registrationperiod.process(period, { pass: data }))
+      .map((period) => registrationperiod_processor.process(period, { pass: data }))
   )
 }
 
