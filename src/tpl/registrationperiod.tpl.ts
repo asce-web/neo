@@ -36,11 +36,14 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: Op
 	frag.querySelector('[name="pass-name"]' ) !.textContent = `${opts.pass.name}: `
 	;(frag.querySelector('meta[itemprop="offerCount"]') as HTMLMetaElement).content = `${opts.pass.offers.length}`
 
-	// FIXME control flow
-	if (date_start) (frag.querySelector('meta[itemprop="availabilityStarts"]') as HTMLMetaElement).content = date_start.toISOString()
-	else            (frag.querySelector('meta[itemprop="availabilityStarts"]') as HTMLMetaElement).remove()
-	if (date_end  ) (frag.querySelector('meta[itemprop="availabilityEnds"]'  ) as HTMLMetaElement).content = date_end.toISOString()
-	else            (frag.querySelector('meta[itemprop="availabilityEnds"]'  ) as HTMLMetaElement).remove()
+	new xjs.HTMLMetaElement(frag.querySelector('meta[itemprop="availabilityStarts"]') as HTMLMetaElement).exe(function () {
+		if (date_start) this.content(date_start.toISOString())
+		else this.node.remove()
+	})
+	new xjs.HTMLMetaElement(frag.querySelector('meta[itemprop="availabilityEnds"]') as HTMLMetaElement).exe(function () {
+		if (date_end) this.content(date_end.toISOString())
+		else this.node.remove()
+	})
 
   new xjs.HTMLElement(frag.querySelector('dl') !).append(
     ...opts.pass.offers.map((att_type) =>

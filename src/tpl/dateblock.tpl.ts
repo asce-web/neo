@@ -47,10 +47,17 @@ function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
       formatting.dates[0].remove()
     }
 
-    new xjs.Element(f.querySelector('[itemprop="url"]') !).attr({
-      href    : d.url || null,
-      itemprop: (d.url) ? 'url' : null, // TODO turn this into an `if`
-    }).textContent(d.name)
+		new xjs.HTMLAnchorElement(f.querySelector('a[itemprop="url"]') as HTMLAnchorElement).exe(function () {
+			if (d.url) {
+				this.href(d.url)
+			} else {
+				this.attr({
+					href: null,
+					itemprop: null,
+					role: 'none presentation'
+				})
+			}
+		}).textContent(d.name)
   }, data)
 }
 

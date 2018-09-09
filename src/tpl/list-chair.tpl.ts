@@ -7,8 +7,8 @@ import person_affiliation_processor from './person-affiliation.tpl'
 
 const template = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
-		new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List')
-		new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List')
+		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
 			.addClass('o-List__Item c-Chair -mb-h')
 			.attr({
 				itemprop  : 'organizer',
@@ -16,7 +16,7 @@ const template = xjs.HTMLUListElement.templateSync()
 				itemtype  : 'http://schema.org/Person',
 			})
 			.innerHTML(`<link rel="import" data-import="template" href="../../tpl/x-person-affiliation.tpl.html"/>`)
-		new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+		new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
 	})
 	.node
 

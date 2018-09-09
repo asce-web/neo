@@ -13,7 +13,7 @@ const xjs = { ...xjs1, ...xjs2 }
 const template = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-supporter-level.tpl.html'))
   .exe(function () {
-    new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+    new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
   })
   .node
 

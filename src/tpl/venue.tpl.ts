@@ -24,32 +24,30 @@ function instructions(frag: DocumentFragment, data: Venue): void {
   frag.querySelector('[itemprop="description"]') !.textContent = data.description
   frag.querySelector('[itemprop="name"]')        !.textContent = data.name
 
-	// REVIEW control flow
-	if (data.photo) (frag.querySelector('img[itemprop="image"]') as HTMLImageElement).src = data.photo.url
-	else            (frag.querySelector('img[itemprop="image"]') as HTMLImageElement).remove()
-
   new xjs.Element(frag.querySelector('[itemprop="address"]') !).append(xAddress.render({
     ...data.address,
   }))
 
-	if (data.telephone) {
-		new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="telephone"]') as HTMLAnchorElement)
-			.href(`tel:${data.telephone}`)
-			.textContent(data.telephone)
-	} else {
-		(frag.querySelector('[itemprop="telephone"]') !).remove()
-	}
-
-  // FIXME control flow
-  if (data.url) {
-    new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="url"]') as HTMLAnchorElement)
-      .href(data.url)
-  } else {
-    new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="url"]') as HTMLAnchorElement).attr({
-      href: null,
-      itemprop: null,
-    })
-  }
+	new xjs.HTMLImageElement(frag.querySelector('img[itemprop="image"]') as HTMLImageElement).exe(function () {
+		this.attr('itemprop', 'photo') // FIXME in markup
+		if (data.photo) this.src(data.photo.url)
+		else this.node.remove()
+	})
+	new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="telephone"]') as HTMLAnchorElement).exe(function () {
+		if (data.telephone) this.href(`tel:${data.telephone}`).textContent(data.telephone)
+		else this.node.remove()
+	})
+	new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="url"]') as HTMLAnchorElement).exe(function () {
+		if (data.url) {
+			this.href(data.url)
+		} else {
+			this.attr({
+				href: null,
+				itemprop: null,
+				role: 'none presentation'
+			})
+		}
+	})
 }
 
 export default new Processor(template, instructions)

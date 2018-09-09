@@ -7,11 +7,11 @@ import pass_processor from './pass.tpl'
 
 const template = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
-		new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-ListStacked')
-		new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List o-Flex o-ListStacked')
+		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
 			.addClass('o-List__Item o-Flex__Item o-ListStacked__Item')
 			.innerHTML(`<link rel="import" data-import="template" href="../../tpl/x-pass.tpl.html"/>`)
-		new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+		new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
 	})
 	.node
 

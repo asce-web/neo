@@ -7,9 +7,9 @@ import exhibitor_processor from './exhibitor.tpl'
 
 const template = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
-		new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
 			.innerHTML(`<link rel="import" data-import="template" href="../../tpl/x-exhibitor.tpl.html"/>`)
-		new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+		new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
 	})
 	.node
 

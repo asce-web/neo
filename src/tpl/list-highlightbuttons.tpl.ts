@@ -6,8 +6,8 @@ import {Hyperlink} from '../interfaces'
 
 const template = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
-		new xjs.HTMLUListElement(this.content().querySelector('ul')).addClass('o-List o-Flex o-Flex--even')
-		new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List o-Flex o-Flex--even')
+		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
 			.addClass('o-List__Item o-Flex__Item')
 			.innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
 	})

@@ -32,10 +32,17 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
   new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.render(data))
   frag.querySelector('[itemprop="jobTitle"]') !.textContent = data.jobTitle || ''
 
-  // if (data.email) {}
-  new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="email"]') as HTMLAnchorElement)
-    .href(data.email ? `mailto:${data.email}` : null)
-    .attr('itemprop', data.email ? 'email' : null) // TODO turn this into an `if`
+	new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="email"]') as HTMLAnchorElement).exe(function () {
+		if (data.email) {
+			this.href(`mailto:${data.email}`)
+		} else {
+			this.attr({
+				href: null,
+				itemprop: null,
+				role: 'none presentation'
+			})
+		}
+	})
 
   if (data.telephone) {
     new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="telephone"]') as HTMLAnchorElement)

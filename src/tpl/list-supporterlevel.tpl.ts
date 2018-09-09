@@ -7,11 +7,11 @@ import supporterlevel_processor from './supporterlevel.tpl'
 
 const template = xjs.HTMLOListElement.templateSync()
 	.exe(function () {
-		new xjs.HTMLUListElement(this.content().querySelector('ol')).addClass('o-List')
-		new xjs.HTMLLIElement(this.content().querySelector('template').content.querySelector('li'))
+		new xjs.HTMLUListElement(this.content().querySelector('ol') !).addClass('o-List')
+		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
 			.addClass('o-List__Item')
 			.innerHTML(`<link rel="import" data-import="template" href="../../tpl/x-supporter-level.tpl.html"/>`)
-		new xjs.DocumentFragment(this.content().querySelector('template').content).importLinks(__dirname)
+		new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
 	})
 	.node
 
