@@ -14,11 +14,20 @@ const template = xjs.HTMLTemplateElement
   .node
 
 interface OptsType {
-	/** A non-negative integer, or `Infinity`: how many levels deep the outline should be; default is `Infinity` */
+	/**
+	 * How many levels deep the outline should be; a non-negative integer, or `Infinity`.
+	 * @default Infinity
+	 */
 	depth?: number;
-	/** which subpage to start at, non-negative integer; default is `0` */
+	/**
+	 * Which subpage to start at; non-negative integer.
+	 * @default 0
+	 */
 	start?: number;
-	/** which subpage to end at, non-negative integer or `Infinity`; default is `Infinity` */
+	/**
+	 * Which subpage to end at; non-negative integer or `Infinity`.
+	 * @default Infinity
+	 */
 	end?: number;
 	/** group set of css class configurations */
 	classes?: null|{
@@ -36,7 +45,7 @@ interface OptsType {
 	/** unknown docs */
 	links?: object;
 	/** configurations for nested outlines */
-	options?: OptsType;
+	opts?: OptsType;
 }
 
 /**
@@ -51,7 +60,7 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
     'object'   : () => [data.hasPart as ConfPage],
     'undefined': () => [],
   })()
-  let depth    = (xjs.Object.typeOf(opts.depth)   === 'number') ? opts.depth   : Infinity
+  let depth = (opts.depth === 0) ? 0 : opts.depth || Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol') !)
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
     .populate(function (f: DocumentFragment, d: ConfPage) {
@@ -68,27 +77,28 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
       const formatting = {
         /** Icons for links. */ icons: [...f.querySelectorAll('i.material-icons')],
       }
-      if (xjs.Object.typeOf(opts.classes && opts.classes.icon) === 'string') {
-        new xjs.Element(formatting.icons[0])
-          .replaceClassString('{{ classes.icon }}', opts.classes && opts.classes.icon || '')
-          .textContent(d.getIcon()) // TODO don’t use ConfPage#getIcon()
-      } else {
-        formatting.icons[0].remove()
-      }
-      if (xjs.Object.typeOf(opts.classes && opts.classes.expand) === 'string' && d.findAll().length) { // TODO don’t use Page#findAll
-        new xjs.Element(formatting.icons[1])
-          .replaceClassString('{{ classes.expand }}', opts.classes && opts.classes.expand || '')
-      } else {
-        formatting.icons[1].remove()
-      }
+			new xjs.Element(formatting.icons[0]).exe(function () {
+				if (opts.classes && opts.classes.icon) {
+					this.replaceClassString('{{ classes.icon }}', opts.classes.icon).textContent('temporary_icon')
+				} else {
+					this.node.remove()
+				}
+			})
+			new xjs.Element(formatting.icons[1]).exe(function () {
+				if (opts.classes && opts.classes.expand && Array.isArray(d.hasPart) && d.hasPart.length) { // FIXME make `hasPart` an array only
+					this.replaceClassString('{{ classes.expand }}', opts.classes.expand).textContent('expand_more')
+				} else {
+					this.node.remove()
+				}
+			})
 
-      if (d.findAll().length && depth > 0) { // TODO don’t use Page#findAll
+      if (Array.isArray(d.hasPart) && d.hasPart.length && depth > 0) { // FIXME make `hasPart` an array only
         new xjs.Element(f.querySelector('[itemprop="hasPart"]') !).append(
           require(__filename).process({
             ...d,
-            hasPart: d.findAll().filter((p) => !p.isHidden()),
+            hasPart: d.hasPart//.filter((p) => !p.isHidden()),
           }, {
-            ...(opts.options || {}),
+            ...(opts.opts || {}),
             depth: depth - 1,
           })
         )
