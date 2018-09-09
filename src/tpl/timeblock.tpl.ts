@@ -22,7 +22,7 @@ const template = xjs.HTMLTemplateElement
 function instructions(frag: DocumentFragment, data: Session[]): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('tbody') !).populate(function (f: DocumentFragment, d: Session) {
     let time_start = new Date(d.startDate)
-    let time_end   = new Date(d.endDate  )
+    let time_end   = new Date(d.endDate || d.startDate)
     /**
      * References to formatting elements.
      * We want to create these references before removing any elements from the DOM.

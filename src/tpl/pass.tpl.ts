@@ -26,7 +26,8 @@ interface OptsType {
  * @param   opts additional processing options
  */
 function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void {
-  let current_period = opts.conference.currentRegistrationPeriod
+  // TODO programmatically determine current registration period by date
+  let current_period = (opts.conference.offers || []).find((pd) => pd.name === opts.conference.$currentRegistrationPeriod) !
   frag.querySelector('.c-Pass__Hn'       ) !.textContent = data.name              // TODO use `[itemprop="name"]` and add to markup
   frag.querySelector('.c-Pass__Desc slot') !.textContent = data.description || '' // TODO use `[itemprop="description"]` and add to markup
   if (data.disambiguatingDescription) {
@@ -38,7 +39,7 @@ function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void 
   )
 
   new xjs.Element(frag.querySelector('.c-Pass__Foot') !).append(
-    ...opts.conference.getRegistrationPeriodsAll()
+    ...(opts.conference.offers || [])
       .filter((period) => period.name !== current_period.name)
       .map((period) => registrationperiod_processor.process(period, { pass: data }))
   )

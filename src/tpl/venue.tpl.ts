@@ -24,9 +24,9 @@ function instructions(frag: DocumentFragment, data: Venue): void {
   frag.querySelector('[itemprop="description"]') !.textContent = data.description
   frag.querySelector('[itemprop="name"]')        !.textContent = data.name
 
-	// FIXME control flow
-	if (data.image) (frag.querySelector('img[itemprop="image"]') as HTMLImageElement ).src = data.image
-	else            (frag.querySelector('img[itemprop="image"]') as HTMLImageElement ).remove()
+	// REVIEW control flow
+	if (data.photo) (frag.querySelector('img[itemprop="image"]') as HTMLImageElement).src = data.photo.url
+	else            (frag.querySelector('img[itemprop="image"]') as HTMLImageElement).remove()
 
   new xjs.Element(frag.querySelector('[itemprop="address"]') !).append(xAddress.render({
     ...data.address,

@@ -30,7 +30,7 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
 		/** Pipe after job title. */ pipe : frag.querySelector('[itemprop="jobTitle"] + span') !,
 	}
   new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.render(data))
-  frag.querySelector('[itemprop="jobTitle"]') !.textContent = data.jobTitle
+  frag.querySelector('[itemprop="jobTitle"]') !.textContent = data.jobTitle || ''
 
   // if (data.email) {}
   new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="email"]') as HTMLAnchorElement)

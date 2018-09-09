@@ -1,31 +1,38 @@
 import * as sdo from 'schemaorg-jsd/dist/schemaorg'
 
 
-/** Types of attendees that can purchase passes (usually based on membership). */
+/**
+ * Types of attendees that can purchase passes (usually based on membership).
+ */
 export interface AttendeeType extends sdo.Offer {
 	/** The name of the attendee type. */
-	name  : string;
-	/** The price for the attendee type given a certain pass and registration period. */
-	price?: number;
+	name: string;
+	/** The price for the attendee type, given a certain pass and registration period. */
+	price: number;
 }
 
 
-/** A single conference on a website. */
-export interface Conference extends sdo.Organization {
+/**
+ * A single conference on a website.
+ */
+export interface Conference extends sdo.Event {
 	/** The conference name. */
 	name: string;
 	/** The conference theme. */
-	// description?;
-	/** A blurb promoting the previous/next conference. */
-	// disambiguatingDescription?;
+	description?: string;
+	/** A blurb promoting this conference, if it’s the previous/next conference in a series. */
+	disambiguatingDescription?: string;
 	/** An absolute URL for the conference homepage. */
 	url: string;
 	/** The hero image. */
-	// image?;
-	/** The starting date of this conference, in ISO string format. */
+	image?: string;
+	/** The start date of this conference, in ISO string format. */
 	startDate: string;
-	/** The ending date of this conference, in ISO string format. */
-	endDate ?: string;
+	/**
+	 * The end date of this conference, in ISO string format.
+	 * @default this.startDate
+	 */
+	endDate?: string;
 	/**
 	 * A list of locations of this conference.
 	 * The first entry is the promoted location;
@@ -34,38 +41,42 @@ export interface Conference extends sdo.Organization {
 	 */
 	location : sdo.PostalAddress;
 	/** A list of registration periods. */
-	// offers?;
+	offers?: RegistrationPeriod[];
 	/**
 	 * The name of an existing offer active at this time.
 	 * @todo TODO dynamically use the current date instead
 	 */
-	// $currentRegistrationPeriod?: Pass[];
+	$currentRegistrationPeriod?: string;
 	/** A list of important dates. */
-	// potentialAction?;
+	potentialAction?: ImportantDate[];
 	/** A list of program sessions. */
-	// subEvent?;
+	subEvent?: Session[];
 	/** A list of speakers at the conference. */
-	// performer?;
+	performer?: ConfPerson[];
 	/**
 	 * A list of supporters including non-sponsoring organizations.
 	 * NOTE: Itemprop `funder` is used instead for financially sponsoring organizations.
 	 */
-	// sponsor?;
+	sponsor?: Supporter[];
 	/** A list of exhibitors. */
-	// $exhibitors?: Exhibitor[];
+	$exhibitors?: Exhibitor[];
 	/** A list of organizers: chairpersons, steering committee members,
 		or other persons who are responsible for organizing the conference. */
-	// organizer?;
+	organizer?: ConfPerson[];
 	/** The passes belonging to this conference. */
-	// $passes?: Pass[];
+	$passes?: Pass[];
 	/** A list of supporter levels. */
-	// $supporterLevels?: SupporterLevel[];
+	$supporterLevels?: SupporterLevel[];
 	/** A list of links serving as action buttons in the Hero section. */
 	$heroButtons?: Hyperlink[];
 	/** A list of social media links for this conference. */
-	// $social?: Hyperlink[];
+	$social?: Hyperlink[];
 }
 
+/**
+ * A basic page of content on a conference site.
+ * @todo  FIXME make `hasPart` an array only
+ */
 export interface ConfPage extends sdo.WebPage {
 	/** The page name. */
 	name: string;
@@ -81,19 +92,23 @@ export interface ConfPerson extends sdo.Person {
 	name?: string;
 	/** A unique identifier of this person. */
 	identifier: string;
-	/** the person’s first name */
-	givenName   : string;
-	/** the person’s last name */
-	familyName  : string;
-	/** an organization that this person is affiliated with */
+	/** This person’s first name. */
+	givenName: string;
+	/** This person’s last name. */
+	familyName: string;
+	/** This person’s affiliated organization. */
 	affiliation?: sdo.Organization;
-	/** this person’s job title */
-	jobTitle?: string; // TODO schemaorg-jsd:`Person#jobTitle`
+	/** This person’s job title. */
+	jobTitle?: string;
+	/** A photo of this person. */
+	image?: string;
 	/** A list of social media contact links for this person. */
 	$social?: Hyperlink[];
 }
 
-/** A single website hosting a series of conferences. */
+/**
+ * A single website hosting a series of conferences.
+ */
 export interface ConfSite extends sdo.Product, sdo.WebPage {
 	/** The unique, absolute URL of the website. */
 	'@id': string;
@@ -106,7 +121,7 @@ export interface ConfSite extends sdo.Product, sdo.WebPage {
 	/** Keywords for this website. */
 	// keywords?;
 	/** The website logo. */
-	// logo?;
+	logo?: string;
 	/** Two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`. */
 	// color?: [string, string];
 	/** The publisher/brand responsible for this website. */
@@ -127,14 +142,22 @@ export interface ConfSite extends sdo.Product, sdo.WebPage {
 	// })[];
 }
 
-/** An organization exhibiting at a conference. */
+/**
+ * An organization exhibiting at a conference.
+ */
 export interface Exhibitor extends sdo.Organization {
+	/** The name of this exhibitor. */
 	name: string;
+	/** The URL of this exhibitor’s website. */
 	url : string;
+	/** This exhibitor’s logo. */
 	logo: string;
-	/** The booth number of the exhibitor. integer. */
+	/**
+	 * The booth number of this exhibitor.
+	 * @type {integer}
+	 */
 	$booth: number;
-	/** Does the exhibitor also happen to be a sponsor? */
+	/** Does this exhibitor also happen to be a sponsor? */
 	$isSponsor?: boolean;
 }
 
@@ -148,34 +171,78 @@ export interface Hyperlink extends sdo.WebPageElement {
 	name?: string
 }
 
+/**
+ * A significant date leading up to or involved in a conference event.
+ */
 export interface ImportantDate extends sdo.Action {
-	name     : string;
+	/** The name of this important date. */
+	name: string;
+	/** The date of this important date, or the start date of this important date range. */
 	startTime: string;
-	endTime ?: string;
+	/**
+	 * The end date of this important date range.
+	 * @default this.startTime
+	 */
+	endTime?: string;
 }
 
 export interface Pass extends sdo.AggregateOffer {
+	/** The pass name. */
 	name: string;
-	// description?;
-	// disambiguatingDescription?;
+	/** A short description of this pass. */
+	description?: string;
+	/** Further details of this pass. */
+	disambiguatingDescription?: string;
 	/** Types of attendees that can purchase this pass (usually based on membership). */
 	offers: AttendeeType[];
 }
 
-export interface Session extends sdo.Event {
-	name     : string;
-	startDate: string;
-	endDate  : string;
-}
-
-export interface Supporter extends sdo.Organization {
+/**
+ * A time period in which a pass offer is available.
+ */
+export interface RegistrationPeriod extends sdo.AggregateOffer {
+	/** The name of this registration period. */
 	name: string;
-	url : string;
-	logo: string;
+	/** The start date of this registration period. */
+	availabilityStarts?: string;
+	/** The end date of this registration period. */
+	availabilityEnds?: string;
+	/** The keyword of an icon representing this registration period. */
+	$icon?: string;
 }
 
-/** A classification of supporting organizations to a conference.
-	Organizations might or might not be financial sponsors. */
+/**
+ * A conference program event.
+ */
+export interface Session extends sdo.Event {
+	/** The name of this session. */
+	name: string;
+	/** The start time of this session. */
+	startDate: string;
+	/**
+	 * The end time of this session.
+	 * @default this.startDate
+	 */
+	endDate?: string;
+}
+
+/**
+ * An organization supporting a conference.
+ */
+export interface Supporter extends sdo.Organization {
+	/** The name of this supporter. */
+	name: string;
+	/** The URL of this supporter’s website. */
+	url : string;
+	/** This supporter’s logo. */
+	logo: string;
+	/** A classification of this supporter. */
+	$level: string;
+}
+
+/**
+ * A classification of supporting organizations to a conference.
+ */
 export interface SupporterLevel extends sdo.Offer {
 	name: string;
 	/** The sizing of this level’s logos on the page. */
@@ -184,19 +251,18 @@ export interface SupporterLevel extends sdo.Offer {
 	$isSponsor?: boolean;
 }
 
-export interface RegistrationPeriod extends sdo.AggregateOffer {
-	name: string;
-	/** the icon keyword of this registration period */
-	$icon?: string;
-	availabilityStarts?: string; // TODO schemaorg-jsd:`Offer#availabilityStarts`
-	availabilityEnds  ?: string; // TODO schemaorg-jsd:`Offer#availabilityEnds`
-}
-
+/**
+ * A building location and address related to a conference.
+ */
 export interface Venue extends sdo.Accommodation {
+	/** The name of this venue or hotel. */
 	name: string;
-	/** the label or title of the venue */
+	/** The label or title of this venue. */
 	description: string;
-	address?: sdo.PostalAddress;
-	/** a call-to-action link */
+	/** The venue address. */
+	address: sdo.PostalAddress;
+	/** A photo of this venue. */
+	photo?: { url: string; };
+	/** A link to direct users to take action. */
 	$cta?: Hyperlink;
 }

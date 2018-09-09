@@ -36,7 +36,7 @@ function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsTy
   /**
    * Array of supporters in the level.
    */
-  let supporters: Supporter[] = (opts.conference._DATA.sponsor || []).filter((org) => org.$level === data.name)
+  let supporters: Supporter[] = (opts.conference.sponsor || []).filter((org) => org.$level === data.name)
   new xjs.Element(frag.querySelector('.c-SupporterBlock') !).addClass((xjs.Object.switch<string>((opts.small) ? 'Small' : (data.$logosize || 'default'), {
     'Small' : () => 'c-SupporterBlock--sml',
     'Medium': () => 'c-SupporterBlock--med',

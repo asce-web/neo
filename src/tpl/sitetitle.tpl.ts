@@ -16,12 +16,13 @@ const template = xjs.HTMLTemplateElement
  */
 function instructions(frag: DocumentFragment, data: ConfSite): void {
   frag.querySelector('[itemprop="name"]'       ) !.textContent = data.name
-  frag.querySelector('[itemprop="description"]') !.textContent = data.description
   ;(frag.querySelector('a[itemprop="url"]'   ) as HTMLAnchorElement).href = data.url
-  ;(frag.querySelector('img[itemprop="logo"]') as HTMLImageElement ).src  = data.logo
 
-  if (!data.description) frag.querySelector('[itemprop="description"]') !.remove()
-  if (!data.logo       ) frag.querySelector('[itemprop="logo"]'       ) !.remove()
+	// REVIEW control flow
+	if (data.description)  frag.querySelector('[itemprop="description"]') !.textContent = data.description
+	else                   frag.querySelector('[itemprop="description"]') !.remove()
+	if (data.logo       ) (frag.querySelector('img[itemprop="logo"]'    ) as HTMLImageElement ).src = data.logo
+	else                   frag.querySelector('img[itemprop="logo"]'    ) !.remove()
 }
 
 export default new Processor(template, instructions)

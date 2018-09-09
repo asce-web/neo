@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import {SupporterLevel} from '../interfaces'
+import {Conference, SupporterLevel} from '../interfaces'
 import supporterlevel_processor from './supporterlevel.tpl'
 
 

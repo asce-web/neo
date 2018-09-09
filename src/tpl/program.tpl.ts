@@ -46,7 +46,7 @@ function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): 
 		f.querySelector('[name="date"]'    ) !.textContent = xjs.Date.format(d.date, 'M j')
 		f.querySelector('time'             ) !.dateTime    = d.date.toISOString()
 		new xjs.Element(f.querySelector('[name="panel"]') !).empty()
-			.append(timeblock_processor.process(d.items))
+			.append(timeblock_processor.process(d.sessions))
 		new xjs.Element(f.querySelector('.c-ProgramHn') !).trimInner()
 	})
   /**
@@ -56,7 +56,6 @@ function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): 
     const returned: DateGroup[] = []
     all_sessions.forEach((session) => {
       let time_start = new Date(session.startDate)
-      let time_end   = new Date(session.endDate  )
       if (!returned.find((group) => xjs.Date.sameDate(group.date, time_start))) {
         returned.push({
           date    : time_start,

@@ -34,7 +34,7 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: Op
 	new xjs.Element(frag.querySelector('.c-Pass__Period') !).replaceClassString('{{ is_body }}', (!opts.is_body) ? 'o-Flex__Item' : '')
 	frag.querySelector('[name="offer-name"]') !.textContent = data.name
 	frag.querySelector('[name="pass-name"]' ) !.textContent = `${opts.pass.name}: `
-	;(frag.querySelector('meta[itemprop="offerCount"]') as HTMLMetaElement).content = opts.pass.offers.length
+	;(frag.querySelector('meta[itemprop="offerCount"]') as HTMLMetaElement).content = `${opts.pass.offers.length}`
 
 	// FIXME control flow
 	if (date_start) (frag.querySelector('meta[itemprop="availabilityStarts"]') as HTMLMetaElement).content = date_start.toISOString()
