@@ -49,9 +49,7 @@ function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): 
 			.append(timeblock_processor.process(d.sessions))
 		new xjs.Element(f.querySelector('.c-ProgramHn') !).trimInner()
 	})
-  /**
-   * An array, categorizing all the sessions of the conference by date.
-   */
+  /** An array, categorizing all the sessions of the conference by date. */
   const grouped_sessions: DateGroup[] = ((all_sessions) => {
     const returned: DateGroup[] = []
     all_sessions.forEach((session) => {

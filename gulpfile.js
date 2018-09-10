@@ -19,9 +19,6 @@ const {requireOtherAsync} = require('schemaorg-jsd/lib/requireOther.js')
 const tsconfig      = require('./tsconfig.json')
 const typedocconfig = require('./config/typedoc.json')
 
-const ConfSite   = require('./class/ConfSite.class.js')
-const ConfPage   = require('./class/ConfPage.class.js')
-
 
 gulp.task('dist-ts', async function () {
 	return gulp.src('./src/**/*.ts')
@@ -128,6 +125,8 @@ gulp.task('proto-default-validate', async function () {
 })
 
 gulp.task('proto-default', ['proto-default-validate'], async function () {
+  const ConfSite   = require('./class/ConfSite.class.js')
+  const ConfPage   = require('./class/ConfPage.class.js')
   return gulp.src('./proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
@@ -146,6 +145,8 @@ gulp.task('proto-sample-validate', async function () {
 })
 
 gulp.task('proto-sample-markup', ['proto-sample-validate'], async function () {
+  const ConfSite   = require('./class/ConfSite.class.js')
+  const ConfPage   = require('./class/ConfPage.class.js')
   return gulp.src('./proto/asce-event.org/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',

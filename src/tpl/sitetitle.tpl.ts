@@ -15,8 +15,8 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
  * @param   data the webpage with possible description and logo
  */
 function instructions(frag: DocumentFragment, data: ConfSite): void {
-  frag.querySelector('[itemprop="name"]'       ) !.textContent = data.name
-  ;(frag.querySelector('a[itemprop="url"]'   ) as HTMLAnchorElement).href = data.url
+	frag.querySelector('[itemprop="name"]') !.textContent = data.name
+	;(frag.querySelector('a[itemprop="url"]') as HTMLAnchorElement).href = data.url
 
 	new xjs.Element(frag.querySelector('[itemprop="description"]') !).exe(function () {
 		if (data.description) this.node.textContent = data.description

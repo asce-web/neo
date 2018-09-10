@@ -26,9 +26,9 @@ function instructions(frag: DocumentFragment, data: Conference): void {
    */ frag.querySelector('.c-Banner') !.setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
 
 
-	  frag.querySelector('[itemprop="name"]'         ) !                    .textContent = data.name
-	;(frag.querySelector('a[itemprop="url"]'         ) as HTMLAnchorElement).href        = data.url
-	;(frag.querySelector('meta[itemprop="startDate"]') as HTMLMetaElement)  .content     = data.startDate
+	 frag.querySelector('[itemprop="name"]') !.textContent = data.name
+	;(frag.querySelector('a[itemprop="url"]'         ) as HTMLAnchorElement).href    = data.url
+	;(frag.querySelector('meta[itemprop="startDate"]') as HTMLMetaElement)  .content = data.startDate
   new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.render({
     ...data.location,
     $regionName: true,

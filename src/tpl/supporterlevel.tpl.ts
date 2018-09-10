@@ -33,9 +33,7 @@ interface OptsType {
  * @param   opts additional processing options
  */
 function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsType): void {
-  /**
-   * Array of supporters in the level.
-   */
+  /** Array of supporters in the level. */
   let supporters: Supporter[] = (opts.conference.sponsor || []).filter((org) => org.$level === data.name)
   new xjs.Element(frag.querySelector('.c-SupporterBlock') !).addClass((xjs.Object.switch<string>((opts.small) ? 'Small' : (data.$logosize || 'default'), {
     'Small' : () => 'c-SupporterBlock--sml',
