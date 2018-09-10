@@ -53,6 +53,11 @@
                 "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Accommodation.jsd"
               }
             },
+            "$passes": {
+              "description": "The passes belonging to this conference.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/Pass" }
+            },
             "offers": {
               "description": "A list of registration periods.",
               "type": "array",
@@ -84,6 +89,11 @@
               "type": "array",
               "items": { "$ref": "#/definitions/Supporter" }
             },
+            "$supporterLevels": {
+              "description": "A list of supporter levels.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/SupporterLevel" }
+            },
             "$exhibitors": {
               "description": "A list of exhibitors.",
               "type": "array",
@@ -94,16 +104,6 @@
 							"type": "array",
 							"items": { "$ref": "#/definitions/ConfPerson" }
 						},
-            "$passes": {
-              "description": "The passes belonging to this conference.",
-              "type": "array",
-              "items": { "$ref": "#/definitions/Pass" }
-            },
-            "$supporterLevels": {
-              "description": "A list of supporter levels.",
-              "type": "array",
-              "items": { "$ref": "#/definitions/SupporterLevel" }
-            },
             "$heroButtons": {
               "description": "A list of links serving as action buttons in the Hero section.",
               "type": "array",
@@ -290,10 +290,10 @@
 							"description": "This supporter’s logo.",
 							"type": "string"
 						},
-						"logo": {
+						"$level": {
 							"description": "A classification of this supporter.",
 							"type": "string"
-						},
+						}
 					}
 				}
 			]
@@ -344,7 +344,7 @@
 						"$cta": {
 							"description": "A link to direct users to take action.",
 							"$ref": "#/definitions/Hyperlink"
-						},
+						}
 					}
 				}
 			]
@@ -355,10 +355,7 @@
     { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Product.jsd" },
     {
       "required": ["@id", "name", "url"],
-      "additionalProperties": false,
-      "$comment": "This schema is for development only. TODO Remove when ready for production.",
       "properties": {
-        "@context"      : true,
         "@id"           : { "description": "The unique, absolute URL of the website." },
         "name"          : { "description": "The website name." },
         "description"   : { "description": "The website slogan (or tagline)." },
@@ -367,6 +364,7 @@
         "logo"          : { "description": "The website logo." },
         "color"         : {
           "description": "Two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`.",
+          "minItems": 2,
           "maxItems": 2
         },
         "brand": {

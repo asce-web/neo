@@ -112,10 +112,8 @@ async function proto_validate(jsondata) {
   let ajv = new Ajv().addMetaSchema(META_SCHEMATA).addSchema(SCHEMATA)
   let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata)
   if (!is_data_valid) {
-    let e = new TypeError(ajv.errors.map((e) => e.message).join('\n'))
-    e.details = ajv.errors
-    console.error(e)
-    throw e
+    ajv.errors.forEach((e) => console.error(e))
+    throw new TypeError(ajv.errors[0].message)
   }
   return true
 }
