@@ -5,7 +5,7 @@ import {ConfPerson} from '../interfaces'
 import person_affiliation_processor from './person-affiliation.tpl'
 
 
-const template = xjs.HTMLUListElement.templateSync()
+const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List')
 		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)

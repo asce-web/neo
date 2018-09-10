@@ -5,7 +5,7 @@ import {Exhibitor} from '../interfaces'
 import exhibitor_processor from './exhibitor.tpl'
 
 
-const template = xjs.HTMLUListElement.templateSync()
+const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
 			.innerHTML(`<link rel="import" data-import="template" href="../../tpl/x-exhibitor.tpl.html"/>`)

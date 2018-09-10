@@ -5,7 +5,7 @@ import {Conference, SupporterLevel} from '../interfaces'
 import supporterlevel_processor from './supporterlevel.tpl'
 
 
-const template = xjs.HTMLOListElement.templateSync()
+const template: HTMLTemplateElement = xjs.HTMLOListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLUListElement(this.content().querySelector('ol') !).addClass('o-List')
 		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)

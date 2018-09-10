@@ -3,11 +3,11 @@ import * as path from 'path'
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import {Conference, Pass} from '../interfaces'
+import {Conference, Pass, RegistrationPeriod} from '../interfaces'
 import registrationperiod_processor from './registrationperiod.tpl'
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-pass.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
@@ -27,7 +27,7 @@ interface OptsType {
  */
 function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void {
   // TODO programmatically determine current registration period by date
-  let current_period = (opts.conference.offers || []).find((pd) => pd.name === opts.conference.$currentRegistrationPeriod) !
+  let current_period: RegistrationPeriod = (opts.conference.offers || []).find((pd) => pd.name === opts.conference.$currentRegistrationPeriod) !
   frag.querySelector('.c-Pass__Hn'       ) !.textContent = data.name              // TODO use `[itemprop="name"]` and add to markup
   frag.querySelector('.c-Pass__Desc slot') !.textContent = data.description || '' // TODO use `[itemprop="description"]` and add to markup
   if (data.disambiguatingDescription) {

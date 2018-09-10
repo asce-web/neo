@@ -8,7 +8,7 @@ import {Conference} from '../interfaces'
 const {xAddress} = require('aria-patterns')
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-otheryear.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)

@@ -6,7 +6,7 @@ import {Processor} from 'template-processor'
 import {Hyperlink} from '../interfaces'
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../x-list-social.tpl.html')) // TODO use `xjs.HTMLUListElement.templateSync()`
   .node
 

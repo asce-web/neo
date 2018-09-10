@@ -11,7 +11,7 @@ const {xPersonFullname} = require('aria-patterns')
 const Util = require('../../class/Util.class.js')
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.resolve(__dirname, '../../tpl/x-speaker.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)

@@ -18,7 +18,7 @@ interface DateGroup {
 	sessions: Session[];
 }
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-program.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
@@ -39,7 +39,7 @@ interface OptsType {
  * @param   opts additional processing options
  */
 function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): void {
-  let container = new xjs.Element(frag.querySelector('[role="tablist"]') !)
+  let container: xjs2.Element = new xjs.Element(frag.querySelector('[role="tablist"]') !)
 	const ProgramPanel = new Processor(container.node.querySelector('template') !, function (f: DocumentFragment, d: DateGroup, o: { index: number }) {
 		f.querySelector('[role="tabpanel"]') !.id          = `${opts.id}-panel${o.index}`
 		f.querySelector('[name="day"]'     ) !.textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
@@ -55,7 +55,7 @@ function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): 
   const grouped_sessions: DateGroup[] = ((all_sessions) => {
     const returned: DateGroup[] = []
     all_sessions.forEach((session) => {
-      let time_start = new Date(session.startDate)
+      let time_start: Date = new Date(session.startDate)
       if (!returned.find((group) => xjs.Date.sameDate(group.date, time_start))) {
         returned.push({
           date    : time_start,

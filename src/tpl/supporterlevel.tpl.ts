@@ -10,7 +10,7 @@ import supporter_processor from './supporter.tpl'
 const xjs = { ...xjs1, ...xjs2 }
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-supporter-level.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)

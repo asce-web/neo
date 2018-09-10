@@ -6,7 +6,7 @@ import {Processor} from 'template-processor'
 import {AttendeeType} from '../interfaces'
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-attendeetype.tpl.html'))
   .node
 
@@ -19,7 +19,7 @@ function instructions(frag: DocumentFragment, data: AttendeeType): void {
   /**
    * Options for formatting pass prices.
    */
-  const PRICE_OPTIONS = new Intl.NumberFormat('en', {
+  const PRICE_OPTIONS: Intl.NumberFormat = new Intl.NumberFormat('en', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts

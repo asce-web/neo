@@ -9,7 +9,7 @@ import {RegistrationPeriod} from '../interfaces'
 const xjs = { ...xjs1, ...xjs2 }
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-registrationicon.tpl.html'))
   .node
 
@@ -19,8 +19,8 @@ const template = xjs.HTMLTemplateElement
  * @param   data a single registration period
  */
 function instructions(frag: DocumentFragment, data: RegistrationPeriod): void {
-  let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
-  let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
+  let date_start: Date|null = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
+  let date_end  : Date|null = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
 	frag.querySelector('i') !.textContent = data.$icon || ''
 	frag.querySelector('b') !.textContent = data.name

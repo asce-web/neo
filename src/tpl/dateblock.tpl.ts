@@ -9,7 +9,7 @@ import {ImportantDate} from '../interfaces'
 const xjs = { ...xjs1, ...xjs2 }
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-dateblock.tpl.html'))
   .node
 
@@ -21,8 +21,8 @@ const template = xjs.HTMLTemplateElement
  */
 function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('tbody') !).populate(function (f: DocumentFragment, d: ImportantDate) {
-    let date_start = new Date(d.startTime)
-    let date_end   = new Date(d.endTime || d.startTime)
+    let date_start: Date = new Date(d.startTime)
+    let date_end  : Date = new Date(d.endTime || d.startTime)
     /**
      * References to formatting elements.
      * We want to create these references before removing any elements from the DOM.

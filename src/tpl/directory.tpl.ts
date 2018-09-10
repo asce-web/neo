@@ -9,7 +9,7 @@ import {ConfPage} from '../interfaces'
 const xjs = { ...xjs1, ...xjs2 }
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-directory.tpl.html'))
   .node
 
@@ -60,7 +60,7 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
     'object'   : () => [data.hasPart as ConfPage],
     'undefined': () => [],
   })()
-  let depth = (opts.depth === 0) ? 0 : opts.depth || Infinity
+  let depth: number = (opts.depth === 0) ? 0 : opts.depth || Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol') !)
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
     .populate(function (f: DocumentFragment, d: ConfPage) {

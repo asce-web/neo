@@ -6,7 +6,7 @@ import {Processor} from 'template-processor'
 import {Supporter} from '../interfaces'
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-supporter.tpl.html'))
   .node
 

@@ -7,7 +7,7 @@ import {Pass, RegistrationPeriod} from '../interfaces'
 import attendeetype_processor from './attendeetype.tpl'
 
 
-const template = xjs.HTMLTemplateElement
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../tpl/x-registrationperiod.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
@@ -28,8 +28,8 @@ interface OptsType {
  * @param   opts additional processing options
  */
 function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: OptsType): void {
-  let date_start = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
-  let date_end   = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
+  let date_start: Date|null = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
+  let date_end  : Date|null = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
 	new xjs.Element(frag.querySelector('.c-Pass__Period') !).replaceClassString('{{ is_body }}', (!opts.is_body) ? 'o-Flex__Item' : '')
 	frag.querySelector('[name="offer-name"]') !.textContent = data.name

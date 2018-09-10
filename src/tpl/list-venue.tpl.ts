@@ -5,7 +5,7 @@ import {Venue} from '../interfaces'
 import venue_processor from './venue.tpl'
 
 
-const template = xjs.HTMLUListElement.templateSync()
+const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List o-Flex o-Flex--even c-Alert')
 		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
