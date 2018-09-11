@@ -6,7 +6,7 @@ const xjs = {
 }
 const {xPersonFullname} = require('aria-patterns')
 
-const xPersonContact = require('../tpl/x-person-contact.tpl.js')
+const xPersonContact = require('../dist/tpl/person-contact.tpl.js').default
 
 
 /**
@@ -19,10 +19,10 @@ class Person {
   /**
    * Construct a new Person object.
    * @param {!Object} jsondata a JSON object
-   * @param {string} jsondata.identifier a unique identifier of this person
-   * @param {string=} jsondata.name the string name of this person
-   * @param {string} jsondata.givenName the person’s first name
-   * @param {string} jsondata.familyName the person’s last name
+   * @param {string} jsondata.identifier
+   * @param {string=} jsondata.name
+   * @param {string} jsondata.givenName
+   * @param {string} jsondata.familyName
    * @param {string=} jsondata.additionalName  the person’s middle name or initial
    * @param {string=} jsondata.honorificPrefix a prefix, if any (e.g. 'Mr.', 'Ms.', 'Dr.')
    * @param {string=} jsondata.honorificSuffix the suffix, if any (e.g. 'M.D.', 'P.ASCE')
@@ -30,8 +30,8 @@ class Person {
    * @param {string=} jsondata.url the url to this person’s homepage or website
    * @param {string=} jsondata.email this person’s email address
    * @param {string=} jsondata.telephone this person’s telephone number
-   * @param {string=} jsondata.jobTitle this person’s job title
-   * @param {!Object=} jsondata.affiliation an organization that this person is affiliated with; type {@link http://schema.org/Organization}
+   * @param {string=} jsondata.jobTitle
+   * @param {!Object=} jsondata.affiliation ; type {@link http://schema.org/Organization}
    * @param {string=} jsondata.affiliation.name an organization that this person is affiliated with
    * @param {Array<!Object>=} jsondata.$social a list of social media links for this person; type {@link http://schema.org/URL}
    * @param {string}          jsondata.$social.name the name or identifier of the social media service (used for icons)
@@ -68,7 +68,7 @@ class Person {
 	 * @returns {string} HTML output
 	 */
 	view_contact() {
-		return new xjs.DocumentFragment(xPersonContact.template.render(xPersonContact.renderer, this._DATA)).innerHTML()
+		return new xjs.DocumentFragment(xPersonContact.process(this._DATA)).innerHTML()
 	}
 }
 

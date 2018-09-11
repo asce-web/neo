@@ -1,21 +1,23 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://conferences.style.asce.org/neo.jsd",
-  "title": "Neo Theme",
+  "title": "ConfSite",
   "description": "A single website hosting a series of conferences.",
   "definitions": {
-    "Link": {
+    "AttendeeType": {
+      "description": "Types of attendees that can purchase passes (usually based on membership).",
       "allOf": [
+        { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Offer.jsd" },
         {
-          "$comment": "TODO: https://chharvey.github.io/schemaorg-jsd/schema/WebPageElement.jsd",
-          "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/CreativeWork.jsd"
-        },
-        {
-          "required": ["text", "url"],
+					"required": ["name", "price"],
           "properties": {
-            "text": { "description": "The textual content of the link." },
-            "url" : { "description": "The href of the link." },
-            "name": { "description": "The name or identifier of the social media service (used for icons)." }
+						"name" : {
+							"description": "The name of the attendee type."
+						},
+						"price": {
+							"description": "The price for the attendee type, given a certain pass and registration period.",
+							"type": "number"
+						}
           }
         }
       ]
@@ -29,28 +31,13 @@
           "properties": {
             "name"                     : { "description": "The conference name." },
             "description"              : { "description": "The conference theme." },
-            "disambiguatingDescription": { "description": "A blurb promoting the previous/next conference." },
+            "disambiguatingDescription": { "description": "A blurb promoting this conference, if it’s the previous/next conference in a series." },
             "url"                      : { "description": "An absolute URL for the conference homepage." },
             "image"                    : { "description": "The hero image." },
-            "startDate"                : { "description": "The starting date of this conference, in ISO string format." },
-            "endDate"                  : { "description": "The ending date of this conference, in ISO string format." },
-            "offers"                   : { "description": "A list of registration periods." },
-            "subEvent"                 : { "description": "A list of program sessions." },
-            "potentialAction"          : { "description": "A list of important dates." },
-            "sponsor"                  : { "description": "A list of supporters including non-sponsoring organizations.", "$comment": "Itemprop `funder` is used instead for financially sponsoring organizations." },
-            "organizer"                : { "description": "A list of organizers: chairpersons, steering committee members, or other persons who are responsible for organizing the conference." },
-            "performer" : {
-              "description": "A list of speakers at the conference.",
-              "type": "array",
-              "items": {
-                "properties": {
-                  "$social": {
-                    "description": "A list of social media contact links for this person.",
-                    "type": "array",
-                    "items": { "$ref": "#/definitions/Link" }
-                  }
-                }
-              }
+            "startDate"                : { "description": "The start date of this conference, in ISO string format." },
+            "endDate"                  : {
+              "description": "The end date of this conference, in ISO string format.",
+              "default": "this.startTime"
             },
             "location" : {
               "description": "A list of locations of this conference. The first entry is the promoted location; subsequent entries are other venues.",
@@ -66,24 +53,41 @@
                 "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Accommodation.jsd"
               }
             },
-            "$social": {
-              "description": "A list of social media links for this conference.",
-              "type": "array",
-              "items": { "$ref": "#/definitions/Link" }
-            },
-            "$heroButtons": {
-              "description": "A list of links serving as action buttons in the Hero section.",
-              "type": "array",
-              "items": { "$ref": "#/definitions/Link" }
-            },
             "$passes": {
               "description": "The passes belonging to this conference.",
               "type": "array",
               "items": { "$ref": "#/definitions/Pass" }
             },
+            "offers": {
+              "description": "A list of registration periods.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/RegistrationPeriod" }
+            },
             "$currentRegistrationPeriod": {
               "description": "The name of an existing offer active at this time.",
+              "$comment": "TODO dynamically use the current date instead",
               "type": "string"
+            },
+						"potentialAction": {
+							"description": "A list of important dates.",
+							"type": "array",
+							"items": { "$ref": "#/definitions/ImportantDate" }
+						},
+						"subEvent": {
+							"description": "A list of program sessions.",
+							"type": "array",
+							"items": { "$ref": "#/definitions/Session" }
+						},
+            "performer": {
+              "description": "A list of speakers at the conference.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/ConfPerson" }
+            },
+            "sponsor": {
+              "description": "A list of supporters including non-sponsoring organizations.",
+              "$comment": "Itemprop `funder` is used instead for financially sponsoring organizations.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/Supporter" }
             },
             "$supporterLevels": {
               "description": "A list of supporter levels.",
@@ -93,12 +97,126 @@
             "$exhibitors": {
               "description": "A list of exhibitors.",
               "type": "array",
-              "items": { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Organization.jsd" }
+              "items": { "$ref": "#/definitions/Exhibitor" }
+            },
+						"organizer": {
+							"description": "A list of organizers: chairpersons, steering committee members, or other persons who are responsible for organizing the conference.",
+							"type": "array",
+							"items": { "$ref": "#/definitions/ConfPerson" }
+						},
+            "$heroButtons": {
+              "description": "A list of links serving as action buttons in the Hero section.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/Hyperlink" }
+            },
+            "$social": {
+              "description": "A list of social media links for this conference.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/Hyperlink" }
             }
           }
         }
       ]
     },
+		"ConfPage": {
+			"description": "A basic page of content on a conference site.",
+			"allOf": [
+				{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/WebPage.jsd" },
+				{
+					"required": ["name", "url"],
+					"properties": {
+						"name"    : { "description": "The page name." },
+						"url"     : { "description": "The root-relative URL of this page." },
+						"hasPart" : {
+							"description": "Subpage(s) of this page.",
+							"anyOf": [
+								{ "$ref": "#/definitions/ConfPage" },
+								{ "type": "array", "items": { "$ref": "#/definitions/ConfPage" } }
+							]
+						}
+					}
+				}
+			]
+		},
+    "ConfPerson": {
+      "description": "Any person entered into the system.",
+      "allOf": [
+        { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Person.jsd" },
+        {
+          "required": ["identifier", "givenName", "familyName"],
+          "properties": {
+            "name"        : { "description": "A string representation of this person’s name." },
+            "identifier"  : { "description": "A unique identifier of this person." },
+            "givenName"   : { "description": "This person’s first name." },
+            "familyName"  : { "description": "This person’s last name." },
+            "affiliation" : { "description": "This person’s affiliated organization." },
+            "jobTitle"    : { "description": "This person’s job title." },
+						"image"       : {
+							"description": "A photo of this person.",
+							"type": "string"
+						},
+            "$social": {
+              "description": "A list of social media contact links for this person.",
+              "type": "array",
+              "items": { "$ref": "#/definitions/Hyperlink" }
+            }
+          }
+        }
+      ]
+    },
+    "Exhibitor": {
+      "description": "An organization exhibiting at a conference.",
+      "allOf": [
+        { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Organization.jsd" },
+        {
+          "required": ["name", "url", "logo", "$booth"],
+          "properties": {
+            "name": { "description": "The name of this exhibitor." },
+            "url" : { "description": "The URL of this exhibitor’s website." },
+            "logo": { "description": "This exhibitor’s logo." },
+            "$booth": {
+              "description": "The booth number of this exhibitor.",
+              "type": "integer"
+            },
+            "$isSponsor": {
+              "description": "Does this exhibitor also happen to be a sponsor?",
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "Hyperlink": {
+      "description": "A hyperlink HTML element.",
+      "allOf": [
+        { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/WebPageElement.jsd" },
+        {
+          "required": ["text", "url"],
+          "properties": {
+            "text": { "description": "The textual content of the link." },
+            "url" : { "description": "The href of the link." },
+            "name": { "description": "The name or identifier of the social media service (used for icons)." }
+          }
+        }
+      ]
+    },
+		"ImportantDate": {
+			"description": "A significant date leading up to or involved in a conference event.",
+			"allOf": [
+				{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Action.jsd" },
+				{
+					"required": ["name", "startTime"],
+					"properties": {
+						"name"     : { "description": "The name of this important date." },
+						"startTime": { "description": "The date of this important date, or the start date of this important date range." },
+						"endTime"  : {
+							"description": "The end date of this important date range.",
+							"default": "this.startTime"
+						}
+					}
+				}
+			]
+		},
     "Pass": {
       "description": "A pass with conference registration information.",
       "allOf": [
@@ -106,29 +224,80 @@
         {
           "required": ["name", "offers"],
           "properties": {
-            "name"                     : { "description": "The name or type of the pass." },
-            "description"              : { "description": "A short description of the pass." },
-            "disambiguatingDescription": { "description": "Further details of the pass." },
+            "name"                     : { "description": "The pass name." },
+            "description"              : { "description": "A short description of this pass." },
+            "disambiguatingDescription": { "description": "Further details of this pass." },
             "offers": {
               "description": "Types of attendees that can purchase this pass (usually based on membership).",
               "type": "array",
-              "items": {
-                "allOf": [
-                  { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Offer.jsd" },
-                  {
-                    "required": ["name"],
-                    "properties": {
-                      "name" : { "description": "The name of the attendee type." },
-                      "price": { "description": "The price for the attendee type given a certain pass and registration period." }
-                    }
-                  }
-                ]
-              }
+              "items": { "$ref": "#/definitions/AttendeeType" }
             }
           }
         }
       ]
     },
+		"RegistrationPeriod": {
+			"description": "A time period in which a pass offer is available.",
+			"allOf": [
+				{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/AggregateOffer.jsd" },
+				{
+					"required": ["name"],
+					"properties": {
+						"name": { "description": "The name of this registration period." },
+						"availabilityStarts": {
+							"description": "The start date of this registration period.",
+							"type": "string"
+						},
+						"availabilityEnds": {
+							"description": "The end date of this registration period.",
+							"type": "string"
+						},
+						"$icon": {
+							"description": "The keyword of an icon representing this registration period.",
+							"type": "string"
+						}
+					}
+				}
+			]
+		},
+		"Session": {
+			"description": "A conference program event.",
+			"allOf": [
+				{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Event.jsd" },
+				{
+					"required": ["name", "startDate"],
+					"properties": {
+						"name": { "description": "The name of this session." },
+						"startDate": { "description": "The start time of this session." },
+						"endDate"  : {
+							"description": "The end time of this session.",
+							"default": "this.startDate"
+						}
+					}
+				}
+			]
+		},
+		"Supporter": {
+			"description": "An organization supporting a conference.",
+			"allOf": [
+				{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Organization.jsd" },
+				{
+					"required": ["name", "url", "logo", "$level"],
+					"properties": {
+						"name": { "description": "The name of this supporter." },
+						"url" : { "description": "The URL of this supporter’s website." },
+						"logo": {
+							"description": "This supporter’s logo.",
+							"type": "string"
+						},
+						"$level": {
+							"description": "A classification of this supporter.",
+							"type": "string"
+						}
+					}
+				}
+			]
+		},
     "SupporterLevel": {
       "description": "A classification of supporting organizations to a conference. Organizations might or might not be financial sponsors.",
       "allOf": [
@@ -136,47 +305,75 @@
         {
           "required": ["name"],
           "properties": {
+            "name": true,
             "$logoSize": {
               "description": "The sizing of this level’s logos on the page.",
               "enum": ["Small", "Medium", "Large"]
             },
             "$isSponsor": {
-              "description": "Whether the level is awarded to financial contributors.",
+              "description": "Is the level awarded to financial contributors?",
               "type": "boolean"
             }
           }
         }
       ]
-    }
+    },
+		"Venue": {
+			"description": "A building location and address related to a conference.",
+			"allOf": [
+				{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Accommodation.jsd" },
+				{
+					"required": ["name", "description", "address"],
+					"properties": {
+						"name": { "description": "The name of this venue or hotel." },
+						"description" : {
+							"description": "The label or title of this venue.",
+							"type": "string"
+						},
+						"address": {
+							"description": "The venue address.",
+							"$ref": "https://chharvey.github.io/schemaorg-jsd/schema/PostalAddress.jsd"
+						},
+						"photo": {
+							"description": "A photo of this venue.",
+							"required": ["url"],
+							"properties": {
+								"url": true
+							}
+						},
+						"$cta": {
+							"description": "A link to direct users to take action.",
+							"$ref": "#/definitions/Hyperlink"
+						}
+					}
+				}
+			]
+		}
   },
   "allOf": [
-    {
-      "$comment": "TODO: https://chharvey.github.io/schemaorg-jsd/schema/WebSite.jsd",
-      "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/CreativeWork.jsd"
-    },
+    { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/WebSite.jsd" },
     { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Product.jsd" },
     {
       "required": ["@id", "name", "url"],
-      "additionalProperties": false,
-      "$comment": "This schema is for development only. TODO Remove when ready for production.",
       "properties": {
-        "@context"      : true,
-        "@type"         : { "const": "WebSite" },
-        "additionalType": { "const": "http://schema.org/Product" },
         "@id"           : { "description": "The unique, absolute URL of the website." },
         "name"          : { "description": "The website name." },
         "description"   : { "description": "The website slogan (or tagline)." },
         "url"           : { "description": "An absolute or root-relative URL for the landing page of this website." },
         "keywords"      : { "description": "Keywords for this website." },
         "logo"          : { "description": "The website logo." },
-        "color"         : { "description": "Two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`.", "maxItems": 2 },
+        "color"         : {
+          "description": "Two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`.",
+          "minItems": 2,
+          "maxItems": 2
+        },
         "brand": {
           "description": "The publisher/brand responsible for this website.",
           "properties": {
             "$social": {
               "description": "A list of social media contact links for this brand.",
               "type": "array",
-              "items": { "$ref": "#/definitions/Link" }
+              "items": { "$ref": "#/definitions/Hyperlink" }
             }
           }
         },

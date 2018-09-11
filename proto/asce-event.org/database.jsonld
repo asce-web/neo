@@ -12,7 +12,7 @@
   "brand"         : {
     "@type": "NGO",
     "name": "American Society of Civil Engineers",
-    "url" : "http://www.asce.org",
+    "url" : "http://www.asce.org/",
     "$social": [
       { "@type": "WebPageElement", "name": "twitter" , "url": "//twitter.com/ASCE"    , "text": "Follow ASCE on Twitter"        },
       { "@type": "WebPageElement", "name": "google"  , "url": "//plus.google.com/ASCE", "text": "Follow ASCE on Google+"        },
@@ -111,20 +111,20 @@
         {
           "@type": "AggregateOffer",
           "name"              : "Early Bird",
-          "availabilityEnds"  : "2016-07-28",
+          "availabilityEnds"  : "2016-07-28T00:00:00.000Z",
           "$icon"             : "stars"
         },
         {
           "@type": "AggregateOffer",
           "name"              : "Advance",
-          "availabilityStarts": "2016-07-29",
-          "availabilityEnds"  : "2016-08-25",
+          "availabilityStarts": "2016-07-29T00:00:00.000Z",
+          "availabilityEnds"  : "2016-08-25T00:00:00.000Z",
           "$icon"             : "date_range"
         },
         {
           "@type": "AggregateOffer",
           "name"              : "Onsite",
-          "availabilityStarts": "2016-08-26",
+          "availabilityStarts": "2016-08-26T00:00:00.000Z",
           "$icon"             : "account_balance"
         }
       ],
@@ -135,17 +135,17 @@
           "name": "Standard Pass",
           "description": "Members & Non-Members",
           "offers": [
-            { "@type": "Offer", "name": "Member" },
-            { "@type": "Offer", "name": "Non-Member" }
+            { "@type": "Offer", "price": 0, "name": "Member" },
+            { "@type": "Offer", "price": 0, "name": "Non-Member" }
           ]
         },
         {
           "@type": "AggregateOffer",
           "name": "Speaker Pass",
-          "description": "Speakers and Presenters",
+          "description": "Speakers & Presenters",
           "offers": [
-            { "@type": "Offer", "name": "Member" },
-            { "@type": "Offer", "name": "Non-Member" }
+            { "@type": "Offer", "price": 0, "name": "Member" },
+            { "@type": "Offer", "price": 0, "name": "Non-Member" }
           ]
         },
         {
@@ -153,36 +153,36 @@
           "name": "Moderator Pass",
           "description": "Moderators",
           "offers": [
-            { "@type": "Offer", "name": "Member" },
-            { "@type": "Offer", "name": "Non-Member" }
+            { "@type": "Offer", "price": 0, "name": "Member" },
+            { "@type": "Offer", "price": 0, "name": "Non-Member" }
           ]
         },
         {
           "@type": "AggregateOffer",
           "name": "Younger Member",
           "description": "Members 18–35",
-          "offers": [{ "@type": "Offer", "name": "Member/Non-Member" }]
+          "offers": [{ "@type": "Offer", "price": 0, "name": "Member/Non-Member" }]
         },
         {
           "@type": "AggregateOffer",
           "name": "Student Pass",
           "description": "Undergraduates 18–24",
           "disambiguatingDescription": "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
-          "offers": [{ "@type": "Offer", "name": "Member/Non-Member" }]
+          "offers": [{ "@type": "Offer", "price": 0, "name": "Member/Non-Member" }]
         },
         {
           "@type": "AggregateOffer",
           "name": "Guest Pass",
           "description": "Speaker and Moderator Guests",
-          "offers": [{ "@type": "Offer", "name": "Member/Non-Member" }]
+          "offers": [{ "@type": "Offer", "price": 0, "name": "Member/Non-Member" }]
         },
         {
           "@type": "AggregateOffer",
           "name": "Daily Pass",
           "description": "For One Day Only",
           "offers": [
-            { "@type": "Offer", "name": "Member" },
-            { "@type": "Offer", "name": "Non-Member" }
+            { "@type": "Offer", "price": 0, "name": "Member" },
+            { "@type": "Offer", "price": 0, "name": "Non-Member" }
           ]
         }
       ],
@@ -702,7 +702,7 @@
     {
       "@type": "ItemList",
       "name" : "All Sponsors",
-      "description": "All suppporter levels to display on the Sponsors page.",
+      "description": "All supporter levels to display on the Sponsors page.",
       "itemListElement": [
         "Platinum",
         "Corporate",
