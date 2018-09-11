@@ -8,7 +8,7 @@ import attendeetype_processor from './attendeetype.tpl'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../tpl/x-registrationperiod.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../src/tpl/registrationperiod.tpl.html')) // NB relative to dist
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })

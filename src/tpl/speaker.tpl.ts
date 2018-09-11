@@ -12,7 +12,7 @@ const Util = require('../../class/Util.class.js')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, '../../tpl/x-speaker.tpl.html'))
+  .fromFileSync(path.resolve(__dirname, '../../src/tpl/speaker.tpl.html')) // NB relative to dist
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })

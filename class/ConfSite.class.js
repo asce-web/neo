@@ -5,8 +5,8 @@ const Color    = require('extrajs-color')
 const Conference = require('./Conference.class.js')
 const ConfPage   = require('./ConfPage.class.js')
 
-const xSitetitle = require('../tpl/x-sitetitle.tpl.js')
-const xDirectory = require('../tpl/x-directory.tpl.js')
+const xSitetitle = require('../dist/tpl/sitetitle.tpl.js').default
+const xDirectory = require('../dist/tpl/directory.tpl.js').default
 
 
 
@@ -22,7 +22,7 @@ class ConfSite extends Page {
 	 * @returns {string} HTML output
 	 */
 	view_siteTitle() {
-	  return new xjs.DocumentFragment(xSitetitle.template.render(xSitetitle.renderer, this._DATA)).innerHTML()
+	  return new xjs.DocumentFragment(xSitetitle.process(this._DATA)).innerHTML()
 	}
 			/**
 			 * Return a Page object’s document outline as a nested ordered list.
@@ -39,7 +39,7 @@ class ConfSite extends Page {
 			 * @returns {string} HTML output
 			 */
 			view_pageToc(options = {}) {
-				return new xjs.DocumentFragment(xDirectory.template.render(xDirectory.renderer, {
+				return new xjs.DocumentFragment(xDirectory.process({
 					...this._DATA,
 					hasPart: this.findAll().filter((p) => !p.isHidden()),
 				}, {

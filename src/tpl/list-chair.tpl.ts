@@ -15,7 +15,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 				itemscope : '',
 				itemtype  : 'http://schema.org/Person',
 			})
-			.innerHTML(`<link rel="import" data-import="template" href="../../tpl/x-person-affiliation.tpl.html"/>`)
+			.innerHTML(`<link rel="import" data-import="template" href="../../src/tpl/person-affiliation.tpl.html"/>`) // NB relative to dist
 		new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
 	})
 	.node

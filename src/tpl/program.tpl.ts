@@ -19,7 +19,7 @@ interface DateGroup {
 }
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../tpl/x-program.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../src/tpl/program.tpl.html')) // NB relative to dist
   .exe(function () {
     new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
   })

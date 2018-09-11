@@ -7,7 +7,7 @@ import {Supporter} from '../interfaces'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../tpl/x-supporter.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../src/tpl/supporter.tpl.html')) // NB relative to dist
   .node
 
 interface OptsType {

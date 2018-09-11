@@ -7,9 +7,11 @@ import {ConfPerson} from '../interfaces'
 
 const {xPersonFullname} = require('aria-patterns')
 
+const Util = require('../../class/Util.class.js')
+
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, '../../tpl/x-person-contact.tpl.html'))
+  .fromFileSync(path.resolve(__dirname, '../../src/tpl/person-contact.tpl.html')) // NB relative to dist
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
@@ -46,7 +48,7 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
 
   if (data.telephone) {
     new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="telephone"]') as HTMLAnchorElement)
-      .href(data.telephone)
+      .href(`tel:${Util.toURL(data.telephone)}`)
       .textContent(data.telephone)
   } else {
     formatting.pipe.remove()

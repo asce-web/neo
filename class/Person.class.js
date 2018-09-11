@@ -6,7 +6,7 @@ const xjs = {
 }
 const {xPersonFullname} = require('aria-patterns')
 
-const xPersonContact = require('../tpl/x-person-contact.tpl.js')
+const xPersonContact = require('../dist/tpl/person-contact.tpl.js').default
 
 
 /**
@@ -68,7 +68,7 @@ class Person {
 	 * @returns {string} HTML output
 	 */
 	view_contact() {
-		return new xjs.DocumentFragment(xPersonContact.template.render(xPersonContact.renderer, this._DATA)).innerHTML()
+		return new xjs.DocumentFragment(xPersonContact.process(this._DATA)).innerHTML()
 	}
 }
 

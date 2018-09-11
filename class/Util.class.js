@@ -115,8 +115,8 @@ class Util {
 			 * @returns {string} HTML output
 			 */
 			static view_highlightButtons(buttons, buttonclasses = '') {
-				const xListHighlightbuttons = require('../src/tpl/x-list-highlightbuttons.tpl.js')
-				return new xjs.DocumentFragment(xListHighlightbuttons.template.render(xListHighlightbuttons.renderer, buttons, { buttonclasses })).innerHTML()
+				const xListHighlightbuttons = require('../dist/tpl/list-highlightbuttons.tpl.js').default
+				return new xjs.DocumentFragment(xListHighlightbuttons.process(buttons, { buttonclasses })).innerHTML()
 			}
 	/**
 	 * Return a `<ul.c-SocialList>` component, containing
@@ -129,8 +129,8 @@ class Util {
 	 * @returns {string} HTML output
 	 */
 	static view_socialList(data, classes = '') {
-		const xListSocial = require('../tpl/x-list-social.tpl.js')
-		return new xjs.DocumentFragment(xListSocial.template.render(xListSocial.renderer, data, { classes })).innerHTML()
+		const xListSocial = require('../dist/tpl/list-social.tpl.js').default
+		return new xjs.DocumentFragment(xListSocial.process(data, { classes })).innerHTML()
 	}
 
   /**

@@ -7,7 +7,7 @@ import {Hyperlink} from '../interfaces'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../x-list-social.tpl.html')) // TODO use `xjs.HTMLUListElement.templateSync()`
+  .fromFileSync(path.join(__dirname, '../../src/tpl/list-social.tpl.html')) // NB relative to dist // TODO use `xjs.HTMLUListElement.templateSync()`
   .node
 
 interface OptsType {
