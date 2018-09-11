@@ -7,6 +7,8 @@ import {ConfPerson} from '../interfaces'
 
 const {xPersonFullname} = require('aria-patterns')
 
+const Util = require('../../class/Util.class.js')
+
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.resolve(__dirname, '../../tpl/x-person-contact.tpl.html'))
@@ -46,7 +48,7 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
 
   if (data.telephone) {
     new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="telephone"]') as HTMLAnchorElement)
-      .href(data.telephone)
+      .href(`tel:${Util.toURL(data.telephone)}`)
       .textContent(data.telephone)
   } else {
     formatting.pipe.remove()

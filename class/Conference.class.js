@@ -3,12 +3,17 @@ const xjs = {
   ...require('extrajs-dom'),
 }
 
-const Person             = require('./Person.class.js')
-
-const xHero           = require('../tpl/x-hero.tpl.js')
-const xOtheryear      = require('../tpl/x-otheryear.tpl.js')
-const xProgram        = require('../tpl/x-program.tpl.js')
-const xDateblock      = require('../tpl/x-dateblock.tpl.js')
+const xHero                 = require('../dist/tpl/hero.tpl.js').default
+const xOtheryear            = require('../dist/tpl/otheryear.tpl.js').default
+const xListPass             = require('../dist/tpl/list-pass.tpl.js').default
+const xListRegistrationicon = require('../dist/tpl/list-registrationicon.tpl.js').default
+const xDateblock            = require('../dist/tpl/dateblock.tpl.js').default
+const xProgram              = require('../dist/tpl/program.tpl.js').default
+const xListSpeaker          = require('../dist/tpl/list-speaker.tpl.js').default
+const xListVenue            = require('../dist/tpl/list-venue.tpl.js').default
+const xListSupporterLevel   = require('../dist/tpl/list-supporterlevel.tpl.js').default
+const xListExhibitor        = require('../dist/tpl/list-exhibitor.tpl.js').default
+const xListChair            = require('../dist/tpl/list-chair.tpl.js').default
 
 
 /**
@@ -196,7 +201,7 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_hero() {
-		return new xjs.DocumentFragment(xHero.template.render(xHero.renderer, {
+		return new xjs.DocumentFragment(xHero.process({
 			...this._DATA,
 			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
 		})).innerHTML()
@@ -206,21 +211,10 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_otherYear() {
-		return new xjs.DocumentFragment(xOtheryear.template.render(xOtheryear.renderer, {
+		return new xjs.DocumentFragment(xOtheryear.process({
 			...this._DATA,
 			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
 		})).innerHTML()
-	}
-	/**
-	 * Return a `xDateblock` component marking up this conference’s important dates.
-	 * @param   {boolean=} starred `true` if you want only starred dates to display
-	 * @returns {string} HTML output
-	 */
-	view_importantDates(starred = false) {
-		return new xjs.DocumentFragment(xDateblock.template.render(
-			xDateblock.renderer,
-			(this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
-		)).innerHTML()
 	}
 	/**
 	 * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
@@ -229,51 +223,26 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_pass(queue = null) {
-		const xListPass = require('../src/tpl/x-list-pass.tpl.js')
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = this.getPassesAll().filter((item) => (queue) ? item_keys.includes(item.name) : true)
-		return new xjs.DocumentFragment(xListPass.template.render(xListPass.renderer, items, { conference: this })).innerHTML()
+		return new xjs.DocumentFragment(xListPass.process(items, { conference: this })).innerHTML()
 	}
 	/**
 	 * Return a `<ul.c-Alert>` component containing the legend of registration periods.
 	 * @returns {string} HTML output
 	 */
 	view_registrationLegend() {
-		const xListRegistrationicon = require('../src/tpl/x-list-registrationicon.tpl.js')
-		return new xjs.DocumentFragment(xListRegistrationicon.template.render(xListRegistrationicon.renderer, this.getRegistrationPeriodsAll())).innerHTML()
+		return new xjs.DocumentFragment(xListRegistrationicon.process(this.getRegistrationPeriodsAll())).innerHTML()
 	}
 	/**
-	 * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
-	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
+	 * Return a `xDateblock` component marking up this conference’s important dates.
+	 * @param   {boolean=} starred `true` if you want only starred dates to display
 	 * @returns {string} HTML output
 	 */
-	view_venue(queue = null) {
-		const xListVenue = require('../src/tpl/x-list-venue.tpl.js')
-		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-		let items = this.getVenuesAll().filter((item) => (queue) ? item_keys.includes(item.description) : true)
-		return new xjs.DocumentFragment(xListVenue.template.render(xListVenue.renderer, items)).innerHTML()
-	}
-	/**
-	 * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
-	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
-	 * @returns {string} HTML output
-	 */
-	view_speaker(queue = null) {
-		const xListSpeaker = require('../src/tpl/x-list-speaker.tpl.js')
-		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-		let items = this.getSpeakersAll().filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
-		return new xjs.DocumentFragment(xListSpeaker.template.render(xListSpeaker.renderer, items)).innerHTML()
-	}
-	/**
-	 * Return a `<ul>` element, containing conference chairs and/or co-chairs.
-	 * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
-	 * @returns {string} HTML output
-	 */
-	view_chair() {
-		const xListChair = require('../src/tpl/x-list-chair.tpl.js')
-		return new xjs.DocumentFragment(xListChair.template.render(xListChair.renderer, (this._DATA.organizer || []))).innerHTML()
+	view_importantDates(starred = false) {
+		return new xjs.DocumentFragment(xDateblock.process(
+			(this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
+		)).innerHTML()
 	}
 	/**
 	 * Return an `<.o-Tablist[role="tablist"]>` marking up this conference’s program sessions.
@@ -284,11 +253,32 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_program(id, starred = false) {
-		return new xjs.DocumentFragment(xProgram.template.render(
-			xProgram.renderer,
+		return new xjs.DocumentFragment(xProgram.process(
 			(this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
 			{ id, starred }
 		)).innerHTML()
+	}
+	/**
+	 * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
+	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
+	 * @returns {string} HTML output
+	 */
+	view_speaker(queue = null) {
+		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+		let items = this.getSpeakersAll().filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
+		return new xjs.DocumentFragment(xListSpeaker.process(items)).innerHTML()
+	}
+	/**
+	 * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
+	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
+	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
+	 * @returns {string} HTML output
+	 */
+	view_venue(queue = null) {
+		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
+		let items = this.getVenuesAll().filter((item) => (queue) ? item_keys.includes(item.description) : true)
+		return new xjs.DocumentFragment(xListVenue.process(items)).innerHTML()
 	}
 	/**
 	 * Return a list of `<section.c-SupporterBlock>` components containing this conference’s supporters
@@ -298,18 +288,24 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_supporterLevel(queue = null, small = false) {
-		const xListSupporterLevel = require('../src/tpl/x-list-supporterlevel.tpl.js')
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
-		return new xjs.DocumentFragment(xListSupporterLevel.template.render(xListSupporterLevel.renderer, items, { small, conference: this })).innerHTML()
+		return new xjs.DocumentFragment(xListSupporterLevel.process(items, { small, conference: this })).innerHTML()
 	}
 	/**
 	 * Return a list of `<div>` elements marking up this conference’s exhibitors.
 	 * @returns {string} HTML output
 	 */
 	view_exhibitorList() {
-		const xListExhibitor = require('../src/tpl/x-list-exhibitor.tpl.js')
-		return new xjs.DocumentFragment(xListExhibitor.template.render(xListExhibitor.renderer, this._DATA.$exhibitors || [])).innerHTML()
+		return new xjs.DocumentFragment(xListExhibitor.process(this._DATA.$exhibitors || [])).innerHTML()
+	}
+	/**
+	 * Return a `<ul>` element, containing conference chairs and/or co-chairs.
+	 * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
+	 * @returns {string} HTML output
+	 */
+	view_chair() {
+		return new xjs.DocumentFragment(xListChair.process(this._DATA.organizer || [])).innerHTML()
 	}
 }
 
