@@ -25,6 +25,13 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
  * @param   data a single conference event
  */
 function instructions(frag: DocumentFragment, data: Conference): void {
+	/**
+	 * References to formatting elements.
+	 * We want to create these references before removing any elements from the DOM.
+	 */
+	const formatting = {
+		/** Start and end dates. */ dates: [...frag.querySelectorAll('.c-ConfHed__Detail__Dates')],
+	}
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
    */ frag.querySelector('.c-Banner') !.setAttribute('style', `--banner-img: ${(data.image) ? `url('${data.image}')` : null};`)
@@ -38,13 +45,19 @@ function instructions(frag: DocumentFragment, data: Conference): void {
 
   let date_start: Date = new Date(data.startDate)
   let date_end  : Date = new Date(data.endDate || data.startDate)
-  new xjs.HTMLTimeElement(frag.querySelector('time[itemprop="startDate"]') as HTMLTimeElement)
-    .dateTime(date_start)
-    .textContent(xjs.Date.format(date_start, 'M j'))
-  // TODO remove markup if `endDate` is missing
-  new xjs.HTMLTimeElement(frag.querySelector('time[itemprop="endDate"]') as HTMLTimeElement)
-    .dateTime(date_end)
-    .textContent(xjs.Date.format(date_end, 'M j'))
+	frag.querySelectorAll('time[itemprop~="startDate"]').forEach((time) => {
+		new xjs.HTMLTimeElement(time as HTMLTimeElement)
+			.dateTime(date_start)
+			.textContent(xjs.Date.format(date_start, 'M j'))
+	})
+	new xjs.HTMLTimeElement(frag.querySelectorAll('time[itemprop~="endDate"]')[1] as HTMLTimeElement)
+		.dateTime(date_end)
+		.textContent(xjs.Date.format(date_end, 'M j'))
+	if (xjs.Date.sameDate(date_start, date_end)) {
+		formatting.dates[1].remove()
+	} else {
+		formatting.dates[0].remove()
+	}
 
   frag.querySelector('[itemprop="description"]') !.textContent = data.description || ' ' // `&nbsp;` // cannot remove node due to SEO
 
