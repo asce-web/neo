@@ -75,15 +75,14 @@ export interface Conference extends sdo.Event {
 
 /**
  * A basic page of content on a conference site.
- * @todo  FIXME make `hasPart` an array only
  */
 export interface ConfPage extends sdo.WebPage {
 	/** The page name. */
 	name: string;
 	/** The root-relative URL of this page. */
 	url: string;
-	/** Subpage(s) of this page. */
-	hasPart?: ConfPage|ConfPage[];
+	/** Subpages of this page. */
+	hasPart?: ConfPage[];
 }
 
 /** Any person entered into the system. */
