@@ -225,7 +225,7 @@ class Conference {
 	view_pass(queue = null) {
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = this.getPassesAll().filter((item) => (queue) ? item_keys.includes(item.name) : true)
-		return new xjs.DocumentFragment(xListPass.process(items, { conference: this })).innerHTML()
+		return new xjs.DocumentFragment(xListPass.process(items, { conference: this._DATA })).innerHTML()
 	}
 	/**
 	 * Return a `<ul.c-Alert>` component containing the legend of registration periods.

@@ -9,10 +9,6 @@ import {ConfPage} from '../interfaces'
 const xjs = { ...xjs1, ...xjs2 }
 
 
-const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/directory.tpl.html')) // NB relative to dist
-  .node
-
 interface OptsType {
 	/**
 	 * How many levels deep the outline should be; a non-negative integer, or `Infinity`.
@@ -47,6 +43,10 @@ interface OptsType {
 	/** configurations for nested outlines */
 	opts?: OptsType;
 }
+
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, '../../src/tpl/directory.tpl.html')) // NB relative to dist
+  .node
 
 /**
  * A nested `<ol>` marking up a site directory.

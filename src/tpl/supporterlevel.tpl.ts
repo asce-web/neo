@@ -10,13 +10,6 @@ import supporter_processor from './supporter.tpl'
 const xjs = { ...xjs1, ...xjs2 }
 
 
-const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/supporterlevel.tpl.html')) // NB relative to dist
-  .exe(function () {
-    new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
-  })
-  .node
-
 interface OptsType {
 	/** should logo sizing be overridden to `Small`? */
 	small?: boolean;
@@ -25,6 +18,13 @@ interface OptsType {
 	/** the conference to which this supporter level belongs */
 	conference: Conference; // FIXME this should not be required
 }
+
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, '../../src/tpl/supporterlevel.tpl.html')) // NB relative to dist
+  .exe(function () {
+    new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
+  })
+  .node
 
 /**
  * A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.

@@ -7,17 +7,17 @@ import {Conference, Pass, RegistrationPeriod} from '../interfaces'
 import registrationperiod_processor from './registrationperiod.tpl'
 
 
+interface OptsType {
+	/** the conference to which this pass belongs */
+	conference: Conference; // FIXME this should not be required
+}
+
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/pass.tpl.html')) // NB relative to dist
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })
   .node
-
-interface OptsType {
-	/** the conference to which this pass belongs */
-	conference: Conference; // FIXME this should not be required
-}
 
 /**
  * An `<article.c-Pass>` component marking up a pass’s info.

@@ -7,19 +7,19 @@ import {Pass, RegistrationPeriod} from '../interfaces'
 import attendeetype_processor from './attendeetype.tpl'
 
 
-const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/registrationperiod.tpl.html')) // NB relative to dist
-  .exe(function () {
-    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
-  })
-  .node
-
 interface OptsType {
 	/** should this period be placed in the body, and not the footer, of the pass? */
 	is_body?: boolean;
 	/** the pass of which this markup is a part */
 	pass: Pass;
 }
+
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, '../../src/tpl/registrationperiod.tpl.html')) // NB relative to dist
+  .exe(function () {
+    new xjs.DocumentFragment(this.content()).importLinks(__dirname)
+  })
+  .node
 
 /**
  * A `<section.c-Pass__Period>` subcomponent marking up this period’s info.

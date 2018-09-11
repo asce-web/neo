@@ -6,14 +6,14 @@ import {Processor} from 'template-processor'
 import {Supporter} from '../interfaces'
 
 
-const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/supporter.tpl.html')) // NB relative to dist
-  .node
-
 interface OptsType {
 	/** is the supporter a financial sponsor? */
 	is_sponsor?: boolean;
 }
+
+const template: HTMLTemplateElement = xjs.HTMLTemplateElement
+  .fromFileSync(path.join(__dirname, '../../src/tpl/supporter.tpl.html')) // NB relative to dist
+  .node
 
 /**
  * Markup for a supporter logo.
