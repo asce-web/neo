@@ -28,11 +28,12 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
 function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void {
   // TODO programmatically determine current registration period by date
   let current_period: RegistrationPeriod = (opts.conference.offers || []).find((pd) => pd.name === opts.conference.$currentRegistrationPeriod) !
-  frag.querySelector('.c-Pass__Hn'       ) !.textContent = data.name              // TODO use `[itemprop="name"]` and add to markup
-  frag.querySelector('.c-Pass__Desc slot') !.textContent = data.description || '' // TODO use `[itemprop="description"]` and add to markup
-  if (data.disambiguatingDescription) {
-    frag.querySelector('.c-Pass__Fine') !.textContent = data.disambiguatingDescription || '' // TODO use `[itemprop="disambiguatingDescription"]` and add to markup
-  } else frag.querySelector('.c-Pass__Fine') !.remove()
+  frag.querySelector('[itemprop="name"]'       ) !.textContent = data.name
+  frag.querySelector('[itemprop="description"]') !.textContent = data.description || ''
+	new xjs.Element(frag.querySelector('[itemprop="disambiguatingDescription"]') !).exe(function () {
+		if (data.disambiguatingDescription) this.node.textContent = data.disambiguatingDescription
+		else this.node.remove()
+	})
 
   new xjs.Element(frag.querySelector('.c-Pass__Body') !).append(
     registrationperiod_processor.process(current_period, { pass: data, is_body: true })

@@ -1,10 +1,10 @@
 <template>
-  <article class="c-Pass">
+  <article class="c-Pass" itemscope="" itemtype="http://schema.org/AggregateOffer">
     <header class="c-Pass__Head">
-      <h1 class="c-Pass__Hn">{{ name }}</h1>
+      <h1 class="c-Pass__Hn" itemprop="name">{{ name }}</h1>
       <p class="c-Pass__Desc">
-        <slot>{{ description }}</slot>
-        <small class="c-Pass__Fine h-Block">{{ fineprint }}</small>
+        <slot itemprop="description">{{ description }}</slot>
+        <small class="c-Pass__Fine h-Block" itemprop="disambiguatingDescription">{{ fineprint }}</small>
       </p>
     </header>
     <div class="c-Pass__Body">
