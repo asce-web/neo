@@ -11,7 +11,7 @@ const Util = require('../../class/Util.class.js')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, '../../tpl/x-person-contact.tpl.html'))
+  .fromFileSync(path.resolve(__dirname, '../../src/tpl/person-contact.tpl.html')) // NB relative to dist
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })

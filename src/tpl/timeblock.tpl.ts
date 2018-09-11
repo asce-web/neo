@@ -10,7 +10,7 @@ const xjs = { ...xjs1, ...xjs2 }
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../tpl/x-timeblock.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../src/tpl/timeblock.tpl.html')) // NB relative to dist
   .node
 
 /**

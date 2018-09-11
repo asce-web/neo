@@ -7,7 +7,7 @@ import {Exhibitor} from '../interfaces'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../tpl/x-exhibitor.tpl.html'))
+  .fromFileSync(path.join(__dirname, '../../src/tpl/exhibitor.tpl.html')) // NB relative to dist
   .node
 
 /**
