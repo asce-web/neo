@@ -4,6 +4,11 @@ import {Processor} from 'template-processor'
 import {Hyperlink} from '../interfaces'
 
 
+interface OptsType {
+	/** additional class(es) to add to each link */
+	buttonclasses?: string;
+}
+
 const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List o-Flex o-Flex--even')
@@ -12,11 +17,6 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 			.innerHTML(`<a class="c-Button c-Button--hilite {{ buttonclasses }}" href="{{ url }}">{{ text }}</a>`)
 	})
 	.node
-
-interface OptsType {
-	/** additional class(es) to add to each link */
-	buttonclasses?: string;
-}
 
 /**
  * A `<ul>` list of highlighted buttons.

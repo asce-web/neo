@@ -6,14 +6,14 @@ import {Processor} from 'template-processor'
 import {Hyperlink} from '../interfaces'
 
 
+interface OptsType {
+	/** any other class(es) to add to the `<ul>` */
+	classes?: string;
+}
+
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/list-social.tpl.html')) // NB relative to dist // TODO use `xjs.HTMLUListElement.templateSync()`
   .node
-
-interface OptsType {
-  /** any other class(es) to add to the `<ul>` */
-	classes?: string;
-}
 
 /**
  * A `<ul>` list of social media links.

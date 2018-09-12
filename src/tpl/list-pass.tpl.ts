@@ -5,6 +5,11 @@ import {Conference, Pass} from '../interfaces'
 import pass_processor from './pass.tpl'
 
 
+interface OptsType {
+	/** the conference to which this pass belongs */
+	conference: Conference; // FIXME this should not be required
+}
+
 const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List o-Flex o-ListStacked')
@@ -14,11 +19,6 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 		new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
 	})
 	.node
-
-interface OptsType {
-	/** the conference to which this pass belongs */
-	conference: Conference; // FIXME this should not be required
-}
 
 /**
  * A `<ul>` list of {@link Pass|passes}.

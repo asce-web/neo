@@ -5,6 +5,13 @@ import {Conference, SupporterLevel} from '../interfaces'
 import supporterlevel_processor from './supporterlevel.tpl'
 
 
+interface OptsType {
+	/** should logo sizing be overridden to `Small`? */
+	small?: boolean;
+	/** the conference to which these supporter levels belong */
+	conference: Conference; // FIXME this should not be required
+}
+
 const template: HTMLTemplateElement = xjs.HTMLOListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLUListElement(this.content().querySelector('ol') !).addClass('o-List')
@@ -14,13 +21,6 @@ const template: HTMLTemplateElement = xjs.HTMLOListElement.templateSync()
 		new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
 	})
 	.node
-
-interface OptsType {
-	/** should logo sizing be overridden to `Small`? */
-	small?: boolean;
-	/** the conference to which these supporter levels belong */
-	conference: Conference; // FIXME this should not be required
-}
 
 /**
  * An `<ol>` list of {@link Supporterlevel|supporter levels}.
