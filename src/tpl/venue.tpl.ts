@@ -28,8 +28,7 @@ function instructions(frag: DocumentFragment, data: Venue): void {
     ...data.address,
   }))
 
-	new xjs.HTMLImageElement(frag.querySelector('img[itemprop="image"]') as HTMLImageElement).exe(function () {
-		this.attr('itemprop', 'photo') // FIXME in markup
+	new xjs.HTMLImageElement(frag.querySelector('img[itemprop="photo"]') as HTMLImageElement).exe(function () {
 		if (data.photo) this.src(data.photo.url)
 		else this.node.remove()
 	})

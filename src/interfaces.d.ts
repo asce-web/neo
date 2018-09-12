@@ -37,7 +37,7 @@ export interface Conference extends sdo.Event {
 	 * A list of locations of this conference.
 	 * The first entry is the promoted location;
 	 * subsequent entries are other venues.
-	 * @todo FIXME the code should match this description
+	 * @todo FIXME make this match its description
 	 */
 	location : sdo.PostalAddress;
 	/** A list of registration periods. */
