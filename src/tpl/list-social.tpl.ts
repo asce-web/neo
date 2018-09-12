@@ -1,5 +1,3 @@
-import * as path from 'path'
-
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
@@ -11,9 +9,23 @@ interface OptsType {
 	classes?: string;
 }
 
-const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/list-social.tpl.html')) // NB relative to dist // TODO use `xjs.HTMLUListElement.templateSync()`
-  .node
+const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
+	.exe(function () {
+		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List o-Flex c-SocialList {{ listclasses }}')
+		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
+			.addClass('o-List__Item o-Flex__Item c-SocialList__Item')
+			.attr({
+				itemprop : 'sameAs',
+				itemscope: '',
+				itemtype : 'http://schema.org/WebPageElement',
+			})
+			.innerHTML(`
+				<a class="c-SocialList__Link h-Block c-SocialList__Link--{{ name }}" href="{{ url }}" itemprop="url">
+					<slot class="h-Hidden" itemprop="text">{{ text }}</slot>
+				</a>
+			`)
+	})
+	.node
 
 /**
  * A `<ul>` list of social media links.
@@ -28,7 +40,7 @@ function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType)
       new xjs.HTMLAnchorElement(f.querySelector('a') !)
         .replaceClassString('{{ name }}', d.name || '')
         .href(d.url)
-      f.querySelector('slot') !.textContent = d.text
+      f.querySelector('[itemprop="text"]') !.textContent = d.text
     }, data)
 }
 

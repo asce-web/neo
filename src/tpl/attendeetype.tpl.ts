@@ -20,8 +20,8 @@ function instructions(frag: DocumentFragment, data: AttendeeType): void {
   const PRICE_OPTIONS: Intl.NumberFormat = new Intl.NumberFormat('en', {
     style: 'currency',
     currency: 'USD',
-    minimumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
-    maximumFractionDigits: 0, // REVIEW: remove these lines to show cent amounts
+    minimumFractionDigits: 0, // QUESTION: remove these lines to show cent amounts
+    maximumFractionDigits: 0, // QUESTION: remove these lines to show cent amounts
   })
   frag.querySelector('.c-Pass__Attendee'         ) !.textContent = data.name
   frag.querySelector('[itemprop="priceCurrency"]') !.textContent = PRICE_OPTIONS.format(data.price)[0] // .charAt(0) // FIXME for USD only!

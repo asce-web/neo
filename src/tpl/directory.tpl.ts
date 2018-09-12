@@ -16,12 +16,18 @@ interface OptsType {
 	 */
 	depth?: number;
 	/**
-	 * Which subpage to start at; non-negative integer.
+	 * The subpage at which to start; an integer.
+	 *
+	 * Works just like the first parameter of
+	 * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice|Array#slice}.
 	 * @default 0
 	 */
 	start?: number;
 	/**
-	 * Which subpage to end at; non-negative integer or `Infinity`.
+	 * The subpage at which to end; an integer or `Infinity`.
+	 *
+	 * Works just like the last parameter of
+	 * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice|Array#slice}.
 	 * @default Infinity
 	 */
 	end?: number;
@@ -55,11 +61,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
  * @param   opts additional processing options
 */
 function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): void {
-  let subpages: ConfPage[] = xjs.Object.switch<ConfPage[]>(xjs.Object.typeOf(data.hasPart), {
-    'array'    : () =>  data.hasPart as ConfPage[],
-    'object'   : () => [data.hasPart as ConfPage],
-    'undefined': () => [],
-  })()
+	;[opts.depth, opts.start, opts.end].forEach((n) => { if (typeof n === 'number') xjs.Number.assertType(n) })
   let depth: number = (opts.depth === 0) ? 0 : opts.depth || Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol') !)
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
@@ -85,25 +87,24 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
 				}
 			})
 			new xjs.Element(formatting.icons[1]).exe(function () {
-				if (opts.classes && opts.classes.expand && Array.isArray(d.hasPart) && d.hasPart.length) { // FIXME make `hasPart` an array only
+				if (opts.classes && opts.classes.expand && d.hasPart && d.hasPart.length) {
 					this.replaceClassString('{{ classes.expand }}', opts.classes.expand).textContent('expand_more')
 				} else {
 					this.node.remove()
 				}
 			})
 
-      if (Array.isArray(d.hasPart) && d.hasPart.length && depth > 0) { // FIXME make `hasPart` an array only
+      if (d.hasPart && d.hasPart.length && depth > 0) {
         new xjs.Element(f.querySelector('[itemprop="hasPart"]') !).append(
-          require(__filename).process({
-            ...d,
-            hasPart: d.hasPart//.filter((p) => !p.isHidden()),
-          }, {
+          xDirectory.process(d, {
             ...(opts.opts || {}),
             depth: depth - 1,
           })
         )
       }
-    }, subpages)
+    }, (data.hasPart || []).slice(opts.start || 0, opts.end || Infinity))
 }
 
-export default new Processor(template, instructions)
+const xDirectory = new Processor(template, instructions)
+
+export default xDirectory

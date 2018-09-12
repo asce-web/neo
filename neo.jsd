@@ -128,11 +128,9 @@
 						"name"    : { "description": "The page name." },
 						"url"     : { "description": "The root-relative URL of this page." },
 						"hasPart" : {
-							"description": "Subpage(s) of this page.",
-							"anyOf": [
-								{ "$ref": "#/definitions/ConfPage" },
-								{ "type": "array", "items": { "$ref": "#/definitions/ConfPage" } }
-							]
+							"description": "Subpages of this page.",
+							"type": "array",
+							"items": { "$ref": "#/definitions/ConfPage" }
 						}
 					}
 				}

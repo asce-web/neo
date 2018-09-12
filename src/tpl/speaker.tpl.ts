@@ -31,25 +31,20 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
 
   new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.render(data))
 
-  // TODO use list-social.tpl
-  new xjs.HTMLUListElement(frag.querySelectorAll('ul.c-SocialList')[0] as HTMLUListElement).exe(function () {
-    this.node.before(list_social_processor.process((data.$social || []), {
-      classes: 'c-SocialList--speaker',
-    }))
-  }).populate(function (f: DocumentFragment, d: { prop: 'url'|'email'|'telephone'; icon: string; url: string; text: string }) {
-    if (!data[d.prop]) {
-      new xjs.DocumentFragment(f).empty()
-    } else {
-    f.querySelector('slot') !.textContent = d.text
-    new xjs.HTMLAnchorElement(f.querySelector('a') !)
-      .replaceClassString('{{ icon }}', d.icon)
-      .attr({ href: d.url, itemprop: d.prop })
-    }
-  }, [
-    { prop: 'url'      , icon: 'explore', url: data.url                           , text: 'visit homepage' },
-    { prop: 'email'    , icon: 'email'  , url: `mailto:${data.email}`             , text: 'send email'     },
-    { prop: 'telephone', icon: 'phone'  , url: `tel:${Util.toURL(data.telephone)}`, text: 'call'           },
-  ])
+	new xjs.Element(frag.querySelector('.c-Speaker__Foot template') !).after(...[
+		list_social_processor.process((data.$social || []), {
+			classes: 'c-SocialList--speaker',
+		}),
+		// TODO make a new Processor for this list
+		// TODO remove items if they are not provided
+		list_social_processor.process([
+			{ /* "@type": "WebPageElement",*/ identifier: 'url'      , name: 'explore', text: 'visit homepage', url: `${data.url}`                       },
+			{ /* "@type": "WebPageElement",*/ identifier: 'email'    , name: 'email'  , text: 'send email'    , url: `mailto:${data.email}`              },
+			{ /* "@type": "WebPageElement",*/ identifier: 'telephone', name: 'phone'  , text: 'call'          , url: `tel:${Util.toURL(data.telephone)}` },
+		], {
+			classes: 'c-SocialList--speaker',
+		}),
+	])
 }
 
 export default new Processor(template, instructions)

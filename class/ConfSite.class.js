@@ -39,17 +39,20 @@ class ConfSite extends Page {
 			 * @returns {string} HTML output
 			 */
 			view_pageToc(options = {}) {
+				function toSDO(page) {
+					return {
+						"@type": "WebPage",
+						"name"       : page.name(),
+						"url"        : page.url(),
+						"description": page.description(),
+						"keywords"   : page.keywords(),
+						"hasPart"    : page.findAll().map((p) => toSDO(p)),
+					}
+				}
 				return new xjs.DocumentFragment(xDirectory.process({
 					...this._DATA,
-					hasPart: this.findAll().filter((p) => !p.isHidden()),
-				}, {
-					depth  : options.depth || Infinity,
-					start  : options.start || 0,
-					end    : options.end   || Infinity,
-					classes: options.classes || {},
-					links  : options.links,
-					options: options.options,
-				})).innerHTML()
+					hasPart: this.findAll().map((p) => toSDO(p)),
+				}, options)).innerHTML()
 			}
   /**
    * @summary Construct a new ConfSite object.

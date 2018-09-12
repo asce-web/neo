@@ -30,9 +30,9 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod): void {
    * We want to create these references before removing any elements from the DOM.
    */
   const formatting = {
-    /** Colon after period name. */ colon: frag.querySelector('slot[name="colon"]') !, // TODO `frag.querySelectorAll('small span')[0]`
     /** Start and end dates. */     times: [...frag.querySelectorAll('time')],
-    /** Dash between times. */      dash : frag.querySelector('slot[name="dash"]') !, // TODO `frag.querySelectorAll('small span')[1]`
+    /** Colon after period name. */ colon: frag.querySelectorAll('small span')[0],
+    /** Dash between times. */      dash : frag.querySelectorAll('small span')[1],
   }
   if (date_start) {
     new xjs.HTMLTimeElement(formatting.times[0])

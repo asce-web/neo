@@ -47,7 +47,7 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: Op
 
   new xjs.HTMLElement(frag.querySelector('dl') !).append(
     ...opts.pass.offers.map((att_type) =>
-      attendeetype_processor.process({ ...att_type, price: 42.87 }) // TODO price is 42 for now
+      attendeetype_processor.process({ ...att_type, price: 42.87 }) // FIXME price is 42 for now
     )
   )
 }
