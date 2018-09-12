@@ -17,13 +17,7 @@
         </span>
       </p>
       <p class="c-ConfHed__Theme h-Hidden-nM" itemprop="description">{{ description || '&nbsp;' }}</p>
-      <ul class="o-List o-Flex o-Flex--even">
-        <template>
-          <li class="o-List__Item o-Flex__Item">
-            <a class="c-Button c-Button--hilite c-Button--primary" href="{{ url }}" itemprop="significantLink">{{ text }}</a>
-          </li>
-        </template>
-      </ul>
+			<link rel="import" data-import="document" href="../../node_modules/extrajs-dom/src/tpl/x-htmlulistelement.tpl.html"/>
     </div>
   </header>
 </template>

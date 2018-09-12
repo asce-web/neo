@@ -5,7 +5,7 @@ import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Conference, Hyperlink} from '../interfaces'
-// import list_highlightbuttons_processor from './list-highlightbuttons.tpl'
+import list_highlightbuttons_processor from './list-highlightbuttons.tpl'
 
 const xjs = { ...xjs1, ...xjs2 }
 
@@ -61,12 +61,15 @@ function instructions(frag: DocumentFragment, data: Conference): void {
 
   frag.querySelector('[itemprop="description"]') !.textContent = data.description || ' ' // `&nbsp;` // cannot remove node due to SEO
 
-  // TODO use `list-highlightbuttons.tpl.ts`
-  new xjs.HTMLUListElement(frag.querySelector('ul.o-Flex') as HTMLUListElement).populate(function (f: DocumentFragment, d: Hyperlink) {
-    new xjs.HTMLAnchorElement(f.querySelector('a[itemprop="significantLink"]') as HTMLAnchorElement)
-      .href(d.url)
-      .textContent(d.text)
-  }, data.$heroButtons || [])
+	new xjs.Element(frag.querySelector('.c-ConfHed__Theme ~ template') !).after(
+		new xjs.DocumentFragment(list_highlightbuttons_processor.process(data.$heroButtons || [], {
+			buttonclasses: 'c-Button--primary',
+		})).exe(function () {
+			this.node.querySelectorAll('a').forEach((anchor) => {
+				new xjs.HTMLAnchorElement(anchor).attr('itemprop', 'significantLink')
+			})
+		})
+	)
 
   new xjs.Element(frag.querySelector('.c-ConfHed__Detail__Dates') !).trimInner()
 }
