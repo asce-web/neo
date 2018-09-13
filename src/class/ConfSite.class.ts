@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Color} from 'extrajs-color'
 
-import {Hyperlink} from '../interfaces'
+import {Hyperlink, Queue} from '../interfaces'
 import sitetitle_processor from '../tpl/registrationicon.tpl'
 import directory_processor from '../tpl/directory.tpl'
 import Conference from './Conference.class'
@@ -210,17 +210,17 @@ export default class ConfSite extends Page {
   /**
    * Retrieve a queue added to this site.
    * @param   name the name of the queue
-   * @returns {?sdo.ItemList} the queue, or `null` if not found
+   * @returns the queue, or `null` if not found
    */
-  getQueue(name: string) {
+  getQueue(name: string): Queue|null {
     return this.getQueuesAll().find((list) => list.name===name) || null
   }
   /**
    * Return all queues on this site.
    * @todo TODO turn this into a getter
-   * @returns {Array<sdo.ItemList>} all this site’s queues
+   * @returns all this site’s queues
    */
-  getQueuesAll() {
+  getQueuesAll(): Queue[] {
     return (this._DATA.$queues || []).slice()
   }
 
