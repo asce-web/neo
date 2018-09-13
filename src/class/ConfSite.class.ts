@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 import {Color} from 'extrajs-color'
 
-import {Hyperlink, Queue} from '../interfaces'
+import {ConfSite as ConfSiteSchema, Hyperlink, Queue} from '../interfaces'
 import sitetitle_processor from '../tpl/registrationicon.tpl'
 import directory_processor from '../tpl/directory.tpl'
 import Conference from './Conference.class'
@@ -118,40 +118,17 @@ export default class ConfSite extends Page {
   }
 
 
+	/** All the data for this object. */
+	private readonly _DATA: ConfSiteSchema;
+
   /**
    * Construct a new ConfSite object.
-   * @param {(sdo.WebSite&sdo.Product)} jsondata a JSON object that validates against http://schema.org/WebSite, http://schema.org/Product, and `/neo.jsd`
-   * @param {string}                    jsondata.name        http://schema.org/name
-   * @param {string}                    jsondata.url         http://schema.org/url
-   * @param {string=}                   jsondata.description http://schema.org/description
-   * @param {Array<string>=}            jsondata.keywords    http://schema.org/keywords
-   * @param {string=}                   jsondata.logo        http://schema.org/logo
-   * @param {Array<string>=}            jsondata.color       http://schema.org/color
-   * @param {sdo.Organization=}         jsondata.brand       http://schema.org/brand
-   * @param {Array<!Object>=}           jsondata.brand.$social
-   * @param {Array<sdo.Event>}          jsondata.$conferences
-   * @param {string}                    jsondata.$currentConference
-   * @param {string}                    jsondata.$previousConference
-   * @param {string}                    jsondata.$nextConference
-   * @param {Array<sdo.ItemList>=}      jsondata.$queues
-   *                                                     The following queues are recommended:
-   *                                                     - Featured Passes
-   *                                                     - Featured Speakers
-   *                                                     - Top Sponsors
-   *                                                     - Non-Sponsors
-   *                                                     - All Sponsors
+   * @param   jsondata all the data for this object
    */
-  constructor(jsondata) {
+  constructor(jsondata: ConfSiteSchema) {
     super({ name: jsondata.name, url: jsondata.url })
     super.description(jsondata.description || '')
     super.keywords(jsondata.keywords || [])
-
-    /**
-     * All the data for this site.
-     * @private
-     * @final
-     * @type {!Object}
-     */
     this._DATA = jsondata
   }
 
@@ -180,7 +157,7 @@ export default class ConfSite extends Page {
    * @returns all conferences of this site
    */
   getConferencesAll(): Conference[] {
-    return this._DATA.$conferences.map((event) => new Conference(event))
+    return (this._DATA.$conferences || []).map((event) => new Conference(event))
   }
   /**
    * The current conference of this site.
@@ -317,7 +294,7 @@ export default class ConfSite extends Page {
 				}
 				return new xjs.DocumentFragment(directory_processor.process({
 					...this._DATA,
-					hasPart: this.findAll().map((p) => toSDO(p)),
+					hasPart: this.findAll().map((p) => toSDO(p)), // FIXME don’t use `.findAll`
 				}, options)).innerHTML()
 			}
 }

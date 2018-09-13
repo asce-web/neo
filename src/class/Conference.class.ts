@@ -2,6 +2,7 @@ import * as xjs from 'extrajs-dom'
 import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
 
 import {
+	Conference as ConferenceSchema,
 	ConfPerson,
 	Hyperlink,
 	Pass,
@@ -23,49 +24,18 @@ import list_chair_processor            from '../tpl/list-chair.tpl'
 
 
 /**
- * A conference event.
- * It may have a name, theme, dates, (promoted) location,
- * passes, sessions, venues, speakers,
- * supporter levels and supporters, exhibitors, contact information,
- * important dates, organizers, and other properties.
+ * A wrapper for a {@link ConferenceSchema} event, with supplemental methods.
  */
 export default class Conference {
+	/** All the data for this object. */
+	private readonly _DATA: ConferenceSchema;
+
   /**
    * Construct a new Conference object.
-   *
-   * The name, url, theme, start date, end date, and promoted location
-   * are immutable and must be provided during construction.
-   * @param {sdo.Event} jsondata a JSON object that validates against http://schema.org/Event and `/neo.jsd#/definitions/Conference`
-   * @param {string} jsondata.name                       http://schema.org/name
-   * @param {string} jsondata.url                        http://schema.org/url
-   * @param {string=} jsondata.description               http://schema.org/description
-   * @param {string=} jsondata.image                     http://schema.org/image
-   * @param {string=} jsondata.startDate                 http://schema.org/startDate
-   * @param {string=} jsondata.endDate                   http://schema.org/endDate
-   * @param {Array<!Object>=} jsondata.location          http://schema.org/location
-   * @param {Array<sdo.AggregateOffer>=} jsondata.offers http://schema.org/offers
-   * @param {string=} jsondata.$currentRegistrationPeriod
-   * @param {Array<!Object>=} jsondata.$passes
-   * @param {Array<sdo.Event>=} jsondata.subEvent         http://schema.org/subEvent
-   * @param {Array<sdo.Action>=} jsondata.potentialAction http://schema.org/potentialAction
-   * @param {Array<sdo.Person>=} jsondata.performer       http://schema.org/performer
-   * @param {Array<sdo.Organization>=} jsondata.sponsor   http://schema.org/sponsor
-   * @param {Array<sdo.Person>=} jsondata.organizer       http://schema.org/organizer
-   * @param {Array<sdo.Organization>=} jsondata.$exhibitors
-   * @param {Array<sdo.WebPageElement>=} jsondata.$social
+   * @param   jsondata all the data for this object
    */
-  constructor(jsondata) {
-    /**
-     * All the data for this conference.
-     * @private
-     * @final
-     * @type {!Object}
-     */
+  constructor(jsondata: ConferenceSchema) {
     this._DATA = jsondata
-
-    /** @private */ this._supporter_levels = []
-    /** @private */ this._supporter_lists  = {}
-    /** @private */ this._social          = {}
   }
 
   /**
@@ -103,14 +73,14 @@ export default class Conference {
    * The starting date of this conference.
    */
   get startDate(): Date {
-    return new Date(this._DATA.startDate || null)
+    return new Date(this._DATA.startDate)
   }
 
   /**
    * The ending date of this conference.
    */
   get endDate(): Date {
-    return new Date(this._DATA.endDate || null)
+    return new Date(this._DATA.endDate || this._DATA.startDate)
   }
 
   /**
@@ -121,14 +91,14 @@ export default class Conference {
    * promotional and advertising purposes.
    */
   get promoLoc(): sdo.PostalAddress {
-    return this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" }
+    return this._DATA.location // FIXME && this._DATA.location[0] || { "@type": "PostalAddress" }
   }
 
   /**
    * The location image of this conference.
    */
   get promoLocImage(): string {
-    return this._DATA.location && this._DATA.location[0] && this._DATA.location[0].image || ''
+    return this._DATA.location.image as string || '' // FIXME && this._DATA.location[0] && this._DATA.location[0].image || '' // TODO The images of the venues should be a string or undefined
   }
 
   /**
@@ -168,7 +138,7 @@ export default class Conference {
    * @returns a shallow copy of the venues object of this conference
    */
   getVenuesAll(): Venue[] {
-    return (this._DATA.location || []).slice(1)
+    return [] // FIXME (this._DATA.location || []).slice(1)
   }
 
   /**
@@ -204,7 +174,7 @@ export default class Conference {
 	view_hero(): string {
 		return new xjs.DocumentFragment(hero_processor.process({
 			...this._DATA,
-			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
+			location: this._DATA.location // FIXME && this._DATA.location[0] || { "@type": "PostalAddress" },
 		})).innerHTML()
 	}
 	/**
@@ -214,7 +184,7 @@ export default class Conference {
 	view_otherYear(): string {
 		return new xjs.DocumentFragment(otheryear_processor.process({
 			...this._DATA,
-			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
+			location: this._DATA.location // FIXME && this._DATA.location[0] || { "@type": "PostalAddress" },
 		})).innerHTML()
 	}
 	/**
@@ -284,7 +254,7 @@ export default class Conference {
 	 */
 	view_supporterLevel(queue?: Queue, small = false): string {
 		let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? queue.itemListElement.includes(offer.name) : true)
-		return new xjs.DocumentFragment(list_supporterLevel_processor.process(items, { small, conference: this })).innerHTML()
+		return new xjs.DocumentFragment(list_supporterLevel_processor.process(items, { small, conference: this._DATA })).innerHTML()
 	}
 	/**
 	 * Return a list of `<div>` elements marking up this conference’s exhibitors.
