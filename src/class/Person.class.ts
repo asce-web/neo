@@ -56,7 +56,6 @@ export default class Person {
     }
   }
 
-
 	/**
 	 * Return this person’s name in "FullName, Director of ... | 555-555-5555" format.
 	 * @returns {string} HTML output

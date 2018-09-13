@@ -10,50 +10,113 @@ import ConfPage   from './ConfPage.class'
 const Page     = require('sitepage').Page
 
 
+// TODO export this and use in '../tpl/directory.tpl'
+interface DirectoryOpts {
+	/**
+	 * How many levels deep the outline should be; a non-negative integer, or `Infinity`.
+	 * @default Infinity
+	 */
+	depth?: number;
+	/**
+	 * The subpage at which to start; an integer.
+	 *
+	 * Works just like the first parameter of
+	 * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice|Array#slice}.
+	 * @default 0
+	 */
+	start?: number;
+	/**
+	 * The subpage at which to end; an integer or `Infinity`.
+	 *
+	 * Works just like the last parameter of
+	 * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice|Array#slice}.
+	 * @default Infinity
+	 */
+	end?: number;
+	/** group set of css class configurations */
+	classes?: null|{
+		/** list classes (`<ol>`) */
+		list?: string;
+		/** item classes (`<li>`) */
+		item?: string;
+		/** link classes (`<a>`) */
+		link?: string;
+		/** classes for page icon */
+		icon?: string;
+		/** classes for `expand_more` icon */
+		expand?: string;
+	};
+	/** unknown docs */
+	links?: object;
+	/** configurations for nested outlines */
+	opts?: DirectoryOpts;
+}
+
 /**
  * A conference site.
  * A website hosting a series of conferences,
  * with a name, url, slogan, logo, and color scheme.
- * @extends Page
  */
 export default class ConfSite extends Page {
-	/**
-	 * Return an `<a.c-SiteTitle>` component marking up this conference site’s info.
-	 * @returns {string} HTML output
-	 */
-	view_siteTitle() {
-		return new xjs.DocumentFragment(sitetitle_processor.process(this._DATA)).innerHTML()
-	}
-			/**
-			 * Return a Page object’s document outline as a nested ordered list.
-			 * Parameter `data` should be of type `Page`.
-			 * @param   {!Object=} options options for configuring output
-			 * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
-			 * @param   {integer=} options.start which subpage to start at
-			 * @param   {integer=} options.end which subpage to end at
-			 * @param   {?Object<string>=} options.classes group set of css class configurations
-			 * @param   {string=} options.classes.list list classes (`<ol>`)
-			 * @param   {string=} options.classes.item item classes (`<li>`)
-			 * @param   {!Object=} options.links configuration param to send into {@link Util.VIEW.pageLink|Util#view.pageLink()}
-			 * @param   {!Object=} options.options configurations for nested outlines; specs identical to `options`
-			 * @returns {string} HTML output
-			 */
-			view_pageToc(options = {}) {
-				function toSDO(page) {
-					return {
-						"@type": "WebPage",
-						"name"       : page.name(),
-						"url"        : page.url(),
-						"description": page.description(),
-						"keywords"   : page.keywords(),
-						"hasPart"    : page.findAll().map((p) => toSDO(p)),
-					}
-				}
-				return new xjs.DocumentFragment(directory_processor.process({
-					...this._DATA,
-					hasPart: this.findAll().map((p) => toSDO(p)),
-				}, options)).innerHTML()
-			}
+  /**
+   * @summary Generate a color palette and return a style object with custom properties.
+   * @param   {Color} $primary   the primary color for the site
+   * @param   {Color} $secondary the secondary color for the site
+   * @returns {Object<string>} a CSS object containg custom properties with color string values
+   */
+  static colorStyles($primary, $secondary) {
+    let   primary_s2  =   $primary.darken(2/3, true)
+    let   primary_s1  =   $primary.darken(1/3, true)
+    let   primary_t1  =   $primary.darken(1/3, true).lighten(1/3, false) // one-third to white
+    let   primary_t2  =   $primary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
+    let secondary_s2  = $secondary.darken(2/3, true)
+    let secondary_s1  = $secondary.darken(1/3, true)
+    let secondary_t1  = $secondary.darken(1/3, true).lighten(1/3, false) // one-third to white
+    let secondary_t2  = $secondary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
+
+    let _g1 = $primary.mix($secondary, 1/4).desaturate(7/8, true)
+    let _g2 = $secondary.mix($primary, 1/4).desaturate(7/8, true)
+
+    let gray_dk_s2 = _g1.lighten( 1/12 - _g1.hslLum, false)
+    let gray_dk_s1 = _g1.lighten( 2/12 - _g1.hslLum, false)
+    let gray_dk    = _g1.lighten( 3/12 - _g1.hslLum, false)
+    let gray_dk_t1 = _g1.lighten( 4/12 - _g1.hslLum, false)
+    let gray_dk_t2 = _g1.lighten( 5/12 - _g1.hslLum, false)
+    let gray_lt_s2 = _g2.lighten( 7/12 - _g2.hslLum, false)
+    let gray_lt_s1 = _g2.lighten( 8/12 - _g2.hslLum, false)
+    let gray_lt    = _g2.lighten( 9/12 - _g2.hslLum, false)
+    let gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum, false)
+    let gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum, false)
+
+    return {
+      '--color-primary'  :   $primary.toString('hex'),
+      '--color-secondary': $secondary.toString('hex'),
+      '--color-gray_dk'  :    gray_dk.toString('hex'),
+      '--color-gray_lt'  :    gray_lt.toString('hex'),
+
+      '--color-primary-shade2'  :   primary_s2.toString('hex'),
+      '--color-primary-shade1'  :   primary_s1.toString('hex'),
+      '--color-primary-tint1'   :   primary_t1.toString('hex'),
+      '--color-primary-tint2'   :   primary_t2.toString('hex'),
+
+      '--color-secondary-shade2': secondary_s2.toString('hex'),
+      '--color-secondary-shade1': secondary_s1.toString('hex'),
+      '--color-secondary-tint1' : secondary_t1.toString('hex'),
+      '--color-secondary-tint2' : secondary_t2.toString('hex'),
+
+      '--color-gray_dk-shade2'  :   gray_dk_s2.toString('hex'),
+      '--color-gray_dk-shade1'  :   gray_dk_s1.toString('hex'),
+      '--color-gray_dk-tint1'   :   gray_dk_t1.toString('hex'),
+      '--color-gray_dk-tint2'   :   gray_dk_t2.toString('hex'),
+
+      '--color-gray_lt-shade2'  :   gray_lt_s2.toString('hex'),
+      '--color-gray_lt-shade1'  :   gray_lt_s1.toString('hex'),
+      '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex'),
+      '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex'),
+    }
+  }
+
+
   /**
    * @summary Construct a new ConfSite object.
    * @param {(sdo.WebSite&sdo.Product)} jsondata a JSON object that validates against http://schema.org/WebSite, http://schema.org/Product, and `/neo.jsd`
@@ -228,62 +291,41 @@ export default class ConfSite extends Page {
       )
   }
 
-
-  /**
-   * @summary Generate a color palette and return a style object with custom properties.
-   * @param   {Color} $primary   the primary color for the site
-   * @param   {Color} $secondary the secondary color for the site
-   * @returns {Object<string>} a CSS object containg custom properties with color string values
-   */
-  static colorStyles($primary, $secondary) {
-    let   primary_s2  =   $primary.darken(2/3, true)
-    let   primary_s1  =   $primary.darken(1/3, true)
-    let   primary_t1  =   $primary.darken(1/3, true).lighten(1/3, false) // one-third to white
-    let   primary_t2  =   $primary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
-    let secondary_s2  = $secondary.darken(2/3, true)
-    let secondary_s1  = $secondary.darken(1/3, true)
-    let secondary_t1  = $secondary.darken(1/3, true).lighten(1/3, false) // one-third to white
-    let secondary_t2  = $secondary.darken(2/3, true).lighten(2/3, false) // two-thirds to white
-
-    let _g1 = $primary.mix($secondary, 1/4).desaturate(7/8, true)
-    let _g2 = $secondary.mix($primary, 1/4).desaturate(7/8, true)
-
-    let gray_dk_s2 = _g1.lighten( 1/12 - _g1.hslLum, false)
-    let gray_dk_s1 = _g1.lighten( 2/12 - _g1.hslLum, false)
-    let gray_dk    = _g1.lighten( 3/12 - _g1.hslLum, false)
-    let gray_dk_t1 = _g1.lighten( 4/12 - _g1.hslLum, false)
-    let gray_dk_t2 = _g1.lighten( 5/12 - _g1.hslLum, false)
-    let gray_lt_s2 = _g2.lighten( 7/12 - _g2.hslLum, false)
-    let gray_lt_s1 = _g2.lighten( 8/12 - _g2.hslLum, false)
-    let gray_lt    = _g2.lighten( 9/12 - _g2.hslLum, false)
-    let gray_lt_t1 = _g2.lighten(10/12 - _g2.hslLum, false)
-    let gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum, false)
-
-    return {
-      '--color-primary'  :   $primary.toString('hex'),
-      '--color-secondary': $secondary.toString('hex'),
-      '--color-gray_dk'  :    gray_dk.toString('hex'),
-      '--color-gray_lt'  :    gray_lt.toString('hex'),
-
-      '--color-primary-shade2'  :   primary_s2.toString('hex'),
-      '--color-primary-shade1'  :   primary_s1.toString('hex'),
-      '--color-primary-tint1'   :   primary_t1.toString('hex'),
-      '--color-primary-tint2'   :   primary_t2.toString('hex'),
-
-      '--color-secondary-shade2': secondary_s2.toString('hex'),
-      '--color-secondary-shade1': secondary_s1.toString('hex'),
-      '--color-secondary-tint1' : secondary_t1.toString('hex'),
-      '--color-secondary-tint2' : secondary_t2.toString('hex'),
-
-      '--color-gray_dk-shade2'  :   gray_dk_s2.toString('hex'),
-      '--color-gray_dk-shade1'  :   gray_dk_s1.toString('hex'),
-      '--color-gray_dk-tint1'   :   gray_dk_t1.toString('hex'),
-      '--color-gray_dk-tint2'   :   gray_dk_t2.toString('hex'),
-
-      '--color-gray_lt-shade2'  :   gray_lt_s2.toString('hex'),
-      '--color-gray_lt-shade1'  :   gray_lt_s1.toString('hex'),
-      '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex'),
-      '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex'),
-    }
-  }
+	/**
+	 * Return an `<a.c-SiteTitle>` component marking up this conference site’s info.
+	 * @returns {string} HTML output
+	 */
+	view_siteTitle() {
+		return new xjs.DocumentFragment(sitetitle_processor.process(this._DATA)).innerHTML()
+	}
+			/**
+			 * Return a Page object’s document outline as a nested ordered list.
+			 * Parameter `data` should be of type `Page`.
+			 * @param   {!Object=} options options for configuring output
+			 * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
+			 * @param   {integer=} options.start which subpage to start at
+			 * @param   {integer=} options.end which subpage to end at
+			 * @param   {?Object<string>=} options.classes group set of css class configurations
+			 * @param   {string=} options.classes.list list classes (`<ol>`)
+			 * @param   {string=} options.classes.item item classes (`<li>`)
+			 * @param   {!Object=} options.links configuration param to send into {@link Util.VIEW.pageLink|Util#view.pageLink()}
+			 * @param   {!Object=} options.options configurations for nested outlines; specs identical to `options`
+			 * @returns {string} HTML output
+			 */
+			view_pageToc(options = {}) {
+				function toSDO(page) {
+					return {
+						"@type": "WebPage",
+						"name"       : page.name(),
+						"url"        : page.url(),
+						"description": page.description(),
+						"keywords"   : page.keywords(),
+						"hasPart"    : page.findAll().map((p) => toSDO(p)),
+					}
+				}
+				return new xjs.DocumentFragment(directory_processor.process({
+					...this._DATA,
+					hasPart: this.findAll().map((p) => toSDO(p)),
+				}, options)).innerHTML()
+			}
 }

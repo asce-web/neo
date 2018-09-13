@@ -1,4 +1,4 @@
-import Util from './Util.class'
+import Util, {Icon} from './Util.class'
 
 const Page = require('sitepage').Page
 
@@ -6,9 +6,13 @@ const Page = require('sitepage').Page
 
 /**
  * Any page or subpage within a {@link ConfSite}.
- * @extends Page
  */
 export default class ConfPage extends Page {
+  /** This page’s icon. */
+  private _icon: Icon|null;
+  /** Is this page hidden? */
+  private _is_hidden: boolean;
+
   /**
    * Construct a ConfPage object, given a name and url.
    * @param {string} name name of this page
@@ -16,8 +20,8 @@ export default class ConfPage extends Page {
    */
   constructor(name, url) {
     super({ name: name, url: url })
-    /** @private */ this._icon     = null
-    /** @private */ this._is_hidden = false
+    this._icon      = null
+    this._is_hidden = false
   }
 
   /**

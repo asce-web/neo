@@ -9,41 +9,26 @@ const {xAddress} = require('aria-patterns')
 
 
 /**
+ * Data for an icon.
+ */
+export interface Icon {
+	/** the keyword used for the ligature */
+	content: string;
+	/** unicode code point */
+	fallback: string;
+	/** html entity */
+	html: string;
+}
+
+/**
  * A set of static values and functions used site-wide.
- * @namespace
  */
 export default class Util {
-  /** @private */ constructor() {}
-
-
   /**
-   * NOTE: TYPE DEFINITION
-   * ```json
-   * {
-   *   "$schema": "http://json-schema.org/schema#",
-   *   "title": "Util.Icon",
-   *   "type": "object",
-   *   "additionalProperties": false,
-   *   "required": ["content", "fallback", "html"],
-   *   "properties": {
-   *     "content" : { "type": "string", "description": "the keyword used for the ligature" },
-   *     "fallback": { "type": "string", "description": "unicode code point" },
-   *     "html"    : { "type": "string", "description": "html entity" }
-   *   }
-   * }
-   * ```
-   * @typedef  {Object} Util.Icon
-   * @property {string} content  - the keyword used for the ligature
-   * @property {string} fallback - unicode code point
-   * @property {string} html     - html entity
+   * List of icon objects used in Conf styles.
+   * @todo TODO convert this to JSON
    */
-
-  /**
-   * @summary List of icon objects used in Conf styles.
-   * @type {Array<Util.Icon>}
-   */
-  static get ICON_DATA() {
-    return [
+  static readonly ICON_DATA: Icon[] = [
       { content: 'home'              , fallback: '\uE88A', html: '&#xE88A;' }, // Home page
       { content: 'shopping_cart'     , fallback: '\uE8CC', html: '&#xE8CC;' }, // Registration page
       { content: 'event'             , fallback: '\uE878', html: '&#xE878;' }, // Program page
@@ -63,14 +48,12 @@ export default class Util {
       { content: 'explore'           , fallback: '\uE87A', html: '&#xE87A;' }, // social list icon homepage
       { content: 'expand_more'       , fallback: '\uE5CF', html: '&#xE5CF;' }, // main menu drop-down
     ]
-  }
 
   /**
-   * @summary Data for social media networks.
-   * @type {Object<{name:string, icon:Util.Icon}>}
+   * Data for social media networks.
+   * @todo TODO convert this to JSON
    */
-  static get SOCIAL_DATA() {
-    return {
+  static readonly SOCIAL_DATA: { [index: string]: { name: string, icon: Icon } } = {
       twitter: {
         name: 'Twitter',
         icon: Util.ICON_DATA[-1],
@@ -92,7 +75,6 @@ export default class Util {
         name: 'YouTube',
         icon: Util.ICON_DATA[-1],
       },
-    }
   }
 
 			/**
@@ -149,18 +131,7 @@ export default class Util {
   static iconToString(icon, fb = false) {
     return (fb) ? icon.fallback : icon.content
   }
-}
 
 
-
-/**
- * @summary Enum for state regions.
- * @enum {string}
- */
-Util.Region = {
-  SOUTH    : 's',
-  WEST     : 'w',
-  SOUTHWEST: 'sw',
-  NORTHEAST: 'ne',
-  MIDWEST  : 'mw',
+	private constructor() {}
 }
