@@ -1,12 +1,6 @@
-const path = require('path')
+import * as xjs from 'extrajs-dom'
 
-const xjs = {
-  ...require('extrajs'),
-  ...require('extrajs-dom'),
-}
-const {xPersonFullname} = require('aria-patterns')
-
-const xPersonContact = require('../dist/tpl/person-contact.tpl.js').default
+import person_contact_processor from '../tpl/person-contact.tpl'
 
 
 /**
@@ -15,7 +9,7 @@ const xPersonContact = require('../dist/tpl/person-contact.tpl.js').default
  * e.g., speaker, chair, or ASCE staff member.
  * @see https://schema.org/Person
  */
-class Person {
+export default class Person {
   /**
    * Construct a new Person object.
    * @param {!Object} jsondata a JSON object
@@ -68,8 +62,6 @@ class Person {
 	 * @returns {string} HTML output
 	 */
 	view_contact() {
-		return new xjs.DocumentFragment(xPersonContact.process(this._DATA)).innerHTML()
+		return new xjs.DocumentFragment(person_contact_processor.process(this._DATA)).innerHTML()
 	}
 }
-
-module.exports = Person

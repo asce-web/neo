@@ -1,19 +1,27 @@
-const xjs = {
-  ...require('extrajs'),
-  ...require('extrajs-dom'),
-}
+import * as xjs1 from 'extrajs'
+import * as xjs2 from 'extrajs-dom'
+import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
 
-const xHero                 = require('../dist/tpl/hero.tpl.js').default
-const xOtheryear            = require('../dist/tpl/otheryear.tpl.js').default
-const xListPass             = require('../dist/tpl/list-pass.tpl.js').default
-const xListRegistrationicon = require('../dist/tpl/list-registrationicon.tpl.js').default
-const xDateblock            = require('../dist/tpl/dateblock.tpl.js').default
-const xProgram              = require('../dist/tpl/program.tpl.js').default
-const xListSpeaker          = require('../dist/tpl/list-speaker.tpl.js').default
-const xListVenue            = require('../dist/tpl/list-venue.tpl.js').default
-const xListSupporterLevel   = require('../dist/tpl/list-supporterlevel.tpl.js').default
-const xListExhibitor        = require('../dist/tpl/list-exhibitor.tpl.js').default
-const xListChair            = require('../dist/tpl/list-chair.tpl.js').default
+import {
+	ConfPerson,
+	Hyperlink,
+	Pass,
+	RegistrationPeriod,
+	Venue,
+} from '../interfaces'
+import hero_processor                  from '../tpl/hero.tpl'
+import otheryear_processor             from '../tpl/otheryear.tpl'
+import dateblock_processor             from '../tpl/dateblock.tpl'
+import program_processor               from '../tpl/program.tpl'
+import list_pass_processor             from '../tpl/list-pass.tpl'
+import list_registrationicon_processor from '../tpl/list-registrationicon.tpl'
+import list_speaker_processor          from '../tpl/list-speaker.tpl'
+import list_venue_processor            from '../tpl/list-venue.tpl'
+import list_supporterLevel_processor   from '../tpl/list-supporterlevel.tpl'
+import list_exhibitor_processor        from '../tpl/list-exhibitor.tpl'
+import list_chair_processor            from '../tpl/list-chair.tpl'
+
+const xjs = { ...xjs1, ...xjs2 }
 
 
 /**
@@ -23,7 +31,7 @@ const xListChair            = require('../dist/tpl/list-chair.tpl.js').default
  * supporter levels and supporters, exhibitors, contact information,
  * important dates, organizers, and other properties.
  */
-class Conference {
+export default class Conference {
   /**
    * @summary Construct a Conference object.
    * @description The name, url, theme, start date, end date, and promoted location
@@ -201,7 +209,7 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_hero() {
-		return new xjs.DocumentFragment(xHero.process({
+		return new xjs.DocumentFragment(hero_processor.process({
 			...this._DATA,
 			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
 		})).innerHTML()
@@ -211,7 +219,7 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_otherYear() {
-		return new xjs.DocumentFragment(xOtheryear.process({
+		return new xjs.DocumentFragment(otheryear_processor.process({
 			...this._DATA,
 			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
 		})).innerHTML()
@@ -225,14 +233,14 @@ class Conference {
 	view_pass(queue = null) {
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = this.getPassesAll().filter((item) => (queue) ? item_keys.includes(item.name) : true)
-		return new xjs.DocumentFragment(xListPass.process(items, { conference: this._DATA })).innerHTML()
+		return new xjs.DocumentFragment(list_pass_processor.process(items, { conference: this._DATA })).innerHTML()
 	}
 	/**
 	 * Return a `<ul.c-Alert>` component containing the legend of registration periods.
 	 * @returns {string} HTML output
 	 */
 	view_registrationLegend() {
-		return new xjs.DocumentFragment(xListRegistrationicon.process(this.getRegistrationPeriodsAll())).innerHTML()
+		return new xjs.DocumentFragment(list_registrationicon_processor.process(this.getRegistrationPeriodsAll())).innerHTML()
 	}
 	/**
 	 * Return a `xDateblock` component marking up this conference’s important dates.
@@ -240,7 +248,7 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_importantDates(starred = false) {
-		return new xjs.DocumentFragment(xDateblock.process(
+		return new xjs.DocumentFragment(dateblock_processor.process(
 			(this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
 		)).innerHTML()
 	}
@@ -253,7 +261,7 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_program(id, starred = false) {
-		return new xjs.DocumentFragment(xProgram.process(
+		return new xjs.DocumentFragment(program_processor.process(
 			(this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
 			{ id, starred }
 		)).innerHTML()
@@ -267,7 +275,7 @@ class Conference {
 	view_speaker(queue = null) {
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = this.getSpeakersAll().filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
-		return new xjs.DocumentFragment(xListSpeaker.process(items)).innerHTML()
+		return new xjs.DocumentFragment(list_speaker_processor.process(items)).innerHTML()
 	}
 	/**
 	 * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
@@ -278,7 +286,7 @@ class Conference {
 	view_venue(queue = null) {
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = this.getVenuesAll().filter((item) => (queue) ? item_keys.includes(item.description) : true)
-		return new xjs.DocumentFragment(xListVenue.process(items)).innerHTML()
+		return new xjs.DocumentFragment(list_venue_processor.process(items)).innerHTML()
 	}
 	/**
 	 * Return a list of `<section.c-SupporterBlock>` components containing this conference’s supporters
@@ -290,14 +298,14 @@ class Conference {
 	view_supporterLevel(queue = null, small = false) {
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
-		return new xjs.DocumentFragment(xListSupporterLevel.process(items, { small, conference: this })).innerHTML()
+		return new xjs.DocumentFragment(list_supporterLevel_processor.process(items, { small, conference: this })).innerHTML()
 	}
 	/**
 	 * Return a list of `<div>` elements marking up this conference’s exhibitors.
 	 * @returns {string} HTML output
 	 */
 	view_exhibitorList() {
-		return new xjs.DocumentFragment(xListExhibitor.process(this._DATA.$exhibitors || [])).innerHTML()
+		return new xjs.DocumentFragment(list_exhibitor_processor.process(this._DATA.$exhibitors || [])).innerHTML()
 	}
 	/**
 	 * Return a `<ul>` element, containing conference chairs and/or co-chairs.
@@ -305,8 +313,6 @@ class Conference {
 	 * @returns {string} HTML output
 	 */
 	view_chair() {
-		return new xjs.DocumentFragment(xListChair.process(this._DATA.organizer || [])).innerHTML()
+		return new xjs.DocumentFragment(list_chair_processor.process(this._DATA.organizer || [])).innerHTML()
 	}
 }
-
-module.exports = Conference

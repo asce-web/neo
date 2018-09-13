@@ -1,4 +1,4 @@
-import * as sdo from 'schemaorg-jsd/dist/schemaorg'
+import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
 
 
 /**

@@ -1,20 +1,18 @@
-const fs = require('fs')
-const path = require('path')
+import * as xjs from 'extrajs-dom'
+import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
+
+import {Hyperlink} from '../interfaces'
+import list_highlightbuttons from '../tpl/list-highlightbuttons.tpl'
+import list_social from '../tpl/list-social.tpl'
 
 const {xAddress} = require('aria-patterns')
-
-const xjs = {
-  ...require('extrajs'),
-  ...require('extrajs-dom'),
-}
-
 
 
 /**
  * A set of static values and functions used site-wide.
  * @namespace
  */
-class Util {
+export default class Util {
   /** @private */ constructor() {}
 
 
@@ -115,8 +113,8 @@ class Util {
 			 * @returns {string} HTML output
 			 */
 			static view_highlightButtons(buttons, buttonclasses = '') {
-				const xListHighlightbuttons = require('../dist/tpl/list-highlightbuttons.tpl.js').default
-				return new xjs.DocumentFragment(xListHighlightbuttons.process(buttons, { buttonclasses })).innerHTML()
+				// const list_highlightbuttons = require('../dist/tpl/list-highlightbuttons.tpl.js').default
+				return new xjs.DocumentFragment(list_highlightbuttons.process(buttons, { buttonclasses })).innerHTML()
 			}
 	/**
 	 * Return a `<ul.c-SocialList>` component, containing
@@ -129,8 +127,8 @@ class Util {
 	 * @returns {string} HTML output
 	 */
 	static view_socialList(data, classes = '') {
-		const xListSocial = require('../dist/tpl/list-social.tpl.js').default
-		return new xjs.DocumentFragment(xListSocial.process(data, { classes })).innerHTML()
+		// const list_social = require('../dist/tpl/list-social.tpl.js').default
+		return new xjs.DocumentFragment(list_social.process(data, { classes })).innerHTML()
 	}
 
   /**
@@ -166,5 +164,3 @@ Util.Region = {
   NORTHEAST: 'ne',
   MIDWEST  : 'mw',
 }
-
-module.exports = Util

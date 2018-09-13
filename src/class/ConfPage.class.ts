@@ -1,13 +1,14 @@
+import Util from './Util.class'
+
 const Page = require('sitepage').Page
 
-const Util = require('./Util.class.js')
 
 
 /**
  * Any page or subpage within a {@link ConfSite}.
  * @extends Page
  */
-class ConfPage extends Page {
+export default class ConfPage extends Page {
   /**
    * Construct a ConfPage object, given a name and url.
    * @param {string} name name of this page
@@ -53,5 +54,3 @@ class ConfPage extends Page {
     return this._is_hidden
   }
 }
-
-module.exports = ConfPage

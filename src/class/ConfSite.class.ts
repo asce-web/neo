@@ -1,13 +1,13 @@
-const xjs      = require('extrajs-dom')
+import * as xjs from 'extrajs-dom'
+import {Color} from 'extrajs-color'
+
+import {Hyperlink} from '../interfaces'
+import sitetitle_processor from '../tpl/registrationicon.tpl'
+import directory_processor from '../tpl/directory.tpl'
+import Conference from './Conference.class'
+import ConfPage   from './ConfPage.class'
+
 const Page     = require('sitepage').Page
-const Color    = require('extrajs-color')
-
-const Conference = require('./Conference.class.js')
-const ConfPage   = require('./ConfPage.class.js')
-
-const xSitetitle = require('../dist/tpl/sitetitle.tpl.js').default
-const xDirectory = require('../dist/tpl/directory.tpl.js').default
-
 
 
 /**
@@ -16,13 +16,13 @@ const xDirectory = require('../dist/tpl/directory.tpl.js').default
  * with a name, url, slogan, logo, and color scheme.
  * @extends Page
  */
-class ConfSite extends Page {
+export default class ConfSite extends Page {
 	/**
 	 * Return an `<a.c-SiteTitle>` component marking up this conference site’s info.
 	 * @returns {string} HTML output
 	 */
 	view_siteTitle() {
-	  return new xjs.DocumentFragment(xSitetitle.process(this._DATA)).innerHTML()
+		return new xjs.DocumentFragment(sitetitle_processor.process(this._DATA)).innerHTML()
 	}
 			/**
 			 * Return a Page object’s document outline as a nested ordered list.
@@ -49,7 +49,7 @@ class ConfSite extends Page {
 						"hasPart"    : page.findAll().map((p) => toSDO(p)),
 					}
 				}
-				return new xjs.DocumentFragment(xDirectory.process({
+				return new xjs.DocumentFragment(directory_processor.process({
 					...this._DATA,
 					hasPart: this.findAll().map((p) => toSDO(p)),
 				}, options)).innerHTML()
@@ -287,5 +287,3 @@ class ConfSite extends Page {
     }
   }
 }
-
-module.exports = ConfSite
