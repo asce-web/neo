@@ -86,7 +86,7 @@ export default class Util {
 				return new xjs.DocumentFragment(xAddress.render({
 					...postal_address,
 					$regionName: true,
-				})).trimInner().textContent()
+				})).trimInner().textContent() !
 			}
 			/**
 			 * Return an unordered list of button links for a highlighted content block.

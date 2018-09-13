@@ -224,7 +224,7 @@ export default class Conference {
 	view_program(id: string, starred = false): string {
 		return new xjs.DocumentFragment(program_processor.process(
 			(this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
-			{ id, starred }
+			{ id }
 		)).innerHTML()
 	}
 	/**

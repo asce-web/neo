@@ -13,8 +13,6 @@ const xjs = { ...xjs1, ...xjs2 }
 interface OptsType {
 	/** provide a unique id for the program block */
 	id: string;
-	/** should only starred sessions be displayed? */
-	starred?: boolean;
 }
 
 /** A group of sessions, sharing the same day, on a program. */

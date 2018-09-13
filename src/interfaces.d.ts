@@ -197,6 +197,8 @@ export interface ImportantDate extends sdo.Action {
 	 * @default this.startTime
 	 */
 	endTime?: string;
+	/** Promote this important date to the front page? */
+	$starred?: boolean;
 }
 
 export interface Pass extends sdo.AggregateOffer {
@@ -249,6 +251,8 @@ export interface Session extends sdo.Event {
 	 * @default this.startDate
 	 */
 	endDate?: string;
+	/** Promote this session to the front page? */
+	$starred?: boolean;
 }
 
 /**

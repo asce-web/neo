@@ -90,30 +90,30 @@ export default class ConfSite extends Page {
     let gray_lt_t2 = _g2.lighten(11/12 - _g2.hslLum, false)
 
     return {
-      '--color-primary'  :   $primary.toString('hex'),
-      '--color-secondary': $secondary.toString('hex'),
-      '--color-gray_dk'  :    gray_dk.toString('hex'),
-      '--color-gray_lt'  :    gray_lt.toString('hex'),
+      '--color-primary'  :   $primary.toString(),
+      '--color-secondary': $secondary.toString(),
+      '--color-gray_dk'  :    gray_dk.toString(),
+      '--color-gray_lt'  :    gray_lt.toString(),
 
-      '--color-primary-shade2'  :   primary_s2.toString('hex'),
-      '--color-primary-shade1'  :   primary_s1.toString('hex'),
-      '--color-primary-tint1'   :   primary_t1.toString('hex'),
-      '--color-primary-tint2'   :   primary_t2.toString('hex'),
+      '--color-primary-shade2'  :   primary_s2.toString(),
+      '--color-primary-shade1'  :   primary_s1.toString(),
+      '--color-primary-tint1'   :   primary_t1.toString(),
+      '--color-primary-tint2'   :   primary_t2.toString(),
 
-      '--color-secondary-shade2': secondary_s2.toString('hex'),
-      '--color-secondary-shade1': secondary_s1.toString('hex'),
-      '--color-secondary-tint1' : secondary_t1.toString('hex'),
-      '--color-secondary-tint2' : secondary_t2.toString('hex'),
+      '--color-secondary-shade2': secondary_s2.toString(),
+      '--color-secondary-shade1': secondary_s1.toString(),
+      '--color-secondary-tint1' : secondary_t1.toString(),
+      '--color-secondary-tint2' : secondary_t2.toString(),
 
-      '--color-gray_dk-shade2'  :   gray_dk_s2.toString('hex'),
-      '--color-gray_dk-shade1'  :   gray_dk_s1.toString('hex'),
-      '--color-gray_dk-tint1'   :   gray_dk_t1.toString('hex'),
-      '--color-gray_dk-tint2'   :   gray_dk_t2.toString('hex'),
+      '--color-gray_dk-shade2'  :   gray_dk_s2.toString(),
+      '--color-gray_dk-shade1'  :   gray_dk_s1.toString(),
+      '--color-gray_dk-tint1'   :   gray_dk_t1.toString(),
+      '--color-gray_dk-tint2'   :   gray_dk_t2.toString(),
 
-      '--color-gray_lt-shade2'  :   gray_lt_s2.toString('hex'),
-      '--color-gray_lt-shade1'  :   gray_lt_s1.toString('hex'),
-      '--color-gray_lt-tint1'   :   gray_lt_t1.toString('hex'),
-      '--color-gray_lt-tint2'   :   gray_lt_t2.toString('hex'),
+      '--color-gray_lt-shade2'  :   gray_lt_s2.toString(),
+      '--color-gray_lt-shade1'  :   gray_lt_s1.toString(),
+      '--color-gray_lt-tint1'   :   gray_lt_t1.toString(),
+      '--color-gray_lt-tint2'   :   gray_lt_t2.toString(),
     }
   }
 
