@@ -234,6 +234,27 @@
         }
       ]
     },
+		"Queue": {
+			"description": "A named list of references to objects.",
+			"allOf": [
+				{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" },
+				{
+					"required": ["name", "itemListElement"],
+					"properties": {
+						"name": { "description": "The queue name." },
+						"description": {
+							"description": "The queue description.",
+							"type": "string"
+						},
+						"itemListElement": {
+							"description": "The list of string references.",
+							"type": "array",
+							"items": { "type": "string" }
+						}
+					}
+				}
+			]
+		},
 		"RegistrationPeriod": {
 			"description": "A time period in which a pass offer is available.",
 			"allOf": [
@@ -386,20 +407,7 @@
         "$queues": {
           "description": "An array of lists, each whose items are string references to some objects that have been added to the site.",
           "type": "array",
-          "items": {
-            "allOf": [
-              { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" },
-              {
-                "required": ["name", "itemListElement"],
-                "properties": {
-                  "itemListElement": {
-                    "type": "array",
-                    "items": { "type": "string" }
-                  }
-                }
-              }
-            ]
-          }
+          "items": { "$ref": "#/definitions/Queue" }
         }
       }
     }

@@ -1,11 +1,11 @@
-import * as xjs1 from 'extrajs'
-import * as xjs2 from 'extrajs-dom'
+import * as xjs from 'extrajs-dom'
 import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
 
 import {
 	ConfPerson,
 	Hyperlink,
 	Pass,
+	Queue,
 	RegistrationPeriod,
 	Venue,
 } from '../interfaces'
@@ -20,8 +20,6 @@ import list_venue_processor            from '../tpl/list-venue.tpl'
 import list_supporterLevel_processor   from '../tpl/list-supporterlevel.tpl'
 import list_exhibitor_processor        from '../tpl/list-exhibitor.tpl'
 import list_chair_processor            from '../tpl/list-chair.tpl'
-
-const xjs = { ...xjs1, ...xjs2 }
 
 
 /**
@@ -221,13 +219,11 @@ export default class Conference {
 	}
 	/**
 	 * Return a `<ul.o-ListStacked>` component, containing {@link Pass} items.
-	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
+	 * @param   queue a list of pass names, in the correct order
 	 * @returns HTML output
 	 */
-	view_pass(queue = null): string {
-		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-		let items = this.getPassesAll().filter((item) => (queue) ? item_keys.includes(item.name) : true)
+	view_pass(queue?: Queue): string {
+		let items = this.getPassesAll().filter((item) => (queue) ? queue.itemListElement.includes(item.name) : true)
 		return new xjs.DocumentFragment(list_pass_processor.process(items, { conference: this._DATA })).innerHTML()
 	}
 	/**
@@ -263,36 +259,31 @@ export default class Conference {
 	}
 	/**
 	 * Return a `<ul.o-ListStacked>` component, containing {@link ConfPerson} items.
-	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
+	 * @param   queue a list of person ids, in the correct order
 	 * @returns HTML output
 	 */
-	view_speaker(queue = null): string {
-		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-		let items = this.getSpeakersAll().filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
+	view_speaker(queue?: Queue): string {
+		let items = this.getSpeakersAll().filter((item) => (queue) ? queue.itemListElement.includes(item.identifier) : true)
 		return new xjs.DocumentFragment(list_speaker_processor.process(items)).innerHTML()
 	}
 	/**
 	 * Return a `<ul.c-Alert>` component, containing {@link Venue} items.
-	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
+	 * @param   queue a list of venue titles, in the correct order
 	 * @returns HTML output
 	 */
-	view_venue(queue = null): string {
-		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-		let items = this.getVenuesAll().filter((item) => (queue) ? item_keys.includes(item.description) : true)
+	view_venue(queue?: Queue): string {
+		let items = this.getVenuesAll().filter((item) => (queue) ? queue.itemListElement.includes(item.description) : true)
 		return new xjs.DocumentFragment(list_venue_processor.process(items)).innerHTML()
 	}
 	/**
 	 * Return a list of `<section.c-SupporterBlock>` components containing this conference’s supporters
 	 * that have the specified levels.
-	 * @param   {?(sdo.ItemList|Array<string>)=} queue a list of supporter level names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
-	 * @param   {boolean=} small should logo sizing be overridden to small?
+	 * @param   queue a list of supporter level names, in the correct order
+	 * @param   small should logo sizing be overridden to small?
 	 * @returns HTML output
 	 */
-	view_supporterLevel(queue = null, small = false): string {
-		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
-		let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
+	view_supporterLevel(queue?: Queue, small = false): string {
+		let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? queue.itemListElement.includes(offer.name) : true)
 		return new xjs.DocumentFragment(list_supporterLevel_processor.process(items, { small, conference: this })).innerHTML()
 	}
 	/**

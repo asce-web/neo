@@ -134,11 +134,8 @@ export interface ConfSite extends sdo.Product, sdo.WebPage {
 	// $previousConference?: string;
 	/** The next     conference in this series. Must match the 'url' property of an already-added conference. */
 	// $nextConference?: string;
-	/** An array of lists, each whose items are string references to some objects that have been added to the site. */
-	// $queues?: (sdo.ItemList & {
-	//   name: string;
-	//   itemListElement: string[]
-	// })[];
+	/** The entity queues holding collections of data for this website. */
+	$queues?: Queue[];
 }
 
 /**
@@ -194,6 +191,18 @@ export interface Pass extends sdo.AggregateOffer {
 	disambiguatingDescription?: string;
 	/** Types of attendees that can purchase this pass (usually based on membership). */
 	offers: AttendeeType[];
+}
+
+/**
+ * A named list of references to objects.
+ */
+export interface Queue extends sdo.ItemList {
+	/** The queue name. */
+	name: string;
+	/** The queue description. */
+	description?: string;
+	/** The list of string references. */
+	itemListElement: string[];
 }
 
 /**
