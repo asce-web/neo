@@ -150,38 +150,36 @@ export default class ConfSite extends Page {
    * @returns the specified conference, or `null` if it cannot be found
    */
   getConference(url: string): Conference|null {
-    return this.getConferencesAll().find((conference) => conference.url===url) || null
+    let returned = this._DATA.$conferences.find((conference) => conference.url === url) || null
+    return (returned) ? new Conference(returned) : null
   }
   /**
    * Retrieve all conferences added to this site.
    * @returns all conferences of this site
    */
   getConferencesAll(): Conference[] {
-    return (this._DATA.$conferences || []).map((event) => new Conference(event))
+    return this._DATA.$conferences.map((event) => new Conference(event))
   }
   /**
-   * The current conference of this site.
-   *
    * The current conference is the conference that is being promoted this cycle.
+   * @returns the current conference of this site
    */
   get currentConference(): Conference {
-    return this.getConference(this._DATA.$currentConference)
+    return this.getConference(this._DATA.$currentConference || this._DATA.$conferences[0].url) !
   }
   /**
-   * The previous conference of this site.
-   *
    * The previous conference is the conference that was promoted last cycle.
+   * @returns the previous conference of this site, or `null` if it has not been specified
    */
-  get prevConference(): Conference {
-    return this.getConference(this._DATA.$previousConference)
+  get prevConference(): Conference|null {
+    return this.getConference(this._DATA.$previousConference || '')
   }
   /**
-   * The next conference of this site.
-   *
    * The next conference is the conference that will be promoted next cycle.
+   * @returns the next conference of this site, or `null` if it has not been specified
    */
-  get nextConference(): Conference {
-    return this.getConference(this._DATA.$nextConference)
+  get nextConference(): Conference|null {
+    return this.getConference(this._DATA.$nextConference || '')
   }
 
   /**
@@ -206,7 +204,7 @@ export default class ConfSite extends Page {
    * @returns all this site’s social media networks
    */
   getSocialAll(): Hyperlink[] {
-    return (this._DATA.brand.$social || []).slice()
+    return (this._DATA.brand) ? (this._DATA.brand.$social || []).slice() : []
   }
 
 

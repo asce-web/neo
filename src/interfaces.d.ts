@@ -121,18 +121,30 @@ export interface ConfSite extends sdo.Product, sdo.WebSite {
 	/** The website logo. */
 	logo?: string;
 	/** Two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`. */
-	// color?: [string, string];
+	color?: [string, string];
 	/** The publisher/brand responsible for this website. */
-	// brand?: sdo.Organization && { $social?: Hyperlink[]; };
-
-	/** All conferences present on this website. */
-	// $conferences?: Conference[];
-	/** The current conference in this series. Must match the 'url' property of an already-added conference. */
-	// $currentConference?: string;
-	/** The previous conference in this series. Must match the 'url' property of an already-added conference. */
-	// $previousConference?: string;
-	/** The next conference in this series. Must match the 'url' property of an already-added conference. */
-	// $nextConference?: string;
+	brand?: sdo.Organization&{ $social?: Hyperlink[]; };
+	/**
+	 * All conferences present on this website.
+	 * @minItems 1
+	 */
+	$conferences: Conference[]&{ 0: Conference; };
+	/**
+	 * The current conference in this series.
+	 * Must match the 'url' property of an already-added conference.
+	 * @default this.$conferences[0].url
+	 */
+	$currentConference?: string;
+	/**
+	 * The previous conference in this series.
+	 * Must match the 'url' property of an already-added conference.
+	 */
+	$previousConference?: string;
+	/**
+	 * The next conference in this series.
+	 * Must match the 'url' property of an already-added conference.
+	 */
+	$nextConference?: string;
 	/** The entity queues holding collections of data for this website. */
 	// The following Queues are recommended:
 	// - Featured Passes
