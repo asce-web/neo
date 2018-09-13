@@ -59,12 +59,13 @@ interface DirectoryOpts {
  */
 export default class ConfSite extends Page {
   /**
-   * @summary Generate a color palette and return a style object with custom properties.
-   * @param   {Color} $primary   the primary color for the site
-   * @param   {Color} $secondary the secondary color for the site
-   * @returns {Object<string>} a CSS object containg custom properties with color string values
+   * Generate a color palette and return a style object with custom properties.
+   * @todo TODO use a CSSRuleset object
+   * @param   $primary   the primary color for the site
+   * @param   $secondary the secondary color for the site
+   * @returns a CSS object containg custom properties with color string values
    */
-  static colorStyles($primary, $secondary) {
+  static colorStyles($primary: Color, $secondary: Color): { [index: string]: string } {
     let   primary_s2  =   $primary.darken(2/3, true)
     let   primary_s1  =   $primary.darken(1/3, true)
     let   primary_t1  =   $primary.darken(1/3, true).lighten(1/3, false) // one-third to white
@@ -118,7 +119,7 @@ export default class ConfSite extends Page {
 
 
   /**
-   * @summary Construct a new ConfSite object.
+   * Construct a new ConfSite object.
    * @param {(sdo.WebSite&sdo.Product)} jsondata a JSON object that validates against http://schema.org/WebSite, http://schema.org/Product, and `/neo.jsd`
    * @param {string}                    jsondata.name        http://schema.org/name
    * @param {string}                    jsondata.url         http://schema.org/url
@@ -156,11 +157,10 @@ export default class ConfSite extends Page {
 
 
   /**
-   * @summary The colors for this site: a CSS object containg custom properties with color string values.
+   * The colors for this site: a CSS object containg custom properties with color string values.
    * @todo TODO use a CSSRuleset object
-   * @type {Object<string>}
    */
-  get colors() {
+  get colors(): { [index: string]: string } {
     return ConfSite.colorStyles(
       Color.fromString(this._DATA.color && this._DATA.color[0] || '#660000'),  // default Hokie colors
       Color.fromString(this._DATA.color && this._DATA.color[1] || '#ff6600')   // default Hokie colors
@@ -168,55 +168,55 @@ export default class ConfSite extends Page {
   }
 
   /**
-   * @summary Retrieve a conference of this site.
-   * @param   {string} url the unique url of the conference to get
-   * @returns {?Conference} the specified conference
+   * Retrieve a conference of this site.
+   * @param   url the unique url of the conference to get
+   * @returns the specified conference, or `null` if it cannot be found
    */
-  getConference(url) {
+  getConference(url: string): Conference|null {
     return this.getConferencesAll().find((conference) => conference.url===url) || null
   }
   /**
-   * @summary Retrieve all conferences added to this site.
-   * @returns {Array<Conference>} all conferences of this site
+   * Retrieve all conferences added to this site.
+   * @returns all conferences of this site
    */
-  getConferencesAll() {
+  getConferencesAll(): Conference[] {
     return this._DATA.$conferences.map((event) => new Conference(event))
   }
   /**
    * The current conference of this site.
-   * @description The current conference is the conference that is being promoted this cycle.
-   * @type {Conference} the current conference
+   *
+   * The current conference is the conference that is being promoted this cycle.
    */
-  get currentConference() {
+  get currentConference(): Conference {
     return this.getConference(this._DATA.$currentConference)
   }
   /**
-   * @summary The previous conference of this site.
-   * @description The previous conference is the conference that was promoted last cycle.
-   * @type {Conference} the previous conference
+   * The previous conference of this site.
+   *
+   * The previous conference is the conference that was promoted last cycle.
    */
-  get prevConference() {
+  get prevConference(): Conference {
     return this.getConference(this._DATA.$previousConference)
   }
   /**
-   * @summary The next conference of this site.
-   * @description The next conference is the conference that will be promoted next cycle.
-   * @type {Conference} the next conference
+   * The next conference of this site.
+   *
+   * The next conference is the conference that will be promoted next cycle.
    */
-  get nextConference() {
+  get nextConference(): Conference {
     return this.getConference(this._DATA.$nextConference)
   }
 
   /**
-   * @summary Retrieve a queue added to this site.
-   * @param   {string} name the name of the queue
+   * Retrieve a queue added to this site.
+   * @param   name the name of the queue
    * @returns {?sdo.ItemList} the queue, or `null` if not found
    */
-  getQueue(name) {
+  getQueue(name: string) {
     return this.getQueuesAll().find((list) => list.name===name) || null
   }
   /**
-   * @summary Return all queues on this site.
+   * Return all queues on this site.
    * @todo TODO turn this into a getter
    * @returns {Array<sdo.ItemList>} all this site’s queues
    */
@@ -225,20 +225,21 @@ export default class ConfSite extends Page {
   }
 
   /**
-   * @summary Return all social network profiles of this site.
-   * @returns {Array<!Object>} all this site’s social media networks
+   * Return all social network profiles of this site.
+   * @returns all this site’s social media networks
    */
-  getSocialAll() {
+  getSocialAll(): Hyperlink[] {
     return (this._DATA.brand.$social || []).slice()
   }
 
 
   /**
-   * @summary Initialize this site: add the proper pages.
-   * @description This method should only be called once; it resets pages every time called.
-   * @returns {ConfSite} this site
+   * Initialize this site: add the proper pages.
+   *
+   * This method should only be called once; it resets pages every time called.
+   * @returns `this`
    */
-  init() {
+  init(): this {
     // TODO move all this data inside the database
     var self = this
     function pageTitle() { return this.name() + ' | ' + self.name() }
@@ -293,27 +294,18 @@ export default class ConfSite extends Page {
 
 	/**
 	 * Return an `<a.c-SiteTitle>` component marking up this conference site’s info.
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_siteTitle() {
+	view_siteTitle(): string {
 		return new xjs.DocumentFragment(sitetitle_processor.process(this._DATA)).innerHTML()
 	}
 			/**
 			 * Return a Page object’s document outline as a nested ordered list.
-			 * Parameter `data` should be of type `Page`.
-			 * @param   {!Object=} options options for configuring output
-			 * @param   {number=} options.depth a non-negative integer, or `Infinity`: how many levels deep the outline should be
-			 * @param   {integer=} options.start which subpage to start at
-			 * @param   {integer=} options.end which subpage to end at
-			 * @param   {?Object<string>=} options.classes group set of css class configurations
-			 * @param   {string=} options.classes.list list classes (`<ol>`)
-			 * @param   {string=} options.classes.item item classes (`<li>`)
-			 * @param   {!Object=} options.links configuration param to send into {@link Util.VIEW.pageLink|Util#view.pageLink()}
-			 * @param   {!Object=} options.options configurations for nested outlines; specs identical to `options`
-			 * @returns {string} HTML output
+			 * @param   options options for configuring output
+			 * @returns HTML output
 			 */
-			view_pageToc(options = {}) {
-				function toSDO(page) {
+			view_pageToc(options: DirectoryOpts = {}): string {
+				function toSDO(page: Page) {
 					return {
 						"@type": "WebPage",
 						"name"       : page.name(),

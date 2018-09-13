@@ -43,10 +43,9 @@ export default class Person {
   }
 
   /**
-   * @summary The string name of this person if it exists; else the object name of this person.
-   * @type {!Object}
+   * The string name of this person if it exists; else the object name of this person.
    */
-  get name() {
+  get name(): object {
     return {
       givenName      : this._DATA.givenName       || this._DATA.name || '',
       familyName     : this._DATA.familyName      || '',
@@ -58,9 +57,9 @@ export default class Person {
 
 	/**
 	 * Return this person’s name in "FullName, Director of ... | 555-555-5555" format.
-	 * @returns {string} HTML output
+	 * HTML output
 	 */
-	view_contact() {
+	view_contact(): string {
 		return new xjs.DocumentFragment(person_contact_processor.process(this._DATA)).innerHTML()
 	}
 }

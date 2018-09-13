@@ -14,47 +14,48 @@ export default class ConfPage extends Page {
   private _is_hidden: boolean;
 
   /**
-   * Construct a ConfPage object, given a name and url.
-   * @param {string} name name of this page
-   * @param {string} url  url of this page
+   * Construct a new ConfPage object.
+   * @param   name name of this page
+   * @param   url  url of this page
    */
-  constructor(name, url) {
+  constructor(name: string, url: string) {
     super({ name: name, url: url })
     this._icon      = null
     this._is_hidden = false
   }
 
   /**
-   * @summary Set the icon for this page.
-   * @param {string} key the keyword for the icon
+   * Set the icon for this page.
+   * @param   key the content keyword for the icon
+   * @returns `this`
    */
-  setIcon(key) {
-    this._icon = Util.ICON_DATA.find(($icon) => $icon.content===key)
+  setIcon(key: string): this {
+    this._icon = Util.ICON_DATA.find((icon) => icon.content === key) || null
     return this
   }
   /**
-   * @summary Get the icon of this page.
-   * @param   {boolean=} fallback if true, get the unicode code point
-   * @returns {string} if fallback, the unicode code point, else, the keyword of the icon
+   * Get the icon of this page.
+   * @param   fallback should I get the unicode code point?
+   * @returns if fallback, the unicode code point, else, the keyword of the icon
    */
-  getIcon(fallback) {
+  getIcon(fallback?: boolean): string {
     return (this._icon) ? Util.iconToString(this._icon, fallback) : ''
   }
 
   /**
-   * @summary Hide or show this page.
-   * @param   {boolean=} bool hides or shows this page
-   * @returns {Page} this page
+   * Hide or show this page.
+   * @param   bool should this page be hidden? (default `true`)
+   * @returns `this`
    */
-  hide(bool = true) {
+  hide(bool = true): this {
     this._is_hidden = bool
     return this
   }
   /**
-   * @summary Get the hidden status of this page.
-   * @returns {boolean} true if this page is hidden; false otherwise
+   * Get the hidden status of this page.
+   * @returns is this page hidden?
    */
-  isHidden() {
+  isHidden(): boolean {
     return this._is_hidden
   }
 }

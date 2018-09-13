@@ -33,8 +33,9 @@ const xjs = { ...xjs1, ...xjs2 }
  */
 export default class Conference {
   /**
-   * @summary Construct a Conference object.
-   * @description The name, url, theme, start date, end date, and promoted location
+   * Construct a new Conference object.
+   *
+   * The name, url, theme, start date, end date, and promoted location
    * are immutable and must be provided during construction.
    * @param {sdo.Event} jsondata a JSON object that validates against http://schema.org/Event and `/neo.jsd#/definitions/Conference`
    * @param {string} jsondata.name                       http://schema.org/name
@@ -70,89 +71,83 @@ export default class Conference {
   }
 
   /**
-   * @summary The name of this conference.
-   * @type {string}
+   * The name of this conference.
    */
-  get name() {
+  get name(): string {
     return this._DATA.name
   }
 
   /**
-   * @summary The URL of this conference.
-   * @type {string}
+   * The URL of this conference.
    */
-  get url() {
+  get url(): string {
     return this._DATA.url
   }
 
   /**
-   * @summary The theme of this conference.
-   * @description The theme is a one-sentence or one-phrase motif,
+   * The theme of this conference.
+   *
+   * The theme is a one-sentence or one-phrase motif,
    * and may be changed from year to year (from conference to conference).
-   * @type {string}
    */
-  get theme() {
+  get theme(): string {
     return this._DATA.description || ''
   }
 
   /**
-   * @summary The hero image of this conference.
-   * @type {string}
+   * The hero image of this conference.
    */
-  get heroImage() {
+  get heroImage(): string {
     return this._DATA.image || ''
   }
 
   /**
-   * @summary The starting date of this conference.
-   * @type {Date}
+   * The starting date of this conference.
    */
-  get startDate() {
+  get startDate(): Date {
     return new Date(this._DATA.startDate || null)
   }
 
   /**
-   * @summary The ending date of this conference.
-   * @type {Date}
+   * The ending date of this conference.
    */
-  get endDate() {
+  get endDate(): Date {
     return new Date(this._DATA.endDate || null)
   }
 
   /**
-   * @summary Get the promoted location of this conference.
-   * @description The promoted location is not necessarily the actual postal address of the conference,
+   * Get the promoted location of this conference.
+   *
+   * The promoted location is not necessarily the actual postal address of the conference,
    * but rather a major city nearest to the conference used for
    * promotional and advertising purposes.
-   * @type {sdo.PostalAddress}
    */
-  get promoLoc() {
+  get promoLoc(): sdo.PostalAddress {
     return this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" }
   }
 
   /**
-   * @summary The location image of this conference.
-   * @type {string}
+   * The location image of this conference.
    */
-  get promoLocImage() {
+  get promoLocImage(): string {
     return this._DATA.location && this._DATA.location[0] && this._DATA.location[0].image || ''
   }
 
   /**
-   * @summary Retrieve all registration periods of this conference.
-   * @returns {Array<sdo.AggregateOffer>} a shallow array of all registration periods of this conference.
+   * Retrieve all registration periods of this conference.
+   * @returns a shallow array of all registration periods of this conference.
    */
-  getRegistrationPeriodsAll() {
+  getRegistrationPeriodsAll(): RegistrationPeriod[] {
     return (this._DATA.offers || []).slice()
   }
 
   /**
-   * @summary The current registration period.
-   * @description The current registration period is the registration period that is active at this time.
+   * The current registration period.
+   *
+   * The current registration period is the registration period that is active at this time.
    * If none has been set, the first registration period is returned.
-   * @type {sdo.AggregateOffer}
    */
-  get currentRegistrationPeriod() {
+  get currentRegistrationPeriod(): RegistrationPeriod {
     let default_ = {
       "@type": "AggregateOffer",
       "name" : "default",
@@ -163,34 +158,34 @@ export default class Conference {
   }
 
   /**
-   * @summary Retrieve all passes of this conference.
-   * @returns {Array<!Object>} a shallow array of all passes of this conference
+   * Retrieve all passes of this conference.
+   * @returns a shallow array of all passes of this conference
    */
-  getPassesAll() {
+  getPassesAll(): Pass[] {
     return (this._DATA.$passes || []).slice()
   }
 
   /**
-   * @summary Retrieve all venues of this conference.
-   * @returns {Array<sdo.Accommodation>} a shallow copy of the venues object of this conference
+   * Retrieve all venues of this conference.
+   * @returns a shallow copy of the venues object of this conference
    */
-  getVenuesAll() {
+  getVenuesAll(): Venue[] {
     return (this._DATA.location || []).slice(1)
   }
 
   /**
-   * @summary Retrieve all speakers of this conference.
-   * @returns {Array<sdo.Person>} a shallow array of all speakers of this conference
+   * Retrieve all speakers of this conference.
+   * @returns a shallow array of all speakers of this conference
    */
-  getSpeakersAll() {
+  getSpeakersAll(): ConfPerson[] {
     return (this._DATA.performer || []).slice()
   }
 
   /**
-   * @summary Return an object representing all social network profiles of this conference.
-   * @returns {Array<!Object>} all this conference’s social media networks
+   * Return an object representing all social network profiles of this conference.
+   * @returns all this conference’s social media networks
    */
-  getSocialAll() {
+  getSocialAll(): Hyperlink[] {
     return (this._DATA.$social || []).slice()
   }
 
@@ -206,9 +201,9 @@ export default class Conference {
 
 	/**
 	 * Return a `<header>` element with hero image marking up this conference’s main info.
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_hero() {
+	view_hero(): string {
 		return new xjs.DocumentFragment(hero_processor.process({
 			...this._DATA,
 			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
@@ -216,38 +211,38 @@ export default class Conference {
 	}
 	/**
 	 * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_otherYear() {
+	view_otherYear(): string {
 		return new xjs.DocumentFragment(otheryear_processor.process({
 			...this._DATA,
 			location: this._DATA.location && this._DATA.location[0] || { "@type": "PostalAddress" },
 		})).innerHTML()
 	}
 	/**
-	 * Return a `<ul.o-ListStacked>` component, containing {@link xPass} items.
+	 * Return a `<ul.o-ListStacked>` component, containing {@link Pass} items.
 	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of pass names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
 	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the pass names
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_pass(queue = null) {
+	view_pass(queue = null): string {
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = this.getPassesAll().filter((item) => (queue) ? item_keys.includes(item.name) : true)
 		return new xjs.DocumentFragment(list_pass_processor.process(items, { conference: this._DATA })).innerHTML()
 	}
 	/**
 	 * Return a `<ul.c-Alert>` component containing the legend of registration periods.
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_registrationLegend() {
+	view_registrationLegend(): string {
 		return new xjs.DocumentFragment(list_registrationicon_processor.process(this.getRegistrationPeriodsAll())).innerHTML()
 	}
 	/**
 	 * Return a `xDateblock` component marking up this conference’s important dates.
-	 * @param   {boolean=} starred `true` if you want only starred dates to display
-	 * @returns {string} HTML output
+	 * @param   starred do you want only starred dates to display?
+	 * @returns HTML output
 	 */
-	view_importantDates(starred = false) {
+	view_importantDates(starred = false): string {
 		return new xjs.DocumentFragment(dateblock_processor.process(
 			(this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
 		)).innerHTML()
@@ -256,34 +251,34 @@ export default class Conference {
 	 * Return an `<.o-Tablist[role="tablist"]>` marking up this conference’s program sessions.
 	 * Each tab contains a Program Heading Component
 	 * and its panel contains a Time Block Component for that date.
-	 * @param   {string} id unique id for form elements
-	 * @param   {boolean=} starred `true` if you want only starred sessions to display
-	 * @returns {string} HTML output
+	 * @param   id unique id for form elements
+	 * @param   starred do you want only starred sessions to display?
+	 * @returns HTML output
 	 */
-	view_program(id, starred = false) {
+	view_program(id: string, starred = false): string {
 		return new xjs.DocumentFragment(program_processor.process(
 			(this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
 			{ id, starred }
 		)).innerHTML()
 	}
 	/**
-	 * Return a `<ul.o-ListStacked>` component, containing {@link xSpeaker} items.
+	 * Return a `<ul.o-ListStacked>` component, containing {@link ConfPerson} items.
 	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of person ids, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
 	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the person ids
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_speaker(queue = null) {
+	view_speaker(queue = null): string {
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = this.getSpeakersAll().filter((item) => (queue) ? item_keys.includes(item.identifier) : true)
 		return new xjs.DocumentFragment(list_speaker_processor.process(items)).innerHTML()
 	}
 	/**
-	 * Return a `<ul.c-Alert>` component, containing {@link xVenue} items.
+	 * Return a `<ul.c-Alert>` component, containing {@link Venue} items.
 	 * @param   {(Array<string>|sdo.ItemList)=} queue a list of venue titles, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
 	 * @param   {Array<string>=} queue.itemListElement if `queue` is an {@link http://schema.org/ItemList}, the venue titles
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_venue(queue = null) {
+	view_venue(queue = null): string {
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = this.getVenuesAll().filter((item) => (queue) ? item_keys.includes(item.description) : true)
 		return new xjs.DocumentFragment(list_venue_processor.process(items)).innerHTML()
@@ -293,26 +288,26 @@ export default class Conference {
 	 * that have the specified levels.
 	 * @param   {?(sdo.ItemList|Array<string>)=} queue a list of supporter level names, in the correct order, or an {@link http://schema.org/ItemList} type describing such a list
 	 * @param   {boolean=} small should logo sizing be overridden to small?
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_supporterLevel(queue = null, small = false) {
+	view_supporterLevel(queue = null, small = false): string {
 		let item_keys = (xjs.Object.typeOf(queue) === 'object') ? queue.itemListElement || [] : queue
 		let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? item_keys.includes(offer.name) : true)
 		return new xjs.DocumentFragment(list_supporterLevel_processor.process(items, { small, conference: this })).innerHTML()
 	}
 	/**
 	 * Return a list of `<div>` elements marking up this conference’s exhibitors.
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_exhibitorList() {
+	view_exhibitorList(): string {
 		return new xjs.DocumentFragment(list_exhibitor_processor.process(this._DATA.$exhibitors || [])).innerHTML()
 	}
 	/**
 	 * Return a `<ul>` element, containing conference chairs and/or co-chairs.
 	 * Parameter `data` should be of type `Array<{@link http://schema.org/Person|sdo.Person}>`.
-	 * @returns {string} HTML output
+	 * @returns HTML output
 	 */
-	view_chair() {
+	view_chair(): string {
 		return new xjs.DocumentFragment(list_chair_processor.process(this._DATA.organizer || [])).innerHTML()
 	}
 }

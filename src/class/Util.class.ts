@@ -79,10 +79,10 @@ export default class Util {
 
 			/**
 			 * Return a snippet marking up a promoted location.
-			 * @param   {sdo.PostalAddress} postal_address a postal address
-			 * @returns {string} HTML output
+			 * @param   postal_address a postal address
+			 * @returns HTML output
 			 */
-			static view_promoLoc(postal_address) {
+			static view_promoLoc(postal_address: sdo.PostalAddress): string {
 				return new xjs.DocumentFragment(xAddress.render({
 					...postal_address,
 					$regionName: true,
@@ -90,45 +90,42 @@ export default class Util {
 			}
 			/**
 			 * Return an unordered list of button links for a highlighted content block.
-			 * @param   {Array<sdo.WebPageElement>} buttons a list of links
-			 * @param   {string=} buttonclasses the classes to add to the buttons
-			 * @returns {string} HTML output
+			 * @param   buttons a list of links
+			 * @param   buttonclasses the classes to add to the buttons
+			 * @returns HTML output
 			 */
-			static view_highlightButtons(buttons, buttonclasses = '') {
+			static view_highlightButtons(buttons: Hyperlink[], buttonclasses = '') {
 				// const list_highlightbuttons = require('../dist/tpl/list-highlightbuttons.tpl.js').default
 				return new xjs.DocumentFragment(list_highlightbuttons.process(buttons, { buttonclasses })).innerHTML()
 			}
 	/**
 	 * Return a `<ul.c-SocialList>` component, containing
 	 * markup for social media profiles.
-	 * @param   {Array<sdo.WebPageElement>} data array of social media links
-	 * @param   {string=} data.name http://schema.org/name
-	 * @param   {string=} data.url  http://schema.org/url
-	 * @param   {string=} data.text http://schema.org/text
-	 * @param   {string=} classes optional classes to add to the `<ul>`
-	 * @returns {string} HTML output
+	 * @param   data array of social media links
+	 * @param   classes optional classes to add to the `<ul>`
+	 * @returns HTML output
 	 */
-	static view_socialList(data, classes = '') {
+	static view_socialList(data: Hyperlink[], classes = ''): string {
 		// const list_social = require('../dist/tpl/list-social.tpl.js').default
 		return new xjs.DocumentFragment(list_social.process(data, { classes })).innerHTML()
 	}
 
   /**
-   * @summary Return a URL-friendly string.
-   * @param  {string} str a string to convert
-   * @returns {string} a URL-safe variant of the string given
+   * Return a URL-friendly string.
+   * @param   str a string to convert
+   * @returns a URL-safe variant of the string given
    */
-  static toURL(str) {
+  static toURL(str: string): string {
     return encodeURIComponent(str.toLowerCase().replace(/[\W]+/g, '-'))
   }
 
   /**
-   * @summary Return a string part of an icon.
-   * @param   {Util.Icon} icon the icon object to parse
-   * @param   {boolean=} fb true if the fallback is preferred over the content
-   * @returns {string} if `fb===true`, `icon.fallback`; else `icon.content`
+   * Return a string part of an icon.
+   * @param   icon the icon object to parse
+   * @param   fb is the fallback preferred over the content?
+   * @returns exactly `(fb) ? icon.fallback : icon.content`
    */
-  static iconToString(icon, fb = false) {
+  static iconToString(icon: Icon, fb = false): string {
     return (fb) ? icon.fallback : icon.content
   }
 
