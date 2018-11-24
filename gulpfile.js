@@ -1,3 +1,7 @@
+const fs = require('fs')
+const path = require('path')
+const util = require('util')
+
 const kss          = require('kss')
 const gulp         = require('gulp')
 const jsdoc        = require('gulp-jsdoc3')
@@ -75,9 +79,8 @@ gulp.task('pug:default', function () {
 })
 
 gulp.task('render:sample', async function () {
-  const Neo = require('./class/Neo.class.js')
-  const data = requireOther('./proto/asce-event.org/database.jsonld')
-  return await new Neo(data).render()
+	let contents = new xjs.Document(await require('./src/page/index.page.js')).innerHTML()
+	return util.promisify(fs.writeFile)(path.resolve(__dirname, './proto/asce-event.org/index.html'), contents, 'utf8')
 })
 
 gulp.task('pug:sample', function () {
