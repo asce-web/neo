@@ -4,11 +4,10 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {ConfPerson} from '../interfaces'
+import Util from '../class/Util.class'
 import list_social_processor from './list-social.tpl'
 
 const {xPersonFullname} = require('aria-patterns')
-
-const Util = require('../../class/Util.class.js')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -38,9 +37,9 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
 		// TODO make a new Processor for this list
 		// TODO remove items if they are not provided
 		list_social_processor.process([
-			{ /* "@type": "WebPageElement",*/ identifier: 'url'      , name: 'explore', text: 'visit homepage', url: `${data.url}`                       },
-			{ /* "@type": "WebPageElement",*/ identifier: 'email'    , name: 'email'  , text: 'send email'    , url: `mailto:${data.email}`              },
-			{ /* "@type": "WebPageElement",*/ identifier: 'telephone', name: 'phone'  , text: 'call'          , url: `tel:${Util.toURL(data.telephone)}` },
+			{ /* "@type": "WebPageElement",*/ identifier: 'url'      , name: 'explore', text: 'visit homepage', url: `${               data.url       || '' }` },
+			{ /* "@type": "WebPageElement",*/ identifier: 'email'    , name: 'email'  , text: 'send email'    , url: `mailto:${        data.email     || '' }` },
+			{ /* "@type": "WebPageElement",*/ identifier: 'telephone', name: 'phone'  , text: 'call'          , url: `tel:${Util.toURL(data.telephone || '')}` },
 		], {
 			classes: 'c-SocialList--speaker',
 		}),
