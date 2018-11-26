@@ -1,4 +1,4 @@
-import * as sdo from 'schemaorg-jsd/dist/schemaorg'
+import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
 
 
 /**
@@ -37,6 +37,7 @@ export interface Conference extends sdo.Event {
 	 * A list of locations of this conference.
 	 * The first entry is the promoted location;
 	 * subsequent entries are other venues.
+	 * @todo TODO The images of the venues should be a string or undefined
 	 * @todo FIXME make this match its description
 	 */
 	location : sdo.PostalAddress;
@@ -97,8 +98,6 @@ export interface ConfPerson extends sdo.Person {
 	familyName: string;
 	/** This person’s affiliated organization. */
 	affiliation?: sdo.Organization;
-	/** This person’s job title. */
-	jobTitle?: string;
 	/** A photo of this person. */
 	image?: string;
 	/** A list of social media contact links for this person. */
@@ -108,7 +107,7 @@ export interface ConfPerson extends sdo.Person {
 /**
  * A single website hosting a series of conferences.
  */
-export interface ConfSite extends sdo.Product, sdo.WebPage {
+export interface ConfSite extends sdo.Product, sdo.WebSite {
 	/** The unique, absolute URL of the website. */
 	'@id': string;
 	/** The website name. */
@@ -118,27 +117,42 @@ export interface ConfSite extends sdo.Product, sdo.WebPage {
 	/** An absolute or root-relative URL for the landing page of this website. */
 	url: string;
 	/** Keywords for this website. */
-	// keywords?;
+	// keywords?: string[];
 	/** The website logo. */
 	logo?: string;
 	/** Two color strings: `[primary, secondary]`, in formats supported by `require('extrajs-color')`. */
-	// color?: [string, string];
+	color?: [string, string];
 	/** The publisher/brand responsible for this website. */
-	// brand?;
-
-	/** All conferences present on this website. */
-	// $conferences?: Conference[];
-	/** The current  conference in this series. Must match the 'url' property of an already-added conference. */
-	// $currentConference?: string;
-	/** The previous conference in this series. Must match the 'url' property of an already-added conference. */
-	// $previousConference?: string;
-	/** The next     conference in this series. Must match the 'url' property of an already-added conference. */
-	// $nextConference?: string;
-	/** An array of lists, each whose items are string references to some objects that have been added to the site. */
-	// $queues?: (sdo.ItemList & {
-	//   name: string;
-	//   itemListElement: string[]
-	// })[];
+	brand?: sdo.Organization&{ $social?: Hyperlink[]; };
+	/**
+	 * All conferences present on this website.
+	 * @minItems 1
+	 */
+	$conferences: Conference[]&{ 0: Conference; };
+	/**
+	 * The current conference in this series.
+	 * Must match the 'url' property of an already-added conference.
+	 * @default this.$conferences[0].url
+	 */
+	$currentConference?: string;
+	/**
+	 * The previous conference in this series.
+	 * Must match the 'url' property of an already-added conference.
+	 */
+	$previousConference?: string;
+	/**
+	 * The next conference in this series.
+	 * Must match the 'url' property of an already-added conference.
+	 */
+	$nextConference?: string;
+	/** The entity queues holding collections of data for this website. */
+	// The following Queues are recommended:
+	// - Featured Passes
+	// - Featured Speakers
+	// - Top Sponsors
+	// - Non-Sponsors
+	// - All Sponsors
+	$queues?: Queue[];
 }
 
 /**
@@ -183,6 +197,8 @@ export interface ImportantDate extends sdo.Action {
 	 * @default this.startTime
 	 */
 	endTime?: string;
+	/** Promote this important date to the front page? */
+	$starred?: boolean;
 }
 
 export interface Pass extends sdo.AggregateOffer {
@@ -194,6 +210,18 @@ export interface Pass extends sdo.AggregateOffer {
 	disambiguatingDescription?: string;
 	/** Types of attendees that can purchase this pass (usually based on membership). */
 	offers: AttendeeType[];
+}
+
+/**
+ * A named list of references to objects.
+ */
+export interface Queue extends sdo.ItemList {
+	/** The queue name. */
+	name: string;
+	/** The queue description. */
+	description?: string;
+	/** The list of string references. */
+	itemListElement: string[];
 }
 
 /**
@@ -223,6 +251,8 @@ export interface Session extends sdo.Event {
 	 * @default this.startDate
 	 */
 	endDate?: string;
+	/** Promote this session to the front page? */
+	$starred?: boolean;
 }
 
 /**

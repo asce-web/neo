@@ -13,8 +13,6 @@ const xjs = { ...xjs1, ...xjs2 }
 interface OptsType {
 	/** provide a unique id for the program block */
 	id: string;
-	/** should only starred sessions be displayed? */
-	starred?: boolean;
 }
 
 /** A group of sessions, sharing the same day, on a program. */
@@ -40,7 +38,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
  */
 function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): void {
   let container: xjs2.Element = new xjs.Element(frag.querySelector('[role="tablist"]') !)
-	const ProgramPanel = new Processor(container.node.querySelector('template') !, function (f: DocumentFragment, d: DateGroup, o: { index: number }) {
+	const program_panel = new Processor(container.node.querySelector('template') !, function (f: DocumentFragment, d: DateGroup, o: { index: number }) {
 		f.querySelector('[role="tabpanel"]') !.id          = `${opts.id}-panel${o.index}`
 		f.querySelector('[name="day"]'     ) !.textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
 		f.querySelector('[name="date"]'    ) !.textContent = xjs.Date.format(d.date, 'M j')
@@ -63,7 +61,7 @@ function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): 
     })
     return returned
   })(data)
-  container.append(...grouped_sessions.map((group, index) => ProgramPanel.process(group, { index })))
+  container.append(...grouped_sessions.map((group, index) => program_panel.process(group, { index })))
 }
 
 export default new Processor(template, instructions)

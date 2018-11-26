@@ -27,7 +27,7 @@
       "allOf": [
         { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Event.jsd" },
         {
-          "required": ["name", "url", "startDate", "endDate"],
+          "required": ["name", "url", "startDate"],
           "properties": {
             "name"                     : { "description": "The conference name." },
             "description"              : { "description": "The conference theme." },
@@ -234,6 +234,27 @@
         }
       ]
     },
+		"Queue": {
+			"description": "A named list of references to objects.",
+			"allOf": [
+				{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" },
+				{
+					"required": ["name", "itemListElement"],
+					"properties": {
+						"name": { "description": "The queue name." },
+						"description": {
+							"description": "The queue description.",
+							"type": "string"
+						},
+						"itemListElement": {
+							"description": "The list of string references.",
+							"type": "array",
+							"items": { "type": "string" }
+						}
+					}
+				}
+			]
+		},
 		"RegistrationPeriod": {
 			"description": "A time period in which a pass offer is available.",
 			"allOf": [
@@ -352,7 +373,7 @@
     { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/WebSite.jsd" },
     { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Product.jsd" },
     {
-      "required": ["@id", "name", "url"],
+      "required": ["@id", "name", "url", "$conferences"],
       "properties": {
         "@id"           : { "description": "The unique, absolute URL of the website." },
         "name"          : { "description": "The website name." },
@@ -367,17 +388,23 @@
         },
         "brand": {
           "description": "The publisher/brand responsible for this website.",
-          "properties": {
-            "$social": {
-              "description": "A list of social media contact links for this brand.",
-              "type": "array",
-              "items": { "$ref": "#/definitions/Hyperlink" }
-            }
-          }
+					"allOf": [
+						{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Organization.jsd" },
+						{
+							"properties": {
+								"$social": {
+									"description": "A list of social media contact links for this brand.",
+									"type": "array",
+									"items": { "$ref": "#/definitions/Hyperlink" }
+								}
+							}
+						}
+					]
         },
         "$conferences": {
           "description": "All conferences present on this website.",
           "type": "array",
+          "minItems": 1,
           "items": { "$ref": "#/definitions/Conference" }
         },
         "$currentConference" : { "type": "string", "format": "uri", "description": "The current  conference in this series. Must match the 'url' property of an already-added conference." },
@@ -386,20 +413,7 @@
         "$queues": {
           "description": "An array of lists, each whose items are string references to some objects that have been added to the site.",
           "type": "array",
-          "items": {
-            "allOf": [
-              { "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/ItemList.jsd" },
-              {
-                "required": ["name", "itemListElement"],
-                "properties": {
-                  "itemListElement": {
-                    "type": "array",
-                    "items": { "type": "string" }
-                  }
-                }
-              }
-            ]
-          }
+          "items": { "$ref": "#/definitions/Queue" }
         }
       }
     }

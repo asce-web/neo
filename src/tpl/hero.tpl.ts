@@ -4,7 +4,7 @@ import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
-import {Conference, Hyperlink} from '../interfaces'
+import {Conference} from '../interfaces'
 import list_highlightbuttons_processor from './list-highlightbuttons.tpl'
 
 const xjs = { ...xjs1, ...xjs2 }
