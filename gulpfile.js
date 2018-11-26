@@ -45,7 +45,7 @@ gulp.task('dist-css', async function () {
 		.pipe(gulp.dest('./css'))
 })
 
-gulp.task('dist', ['dist-css'])
+gulp.task('dist', ['dist-ts', 'dist-css'])
 
 gulp.task('test', async function () {})
 
@@ -123,14 +123,14 @@ gulp.task('proto-default-validate', async function () {
 })
 
 gulp.task('proto-default', ['proto-default-validate'], async function () {
-  const ConfSite   = require('./class/ConfSite.class.js')
-  const ConfPage   = require('./class/ConfPage.class.js')
+	const ConfSite = require('./dist/class/ConfSite.class.js').default
+	const ConfPage = require('./dist/class/ConfPage.class.js').default
   return gulp.src('./proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
         xjs: require('extrajs-dom'),
-        Util: require('./class/Util.class.js'),
+        Util: require('./dist/class/Util.class.js').default,
         site: new ConfSite(await requireOtherAsync('./proto/default/database.jsonld')).init(),
         page: new ConfPage(),
       },
@@ -143,14 +143,14 @@ gulp.task('proto-sample-validate', async function () {
 })
 
 gulp.task('proto-sample-markup', ['proto-sample-validate'], async function () {
-  const ConfSite   = require('./class/ConfSite.class.js')
-  const ConfPage   = require('./class/ConfPage.class.js')
+	const ConfSite = require('./dist/class/ConfSite.class.js').default
+	const ConfPage = require('./dist/class/ConfPage.class.js').default
   return gulp.src('./proto/asce-event.org/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
-        Util: require('./class/Util.class.js'),
-        Person: require('./class/Person.class.js'),
+        Util  : require('./dist/class/Util.class.js').default,
+        Person: require('./dist/class/Person.class.js').default,
         site: await (async function () {
           // TODO move all this data inside the database
           const returned = new ConfSite(await requireOtherAsync('./proto/asce-event.org/database.jsonld')).init()

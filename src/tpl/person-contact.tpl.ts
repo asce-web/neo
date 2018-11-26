@@ -4,10 +4,9 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {ConfPerson} from '../interfaces'
+import Util from '../class/Util.class'
 
 const {xPersonFullname} = require('aria-patterns')
-
-const Util = require('../../class/Util.class.js')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement

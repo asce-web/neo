@@ -217,7 +217,7 @@ export default class ConfSite extends Page {
   init(): this {
     // TODO move all this data inside the database
     var self = this
-    function pageTitle() { return this.name() + ' | ' + self.name() }
+    function pageTitle(this: ConfPage): string { return this.name() + ' | ' + self.name() }
     return this
       .removeAll() //- NOTE IMPORTANT
       .add(new ConfPage('Home', 'index.html')
@@ -280,19 +280,19 @@ export default class ConfSite extends Page {
 			 * @returns HTML output
 			 */
 			view_pageToc(options: DirectoryOpts = {}): string {
-				function toSDO(page: Page) {
+				function toSDO(page: typeof Page) {
 					return {
 						"@type": "WebPage",
 						"name"       : page.name(),
 						"url"        : page.url(),
 						"description": page.description(),
 						"keywords"   : page.keywords(),
-						"hasPart"    : page.findAll().map((p) => toSDO(p)),
+						"hasPart"    : page.findAll().map((p: typeof Page) => toSDO(p)),
 					}
 				}
 				return new xjs.DocumentFragment(directory_processor.process({
 					...this._DATA,
-					hasPart: this.findAll().map((p) => toSDO(p)), // FIXME don’t use `.findAll`
+					hasPart: this.findAll().map((p: typeof Page) => toSDO(p)), // FIXME don’t use `.findAll`
 				}, options)).innerHTML()
 			}
 }
