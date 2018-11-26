@@ -17,12 +17,12 @@
 // DOM:
 // <pre>
 // const xPass = require('/tpl/x-pass.tpl.js')
-//   let pass = new Pass({
+//   let pass = {
 //     "name": "Speaker Pass",
 //     "description": "Speakers and Presenters",
 //     "$fineprint" : "Side note or fine print goes here. Only plain text is allowed.",
 //     "$attendeeTypes": ["Member", "Non-Member"]
-//   })
+//   }
 //   let conference = new Conference({
 //     "@context" : "http://schema.org/",
 //     "@type"    : "Event",
@@ -33,7 +33,7 @@
 //     ],
 //     "$currentRegistrationPeriod": "Advance"
 //   })
-// document.append(xPass.render({ ...pass._DATA, $conference: conference }))
+// document.append(xPass.render(renderer, pass, { conference }))
 // </pre>
 //
 // <header><dl>

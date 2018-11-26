@@ -3,5 +3,5 @@ h1#program-highlights Program Highlights
   let highlight_buttons = [
     { "@type": "WebPageElement", "text": "Full Program", "url": "program.html" },
   ]
-!= site.currentConference.view.program('program-highlights-block', true)
-footer!= Util.view(highlight_buttons).highlightButtons()
+!= site.currentConference.view_program('program-highlights-block', true)
+footer!= Util.view_highlightButtons(highlight_buttons)
