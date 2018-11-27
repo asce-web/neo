@@ -2,6 +2,12 @@
 /*################################*\
     neo  |  _c-Pass.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-pt.less');
+@import (reference) url('./__mx.box.less');
+@import (reference) url('./_-mv.less');
 
 
 // The Pass Component
@@ -11,12 +17,12 @@
 // DOM:
 // <pre>
 // const xPass = require('/tpl/x-pass.tpl.js')
-//   let pass = new Pass({
+//   let pass = {
 //     "name": "Speaker Pass",
 //     "description": "Speakers and Presenters",
 //     "$fineprint" : "Side note or fine print goes here. Only plain text is allowed.",
 //     "$attendeeTypes": ["Member", "Non-Member"]
-//   })
+//   }
 //   let conference = new Conference({
 //     "@context" : "http://schema.org/",
 //     "@type"    : "Event",
@@ -27,7 +33,7 @@
 //     ],
 //     "$currentRegistrationPeriod": "Advance"
 //   })
-// document.append(xPass.render({ ...pass._DATA, $conference: conference }))
+// document.append(xPass.render(renderer, pass, { conference }))
 // </pre>
 //
 // <header><dl>
@@ -93,9 +99,7 @@
 }
 
 .c-Pass__Head {
-  & > *:last-child {
-    margin-bottom: 0; // override base typog
-  }
+  .mx-box();
 }
 
 .c-Pass__Body {
@@ -114,8 +118,10 @@
 }
 
 .c-Pass__Hn {
-  padding-top: 0; // override base h1
-  .font-size-el(@g-font-size-h2);
+  .-pt-0; // override base `h1`
+  .h-FontSize;
+  --font-scale: @g-font-size-h2;
+  --tracks: 2;
 }
 
 .c-Pass__Desc {
@@ -125,7 +131,8 @@
 .c-Pass__Fine {
   font-weight: 300;
   font-style: italic;
-  .font-size-el(14/16);
+  .h-FontSize;
+  --font-scale: @g-font-size-mill;
   white-space: initial;
 }
 
@@ -159,9 +166,7 @@
 //
 // Styleguide Components.Pass.Period
 .c-Pass__Period {
-  & > *:last-child {
-    margin-bottom: 0; // override base typog
-  }
+  .mx-box();
   .c-Pass__Foot & {
     flex: 1; // override Flex__Item (auto)
     &:not(:last-child) {
@@ -173,7 +178,7 @@
         display: block;
         position: absolute;
         right: 0; top: 0; bottom: 0;
-        margin: var(--vru) 0;
+        margin: 0; .-mv-1;
         border-right-width: @rw;
         opacity: 0.5;
       }
@@ -185,12 +190,15 @@
 }
 
 .c-Pass__Period__Hn {
-  margin-bottom: 0; // override base h1
-  padding-top: 0;   // override base h1
-  font-weight: 700; // override base 900
-  .font-size-el(@g-font-size-h4);
+  // override base `h1`
+  .-mb-0;
+  .-pt-0;
+  font-weight: 700;
+  .h-FontSize;
+  --font-scale: @g-font-size-h4;
   .c-Pass__Body & {
-    .font-size-el(@g-font-size-h3);
+    --font-scale: @g-font-size-h3;
+    --tracks: 2;
   }
 }
 
@@ -204,7 +212,9 @@
 
 .c-Pass__Price {
   .c-Pass__Body &:first-of-type {
-  .font-size-el(2; 2);
+    .h-FontSize;
+    --font-scale: @g-font-size-h3;
+    --tracks: 2;
   font-weight: 600;
   color: var(--color-primary, @g-color-primary);
   }

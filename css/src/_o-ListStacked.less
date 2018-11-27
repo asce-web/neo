@@ -2,6 +2,7 @@
 /*################################*\
     neo  |  _o-ListStacked.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
 
 
 // The Stacked List
@@ -40,14 +41,14 @@
 }
 .o-ListStacked__Item {
   flex: 0 1 100%;
-  margin-bottom: var(--vru);
+  .-mb-1;
   @media screen and (min-width: 30em) {
-    flex-basis: calc(100%/2~' - 0.5rem');
+    flex-basis: calc(100%/2 - 0.5rem);
   }
   @media screen and (min-width: 45em) {
-    flex-basis: calc(100%/3~' - 1rem');
+    flex-basis: calc(100%/3 - 1rem);
   }
   @media screen and (min-width: 90em) {
-    flex-basis: calc(100%/4~' - 2rem');
+    flex-basis: calc(100%/4 - 2rem);
   }
 }

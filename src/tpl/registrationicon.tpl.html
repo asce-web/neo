@@ -1,0 +1,12 @@
+<template>
+        <p class="c-RegPdIcon">
+          <i class="material-icons" aria-hidden="true">{{ icon }}</i>
+          <small>
+            <b>{{ name }}</b>
+            <span>: </span>
+            <time datetime="{{ start }}">{{ start.format('M j' }}</time>
+            <span>&ndash;</span>
+            <time datetime="{{ end }}">{{ end.format('M j' }}</time>
+          </small>
+        </p>
+</template>

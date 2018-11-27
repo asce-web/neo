@@ -21,7 +21,7 @@
 //   { "@type": "URL", "name": "linkedin", "url": "//linkedin.com/ASCE"   , "description": "example LinkedIn link (alt text)" },
 //   { "@type": "URL", "name": "youtube" , "url": "//youtube.com/ASCE"    , "description": "example YouTube link (alt text)" },
 // ]
-// != Util.view(socialdata).socialList()
+// != Util.view_socialList(socialdata)
 // </pre>
 //
 // <header><dl>
@@ -68,7 +68,7 @@
   width: 50%;
   --iconsize: 5vw;
   @media screen and (min-width: 60em) {
-    --iconsize: calc(~'2 * var(--vru)');
+    --iconsize: calc(2 * var(--lh));
   }
   @media screen and (min-width: 75em) {
     width: (100%/3);
@@ -76,7 +76,7 @@
 }
 
 .c-SocialList--speaker {
-  --iconsize: var(--vru);
+  --iconsize: var(--lh);
 }
 
 .c-SocialList--highlight {

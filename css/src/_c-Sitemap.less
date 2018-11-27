@@ -2,6 +2,9 @@
 /*################################*\
     neo  |  _c-Sitemap.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
 
 
 // The Site Map
@@ -38,7 +41,7 @@
 //       }
 //     },
 //   }
-// != Util.view(homepage).pageToc(sitemap_options)
+// != homepage.view_pageToc(sitemap_options)
 // </pre>
 //
 // <header><dl>
@@ -93,7 +96,7 @@
   .menufont();
   @media not all and (min-width: 45em) {
     flex-direction: column;
-    .font-size-mod(20/16);
+    .font-size-mod(@g-font-size-kilo);
   }
 }
 
@@ -101,17 +104,18 @@
   flex: none;
   @media not all and (min-width: 45em) {
     &:not(:last-child) {
-      margin-bottom: var(--vru);
+      .-mb-1;
     }
   }
 }
 
 .c-Sitemap__Sub {
   font-weight: 300;
-  .font-size-el(16/20);
+  .h-FontSize;
+  --font-scale: (1/@g-font-size-kilo);
   text-transform: initial; // override .menufont()
   @media screen and (min-width: 45em) {
-    .font-size-el(12/14);
+    --font-scale: (12/14); // REVIEW:MAGICNUMBER
   }
 }
 
