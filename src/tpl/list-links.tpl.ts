@@ -1,19 +1,33 @@
-const path = require('path')
+import * as xjs from 'extrajs-dom'
+import {Processor} from 'template-processor'
 
-const xjs = require('extrajs-dom')
+import {Hyperlink} from '../interfaces'
+
+
+const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
+	.exe(function () {
+		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o List c-LinkList')
+		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
+			.addClass('o-List__Item c-LinkList__Item')
+			.innerHTML(`
+				<a class="c-LinkList__Link" href="{{ url }}">
+					<i class="halflings halflings-circle-arrow-right" aria-hidden="true"></i>
+					<slot>{{ text }}</slot>
+				</a>
+			`)
+	})
+	.node
 
 /**
- * @summary xLinklist renderer.
- * @param {DocumentFragment} frag the template content with which to render
- * @param {Array<sdo.WebPageElement>} data an array of `{url:string, text:string}` objects
+ * A list of hyperlinks.
+ * @param   frag the template content to process
+ * @param   data an array of hyperlinks
  */
-function xLinklist_renderer(frag, data) {
-  new xjs.HTMLUListElement(frag.querySelector('ul')).populate(data, function (f, d) {
-    f.querySelector('a'   ).href        = d.url  || '#1'
-    f.querySelector('slot').textContent = d.text || ''
-  })
+function instructions(frag: DocumentFragment, data: Hyperlink[]) {
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
+		f.querySelector('a'   ) !.href        = d.url
+		f.querySelector('slot') !.textContent = d.text
+	}, data)
 }
 
-module.exports = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, './x-linklist.tpl.html'))
-  .setRenderer(xLinklist_renderer)
+export default new Processor(template, instructions)
