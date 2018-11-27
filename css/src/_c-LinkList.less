@@ -34,17 +34,20 @@
 .c-LinkList__Item {
   .halflings/*.halflings-circle-arrow-right*/ {
     margin-right: 1ch; // HACK fallback
-    margin-inline-end: 1ch; // takes care of both ltr and rtl directions
+		@supports (margin-inline-end: 1ch) {
+			margin-right: unset;
+			margin-inline-end: 1ch; // takes care of both ltr and rtl directions
+		}
 
     // fix icon based on `dir`.
+		// browsers that support the `:dir` pseudo-class already support `margin-inline-end`
     &:dir(rtl) {
-      margin-right: 0; margin-left: 1ch; // HACK fallback for margin-inline-end
-
       // NOTE: change the right arrow to a left arrow:
       // U+E131 is the content of `.halflings-circle-arrow-right`, and
       // U+E132 is the content of `.halflings-circle-arrow-left`.
       // One option would be to change the content of `::before`:
       // &::before { content: '\E132'; } // XXX // copied from `.halflings-circle-arrow-left`
+
       // However, since this content is in CSS and not in the DOM,
       // it will not affect assistive technology, so changing content is unnecessary.
       // Therefore we can use a transform to visually flip the icon horizontally.
@@ -53,6 +56,6 @@
   }
 }
 
-.c-LinkList__Link {
-  text-decoration: none; // override `.t-Content >> a`
+a.c-LinkList__Link {
+	text-decoration: none; // override `a[href]`
 }
