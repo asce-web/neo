@@ -4,7 +4,7 @@ import {Processor} from 'template-processor'
 import {Hyperlink} from '../interfaces'
 
 
-interface OptsType {
+interface OptsTypeXHighlightButton {
 	/** additional class(es) to add to each link */
 	buttonclasses?: string;
 }
@@ -18,7 +18,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsTypeXHighlightButton): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Hyperlink) {
 		new xjs.HTMLAnchorElement(f.querySelector('a') !)
 			.replaceClassString('{{ buttonclasses }}', opts.buttonclasses || '')
@@ -30,5 +30,5 @@ function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType)
 /**
  * A `<ul>` list of highlighted buttons.
  */
-const xListHighlightButton: Processor<Hyperlink[], OptsType> = new Processor(template, instructions)
+const xListHighlightButton: Processor<Hyperlink[], OptsTypeXHighlightButton> = new Processor(template, instructions)
 export default xListHighlightButton

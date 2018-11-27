@@ -5,6 +5,7 @@ import {Processor} from 'template-processor'
 
 import {ConfSite} from '../interfaces'
 
+
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/sitetitle.tpl.html')) // NB relative to dist
   .node

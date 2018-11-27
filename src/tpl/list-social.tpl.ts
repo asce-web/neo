@@ -4,7 +4,7 @@ import {Processor} from 'template-processor'
 import {Hyperlink} from '../interfaces'
 
 
-interface OptsType {
+interface OptsTypeXListSocial {
 	/** any other class(es) to add to the `<ul>` */
 	classes?: string;
 }
@@ -27,7 +27,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsTypeXListSocial): void {
   new xjs.HTMLUListElement(frag.querySelector('ul') !)
     .replaceClassString('{{ listclasses }}', opts.classes || '')
     .populate(function (f: DocumentFragment, d: Hyperlink) {
@@ -41,5 +41,5 @@ function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType)
 /**
  * A `<ul>` list of social media links.
  */
-const xListSocial: Processor<Hyperlink[], OptsType> = new Processor(template, instructions)
+const xListSocial: Processor<Hyperlink[], OptsTypeXListSocial> = new Processor(template, instructions)
 export default xListSocial

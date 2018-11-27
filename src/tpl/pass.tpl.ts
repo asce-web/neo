@@ -7,7 +7,7 @@ import {Conference, Pass, RegistrationPeriod} from '../interfaces'
 import registrationperiod_processor from './registrationperiod.tpl'
 
 
-interface OptsType {
+interface OptsTypeXPass {
 	/** the conference to which this pass belongs */
 	conference: Conference; // FIXME this should not be required
 }
@@ -19,7 +19,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Pass, opts: OptsTypeXPass): void {
   // TODO programmatically determine current registration period by date
   let current_period: RegistrationPeriod = (opts.conference.offers || []).find((pd) => pd.name === opts.conference.$currentRegistrationPeriod) !
   frag.querySelector('[itemprop="name"]'       ) !.textContent = data.name
@@ -43,5 +43,5 @@ function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void 
 /**
  * An `<article.c-Pass>` component marking up a pass’s info.
  */
-const xPass: Processor<Pass, OptsType> = new Processor(template, instructions)
+const xPass: Processor<Pass, OptsTypeXPass> = new Processor(template, instructions)
 export default xPass

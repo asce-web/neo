@@ -10,7 +10,7 @@ import supporter_processor from './supporter.tpl'
 const xjs = { ...xjs1, ...xjs2 }
 
 
-interface OptsType {
+interface OptsTypeXSupporterLevel {
 	/** should logo sizing be overridden to `Small`? */
 	small?: boolean;
   /** any other class(es) to add to the `<section>` */
@@ -26,7 +26,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsTypeXSupporterLevel): void {
   /** Array of supporters in the level. */
   let supporters: Supporter[] = (opts.conference.sponsor || []).filter((org) => org.$level === data.name)
   new xjs.Element(frag.querySelector('.c-SupporterBlock') !).addClass((xjs.Object.switch<string>((opts.small) ? 'Small' : (data.$logosize || 'default'), {
@@ -44,5 +44,5 @@ function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsTy
 /**
  * A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.
  */
-const xSupporterLevel: Processor<SupporterLevel, OptsType> = new Processor(template, instructions)
+const xSupporterLevel: Processor<SupporterLevel, OptsTypeXSupporterLevel> = new Processor(template, instructions)
 export default xSupporterLevel

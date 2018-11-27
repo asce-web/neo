@@ -5,7 +5,7 @@ import {Conference, SupporterLevel} from '../interfaces'
 import supporterlevel_processor from './supporterlevel.tpl'
 
 
-interface OptsType {
+interface OptsTypeXListSupporterLevel {
 	/** should logo sizing be overridden to `Small`? */
 	small?: boolean;
 	/** the conference to which these supporter levels belong */
@@ -22,7 +22,7 @@ const template: HTMLTemplateElement = xjs.HTMLOListElement.templateSync()
 	})
 	.node
 
-function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: OptsTypeXListSupporterLevel): void {
 	new xjs.HTMLUListElement(frag.querySelector('ol') !).populate(function (f: DocumentFragment, d: SupporterLevel) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
 			supporterlevel_processor.process(d, opts)
@@ -33,5 +33,5 @@ function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: Opts
 /**
  * An `<ol>` list of {@link Supporterlevel|supporter levels}.
  */
-const xListSupporterLevel: Processor<SupporterLevel[], OptsType> = new Processor(template, instructions)
+const xListSupporterLevel: Processor<SupporterLevel[], OptsTypeXListSupporterLevel> = new Processor(template, instructions)
 export default xListSupporterLevel

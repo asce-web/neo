@@ -5,7 +5,7 @@ import {Conference, Pass} from '../interfaces'
 import pass_processor from './pass.tpl'
 
 
-interface OptsType {
+interface OptsTypeXListPass {
 	/** the conference to which this pass belongs */
 	conference: Conference; // FIXME this should not be required
 }
@@ -20,7 +20,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-function instructions(frag: DocumentFragment, data: Pass[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Pass[], opts: OptsTypeXListPass): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Pass) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
 			pass_processor.process(d, opts)
@@ -31,5 +31,5 @@ function instructions(frag: DocumentFragment, data: Pass[], opts: OptsType): voi
 /**
  * A `<ul>` list of {@link Pass|passes}.
  */
-const xListPass: Processor<Pass[], OptsType> = new Processor(template, instructions)
+const xListPass: Processor<Pass[], OptsTypeXListPass> = new Processor(template, instructions)
 export default xListPass

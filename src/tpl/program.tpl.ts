@@ -10,7 +10,7 @@ import timeblock_processor from './timeblock.tpl'
 const xjs = { ...xjs1, ...xjs2 }
 
 
-interface OptsType {
+interface OptsTypeXProgram {
 	/** provide a unique id for the program block */
 	id: string;
 }
@@ -30,7 +30,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Session[], opts: OptsTypeXProgram): void {
   let container: xjs2.Element = new xjs.Element(frag.querySelector('[role="tablist"]') !)
 	const program_panel = new Processor(container.node.querySelector('template') !, function (f: DocumentFragment, d: DateGroup, o: { index: number }) {
 		f.querySelector('[role="tabpanel"]') !.id          = `${opts.id}-panel${o.index}`
@@ -61,5 +61,5 @@ function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): 
 /**
  * A `<div.o-Tablist[role="tablist"]>` component containing panels of `.c-Timeblock` components.
  */
-const xProgram: Processor<Session[], OptsType> = new Processor(template, instructions)
+const xProgram: Processor<Session[], OptsTypeXProgram> = new Processor(template, instructions)
 export default xProgram

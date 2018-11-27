@@ -6,7 +6,7 @@ import {Processor} from 'template-processor'
 import {Supporter} from '../interfaces'
 
 
-interface OptsType {
+interface OptsTypeXSupporter {
 	/** is the supporter a financial sponsor? */
 	is_sponsor?: boolean;
 }
@@ -15,7 +15,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/supporter.tpl.html')) // NB relative to dist
   .node
 
-function instructions(frag: DocumentFragment, data: Supporter, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Supporter, opts: OptsTypeXSupporter): void {
   ;(frag.querySelector('a[itemprop="url"]'    ) as HTMLAnchorElement).href  = data.url
   ;(frag.querySelector('data[itemprop="name"]') as HTMLDataElement  ).value = data.name
   ;(frag.querySelector('img[itemprop="logo"]' ) as HTMLImageElement ).src   = data.logo
@@ -26,5 +26,5 @@ function instructions(frag: DocumentFragment, data: Supporter, opts: OptsType): 
 /**
  * Markup for a supporter logo.
  */
-const xSupporter: Processor<Supporter, OptsType> = new Processor(template, instructions)
+const xSupporter: Processor<Supporter, OptsTypeXSupporter> = new Processor(template, instructions)
 export default xSupporter

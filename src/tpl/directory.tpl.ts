@@ -7,7 +7,7 @@ import {Processor} from 'template-processor'
 import {ConfPage} from '../interfaces'
 
 
-interface OptsType {
+interface OptsTypeXDirectory {
 	/**
 	 * How many levels deep the outline should be; a non-negative integer, or `Infinity`.
 	 * @default Infinity
@@ -45,14 +45,14 @@ interface OptsType {
 	/** unknown docs */
 	links?: object;
 	/** configurations for nested outlines */
-	opts?: OptsType;
+	opts?: OptsTypeXDirectory;
 }
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/directory.tpl.html')) // NB relative to dist
   .node
 
-function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsTypeXDirectory): void {
 	;[opts.depth, opts.start, opts.end].forEach((n) => { if (Number.isNaN(n !)) throw new NaNError() })
   let depth: number = (opts.depth === 0) ? 0 : opts.depth || Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol') !)
@@ -100,5 +100,5 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
 /**
  * A nested `<ol>` marking up a site directory.
 */
-const xDirectory: Processor<ConfPage, OptsType> = new Processor(template, instructions)
+const xDirectory: Processor<ConfPage, OptsTypeXDirectory> = new Processor(template, instructions)
 export default xDirectory

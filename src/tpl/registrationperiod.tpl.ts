@@ -7,7 +7,7 @@ import {Pass, RegistrationPeriod} from '../interfaces'
 import attendeetype_processor from './attendeetype.tpl'
 
 
-interface OptsType {
+interface OptsTypeXRegistrationPeriod {
 	/** should this period be placed in the body, and not the footer, of the pass? */
 	is_body?: boolean;
 	/** the pass of which this markup is a part */
@@ -21,7 +21,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: OptsTypeXRegistrationPeriod): void {
   let date_start: Date|null = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end  : Date|null = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
@@ -49,5 +49,5 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: Op
 /**
  * A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
  */
-const xRegistrationPeriod: Processor<RegistrationPeriod, OptsType> = new Processor(template, instructions)
+const xRegistrationPeriod: Processor<RegistrationPeriod, OptsTypeXRegistrationPeriod> = new Processor(template, instructions)
 export default xRegistrationPeriod
