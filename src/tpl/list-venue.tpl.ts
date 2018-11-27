@@ -15,11 +15,6 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-/**
- * A `<ul>` list of {@link Venue|venues}.
- * @param   frag the template content to process
- * @param   data an array of venues
- */
 function instructions(frag: DocumentFragment, data: Venue[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Venue) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
@@ -28,4 +23,8 @@ function instructions(frag: DocumentFragment, data: Venue[]): void {
 	}, data)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<ul>` list of {@link Venue|venues}.
+ */
+const xListVenue: Processor<Venue[], object> = new Processor(template, instructions)
+export default xListVenue

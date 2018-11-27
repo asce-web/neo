@@ -14,14 +14,13 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * Markup for a person and affiliated organization.
- * @param   frag the template content to process
- * @param   data a person that has an affiliation
- */
 function instructions(frag: DocumentFragment, data: ConfPerson): void {
   frag.querySelector('[itemprop="affiliation"] [itemprop="name"]') !.textContent = data.affiliation && data.affiliation.name || ''
   new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.process(data))
 }
 
-export default new Processor(template, instructions)
+/**
+ * Markup for a person and affiliated organization.
+ */
+const xPersonAffiliation: Processor<ConfPerson, object> = new Processor(template, instructions)
+export default xPersonAffiliation

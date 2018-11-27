@@ -30,12 +30,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * A `<div.o-Tablist[role="tablist"]>` component containing panels of `.c-Timeblock` components.
- * @param   frag the template content to process
- * @param   data an array of sessions
- * @param   opts additional processing options
- */
 function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): void {
   let container: xjs2.Element = new xjs.Element(frag.querySelector('[role="tablist"]') !)
 	const program_panel = new Processor(container.node.querySelector('template') !, function (f: DocumentFragment, d: DateGroup, o: { index: number }) {
@@ -64,4 +58,8 @@ function instructions(frag: DocumentFragment, data: Session[], opts: OptsType): 
   container.append(...grouped_sessions.map((group, index) => program_panel.process(group, { index })))
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<div.o-Tablist[role="tablist"]>` component containing panels of `.c-Timeblock` components.
+ */
+const xProgram: Processor<Session[], OptsType> = new Processor(template, instructions)
+export default xProgram

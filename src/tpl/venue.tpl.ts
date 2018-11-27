@@ -14,11 +14,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * A `<section>` element marking up a venue.
- * @param   frag the template content to process
- * @param   data a venue for a conference
- */
 function instructions(frag: DocumentFragment, data: Venue): void {
   frag.querySelector('[itemprop="description"]') !.textContent = data.description
   frag.querySelector('[itemprop="name"]')        !.textContent = data.name
@@ -48,4 +43,8 @@ function instructions(frag: DocumentFragment, data: Venue): void {
 	})
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<section>` element marking up a venue.
+ */
+const xVenue: Processor<Venue, object> = new Processor(template, instructions)
+export default xVenue

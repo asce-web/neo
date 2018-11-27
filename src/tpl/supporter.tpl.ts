@@ -15,12 +15,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/supporter.tpl.html')) // NB relative to dist
   .node
 
-/**
- * Markup for a supporter logo.
- * @param   frag the template content to process
- * @param   data the supporting organization
- * @param   opts additional processing options
- */
 function instructions(frag: DocumentFragment, data: Supporter, opts: OptsType): void {
   ;(frag.querySelector('a[itemprop="url"]'    ) as HTMLAnchorElement).href  = data.url
   ;(frag.querySelector('data[itemprop="name"]') as HTMLDataElement  ).value = data.name
@@ -29,4 +23,8 @@ function instructions(frag: DocumentFragment, data: Supporter, opts: OptsType): 
   if (opts.is_sponsor) frag.querySelector('[itemprop="sponsor"]') !.setAttribute('itemprop', 'funder')
 }
 
-export default new Processor(template, instructions)
+/**
+ * Markup for a supporter logo.
+ */
+const xSupporter: Processor<Supporter, OptsType> = new Processor(template, instructions)
+export default xSupporter

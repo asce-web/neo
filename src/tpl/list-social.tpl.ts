@@ -27,12 +27,6 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-/**
- * A `<ul>` list of social media links.
- * @param   frag the template content to process
- * @param   data an array of links
- * @param   opts additional processing options
- */
 function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType): void {
   new xjs.HTMLUListElement(frag.querySelector('ul') !)
     .replaceClassString('{{ listclasses }}', opts.classes || '')
@@ -44,4 +38,8 @@ function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType)
     }, data)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<ul>` list of social media links.
+ */
+const xListSocial: Processor<Hyperlink[], OptsType> = new Processor(template, instructions)
+export default xListSocial

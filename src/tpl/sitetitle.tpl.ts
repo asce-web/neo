@@ -9,11 +9,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/sitetitle.tpl.html')) // NB relative to dist
   .node
 
-/**
- * A `<a.c-SiteTitle>` element containing the site logo and title, linking to the home page.
- * @param   frag the template content to process
- * @param   data the webpage with possible description and logo
- */
 function instructions(frag: DocumentFragment, data: ConfSite): void {
 	frag.querySelector('[itemprop="name"]') !.textContent = data.name
 	;(frag.querySelector('a[itemprop="url"]') as HTMLAnchorElement).href = data.url
@@ -28,4 +23,8 @@ function instructions(frag: DocumentFragment, data: ConfSite): void {
 	})
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<a.c-SiteTitle>` element containing the site logo and title, linking to the home page.
+ */
+const xSiteTitle: Processor<ConfSite, object> = new Processor(template, instructions)
+export default xSiteTitle

@@ -10,11 +10,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/exhibitor.tpl.html')) // NB relative to dist
   .node
 
-/**
- * Markup for an exhibitor logo.
- * @param   frag the template content to process
- * @param   data the exhibiting organization
- */
 function instructions(frag: DocumentFragment, data: Exhibitor): void {
   frag.querySelector('[itemprop="name"]') !.textContent = data.name
   frag.querySelector('[name="booth"]'   ) !.textContent = `${data.$booth}`
@@ -27,4 +22,8 @@ function instructions(frag: DocumentFragment, data: Exhibitor): void {
   }
 }
 
-export default new Processor(template, instructions)
+/**
+ * Markup for an exhibitor logo.
+ */
+const xExhibitor: Processor<Exhibitor, object> = new Processor(template, instructions)
+export default xExhibitor

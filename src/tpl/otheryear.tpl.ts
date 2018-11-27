@@ -14,11 +14,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * An about page `<aside>` containing other conferences’ most important info.
- * @param   frag the template content to process
- * @param   data a single conference event
- */
 function instructions(frag: DocumentFragment, data: Conference): void {
   /* // BUG https://github.com/jsdom/jsdom/issues/1895
   new xjs.HTMLElement(frag.querySelector('.c-Banner')).style('--banner-img', (data.image) ? `url('${data.image}')` : null)
@@ -41,4 +36,8 @@ function instructions(frag: DocumentFragment, data: Conference): void {
   }
 }
 
-export default new Processor(template, instructions)
+/**
+ * An about page `<aside>` containing other conferences’ most important info.
+ */
+const xOtherYear: Processor<Conference, object> = new Processor(template, instructions)
+export default xOtherYear

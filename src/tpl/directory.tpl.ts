@@ -52,12 +52,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/directory.tpl.html')) // NB relative to dist
   .node
 
-/**
- * A nested `<ol>` marking up a site directory.
- * @param   frag the template content to process
- * @param   data a webpage with possible subpages
- * @param   opts additional processing options
-*/
 function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): void {
 	;[opts.depth, opts.start, opts.end].forEach((n) => { if (Number.isNaN(n !)) throw new NaNError() })
   let depth: number = (opts.depth === 0) ? 0 : opts.depth || Infinity
@@ -103,6 +97,8 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
     }, (data.hasPart || []).slice(opts.start || 0, opts.end || Infinity))
 }
 
-const xDirectory = new Processor(template, instructions)
-
+/**
+ * A nested `<ol>` marking up a site directory.
+*/
+const xDirectory: Processor<ConfPage, OptsType> = new Processor(template, instructions)
 export default xDirectory

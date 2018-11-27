@@ -13,11 +13,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/registrationicon.tpl.html')) // NB relative to dist
   .node
 
-/**
- * A single `<p.c-RegPdIcon>` component indicating a registration period.
- * @param   frag the template content to process
- * @param   data a single registration period
- */
 function instructions(frag: DocumentFragment, data: RegistrationPeriod): void {
   let date_start: Date|null = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end  : Date|null = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
@@ -56,4 +51,8 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod): void {
   new xjs.HTMLElement(frag.querySelector('small') !).trimInner()
 }
 
-export default new Processor(template, instructions)
+/**
+ * A single `<p.c-RegPdIcon>` component indicating a registration period.
+ */
+const xRegistrationIcon: Processor<RegistrationPeriod, object> = new Processor(template, instructions)
+export default xRegistrationIcon

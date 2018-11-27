@@ -20,12 +20,6 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-/**
- * A `<ul>` list of {@link Pass|passes}.
- * @param   frag the template content to process
- * @param   data an array of passes
- * @param   opts additional processing options
- */
 function instructions(frag: DocumentFragment, data: Pass[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Pass) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
@@ -34,4 +28,8 @@ function instructions(frag: DocumentFragment, data: Pass[], opts: OptsType): voi
 	}, data, opts)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<ul>` list of {@link Pass|passes}.
+ */
+const xListPass: Processor<Pass[], OptsType> = new Processor(template, instructions)
+export default xListPass

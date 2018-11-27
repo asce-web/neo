@@ -19,12 +19,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * An `<article.c-Pass>` component marking up a pass’s info.
- * @param   frag the template content to process
- * @param   data a single pass
- * @param   opts additional processing options
- */
 function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void {
   // TODO programmatically determine current registration period by date
   let current_period: RegistrationPeriod = (opts.conference.offers || []).find((pd) => pd.name === opts.conference.$currentRegistrationPeriod) !
@@ -46,4 +40,8 @@ function instructions(frag: DocumentFragment, data: Pass, opts: OptsType): void 
   )
 }
 
-export default new Processor(template, instructions)
+/**
+ * An `<article.c-Pass>` component marking up a pass’s info.
+ */
+const xPass: Processor<Pass, OptsType> = new Processor(template, instructions)
+export default xPass

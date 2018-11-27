@@ -13,11 +13,6 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-/**
- * A `<ul>` list of exhibitors.
- * @param   frag the template content to process
- * @param   data an array of exhibitors
- */
 function instructions(frag: DocumentFragment, data: Exhibitor[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Exhibitor) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
@@ -26,4 +21,8 @@ function instructions(frag: DocumentFragment, data: Exhibitor[]): void {
 	}, data)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<ul>` list of exhibitors.
+ */
+const xListExhibitor: Processor<Exhibitor[], object> = new Processor(template, instructions)
+export default xListExhibitor

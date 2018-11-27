@@ -13,12 +13,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/dateblock.tpl.html')) // NB relative to dist
   .node
 
-/**
- * A `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
- * marking up this date range as an important date with date and description.
- * @param   frag the template content to process
- * @param   data an array of important dates
- */
 function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
   new xjs.HTMLTableSectionElement(frag.querySelector('tbody') !).populate(function (f: DocumentFragment, d: ImportantDate) {
     let date_start: Date = new Date(d.startTime)
@@ -61,4 +55,9 @@ function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
   }, data)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<tr.c-DateBlock__Item>` subcomponent containing a pair of `<td>`s,
+ * marking up this date range as an important date with date and description.
+ */
+const xDateBlock: Processor<ImportantDate[], object> = new Processor(template, instructions)
+export default xDateBlock

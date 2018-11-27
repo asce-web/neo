@@ -16,11 +16,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * An `<article.c-Speaker>` component marking up a person’s speaker information.
- * @param   frag the template content to process
- * @param   data a person that has a possible job title, an affiliated organization, and social media contact links
- */
 function instructions(frag: DocumentFragment, data: ConfPerson): void {
   frag.querySelector('[itemtype="http://schema.org/Person"]'     ) !.id          = data.identifier
   frag.querySelector('[itemprop="jobTitle"]'                     ) !.textContent = data.jobTitle || ''
@@ -45,4 +40,8 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
 	])
 }
 
-export default new Processor(template, instructions)
+/**
+ * An `<article.c-Speaker>` component marking up a person’s speaker information.
+ */
+const xSpeaker: Processor<ConfPerson, object> = new Processor(template, instructions)
+export default xSpeaker

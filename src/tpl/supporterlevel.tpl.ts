@@ -26,12 +26,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.
- * @param   frag the template content to process
- * @param   data the supporter level
- * @param   opts additional processing options
- */
 function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsType): void {
   /** Array of supporters in the level. */
   let supporters: Supporter[] = (opts.conference.sponsor || []).filter((org) => org.$level === data.name)
@@ -47,4 +41,8 @@ function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsTy
   }, supporters)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<section.c-SupporterBlock>` marking up a group of supporter logos belonging to one level.
+ */
+const xSupporterLevel: Processor<SupporterLevel, OptsType> = new Processor(template, instructions)
+export default xSupporterLevel

@@ -22,12 +22,6 @@ const template: HTMLTemplateElement = xjs.HTMLOListElement.templateSync()
 	})
 	.node
 
-/**
- * An `<ol>` list of {@link Supporterlevel|supporter levels}.
- * @param   frag the template content to process
- * @param   data an array of supporter levels
- * @param   opts additional processing options
- */
 function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: OptsType): void {
 	new xjs.HTMLUListElement(frag.querySelector('ol') !).populate(function (f: DocumentFragment, d: SupporterLevel) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
@@ -36,4 +30,8 @@ function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: Opts
 	}, data, opts)
 }
 
-export default new Processor(template, instructions)
+/**
+ * An `<ol>` list of {@link Supporterlevel|supporter levels}.
+ */
+const xListSupporterLevel: Processor<SupporterLevel[], OptsType> = new Processor(template, instructions)
+export default xListSupporterLevel

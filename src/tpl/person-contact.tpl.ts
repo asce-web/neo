@@ -15,11 +15,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * Markup for a person and contact information.
- * @param   frag the template content to process
- * @param   data a person that has a job title
- */
 function instructions(frag: DocumentFragment, data: ConfPerson): void {
 	/**
 	 * References to formatting elements.
@@ -54,4 +49,8 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
   }
 }
 
-export default new Processor(template, instructions)
+/**
+ * Markup for a person and contact information.
+ */
+const xPersonContact: Processor<ConfPerson, object> = new Processor(template, instructions)
+export default xPersonContact

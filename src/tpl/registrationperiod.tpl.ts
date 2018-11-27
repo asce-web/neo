@@ -21,12 +21,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
- * @param   frag the template content to process
- * @param   data a single registration period
- * @param   opts additional processing options
- */
 function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: OptsType): void {
   let date_start: Date|null = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end  : Date|null = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
@@ -52,4 +46,8 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: Op
   )
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
+ */
+const xRegistrationPeriod: Processor<RegistrationPeriod, OptsType> = new Processor(template, instructions)
+export default xRegistrationPeriod

@@ -15,11 +15,6 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-/**
- * A `<ul.c-Alert>` component listing the registration periods in a legend.
- * @param   frag the template content to process
- * @param   data an array of registration periods
- */
 function instructions(frag: DocumentFragment, data: RegistrationPeriod[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: RegistrationPeriod) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
@@ -28,4 +23,8 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod[]): void 
 	}, data)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<ul.c-Alert>` component listing the registration periods in a legend.
+ */
+const xListRegistrationIcon: Processor<RegistrationPeriod[], object> = new Processor(template, instructions)
+export default xListRegistrationIcon

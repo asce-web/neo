@@ -19,11 +19,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * A homepage `<header>` containing the site’s most important info.
- * @param   frag the template content to process
- * @param   data a single conference event
- */
 function instructions(frag: DocumentFragment, data: Conference): void {
 	/**
 	 * References to formatting elements.
@@ -75,4 +70,8 @@ function instructions(frag: DocumentFragment, data: Conference): void {
   new xjs.Element(frag.querySelector('.c-ConfHed__Detail__Dates') !).trimInner()
 }
 
-export default new Processor(template, instructions)
+/**
+ * A homepage `<header>` containing the site’s most important info.
+ */
+const xHero: Processor<Conference, object> = new Processor(template, instructions)
+export default xHero
