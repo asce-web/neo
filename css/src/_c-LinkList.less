@@ -1,0 +1,61 @@
+
+/*################################*\
+    neo  |  _c-LinkList.less
+\*################################*/
+
+
+// Link List
+//
+// A list of hyperlinks.
+// Why not use a simple unordered list of links?
+// Links are colored offset from their surrounding prose (traditionally in blue)
+// and are also underlined. However a list containing nothing but links does not
+// need this styling, as it should be clear from the list that every item contains
+// one link and only one link. Thus we have provided a slightly quieter style.
+// <header><dl>
+//   <dt>author</dt>  <dd>Chris Harvey</dd>
+//   <dt>updated</dt> <dd><time>2017-12-01</time></dd>
+// </dl></header>
+//
+// Markup:
+// <ul class="o-List c-LinkList">
+//   <li class="o-List__Item c-LinkList__Item"><a class="c-LinkList__Link" href="#0"><i class="halflings halflings-circle-arrow-right"></i>Link 1</a></li>
+//   <li class="o-List__Item c-LinkList__Item"><a class="c-LinkList__Link" href="#0"><i class="halflings halflings-circle-arrow-right"></i>Link 2</a></li>
+//   <li class="o-List__Item c-LinkList__Item"><a class="c-LinkList__Link" href="#0"><i class="halflings halflings-circle-arrow-right"></i>Link 3</a></li>
+//   <li class="o-List__Item c-LinkList__Item"><a class="c-LinkList__Link" href="#0"><i class="halflings halflings-circle-arrow-right"></i>Link 4</a></li>
+// </ul>
+//
+// Weight: 16.1
+//
+// Styleguide Components.LinkList
+.c-LinkList {
+}
+
+.c-LinkList__Item {
+  .halflings/*.halflings-circle-arrow-right*/ {
+    margin-right: 1ch; // HACK fallback
+		@supports (margin-inline-end: 1ch) {
+			margin-right: unset;
+			margin-inline-end: 1ch; // takes care of both ltr and rtl directions
+		}
+
+    // fix icon based on `dir`.
+		// browsers that support the `:dir` pseudo-class already support `margin-inline-end`
+    &:dir(rtl) {
+      // NOTE: change the right arrow to a left arrow:
+      // U+E131 is the content of `.halflings-circle-arrow-right`, and
+      // U+E132 is the content of `.halflings-circle-arrow-left`.
+      // One option would be to change the content of `::before`:
+      // &::before { content: '\E132'; } // XXX // copied from `.halflings-circle-arrow-left`
+
+      // However, since this content is in CSS and not in the DOM,
+      // it will not affect assistive technology, so changing content is unnecessary.
+      // Therefore we can use a transform to visually flip the icon horizontally.
+      transform: scaleX(-1);
+    }
+  }
+}
+
+a.c-LinkList__Link {
+	text-decoration: none; // override `a[href]`
+}

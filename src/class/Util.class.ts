@@ -3,6 +3,7 @@ import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
 
 import {Hyperlink} from '../interfaces'
 import list_highlightbuttons from '../tpl/list-highlightbuttons.tpl'
+import list_links from '../tpl/list-links.tpl'
 import list_social from '../tpl/list-social.tpl'
 
 const {xAddress} = require('aria-patterns')
@@ -97,6 +98,15 @@ export default class Util {
 			static view_highlightButtons(buttons: Hyperlink[], buttonclasses = '') {
 				// const list_highlightbuttons = require('../dist/tpl/list-highlightbuttons.tpl.js').default
 				return new xjs.DocumentFragment(list_highlightbuttons.process(buttons, { buttonclasses })).innerHTML()
+			}
+			/**
+			 * Return an unordered list of links.
+			 * @param   links a list of links
+			 * @returns HTML output
+			 */
+			static view_linkList(links: Hyperlink[]) {
+				// const list_links = require('../dist/tpl/x-linklist.tpl.js').default
+				return new xjs.DocumentFragment(list_links.process(links)).innerHTML()
 			}
 	/**
 	 * Return a `<ul.c-SocialList>` component, containing
