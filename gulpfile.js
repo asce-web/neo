@@ -2,7 +2,6 @@ const Ajv          = require('ajv')
 const gulp         = require('gulp')
 const autoprefixer = require('gulp-autoprefixer')
 const clean_css    = require('gulp-clean-css')
-const jsdoc        = require('gulp-jsdoc3')
 const less         = require('gulp-less')
 const pug          = require('gulp-pug')
 const sourcemaps   = require('gulp-sourcemaps')
@@ -49,12 +48,9 @@ gulp.task('dist', ['dist-ts', 'dist-css'])
 
 gulp.task('test', async function () {})
 
-// HOW-TO: https://github.com/mlucool/gulp-jsdoc3#usage
 gulp.task('docs-api', async function () {
-	// return gulp.src('./src/**/*.ts')
-	// 	.pipe(typedoc(typedocconfig))
-  return gulp.src(['README.md', 'class/*.js'], {read:false})
-    .pipe(jsdoc(require('./config-jsdoc.json')))
+	return gulp.src('./src/**/*.ts')
+		.pipe(typedoc(typedocconfig))
 })
 
 // HOW-TO: https://github.com/kss-node/kss-node/issues/161#issuecomment-222292620
