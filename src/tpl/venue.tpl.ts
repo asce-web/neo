@@ -2,10 +2,9 @@ import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
+import {xAddress} from 'aria-patterns'
 
 import {Venue} from '../interfaces'
-
-const {xAddress} = require('aria-patterns')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -24,7 +23,7 @@ function instructions(frag: DocumentFragment, data: Venue): void {
   frag.querySelector('[itemprop="description"]') !.textContent = data.description
   frag.querySelector('[itemprop="name"]')        !.textContent = data.name
 
-  new xjs.Element(frag.querySelector('[itemprop="address"]') !).append(xAddress.render({
+  new xjs.Element(frag.querySelector('[itemprop="address"]') !).append(xAddress.process({
     ...data.address,
   }))
 

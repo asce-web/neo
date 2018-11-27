@@ -3,13 +3,13 @@ import * as path from 'path'
 import * as xjs1 from 'extrajs'
 import * as xjs2 from 'extrajs-dom'
 import {Processor} from 'template-processor'
+import {xAddress} from 'aria-patterns'
 
 import {Conference} from '../interfaces'
 import list_highlightbuttons_processor from './list-highlightbuttons.tpl'
 
 const xjs = { ...xjs1, ...xjs2 }
 
-const {xAddress} = require('aria-patterns')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -38,10 +38,11 @@ function instructions(frag: DocumentFragment, data: Conference): void {
 
   frag.querySelector('[itemprop="name"]') !.textContent = data.name
   ;(frag.querySelector('meta[itemprop="url"]' ) as HTMLMetaElement).content = data.url
-  new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.render({
-    ...data.location,
-    $regionName: true,
-  }))
+	new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.process({
+		...data.location,
+	}, {
+		regionName: true
+	}))
 
   let date_start: Date = new Date(data.startDate)
   let date_end  : Date = new Date(data.endDate || data.startDate)

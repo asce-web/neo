@@ -1,12 +1,12 @@
 import * as xjs from 'extrajs-dom'
 import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
+import {xAddress} from 'aria-patterns'
 
 import {Hyperlink} from '../interfaces'
 import list_highlightbuttons from '../tpl/list-highlightbuttons.tpl'
 import list_links from '../tpl/list-links.tpl'
 import list_social from '../tpl/list-social.tpl'
 
-const {xAddress} = require('aria-patterns')
 
 
 /**
@@ -84,9 +84,10 @@ export default class Util {
 			 * @returns HTML output
 			 */
 			static view_promoLoc(postal_address: sdo.PostalAddress): string {
-				return new xjs.DocumentFragment(xAddress.render({
+				return new xjs.DocumentFragment(xAddress.process({
 					...postal_address,
-					$regionName: true,
+				}, {
+					regionName: true,
 				})).trimInner().textContent() !
 			}
 			/**

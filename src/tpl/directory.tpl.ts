@@ -1,12 +1,10 @@
 import * as path from 'path'
 
-import * as xjs1 from 'extrajs'
-import * as xjs2 from 'extrajs-dom'
+import {NaNError} from 'extrajs'
+import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {ConfPage} from '../interfaces'
-
-const xjs = { ...xjs1, ...xjs2 }
 
 
 interface OptsType {
@@ -61,7 +59,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
  * @param   opts additional processing options
 */
 function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): void {
-	;[opts.depth, opts.start, opts.end].forEach((n) => { if (typeof n === 'number') xjs.Number.assertType(n) })
+	;[opts.depth, opts.start, opts.end].forEach((n) => { if (Number.isNaN(n !)) throw new NaNError() })
   let depth: number = (opts.depth === 0) ? 0 : opts.depth || Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol') !)
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')

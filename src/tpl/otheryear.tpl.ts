@@ -2,10 +2,9 @@ import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
+import {xAddress} from 'aria-patterns'
 
 import {Conference} from '../interfaces'
-
-const {xAddress} = require('aria-patterns')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -29,10 +28,11 @@ function instructions(frag: DocumentFragment, data: Conference): void {
 	 frag.querySelector('[itemprop="name"]') !.textContent = data.name
 	;(frag.querySelector('a[itemprop="url"]'         ) as HTMLAnchorElement).href    = data.url
 	;(frag.querySelector('meta[itemprop="startDate"]') as HTMLMetaElement)  .content = data.startDate
-  new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.render({
-    ...data.location,
-    $regionName: true,
-  }))
+	new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.process({
+		...data.location,
+	}, {
+		regionName: true,
+	}))
 
   if (data.disambiguatingDescription) {
     frag.querySelector('[itemprop~="disambiguatingDescription"]') !.textContent = data.disambiguatingDescription

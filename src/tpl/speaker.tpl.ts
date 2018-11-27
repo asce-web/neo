@@ -2,12 +2,11 @@ import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
+import {xPersonFullname} from 'aria-patterns'
 
 import {ConfPerson} from '../interfaces'
 import Util from '../class/Util.class'
 import list_social_processor from './list-social.tpl'
-
-const {xPersonFullname} = require('aria-patterns')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -28,7 +27,7 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
   frag.querySelector('[itemprop="affiliation"] [itemprop="name"]') !.textContent = data.affiliation && data.affiliation.name || ''
   ;(frag.querySelector('img[itemprop="image"]') as HTMLImageElement).src = data.image || ''
 
-  new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.render(data))
+	new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.process(data))
 
 	new xjs.Element(frag.querySelector('.c-Speaker__Foot template') !).after(...[
 		list_social_processor.process((data.$social || []), {
