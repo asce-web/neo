@@ -6,7 +6,7 @@ import {Hyperlink} from '../interfaces'
 
 const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
-		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o List c-LinkList')
+		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List c-LinkList')
 		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
 			.addClass('o-List__Item c-LinkList__Item')
 			.innerHTML(`
