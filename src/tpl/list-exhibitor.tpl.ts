@@ -14,7 +14,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.node
 
 function instructions(frag: DocumentFragment, data: Exhibitor[]): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Exhibitor) {
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
 			exhibitor_processor.process(d)
 		)

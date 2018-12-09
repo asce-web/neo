@@ -57,7 +57,7 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsTypeXDir
   let depth: number = (opts.depth === 0) ? 0 : opts.depth || Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol') !)
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
-    .populate(function (f: DocumentFragment, d: ConfPage) {
+    .populate(function (f, d) {
       new xjs.HTMLElement(f.querySelector('li') !).replaceClassString('{{ classes.item }}', opts.classes && opts.classes.item || '')
       new xjs.HTMLAnchorElement(f.querySelector('a[itemprop="url"]') as HTMLAnchorElement)
         .replaceClassString('{{ classes.link }}', opts.classes && opts.classes.link || '')

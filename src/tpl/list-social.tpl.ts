@@ -30,7 +30,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsTypeXListSocial): void {
   new xjs.HTMLUListElement(frag.querySelector('ul') !)
     .replaceClassString('{{ listclasses }}', opts.classes || '')
-    .populate(function (f: DocumentFragment, d: Hyperlink) {
+    .populate(function (f, d) {
       new xjs.HTMLAnchorElement(f.querySelector('a') !)
         .replaceClassString('{{ name }}', d.name || '')
         .href(d.url)

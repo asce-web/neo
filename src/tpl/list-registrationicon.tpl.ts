@@ -16,7 +16,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.node
 
 function instructions(frag: DocumentFragment, data: RegistrationPeriod[]): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: RegistrationPeriod) {
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
 			registrationicon_processor.process(d)
 		)

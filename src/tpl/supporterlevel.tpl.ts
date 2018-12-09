@@ -36,7 +36,7 @@ function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsTy
     default : () => 'c-SupporterBlock--sml',
   })()), opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn') !.textContent = data.name
-  new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Supporter) {
+  new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
     new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(supporter_processor.process(d, { is_sponsor: data.$isSponsor }))
   }, supporters)
 }

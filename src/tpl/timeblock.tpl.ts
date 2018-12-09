@@ -14,7 +14,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .node
 
 function instructions(frag: DocumentFragment, data: Session[]): void {
-  new xjs.HTMLTableSectionElement(frag.querySelector('tbody') !).populate(function (f: DocumentFragment, d: Session) {
+  new xjs.HTMLTableSectionElement(frag.querySelector('tbody') !).populate(function (f, d) {
     let time_start: Date = new Date(d.startDate)
     let time_end  : Date = new Date(d.endDate || d.startDate)
     /**

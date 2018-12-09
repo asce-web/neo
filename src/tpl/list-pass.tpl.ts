@@ -21,7 +21,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.node
 
 function instructions(frag: DocumentFragment, data: Pass[], opts: OptsTypeXListPass): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Pass) {
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
 			pass_processor.process(d, opts)
 		)

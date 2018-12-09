@@ -32,7 +32,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
 
 function instructions(frag: DocumentFragment, data: Session[], opts: OptsTypeXProgram): void {
   let container: xjs2.Element = new xjs.Element(frag.querySelector('[role="tablist"]') !)
-	const program_panel = new Processor(container.node.querySelector('template') !, function (f: DocumentFragment, d: DateGroup, o: { index: number }) {
+	const program_panel: Processor<DateGroup, { index: number }> = new Processor(container.node.querySelector('template') !, function instructions(f, d, o) {
 		f.querySelector('[role="tabpanel"]') !.id          = `${opts.id}-panel${o.index}`
 		f.querySelector('[name="day"]'     ) !.textContent = xjs.Date.DAY_NAMES[d.date.getUTCDay()]
 		f.querySelector('[name="date"]'    ) !.textContent = xjs.Date.format(d.date, 'M j')

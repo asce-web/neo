@@ -23,11 +23,11 @@ const template: HTMLTemplateElement = xjs.HTMLOListElement.templateSync()
 	.node
 
 function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: OptsTypeXListSupporterLevel): void {
-	new xjs.HTMLUListElement(frag.querySelector('ol') !).populate(function (f: DocumentFragment, d: SupporterLevel) {
+	new xjs.HTMLUListElement(frag.querySelector('ol') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
 			supporterlevel_processor.process(d, opts)
 		)
-	}, data, opts)
+	}, data)
 }
 
 /**

@@ -19,7 +19,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.node
 
 function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsTypeXHighlightButton): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Hyperlink) {
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLAnchorElement(f.querySelector('a') !)
 			.replaceClassString('{{ buttonclasses }}', opts.buttonclasses || '')
 			.href       (d.url  || '#1')

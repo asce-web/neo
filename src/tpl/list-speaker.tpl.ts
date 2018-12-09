@@ -16,7 +16,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.node
 
 function instructions(frag: DocumentFragment, data: ConfPerson[]): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: ConfPerson) {
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
 			speaker_processor.process(d)
 		)
