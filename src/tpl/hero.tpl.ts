@@ -30,11 +30,13 @@ function instructions(frag: DocumentFragment, data: Conference): void {
 
   frag.querySelector('[itemprop="name"]') !.textContent = data.name
   ;(frag.querySelector('meta[itemprop="url"]' ) as HTMLMetaElement).content = data.url
-	new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.process({
-		...data.location,
-	}, {
-		regionName: true
-	}))
+	new xjs.Element(frag.querySelector('[itemprop="location"]') !).exe(function () {
+		if (data.$promotedLocation) {
+			this.append(xAddress.process(data.$promotedLocation, {
+				regionName: true
+			}))
+		} else this.node.remove()
+	})
 
   let date_start: Date = new Date(data.startDate)
   let date_end  : Date = new Date(data.endDate || data.startDate)

@@ -2,7 +2,7 @@ import * as xjs from 'extrajs-dom'
 import {Color} from 'extrajs-color'
 
 import {ConfSite as ConfSiteSchema, Hyperlink, Queue} from '../interfaces'
-import xSiteTitle from '../tpl/registrationicon.tpl'
+import xSiteTitle from '../tpl/sitetitle.tpl'
 import xDirectory from '../tpl/directory.tpl'
 import Conference from './Conference.class'
 import ConfPage   from './ConfPage.class'

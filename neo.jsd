@@ -39,20 +39,22 @@
               "description": "The end date of this conference, in ISO string format.",
               "default": "this.startTime"
             },
-            "location" : {
-              "description": "A list of locations of this conference. The first entry is the promoted location; subsequent entries are other venues.",
-              "type": "array",
-              "items": [
-                {
-                  "description": "The promoted location (requires `image` property for location image).",
-                  "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/PostalAddress.jsd"
-                }
-              ],
-              "additionalItems": {
-                "description": "Other venues.",
-                "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/Accommodation.jsd"
-              }
-            },
+						"$promotedLocation": {
+							"description": "The promoted location is not necessarily the actual postal address of the conference, but rather a major city nearest to the conference used for promotional and advertising purposes.",
+							"allOf": [
+								{ "$ref": "https://chharvey.github.io/schemaorg-jsd/schema/PostalAddress.jsd" },
+								{
+									"properties": {
+										"image": { "type": "string", "description": "An image representing the location." }
+									}
+								}
+							]
+						},
+						"location" : {
+							"description": "A list of venues for this conference.",
+							"type": "array",
+							"items": { "$ref": "#/definitions/Venue" }
+						},
             "$passes": {
               "description": "The passes belonging to this conference.",
               "type": "array",

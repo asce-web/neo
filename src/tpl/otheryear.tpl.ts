@@ -23,11 +23,13 @@ function instructions(frag: DocumentFragment, data: Conference): void {
 	 frag.querySelector('[itemprop="name"]') !.textContent = data.name
 	;(frag.querySelector('a[itemprop="url"]'         ) as HTMLAnchorElement).href    = data.url
 	;(frag.querySelector('meta[itemprop="startDate"]') as HTMLMetaElement)  .content = data.startDate
-	new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.process({
-		...data.location,
-	}, {
-		regionName: true,
-	}))
+	new xjs.Element(frag.querySelector('[itemprop="location"]') !).exe(function () {
+		if (data.$promotedLocation) {
+			this.append(xAddress.process(data.$promotedLocation, {
+				regionName: true
+			}))
+		} else this.node.remove()
+	})
 
   if (data.disambiguatingDescription) {
     frag.querySelector('[itemprop~="disambiguatingDescription"]') !.textContent = data.disambiguatingDescription

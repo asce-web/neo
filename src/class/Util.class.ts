@@ -84,9 +84,7 @@ export default class Util {
 			 * @returns HTML output
 			 */
 			static view_promoLoc(postal_address: sdo.PostalAddress): string {
-				return new xjs.DocumentFragment(xAddress.process({
-					...postal_address,
-				}, {
+				return new xjs.DocumentFragment(xAddress.process(postal_address, {
 					regionName: true,
 				})).trimInner().textContent() !
 			}

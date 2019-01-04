@@ -34,13 +34,17 @@ export interface Conference extends sdo.Event {
 	 */
 	endDate?: string;
 	/**
-	 * A list of locations of this conference.
-	 * The first entry is the promoted location;
-	 * subsequent entries are other venues.
-	 * @todo TODO The images of the venues should be a string or undefined
-	 * @todo FIXME make this match its description
+	 * The promoted location is not necessarily the actual postal address of the conference,
+	 * but rather a major city nearest to the conference used for promotional and advertising purposes.
 	 */
-	location : sdo.PostalAddress;
+	$promotedLocation?: sdo.PostalAddress&{
+		/** An image representing the location. */
+		image?: string;
+	};
+	/**
+	 * A list of venues for this conference.
+	 */
+	location?: Venue[];
 	/** A list of registration periods. */
 	offers?: RegistrationPeriod[];
 	/**

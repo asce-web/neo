@@ -90,16 +90,16 @@ export default class Conference {
    * but rather a major city nearest to the conference used for
    * promotional and advertising purposes.
    */
-  get promoLoc(): sdo.PostalAddress {
-    return this._DATA.location // FIXME && this._DATA.location[0] || { "@type": "PostalAddress" }
-  }
+	get promoLoc(): sdo.PostalAddress&{ image?: string; }|null {
+		return this._DATA.$promotedLocation || null
+	}
 
   /**
    * The location image of this conference.
    */
-  get promoLocImage(): string {
-    return this._DATA.location.image as string || '' // FIXME && this._DATA.location[0] && this._DATA.location[0].image || '' // TODO The images of the venues should be a string or undefined
-  }
+	get promoLocImage(): string|null {
+		return this.promoLoc && this.promoLoc.image || null
+	}
 
   /**
    * Retrieve all registration periods of this conference.
@@ -138,7 +138,7 @@ export default class Conference {
    * @returns a shallow copy of the venues object of this conference
    */
   getVenuesAll(): Venue[] {
-    return [] // FIXME (this._DATA.location || []).slice(1)
+		return (this._DATA.location || []).slice(1)
   }
 
   /**
@@ -172,20 +172,14 @@ export default class Conference {
 	 * @returns HTML output
 	 */
 	view_hero(): string {
-		return new xjs.DocumentFragment(xHero.process({
-			...this._DATA,
-			location: this._DATA.location // FIXME && this._DATA.location[0] || { "@type": "PostalAddress" },
-		})).innerHTML()
+		return new xjs.DocumentFragment(xHero.process(this._DATA)).innerHTML()
 	}
 	/**
 	 * Return an `<aside>` element with other year backdrop marking up this conference’s main info.
 	 * @returns HTML output
 	 */
 	view_otherYear(): string {
-		return new xjs.DocumentFragment(xOtherYear.process({
-			...this._DATA,
-			location: this._DATA.location // FIXME && this._DATA.location[0] || { "@type": "PostalAddress" },
-		})).innerHTML()
+		return new xjs.DocumentFragment(xOtherYear.process(this._DATA)).innerHTML()
 	}
 	/**
 	 * Return a `<ul.o-ListStacked>` component, containing {@link Pass} items.

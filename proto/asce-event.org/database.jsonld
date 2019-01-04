@@ -51,14 +51,14 @@
       "image"      : "/proto/asce-event.org/files/cable-car.jpg",
       "startDate"  : "2016-09-28",
       "endDate"    : "2016-10-01",
+			"$promotedLocation": {
+				"@type": "PostalAddress",
+				"addressLocality": "Portland",
+				"addressRegion"  : "OR",
+				"image"          : "/proto/asce-event.org/files/portland.jpg",
+				"description"    : "With sweeping views of the surrounding mountains and a bustling downtown full of shopping, locally sourced dining, and entertainment, Portland is a wonderful destination for business and leisure."
+			},
       "location"   : [
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "Portland",
-          "addressRegion"  : "OR",
-          "image"          : "/proto/asce-event.org/files/portland.jpg",
-          "description"    : "With sweeping views of the surrounding mountains and a bustling downtown full of shopping, locally sourced dining, and entertainment, Portland is a wonderful destination for business and leisure."
-        },
         {
           "@type": "Accommodation",
           "description": "Conference Venue",
@@ -599,12 +599,12 @@
       "startDate"  : "2015-10-11",
       "endDate"    : "2015-10-14",
       "disambiguatingDescription": "Access the 2015 program to see which sessions qualify for PDHs and other documentation.",
+			"$promotedLocation": {
+				"@type": "PostalAddress",
+				"addressLocality": "New York",
+				"addressRegion"  : "NY"
+			},
       "location": [
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "New York",
-          "addressRegion"  : "NY"
-        },
         {
           "@type": "Accommodation",
           "description": "Conference Venue",
@@ -629,12 +629,12 @@
       "startDate"  : "2017-10-08",
       "endDate"    : "2017-10-11",
       "disambiguatingDescription": "Plan ahead to attend, sponsor, or exhibit at the annual convention for civil engineering professionals.",
+			"$promotedLocation": {
+				"@type": "PostalAddress",
+				"addressLocality": "New Orleans",
+				"addressRegion"  : "LA"
+			},
       "location": [
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "New Orleans",
-          "addressRegion"  : "LA"
-        },
         {
           "@type": "Accommodation",
           "description": "Conference Venue",
