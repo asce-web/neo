@@ -3,7 +3,7 @@ import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
 import {xAddress} from 'aria-patterns'
 
 import {Hyperlink} from '../interfaces'
-import xListHighlightButton from '../tpl/list-highlightbuttons.tpl'
+import xListHighlightButton from '../tpl/list-highlightbutton.tpl'
 import xListLink from '../tpl/list-links.tpl'
 import xListSocial from '../tpl/list-social.tpl'
 

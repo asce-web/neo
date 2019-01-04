@@ -6,7 +6,7 @@ import {Processor} from 'template-processor'
 import {xAddress} from 'aria-patterns'
 
 import {Conference} from '../interfaces'
-import xListHighlightButton from './list-highlightbuttons.tpl'
+import xListHighlightButton from './list-highlightbutton.tpl'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
