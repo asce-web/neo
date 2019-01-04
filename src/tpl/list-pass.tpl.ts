@@ -2,7 +2,7 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Conference, Pass} from '../interfaces'
-import pass_processor from './pass.tpl'
+import xPass from './pass.tpl'
 
 
 interface OptsTypeXListPass {
@@ -23,7 +23,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 function instructions(frag: DocumentFragment, data: Pass[], opts: OptsTypeXListPass): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
-			pass_processor.process(d, opts)
+			xPass.process(d, opts)
 		)
 	}, data, opts)
 }

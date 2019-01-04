@@ -4,7 +4,7 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Pass, RegistrationPeriod} from '../interfaces'
-import attendeetype_processor from './attendeetype.tpl'
+import xAttendeeType from './attendeetype.tpl'
 
 
 interface OptsTypeXRegistrationPeriod {
@@ -41,7 +41,7 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: Op
 
   new xjs.HTMLElement(frag.querySelector('dl') !).append(
     ...opts.pass.offers.map((att_type) =>
-      attendeetype_processor.process({ ...att_type, price: 42.87 }) // FIXME price is 42 for now
+      xAttendeeType.process({ ...att_type, price: 42.87 }) // FIXME price is 42 for now
     )
   )
 }

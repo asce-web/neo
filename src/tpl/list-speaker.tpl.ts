@@ -2,7 +2,7 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {ConfPerson} from '../interfaces'
-import speaker_processor from './speaker.tpl'
+import xSpeaker from './speaker.tpl'
 
 
 const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
@@ -18,7 +18,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 function instructions(frag: DocumentFragment, data: ConfPerson[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
-			speaker_processor.process(d)
+			xSpeaker.process(d)
 		)
 	}, data)
 }

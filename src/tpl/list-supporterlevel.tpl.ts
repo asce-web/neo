@@ -2,7 +2,7 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Conference, SupporterLevel} from '../interfaces'
-import supporterlevel_processor from './supporterlevel.tpl'
+import xSupporterLevel from './supporterlevel.tpl'
 
 
 interface OptsTypeXListSupporterLevel {
@@ -25,7 +25,7 @@ const template: HTMLTemplateElement = xjs.HTMLOListElement.templateSync()
 function instructions(frag: DocumentFragment, data: SupporterLevel[], opts: OptsTypeXListSupporterLevel): void {
 	new xjs.HTMLUListElement(frag.querySelector('ol') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
-			supporterlevel_processor.process(d, opts)
+			xSupporterLevel.process(d, opts)
 		)
 	}, data)
 }

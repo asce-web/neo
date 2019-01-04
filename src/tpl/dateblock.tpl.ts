@@ -1,12 +1,10 @@
 import * as path from 'path'
 
-import * as xjs1 from 'extrajs'
-import * as xjs2 from 'extrajs-dom'
+import { Date as xjs_Date } from 'extrajs'
+import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {ImportantDate} from '../interfaces'
-
-const xjs = { ...xjs1, ...xjs2 }
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -27,15 +25,15 @@ function instructions(frag: DocumentFragment, data: ImportantDate[]): void {
     f.querySelectorAll('time[itemprop~="startTime"]').forEach((time) => {
       new xjs.HTMLTimeElement(time as HTMLTimeElement)
         .dateTime(date_start)
-        .textContent(xjs.Date.format(date_start, 'M j, Y'))
+        .textContent(xjs_Date.format(date_start, 'M j, Y'))
     })
     new xjs.HTMLTimeElement(f.querySelectorAll('time[itemprop~="endTime"]')[1] as HTMLTimeElement)
       .dateTime(date_end)
-      .textContent(xjs.Date.format(date_end, 'M j, Y'))
+      .textContent(xjs_Date.format(date_end, 'M j, Y'))
     formatting.dates.forEach((cell) => {
       new xjs.Element(cell).trimInner()
     })
-    if (xjs.Date.sameDate(date_start, date_end)) {
+    if (xjs_Date.sameDate(date_start, date_end)) {
       formatting.dates[1].remove()
     } else {
       formatting.dates[0].remove()

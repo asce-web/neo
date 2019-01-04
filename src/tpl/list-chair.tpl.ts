@@ -2,7 +2,7 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {ConfPerson} from '../interfaces'
-import person_affiliation_processor from './person-affiliation.tpl'
+import xPersonAffiliation from './person-affiliation.tpl'
 
 
 const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
@@ -23,7 +23,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 function instructions(frag: DocumentFragment, data: ConfPerson[]): void {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
-			person_affiliation_processor.process(d)
+			xPersonAffiliation.process(d)
 		)
 	}, data)
 }

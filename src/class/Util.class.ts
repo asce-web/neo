@@ -3,9 +3,9 @@ import * as sdo from 'schemaorg-jsd/dist/schemaorg' // TODO use an index file
 import {xAddress} from 'aria-patterns'
 
 import {Hyperlink} from '../interfaces'
-import list_highlightbuttons from '../tpl/list-highlightbuttons.tpl'
-import list_links from '../tpl/list-links.tpl'
-import list_social from '../tpl/list-social.tpl'
+import xListHighlightButton from '../tpl/list-highlightbuttons.tpl'
+import xListLink from '../tpl/list-links.tpl'
+import xListSocial from '../tpl/list-social.tpl'
 
 
 
@@ -98,7 +98,7 @@ export default class Util {
 			 */
 			static view_highlightButtons(buttons: Hyperlink[], buttonclasses = '') {
 				// const list_highlightbuttons = require('../dist/tpl/list-highlightbuttons.tpl.js').default
-				return new xjs.DocumentFragment(list_highlightbuttons.process(buttons, { buttonclasses })).innerHTML()
+				return new xjs.DocumentFragment(xListHighlightButton.process(buttons, { buttonclasses })).innerHTML()
 			}
 			/**
 			 * Return an unordered list of links.
@@ -107,7 +107,7 @@ export default class Util {
 			 */
 			static view_linkList(links: Hyperlink[]) {
 				// const list_links = require('../dist/tpl/x-linklist.tpl.js').default
-				return new xjs.DocumentFragment(list_links.process(links)).innerHTML()
+				return new xjs.DocumentFragment(xListLink.process(links)).innerHTML()
 			}
 	/**
 	 * Return a `<ul.c-SocialList>` component, containing
@@ -118,7 +118,7 @@ export default class Util {
 	 */
 	static view_socialList(data: Hyperlink[], classes = ''): string {
 		// const list_social = require('../dist/tpl/list-social.tpl.js').default
-		return new xjs.DocumentFragment(list_social.process(data, { classes })).innerHTML()
+		return new xjs.DocumentFragment(xListSocial.process(data, { classes })).innerHTML()
 	}
 
   /**

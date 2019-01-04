@@ -1,13 +1,11 @@
 import * as path from 'path'
 
-import * as xjs1 from 'extrajs'
-import * as xjs2 from 'extrajs-dom'
+import { Object as xjs_Object } from 'extrajs'
+import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Conference, Supporter, SupporterLevel} from '../interfaces'
-import supporter_processor from './supporter.tpl'
-
-const xjs = { ...xjs1, ...xjs2 }
+import xSupporter from './supporter.tpl'
 
 
 interface OptsTypeXSupporterLevel {
@@ -29,7 +27,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
 function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsTypeXSupporterLevel): void {
   /** Array of supporters in the level. */
   let supporters: Supporter[] = (opts.conference.sponsor || []).filter((org) => org.$level === data.name)
-  new xjs.Element(frag.querySelector('.c-SupporterBlock') !).addClass((xjs.Object.switch<string>((opts.small) ? 'Small' : (data.$logosize || 'default'), {
+  new xjs.Element(frag.querySelector('.c-SupporterBlock') !).addClass((xjs_Object.switch<string>((opts.small) ? 'Small' : (data.$logosize || 'default'), {
     'Small' : () => 'c-SupporterBlock--sml',
     'Medium': () => 'c-SupporterBlock--med',
     'Large' : () => 'c-SupporterBlock--lrg',
@@ -37,7 +35,7 @@ function instructions(frag: DocumentFragment, data: SupporterLevel, opts: OptsTy
   })()), opts.classname || '')
   frag.querySelector('.c-SupporterBlock__Hn') !.textContent = data.name
   new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
-    new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(supporter_processor.process(d, { is_sponsor: data.$isSponsor }))
+    new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(xSupporter.process(d, { is_sponsor: data.$isSponsor }))
   }, supporters)
 }
 

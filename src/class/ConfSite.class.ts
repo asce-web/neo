@@ -2,8 +2,8 @@ import * as xjs from 'extrajs-dom'
 import {Color} from 'extrajs-color'
 
 import {ConfSite as ConfSiteSchema, Hyperlink, Queue} from '../interfaces'
-import sitetitle_processor from '../tpl/registrationicon.tpl'
-import directory_processor from '../tpl/directory.tpl'
+import xSiteTitle from '../tpl/registrationicon.tpl'
+import xDirectory from '../tpl/directory.tpl'
 import Conference from './Conference.class'
 import ConfPage   from './ConfPage.class'
 
@@ -272,7 +272,7 @@ export default class ConfSite extends Page {
 	 * @returns HTML output
 	 */
 	view_siteTitle(): string {
-		return new xjs.DocumentFragment(sitetitle_processor.process(this._DATA)).innerHTML()
+		return new xjs.DocumentFragment(xSiteTitle.process(this._DATA)).innerHTML()
 	}
 			/**
 			 * Return a Page object’s document outline as a nested ordered list.
@@ -290,7 +290,7 @@ export default class ConfSite extends Page {
 						"hasPart"    : page.findAll().map((p: typeof Page) => toSDO(p)),
 					}
 				}
-				return new xjs.DocumentFragment(directory_processor.process({
+				return new xjs.DocumentFragment(xDirectory.process({
 					...this._DATA,
 					hasPart: this.findAll().map((p: typeof Page) => toSDO(p)), // FIXME don’t use `.findAll`
 				}, options)).innerHTML()

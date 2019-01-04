@@ -6,7 +6,7 @@ import {xPersonFullname} from 'aria-patterns'
 
 import {ConfPerson} from '../interfaces'
 import Util from '../class/Util.class'
-import list_social_processor from './list-social.tpl'
+import xListSocial from './list-social.tpl'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -25,12 +25,12 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
 	new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.process(data))
 
 	new xjs.Element(frag.querySelector('.c-Speaker__Foot template') !).after(...[
-		list_social_processor.process((data.$social || []), {
+		xListSocial.process((data.$social || []), {
 			classes: 'c-SocialList--speaker',
 		}),
 		// TODO make a new Processor for this list
 		// TODO remove items if they are not provided
-		list_social_processor.process([
+		xListSocial.process([
 			{ /* "@type": "WebPageElement",*/ identifier: 'url'      , name: 'explore', text: 'visit homepage', url: `${               data.url       || '' }` },
 			{ /* "@type": "WebPageElement",*/ identifier: 'email'    , name: 'email'  , text: 'send email'    , url: `mailto:${        data.email     || '' }` },
 			{ /* "@type": "WebPageElement",*/ identifier: 'telephone', name: 'phone'  , text: 'call'          , url: `tel:${Util.toURL(data.telephone || '')}` },

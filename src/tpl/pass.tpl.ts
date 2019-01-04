@@ -4,7 +4,7 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Conference, Pass, RegistrationPeriod} from '../interfaces'
-import registrationperiod_processor from './registrationperiod.tpl'
+import xRegistrationPeriod from './registrationperiod.tpl'
 
 
 interface OptsTypeXPass {
@@ -30,13 +30,13 @@ function instructions(frag: DocumentFragment, data: Pass, opts: OptsTypeXPass): 
 	})
 
   new xjs.Element(frag.querySelector('.c-Pass__Body') !).append(
-    registrationperiod_processor.process(current_period, { pass: data, is_body: true })
+    xRegistrationPeriod.process(current_period, { pass: data, is_body: true })
   )
 
   new xjs.Element(frag.querySelector('.c-Pass__Foot') !).append(
     ...(opts.conference.offers || [])
       .filter((period) => period.name !== current_period.name)
-      .map((period) => registrationperiod_processor.process(period, { pass: data }))
+      .map((period) => xRegistrationPeriod.process(period, { pass: data }))
   )
 }
 
