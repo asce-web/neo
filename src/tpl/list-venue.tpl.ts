@@ -2,7 +2,7 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Venue} from '../interfaces'
-import venue_processor from './venue.tpl'
+import xVenue from './venue.tpl'
 
 
 const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
@@ -15,17 +15,16 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-/**
- * A `<ul>` list of {@link Venue|venues}.
- * @param   frag the template content to process
- * @param   data an array of venues
- */
 function instructions(frag: DocumentFragment, data: Venue[]): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Venue) {
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
-			venue_processor.process(d)
+			xVenue.process(d)
 		)
 	}, data)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<ul>` list of {@link Venue|venues}.
+ */
+const xListVenue: Processor<Venue[], object> = new Processor(template, instructions)
+export default xListVenue

@@ -2,11 +2,10 @@ import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
+import {xPersonFullname} from 'aria-patterns'
 
 import {ConfPerson} from '../interfaces'
 import Util from '../class/Util.class'
-
-const {xPersonFullname} = require('aria-patterns')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -16,11 +15,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * Markup for a person and contact information.
- * @param   frag the template content to process
- * @param   data a person that has a job title
- */
 function instructions(frag: DocumentFragment, data: ConfPerson): void {
 	/**
 	 * References to formatting elements.
@@ -30,7 +24,7 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
 		/** Comma after name. */     comma: frag.querySelector('[itemprop="name"] + span') !,
 		/** Pipe after job title. */ pipe : frag.querySelector('[itemprop="jobTitle"] + span') !,
 	}
-  new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.render(data))
+  new xjs.Element(frag.querySelector('[itemprop="name"]') !).append(xPersonFullname.process(data))
   frag.querySelector('[itemprop="jobTitle"]') !.textContent = data.jobTitle || ''
 
 	new xjs.HTMLAnchorElement(frag.querySelector('a[itemprop="email"]') as HTMLAnchorElement).exe(function () {
@@ -55,4 +49,8 @@ function instructions(frag: DocumentFragment, data: ConfPerson): void {
   }
 }
 
-export default new Processor(template, instructions)
+/**
+ * Markup for a person and contact information.
+ */
+const xPersonContact: Processor<ConfPerson, object> = new Processor(template, instructions)
+export default xPersonContact

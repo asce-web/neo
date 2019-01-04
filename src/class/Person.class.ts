@@ -1,7 +1,7 @@
 import * as xjs from 'extrajs-dom'
 
 import {ConfPerson} from '../interfaces'
-import person_contact_processor from '../tpl/person-contact.tpl'
+import xPersonContact from '../tpl/person-contact.tpl'
 
 
 /**
@@ -39,6 +39,6 @@ export default class Person {
 	 * @todo TODO move this to Utils
 	 */
 	view_contact(): string {
-		return new xjs.DocumentFragment(person_contact_processor.process(this._DATA)).innerHTML()
+		return new xjs.DocumentFragment(xPersonContact.process(this._DATA)).innerHTML()
 	}
 }

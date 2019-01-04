@@ -1,15 +1,13 @@
 import * as path from 'path'
 
-import * as xjs1 from 'extrajs'
-import * as xjs2 from 'extrajs-dom'
+import {NaNError} from 'extrajs'
+import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {ConfPage} from '../interfaces'
 
-const xjs = { ...xjs1, ...xjs2 }
 
-
-interface OptsType {
+interface OptsTypeXDirectory {
 	/**
 	 * How many levels deep the outline should be; a non-negative integer, or `Infinity`.
 	 * @default Infinity
@@ -47,25 +45,19 @@ interface OptsType {
 	/** unknown docs */
 	links?: object;
 	/** configurations for nested outlines */
-	opts?: OptsType;
+	opts?: OptsTypeXDirectory;
 }
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/directory.tpl.html')) // NB relative to dist
   .node
 
-/**
- * A nested `<ol>` marking up a site directory.
- * @param   frag the template content to process
- * @param   data a webpage with possible subpages
- * @param   opts additional processing options
-*/
-function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): void {
-	;[opts.depth, opts.start, opts.end].forEach((n) => { if (typeof n === 'number') xjs.Number.assertType(n) })
+function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsTypeXDirectory): void {
+	;[opts.depth, opts.start, opts.end].forEach((n) => { if (Number.isNaN(n !)) throw new NaNError() })
   let depth: number = (opts.depth === 0) ? 0 : opts.depth || Infinity
   new xjs.HTMLOListElement(frag.querySelector('ol') !)
     .replaceClassString('{{ classes.list }}', opts.classes && opts.classes.list || '')
-    .populate(function (f: DocumentFragment, d: ConfPage) {
+    .populate(function (f, d) {
       new xjs.HTMLElement(f.querySelector('li') !).replaceClassString('{{ classes.item }}', opts.classes && opts.classes.item || '')
       new xjs.HTMLAnchorElement(f.querySelector('a[itemprop="url"]') as HTMLAnchorElement)
         .replaceClassString('{{ classes.link }}', opts.classes && opts.classes.link || '')
@@ -105,6 +97,8 @@ function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsType): v
     }, (data.hasPart || []).slice(opts.start || 0, opts.end || Infinity))
 }
 
-const xDirectory = new Processor(template, instructions)
-
+/**
+ * A nested `<ol>` marking up a site directory.
+*/
+const xDirectory: Processor<ConfPage, OptsTypeXDirectory> = new Processor(template, instructions)
 export default xDirectory

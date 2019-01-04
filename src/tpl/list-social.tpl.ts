@@ -4,7 +4,7 @@ import {Processor} from 'template-processor'
 import {Hyperlink} from '../interfaces'
 
 
-interface OptsType {
+interface OptsTypeXListSocial {
 	/** any other class(es) to add to the `<ul>` */
 	classes?: string;
 }
@@ -27,16 +27,10 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-/**
- * A `<ul>` list of social media links.
- * @param   frag the template content to process
- * @param   data an array of links
- * @param   opts additional processing options
- */
-function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsTypeXListSocial): void {
   new xjs.HTMLUListElement(frag.querySelector('ul') !)
     .replaceClassString('{{ listclasses }}', opts.classes || '')
-    .populate(function (f: DocumentFragment, d: Hyperlink) {
+    .populate(function (f, d) {
       new xjs.HTMLAnchorElement(f.querySelector('a') !)
         .replaceClassString('{{ name }}', d.name || '')
         .href(d.url)
@@ -44,4 +38,8 @@ function instructions(frag: DocumentFragment, data: Hyperlink[], opts: OptsType)
     }, data)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<ul>` list of social media links.
+ */
+const xListSocial: Processor<Hyperlink[], OptsTypeXListSocial> = new Processor(template, instructions)
+export default xListSocial

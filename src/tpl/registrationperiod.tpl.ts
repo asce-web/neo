@@ -4,10 +4,10 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Pass, RegistrationPeriod} from '../interfaces'
-import attendeetype_processor from './attendeetype.tpl'
+import xAttendeeType from './attendeetype.tpl'
 
 
-interface OptsType {
+interface OptsTypeXRegistrationPeriod {
 	/** should this period be placed in the body, and not the footer, of the pass? */
 	is_body?: boolean;
 	/** the pass of which this markup is a part */
@@ -21,13 +21,7 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
- * @param   frag the template content to process
- * @param   data a single registration period
- * @param   opts additional processing options
- */
-function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: OptsType): void {
+function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: OptsTypeXRegistrationPeriod): void {
   let date_start: Date|null = (data.availabilityStarts) ? new Date(data.availabilityStarts) : null
   let date_end  : Date|null = (data.availabilityEnds  ) ? new Date(data.availabilityEnds  ) : null
 
@@ -47,9 +41,13 @@ function instructions(frag: DocumentFragment, data: RegistrationPeriod, opts: Op
 
   new xjs.HTMLElement(frag.querySelector('dl') !).append(
     ...opts.pass.offers.map((att_type) =>
-      attendeetype_processor.process({ ...att_type, price: 42.87 }) // FIXME price is 42 for now
+      xAttendeeType.process({ ...att_type, price: 42.87 }) // FIXME price is 42 for now
     )
   )
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<section.c-Pass__Period>` subcomponent marking up this period’s info.
+ */
+const xRegistrationPeriod: Processor<RegistrationPeriod, OptsTypeXRegistrationPeriod> = new Processor(template, instructions)
+export default xRegistrationPeriod

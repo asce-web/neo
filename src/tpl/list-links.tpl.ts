@@ -18,11 +18,6 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-/**
- * A list of hyperlinks.
- * @param   frag the template content to process
- * @param   data an array of hyperlinks
- */
 function instructions(frag: DocumentFragment, data: Hyperlink[]) {
 	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		f.querySelector('a'   ) !.href        = d.url
@@ -30,4 +25,8 @@ function instructions(frag: DocumentFragment, data: Hyperlink[]) {
 	}, data)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A list of hyperlinks.
+ */
+const xListLink: Processor<Hyperlink[], object> = new Processor(template, instructions)
+export default xListLink

@@ -10,11 +10,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   .fromFileSync(path.join(__dirname, '../../src/tpl/attendeetype.tpl.html')) // NB relative to dist
   .node
 
-/**
- * A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
- * @param   frag the template content to process
- * @param   data the attendee type
- */
 function instructions(frag: DocumentFragment, data: AttendeeType): void {
   /** Options for formatting pass prices. */
   const PRICE_OPTIONS: Intl.NumberFormat = new Intl.NumberFormat('en', {
@@ -32,4 +27,8 @@ function instructions(frag: DocumentFragment, data: AttendeeType): void {
     .trimInner()
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<dt.c-Pass__Attendee>`–`<dd.c-Pass__Price>` pair marking up info for a pass’s attendee type.
+ */
+const xAttendeeType: Processor<AttendeeType, object> = new Processor(template, instructions)
+export default xAttendeeType

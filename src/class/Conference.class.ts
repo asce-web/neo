@@ -10,17 +10,17 @@ import {
 	RegistrationPeriod,
 	Venue,
 } from '../interfaces'
-import hero_processor                  from '../tpl/hero.tpl'
-import otheryear_processor             from '../tpl/otheryear.tpl'
-import dateblock_processor             from '../tpl/dateblock.tpl'
-import program_processor               from '../tpl/program.tpl'
-import list_pass_processor             from '../tpl/list-pass.tpl'
-import list_registrationicon_processor from '../tpl/list-registrationicon.tpl'
-import list_speaker_processor          from '../tpl/list-speaker.tpl'
-import list_venue_processor            from '../tpl/list-venue.tpl'
-import list_supporterLevel_processor   from '../tpl/list-supporterlevel.tpl'
-import list_exhibitor_processor        from '../tpl/list-exhibitor.tpl'
-import list_chair_processor            from '../tpl/list-chair.tpl'
+import xDateBlock            from '../tpl/dateblock.tpl'
+import xHero                 from '../tpl/hero.tpl'
+import xOtherYear            from '../tpl/otheryear.tpl'
+import xProgram              from '../tpl/program.tpl'
+import xListChair            from '../tpl/list-chair.tpl'
+import xListExhibitor        from '../tpl/list-exhibitor.tpl'
+import xListPass             from '../tpl/list-pass.tpl'
+import xListRegistrationIcon from '../tpl/list-registrationicon.tpl'
+import xListSpeaker          from '../tpl/list-speaker.tpl'
+import xListSupporterLevel   from '../tpl/list-supporterlevel.tpl'
+import xListVenue            from '../tpl/list-venue.tpl'
 
 
 /**
@@ -172,7 +172,7 @@ export default class Conference {
 	 * @returns HTML output
 	 */
 	view_hero(): string {
-		return new xjs.DocumentFragment(hero_processor.process({
+		return new xjs.DocumentFragment(xHero.process({
 			...this._DATA,
 			location: this._DATA.location // FIXME && this._DATA.location[0] || { "@type": "PostalAddress" },
 		})).innerHTML()
@@ -182,7 +182,7 @@ export default class Conference {
 	 * @returns HTML output
 	 */
 	view_otherYear(): string {
-		return new xjs.DocumentFragment(otheryear_processor.process({
+		return new xjs.DocumentFragment(xOtherYear.process({
 			...this._DATA,
 			location: this._DATA.location // FIXME && this._DATA.location[0] || { "@type": "PostalAddress" },
 		})).innerHTML()
@@ -194,14 +194,14 @@ export default class Conference {
 	 */
 	view_pass(queue?: Queue): string {
 		let items = this.getPassesAll().filter((item) => (queue) ? queue.itemListElement.includes(item.name) : true)
-		return new xjs.DocumentFragment(list_pass_processor.process(items, { conference: this._DATA })).innerHTML()
+		return new xjs.DocumentFragment(xListPass.process(items, { conference: this._DATA })).innerHTML()
 	}
 	/**
 	 * Return a `<ul.c-Alert>` component containing the legend of registration periods.
 	 * @returns HTML output
 	 */
 	view_registrationLegend(): string {
-		return new xjs.DocumentFragment(list_registrationicon_processor.process(this.getRegistrationPeriodsAll())).innerHTML()
+		return new xjs.DocumentFragment(xListRegistrationIcon.process(this.getRegistrationPeriodsAll())).innerHTML()
 	}
 	/**
 	 * Return a `xDateblock` component marking up this conference’s important dates.
@@ -209,7 +209,7 @@ export default class Conference {
 	 * @returns HTML output
 	 */
 	view_importantDates(starred = false): string {
-		return new xjs.DocumentFragment(dateblock_processor.process(
+		return new xjs.DocumentFragment(xDateBlock.process(
 			(this._DATA.potentialAction || []).filter((d) => (starred) ? d.$starred : true)
 		)).innerHTML()
 	}
@@ -222,7 +222,7 @@ export default class Conference {
 	 * @returns HTML output
 	 */
 	view_program(id: string, starred = false): string {
-		return new xjs.DocumentFragment(program_processor.process(
+		return new xjs.DocumentFragment(xProgram.process(
 			(this._DATA.subEvent || []).filter((s) => (starred) ? s.$starred : true),
 			{ id }
 		)).innerHTML()
@@ -234,7 +234,7 @@ export default class Conference {
 	 */
 	view_speaker(queue?: Queue): string {
 		let items = this.getSpeakersAll().filter((item) => (queue) ? queue.itemListElement.includes(item.identifier) : true)
-		return new xjs.DocumentFragment(list_speaker_processor.process(items)).innerHTML()
+		return new xjs.DocumentFragment(xListSpeaker.process(items)).innerHTML()
 	}
 	/**
 	 * Return a `<ul.c-Alert>` component, containing {@link Venue} items.
@@ -243,7 +243,7 @@ export default class Conference {
 	 */
 	view_venue(queue?: Queue): string {
 		let items = this.getVenuesAll().filter((item) => (queue) ? queue.itemListElement.includes(item.description) : true)
-		return new xjs.DocumentFragment(list_venue_processor.process(items)).innerHTML()
+		return new xjs.DocumentFragment(xListVenue.process(items)).innerHTML()
 	}
 	/**
 	 * Return a list of `<section.c-SupporterBlock>` components containing this conference’s supporters
@@ -254,14 +254,14 @@ export default class Conference {
 	 */
 	view_supporterLevel(queue?: Queue, small = false): string {
 		let items = (this._DATA.$supporterLevels || []).filter((offer) => (queue) ? queue.itemListElement.includes(offer.name) : true)
-		return new xjs.DocumentFragment(list_supporterLevel_processor.process(items, { small, conference: this._DATA })).innerHTML()
+		return new xjs.DocumentFragment(xListSupporterLevel.process(items, { small, conference: this._DATA })).innerHTML()
 	}
 	/**
 	 * Return a list of `<div>` elements marking up this conference’s exhibitors.
 	 * @returns HTML output
 	 */
 	view_exhibitorList(): string {
-		return new xjs.DocumentFragment(list_exhibitor_processor.process(this._DATA.$exhibitors || [])).innerHTML()
+		return new xjs.DocumentFragment(xListExhibitor.process(this._DATA.$exhibitors || [])).innerHTML()
 	}
 	/**
 	 * Return a `<ul>` element, containing conference chairs and/or co-chairs.
@@ -269,6 +269,6 @@ export default class Conference {
 	 * @returns HTML output
 	 */
 	view_chair(): string {
-		return new xjs.DocumentFragment(list_chair_processor.process(this._DATA.organizer || [])).innerHTML()
+		return new xjs.DocumentFragment(xListChair.process(this._DATA.organizer || [])).innerHTML()
 	}
 }

@@ -1,15 +1,12 @@
 import * as path from 'path'
 
-import * as xjs1 from 'extrajs'
-import * as xjs2 from 'extrajs-dom'
+import { Date as xjs_Date } from 'extrajs'
+import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
+import {xAddress} from 'aria-patterns'
 
 import {Conference} from '../interfaces'
-import list_highlightbuttons_processor from './list-highlightbuttons.tpl'
-
-const xjs = { ...xjs1, ...xjs2 }
-
-const {xAddress} = require('aria-patterns')
+import xListHighlightButton from './list-highlightbutton.tpl'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -19,11 +16,6 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * A homepage `<header>` containing the site’s most important info.
- * @param   frag the template content to process
- * @param   data a single conference event
- */
 function instructions(frag: DocumentFragment, data: Conference): void {
 	/**
 	 * References to formatting elements.
@@ -38,22 +30,23 @@ function instructions(frag: DocumentFragment, data: Conference): void {
 
   frag.querySelector('[itemprop="name"]') !.textContent = data.name
   ;(frag.querySelector('meta[itemprop="url"]' ) as HTMLMetaElement).content = data.url
-  new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.render({
-    ...data.location,
-    $regionName: true,
-  }))
+	new xjs.Element(frag.querySelector('[itemprop="location"]') !).append(xAddress.process({
+		...data.location,
+	}, {
+		regionName: true
+	}))
 
   let date_start: Date = new Date(data.startDate)
   let date_end  : Date = new Date(data.endDate || data.startDate)
 	frag.querySelectorAll('time[itemprop~="startDate"]').forEach((time) => {
 		new xjs.HTMLTimeElement(time as HTMLTimeElement)
 			.dateTime(date_start)
-			.textContent(xjs.Date.format(date_start, 'M j'))
+			.textContent(xjs_Date.format(date_start, 'M j'))
 	})
 	new xjs.HTMLTimeElement(frag.querySelectorAll('time[itemprop~="endDate"]')[1] as HTMLTimeElement)
 		.dateTime(date_end)
-		.textContent(xjs.Date.format(date_end, 'M j'))
-	if (xjs.Date.sameDate(date_start, date_end)) {
+		.textContent(xjs_Date.format(date_end, 'M j'))
+	if (xjs_Date.sameDate(date_start, date_end)) {
 		formatting.dates[1].remove()
 	} else {
 		formatting.dates[0].remove()
@@ -62,7 +55,7 @@ function instructions(frag: DocumentFragment, data: Conference): void {
   frag.querySelector('[itemprop="description"]') !.textContent = data.description || ' ' // `&nbsp;` // cannot remove node due to SEO
 
 	new xjs.Element(frag.querySelector('.c-ConfHed__Theme ~ template') !).after(
-		new xjs.DocumentFragment(list_highlightbuttons_processor.process(data.$heroButtons || [], {
+		new xjs.DocumentFragment(xListHighlightButton.process(data.$heroButtons || [], {
 			buttonclasses: 'c-Button--primary',
 		})).exe(function () {
 			this.node.querySelectorAll('a').forEach((anchor) => {
@@ -74,4 +67,8 @@ function instructions(frag: DocumentFragment, data: Conference): void {
   new xjs.Element(frag.querySelector('.c-ConfHed__Detail__Dates') !).trimInner()
 }
 
-export default new Processor(template, instructions)
+/**
+ * A homepage `<header>` containing the site’s most important info.
+ */
+const xHero: Processor<Conference, object> = new Processor(template, instructions)
+export default xHero

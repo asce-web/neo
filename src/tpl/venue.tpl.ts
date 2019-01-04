@@ -2,10 +2,9 @@ import * as path from 'path'
 
 import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
+import {xAddress} from 'aria-patterns'
 
 import {Venue} from '../interfaces'
-
-const {xAddress} = require('aria-patterns')
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
@@ -15,16 +14,11 @@ const template: HTMLTemplateElement = xjs.HTMLTemplateElement
   })
   .node
 
-/**
- * A `<section>` element marking up a venue.
- * @param   frag the template content to process
- * @param   data a venue for a conference
- */
 function instructions(frag: DocumentFragment, data: Venue): void {
   frag.querySelector('[itemprop="description"]') !.textContent = data.description
   frag.querySelector('[itemprop="name"]')        !.textContent = data.name
 
-  new xjs.Element(frag.querySelector('[itemprop="address"]') !).append(xAddress.render({
+  new xjs.Element(frag.querySelector('[itemprop="address"]') !).append(xAddress.process({
     ...data.address,
   }))
 
@@ -49,4 +43,8 @@ function instructions(frag: DocumentFragment, data: Venue): void {
 	})
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<section>` element marking up a venue.
+ */
+const xVenue: Processor<Venue, object> = new Processor(template, instructions)
+export default xVenue

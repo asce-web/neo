@@ -2,10 +2,10 @@ import * as xjs from 'extrajs-dom'
 import {Processor} from 'template-processor'
 
 import {Conference, Pass} from '../interfaces'
-import pass_processor from './pass.tpl'
+import xPass from './pass.tpl'
 
 
-interface OptsType {
+interface OptsTypeXListPass {
 	/** the conference to which this pass belongs */
 	conference: Conference; // FIXME this should not be required
 }
@@ -20,18 +20,16 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	})
 	.node
 
-/**
- * A `<ul>` list of {@link Pass|passes}.
- * @param   frag the template content to process
- * @param   data an array of passes
- * @param   opts additional processing options
- */
-function instructions(frag: DocumentFragment, data: Pass[], opts: OptsType): void {
-	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f: DocumentFragment, d: Pass) {
+function instructions(frag: DocumentFragment, data: Pass[], opts: OptsTypeXListPass): void {
+	new xjs.HTMLUListElement(frag.querySelector('ul') !).populate(function (f, d) {
 		new xjs.HTMLLIElement(f.querySelector('li') !).empty().append(
-			pass_processor.process(d, opts)
+			xPass.process(d, opts)
 		)
 	}, data, opts)
 }
 
-export default new Processor(template, instructions)
+/**
+ * A `<ul>` list of {@link Pass|passes}.
+ */
+const xListPass: Processor<Pass[], OptsTypeXListPass> = new Processor(template, instructions)
+export default xListPass
