@@ -1,6 +1,6 @@
 {
   "@context": "http://schema.org/",
-  "@type": "WebSite",
+  "@type": ["WebSite", "Product"],
   "@id": "https://www.asce-default.org/",
   "additionalType": "http://schema.org/Product",
   "name"          : "Civil Engineering Congress",

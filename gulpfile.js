@@ -11,8 +11,8 @@ const kss          = require('kss')
 // require('typedoc')    // DO NOT REMOVE … peerDependency of `gulp-typedoc`
 // require('typescript') // DO NOT REMOVE … peerDependency of `gulp-typescript`
 
+const { requireJSON } = require('@chharvey/requirejson')
 const sdo_jsd = require('schemaorg-jsd')
-const {requireOtherAsync} = require('schemaorg-jsd/lib/requireOther.js')
 
 const tsconfig      = require('./tsconfig.json')
 const typedocconfig = require('./config/typedoc.json')
@@ -20,16 +20,13 @@ const typedocconfig = require('./config/typedoc.json')
 
 /** @private */
 async function _proto_validate(jsondata) {
-  // TODO in production, you only have to call:
-  // sdo_jsd.sdoValidate(jsondata, 'WebSite')
-  // sdo_jsd.sdoValidate(jsondata, 'Product')
-  const [META_SCHEMATA, SCHEMATA, NEO_SCHEMA] = await Promise.all([
-    sdo_jsd.getMetaSchemata(),
-    sdo_jsd.getSchemata(),
-    requireOtherAsync('./neo.jsd') // This schema is for development only. TODO Remove when ready for production.
-  ])
-  let ajv = new Ajv().addMetaSchema(META_SCHEMATA).addSchema(SCHEMATA)
-  let is_data_valid = ajv.validate(NEO_SCHEMA, jsondata)
+	// sdo_jsd.sdoValidate(jsondata) // TODO in production, you only have to call this
+	const NEO_SCHEMA = requireJSON('./neo.jsd') // This schema is for development only. TODO Remove when ready for production.
+	let ajv = new Ajv()
+		.addMetaSchema(await sdo_jsd.META_SCHEMATA)
+		.addSchema(await sdo_jsd.JSONLD_SCHEMA)
+		.addSchema(await sdo_jsd.SCHEMATA)
+	let is_data_valid = ajv.validate(await NEO_SCHEMA, jsondata)
   if (!is_data_valid) {
     ajv.errors.forEach((e) => console.error(e))
     throw new TypeError(ajv.errors[0].message)
@@ -75,7 +72,7 @@ function proto_index() {
 }
 
 async function proto_default_validate() {
-  return _proto_validate(await requireOtherAsync('./proto/default/database.jsonld'))
+  return _proto_validate(await requireJSON('./proto/default/database.jsonld'))
 }
 
 async function proto_default_markup() {
@@ -87,7 +84,7 @@ async function proto_default_markup() {
       locals: {
         xjs: require('extrajs-dom'),
         Util: require('./dist/class/Util.class.js').default,
-        site: new ConfSite(await requireOtherAsync('./proto/default/database.jsonld')).init(),
+        site: new ConfSite(await requireJSON('./proto/default/database.jsonld')).init(),
         page: new ConfPage(),
       },
     }))
@@ -97,7 +94,7 @@ async function proto_default_markup() {
 const proto_default = gulp.series(proto_default_validate, proto_default_markup)
 
 async function proto_sample_validate() {
-  return _proto_validate(await requireOtherAsync('./proto/asce-event.org/database.jsonld'))
+  return _proto_validate(await requireJSON('./proto/asce-event.org/database.jsonld'))
 }
 
 async function proto_sample_markup() {
@@ -111,7 +108,7 @@ async function proto_sample_markup() {
         Person: require('./dist/class/Person.class.js').default,
         site: await (async function () {
           // TODO move all this data inside the database
-          const returned = new ConfSite(await requireOtherAsync('./proto/asce-event.org/database.jsonld')).init()
+          const returned = new ConfSite(await requireJSON('./proto/asce-event.org/database.jsonld')).init()
           function pageTitle() { return this.name() + ' | ' + returned.name() }
           returned.find('registration.html')
             .add(new ConfPage('Why Attend', '#0')
