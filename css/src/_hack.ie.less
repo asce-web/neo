@@ -15,7 +15,7 @@
 //   ## Pseudo Rems
 // # CUSTOM PROPERTY FALLBACKS
 //   ## Vertical rhythm unit
-//     ### bangs
+//     ### xmeter
 //   ## Supporter logo sizes
 //   ## Site color schemes
 //     ### mixins
@@ -90,17 +90,20 @@
   //-------------------------------//
   @p-vru: 1.5rem;
     //********************************//
-    //  ### bangs
+    //  ### xmeter
     //********************************//
-    .-mt-1 {  margin-top   : 1 * @p-vru; }
-    .-mt-2 {  margin-top   : 2 * @p-vru; }
-    .-mv-1 {  margin-top   : 1 * @p-vru;             margin-bottom: 1 * @p-vru; }
-    .-mv-2 {  margin-top   : 2 * @p-vru;             margin-bottom: 2 * @p-vru; }
-    .-pb-1 { padding-bottom: 1 * @p-vru; }
-    .-pb-2 { padding-bottom: 2 * @p-vru; }
-    .-pv-1 { padding-top   : 1 * @p-vru;            padding-bottom: 1 * @p-vru; }
-    .-pv-2 { padding-top   : 2 * @p-vru;            padding-bottom: 2 * @p-vru; }
-    //**** end ### bangs ****//
+    h1, h2, h3, h4, h5, h6,
+    p, pre, figure, blockquote,
+    ol, ul, dl,
+    table,
+    form, fieldset, textarea,
+    details {
+      margin-bottom: @p-vru;
+    }
+    h1 {
+      padding-top: @p-vru;
+    }
+    //**** end ### xmeter ****//
   blockquote {
     padding: (@p-vru / 2) 0;
   }
