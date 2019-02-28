@@ -4,7 +4,7 @@ block append vars
   - var page = site.find('contact.html')
 
 block mainReference
-  -
+  //- -
     let drew = new Person({
       "@type": "Person",
       "identifier": "drew-caracciolo-1",
@@ -20,7 +20,7 @@ block mainReference
       "jobTitle"   : "Senior Coordinator, Conferences & Meetings",
       "affiliation": "HDR Engineering, Inc."
     })
-  figure.docs-figure
+  //- figure.docs-figure
     ul: li(itemscope="" itemtype="http://schema.org/Person")!= drew.view_contact()
   section.o-Runner.o-Runner--highlight#contact-us: div.h-Constrain
     h1.h-Hidden Contact Us

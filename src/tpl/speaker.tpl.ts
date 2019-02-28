@@ -10,7 +10,7 @@ import xListSocial from './list-social.tpl'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, '../../src/tpl/speaker.tpl.html')) // NB relative to dist
+  .fromFileSync(path.resolve(__dirname, '../../src/tpl/speaker.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })

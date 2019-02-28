@@ -8,7 +8,7 @@ import xExhibitor from './exhibitor.tpl'
 const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 	.exe(function () {
 		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
-			.innerHTML(`<link rel="import" data-import="template" href="../../src/tpl/exhibitor.tpl.html"/>`) // NB relative to dist
+			.innerHTML(`<link rel="import" data-import="template" href="../../src/tpl/exhibitor.tpl.html"/>`)
 		new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
 	})
 	.node

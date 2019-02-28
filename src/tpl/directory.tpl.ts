@@ -49,7 +49,7 @@ interface OptsTypeXDirectory {
 }
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/directory.tpl.html')) // NB relative to dist
+  .fromFileSync(path.join(__dirname, '../../src/tpl/directory.tpl.html'))
   .node
 
 function instructions(frag: DocumentFragment, data: ConfPage, opts: OptsTypeXDirectory): void {

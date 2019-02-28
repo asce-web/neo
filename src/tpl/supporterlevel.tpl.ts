@@ -18,7 +18,7 @@ interface OptsTypeXSupporterLevel {
 }
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/supporterlevel.tpl.html')) // NB relative to dist
+  .fromFileSync(path.join(__dirname, '../../src/tpl/supporterlevel.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
   })

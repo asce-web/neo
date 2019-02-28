@@ -1,6 +1,6 @@
 {
   "@context": "http://schema.org/",
-  "@type": "WebSite",
+  "@type": ["WebSite", "Product"],
   "@id": "https://www.asce-default.org/",
   "additionalType": "http://schema.org/Product",
   "name"          : "Civil Engineering Congress",
@@ -13,6 +13,7 @@
       "url"  : "http://2016.cecongress.org/",
       "startDate"  : "2016-09-28",
       "endDate"    : "2016-10-01"
+			, "location": []
     }
   ],
   "$currentConference" : "http://2016.cecongress.org/",
