@@ -2,6 +2,9 @@
 /*################################*\
     neo  |  _c-DateBlock.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
 
 
 // The Date Block
@@ -69,7 +72,7 @@
 }
 .c-DateBlock__Date,
 .c-DateBlock__Desc {
-  padding: initial; // HACK fallbacks
+  padding: initial; // COMBAK fallback
   padding: unset;
 }
 
@@ -78,13 +81,12 @@
   inline-size: 75%;
   margin-left:  auto;
   margin-right: auto;
-  .font-size-mod(1); // undo _base.less:table
   color: var(--color-gray_dk-shade2, @g-color-gray_dk-shade2); // override if inside Banner
   text-shadow: initial; // override `.c-Banner`
 }
 
 /*tr*/.c-DateBlock__Item {
-  margin-bottom: var(--vru);
+  .-mb-1;
   background-color: var(--color-gray_lt-tint2, @g-color-gray_lt-tint2);
   box-shadow: 0 0 0 1px var(--color-gray_dk, @g-color-gray_dk); // border hack
   @media screen                       { padding: @g-boxpadd_micr; }
@@ -97,7 +99,8 @@
 }
 
 /*td*/.c-DateBlock__Desc {
-  .font-size-el(1.25);
+  .h-FontSize;
+  --font-scale: @g-font-size-kilo;
   font-weight: 600;
 }
 

@@ -1,23 +1,24 @@
 {
   "@context": "http://schema.org/",
-  "@type": "Product",
-  "additionalType": "http://schema.org/WebPage",
-  "name"       : "An ASCE Event",
-  "url"        : "/sites/asce-event.org/",
-  "description": "Optional Brand Slogan",
-  "keywords"   : ["ASCE", "civil engineering", "convention"],
-  "logo"       : "./files/site-logo-white.png",
-  "color"      : ["#3fae2a", "#00a1e1"],
-  "brand"      : {
+  "@type": ["WebSite", "Product"],
+  "@id": "https://www.asce-event.org/",
+  "additionalType": "http://schema.org/Product",
+  "name"          : "An ASCE Event",
+  "url"           : "/sites/asce-event.org/",
+  "description"   : "Optional Brand Slogan",
+  "keywords"      : ["ASCE", "civil engineering", "convention"],
+  "logo"          : "./files/site-logo-white.png",
+  "color"         : ["#3fae2a", "#00a1e1"],
+  "brand"         : {
     "@type": "NGO",
     "name": "American Society of Civil Engineers",
-    "url" : "http://www.asce.org",
+    "url" : "http://www.asce.org/",
     "$social": [
-      { "@type": "URL", "name": "twitter" , "url": "//twitter.com/ASCE"    , "description": "Follow ASCE on Twitter" },
-      { "@type": "URL", "name": "google"  , "url": "//plus.google.com/ASCE", "description": "Follow ASCE on Google+" },
-      { "@type": "URL", "name": "facebook", "url": "//facebook.com/ASCE"   , "description": "Like ASCE on Facebook" },
-      { "@type": "URL", "name": "linkedin", "url": "//linkedin.com/ASCE"   , "description": "Connect with ASCE on LinkedIn" },
-      { "@type": "URL", "name": "youtube" , "url": "//youtube.com/ASCE"    , "description": "Watch ASCE on YouTube" }
+      { "@type": "WebPageElement", "name": "twitter" , "url": "//twitter.com/ASCE"    , "text": "Follow ASCE on Twitter"        },
+      { "@type": "WebPageElement", "name": "google"  , "url": "//plus.google.com/ASCE", "text": "Follow ASCE on Google+"        },
+      { "@type": "WebPageElement", "name": "facebook", "url": "//facebook.com/ASCE"   , "text": "Like ASCE on Facebook"         },
+      { "@type": "WebPageElement", "name": "linkedin", "url": "//linkedin.com/ASCE"   , "text": "Connect with ASCE on LinkedIn" },
+      { "@type": "WebPageElement", "name": "youtube" , "url": "//youtube.com/ASCE"    , "text": "Watch ASCE on YouTube"         }
     ],
     "address": {
       "@type": "PostalAddress",
@@ -50,14 +51,14 @@
       "image"      : "/proto/asce-event.org/files/cable-car.jpg",
       "startDate"  : "2016-09-28",
       "endDate"    : "2016-10-01",
+			"$promotedLocation": {
+				"@type": "PostalAddress",
+				"addressLocality": "Portland",
+				"addressRegion"  : "OR",
+				"image"          : "/proto/asce-event.org/files/portland.jpg",
+				"description"    : "With sweeping views of the surrounding mountains and a bustling downtown full of shopping, locally sourced dining, and entertainment, Portland is a wonderful destination for business and leisure."
+			},
       "location"   : [
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "Portland",
-          "addressRegion"  : "OR",
-          "image"          : "/proto/asce-event.org/files/portland.jpg",
-          "description"    : "With sweeping views of the surrounding mountains and a bustling downtown full of shopping, locally sourced dining, and entertainment, Portland is a wonderful destination for business and leisure."
-        },
         {
           "@type": "Accommodation",
           "description": "Conference Venue",
@@ -97,68 +98,92 @@
         }
       ],
       "$heroButtons": [
-        { "@type": "WebPageElement", "text": "Register"      , "url": "registration.html" },
-        { "@type": "WebPageElement", "text": "Sponsor"       , "url": "sponsor.html"      },
-        { "@type": "WebPageElement", "text": "Submit a Paper"                             }
+        { "@type": "WebPageElement", "text": "Register"      , "url": "registration.html"     },
+        { "@type": "WebPageElement", "text": "Sponsor"       , "url": "sponsor.html"          },
+        { "@type": "WebPageElement", "text": "Submit a Paper", "url": "call-submissions.html" }
+      ],
+      "$social": [
+        { "@type": "WebPageElement", "name": "twitter" , "url": "https://twitter.com/hashtag/#asce2016", "text": "Follow #ASCE2016 on Twitter" },
+        { "@type": "WebPageElement", "name": "google"  , "url": "#0"                                   , "text": "Follow #ASCE2016 on Google+" },
+        { "@type": "WebPageElement", "name": "facebook", "url": "#0"                                   , "text": "Follow #ASCE2016 on Facebook" }
       ],
       "offers": [
         {
           "@type": "AggregateOffer",
           "name"              : "Early Bird",
-          "availabilityEnds"  : "2016-07-28",
+          "availabilityEnds"  : "2016-07-28T00:00:00.000Z",
           "$icon"             : "stars"
         },
         {
           "@type": "AggregateOffer",
           "name"              : "Advance",
-          "availabilityStarts": "2016-07-29",
-          "availabilityEnds"  : "2016-08-25",
+          "availabilityStarts": "2016-07-29T00:00:00.000Z",
+          "availabilityEnds"  : "2016-08-25T00:00:00.000Z",
           "$icon"             : "date_range"
         },
         {
           "@type": "AggregateOffer",
           "name"              : "Onsite",
-          "availabilityStarts": "2016-08-26",
+          "availabilityStarts": "2016-08-26T00:00:00.000Z",
           "$icon"             : "account_balance"
         }
       ],
       "$currentRegistrationPeriod": "Early Bird",
       "$passes": [
         {
+          "@type": "AggregateOffer",
           "name": "Standard Pass",
           "description": "Members & Non-Members",
-          "$attendeeTypes": ["Member", "Non-Member"]
+          "offers": [
+            { "@type": "Offer", "price": 0, "name": "Member" },
+            { "@type": "Offer", "price": 0, "name": "Non-Member" }
+          ]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Speaker Pass",
-          "description": "Speakers and Presenters",
-          "$attendeeTypes": ["Member", "Non-Member"]
+          "description": "Speakers & Presenters",
+          "offers": [
+            { "@type": "Offer", "price": 0, "name": "Member" },
+            { "@type": "Offer", "price": 0, "name": "Non-Member" }
+          ]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Moderator Pass",
           "description": "Moderators",
-          "$attendeeTypes": ["Member", "Non-Member"]
+          "offers": [
+            { "@type": "Offer", "price": 0, "name": "Member" },
+            { "@type": "Offer", "price": 0, "name": "Non-Member" }
+          ]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Younger Member",
           "description": "Members 18–35",
-          "$attendeeTypes": ["Member/Non-Member"]
+          "offers": [{ "@type": "Offer", "price": 0, "name": "Member/Non-Member" }]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Student Pass",
           "description": "Undergraduates 18–24",
-          "$fineprint" : "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
-          "$attendeeTypes": ["Member/Non-Member"]
+          "disambiguatingDescription": "Full-time students must show valid ID onsite at the registration desk when picking up name badge.",
+          "offers": [{ "@type": "Offer", "price": 0, "name": "Member/Non-Member" }]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Guest Pass",
           "description": "Speaker and Moderator Guests",
-          "$attendeeTypes": ["Member/Non-Member"]
+          "offers": [{ "@type": "Offer", "price": 0, "name": "Member/Non-Member" }]
         },
         {
+          "@type": "AggregateOffer",
           "name": "Daily Pass",
           "description": "For One Day Only",
-          "$attendeeTypes": ["Member", "Non-Member"]
+          "offers": [
+            { "@type": "Offer", "price": 0, "name": "Member" },
+            { "@type": "Offer", "price": 0, "name": "Non-Member" }
+          ]
         }
       ],
       "subEvent": [
@@ -232,11 +257,11 @@
             "name": "German Chamber of Architects"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         },
         {
@@ -255,11 +280,11 @@
             "name": "Los Angeles Department of Water and Power"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         },
         {
@@ -277,11 +302,11 @@
             "name": "Planning & Development Group (PDG), Los Angeles World Airports"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         },
         {
@@ -299,11 +324,11 @@
             "name": "Oklahoma Geological Survey"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         },
         {
@@ -321,13 +346,22 @@
             "name": "University of Oklahoma"
           },
           "$social"    : [
-            { "@type": "URL", "name": "linkedin", "url": "#0", "description": "Connect with Donna on LinkedIn" },
-            { "@type": "URL", "name": "twitter" , "url": "#0", "description": "Follow @Donna on Twitter" },
-            { "@type": "URL", "name": "facebook", "url": "#0", "description": "Donna’s Facebook Profile" },
-            { "@type": "URL", "name": "google"  , "url": "#0", "description": "Donna’s Google+ Profile" },
-            { "@type": "URL", "name": "youtube" , "url": "#0", "description": "Donna’s YouTube Channel" }
+            { "@type": "WebPageElement", "name": "linkedin", "url": "#0", "text": "Connect with Donna on LinkedIn" },
+            { "@type": "WebPageElement", "name": "twitter" , "url": "#0", "text": "Follow @Donna on Twitter" },
+            { "@type": "WebPageElement", "name": "facebook", "url": "#0", "text": "Donna’s Facebook Profile" },
+            { "@type": "WebPageElement", "name": "google"  , "url": "#0", "text": "Donna’s Google+ Profile" },
+            { "@type": "WebPageElement", "name": "youtube" , "url": "#0", "text": "Donna’s YouTube Channel" }
           ]
         }
+      ],
+      "$supporterLevels": [
+        { "@type": "Offer", "name": "Platinum"  , "$logoSize": "Large"  , "$isSponsor": true },
+        { "@type": "Offer", "name": "Silver"    , "$logoSize": "Medium" , "$isSponsor": true },
+        { "@type": "Offer", "name": "Bronze"    , "$logoSize": "Medium" , "$isSponsor": true },
+        { "@type": "Offer", "name": "Copper"    , "$logoSize": "Small"  , "$isSponsor": true },
+        { "@type": "Offer", "name": "Corporate" , "$logoSize": "Small"  , "$isSponsor": true },
+        { "@type": "Offer", "name": "Charter Members" },
+        { "@type": "Offer", "name": "Cooperating Organizations" }
       ],
       "sponsor": [
         {
@@ -554,11 +588,6 @@
             "name": "HNTB Corporation"
           }
         }
-      ],
-      "$social": [
-        { "@type": "URL", "name": "twitter" , "url": "https://twitter.com/hashtag/#asce2016", "description": "Follow #ASCE2016 on Twitter" },
-        { "@type": "URL", "name": "google"  , "url": "#0"                                   , "description": "Follow #ASCE2016 on Google+" },
-        { "@type": "URL", "name": "facebook", "url": "#0"                                   , "description": "Follow #ASCE2016 on Facebook" }
       ]
     },
     {
@@ -570,12 +599,12 @@
       "startDate"  : "2015-10-11",
       "endDate"    : "2015-10-14",
       "disambiguatingDescription": "Access the 2015 program to see which sessions qualify for PDHs and other documentation.",
+			"$promotedLocation": {
+				"@type": "PostalAddress",
+				"addressLocality": "New York",
+				"addressRegion"  : "NY"
+			},
       "location": [
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "New York",
-          "addressRegion"  : "NY"
-        },
         {
           "@type": "Accommodation",
           "description": "Conference Venue",
@@ -600,12 +629,12 @@
       "startDate"  : "2017-10-08",
       "endDate"    : "2017-10-11",
       "disambiguatingDescription": "Plan ahead to attend, sponsor, or exhibit at the annual convention for civil engineering professionals.",
+			"$promotedLocation": {
+				"@type": "PostalAddress",
+				"addressLocality": "New Orleans",
+				"addressRegion"  : "LA"
+			},
       "location": [
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "New Orleans",
-          "addressRegion"  : "LA"
-        },
         {
           "@type": "Accommodation",
           "description": "Conference Venue",
@@ -654,6 +683,7 @@
     {
       "@type": "ItemList",
       "name" : "Top Sponsors",
+      "description": "Top few supporter levels to display in a carousel.",
       "itemListElement": [
         "Platinum",
         "Silver",
@@ -663,6 +693,7 @@
     {
       "@type": "ItemList",
       "name" : "Non-Sponsors",
+      "description": "Non-sponsoring suppporter levels to display on each page.",
       "itemListElement": [
         "Cooperating Organizations",
         "Charter Members"
@@ -671,20 +702,13 @@
     {
       "@type": "ItemList",
       "name" : "All Sponsors",
+      "description": "All supporter levels to display on the Sponsors page.",
       "itemListElement": [
         "Platinum",
         "Corporate",
         "Silver",
         "Bronze",
         "Copper"
-      ]
-    },
-    {
-      "@type": "ItemList",
-      "name" : "Conference Co-Chairs",
-      "itemListElement": [
-        "thomas-mccollough",
-        "stephen-dickenson"
       ]
     }
   ]

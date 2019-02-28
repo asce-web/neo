@@ -9,7 +9,8 @@ $ git clone https://github.com/asce-web/neo.git
 $ cd ./neo/
 $ npm install
 $ npm run build
-$ npx harp server -p 9000 # or any available port
+$ npm install -g harp
+$ harp server -p 9000 # or any available port
 ```
 
 ### View the Sample Site

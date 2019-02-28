@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-SiteTitle.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Site Title
@@ -17,7 +19,7 @@
 //     "description": "Innovations In Construction",
 //     "image"      : "http://cisummit.org/sites/cisummit.org/files/ci-shield-logo.png",
 //   }
-// != new ConfSite(sitedata).view.siteTitle()
+// != new ConfSite(sitedata).view_siteTitle()
 // </pre>
 //
 // <header><dl>
@@ -103,7 +105,8 @@
 }
 
 .c-SiteTitle__Name {
-  .font-size-el(2);
+  .h-FontSize;
+  --font-scale: @g-font-size-kilo;
   text-align: inherit; // override h1 center
 }
 
@@ -123,7 +126,7 @@
 .c-SiteTitle__Name,
 .c-SiteTitle__Slogan {
   @media screen and (min-width: 30em) {
-    width: calc(~'100% - '@p-logosize);
+    width: calc(100% - @p-logosize);
     padding-left: 0.5rem;
   }
 }
@@ -166,7 +169,7 @@
 .c-SiteTitle__Name,
 .c-SiteTitle__Slogan {
   width: auto; // override non-grid fallback
-  padding-left: initial; // HACK fallback for `unset`
+  padding-left: initial; // COMBAK fallback for `unset`
   padding-left: unset; // override non-css-grid fallback
 }
 

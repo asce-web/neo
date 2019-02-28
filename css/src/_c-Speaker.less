@@ -2,6 +2,8 @@
 /*################################*\
     neo  |  _c-Speaker.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
 
 
 // The Speaker Component
@@ -80,14 +82,11 @@
 
 .c-Speaker__Head,
 .c-Speaker__Foot {
+  .mx-box();
   padding: @g-boxpadd_norm;
-  & > *:last-child {
-    margin-bottom: 0; // override base typog
-  }
 }
 
 .c-Speaker__Head {
-  padding-top: 0; // override base h1
   white-space: nowrap;
   text-align: center;
 }
@@ -106,14 +105,16 @@
 }
 
 .c-Speaker__Name {
-  .font-size-el(@g-font-size-h2);
   font-family: inherit; // override h1
   color: inherit; // override h1
+  .h-FontSize;
+  --font-scale: @g-font-size-giga;
+  --tracks: 2;
 }
 
 .c-Speaker__JobTitle,
 .c-Speaker__Affiliation {
-  margin-bottom: 0; // override base p
+  .-mb-0; // override base `p`
   font-weight: 300;
 }
 

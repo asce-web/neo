@@ -1,0 +1,14 @@
+
+/*################################*\
+    neo  |  __mx.box.less
+\*################################*/
+// @import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
+
+
+// Mixin for boxes with padding. The last child has no margin-bottom, overriding the base typographical blocks.
+.mx-box() {
+  & > :last-child {
+    .-mb-0;
+  }
+}

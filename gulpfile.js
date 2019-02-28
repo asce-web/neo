@@ -1,87 +1,114 @@
-const kss          = require('kss')
+const Ajv          = require('ajv')
 const gulp         = require('gulp')
-const jsdoc        = require('gulp-jsdoc3')
-const pug          = require('gulp-pug')
-const less         = require('gulp-less')
 const autoprefixer = require('gulp-autoprefixer')
 const clean_css    = require('gulp-clean-css')
+const less         = require('gulp-less')
+const pug          = require('gulp-pug')
 const sourcemaps   = require('gulp-sourcemaps')
+const typedoc      = require('gulp-typedoc')
+const typescript   = require('gulp-typescript')
+const kss          = require('kss')
+// require('typedoc')    // DO NOT REMOVE … peerDependency of `gulp-typedoc`
+// require('typescript') // DO NOT REMOVE … peerDependency of `gulp-typescript`
 
-const jsdom = require('jsdom')
-const xjs = require('extrajs-dom')
-const requireOther = require('schemaorg-jsd/lib/requireOther.js')
+const { requireJSON } = require('@chharvey/requirejson')
+const sdo_jsd = require('schemaorg-jsd')
 
-const ConfSite   = require('./class/ConfSite.class.js')
-const ConfPage   = require('./class/ConfPage.class.js')
-
-
-// HOW-TO: https://github.com/mlucool/gulp-jsdoc3#usage
-gulp.task('docs:api', function () {
-  return gulp.src(['README.md', 'class/*.js'], {read:false})
-    .pipe(jsdoc(require('./config-jsdoc.json')))
-})
-// HOW-TO: https://github.com/kss-node/kss-node/issues/161#issuecomment-222292620
-gulp.task('docs:kss', function () {
-  return kss(require('./config-kss.json'))
-})
-gulp.task('pug:docs', function () {
-  return gulp.src(__dirname + '/docs/{index,principles,base,obj,comp,org,help,atom}.pug')
-    .pipe(pug({
-      basedir: './',
-      locals: {
-        Xmeter  : require('xmeter'),
-        Color   : require('extrajs-color'),
-        ConfSite: require('./class/ConfSite.class.js'),
-        ConfPage: require('./class/ConfPage.class.js'),
-        Person  : require('./class/Person.class.js'),
-        Docs    : require('./docs/_models/Docs.class.js'),
-      },
-    }))
-    .pipe(gulp.dest('./docs/'))
-})
-gulp.task('lessc:docs', function () {
-  return gulp.src(__dirname + '/docs/css/docs.less')
-    .pipe(less())
-    .pipe(autoprefixer({
-      grid: true,
-      cascade: false,
-    }))
-    .pipe(gulp.dest('./docs/css/'))
-})
-
-gulp.task('build:docs', ['docs:api', 'docs:kss', 'pug:docs', 'lessc:docs'])
+const tsconfig      = require('./tsconfig.json')
+const typedocconfig = require('./config/typedoc.json')
 
 
+/** @private */
+async function _proto_validate(jsondata) {
+	// sdo_jsd.sdoValidate(jsondata) // TODO in production, you only have to call this
+	const NEO_SCHEMA = requireJSON('./neo.jsd') // This schema is for development only. TODO Remove when ready for production.
+	let ajv = new Ajv()
+		.addMetaSchema(await sdo_jsd.META_SCHEMATA)
+		.addSchema(await sdo_jsd.JSONLD_SCHEMA)
+		.addSchema(await sdo_jsd.SCHEMATA)
+	let is_data_valid = ajv.validate(await NEO_SCHEMA, jsondata)
+  if (!is_data_valid) {
+    ajv.errors.forEach((e) => console.error(e))
+    throw new TypeError(ajv.errors[0].message)
+  }
+  return true
+}
 
-gulp.task('pug:index', function () {
-  return gulp.src(__dirname + '/index.pug')
+
+function dist_ts() {
+	return gulp.src('./src/**/*.ts')
+		.pipe(typescript(tsconfig.compilerOptions))
+		.pipe(gulp.dest('./dist/'))
+}
+
+function dist_css() {
+	return gulp.src('./css/src/neo.less')
+		.pipe(sourcemaps.init())
+		.pipe(less())
+		.pipe(autoprefixer({
+			grid: true,
+		}))
+		.pipe(clean_css({
+			level: {
+				2: {
+					overrideProperties: false, // need fallbacks for `initial` and `unset`
+					restructureRules: true, // combines selectors having the same rule (akin to `&:extend()`)
+				},
+			},
+		}))
+		.pipe(sourcemaps.write('./')) // write to an external .map file
+		.pipe(gulp.dest('./css'))
+}
+
+const dist = gulp.parallel(dist_ts, dist_css)
+
+function proto_index() {
+	// TODO - hard code this markup
+  return gulp.src('./index.pug')
     .pipe(pug({
       basedir: './',
     }))
     .pipe(gulp.dest('./'))
-})
-gulp.task('pug:default', function () {
-  return gulp.src(__dirname + '/proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
+}
+
+async function proto_default_validate() {
+  return _proto_validate(await requireJSON('./proto/default/database.jsonld'))
+}
+
+async function proto_default_markup() {
+	const ConfSite = require('./dist/class/ConfSite.class.js').default
+	const ConfPage = require('./dist/class/ConfPage.class.js').default
+  return gulp.src('./proto/default/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
         xjs: require('extrajs-dom'),
-        Util: require('./class/Util.class.js'),
-        site: new ConfSite(requireOther('./proto/default/database.jsonld')).init(),
+        Util: require('./dist/class/Util.class.js').default,
+        site: new ConfSite(await requireJSON('./proto/default/database.jsonld')).init(),
         page: new ConfPage(),
       },
     }))
     .pipe(gulp.dest('./proto/default/'))
-})
-gulp.task('pug:sample', function () {
-  return gulp.src(__dirname + '/proto/asce-event.org/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
+}
+
+const proto_default = gulp.series(proto_default_validate, proto_default_markup)
+
+async function proto_sample_validate() {
+  return _proto_validate(await requireJSON('./proto/asce-event.org/database.jsonld'))
+}
+
+async function proto_sample_markup() {
+	const ConfSite = require('./dist/class/ConfSite.class.js').default
+	const ConfPage = require('./dist/class/ConfPage.class.js').default
+  return gulp.src('./proto/asce-event.org/{index,registration,program,location,speakers,sponsor,exhibit,about,contact}.pug')
     .pipe(pug({
       basedir: './',
       locals: {
-        Util   : require('./class/Util.class.js'),
-        Person  : require('./class/Person.class.js'),
-        site: (function () {
-          const returned = new ConfSite(requireOther('./proto/asce-event.org/database.jsonld')).init()
+        Util  : require('./dist/class/Util.class.js').default,
+        Person: require('./dist/class/Person.class.js').default,
+        site: await (async function () {
+          // TODO move all this data inside the database
+          const returned = new ConfSite(await requireJSON('./proto/asce-event.org/database.jsonld')).init()
           function pageTitle() { return this.name() + ' | ' + returned.name() }
           returned.find('registration.html')
             .add(new ConfPage('Why Attend', '#0')
@@ -129,39 +156,91 @@ gulp.task('pug:sample', function () {
       },
     }))
     .pipe(gulp.dest('./proto/asce-event.org/'))
-})
-gulp.task('pug:sites', ['pug:index', 'pug:default', 'pug:sample'])
+}
 
-
-
-gulp.task('lessc:core', function () {
-  return gulp.src(__dirname + '/css/src/neo.less')
-    .pipe(less())
-    .pipe(autoprefixer({
-      grid: true,
-      cascade: false,
-    }))
-    .pipe(gulp.dest('./css/'))
-    .pipe(sourcemaps.init())
-    .pipe(clean_css())
-    .pipe(sourcemaps.write('./')) // write to an external .map file
-    .pipe(gulp.dest('./css'))
-})
-gulp.task('lessc:sample', function () {
-  return gulp.src(__dirname + '/proto/asce-event.org/css/site.less')
+function proto_sample_style() {
+  return gulp.src('./proto/asce-event.org/css/site.less')
     .pipe(less())
     .pipe(autoprefixer({
       grid: true,
       cascade: false,
     }))
     .pipe(gulp.dest('./proto/asce-event.org/css/'))
-})
-gulp.task('lessc:sites', ['lessc:core', 'lessc:sample'])
+}
 
+const proto_sample = gulp.parallel(
+	gulp.series(proto_sample_validate, proto_sample_markup),
+	proto_sample_style
+)
 
+const proto = gulp.parallel(proto_index, proto_default, proto_sample)
 
-gulp.task('build:sites', ['pug:sites', 'lessc:sites'])
+const test = proto
 
+function docs_api() {
+	return gulp.src('./src/**/*.ts')
+		.pipe(typedoc(typedocconfig))
+}
 
+// HOW-TO: https://github.com/kss-node/kss-node/issues/161#issuecomment-222292620
+async function docs_kss() {
+  return kss(require('./config-kss.json'))
+}
 
-gulp.task('build', ['build:docs', 'build:sites'])
+function docs_my_markup() {
+  return gulp.src('./docs/{index,principles,base,obj,comp,org,help,atom}.pug')
+    .pipe(pug({
+      basedir: './',
+      locals: {
+        Xmeter  : require('xmeter'),
+        Color   : require('extrajs-color'),
+        ConfSite,
+        ConfPage,
+        Person  : require('./class/Person.class.js'),
+        Docs    : require('./docs/_models/Docs.class.js'),
+      },
+    }))
+    .pipe(gulp.dest('./docs/'))
+}
+
+function docs_my_style() {
+  return gulp.src('./docs/css/docs.less')
+    .pipe(less())
+    .pipe(autoprefixer({
+      grid: true,
+      cascade: false,
+    }))
+    .pipe(gulp.dest('./docs/css/'))
+}
+
+const docs_my = gulp.parallel(docs_my_markup, docs_my_style)
+
+const docs = gulp.parallel(docs_api, docs_kss/*, docs_my*/)
+
+const build = gulp.parallel(
+	gulp.series(dist, test),
+	docs
+)
+
+module.exports = {
+	dist_ts,
+	dist_css,
+	dist,
+	proto_index,
+	proto_default_validate,
+	proto_default_markup,
+	proto_default,
+	proto_sample_validate,
+	proto_sample_markup,
+	proto_sample_style,
+	proto_sample,
+	proto,
+	test,
+	docs_api,
+	docs_kss,
+	docs_my_markup,
+	docs_my_style,
+	docs_my,
+	docs,
+	build,
+}

@@ -14,7 +14,25 @@ html(lang="en")
       link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic")
       link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,400italic,700")
       link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
-      link(rel="stylesheet" href="../../node_modules/xmeter/css/xmeter.css")
+      link(rel="stylesheet" href="https://cdn.asce.org/chewie/assets/glyphicons_pro_1_9_2/glyphicons/web/html_css/css/glyphicons.css")
+      link(rel="stylesheet" href="https://cdn.asce.org/chewie/assets/glyphicons_pro_1_9_2/glyphicons-filetypes/web/html_css/css/glyphicons-filetypes.css")
+      link(rel="stylesheet" href="https://cdn.asce.org/chewie/assets/glyphicons_pro_1_9_2/glyphicons-halflings/web/html_css/css/glyphicons-halflings.css")
+      link(rel="stylesheet" href="https://cdn.asce.org/chewie/assets/glyphicons_pro_1_9_2/glyphicons-social/web/html_css/css/glyphicons-social.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/base.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/o-List.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/o-Flex.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/o-Grid.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/h-Block.css")
+      //- link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/h-Inline.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/h-Clearfix.css")
+      //- link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/h-Measure.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/h-Constrain.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/h-FontSize.css")
+      //- link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/h-Ruled.css")
+      link(rel="stylesheet" href="../../node_modules/aria-patterns/dist/x-hidden/css/h-Hidden.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/-mb.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/-pt.css")
+      link(rel="stylesheet" href="../../node_modules/xmeter/css/dist/-fz.css")
       link(rel="stylesheet" href="https://cdn.rawgit.com/chharvey/bangs/v0.15.0/bangs.css")
       link(rel="stylesheet" href="../../css/neo.css")
       //- style.
@@ -31,7 +49,7 @@ html(lang="en")
   body
     a.h-Hidden(href="#main") skip to main content
     header.o-Runner.c-Mast.c-Mast--head: div.h-Constrain
-      != site.view.siteTitle()
+      != site.view_siteTitle()
     header.o-Runner.c-Mast.c-Mast--menu#main-menu: nav.h-Constrain.o-Drawer
       h1.h-Hidden Main Menu
       button.o-Drawer__Button.h-Inline(type="button" aria-controls="main-menu-drawer" aria-expanded="false" aria-label="toggle main menu")
@@ -49,23 +67,19 @@ html(lang="en")
             classes: {
               list: 'o-List o-Flex c-MainMenu',
               item: 'o-List__Item o-Flex__Item c-MainMenu__Item',
+              link: 'c-MainMenu__Link h-Block',
+              icon: 'c-MainMenu__Icon',
+              expand: 'c-MainMenu__Exp',
             },
-            links: {
-              classes: {
-                link  : 'c-MainMenu__Link h-Block',
-                icon  : 'c-MainMenu__Icon',
-                expand: 'c-MainMenu__Exp',
-              },
-            },
-            options: {
+            opts: {
               classes: {
                 list: 'o-List c-MainMenu__Sub',
                 item: 'o-List__Item c-MainMenu__Sub__Item',
+                link: 'c-MainMenu__Sub__Link h-Block',
               },
-              links: { classes: { link: 'c-MainMenu__Sub__Link h-Block' } },
             },
           }
-        != Util.view(site).pageToc(mainmenu_options)
+        != site.view_pageToc(mainmenu_options)
     main#main
       article(itemscope="" itemtype="http://schema.org/Event")
         block mainHeader
@@ -83,14 +97,14 @@ html(lang="en")
               (see external demo of
               #[a(href="http://go.asce.org/static/sponsors/") sponsors carousel]
               by rank)
-            != site.currentConference.view.supporterLevels(site.getQueue('Top Sponsors') || [])
+            != site.currentConference.view_supporterLevel(site.getQueue('Top Sponsors'))
             -
               let highlight_buttons = [
                 { "@type": "WebPageElement", "text": "All Sponsors", "url": "sponsor.html" },
               ]
-            footer!= Util.view(highlight_buttons).highlightButtons()
+            footer!= Util.view_highlightButtons(highlight_buttons)
         +callout()
-          != site.currentConference.view.supporterLevels(site.getQueue('Non-Sponsors') || [], true)
+          != site.currentConference.view_supporterLevel(site.getQueue('Non-Sponsors'), true)
     footer.o-Runner.c-Mast.c-Mast--sitemap#sitemap: nav.h-Constrain
       h1.h-Hidden Sitemap
       -
@@ -101,14 +115,14 @@ html(lang="en")
             list: 'o-List o-Flex c-Sitemap',
             item: 'o-List__Item o-Flex__Item c-Sitemap__Item',
           },
-          options: {
+          opts: {
             classes: {
               list: 'o-List c-Sitemap__Sub',
               item: 'o-List__Item c-Sitemap__Sub__Item',
             },
           },
         }
-      != Util.view(site).pageToc(sitemap_options)
+      != site.view_pageToc(sitemap_options)
     footer.o-Runner.c-Mast.c-Mast--foot#connect-with-asce: div.h-Constrain
       h1.h-Hidden Connect With #[abbr(title="American Society of Civil Engineers") ASCE]
       address(itemscope="" itemtype="http://schema.org/NGO")
@@ -132,7 +146,7 @@ html(lang="en")
           meta(content="+1-703-295-6300" itemprop="telephone")
           meta(content="United States of America" itemprop="areaServed")
           meta(content="customer support" itemprop="contactType")
-        != Util.view(site.getSocialAll()).socialList('c-SocialList--footer')
+        != Util.view_socialList(site.getSocialAll(), 'c-SocialList--footer')
         p: small
           | &copy; #[time 1996]&ndash;#[time 2016],#{' '}
           span(itemprop="name") American Society of Civil Engineers

@@ -7,4 +7,4 @@ block sponsors
   +callout()#thank-you-sponsors
     h1 Thank You to Our Sponsors
     p.-ta-c The generous contributions from the following sponsors enable our conference to continue its commitment to excellence in programming and networking events for the attendees.
-    != site.currentConference.view.supporterLevels(site.getQueue('All Sponsors') || [])
+    != site.currentConference.view_supporterLevel(site.getQueue('All Sponsors'))

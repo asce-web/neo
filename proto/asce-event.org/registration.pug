@@ -15,6 +15,6 @@ block callouts
         { "@type": "WebPageElement", "text": "Technical Tours", "url": "#0" },
         { "@type": "WebPageElement", "text": "Optional Tours" , "url": "#0" },
       ]
-    != Util.view(buttons).highlightButtons('c-Button--dark')
+    != Util.view_highlightButtons(buttons, 'c-Button--dark')
   +callout().c-Banner
     include _includes/callouts/_volunteer.pug

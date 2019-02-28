@@ -2,6 +2,9 @@
 /*################################*\
     neo  |  _c-ProgramHn.less
 \*################################*/
+@import (reference) url('../../node_modules/xmeter/css/src/__settings.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_h-FontSize.less');
+@import (reference) url('../../node_modules/xmeter/css/src/_-mb.less');
 
 
 // The Program Heading
@@ -30,12 +33,13 @@
 // Styleguide Components.ProgramHn
 .c-ProgramHn {
   // some styles from h1
-  margin-bottom: var(--vru);
+  .-mb-1;
   font-weight: 900;
   text-align: center;
   color: var(--heading-color-unselected);
   @media screen and (min-width: 45em) {
-    .font-size-el(1.25);
+    .h-FontSize;
+    --font-scale: @g-font-size-kilo;
   }
   [aria-selected="true"] & {
     transform: scale(1.2);
