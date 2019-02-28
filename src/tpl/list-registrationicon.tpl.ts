@@ -10,7 +10,7 @@ const template: HTMLTemplateElement = xjs.HTMLUListElement.templateSync()
 		new xjs.HTMLUListElement(this.content().querySelector('ul') !).addClass('o-List o-Flex o-Flex--even c-Alert')
 		new xjs.HTMLLIElement(this.content().querySelector('template') !.content.querySelector('li') !)
 			.addClass('o-List__Item o-Flex__Item c-Alert__Item')
-			.innerHTML(`<link rel="import" data-import="template" href="../../src/tpl/registrationicon.tpl.html"/>`) // NB relative to dist
+			.innerHTML(`<link rel="import" data-import="template" href="../../src/tpl/registrationicon.tpl.html"/>`)
 		new xjs.DocumentFragment(this.content().querySelector('template') !.content).importLinks(__dirname)
 	})
 	.node

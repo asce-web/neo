@@ -8,7 +8,7 @@ import {Session} from '../interfaces'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/timeblock.tpl.html')) // NB relative to dist
+  .fromFileSync(path.join(__dirname, '../../src/tpl/timeblock.tpl.html'))
   .node
 
 function instructions(frag: DocumentFragment, data: Session[]): void {

@@ -9,7 +9,7 @@ import Util from '../class/Util.class'
 
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.resolve(__dirname, '../../src/tpl/person-contact.tpl.html')) // NB relative to dist
+  .fromFileSync(path.resolve(__dirname, '../../src/tpl/person-contact.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })

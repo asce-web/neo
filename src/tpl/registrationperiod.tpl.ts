@@ -15,7 +15,7 @@ interface OptsTypeXRegistrationPeriod {
 }
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/registrationperiod.tpl.html')) // NB relative to dist
+  .fromFileSync(path.join(__dirname, '../../src/tpl/registrationperiod.tpl.html'))
   .exe(function () {
     new xjs.DocumentFragment(this.content()).importLinks(__dirname)
   })

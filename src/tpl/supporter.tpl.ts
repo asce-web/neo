@@ -12,7 +12,7 @@ interface OptsTypeXSupporter {
 }
 
 const template: HTMLTemplateElement = xjs.HTMLTemplateElement
-  .fromFileSync(path.join(__dirname, '../../src/tpl/supporter.tpl.html')) // NB relative to dist
+  .fromFileSync(path.join(__dirname, '../../src/tpl/supporter.tpl.html'))
   .node
 
 function instructions(frag: DocumentFragment, data: Supporter, opts: OptsTypeXSupporter): void {
